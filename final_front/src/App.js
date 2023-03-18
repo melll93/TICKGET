@@ -8,6 +8,8 @@ import FestivalPage from "./pages/community/FestivalPage";
 import HomePage from "./pages/community/HomePage";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
+import JoinPage from "./pages/member/JoinPage";
+import LoginPage from "./pages/member/LoginPage";
 import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
 import MessagePage from "./pages/personal/MessagePage";
@@ -20,6 +22,10 @@ function App() {
   return (
     <>
       <Routes>
+        {/* LoginMenu Routes */}
+        <Route path="/login" exact={true} element={<LoginPage />} />
+        <Route path="/join" exact={true} element={<JoinPage />} />
+
         {/* PersonalTabs Routes */}
         <Route path="/mypage" exact={true} element={<MyPage />} />
         <Route path="/cart" exact={true} element={<CartPage />} />

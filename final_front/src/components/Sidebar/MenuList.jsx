@@ -12,6 +12,10 @@ const MenuList = () => {
     "MESSAGE",
   ]);
 
-  return items.map((item, index) => <Menu key={index} item={item} />);
+  return (
+    <div className="MenuList">
+      {items.map((item, index) => <Menu key={index} item={item} />)}
+    </div>
+  )
 };
 export default MenuList;
