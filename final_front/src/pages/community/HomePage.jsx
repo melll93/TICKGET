@@ -13,6 +13,7 @@ const HomePage = () => {
       <div className="center">
         <Gnb />
         Home
+        {/* git protection test */}
       </div>
     </>
   );
