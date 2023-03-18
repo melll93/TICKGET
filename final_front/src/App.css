@@ -1,28 +1,75 @@
 * {
   background-color: transparent;
-  color: black;
+  color: white;
   margin: 0;
   padding: 0;
 }
 
+.icon {
+  filter: invert(100%);
+  display: inline-block;
+}
+
 div .Gnb {
-  background-color: gray;
+  background-color: black;
   border-bottom: 1px solid white;
+  /* display: flex; */
+  /* justify-content: space-between; */
+
   width: 100vw;
   height: 10vh;
 }
 
 div .Sidebar {
-  background-color: gray;
+  background-color: black;
   border-right: 1px solid white;
   width: 15vw;
   height: 90vh;
   display: inline-block;
 }
 
+div .center {
+  background-color: black;
+  width: 85vw;
+  height: 90vh;
+  display: inline-block;
+  position: absolute;
+}
+
+div .HomeButton {
+  display: inline-block;
+}
+
+div .SearchBarDiv {
+  display: inline-block;
+  margin-left: 30%;
+  width: 500px;
+}
+
+div .SearchBar {
+  width: 400px;
+  height: 30px;
+  margin: 10px;
+
+  /* color: white; */
+}
+
+.SearchButton {
+  width: 50px;
+}
+
 div .Profile {
+  padding: 0 30px 0 30px;
   height: 8vh;
   display: flex;
+  justify-content: space-around;
+}
+
+div .ProfileButton {
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+  font-size: 14px;
 }
 
 div .PersonalTabs {
@@ -85,12 +132,4 @@ p {
   display: inline-block;
   width: 50px;
   object-fit: cover;
-}
-
-div .center {
-  background-color: gray;
-  width: 85vw;
-  height: 90vh;
-  display: inline-block;
-  position: absolute;
 }

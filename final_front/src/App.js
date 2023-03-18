@@ -5,7 +5,8 @@ import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
 import DonationPage from "./pages/community/DonationPage";
 import FestivalPage from "./pages/community/FestivalPage";
-import MainPage from "./pages/community/MainPage";
+import HomePage from "./pages/community/HomePage";
+import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
 import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
@@ -27,7 +28,8 @@ function App() {
         <Route path="/setting" exact={true} element={<SettingPage />} />
 
         {/* MenuBar Routes */}
-        <Route path="/" exact={true} element={<MainPage />} />
+        <Route path="/" exact={true} element={<HomePage />} />
+        <Route path="/search" exact={true} element={<SearchResultPage />} />
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/concert" exact={true} element={<ConcertPage />} />
         <Route path="/together" exact={true} element={<TogetherPage />} />

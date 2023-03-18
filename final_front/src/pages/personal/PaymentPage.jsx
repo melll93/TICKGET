@@ -1,5 +1,4 @@
 import React from "react";
-import CenterSample from "../../components/CenterSample";
 import Gnb from "../../components/Gnb";
 import Sidebar from "../../components/Sidebar";
 

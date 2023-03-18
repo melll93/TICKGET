@@ -8,7 +8,7 @@ const Menu = ({ item }) => {
   return (
     <div className="Menu">
       <Link to={"/" + urlLower} className="Menu aTag">
-        <img className="image20" src={"logos/" + item + ".png"}></img>
+        <img className="icon image20" src={"logos/" + item + ".png"}></img>
         <div className="TextBox">
           <p>{item}</p>
         </div>

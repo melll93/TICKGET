@@ -1,9 +1,8 @@
 import React from "react";
-import CenterSample from "../../components/CenterSample";
 import Gnb from "../../components/Gnb";
 import Sidebar from "../../components/Sidebar";
 
-const MainPage = () => {
+const HomePage = () => {
   /******************************
    * 조회 순 나열해서 뿌려주기,
    * 검색하면 키워드별로 뿌려주기
@@ -17,4 +16,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default HomePage;
