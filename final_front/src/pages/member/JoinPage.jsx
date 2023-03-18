@@ -1,7 +1,9 @@
 import React from "react";
+import Sidebar from "../../components/Sidebar";
 
 const JoinPage = () => {
-  return <div>JoinPage</div>;
+  return (
+    <><Sidebar /><div>JoinPage</div></>);
 };
 
 export default JoinPage;

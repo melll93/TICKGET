@@ -5,9 +5,11 @@ import Sidebar from "../../components/Sidebar";
 const CarpoolPage = () => {
   return (
     <>
-      <Gnb />
       <Sidebar />
-      <div className="center">carpool</div>
+      <div className="center">
+        <Gnb />
+        Carpool
+      </div>
     </>
   );
 };

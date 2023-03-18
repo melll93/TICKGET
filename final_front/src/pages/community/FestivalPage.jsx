@@ -5,9 +5,11 @@ import Sidebar from "../../components/Sidebar";
 const FestivalPage = () => {
   return (
     <>
-      <Gnb />
       <Sidebar />
-      <div className="center">festival</div>
+      <div className="center">
+        <Gnb />
+        Festival
+      </div>
     </>
   );
 };

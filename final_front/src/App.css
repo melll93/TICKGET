@@ -10,34 +10,37 @@
   display: inline-block;
 }
 
-div .Gnb {
-  background-color: black;
-  border-bottom: 1px solid white;
-  /* display: flex; */
-  /* justify-content: space-between; */
-
-  width: 100vw;
-  height: 10vh;
-}
-
 div .Sidebar {
   background-color: black;
-  border-right: 1px solid white;
+  /* border-right: 1px solid white; */
   width: 15vw;
-  height: 90vh;
+  height: 100vh;
   display: inline-block;
 }
 
 div .center {
-  background-color: black;
-  width: 85vw;
-  height: 90vh;
   display: inline-block;
   position: absolute;
+  background-color: black;
+  border-left: 1px solid white;
+  width: 85vw;
+  height: 100vh;
+}
+
+div .Gnb {
+  margin-top: 15px;
+  background-color: black;
+  /* border-bottom: 1px solid white; */
+  width: 85vw;
+  height: 10vh;
 }
 
 div .HomeButton {
-  display: inline-block;
+  display: flex;
+  width: 100%;
+  height: 8vh;
+  justify-content: center;
+  align-items: center;
 }
 
 div .SearchBarDiv {
@@ -49,7 +52,7 @@ div .SearchBarDiv {
 div .SearchBar {
   width: 400px;
   height: 30px;
-  margin: 10px;
+  margin: 15px;
 
   /* color: white; */
 }
@@ -60,7 +63,7 @@ div .SearchBar {
 
 div .Profile {
   padding: 0 30px 0 30px;
-  height: 8vh;
+  height: 6vh;
   display: flex;
   justify-content: space-around;
 }

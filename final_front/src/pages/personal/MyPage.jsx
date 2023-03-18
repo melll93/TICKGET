@@ -5,9 +5,11 @@ import Sidebar from "../../components/Sidebar";
 const MyPage = () => {
   return (
     <>
-      <Gnb />
       <Sidebar />
-      <div className="center">MyPage</div>
+      <div className="center">
+        <Gnb />
+        Mypage
+      </div>
     </>
   );
 };

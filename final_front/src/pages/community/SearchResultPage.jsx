@@ -5,9 +5,9 @@ import Sidebar from '../../components/Sidebar'
 const SearchResultPage = () => {
     return (
         <div>
-            <Gnb />
             <Sidebar />
             <div className='center'>
+                <Gnb />
                 <p>검색 결과 화면</p>
             </div>
         </div>

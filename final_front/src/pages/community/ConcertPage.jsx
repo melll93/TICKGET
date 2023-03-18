@@ -5,9 +5,11 @@ import Sidebar from "../../components/Sidebar";
 const ConcertPage = () => {
   return (
     <>
-      <Gnb />
       <Sidebar />
-      <div className="center">concert</div>
+      <div className="center">
+        <Gnb />
+        Concert
+      </div>
     </>
   );
 };

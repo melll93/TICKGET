@@ -5,9 +5,11 @@ import Sidebar from "../../components/Sidebar";
 const CalendarPage = () => {
   return (
     <>
-      <Gnb />
       <Sidebar />
-      <div className="center">calendar</div>
+      <div className="center">
+        <Gnb />
+        calendar
+      </div>
     </>
   );
 };

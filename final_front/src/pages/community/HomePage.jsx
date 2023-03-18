@@ -9,9 +9,11 @@ const HomePage = () => {
    ******************************/
   return (
     <>
-      <Gnb />
       <Sidebar />
-      <div className="center">main</div>
+      <div className="center">
+        <Gnb />
+        Home
+      </div>
     </>
   );
 };

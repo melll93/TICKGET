@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Menu = ({ item }) => {
   const urlLower = item.toLowerCase();
-  console.log(typeof item);
   return (
     <div className="Menu">
       <Link to={"/" + urlLower} className="Menu aTag">

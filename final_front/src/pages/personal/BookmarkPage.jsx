@@ -5,9 +5,11 @@ import Sidebar from "../../components/Sidebar";
 const BookmarkPage = () => {
   return (
     <>
-      <Gnb />
       <Sidebar />
-      <div className="center">bookmark</div>
+      <div className="center">
+        <Gnb />
+        Bookmark
+      </div>
     </>
   );
 };

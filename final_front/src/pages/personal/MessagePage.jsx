@@ -5,9 +5,11 @@ import Sidebar from "../../components/Sidebar";
 const MessagePage = () => {
   return (
     <>
-      <Gnb />
       <Sidebar />
-      <div className="center">message</div>
+      <div className="center">
+        <Gnb />
+        Message
+      </div>
     </>
   );
 };
