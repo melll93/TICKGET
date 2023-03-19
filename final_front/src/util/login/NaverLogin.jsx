@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import axios from 'axios';
+
 const { naver } = window
-// const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID
 const NAVER_CLIENT_ID = "3fiEhnoQMSqSfg5o2LKi"
-const NAVER_CALLBACK_URL = encodeURI("http://localhost:3333");
+// const NAVER_CALLBACK_URL = encodeURI("http://localhost:3333/oauth/login/naver");
+const NAVER_CALLBACK_URL = encodeURI("http://localhost:3333/");
+//http://localhost:3333/#access_token=AAAAN1yPkCNxN_H4t9fHu4fu8xMLFu3g5kMAv1Yq_efgQo8d17JgD_MglisvXUXy8mbm2pV3dmYQ74NqrF5vzcWwF-I&state=a13651c0-e814-4222-b264-328640ef6f65&token_type=bearer&expires_in=3600
+// const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID
 // const NAVER_CLIENT_SECRET = "h0Ym27vNUk"
-let STATE_STRING = "RANDOM_STATE";
+
 const NaverLogin = ({ user, setUserInfo }) => {
 
     const naverLogin = new naver.LoginWithNaverId({
         clientId: NAVER_CLIENT_ID,
         callbackUrl: NAVER_CALLBACK_URL,
-        isPopup: false,
+        isPopup: true,
         loginButton: {
             color: 'green', type: 3, height: 50
         },
@@ -27,15 +31,12 @@ const NaverLogin = ({ user, setUserInfo }) => {
         })
     }
 
-    const naverLogout = () => {
-        localStorage.removeItem("com.naver.nid.access_token");
-        localStorage.removeItem("com.naver.nid.oauth.state_token");
-        window.location.reload();
-    }
+
 
     useEffect(() => {
         naverLogin.init()
         getUser()
+        // dataToBack()
     }, [])
 
     return (

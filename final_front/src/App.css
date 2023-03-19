@@ -1,13 +1,13 @@
 * {
   background-color: transparent;
-  color: white;
+  color: black;
   margin: 0;
   padding: 0;
 }
 
 div .Sidebar,
 div .center {
-  background-color: black;
+  /* background-color: black; */
 }
 
 Link {
@@ -15,7 +15,7 @@ Link {
 }
 
 .icon {
-  filter: invert(100%);
+  /* filter: invert(100%); */
   display: inline-block;
 }
 
@@ -28,7 +28,7 @@ div .Sidebar {
 div .center {
   display: inline-block;
   position: absolute;
-  border-left: 1px solid white;
+  border-left: 1px solid black;
   width: 85vw;
   height: 100vh;
 }
