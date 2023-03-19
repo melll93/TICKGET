@@ -39,6 +39,11 @@ div .Gnb {
   height: 10vh;
 }
 
+div .login {
+  margin-left: 40%;
+  margin-top: 15%;
+}
+
 div .HomeButton {
   display: flex;
   width: 100%;

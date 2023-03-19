@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import CalendarPage from "./pages/community/CalendarPage";
@@ -18,12 +19,22 @@ import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 
 function App() {
+  const [user, setUser] = useState();
+
+  const setUserInfo = async (param) => {
+    setUser(param);
+  };
+
   // pages로 routing 처리
   return (
     <>
       <Routes>
         {/* LoginMenu Routes */}
-        <Route path="/login" exact={true} element={<LoginPage />} />
+        <Route
+          path="/login"
+          exact={true}
+          element={<LoginPage user={user} setUserInfo={setUserInfo} />}
+        />
         <Route path="/join" exact={true} element={<JoinPage />} />
 
         {/* PersonalTabs Routes */}
@@ -34,7 +45,7 @@ function App() {
         <Route path="/setting" exact={true} element={<SettingPage />} />
 
         {/* MenuBar Routes */}
-        <Route path="/" exact={true} element={<HomePage />} />
+        <Route path="/" exact={true} element={<HomePage user={user} />} />
         <Route path="/search" exact={true} element={<SearchResultPage />} />
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/concert" exact={true} element={<ConcertPage />} />
