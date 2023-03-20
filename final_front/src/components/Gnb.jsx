@@ -1,5 +1,5 @@
 import React from "react";
-import SearchBar from "./gnb/SearchBar";
+import SearchBar from "./Gnb/SearchBar";
 
 const Gnb = () => {
   return (
