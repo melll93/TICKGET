@@ -1,0 +1,149 @@
+* {
+  background-color: transparent;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
+div .Sidebar,
+div .center {
+  /* background-color: black; */
+}
+
+Link {
+  text-decoration: none;
+}
+
+.icon {
+  /* filter: invert(100%); */
+  display: inline-block;
+}
+
+div .Sidebar {
+  width: 15vw;
+  height: 100vh;
+  display: inline-block;
+}
+
+div .center {
+  display: inline-block;
+  position: absolute;
+  border-left: 1px solid black;
+  width: 85vw;
+  height: 100vh;
+}
+
+div .Gnb {
+  margin-top: 15px;
+  width: 85vw;
+  height: 10vh;
+}
+
+div .login {
+  margin-left: 40%;
+  margin-top: 15%;
+}
+
+div .HomeButton {
+  display: flex;
+  width: 100%;
+  height: 8vh;
+  justify-content: center;
+  align-items: center;
+}
+
+div .SearchBarDiv {
+  display: inline-block;
+  margin-left: 30%;
+  width: 500px;
+}
+
+div .SearchBar {
+  width: 400px;
+  height: 30px;
+  margin: 15px;
+}
+
+.SearchButton {
+  width: 50px;
+}
+
+div .Profile {
+  padding: 0 30px 0 30px;
+  height: 6vh;
+  display: flex;
+  justify-content: space-around;
+}
+
+div .ProfileButton {
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+div .PersonalTabs {
+  height: 7vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid rgb(146, 146, 146);
+}
+
+div .tab {
+  display: flex;
+  width: 3vw;
+  height: 4vh;
+  align-items: center;
+  margin-top: 10px;
+  border: none;
+}
+
+div .MenuList {
+  margin-top: 20px;
+}
+
+div .Menu {
+  /* border: 1px dotted red; */
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+
+.Menu .aTag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 115px;
+  height: 25px;
+  line-height: 10px;
+}
+.TextBox {
+  width: 80px;
+  align-items: center;
+  text-align: center;
+}
+p {
+  display: inline-block;
+}
+
+.image20 {
+  display: inline-block;
+  width: 20px;
+  object-fit: cover;
+}
+
+.image40 {
+  display: inline-block;
+  width: 40px;
+  object-fit: cover;
+}
+
+.image50 {
+  display: inline-block;
+  width: 50px;
+  object-fit: cover;
+}
