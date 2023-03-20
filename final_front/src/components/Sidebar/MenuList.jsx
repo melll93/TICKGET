@@ -14,8 +14,10 @@ const MenuList = () => {
 
   return (
     <div className="MenuList">
-      {items.map((item, index) => <Menu key={index} item={item} />)}
+      {items.map((item, index) => (
+        <Menu key={index} item={item} />
+      ))}
     </div>
-  )
+  );
 };
 export default MenuList;
