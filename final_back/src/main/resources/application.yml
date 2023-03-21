@@ -1,0 +1,15 @@
+server:
+  port: 8888
+
+spring:
+  datasource:
+    driver-class-name: software.aws.rds.jdbc.mysql.Driver
+    url: jdbc:mysql:aws://3.36.67.54:3306/study?serverTimezone=Asia/Seoul
+    username: melll
+    password: tmdgus06
+
+mybatis:
+  type-aliases-package: back.spring.final_back.*.repository
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
