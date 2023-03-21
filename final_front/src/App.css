@@ -3,17 +3,22 @@
   margin: 0;
   padding: 0;
 }
+
+.margin0 {
+  margin: 0;
+}
+
 span {
   color: black;
+}
+
+.link {
+  text-decoration: none;
 }
 
 div .Sidebar,
 div .center {
   /* background-color: black; */
-}
-
-Link {
-  text-decoration: none;
 }
 
 .icon {
@@ -139,13 +144,11 @@ div .Menu {
   height: 25px;
   line-height: 10px;
 }
+
 .TextBox {
   width: 80px;
   align-items: center;
   text-align: center;
-}
-p {
-  display: inline-block;
 }
 
 .image20 {

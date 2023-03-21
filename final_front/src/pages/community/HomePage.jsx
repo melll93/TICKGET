@@ -22,7 +22,7 @@ const HomePage = ({ user }) => {
             <Tabs
               defaultActiveKey="home"
               id="uncontrolled-tab-example"
-              className="mb-3"
+              className="margin0 mb-3"
             >
               <Tab eventKey="home" title="Home">
                 <BasicTable />
