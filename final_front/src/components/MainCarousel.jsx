@@ -31,7 +31,7 @@ const MainCarousel = () => {
           style={{
             width: 280,
             height: 350,
-            objectFit: "contain",
+            objectFit: "cover",
             border: "1px solid black",
           }}
         />
@@ -42,7 +42,8 @@ const MainCarousel = () => {
           style={{
             width: 280,
             height: 350,
-            objectFit: "contain",
+            objectFit: "cover",
+
             border: "1px solid black",
           }}
         />
@@ -53,7 +54,7 @@ const MainCarousel = () => {
           style={{
             width: 280,
             height: 350,
-            objectFit: "contain",
+            objectFit: "cover",
             border: "1px solid black",
           }}
         />
@@ -64,7 +65,7 @@ const MainCarousel = () => {
           style={{
             width: 280,
             height: 350,
-            objectFit: "contain",
+            objectFit: "cover",
             border: "1px solid black",
           }}
         />
@@ -75,7 +76,7 @@ const MainCarousel = () => {
           style={{
             width: 280,
             height: 350,
-            objectFit: "contain",
+            objectFit: "cover",
             border: "1px solid black",
           }}
         />
@@ -86,7 +87,7 @@ const MainCarousel = () => {
           style={{
             width: 280,
             height: 350,
-            objectFit: "contain",
+            objectFit: "cover",
             border: "1px solid black",
           }}
         />
