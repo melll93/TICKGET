@@ -1,8 +1,10 @@
 * {
   background-color: transparent;
-  color: black;
   margin: 0;
   padding: 0;
+}
+span {
+  color: black;
 }
 
 div .Sidebar,
@@ -36,20 +38,22 @@ div .center {
 
 div .mainpage.box {
   display: flex;
+  justify-content: space-around;
+  margin: 30px;
 }
 
 div .mainpage.div {
-  width: 42vw;
+  width: 30vw;
   height: 34vh;
-  margin: 20px 5px 5px 5px;
-  display: inline-block;
   border: 1px dotted red;
 }
 
 div .Gnb {
   margin-top: 15px;
   width: 85vw;
-  height: 10vh;
+  height: 5vh;
+  border-bottom: 0.5px solid black;
+  margin-bottom: 20px;
 }
 
 div .login {
@@ -74,7 +78,7 @@ div .SearchBarDiv {
 div .SearchBar {
   width: 400px;
   height: 30px;
-  margin: 15px;
+  margin: 0px 15px 15px 0px;
 }
 
 .SearchButton {
@@ -124,6 +128,7 @@ div .Menu {
   justify-content: space-around;
   align-items: center;
   text-align: center;
+  color: black;
 }
 
 .Menu .aTag {

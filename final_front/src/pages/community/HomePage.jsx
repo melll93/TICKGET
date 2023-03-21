@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
-import Gnb from "../../components/Gnb";
+import React from "react";
+import { Tab, Tabs } from "react-bootstrap";
+import BasicTable from "../../components/BasicTable";
+import Header from "../../components/Header";
 import MainCarousel from "../../components/MainCarousel";
 import Sidebar from "../../components/Sidebar";
+import MainCalendar from "../../components/MainCalendar";
 
 const HomePage = ({ user }) => {
   /******************************
@@ -12,13 +15,46 @@ const HomePage = ({ user }) => {
     <>
       <Sidebar />
       <div className="center">
-        <Gnb />
+        <Header />
         <MainCarousel />
-        <div className="mainpage box"></div>
-        <div className="mainpage div div1">asd</div>
-        <div className="mainpage div div2">asd</div>
-        <div className="mainpage div div3">asd</div>
-        <div className="mainpage div div4">asd</div>
+        <div className="mainpage box">
+          <div className="mainpage div div1">
+            <Tabs
+              defaultActiveKey="home"
+              id="uncontrolled-tab-example"
+              className="mb-3"
+            >
+              <Tab eventKey="home" title="Home">
+                <BasicTable />
+              </Tab>
+              <Tab eventKey="festival" title="Festival">
+                <BasicTable />
+              </Tab>
+              <Tab eventKey="concert" title="Concert">
+                <BasicTable />
+              </Tab>
+              <Tab eventKey="together" title="Together">
+                <BasicTable />
+              </Tab>
+              <Tab eventKey="carpool" title="Carpool">
+                <BasicTable />
+              </Tab>
+            </Tabs>
+
+
+          </div>
+          <div className="mainpage div div2">
+            <MainCalendar />
+          </div>
+        </div>
+        {/* <div className="mainpage box">
+          <div className="mainpage div div3">
+            <BasicTable />
+          </div>
+          <div className="mainpage div div4">
+            <BasicTable />
+          </div>
+        </div> */}
       </div>
     </>
   );

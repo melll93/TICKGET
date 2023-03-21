@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "./Gnb/SearchBar";
 
-const Gnb = () => {
+const Header = () => {
   return (
     <div className="Gnb">
       <SearchBar />
@@ -9,4 +9,4 @@ const Gnb = () => {
   );
 };
 
-export default Gnb;
+export default Header;

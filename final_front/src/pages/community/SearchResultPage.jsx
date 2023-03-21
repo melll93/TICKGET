@@ -1,5 +1,5 @@
 import React from 'react'
-import Gnb from '../../components/Gnb'
+import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 
 const SearchResultPage = () => {
@@ -7,7 +7,7 @@ const SearchResultPage = () => {
         <div>
             <Sidebar />
             <div className='center'>
-                <Gnb />
+                <Header />
                 <p>검색 결과 화면</p>
             </div>
         </div>

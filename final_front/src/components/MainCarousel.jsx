@@ -27,7 +27,7 @@ const MainCarousel = () => {
     <Carousel responsive={responsive}>
       <div>
         <img
-          src="assets/1.jpg"
+          src="assets/carousel_dummy/1.jpg"
           style={{
             width: 280,
             height: 350,
@@ -38,7 +38,7 @@ const MainCarousel = () => {
       </div>
       <div>
         <img
-          src="assets/2.jpg"
+          src="assets/carousel_dummy/2.jpg"
           style={{
             width: 280,
             height: 350,
@@ -49,7 +49,7 @@ const MainCarousel = () => {
       </div>
       <div>
         <img
-          src="assets/3.jpg"
+          src="assets/carousel_dummy/3.jpg"
           style={{
             width: 280,
             height: 350,
@@ -60,7 +60,7 @@ const MainCarousel = () => {
       </div>
       <div>
         <img
-          src="assets/4.jpg"
+          src="assets/carousel_dummy/4.jpg"
           style={{
             width: 280,
             height: 350,
@@ -71,7 +71,7 @@ const MainCarousel = () => {
       </div>
       <div>
         <img
-          src="assets/5.jpg"
+          src="assets/carousel_dummy/5.jpg"
           style={{
             width: 280,
             height: 350,
@@ -82,7 +82,7 @@ const MainCarousel = () => {
       </div>
       <div>
         <img
-          src="assets/6.jpg"
+          src="assets/carousel_dummy/6.jpg"
           style={{
             width: 280,
             height: 350,
