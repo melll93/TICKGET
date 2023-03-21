@@ -18,6 +18,9 @@ import MessagePage from "./pages/personal/MessagePage";
 import MyPage from "./pages/personal/MyPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
+import AddProductsPage from "./pages/community/AddProductsPage";
+import ProductsDetails from "./pages/community/ProductsDetails";
+import PaymentPage from "./pages/personal/PaymentPage";
 
 function App() {
   const [user, setUser] = useState();
@@ -48,15 +51,21 @@ function App() {
         {/* MenuBar Routes */}
         <Route path="/" exact={true} element={<HomePage user={user} />} />
         <Route path="/search" exact={true} element={<SearchResultPage />} />
-        <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/concert" exact={true} element={<ConcertPage />} />
         <Route path="/together" exact={true} element={<TogetherPage />} />
         <Route path="/carpool" exact={true} element={<CarpoolPage />} />
         <Route path="/donation" exact={true} element={<DonationPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
         <Route path="/message" exact={true} element={<MessagePage />} />
-
+        <Route path="/message" exact={true} element={<MessagePage />} />
         <Route path="/oauth/login/naver" element={<NaverCallback />} />
+        
+        
+        {/* 상품 - 은영 수정중 */}
+        <Route path="/festival" exact={true} element={<FestivalPage />} />
+        <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
+        <Route path="/productsDetail/:id" element={<div><ProductsDetails /></div>} />
+        <Route path="/payment/:id" exact={true} element={<PaymentPage />} />
       </Routes>
     </>
   );
