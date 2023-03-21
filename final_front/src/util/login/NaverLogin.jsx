@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import axios from 'axios';
 
 const { naver } = window
 const NAVER_CLIENT_ID = "3fiEhnoQMSqSfg5o2LKi"

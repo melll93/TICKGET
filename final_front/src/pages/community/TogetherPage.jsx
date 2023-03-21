@@ -1,5 +1,5 @@
 import React from "react";
-import Gnb from "../../components/Gnb";
+import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 
 const TogetherPage = () => {
@@ -7,7 +7,7 @@ const TogetherPage = () => {
     <>
       <Sidebar />
       <div className="center">
-        <Gnb />
+        <Header />
         Together
       </div>
     </>

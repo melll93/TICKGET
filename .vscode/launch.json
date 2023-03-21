@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-FinalBackApplication<final_back>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "back.spring.final_back.FinalBackApplication",
+      "projectName": "final_back",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

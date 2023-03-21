@@ -13,17 +13,11 @@ const Profile = () => {
         <img className="icon image50" src={"logos/PROFILE.png"} />
       </Link>
       <div className="ProfileButton">
-        <div>
-          <Link to="/login">로그인</Link>
-        </div>
-        <div>
-          <Link to="/join">회원가입</Link>
-        </div>
-        <div>
-          <Link to="/" onClick={naverLogout}>
-            로그아웃
-          </Link>
-        </div>
+        <Link to="/login"><span>로그인</span></Link><br />
+        <Link to="/join"><span>회원가입</span></Link><br />
+        <Link to="/" onClick={naverLogout}>
+          <span>로그아웃</span>
+        </Link>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const HomeButton = () => {
     <Link to="/">
       <div className="HomeButton">
         <img className="icon image40" src="logos/HOME.png" />
-        <p>DOMAIN NAME</p>
+        <span>DOMAIN NAME</span>
       </div>
     </Link>
   );

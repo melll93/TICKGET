@@ -1,5 +1,5 @@
 import React from "react";
-import Gnb from "../../components/Gnb";
+import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 
 const PaymentPage = () => {
@@ -7,7 +7,7 @@ const PaymentPage = () => {
     <>
       <Sidebar />
       <div className="center">
-        <Gnb />
+        <Header />
         Payment
       </div>
     </>
