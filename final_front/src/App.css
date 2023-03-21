@@ -26,11 +26,24 @@ div .Sidebar {
 }
 
 div .center {
+  align-items: center;
   display: inline-block;
   position: absolute;
   border-left: 1px solid black;
   width: 85vw;
   height: 100vh;
+}
+
+div .mainpage.box {
+  display: flex;
+}
+
+div .mainpage.div {
+  width: 42vw;
+  height: 34vh;
+  margin: 20px 5px 5px 5px;
+  display: inline-block;
+  border: 1px dotted red;
 }
 
 div .Gnb {

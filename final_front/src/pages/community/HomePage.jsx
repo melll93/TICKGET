@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Gnb from "../../components/Gnb";
+import MainCarousel from "../../components/MainCarousel";
 import Sidebar from "../../components/Sidebar";
 
 const HomePage = ({ user }) => {
@@ -12,7 +13,12 @@ const HomePage = ({ user }) => {
       <Sidebar />
       <div className="center">
         <Gnb />
-        {/* test */}
+        <MainCarousel />
+        <div className="mainpage box"></div>
+        <div className="mainpage div div1">asd</div>
+        <div className="mainpage div div2">asd</div>
+        <div className="mainpage div div3">asd</div>
+        <div className="mainpage div div4">asd</div>
       </div>
     </>
   );
