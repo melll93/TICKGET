@@ -4,51 +4,36 @@ import { Table } from "react-bootstrap";
 const BasicTable = () => {
     return (
         <Table striped bordered hover>
-            {/* <thead>
-                <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                </tr>
-            </thead> */}
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <td colSpan={2}>글 제목 1</td>
+                    <td>시간</td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
+                    <td colSpan={2}>글 제목 2</td>
+                    <td>시간</td>
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
+                    <td colSpan={2}>글 제목 3</td>
+                    <td>시간</td>
                 </tr>
                 <tr>
-                    <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
+                    <td>4</td>
+                    <td colSpan={2}>글 제목 4</td>
+                    <td>시간</td>
                 </tr>
                 <tr>
-                    <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
+                    <td>5</td>
+                    <td colSpan={2}>글 제목 5</td>
+                    <td>시간</td>
                 </tr>
                 <tr>
-                    <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
+                    <td>6</td>
+                    <td colSpan={2}>글 제목 6</td>
+                    <td>시간</td>
                 </tr>
             </tbody>
         </Table>
