@@ -29,16 +29,21 @@ const ConcertPage = () => {
       <Sidebar />
       <div className="center">
         <Header />
-        {concerts.map((concert, index) => (
-          <li key={index} style={{ listStyle: "none" }}>
-            <div>
-              <img src={concert.main_img} /></div>
-            <div>
-              {concert.title}<br />
-              {concert.date}</div>
-          </li>
-        ))}
-      </div>
+        <ul className="items">
+          <div className="container">
+            {concerts.map((concert, index) => (
+              <div className="item">
+                <li key={index} style={{ listStyle: "none" }}>
+                  <img src={concert.main_img} style={{ objectFit: "cover" }} />
+                  {concert.title}<br />
+                  {concert.date}
+                </li>
+              </div>
+            ))}
+          </div>
+        </ul>
+        <div style={{ textAlign: "center" }}>1 2 3 4 5 6 7 8 9 10</div>
+      </div >
     </>
   );
 };

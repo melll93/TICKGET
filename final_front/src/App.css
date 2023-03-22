@@ -41,6 +41,35 @@ div .center {
   height: 100vh;
 }
 
+ul .items {
+  list-style: none;
+}
+
+div .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* list-style: none; */
+  padding-left: 0px;
+  margin: 0px;
+  column-gap: 0px;
+  row-gap: 40px;
+}
+
+div .item {
+  width: 85%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid lightgray;
+  box-shadow: 3px 3px 5px 0px rgb(54, 54, 54);
+  transition: transform 250ms ease-in;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
+}
+
 div .mainpage.box {
   display: flex;
   justify-content: space-around;
