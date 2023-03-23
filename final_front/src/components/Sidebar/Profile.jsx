@@ -10,7 +10,7 @@ const Profile = () => {
   return (
     <div className="Profile">
       <Link to="/mypage">
-        <img className="icon image50" src={"logos/PROFILE.png"} />
+        <img className="icon image50" src={"../logos/PROFILE.png"} />
       </Link>
       <div className="ProfileButton">
         <Link to="/login" className="link"><span>로그인</span></Link><br />
