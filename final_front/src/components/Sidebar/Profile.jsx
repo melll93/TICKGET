@@ -10,16 +10,16 @@ const Profile = () => {
   return (
     <div className="Profile">
       <Link to="/mypage">
-        <img className="icon image50" src={"logos/PROFILE.png"} />
+        <img className="icon image50" src={"../logos/PROFILE.png"} />
       </Link>
       <div className="ProfileButton">
-        <Link to="/login"><span>로그인</span></Link><br />
-        <Link to="/join"><span>회원가입</span></Link><br />
-        <Link to="/" onClick={naverLogout}>
+        <Link to="/login" className="link"><span>로그인</span></Link><br />
+        <Link to="/join" className="link"><span>회원가입</span></Link><br />
+        <Link to="/" className="link" onClick={naverLogout}>
           <span>로그아웃</span>
         </Link>
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -20,13 +20,10 @@ const HomePage = ({ user }) => {
         <div className="mainpage box">
           <div className="mainpage div div1">
             <Tabs
-              defaultActiveKey="home"
+              defaultActiveKey="festival"
               id="uncontrolled-tab-example"
-              className="mb-3"
+              className="margin0 mb-3"
             >
-              <Tab eventKey="home" title="Home">
-                <BasicTable />
-              </Tab>
               <Tab eventKey="festival" title="Festival">
                 <BasicTable />
               </Tab>

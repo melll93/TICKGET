@@ -3,17 +3,22 @@
   margin: 0;
   padding: 0;
 }
+
+.margin0 {
+  margin: 0;
+}
+
 span {
   color: black;
+}
+
+.link {
+  text-decoration: none;
 }
 
 div .Sidebar,
 div .center {
   /* background-color: black; */
-}
-
-Link {
-  text-decoration: none;
 }
 
 .icon {
@@ -34,6 +39,35 @@ div .center {
   border-left: 1px solid black;
   width: 85vw;
   height: 100vh;
+}
+
+ul .items {
+  list-style: none;
+}
+
+div .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* list-style: none; */
+  padding-left: 0px;
+  margin: 0px;
+  column-gap: 0px;
+  row-gap: 40px;
+}
+
+div .item {
+  width: 85%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid lightgray;
+  box-shadow: 3px 3px 5px 0px rgb(54, 54, 54);
+  transition: transform 250ms ease-in;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
 }
 
 div .mainpage.box {
@@ -139,13 +173,11 @@ div .Menu {
   height: 25px;
   line-height: 10px;
 }
+
 .TextBox {
   width: 80px;
   align-items: center;
   text-align: center;
-}
-p {
-  display: inline-block;
 }
 
 .image20 {
