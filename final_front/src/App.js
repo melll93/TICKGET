@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import NaverCallback from "./util/login/NaverCallback";
+import NaverCallback from "./api/login/NaverCallback";
 import CalendarPage from "./pages/community/CalendarPage";
 import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
@@ -59,12 +59,18 @@ function App() {
         <Route path="/message" exact={true} element={<MessagePage />} />
         <Route path="/message" exact={true} element={<MessagePage />} />
         <Route path="/oauth/login/naver" element={<NaverCallback />} />
-        
-        
+
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
-        <Route path="/productsDetail/:id" element={<div><ProductsDetails /></div>} />
+        <Route
+          path="/productsDetail/:id"
+          element={
+            <div>
+              <ProductsDetails />
+            </div>
+          }
+        />
         <Route path="/payment/:id" exact={true} element={<PaymentPage />} />
       </Routes>
     </>

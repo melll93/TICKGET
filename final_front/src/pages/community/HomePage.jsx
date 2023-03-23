@@ -1,22 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import BasicTable from "../../components/BasicTable";
+import BasicTable from "../../components/MainPage/BasicTable";
 import Header from "../../components/Header";
-import MainCarousel from "../../components/MainCarousel";
+import MainCarousel from "../../components/MainPage/MainCarousel";
 import Sidebar from "../../components/Sidebar";
-import MainCalendar from "../../components/MainCalendar";
+import MainCalendar from "../../components/MainPage/MainCalendar";
+import { getFestivalTodayDB } from "../../axios/main/main";
 
 const HomePage = ({ user }) => {
   /******************************
    * 조회 순 나열해서 뿌려주기,
    * 검색하면 키워드별로 뿌려주기
    ******************************/
+  const [festivalToday, setFestivalToday] = useState([]);
+
+  const getTodayList = () => {
+    getFestivalTodayDB().then(setFestivalToday)
+  }
+
+
+  useEffect(() => {
+    getTodayList();
+  }, []);
+
   return (
     <>
       <Sidebar />
       <div className="center">
         <Header />
-        <MainCarousel />
+        <MainCarousel festivalToday={festivalToday} />
         <div className="mainpage box">
           <div className="mainpage div div1">
             <Tabs
