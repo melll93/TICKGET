@@ -9,8 +9,10 @@ import { getFestivalTodayDB } from "../../axios/main/main";
 
 const HomePage = ({ user }) => {
   /******************************
-   * 조회 순 나열해서 뿌려주기,
-   * 검색하면 키워드별로 뿌려주기
+   * SearchBar : keyword 검색해서 페이지 이동(/search)
+   * MainCarousel : 오늘 날짜로 검색해서 뿌려주기,
+   * BasicTable : 게시판 별 최신 글 출력해주기, Link to
+   * MainCalendar : 날짜 클릭하면 하단에 해당 날짜별 축제 출력해주기(Grid)
    ******************************/
   const [festivalToday, setFestivalToday] = useState([]);
 
@@ -49,8 +51,6 @@ const HomePage = ({ user }) => {
                 <BasicTable />
               </Tab>
             </Tabs>
-
-
           </div>
           <div className="mainpage div div2">
             <MainCalendar />
