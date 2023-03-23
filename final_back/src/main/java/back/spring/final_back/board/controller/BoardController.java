@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:3333")
 @Controller
 @ResponseBody
 @RequestMapping("/api")
@@ -20,7 +20,6 @@ import java.util.Map;
 @Slf4j
 public class BoardController {
     Logger logger = LoggerFactory.getLogger(BoardController.class);
-    private Map<String, BoardDto> boardMap;
 
     private final BoardService boardService;
 
