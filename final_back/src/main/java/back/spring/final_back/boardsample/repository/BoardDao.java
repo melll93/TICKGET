@@ -1,4 +1,4 @@
-package back.spring.final_back.board.repository;
+package back.spring.final_back.boardsample.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 

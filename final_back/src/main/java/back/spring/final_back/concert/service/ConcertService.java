@@ -7,6 +7,8 @@ import java.util.List;
 public interface ConcertService {
     List<ConcertDto> ConcertList();
 
+    List<ConcertDto> ConcertToday();
+
     List<ConcertDto> ConcertSearch(String keyword);
 
     int ConcertInsert(ConcertDto concertDto);
@@ -14,4 +16,6 @@ public interface ConcertService {
     int ConcertUpdate(ConcertDto concertDto);
 
     int ConcertDelete(int concert_no);
+
+
 }
