@@ -1,7 +1,7 @@
 import React from 'react'
 
 const CarouselOne = ({ festival }) => {
-    console.log(festival);
+    // console.log(festival);
 
     return (
         <div>

@@ -24,7 +24,7 @@ const responsive = {
 };
 
 const MainCarousel = ({ festivalToday }) => {
-  // console.log(festivalToday);
+  console.log(festivalToday);
 
   return (
     <>
