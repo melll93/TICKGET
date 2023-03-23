@@ -1,7 +1,7 @@
-package back.spring.final_back.board.service;
+package back.spring.final_back.boardsample.service;
 
 
-import back.spring.final_back.board.repository.BoardDto;
+import back.spring.final_back.boardsample.repository.BoardDto;
 
 import java.util.List;
 

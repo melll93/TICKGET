@@ -1,7 +1,5 @@
 package back.spring.final_back.concert.controller;
 
-import back.spring.final_back.board.controller.BoardController;
-import back.spring.final_back.concert.repository.ConcertDao;
 import back.spring.final_back.concert.repository.ConcertDto;
 import back.spring.final_back.concert.service.ConcertService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +26,14 @@ public class ConcertController {
         logger.info("call ConcertController.ConcertList");
         List<ConcertDto> cList = null;
         cList = concertService.ConcertList();
+        return cList;
+    }
+
+    @GetMapping("/concertToday")
+    public List<ConcertDto> ConcertToday() {
+        logger.info("call ConcertController.ConcertToday");
+        List<ConcertDto> cList = null;
+        cList = concertService.ConcertToday();
         return cList;
     }
 

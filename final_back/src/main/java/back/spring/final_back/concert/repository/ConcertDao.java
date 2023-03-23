@@ -13,8 +13,10 @@ import java.util.List;
 @Mapper
 public interface ConcertDao {
     List<ConcertDto> ConcertList();
+    List<ConcertDto> ConcertToday();
     List<ConcertDto> ConcertSearch(String keyword);
     int ConcertInsert(ConcertDto concertDto);
     int ConcertUpdate(ConcertDto concertDto);
     int ConcertDelete(int concert_no);
+
 }

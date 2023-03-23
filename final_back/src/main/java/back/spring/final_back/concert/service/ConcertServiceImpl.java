@@ -25,6 +25,14 @@ public class ConcertServiceImpl implements ConcertService{
     }
 
     @Override
+    public List<ConcertDto> ConcertToday() {
+        logger.info("call ConcertServiceImpl.ConcertToday");
+        List<ConcertDto> cList = null;
+        cList = concertDao.ConcertToday();
+        return cList;
+    }
+
+    @Override
     public List<ConcertDto> ConcertSearch(String keyword) {
         List<ConcertDto> cList = null;
         cList = concertDao.ConcertSearch(keyword);
@@ -51,4 +59,5 @@ public class ConcertServiceImpl implements ConcertService{
         result = concertDao.ConcertDelete(concert_no);
         return result;
     }
+
 }

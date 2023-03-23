@@ -1,7 +1,7 @@
-package back.spring.final_back.board.controller;
+package back.spring.final_back.boardsample.controller;
 
-import back.spring.final_back.board.repository.BoardDto;
-import back.spring.final_back.board.service.BoardService;
+import back.spring.final_back.boardsample.repository.BoardDto;
+import back.spring.final_back.boardsample.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin("http://localhost:3333")
 @Controller

@@ -11,6 +11,12 @@
         where codename like "콘서트"
     </select>
 
+    <select id="ConcertToday" resultType="concertDto">
+        select *
+        from seoul_data
+        where date like CONCAT(CURDATE(),"%")
+    </select>
+
     <select id="ConcertSearch" resultType="ConcertDto">
         SELECT *
         FROM Board

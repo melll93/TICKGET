@@ -1,4 +1,4 @@
-package back.spring.final_back.board.repository;
+package back.spring.final_back.boardsample.repository;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
