@@ -11,7 +11,7 @@ const ConcertPage = () => {
   const [page, setPage] = useState("");
   const AMOUNT = 20
   useEffect(() => {
-    getConcertListDB().then(setConcerts)
+    getConcertListDB("콘서트").then(setConcerts)
   }, [])
 
   // console.log(concerts);
@@ -22,6 +22,9 @@ const ConcertPage = () => {
 
   useEffect(() => {
     pagination()
+    if (page) {
+
+    }
     console.log(page);
   })
 
