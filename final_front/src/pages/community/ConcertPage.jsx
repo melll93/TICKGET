@@ -9,24 +9,23 @@ const ConcertPage = () => {
   // JSON 파일을 배열 객체로 저장
   const [concerts, setConcerts] = useState([]);
   const [page, setPage] = useState("");
-  const AMOUNT = 20
+  const AMOUNT = 20;
   useEffect(() => {
-    getConcertListDB("콘서트").then(setConcerts)
-  }, [])
+    getConcertListDB("콘서트").then(setConcerts);
+  }, []);
 
   // console.log(concerts);
   const pagination = (param) => {
-    const _page = param
-    setPage(_page)
-  }
+    const _page = param;
+    setPage(_page);
+  };
 
   useEffect(() => {
-    pagination()
+    pagination();
     if (page) {
-
     }
     console.log(page);
-  })
+  });
 
   return (
     <>
@@ -39,8 +38,9 @@ const ConcertPage = () => {
               <div key={index} className="item">
                 <li style={{ listStyle: "none" }}>
                   <img src={concert.main_img} style={{ objectFit: "cover" }} />
-                  {concert.title}<br />
-                  {concert.date}
+                  {concert.title}
+                  <br />
+                  <span>{concert.date}</span>
                 </li>
               </div>
             ))}
@@ -49,7 +49,7 @@ const ConcertPage = () => {
         <div style={{ textAlign: "center" }}>
           <BasicPagination pagination={pagination} />
         </div>
-      </div >
+      </div>
     </>
   );
 };
