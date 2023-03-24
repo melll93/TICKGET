@@ -17,10 +17,10 @@ public class ConcertServiceImpl implements ConcertService{
     private final ConcertDao concertDao;
 
     @Override
-    public List<ConcertDto> ConcertList() {
+    public List<ConcertDto> ConcertList(String category) {
         logger.info("call ConcertServiceImpl.ConcertList");
         List<ConcertDto> cList = null;
-        cList = concertDao.ConcertList();
+        cList = concertDao.ConcertList(category);
         return cList;
     }
 

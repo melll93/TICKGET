@@ -22,10 +22,10 @@ public class ConcertController {
     private final ConcertService concertService;
 
     @GetMapping("/concertList")
-    public List<ConcertDto> ConcertList() {
-        logger.info("call ConcertController.ConcertList");
+    public List<ConcertDto> ConcertList(@RequestParam String category) {
+        logger.info("call ConcertController.ConcertList, param : "+category);
         List<ConcertDto> cList = null;
-        cList = concertService.ConcertList();
+        cList = concertService.ConcertList(category);
         return cList;
     }
 

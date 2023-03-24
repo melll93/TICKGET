@@ -12,7 +12,7 @@ import java.util.List;
 
 @Mapper
 public interface ConcertDao {
-    List<ConcertDto> ConcertList();
+    List<ConcertDto> ConcertList(String category);
     List<ConcertDto> ConcertToday();
     List<ConcertDto> ConcertSearch(String keyword);
     int ConcertInsert(ConcertDto concertDto);
