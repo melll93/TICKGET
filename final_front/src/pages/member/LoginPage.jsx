@@ -1,5 +1,5 @@
 import React from "react";
-import NaverLogin from "../../util/login/NaverLogin";
+import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
 
 const LoginPage = ({ user, setUserInfo }) => {

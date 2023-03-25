@@ -43,6 +43,8 @@ div .center {
 
 ul .items {
   list-style: none;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 div .container {
