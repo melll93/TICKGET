@@ -5,7 +5,7 @@ import back.spring.final_back.concert.repository.ConcertDto;
 import java.util.List;
 
 public interface ConcertService {
-    List<ConcertDto> ConcertList();
+    List<ConcertDto> ConcertList(String category);
 
     List<ConcertDto> ConcertToday();
 

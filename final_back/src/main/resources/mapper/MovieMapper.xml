@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="back.spring.final_back.movie.repository.MovieDao">
+    <select id="getMovieList" resultType="MovieDto">
+        select *
+        from seoul_data
+        where codename like "영화"
+    </select>
+
+</mapper>

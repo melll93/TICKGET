@@ -1,6 +1,5 @@
 package back.spring.final_back.concert.service;
 
-import back.spring.final_back.concert.controller.ConcertController;
 import back.spring.final_back.concert.repository.ConcertDao;
 import back.spring.final_back.concert.repository.ConcertDto;
 import lombok.RequiredArgsConstructor;
@@ -12,15 +11,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ConcertServiceImpl implements ConcertService{
+public class ConcertServiceImpl implements ConcertService {
     Logger logger = LoggerFactory.getLogger(ConcertServiceImpl.class);
     private final ConcertDao concertDao;
 
     @Override
-    public List<ConcertDto> ConcertList() {
+    public List<ConcertDto> ConcertList(String category) {
         logger.info("call ConcertServiceImpl.ConcertList");
         List<ConcertDto> cList = null;
-        cList = concertDao.ConcertList();
+        cList = concertDao.ConcertList(category);
         return cList;
     }
 

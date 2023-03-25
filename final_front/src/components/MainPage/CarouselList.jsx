@@ -24,16 +24,18 @@ const responsive = {
 };
 
 const MainCarousel = ({ festivalToday }) => {
-  // console.log(festivalToday);
+  console.log(festivalToday);
 
   return (
     <>
-      <div style={{ textAlign: "center", fontSize: "24px" }}><span>오늘의 축제</span></div>
+      <div style={{ textAlign: "center", fontSize: "24px" }}>
+        <span>오늘의 축제</span>
+      </div>
       <Carousel responsive={responsive}>
         {festivalToday.map((festival, index) => (
           <CarouselOne key={index} festival={festival} />
         ))}
-      </Carousel >
+      </Carousel>
     </>
   );
 };

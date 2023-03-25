@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import BasicTable from "../../components/MainPage/BasicTable";
 import Header from "../../components/Header";
-import MainCarousel from "../../components/MainPage/MainCarousel";
+import CarouselList from "../../components/MainPage/CarouselList";
 import Sidebar from "../../components/Sidebar";
 import MainCalendar from "../../components/MainPage/MainCalendar";
 import { getFestivalTodayDB } from "../../axios/main/main";
@@ -17,9 +17,8 @@ const HomePage = ({ user }) => {
   const [festivalToday, setFestivalToday] = useState([]);
 
   const getTodayList = () => {
-    getFestivalTodayDB().then(setFestivalToday)
-  }
-
+    getFestivalTodayDB().then(setFestivalToday);
+  };
 
   useEffect(() => {
     getTodayList();
@@ -30,7 +29,7 @@ const HomePage = ({ user }) => {
       <Sidebar />
       <div className="center">
         <Header />
-        <MainCarousel festivalToday={festivalToday} />
+        <CarouselList festivalToday={festivalToday} />
         <div className="mainpage box">
           <div className="mainpage div div1">
             <Tabs
