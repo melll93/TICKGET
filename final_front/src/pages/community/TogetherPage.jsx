@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import BoardList from "../board/BoardList";
+import Write from "../board/Write";
 
 const TogetherPage = () => {
   return (
@@ -10,6 +11,7 @@ const TogetherPage = () => {
       <div className="center">
         <Header />
         <BoardList/>
+        <Write/>
       </div>
     </>
   );
