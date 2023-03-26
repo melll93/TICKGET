@@ -5,53 +5,42 @@ import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import { useNavigate } from 'react-router'
 import axios from 'axios';
+import { FestivalInsertDB } from '../../axios/main/Festival';
 
 
 
 
 
 /* ========================= 상품 자체 등록 ============================ */         
-const FestivalInsertDB = (festival) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const response = axios({
-        method:"post",   //@RequestBody - 
-        url: "http://localhost:8888/festival/festivalInsert",
-        data:festival,  //post방식으로 전송시 반드시 data 속성으로 파라미터 줄 것
-      });
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
+
 
 
 
 const AddProducts = () => {
 
 const navigate = useNavigate();
-const[fest_title, setFesttitle] = useState("")
-const[fest_location, setFestloc] = useState("")
-const[fest_category, setFestcate] = useState("")
-const[fest_startday, setFeststart] = useState("")
-const[fest_endday, setFestend] = useState("")
-const[fest_detail, setFestdetail] = useState("")
-const[fest_price, setFestprice] = useState("")
-const[fest_desc, setFestdesc] = useState("")
+const[festTitle, setFesttitle] = useState("")
+const[festLocation, setFestloc] = useState("")
+const[festCategory, setFestcate] = useState("")
+const[festStartday, setFeststart] = useState("")
+const[festEndday, setFestend] = useState("")
+const[festDetail, setFestdetail] = useState("")
+const[festPrice, setFestprice] = useState("")
+const[festDesc, setFestdesc] = useState("")
 
 const festivalInsert=async()=>{
   const festival={
-    fest_title,
-    fest_location,
-    fest_category,
-    fest_startday,
-    fest_endday,
-    fest_detail,
-    fest_price,
-    fest_desc,
+    festTitle,
+    festLocation,
+    festCategory,
+    festStartday,
+    festEndday,
+    festDetail,
+    festPrice,
+    festDesc,
     }
     const res =await FestivalInsertDB(festival)
+    console.log(festival)
     if(!res.data){
     }
     else{
@@ -91,7 +80,7 @@ const inuptTitle = useCallback((e) => {
   return (
     <>
 <div style={{ textAlign:'center', width:'600px', marginLeft:'100px'}}><br/> {/* //등록 div 시작 */}
-<input type="text" className="form-control" id="fest_categoty"onChange={(e)=>{inputCategory (e.target.value)}} />
+<input type="text" className="form-control" id="festCategoty"onChange={(e)=>{inputCategory (e.target.value)}} />
 
 {/* <select className="form-select" aria-label="Default select example" style={{width:'150px'}}>
   <option id="fest_category" selected>카테고리</option>
@@ -105,31 +94,31 @@ const inuptTitle = useCallback((e) => {
         </div><br/>
  <input className="form-control" type="file" accept='image/*' id="productsImg" name="productsImg"/> <br/>
  <div className="form-floating mb-3">
-  <input type="text" className="form-control" id="fest_title" onChange={(e)=>{inuptTitle(e.target.value)}} />
-  <label htmlFor="floatingInput"> products name </label>
+  <input type="text" className="form-control" id="festTitle" onChange={(e)=>{inuptTitle(e.target.value)}} />
+  <label htmlFor="floatingInput"> festTitle </label>
 </div>
 <div className="form-floating mb-3">
-  <input type="text" className="form-control" id="fest_desc" onChange={(e)=>{inputDesc  (e.target.value)}}/>
+  <input type="text" className="form-control" id="festDesc" onChange={(e)=>{inputDesc  (e.target.value)}}/>
   <label htmlFor="floatingInput"> desc </label>
 </div>
 <div className="form-floating">
-  <input type="text" className="form-control" id="fest_location"onChange={(e)=>{inputLocation (e.target.value)}} />
+  <input type="text" className="form-control" id="festLocation"onChange={(e)=>{inputLocation (e.target.value)}} />
   <label htmlFor="floatingInput">location</label>
 </div><br />
 <div className="form-floating">
-  <input type="number" className="form-control" id="fest_price" name="price" onChange={(e)=>{inputPrice (e.target.value)}}/>
+  <input type="number" className="form-control" id="festPrice" name="price" onChange={(e)=>{inputPrice (e.target.value)}}/>
   <label htmlFor="floatingInput">price</label>
 </div><br />
 <div className="form-floating mb-3">
-  <input type="date" className="form-control" id="fest_startday" name="startDay" onChange={(e)=>{inputStartday (e.target.value)}}/>
+  <input type="date" className="form-control" id="festStartday" name="startDay" onChange={(e)=>{inputStartday (e.target.value)}}/>
   <label htmlFor="floatingInput"> 행사시작일 </label>
 </div>
 <div className="form-floating mb-3">
-  <input type="date" className="form-control" id="fest_endday" name="startDay" onChange={(e)=>{inputEndday (e.target.value)}}/>
+  <input type="date" className="form-control" id="festEndday" name="startDay" onChange={(e)=>{inputEndday (e.target.value)}}/>
   <label htmlFor="floatingInput"> 행사종료일 </label>
 </div>
  <div className="form-floating">
-  <textarea className="form-control" placeholder="Leave a comment here" id="fest_detail" style={{height: '300px',}} onChange={(e)=>{inputDetail (e.target.value)}}></textarea>
+  <textarea className="form-control" placeholder="Leave a comment here" id="festDetail" style={{height: '300px',}} onChange={(e)=>{inputDetail (e.target.value)}}></textarea>
   <label htmlFor="floatingTextarea2">상세내용</label>
 </div><br/>
 <button type="button" className="btn btn-dark" onClick={()=>{navigate(-1)}}>취소</button>&nbsp;
