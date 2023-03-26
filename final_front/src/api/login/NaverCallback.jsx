@@ -34,7 +34,7 @@ const NaverCallback = ({ setLoginDomain }) => {
 
     useEffect(() => {
         getNaverToken()
-        sendToken(token)
+        // sendToken(token)
     }, [])
 
 }

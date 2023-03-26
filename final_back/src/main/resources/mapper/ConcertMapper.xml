@@ -5,17 +5,26 @@
 <mapper namespace="back.spring.final_back.concert.repository.ConcertDao">
 
     <select id="ConcertList" parameterType="String" resultType="ConcertDto">
-<!--        select concert_no, codename, title, place, player, main_img, date, guname, org_link, use_fee-->
+        <!--        select concert_no, codename, title, place, player, main_img, date, guname, org_link, use_fee-->
         SELECT *
-          FROM seoul_data
-         WHERE codename LIKE #{category}
-         ORDER BY date
+        FROM seoul_data
+        WHERE codename LIKE #{category}
+        ORDER BY date
     </select>
 
     <select id="ConcertToday" resultType="concertDto">
+<!--        SELECT concert_no, codename, title, place, player, main_img, date, guname, org_link, use_fee-->
         SELECT *
           FROM seoul_data
-         WHERE date LIKE CONCAT(CURDATE(),"%")
+         WHERE CURDATE() BETWEEN (SELECT (STR_TO_DATE((SELECT SUBSTRING_INDEX(date,'~', 1)),
+                                                      '%Y-%m-%d')
+                                          )
+                                  )
+                            AND
+                                 (SELECT (STR_TO_DATE((SELECT SUBSTRING_INDEX(date,'~', -1)),
+                                                      '%Y-%m-%d')
+                                          )
+                                  )
     </select>
 
     <select id="ConcertSearch" resultType="ConcertDto">

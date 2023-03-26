@@ -28,6 +28,7 @@ public class ConcertServiceImpl implements ConcertService {
         logger.info("call ConcertServiceImpl.ConcertToday");
         List<ConcertDto> cList = null;
         cList = concertDao.ConcertToday();
+        logger.info(cList.toString());
         return cList;
     }
 

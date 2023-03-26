@@ -1,14 +1,12 @@
 package back.spring.final_back.concert.repository;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
+//@NoArgsConstructor
 public class ConcertDto {
     private int concert_no;
     private String org_name;
