@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="back.spring.final_back.board.repository.BoardDao">
+    <!-- 게시글 작성 -->
+    <insert id="insertBoardList" parameterType="BoardDto">
+        insert into board{
+            BOARD_NO,
+            MEMBER_ID,
+            BOARD_TITLE,
+            BOARD_CONTENT,
+            BOARD_DATE,
+            BOARD_VIEWS,
+            BOARD_SUPER_NO,
+            BOARD_GROUP_NO,
+            BOARD_DEPTH,
+            BOARD_REPLY_COUNT,
+            BOARD_CHECK
+        }values{
+            #{boardNo},
+            #{memberId},
+            #{boardTitle},
+            SYSDATE
+            #{boardContent},
+            #{boardViews},
+            #{boardSuperno},
+            #{boardGroupno},
+            #{boardDepth},
+            0,
+            'N'
+        }
+    </insert>
+
+      <!-- 전체조회-->
+    <select id="selectBoardList" resultType="BoardDto">
+    select * from board
+    </select>
+
+       <!-- 상세보기-->
+    <select id="selectBoardDetail" parameterType="BoardDto" resultType="BoardDto">
+    select * from board where board_no=#{boardNo}
+    </select>
+
+          <!-- 게시글 삭제 -->
+    <delete id="deleteBoard" parameterType="BoardDto">
+        delete from board where board_no=#{boardNo}
+    </delete>
+
+       <!-- 게시글 수정 -->
+    <update id="updateBoard" parameterType="BoardDto">
+        update board set
+            board_title = #{boardTitle}
+          , board_content = #{boardContent}
+        where board_no = #{boardNo}
+    </update>
+</mapper>
