@@ -9,6 +9,10 @@ select concert_no, codename, title, place, player, main_img, date, guname, org_l
   from seoul_data
  where codename like "축제%";
 
+select *
+  from seoul_data
+ where codename like "영화";
+
 select concert_no, codename, title, place, player, main_img, date, guname, org_link, use_fee
   from seoul_data
  where codename like "축제-기타";

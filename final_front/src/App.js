@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
-import NaverCallback from "./api/login/NaverCallback";
 import CalendarPage from "./pages/community/CalendarPage";
 import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
@@ -21,25 +20,47 @@ import TicketPage from "./pages/personal/TicketPage";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import ProductsDetails from "./pages/community/ProductsDetails";
 import PaymentPage from "./pages/personal/PaymentPage";
+import NaverLogin from "./api/login/NaverLogin";
+import NaverCallback from "./api/login/NaverCallback";
 
 function App() {
   const [user, setUser] = useState();
+  const [domain, setDomain] = useState();
+  const navigate = useNavigate();
 
   const setUserInfo = async (param) => {
-    setUser(param);
+    const _user = param;
+    setUser(_user);
   };
+
+  const setLoginDomain = (param) => {
+    const _domain = param;
+    setDomain(_domain);
+  };
+
+  const token = window.localStorage.getItem("access_token");
+  useEffect(() => {
+    console.log(user);
+    console.log(token);
+    console.log(domain);
+    // navigate("/");
+  }, [token]);
 
   // pages로 routing 처리
   return (
     <>
       <Routes>
         {/* LoginMenu Routes */}
+        <Route path="/join" exact={true} element={<JoinPage />} />
         <Route
           path="/login"
           exact={true}
           element={<LoginPage user={user} setUserInfo={setUserInfo} />}
         />
-        <Route path="/join" exact={true} element={<JoinPage />} />
+        <Route
+          path="/oauth/login/naver/callback"
+          element={<NaverCallback setLoginDomain={setLoginDomain} />}
+        />
 
         {/* PersonalTabs Routes */}
         <Route path="/mypage" exact={true} element={<MyPage />} />
@@ -58,7 +79,6 @@ function App() {
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
         <Route path="/message" exact={true} element={<MessagePage />} />
         <Route path="/message" exact={true} element={<MessagePage />} />
-        <Route path="/oauth/login/naver" element={<NaverCallback />} />
 
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
