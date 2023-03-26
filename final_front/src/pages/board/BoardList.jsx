@@ -1,16 +1,11 @@
 import { Component } from "react";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
-/**
- * BoardList class
- */
 class BoardList extends Component {
-    /**
-     * @return {Component} Component
-     */
     render() {
         return (
-            <>
+            <div>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -41,7 +36,12 @@ class BoardList extends Component {
                     </tr>
                 </tbody>
             </Table>
-            </>
+            <Button style={{backgroundColor:"black"}}>글 작성하기</Button>
+            &nbsp;
+            <Button style={{backgroundColor:"black"}}>글 수정하기</Button>
+            &nbsp;
+            <Button style={{backgroundColor:"black"}}>글 삭제하기</Button>
+            </div>
         );
     }
 }
