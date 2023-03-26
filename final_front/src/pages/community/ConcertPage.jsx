@@ -25,7 +25,7 @@ const ConcertPage = () => {
     if (page) {
 
     }
-    console.log(page);
+    // console.log(page);
   })
 
   return (
