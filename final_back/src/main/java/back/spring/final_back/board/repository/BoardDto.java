@@ -3,31 +3,27 @@ package back.spring.final_back.board.repository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
+@RequiredArgsConstructor
+// @AllArgsConstructor
+// @NoArgsConstructor
 public class BoardDto {
-    private int concert_no;
-    private String org_name;
-    private String use_fee;
-    private String player;
-    private String org_link;
-    private String guname;
-    private String main_img;
-    private String themecode;
-    private String date;
-    private String etc_desc;
-    private long end_date;
-    private String title;
-    private String ticket;
-    private String codename;
-    private String use_trgt;
-    private String program;
-    private String rgstdate;
-    private long strtdate;
-    private String place;
+    private int board_no;
+    private String member_id;
+    private String board_title;
+    private String board_content;
+    private String board_date;
+    private int board_views;
+    private int board_super_no;
+    private int board_group_no;
+    private int board_depth;
+    private int board_reply_count;
+    private String board_check;
 }

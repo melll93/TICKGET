@@ -15,10 +15,16 @@ public class BoardServiceImpl implements BoardService {
 private final BoardDao boardDao;
 
     @Override
-    public List<BoardDto> boardList() {
-        List<BoardDto> bList = null;
-        bList = boardDao.boardList();
-        return bList;
+    public List<BoardDto> selectBoardList() {
+        List<BoardDto> mList = null;
+        mList = boardDao.selectBoardList();
+        return mList;
+    }
+
+    @Override
+    public int insertBoardList(BoardDto boardDto) {
+        int result = boardDao.insertBoardList(boardDto);
+        return result;
     }
 
 

@@ -21,26 +21,16 @@ import AddProductsPage from "./pages/community/AddProductsPage";
 import ProductsDetails from "./pages/community/ProductsDetails";
 import PaymentPage from "./pages/personal/PaymentPage";
 import NaverLogin from "./api/login/NaverLogin";
+import KakaoLogin from "./api/login/KakaoLogin";
 
 function App() {
   const [user, setUser] = useState();
   const [domain, setDomain] = useState();
   const navigate = useNavigate();
 
-  const setUserInfo = (param) => {
-    const _user = param;
-    setUser(_user);
-  };
-
-  const setLoginDomain = (param) => {
-    const _domain = param;
-    setDomain(_domain);
-  };
-
-  const token = window.localStorage.getItem("access_token");
   useEffect(() => {
     console.log(user);
-  }, [token]);
+  }, [user]);
 
   // pages로 routing 처리
   return (
@@ -51,11 +41,15 @@ function App() {
         <Route
           path="/login"
           exact={true}
-          element={<LoginPage user={user} setUserInfo={setUserInfo} />}
+          element={<LoginPage user={user} setUser={setUser} />}
         />
         <Route
           path="/oauth/login/naver/callback"
-          element={<NaverLogin user={user} setUserInfo={setUserInfo} />}
+          element={<NaverLogin setUser={setUser} />}
+        />
+        <Route
+          path="/oauth/login/kakao/callback"
+          element={<KakaoLogin setUser={setUser} />}
         />
 
         {/* PersonalTabs Routes */}

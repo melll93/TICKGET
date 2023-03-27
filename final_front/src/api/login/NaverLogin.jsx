@@ -7,8 +7,9 @@ const NAVER_CALLBACK_URL = encodeURI(
   "http://localhost:3333/oauth/login/naver/callback"
 );
 
-const NaverLogin = ({ user, setUserInfo }) => {
+const NaverLogin = ({ user, setUser }) => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState();
 
   const initializeNaverLogin = () => {
     const naverLogin = new naver.LoginWithNaverId({
@@ -29,8 +30,8 @@ const NaverLogin = ({ user, setUserInfo }) => {
         console.log(userName);
         console.log(userEmail);
         console.log(naverLogin.user);
-        setUserInfo(naverLogin.user);
-        // setUserObject(user);
+        setUser(naverLogin.user);
+        setUserData(naverLogin.user);
       }
     });
   };
@@ -41,14 +42,17 @@ const NaverLogin = ({ user, setUserInfo }) => {
 
   const getToken = () => {
     const token = window.location.href.split("=")[1].split("&")[0];
+    window.localStorage.setItem("access_token", token);
+    window.localStorage.setItem("login_domain", "naver");
+    sendToken().then(console.log);
     navigate("/");
   };
 
-  const sendToken = async (user) => {
+  const sendToken = async () => {
     const result = await axios({
       method: "POST",
       url: "http://localhost:8888/oauth/login/naver/callback",
-      data: user,
+      data: userData,
     });
     // .then(console.log)
     // .catch((error) => console.log(error))
@@ -58,7 +62,6 @@ const NaverLogin = ({ user, setUserInfo }) => {
   useEffect(() => {
     initializeNaverLogin();
     userAccessToken();
-    // sendToken(userObject).then(console.log)
   }, []);
 
   return (
