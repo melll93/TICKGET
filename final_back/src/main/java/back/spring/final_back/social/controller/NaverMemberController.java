@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/oauth/*")
 public class NaverMemberController {
     Logger logger = LoggerFactory.getLogger(NaverMemberController.class);
-//    private final NaverMemberService naverMemberService;
+    // private final NaverMemberService naverMemberService;
 
     /*****************************************************************
      *
@@ -26,7 +26,7 @@ public class NaverMemberController {
     @PostMapping("/login/naver/callback")
     public int NaverMemberLogin(@RequestBody NaverMemberDto naverMemberDto) {
         logger.info(naverMemberDto.toString());
-//        int result = naverMemberService.getMemberbyId();
+        // int result = naverMemberService.getMemberbyId();
         return 0;
     }
 }
