@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
-import NaverLogin from "../../api/login/NaverLoginCallback";
+import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
 
 const LoginPage = ({ user, setUserInfo }) => {
-
   return (
-    <><Sidebar />
+    <>
+      <Sidebar />
       <div className="center">
         <div className="login">
           <NaverLogin user={user} setUserInfo={setUserInfo} />
         </div>
       </div>
-    </>);
+    </>
+  );
 };
 
 export default LoginPage;

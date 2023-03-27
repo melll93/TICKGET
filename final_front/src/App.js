@@ -20,8 +20,7 @@ import TicketPage from "./pages/personal/TicketPage";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import ProductsDetails from "./pages/community/ProductsDetails";
 import PaymentPage from "./pages/personal/PaymentPage";
-import NaverLogin from "./api/login/NaverLoginCallback";
-import NaverCallback from "./api/login/NaverCallback";
+import NaverLogin from "./api/login/NaverLogin";
 
 function App() {
   const [user, setUser] = useState();
