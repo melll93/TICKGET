@@ -1,24 +1,42 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 
-const NaverCallback = () => {
+const NaverCallback = ({ setLoginDomain }) => {
     const navigate = useNavigate();
-    const dataToBack = async (userInfo) => {
+
+    const sendToken = async (token) => {
         await axios({
             method: "POST",
-            url: "http://localhost:8888/oauth/callback/login/naver",
-            user: userInfo
-        }).then(console.log).then(alert("로그인 성공")).catch((error) => console.log(error))
+            url: "http://localhost:8888/oauth/login/naver/callback",
+            data: token
+        }).then(console.log).catch((error) => console.log(error))
     }
 
-    dataToBack();
-    navigate("/");
+    const token = window.location.hash.split('=')[1].split('&')[0];
 
-    return (
-        <div>NaverCallback</div>
-    )
+    const getNaverToken = () => {
+        window.localStorage.setItem("access_token", token)
+        setLoginDomain("naver")
+    }
+
+    // const getProfile = async () => {
+    //     const result = await axios.get("https://openapi.naver.com/v1/nid/me",
+    //         {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         })
+
+    //     return result
+    // }
+
+    useEffect(() => {
+        getNaverToken()
+        // sendToken(token)
+    }, [])
+
 }
 
 export default NaverCallback

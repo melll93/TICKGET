@@ -24,8 +24,8 @@ const ConcertPage = () => {
     pagination();
     if (page) {
     }
-    console.log(page);
-  });
+  })
+
 
   return (
     <>
