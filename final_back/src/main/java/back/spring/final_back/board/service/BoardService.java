@@ -6,5 +6,5 @@ import back.spring.final_back.board.repository.BoardDto;
 
 public interface BoardService {
 
-    List<BoardDto> boardList();
+    List<BoardDto> selectBoardList();
 }
