@@ -42,6 +42,8 @@ const NaverLogin = ({ user, setUser }) => {
 
   const getToken = () => {
     const token = window.location.href.split("=")[1].split("&")[0];
+    window.localStorage.setItem("access_token", token);
+    window.localStorage.setItem("login_domain", "naver");
     sendToken().then(console.log);
     navigate("/");
   };
