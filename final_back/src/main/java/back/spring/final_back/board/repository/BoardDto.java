@@ -11,23 +11,15 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class BoardDto {
-    private int concert_no;
-    private String org_name;
-    private String use_fee;
-    private String player;
-    private String org_link;
-    private String guname;
-    private String main_img;
-    private String themecode;
-    private String date;
-    private String etc_desc;
-    private long end_date;
-    private String title;
-    private String ticket;
-    private String codename;
-    private String use_trgt;
-    private String program;
-    private String rgstdate;
-    private long strtdate;
-    private String place;
+    private int BOARD_NO;
+    private String MEMBER_ID;
+    private String BOARD_TITLE;
+    private String BOARD_CONTENT;
+    private String BOARD_DATE;
+    private int BOARD_VIEWS;
+    private int BOARD_SUPER_NO;
+    private int BOARD_GROUP_NO;
+    private int BOARD_DEPTH;
+    private int BOARD_REPLY_COUNT;
+    private String BOARD_CHECK;
 }
