@@ -29,6 +29,19 @@ export const getConcertListDB = async (category) => {
   return result;
 };
 
+/***********************
+ * 오픈 예정 행사 가져오기
+ * 
+ ***********************/
+export const getOpenSoonListDB = async () => {
+  const result = await axios({
+    method: "GET",
+    url: "http://localhost:8888/api/openSoonList",
+  }).then((res) => res.data);
+  return result;
+};
+
+
 export const getMovieListDB = async () => {
   const result = await axios({
     method: "GET",
