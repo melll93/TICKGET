@@ -7,4 +7,6 @@ import back.spring.final_back.board.repository.BoardDto;
 public interface BoardService {
 
     List<BoardDto> selectBoardList();
+
+    int insertBoardList(BoardDto boardDto);
 }

@@ -4,15 +4,25 @@
 <mapper namespace="back.spring.final_back.board.repository.BoardDao">
     <!-- 전체조회-->
     <select id="selectBoardList" resultType="BoardDto"> select * from board </select>
+
+    <insert id="insertBoardList" parameterType="BoardDto">
+        INSERT INTO board
+        VALUES(
+            #{board_no}
+            , #{member_id}
+            , #{board_title}
+            , #{board_date}
+            , #{board_content}
+            , #{board_views}
+            , #{board_super_no}
+            , #{board_group_no}
+            , #{board_depth}
+            , #{board_reply_count}
+            , #{board_check}
+        )
+    </insert>
 </mapper>
 <!-- 
-<insert id="insertBoardList" parameterType="BoardDto"> insert into board{ BOARD_NO, MEMBER_ID,
-    BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_VIEWS, BOARD_SUPER_NO, BOARD_GROUP_NO,
-    BOARD_DEPTH, BOARD_REPLY_COUNT, BOARD_CHECK }values{ #{boardNo}, #{memberId}, #{boardTitle},
-    SYSDATE #{boardContent}, #{boardViews}, #{boardSuperno}, #{boardGroupno}, #{boardDepth}, 0, 'N'
-    } </insert>
-
-
 <select id="selectBoardDetail" parameterType="BoardDto" resultType="BoardDto"> select * from board
     where board_no=#{boardNo} </select>
 

@@ -21,6 +21,12 @@ private final BoardDao boardDao;
         return mList;
     }
 
+    @Override
+    public int insertBoardList(BoardDto boardDto) {
+        int result = boardDao.insertBoardList(boardDto);
+        return result;
+    }
+
 
     
 }

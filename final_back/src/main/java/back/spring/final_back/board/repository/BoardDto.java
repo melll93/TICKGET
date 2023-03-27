@@ -3,13 +3,17 @@ package back.spring.final_back.board.repository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
+@RequiredArgsConstructor
+// @AllArgsConstructor
+// @NoArgsConstructor
 public class BoardDto {
     private int board_no;
     private String member_id;

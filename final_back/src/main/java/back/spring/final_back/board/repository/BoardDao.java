@@ -9,4 +9,6 @@ public interface BoardDao {
 
     public List<BoardDto> selectBoardList();
 
+    public int insertBoardList(BoardDto boardDto);
+
 }
