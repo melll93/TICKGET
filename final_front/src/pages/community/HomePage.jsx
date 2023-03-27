@@ -7,7 +7,7 @@ import Sidebar from "../../components/Sidebar";
 import MainCalendar from "../../components/MainPage/MainCalendar";
 import { getFestivalTodayDB } from "../../axios/main/main";
 
-const HomePage = ({ user }) => {
+const HomePage = () => {
   /******************************
    * SearchBar : keyword 검색해서 페이지 이동(/search)
    * MainCarousel : 오늘 날짜로 검색해서 뿌려주기,

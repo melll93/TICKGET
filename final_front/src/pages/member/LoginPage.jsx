@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import NaverLogin from "../../api/login/NaverLogin";
+import NaverLogin from "../../api/login/NaverLoginCallback";
 import Sidebar from "../../components/Sidebar";
 
 const LoginPage = ({ user, setUserInfo }) => {
-
 
   return (
     <><Sidebar />

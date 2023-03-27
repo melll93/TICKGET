@@ -20,7 +20,7 @@ import TicketPage from "./pages/personal/TicketPage";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import ProductsDetails from "./pages/community/ProductsDetails";
 import PaymentPage from "./pages/personal/PaymentPage";
-import NaverLogin from "./api/login/NaverLogin";
+import NaverLogin from "./api/login/NaverLoginCallback";
 import NaverCallback from "./api/login/NaverCallback";
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
   const [domain, setDomain] = useState();
   const navigate = useNavigate();
 
-  const setUserInfo = async (param) => {
+  const setUserInfo = (param) => {
     const _user = param;
     setUser(_user);
   };
@@ -41,9 +41,6 @@ function App() {
   const token = window.localStorage.getItem("access_token");
   useEffect(() => {
     console.log(user);
-    console.log(token);
-    console.log(domain);
-    // navigate("/");
   }, [token]);
 
   // pages로 routing 처리
@@ -59,7 +56,7 @@ function App() {
         />
         <Route
           path="/oauth/login/naver/callback"
-          element={<NaverCallback setLoginDomain={setLoginDomain} />}
+          element={<NaverLogin user={user} setUserInfo={setUserInfo} />}
         />
 
         {/* PersonalTabs Routes */}
@@ -70,7 +67,7 @@ function App() {
         <Route path="/setting" exact={true} element={<SettingPage />} />
 
         {/* MenuBar Routes */}
-        <Route path="/" exact={true} element={<HomePage user={user} />} />
+        <Route path="/" exact={true} element={<HomePage />} />
         <Route path="/search" exact={true} element={<SearchResultPage />} />
         <Route path="/concert" exact={true} element={<ConcertPage />} />
         <Route path="/together" exact={true} element={<TogetherPage />} />
