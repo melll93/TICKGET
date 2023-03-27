@@ -20,5 +20,4 @@ public class MovieServiceImpl implements MovieService {
     mList = movieDao.getMovieList();
     return mList;
   }
-
 }
