@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import data from "./data";
+import { FetivalListDB } from "../../axios/main/Festival";
 
 function ProductsItems(props) {
   return (
@@ -24,7 +25,7 @@ function ProductsItems(props) {
             width="100%"
             alt="사진1"
           />
-          <div class="card-body">
+          <div class="card-body" >
             <h5 class="card-title">{props.dumdt.title}</h5>
             <p class="card-text">{props.dumdt.desc}</p>
             <p class="card-text">
@@ -56,10 +57,13 @@ const Products = () => {
   );
 };
 
+
+
+
 const Navbar = () => {
   return (
     <>
-      <nav class="navbar navbar-expand-sm bg-light navbar-light">
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="container-fluid">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -93,6 +97,66 @@ const Navbar = () => {
   );
 };
 
+const FestivalsTest =() =>{
+    const [festivals, setFestivals] = useState([]);
+    useEffect(() => {
+      FetivalListDB().then(setFestivals);
+    }, []);
+
+  
+  return(
+  <>
+   <div>
+        {festivals.data && festivals.data.map((festival, i) => {
+  if(i > 20){
+
+return(
+      <div
+      class="card"
+      style={{
+        width: "18rem",
+        display: "inline-block",
+        margin: "50px 0px 0px 50px",
+      }}
+    >
+      <a
+        style={{ textDecoration: "none", color: "black" }}
+        href={"/productsDetail/" + festival.i}
+      >
+        <img
+          src={"images_key/fev" + (festival.festId-20) + ".PNG"}
+          width="100%"
+          alt="사진1"
+        />
+          등록한 상품
+        <div class="card-body">
+          <h5 class="card-title">{festival.festTitle}</h5>  
+          <p class="card-text">{festival.festDesc}</p>
+          <p class="card-text">
+            {festival.festStartday}-{festival.festEndday}
+          </p>
+        </div>
+      </a>
+    </div>
+) }
+        })}
+      </div>
+
+      
+  </>
+  
+    )
+}
+
+
+
+
+
+
+
+
+
+
 const FestivalPage = () => {
   return (
     <>
@@ -101,7 +165,7 @@ const FestivalPage = () => {
         <Header />
         Festival
         <Link to="/addProducts">상품등록</Link>
-        <div>이미지 1, 이미지 2, 이미지 3, 이미지4</div>
+        <FestivalsTest></FestivalsTest><br/>
         <Navbar />
         <Products />
       </div>
