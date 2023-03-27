@@ -10,29 +10,6 @@ const Profile = () => {
     navigate("/")
   };
 
-  const getToken = () => {
-    const _token = window.localStorage.getItem("access_token")
-    setToken(_token)
-  }
-
-  // const getProfile = async () => {
-  //   const result = await axios.get("https://openapi.naver.com/v1/nid/me",
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     })
-
-  //   return result
-  // }
-
-  useEffect(() => {
-    getToken();
-    console.log(token);
-    // getProfile().then(console.log)
-  }, [token])
-
-
   return (
     <div className="Profile">
       <Link to="/mypage">
