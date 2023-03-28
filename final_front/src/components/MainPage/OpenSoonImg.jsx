@@ -5,7 +5,7 @@ import { ListGroup } from 'react-bootstrap';
    const OpenSoonImg = ({ openSoon }) => {
       
       return (
-         <Card style={{ width: '18rem'}} >
+       <Card style={{ width: '18rem' , marginLeft: '20px', marginRight: '20px', }} >
            <Card.Img variant="top" src={openSoon.main_img} style={{                     
                      width: 350,
                      height: 350,
