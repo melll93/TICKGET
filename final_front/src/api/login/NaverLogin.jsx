@@ -33,7 +33,9 @@ const NaverLogin = ({ user, setUser }) => {
             console.log(loginStatus);
             navigate("/join");
           } else if (loginStatus === 1) {
-            // 자체 회원가입 되어있다면 login success => home
+            // 자체 회원가입 되어있다면
+            // res.data.member를 redux로 회원정보 저장,
+            // login success => home
             console.log(loginStatus);
             navigate("/");
           }
