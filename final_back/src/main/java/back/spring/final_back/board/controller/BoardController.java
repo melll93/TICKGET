@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +23,15 @@ public class BoardController {
     Logger logger = LoggerFactory.getLogger(BoardController.class);
     private final BoardService boardService;
 
+
+    // 게시판 등록(Insert)
+    @GetMapping("/insertBoardList")
+    public int insertBoardList(BoardDto BoardDto) {
+        logger.info("BoardController : inserBoard호출");
+        int result = boardService.insertBoardList(BoardDto);
+        return result;
+    }
+
     // 게시판 조회(SelectAll)
     @GetMapping("/selectBoardList")
     public List<BoardDto> selectBoardList() {
@@ -31,14 +39,6 @@ public class BoardController {
         List<BoardDto> mList = null;
         mList = boardService.selectBoardList();
         return mList;
-    }
-
-    // 게시판 등록(Insert)
-    @GetMapping("/insertBoardList")
-    public int insertBoardList(BoardDto boardDto) {
-        logger.info("BoardController : inserBoard호출");
-        int result = boardService.insertBoardList(boardDto);
-        return result;
     }
 
     // 게시판 수정(Update)

@@ -9,7 +9,6 @@ import FestivalPage from "./pages/community/FestivalPage";
 import HomePage from "./pages/community/HomePage";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
-import JoinPage from "./pages/member/JoinPage";
 import LoginPage from "./pages/member/LoginPage";
 import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
@@ -22,6 +21,11 @@ import ProductsDetails from "./pages/community/ProductsDetails";
 import PaymentPage from "./pages/personal/PaymentPage";
 import NaverLogin from "./api/login/NaverLogin";
 import KakaoLogin from "./api/login/KakaoLogin";
+import RegisterPage from "./pages/member/RegisterPage";
+import SocialRegisterPage from "./pages/member/SocialRegisterPage";
+import AuthLogic from "./util/authLogic";
+import firebaseApp from "./util/firebase";
+const authLogic = new AuthLogic(firebaseApp);
 
 function App() {
   const [user, setUser] = useState();
@@ -37,7 +41,12 @@ function App() {
     <>
       <Routes>
         {/* LoginMenu Routes */}
-        <Route path="/join" exact={true} element={<JoinPage />} />
+        <Route path="/register" exact={true} element={<RegisterPage />} />
+        <Route
+          path="/socialregister"
+          exact={true}
+          element={<SocialRegisterPage authLogic={authLogic} />}
+        />
         <Route
           path="/login"
           exact={true}

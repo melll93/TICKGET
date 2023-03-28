@@ -2,10 +2,12 @@ package back.spring.final_back.signup.service;
 
 import java.util.Map;
 
-public class SignUpService {
+public interface SignUpService {
+  // 자바 메일을 사용하여 이메일 전송
+  /*
+   * @Autowired
+   * private JavaMailSender javaMailSender;
+   */
 
-  public int memberInsert(Map<String, Object> pMap) {
-    return 0;
-  }
-
+  int memberInsert(Map<String, Object> pMap);
 }

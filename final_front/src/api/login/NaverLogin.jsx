@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { sendNaverMember } from "../../axios/main/socialLogin";
 const { naver } = window;
 const NAVER_CLIENT_ID = "3fiEhnoQMSqSfg5o2LKi";
 const NAVER_CALLBACK_URL = encodeURI(
@@ -9,29 +11,41 @@ const NAVER_CALLBACK_URL = encodeURI(
 
 const NaverLogin = ({ user, setUser }) => {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState();
+
+  const handleNaverLogin = () => {
+    const btnNaverLogin = document.querySelector("#naverIdLogin").firstChild;
+    btnNaverLogin.click();
+  };
 
   const initializeNaverLogin = () => {
     const naverLogin = new naver.LoginWithNaverId({
       clientId: NAVER_CLIENT_ID,
       callbackUrl: NAVER_CALLBACK_URL,
       isPopup: false,
-      loginButton: { color: "green", type: 3, height: 50 },
+      loginButton: { color: "green", type: 1, height: 60 },
       callbackHandle: true,
     });
     naverLogin.init();
 
     naverLogin.getLoginStatus(async function (status) {
       if (status) {
-        const userId = naverLogin.user.id;
-        const userEmail = naverLogin.user.email;
-        const userName = naverLogin.user.name;
-        console.log(userId);
-        console.log(userName);
-        console.log(userEmail);
-        console.log(naverLogin.user);
         setUser(naverLogin.user);
-        setUserData(naverLogin.user);
+        console.log(naverLogin.user);
+        await sendMemberData(naverLogin.user).then((res) => {
+          console.log(res);
+          const loginStatus = res.data.result;
+          if (loginStatus === 0) {
+            // 자체 회원가입 안되어있다면 login failed
+            console.log(loginStatus);
+            navigate("/socialregister");
+          } else if (loginStatus === 1) {
+            // 자체 회원가입 되어있다면
+            // res.data.member를 redux로 회원정보 저장,
+            // login success => home
+            console.log(loginStatus);
+            navigate("/");
+          }
+        });
       }
     });
   };
@@ -42,18 +56,23 @@ const NaverLogin = ({ user, setUser }) => {
 
   const getToken = () => {
     const token = window.location.href.split("=")[1].split("&")[0];
-    sendToken().then(console.log);
-    navigate("/");
+    window.localStorage.setItem("access_token", token);
+    window.localStorage.setItem("login_domain", "naver");
   };
 
-  const sendToken = async () => {
-    const result = await axios({
-      method: "POST",
-      url: "http://localhost:8888/oauth/login/naver/callback",
-      data: userData,
-    });
-    // .then(console.log)
-    // .catch((error) => console.log(error))
+  const sendMemberData = async (user) => {
+    const member = {
+      id: user.id,
+      name: user.name,
+      age: user.age,
+      birthday: user.birthday,
+      birthyear: user.birthyear,
+      email: user.email,
+      gender: user.gender,
+      nickname: user.nickname,
+      profile_image: user.profile_image,
+    };
+    const result = await sendNaverMember(member);
     return result;
   };
 
@@ -64,8 +83,13 @@ const NaverLogin = ({ user, setUser }) => {
 
   return (
     <>
-      <div className="loginbutton" id="naverIdLogin">
-        {" "}
+      <div id="naverIdLogin" style={{ display: "none" }}></div>
+      <div className="loginbutton">
+        <img
+          src="logos/naver/btnG_아이콘원형.png"
+          onClick={handleNaverLogin}
+          style={{ cursor: "pointer" }}
+        />
       </div>
     </>
   );

@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
 
@@ -12,12 +14,55 @@ const LoginPage = ({ user, setUser }) => {
       <Sidebar />
       <div className="center">
         <div className="login">
-          <NaverLogin user={user} setUser={setUser} />
-          <div className="loginbutton">
-            <a href={KAKAO_AUTH_URL}>
-              <img src="logos/kakao/kakao_login_medium_narrow.png" />
-            </a>
+          {/********************** 자체 회원 로그인 **********************/}
+          <Form>
+            <Form.Group className="mb-3" controlId="formBasicId">
+              <Form.Label>ID</Form.Label>
+              <Form.Control type="id" placeholder="ID를 입력해주세요." />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password를 입력해주세요."
+              />
+            </Form.Group>
+            <Button variant="primary" type="login">
+              로그인
+            </Button>
+          </Form>
+          {/***************************************************************/}
+          <hr />
+
+          {/************************* 소셜 로그인 *************************/}
+          <div className="socialLogin">
+            {/********************** 네이버 로그인 버튼 **********************/}
+            <NaverLogin user={user} setUser={setUser} />
+            {/************************** 네이버 끝 **************************/}
+
+            {/********************** 카카오 로그인 버튼 **********************/}
+            <div className="loginbutton">
+              <a href={KAKAO_AUTH_URL}>
+                <img
+                  className="loginbuttonimg"
+                  src="logos/kakao/kakao_login_simple.png"
+                />
+              </a>
+            </div>
+            {/************************** 카카오 끝 **************************/}
+            {/********************** 카카오 로그인 버튼 **********************/}
+            <div className="loginbutton">
+              <a href="#">
+                <img
+                  className="loginbuttonimg"
+                  src="logos/google/btn_google_simple.png"
+                />
+              </a>
+            </div>
+            {/************************** 카카오 끝 **************************/}
           </div>
+          {/************************ 소셜 로그인 끝 ************************/}
         </div>
       </div>
     </>

@@ -36,6 +36,8 @@ const KakaoLogin = () => {
       window.Kakao.init(process.env.REACT_APP_KAKAO_JS_KEY);
       console.log(res.data.access_token);
       window.Kakao.Auth.setAccessToken(res.data.access_token);
+      window.localStorage.setItem("access_token", res.data.access_token);
+      window.localStorage.setItem("login_domain", "kakao");
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -47,12 +49,12 @@ const KakaoLogin = () => {
       let data = await window.Kakao.API.request({
         url: "/v2/user/me",
       });
-      setUserId(data.id);
-      window.localStorage.setItem("userId", userId);
-      setUserNickname(data.properties.nickname);
-      window.localStorage.setItem("userNickname", userNickname);
-      setUserImage(data.properties.profile_image);
-      window.localStorage.setItem("userImage", userImage);
+      // setUserId(data.id);
+      // window.localStorage.setItem("userId", userId);
+      // setUserNickname(data.properties.nickname);
+      // window.localStorage.setItem("userNickname", userNickname);
+      // setUserImage(data.properties.profile_image);
+      // window.localStorage.setItem("userImage", userImage);
       console.log(data);
     } catch (error) {
       console.log(error);
