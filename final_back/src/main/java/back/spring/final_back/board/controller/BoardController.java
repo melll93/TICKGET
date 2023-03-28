@@ -23,7 +23,6 @@ public class BoardController {
     Logger logger = LoggerFactory.getLogger(BoardController.class);
     private final BoardService boardService;
 
-
     // 게시판 등록(Insert)
     @GetMapping("/insertBoardList")
     public int insertBoardList(BoardDto BoardDto) {
@@ -42,20 +41,20 @@ public class BoardController {
     }
 
     // 게시판 수정(Update)
-    @GetMapping("/memberUpdate")
-    public int updateMemberUpdate(BoardDto boardDto) {
+    @GetMapping("/updateBoardList")
+    public int updateBoardList(BoardDto boardDto) {
         logger.info("RestMemberController : memberUpdate");
         int result = 0;
-        result = boardService.updateMemberList(boardDto);
+        result = boardService.updateBoardList(boardDto);
         return result;
     }
 
     // 게시판 삭제(Delete)
-    @GetMapping("/memberDelete")
-    public int deleteMemberDelete(BoardDto boardDto) {
+    @GetMapping("/deleteBoardList")
+    public int deleteBoardList(BoardDto boardDto) {
         logger.info("RestMemberController : memberDelete 호출");
         int result = 0;
-        result = boardService.deleteMemberDelete(boardDto);
+        result = boardService.deleteBoardList(boardDto);
         return result;
     }
 

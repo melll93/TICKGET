@@ -13,8 +13,8 @@ public interface BoardDao {
     public int insertBoardList(BoardDto boardDto);
 
     // 게시판 수정(Update)
-    public int updateMemberList(BoardDto boardDto);
+    public int updateBoardList(BoardDto boardDto);
 
     // 게시판 삭제(Delete)
-    public int deleteMemberDelete(BoardDto boardDto);
+    public int deleteBoardList(BoardDto boardDto);
 }

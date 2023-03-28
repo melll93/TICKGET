@@ -5,6 +5,7 @@ import java.util.List;
 import back.spring.final_back.board.repository.BoardDto;
 
 public interface BoardService {
+
     // 게시판 조회(SelectAll)
     List<BoardDto> selectBoardList();
 
@@ -12,8 +13,8 @@ public interface BoardService {
     int insertBoardList(BoardDto boardDto);
 
     // 게시판 수정(Update)
-    int updateMemberList(BoardDto boardDto);
+    int updateBoardList(BoardDto boardDto);
 
     // 게시판 삭제(Delete)
-    int deleteMemberDelete(BoardDto boardDto);
+    int deleteBoardList(BoardDto boardDto);
 }

@@ -2,9 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="back.spring.final_back.board.repository.BoardDao">
-    <!-- 전체조회-->
-    <select id="selectBoardList" resultType="BoardDto"> select * from board </select>
-
+    <!-- 게시글 전체조회-->
+    <select id="selectBoardList" resultType="BoardDto">
+        select * from board
+    </select>
+    <!-- 게시글 추가 -->
     <insert id="insertBoardList" parameterType="BoardDto">
         INSERT INTO board
         VALUES(
@@ -21,12 +23,12 @@
             , #{board_check}
         )
     </insert>
+    <!-- 게시슬 삭제 -->
+    <delete id="deleteBoard" parameterType="BoardDto">
+        delete from board where board_no=#{boardNo}
+    </delete>
+    <!-- 게시글 수정 -->
+    <update id="updateBoard" parameterType="BoardDto"> update board set board_title = #{boardTitle} ,
+    board_content = #{boardContent} where board_no = #{boardNo}
+    </update>
 </mapper>
-<!-- 
-<select id="selectBoardDetail" parameterType="BoardDto" resultType="BoardDto"> select * from board
-    where board_no=#{boardNo} </select>
-
-<delete id="deleteBoard" parameterType="BoardDto"> delete from board where board_no=#{boardNo} </delete>
-
-<update id="updateBoard" parameterType="BoardDto"> update board set board_title = #{boardTitle} ,
-    board_content = #{boardContent} where board_no = #{boardNo} </update>  -->
