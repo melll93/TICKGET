@@ -1,23 +1,30 @@
 package back.spring.final_back.signup.repository;
 
+import java.util.Map;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class SignUpDao {
-/*   insert into member(
-                      member_age,
-                      member_birth,
-                      member_email,
-                      member_gender,
-                      member_id,
-                      member_tel,
-                      member_name,
-                      member_nickname)
-              values(
-                      #{member_age},
-                      #{member_birth},
-                      #{member_email},
-                      #{member_gender},
-                      #{member_id},
-                      #{member_tel},
-                      #{member_name},
-                      #{member_nickname})
-  select * from member */
+  @Autowired
+	private SqlSessionTemplate sqlSessionTemplate = null;
+  // Insert
+  public int memberInsert(Map<String, Object> pMap) {
+		int result = 0;
+		result = sqlSessionTemplate.update("memberInsert", pMap); //insert는 리턴 타입이 Object이기 때문에 update로 사용
+		return result;
+	}
+  // Update
+  public int memberUpdate(Map<String, Object> pMap) {
+    int result = 0;
+		result = sqlSessionTemplate.update("memberUpdate", pMap);
+		return result;
+  }
+  // Delete
+  public int memberDelete(Map<String, Object> pMap) {
+		int result = 0;
+		result = sqlSessionTemplate.delete("memberDelete", pMap);
+		return result;
+  }
 }
+
