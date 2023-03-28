@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { sendNaverMember } from "../../axios/main/socialLogin";
 const { naver } = window;
 const NAVER_CLIENT_ID = "3fiEhnoQMSqSfg5o2LKi";
 const NAVER_CALLBACK_URL = encodeURI(
@@ -10,6 +11,15 @@ const NAVER_CALLBACK_URL = encodeURI(
 const NaverLogin = ({ user, setUser }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState();
+  const [id, setId] = useState();
+  const [name, setName] = useState();
+  const [age, setAge] = useState();
+  const [birthday, setBirthday] = useState();
+  const [birthyear, setBirthyear] = useState();
+  const [email, setEmail] = useState();
+  const [gender, setGender] = useState();
+  const [nickname, setNickname] = useState();
+  const [profile_image, setImage] = useState();
 
   const initializeNaverLogin = () => {
     const naverLogin = new naver.LoginWithNaverId({
@@ -23,15 +33,19 @@ const NaverLogin = ({ user, setUser }) => {
 
     naverLogin.getLoginStatus(async function (status) {
       if (status) {
-        const userId = naverLogin.user.id;
-        const userEmail = naverLogin.user.email;
-        const userName = naverLogin.user.name;
-        console.log(userId);
-        console.log(userName);
-        console.log(userEmail);
-        console.log(naverLogin.user);
+        setId(naverLogin.user.id);
+        setName(naverLogin.user.name);
+        setAge(naverLogin.user.age);
+        setBirthday(naverLogin.user.birthday);
+        setBirthyear(naverLogin.user.birthyear);
+        setEmail(naverLogin.user.email);
+        setGender(naverLogin.user.gender);
+        setNickname(naverLogin.user.nickname);
+        setImage(naverLogin.user.profile_image);
+
         setUser(naverLogin.user);
-        setUserData(naverLogin.user);
+        console.log(naverLogin.user);
+        await sendMemberData(naverLogin.user).then(console.log);
       }
     });
   };
@@ -44,18 +58,22 @@ const NaverLogin = ({ user, setUser }) => {
     const token = window.location.href.split("=")[1].split("&")[0];
     window.localStorage.setItem("access_token", token);
     window.localStorage.setItem("login_domain", "naver");
-    sendToken().then(console.log);
     navigate("/");
   };
 
-  const sendToken = async () => {
-    const result = await axios({
-      method: "POST",
-      url: "http://localhost:8888/oauth/login/naver/callback",
-      data: userData,
-    });
-    // .then(console.log)
-    // .catch((error) => console.log(error))
+  const sendMemberData = async (user) => {
+    const member = {
+      id: user.id,
+      name: user.name,
+      age: user.age,
+      birthday: user.birthday,
+      birthyear: user.birthyear,
+      email: user.email,
+      gender: user.gender,
+      nickname: user.nickname,
+      profile_image: user.profile_image,
+    };
+    const result = await sendNaverMember(member);
     return result;
   };
 
@@ -66,9 +84,7 @@ const NaverLogin = ({ user, setUser }) => {
 
   return (
     <>
-      <div className="loginbutton" id="naverIdLogin">
-        {" "}
-      </div>
+      <div className="loginbutton" id="naverIdLogin"></div>
     </>
   );
 };
