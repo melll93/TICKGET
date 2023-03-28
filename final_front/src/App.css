@@ -109,6 +109,12 @@ div .login {
   width: 20%;
 }
 
+div .register {
+  margin-left: 35%;
+  margin-top: 15%;
+  width: 40%;
+}
+
 div .HomeButton {
   display: flex;
   width: 100%;

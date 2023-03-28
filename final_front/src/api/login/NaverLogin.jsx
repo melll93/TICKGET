@@ -37,7 +37,7 @@ const NaverLogin = ({ user, setUser }) => {
           if (loginStatus === 0) {
             // 자체 회원가입 안되어있다면 login failed
             console.log(loginStatus);
-            navigate("/join");
+            navigate("/socialregister");
           } else if (loginStatus === 1) {
             // 자체 회원가입 되어있다면
             // res.data.member를 redux로 회원정보 저장,
