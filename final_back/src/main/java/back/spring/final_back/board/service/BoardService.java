@@ -2,6 +2,8 @@ package back.spring.final_back.board.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import back.spring.final_back.board.repository.BoardDto;
 
 public interface BoardService {

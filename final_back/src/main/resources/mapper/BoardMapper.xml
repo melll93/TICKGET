@@ -13,8 +13,8 @@
             #{board_no}
             , #{member_id}
             , #{board_title}
-            , #{board_date}
             , #{board_content}
+            , #{board_date}
             , #{board_views}
             , #{board_super_no}
             , #{board_group_no}
@@ -24,11 +24,11 @@
         )
     </insert>
     <!-- 게시슬 삭제 -->
-    <delete id="deleteBoard" parameterType="BoardDto">
+    <delete id="deleteBoardList" parameterType="BoardDto">
         delete from board where board_no=#{boardNo}
     </delete>
     <!-- 게시글 수정 -->
-    <update id="updateBoard" parameterType="BoardDto"> update board set board_title = #{boardTitle} ,
+    <update id="updateBoardList" parameterType="BoardDto"> update board set board_title = #{boardTitle} ,
     board_content = #{boardContent} where board_no = #{boardNo}
     </update>
 </mapper>

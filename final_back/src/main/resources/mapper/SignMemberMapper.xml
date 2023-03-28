@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="back.spring.final_back.social.repository.SignUpDao">
-  <insert>
+  <insert id="memberInsert" parameterType="map">
     insert into member(
                         member_no,
                         domain,
