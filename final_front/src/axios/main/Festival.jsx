@@ -30,3 +30,19 @@ export const FestivalInsertDB = (festival) => {
       }
     });
   };
+
+
+  export const FestivalListLocationDB = (festival) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const response = axios({
+          method: "get",
+          url: "http://localhost:8888/festival/festivalListLocation",
+          params: festival, 
+        });
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
