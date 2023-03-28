@@ -4,6 +4,10 @@
   padding: 0;
 }
 
+img {
+  width: 100%;
+}
+
 .margin0 {
   margin: 0;
 }
@@ -16,13 +20,20 @@ span {
   text-decoration: none;
 }
 
-div .Sidebar,
-div .center {
-  /* background-color: black; */
+div .socialLogin {
+  display: flex;
+  justify-content: space-around;
 }
 
 div .loginbutton {
-  width: 250px;
+  width: 3rem;
+  border-radius: 50%;
+  box-shadow: 3px 3px 10px gray;
+}
+
+.loginbuttonimg {
+  border-radius: 50%;
+  /* border: 0.5px gray solid; */
 }
 
 .icon {
@@ -72,10 +83,6 @@ div .item {
   cursor: pointer;
 }
 
-img {
-  width: 100%;
-}
-
 div .mainpage.box {
   display: flex;
   justify-content: space-around;
@@ -97,8 +104,15 @@ div .Gnb {
 }
 
 div .login {
-  margin-left: 40%;
+  margin-left: 35%;
   margin-top: 15%;
+  width: 20%;
+}
+
+div .register {
+  margin-left: 35%;
+  margin-top: 15%;
+  width: 40%;
 }
 
 div .HomeButton {
