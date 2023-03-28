@@ -35,6 +35,7 @@ public class NaverMemberServiceImpl implements NaverMemberService {
             NaverMemberDto nDto = naverMemberDao.searchMemberbyId(id);
             Map<String, Object> rMap = new HashMap<>();
             rMap.put("result", 0);
+            rMap.put("msg", "login success");
             rMap.put("member", nDto);
             result = rMap;
             try {
@@ -49,7 +50,7 @@ public class NaverMemberServiceImpl implements NaverMemberService {
             if (result == null) {
                 Map<String, Object> rMap = new HashMap<>();
                 rMap.put("result", 0);
-                rMap.put("msg", "존재하지 않는 ID 입니다.");
+                rMap.put("msg", "login failed");
 
                 result = rMap;
             }

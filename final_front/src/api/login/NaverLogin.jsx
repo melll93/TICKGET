@@ -10,16 +10,6 @@ const NAVER_CALLBACK_URL = encodeURI(
 
 const NaverLogin = ({ user, setUser }) => {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState();
-  const [id, setId] = useState();
-  const [name, setName] = useState();
-  const [age, setAge] = useState();
-  const [birthday, setBirthday] = useState();
-  const [birthyear, setBirthyear] = useState();
-  const [email, setEmail] = useState();
-  const [gender, setGender] = useState();
-  const [nickname, setNickname] = useState();
-  const [profile_image, setImage] = useState();
 
   const initializeNaverLogin = () => {
     const naverLogin = new naver.LoginWithNaverId({
@@ -33,19 +23,21 @@ const NaverLogin = ({ user, setUser }) => {
 
     naverLogin.getLoginStatus(async function (status) {
       if (status) {
-        setId(naverLogin.user.id);
-        setName(naverLogin.user.name);
-        setAge(naverLogin.user.age);
-        setBirthday(naverLogin.user.birthday);
-        setBirthyear(naverLogin.user.birthyear);
-        setEmail(naverLogin.user.email);
-        setGender(naverLogin.user.gender);
-        setNickname(naverLogin.user.nickname);
-        setImage(naverLogin.user.profile_image);
-
         setUser(naverLogin.user);
         console.log(naverLogin.user);
-        await sendMemberData(naverLogin.user).then(console.log);
+        await sendMemberData(naverLogin.user).then((res) => {
+          console.log(res);
+          const loginStatus = res.data.result;
+          if (loginStatus === 0) {
+            // 자체 회원가입 안되어있다면 login failed
+            console.log(loginStatus);
+            navigate("/join");
+          } else if (loginStatus === 1) {
+            // 자체 회원가입 되어있다면 login success => home
+            console.log(loginStatus);
+            navigate("/");
+          }
+        });
       }
     });
   };
@@ -58,7 +50,6 @@ const NaverLogin = ({ user, setUser }) => {
     const token = window.location.href.split("=")[1].split("&")[0];
     window.localStorage.setItem("access_token", token);
     window.localStorage.setItem("login_domain", "naver");
-    navigate("/");
   };
 
   const sendMemberData = async (user) => {
