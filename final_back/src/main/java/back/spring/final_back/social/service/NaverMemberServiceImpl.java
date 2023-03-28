@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import back.spring.final_back.social.repository.NaverMemberDao;
+import back.spring.final_back.social.repository.NaverMemberDto;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -31,8 +32,11 @@ public class NaverMemberServiceImpl implements NaverMemberService {
         logger.info("call NaverMemberServiceImpl.searchMemberbyId");
         Object result = null;
         try {
-            result = naverMemberDao.searchMemberbyId(id);
-            // result type : NaverMemberDto
+            NaverMemberDto nDto = naverMemberDao.searchMemberbyId(id);
+            Map<String, Object> rMap = new HashMap<>();
+            rMap.put("result", 0);
+            rMap.put("member", nDto);
+            result = rMap;
             try {
                 logger.info(result.toString());
             } catch (NullPointerException e) {
