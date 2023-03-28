@@ -1,5 +1,7 @@
 package back.spring.final_back.signup.repository;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +12,17 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class SignUpDto {
-  private int member_age;
-  private String member_birth;
-  // private Localdate member_birth 
-  private String member_email;
-  private String member_gender;
-  private String member_id;
-  private String memeber_tel;
-  private String memeber_name;
-  private String member_nickname;
+  private int member_no;
+  private String domain;
+  private String id;
+  private String password;
+  private String name;
+  private int age;
+  private Date birth;
+  private String email;
+  private String gender;
+  private String mobile;
+  private String nickname;
+  private String profile_image;
+  private Date register_date;
 }

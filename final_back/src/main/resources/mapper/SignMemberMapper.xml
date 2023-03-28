@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="back.spring.final_back.social.repository.SignUpDao">
+  <insert>
+    insert into member(
+                        member_no,
+                        domain,
+                        id,
+                        password,
+                        name,
+                        age,
+                        birth,
+                        email,
+                        gender,
+                        mobile,
+                        nickname,
+                        profile_image,
+                        register_date)
+                values(
+                        #{member_no},
+                        #{domain},
+                        #{id},
+                        #{password},
+                        #{name},
+                        #{age},
+                        #{email},
+                        #{gender},
+                        #{mobile},
+                        #{nickname},
+                        #{profile_image},
+                        #{register_date})
+    select * from member
+  </insert>
+</mapper>
