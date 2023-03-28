@@ -9,26 +9,23 @@ function ProductsItems(props) {
   return (
     <>
       <div
-        class="card"
-        style={{
+        className="card" style={{
           width: "18rem",
           display: "inline-block",
           margin: "50px 0px 0px 50px",
         }}
       >
-        <a
-          style={{ textDecoration: "none", color: "black" }}
-          href={"/productsDetail/" + props.i}
+        <a style={{ textDecoration: "none", color: "black" }} href={"/productsDetail/" + props.i}
         >
           <img
             src={"images_key/fev" + props.i + ".PNG"}
             width="100%"
             alt="사진1"
           />
-          <div class="card-body" >
-            <h5 class="card-title">{props.dumdt.title}</h5>
-            <p class="card-text">{props.dumdt.desc}</p>
-            <p class="card-text">
+          <div className="card-body" >
+            <h5 className="card-title">{props.dumdt.title}</h5>
+            <p className="card-text">{props.dumdt.desc}</p>
+            <p className="card-text">
               {props.dumdt.startDate}-{props.dumdt.endDate}
             </p>
           </div>
@@ -63,30 +60,30 @@ const Products = () => {
 const Navbar = () => {
   return (
     <>
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div class="container-fluid">
-          <ul class="navbar-nav">
-            <li class="nav-item">
+      <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div className="container-fluid">
+          <ul className="navbar-nav">
+            <li className="nav-item">
               <a
-                class="nav-link active"
+                className="nav-link active"
                 href="#"
                 style={{ marginLeft: "150px" }}
               >
                 전체
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" style={{ marginLeft: "150px" }}>
+            <li className="nav-item">
+              <a className="nav-link" href="#" style={{ marginLeft: "150px" }}>
                 지역별
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" style={{ marginLeft: "150px" }}>
+            <li className="nav-item">
+              <a className="nav-link" href="#" style={{ marginLeft: "150px" }}>
                 인기순/랭킹
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" style={{ marginLeft: "150px" }}>
+            <li className="nav-item">
+              <a className="nav-link" href="#" style={{ marginLeft: "150px" }}>
                 기타
               </a>
             </li>
@@ -108,11 +105,11 @@ const FestivalsTest =() =>{
   <>
    <div>
         {festivals.data && festivals.data.map((festival, i) => {
-  if(i > 20){
+ //if(i > 2)
 
 return(
-      <div
-      class="card"
+      <div key={festival.festId}
+      className="card"
       style={{
         width: "18rem",
         display: "inline-block",
@@ -121,24 +118,27 @@ return(
     >
       <a
         style={{ textDecoration: "none", color: "black" }}
-        href={"/productsDetail/" + festival.i}
+        href={"/productsDetail/" + festival.festId}
       >
         <img
-          src={"images_key/fev" + (festival.festId-20) + ".PNG"}
+          src={"images_key/fev" + (festival.festId) + ".PNG"}
           width="100%"
           alt="사진1"
         />
           등록한 상품
-        <div class="card-body">
-          <h5 class="card-title">{festival.festTitle}</h5>  
-          <p class="card-text">{festival.festDesc}</p>
-          <p class="card-text">
-            {festival.festStartday}-{festival.festEndday}
+        <div className="card-body">
+          <h5 className="card-title">제목 : {festival.festTitle}</h5>  
+          <p className="card-text">설명 : {festival.festDesc}</p>
+          <p className="card-text">
+            {festival.festStartday} ~ {festival.festEndday}
+          <br/> festId: {festival.festId}
+          <br/> festCategory: {festival.festCategory}
           </p>
         </div>
       </a>
     </div>
-) }
+) 
+  //  }if문
         })}
       </div>
 
@@ -163,11 +163,11 @@ const FestivalPage = () => {
       <Sidebar />
       <div className="center">
         <Header />
-        Festival
-        <Link to="/addProducts">상품등록</Link>
-        <FestivalsTest></FestivalsTest><br/>
+        Festival 페이지<br/>
+        <Link to="/addProducts" style={{fontSize:'40px', backgroundColor:'blue', color:'white', borderRadius:'20%', textDecoration:'none'}}>상품등록버튼</Link>
         <Navbar />
-        <Products />
+        <FestivalsTest></FestivalsTest><br/>
+        {/* <Products /> */}
       </div>
     </>
   );
