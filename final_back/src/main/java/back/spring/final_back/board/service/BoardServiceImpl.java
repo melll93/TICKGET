@@ -12,8 +12,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
-private final BoardDao boardDao;
+    private final BoardDao boardDao;
 
+    // 게시판 조회(SelectAll)
     @Override
     public List<BoardDto> selectBoardList() {
         List<BoardDto> mList = null;
@@ -21,12 +22,24 @@ private final BoardDao boardDao;
         return mList;
     }
 
+    // 게시판 등록(Insert)
     @Override
     public int insertBoardList(BoardDto boardDto) {
         int result = boardDao.insertBoardList(boardDto);
         return result;
     }
 
+    // 게시판 수정(Update)
+    @Override
+    public int updateMemberList(BoardDto boardDto) {
+        int result = boardDao.updateMemberList(boardDto);
+        return result;
+    }
 
-    
+    // 게시판 삭제(Delete)
+    @Override
+    public int deleteMemberDelete(BoardDto boardDto) {
+        int result = boardDao.deleteMemberDelete(boardDto);
+        return result;
+    }
 }
