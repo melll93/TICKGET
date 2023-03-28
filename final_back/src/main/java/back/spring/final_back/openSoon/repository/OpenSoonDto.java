@@ -1,8 +1,16 @@
 package back.spring.final_back.openSoon.repository;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-@Data
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
 public class OpenSoonDto {
   // @NoArgsConstructor
   private int concert_no;
