@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { sendNaverMember } from "../../axios/main/socialLogin";
 const { naver } = window;
@@ -11,12 +12,17 @@ const NAVER_CALLBACK_URL = encodeURI(
 const NaverLogin = ({ user, setUser }) => {
   const navigate = useNavigate();
 
+  const handleNaverLogin = () => {
+    const btnNaverLogin = document.querySelector("#naverIdLogin").firstChild;
+    btnNaverLogin.click();
+  };
+
   const initializeNaverLogin = () => {
     const naverLogin = new naver.LoginWithNaverId({
       clientId: NAVER_CLIENT_ID,
       callbackUrl: NAVER_CALLBACK_URL,
       isPopup: false,
-      loginButton: { color: "green", type: 3, height: 50 },
+      loginButton: { color: "green", type: 1, height: 60 },
       callbackHandle: true,
     });
     naverLogin.init();
@@ -31,7 +37,7 @@ const NaverLogin = ({ user, setUser }) => {
           if (loginStatus === 0) {
             // 자체 회원가입 안되어있다면 login failed
             console.log(loginStatus);
-            navigate("/join");
+            navigate("/socialregister");
           } else if (loginStatus === 1) {
             // 자체 회원가입 되어있다면
             // res.data.member를 redux로 회원정보 저장,
@@ -77,7 +83,14 @@ const NaverLogin = ({ user, setUser }) => {
 
   return (
     <>
-      <div className="loginbutton" id="naverIdLogin"></div>
+      <div id="naverIdLogin" style={{ display: "none" }}></div>
+      <div className="loginbutton">
+        <img
+          src="logos/naver/btnG_아이콘원형.png"
+          onClick={handleNaverLogin}
+          style={{ cursor: "pointer" }}
+        />
+      </div>
     </>
   );
 };

@@ -44,7 +44,7 @@ const Profile = () => {
           <span>로그인</span>
         </Link>
         <br />
-        <Link to="/join" className="link">
+        <Link to="/register" className="link">
           <span>회원가입</span>
         </Link>
         <br />
