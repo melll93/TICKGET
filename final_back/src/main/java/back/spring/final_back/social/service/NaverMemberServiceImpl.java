@@ -1,5 +1,10 @@
 package back.spring.final_back.social.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,7 +43,11 @@ public class NaverMemberServiceImpl implements NaverMemberService {
             logger.info("존재하지 않는 ID 입니다.");
         } finally {
             if (result == null) {
-                result = 0;
+                Map<String, Object> rMap = new HashMap<>();
+                rMap.put("result", 0);
+                rMap.put("msg", "존재하지 않는 ID 입니다.");
+
+                result = rMap;
             }
         }
         return result;
