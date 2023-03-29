@@ -25,6 +25,8 @@ import RegisterPage from "./pages/member/RegisterPage";
 import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import AuthLogic from "./util/authLogic";
 import firebaseApp from "./util/firebase";
+import Write from "./pages/board/Write";
+import BoardList from "./pages/board/BoardList";
 const authLogic = new AuthLogic(firebaseApp);
 
 function App() {
@@ -84,6 +86,9 @@ function App() {
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
         <Route path="/productsDetail/:id" element={<ProductsDetails />} />
         <Route path="/payment/:id" exact={true} element={<PaymentPage />} />
+
+        {/* TogetherPage Routes*/}
+        <Route path="together/write*" element={<Write />} />
       </Routes>
     </>
   );
