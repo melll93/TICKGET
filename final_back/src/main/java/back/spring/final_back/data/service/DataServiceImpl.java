@@ -56,7 +56,7 @@ public class DataServiceImpl implements DataService {
     rList = dataDao.selectIdList();
     StringBuilder sb = new StringBuilder();
 
-    for (int i = 0; i < 500; i++) {
+    for (int i = 0; i < rList.size(); i++) {
 
       String mt20id = rList.get(i);
       StringBuilder urlBuilder = new StringBuilder("http://kopis.or.kr/openApi/restful/pblprfr/" + mt20id
