@@ -15,6 +15,7 @@
                                                       '%Y-%m-%d')
                                           )
                                   )
+                                  LIMIT 5;
     </select>
 
 </mapper>
