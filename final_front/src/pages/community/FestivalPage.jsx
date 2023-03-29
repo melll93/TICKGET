@@ -11,19 +11,11 @@ import { FestivalListLocationDB, FetivalListDB, KyeongkiFestivalListDB, SeoulFes
 
 const Navbar = ({changeModal, modal2open, modal2_1open, modal3open, modal4open}) => {
   const [ style, setStyle ] = useState({display: 'none'})
-  const FestTotalModals=() => {
-    changeModal()
-  }
-  const Seoul=() => {
-    modal2open()
-  }
+  const FestTotalModals=() => {changeModal()}
+  const Seoul=() => {  modal2open()}
   const Kyeongki=()=>{modal2_1open()}
-  const modalch=()=>{
-    modal3open()
-  }
-  const modal4=()=>{
-    modal4open()
-  }
+  const modalch=()=>{modal3open()}
+  const modal4=()=>{modal4open()}
   return (
     <>
       <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -47,6 +39,9 @@ const Navbar = ({changeModal, modal2open, modal2_1open, modal3open, modal4open})
       }} >
                 지역별
                 <div style={style}>
+
+                {/* <div style={{display:'flex', backgroundColor:'darkblue'}}> */}
+
                 <li className="nav-item">
               <a className="nav-link" onClick={Seoul}>
               서울
@@ -77,8 +72,9 @@ const Navbar = ({changeModal, modal2open, modal2_1open, modal3open, modal4open})
               제주도/광역시
               </a>
             </li>
+            </div>
 
-     </div>  
+
               </a>
             </li>
             <li className="nav-item">

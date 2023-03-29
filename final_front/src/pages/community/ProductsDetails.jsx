@@ -1,11 +1,19 @@
 import {Link, useParams} from 'react-router-dom'
+import Header from '../../components/Header';
+import Sidebar from '../../components/Sidebar';
+import BoardList from '../board/BoardList';
+import Write from '../board/Write';
 
 function ProductsDetails(props){
     let {id} =useParams();
   
     return(
       <>
-      <div className="container">
+      <Sidebar />
+      <div className="center">
+        <Header />
+
+        <div className="container">
         <div className="row">
           <div className="cols-md-6">
           <img src={'../images_key/fev'+[id]+'.PNG'} width="50%" alt="상품사진" />
@@ -20,6 +28,13 @@ function ProductsDetails(props){
             </a>
           </div>
         </div>
+
+
+      </div>
+
+
+
+
        </>
     )
   }

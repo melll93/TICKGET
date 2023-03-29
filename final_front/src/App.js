@@ -82,14 +82,7 @@ function App() {
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
-        <Route
-          path="/productsDetail/:id"
-          element={
-            <div>
-              <ProductsDetails />
-            </div>
-          }
-        />
+        <Route path="/productsDetail/:id" element={<ProductsDetails />}/>
         <Route path="/payment/:id" exact={true} element={<PaymentPage />} />
       </Routes>
     </>
