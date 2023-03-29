@@ -25,9 +25,8 @@ import RegisterPage from "./pages/member/RegisterPage";
 import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import AuthLogic from "./util/authLogic";
 import firebaseApp from "./util/firebase";
-const authLogic = new AuthLogic(firebaseApp);
 
-function App() {
+function App({authLogic}) {
   const [user, setUser] = useState();
   const [domain, setDomain] = useState();
   const navigate = useNavigate();
@@ -41,11 +40,11 @@ function App() {
     <>
       <Routes>
         {/* LoginMenu Routes */}
-        <Route path="/register" exact={true} element={<RegisterPage />} />
+        <Route path="/register" exact={true} element={<RegisterPage authLogic={authLogic} />} />
         <Route
           path="/socialregister"
           exact={true}
-          element={<SocialRegisterPage authLogic={authLogic} />}
+          element={<SocialRegisterPage />}
         />
         <Route
           path="/login"
