@@ -90,7 +90,7 @@ function App() {
             </div>
           }
         />
-        <Route path="/payment/:id" exact={true} element={<PaymentPage />} />
+        <Route path="/payment/:id" element={<PaymentPage />} />
       </Routes>
     </>
   );
