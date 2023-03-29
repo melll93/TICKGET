@@ -30,3 +30,34 @@ export const FestivalInsertDB = (festival) => {
       }
     });
   };
+
+
+  export const SeoulFestivalListDB = (festival) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const response = axios({
+          method: "get",
+          url: "http://localhost:8888/festival/seoulFestivalList",
+          params: festival, 
+        });
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  export const KyeongkiFestivalListDB = (festival) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const response = axios({
+          method: "get",
+          url: "http://localhost:8888/festival/kyeongkiFestivalList",
+          params: festival, 
+        });
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };

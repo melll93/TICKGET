@@ -1,0 +1,64 @@
+a {
+    text-decoration: none;
+}
+
+.breadcrumb {
+    padding: 8px 15px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    list-style: none;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+​ .page-header {
+    padding: 20px 0px;
+}
+
+​ .board-detail {
+    display: flex;
+}
+
+.board-header {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 20px;
+}
+
+.board-list {
+    margin: 20px 0px;
+}
+
+​ .thumbNail {
+    display: inline-block;
+    width: 150px;
+    height: 200px;
+    border: 1px solid black;
+    object-fit: contain;
+    background-size: cover;
+}
+
+​ .boardlist-footer {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+​ .detail-link {
+    display: flex;
+    margin: 6px;
+}
+
+​ .board-footer {
+    margin-top: 30px;
+}
+
+​ .visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}

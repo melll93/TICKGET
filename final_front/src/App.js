@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import KakaoLogin from "./api/login/KakaoLogin";
+import NaverLogin from "./api/login/NaverLogin";
 import "./App.css";
+import Write from "./pages/board/Write";
+import AddProductsPage from "./pages/community/AddProductsPage";
 import CalendarPage from "./pages/community/CalendarPage";
 import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
 import DonationPage from "./pages/community/DonationPage";
 import FestivalPage from "./pages/community/FestivalPage";
 import HomePage from "./pages/community/HomePage";
+import ProductsDetails from "./pages/community/ProductsDetails";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
 import LoginPage from "./pages/member/LoginPage";
+import RegisterPage from "./pages/member/RegisterPage";
+import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
 import MessagePage from "./pages/personal/MessagePage";
 import MyPage from "./pages/personal/MyPage";
+import PaymentPage from "./pages/personal/PaymentPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-import AddProductsPage from "./pages/community/AddProductsPage";
-import ProductsDetails from "./pages/community/ProductsDetails";
-import PaymentPage from "./pages/personal/PaymentPage";
-import NaverLogin from "./api/login/NaverLogin";
-import KakaoLogin from "./api/login/KakaoLogin";
-import RegisterPage from "./pages/member/RegisterPage";
-import SocialRegisterPage from "./pages/member/SocialRegisterPage";
-import AuthLogic from "./util/authLogic";
-import firebaseApp from "./util/firebase";
-const authLogic = new AuthLogic(firebaseApp);
 
-function App() {
+function App({authLogic}) {
   const [user, setUser] = useState();
   const [domain, setDomain] = useState();
   const navigate = useNavigate();
@@ -41,11 +39,11 @@ function App() {
     <>
       <Routes>
         {/* LoginMenu Routes */}
-        <Route path="/register" exact={true} element={<RegisterPage />} />
+        <Route path="/register" exact={true} element={<RegisterPage authLogic={authLogic} />} />
         <Route
           path="/socialregister"
           exact={true}
-          element={<SocialRegisterPage authLogic={authLogic} />}
+          element={<SocialRegisterPage />}
         />
         <Route
           path="/login"
@@ -82,15 +80,11 @@ function App() {
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
-        <Route
-          path="/productsDetail/:id"
-          element={
-            <div>
-              <ProductsDetails />
-            </div>
-          }
-        />
+        <Route path="/productsDetail/:id" element={<ProductsDetails />} />
         <Route path="/payment/:id" exact={true} element={<PaymentPage />} />
+
+        {/* TogetherPage Routes*/}
+        <Route path="together/write*" element={<Write />} />
       </Routes>
     </>
   );

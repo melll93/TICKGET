@@ -1,10 +1,9 @@
 //상품등록 페이지 - 은영 - 수정중
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import { useNavigate } from 'react-router'
-import axios from 'axios';
 import { FestivalInsertDB } from '../../axios/main/Festival';
 
 
@@ -27,6 +26,9 @@ const[festEndday, setFestend] = useState("")
 const[festDetail, setFestdetail] = useState("")
 const[festPrice, setFestprice] = useState("")
 const[festDesc, setFestdesc] = useState("")
+const [festImages, setFestImages] = useState("");
+const imgRef = useRef();
+
 
 const festivalInsert=async()=>{
   const festival={
@@ -73,26 +75,60 @@ const inuptTitle = useCallback((e) => {
       setFestdesc (e)
     },[])
     
-    
+    const festImage=()=>{
+        const file = imgRef.current.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend=()=>{
+          setFestImages(reader.result);
+        }
+    }
+
+
+  // //이미지 파일 첨부구현
+  // const imgChange = async (e) => {
+  //   // const uploaded = await imageUploader.upload(e.target.files[0]);
+  //   setFestImages({
+
+  //   });
+  //   //input의 이미지 객체 얻어오기
+  //   const upload = document.querySelector("#festivalImg");
+  //   //이미지를 집어넣을 곳의 부모태그
+  //   const holder = document.querySelector("#festivalImgChange");
+  //   const file = upload.files[0];
+  //   const reader = new FileReader();
+  //   reader.onload = (e) => {
+  //     const img = new Image();
+  //     img.src = e.target.result;
+  //     if (img.width > 150) {
+  //       img.width = 150;
+  //     }
+  //     holder.innerHTML = "";
+  //     holder.appendChild(img);
+  //   };
+  //   reader.readAsDataURL(file);
+  //   return false;
+  // };
 
 
 
   return (
     <>
 <div style={{ textAlign:'center', width:'600px', marginLeft:'100px'}}><br/> {/* //등록 div 시작 */}
-<input type="text" className="form-control" id="festCategoty"onChange={(e)=>{inputCategory (e.target.value)}} />
+{/* <input type="text" className="form-control" id="festCategoty"onChange={(e)=>{inputCategory (e.target.value)}} /> */}
 
-{/* <select className="form-select" aria-label="Default select example" style={{width:'150px'}}>
-  <option id="fest_category" selected>카테고리</option>
-  <option value="FESTIVAL">FESTIVAL</option>
-  <option value="CONCERT">CONCERT</option>
-</select><br/> */}
+<select className="form-select" id="fest_category" aria-label="Default select example" style={{width:'150px'}}  onChange={(e)=>{inputCategory (e.target.value)}}>
+  <option  value='' selected>카테고리</option>
+  <option  value="FESTIVAL"  >FESTIVAL</option>
+  <option  value="CONCERT"  >CONCERT</option>
+</select><br/>
+
 <h2>상품 자체 등록</h2>
 <div id="uploadImg">
-          <img id="productsImgChange" className='thumbNail' src="https://via.placeholder.com/400x300/D9D9D9/979892.png?text=image+upload" alt="미리보기" />
+          <img id="festivalImgChange" className='thumbNail' src={festImages? festImages:`https://via.placeholder.com/400x300/D9D9D9/979892.png?text=image+upload`} alt="미리보기" />
         {/* - 가로x세로/배경색/글자색.확장자?text=텍스트(공백은+로) */}
         </div><br/>
- <input className="form-control" type="file" accept='image/*' id="productsImg" name="productsImg"/> <br/>
+ <input className="form-control" type="file" accept='image/*' id="festivalImg" onChange={festImage} ref={imgRef}/> <br/>
  <div className="form-floating mb-3">
   <input type="text" className="form-control" id="festTitle" onChange={(e)=>{inuptTitle(e.target.value)}} />
   <label htmlFor="floatingInput"> festTitle </label>
@@ -127,7 +163,7 @@ const inuptTitle = useCallback((e) => {
     </>
   )
 }
-/* ========================= 상품 자체 등록 끝============================ */
+/* ========================= 상품등록  끝 ============================ */
 
 
 

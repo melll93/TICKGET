@@ -31,15 +31,15 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시판 수정(Update)
     @Override
-    public int updateMemberList(BoardDto boardDto) {
-        int result = boardDao.updateMemberList(boardDto);
+    public int updateBoardList(BoardDto boardDto) {
+        int result = boardDao.updateBoardList(boardDto);
         return result;
     }
 
     // 게시판 삭제(Delete)
     @Override
-    public int deleteMemberDelete(BoardDto boardDto) {
-        int result = boardDao.deleteMemberDelete(boardDto);
+    public int deleteBoardList(BoardDto boardDto) {
+        int result = boardDao.deleteBoardList(boardDto);
         return result;
     }
 }
