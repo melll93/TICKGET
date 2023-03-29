@@ -26,5 +26,7 @@ public class TicketController {
       List<TicketDto> tList = ticketService.getTicketList();
       return tList;
    }
+   
+   
 
 }
