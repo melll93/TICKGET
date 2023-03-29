@@ -7,6 +7,8 @@
     <select id="selectIdList" resultType="string">
       SELECT fest_m_id
         FROM fest_main
+       ORDER BY fest_m_start desc
+       LIMIT 500
     </select>
 
 </mapper>
