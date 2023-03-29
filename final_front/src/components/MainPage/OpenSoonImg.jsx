@@ -6,14 +6,18 @@ import { ListGroup } from 'react-bootstrap';
       
       return (
        <Card style={{ width: '18rem' , marginLeft: '20px', marginRight: '20px', }} >
+         <Card style={{ width: '18rem' , marginLeft: '20px' , marginRight: '20px'}} >
            <Card.Img variant="top" src={openSoon.main_img} style={{                     
                      width: 350,
                      height: 350,
                      objectFit: "cover",
-                     border: "1px solid black",}} />
+                     border: "1px solid black", 
+                      
+                  }} />
            <Card.Body>
              <Card.Title style={{width:350 , height:100, objectFit:"cover"}}>{openSoon.title}</Card.Title>
            </Card.Body>
+         </Card>
          </Card>
        );
      }
