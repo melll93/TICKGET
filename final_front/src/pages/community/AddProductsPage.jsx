@@ -1,6 +1,6 @@
 //상품등록 페이지 - 은영 - 수정중
 
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import { useNavigate } from 'react-router'
@@ -27,6 +27,7 @@ const[festDetail, setFestdetail] = useState("")
 const[festPrice, setFestprice] = useState("")
 const[festDesc, setFestdesc] = useState("")
 const [festImages, setFestImages] = useState("");
+const [festImageUrl, setFestImageUrl] = useState(null);
 const imgRef = useRef();
 
 
@@ -46,9 +47,11 @@ const festivalInsert=async()=>{
     if(!res.data){
     }
     else{
+      FestImageUpload()
       navigate("/festival")
     }
 }
+
 
 const inuptTitle = useCallback((e) => {
   setFesttitle (e)
@@ -75,50 +78,52 @@ const inuptTitle = useCallback((e) => {
       setFestdesc (e)
     },[])
     
+
+//선택파일 이미지로 교체
     const festImage=()=>{
-        const file = imgRef.current.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend=()=>{
-          setFestImages(reader.result);
-        }
-    }
+      const file = imgRef.current.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend=()=>{
+        setFestImages(reader.result);
+      }
+  }
 
 
-  // //이미지 파일 첨부구현
-  // const imgChange = async (e) => {
-  //   // const uploaded = await imageUploader.upload(e.target.files[0]);
-  //   setFestImages({
+//클라우디너리에 업로드
+  const FestImageUpload = () => {
+    const { files } = document.querySelector('#festivalsImg');
+    const imageFile = document.querySelector('#festivalsImg');
+    const filesa = imageFile.files;
+    console.log("Image file", filesa[0]);
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "dpa186u8");// "본인 프리셋 업로드 네임"
+    const options = {
+      method: "POST",
+      body: formData,
+    };
+    return fetch(
+      "https://api.Cloudinary.com/v1_1/djxfvm2ev/image/upload",options)
+      //"https://api.Cloudinary.com/v1_1/본인 클라우드 네임/image/upload"
+      .then((res) => res.json())
+      .then((res) => {
+        setFestImageUrl(res.secure_url);
+      })
+      .catch((err) => console.log(err));
+  };
 
-  //   });
-  //   //input의 이미지 객체 얻어오기
-  //   const upload = document.querySelector("#festivalImg");
-  //   //이미지를 집어넣을 곳의 부모태그
-  //   const holder = document.querySelector("#festivalImgChange");
-  //   const file = upload.files[0];
-  //   const reader = new FileReader();
-  //   reader.onload = (e) => {
-  //     const img = new Image();
-  //     img.src = e.target.result;
-  //     if (img.width > 150) {
-  //       img.width = 150;
-  //     }
-  //     holder.innerHTML = "";
-  //     holder.appendChild(img);
-  //   };
-  //   reader.readAsDataURL(file);
-  //   return false;
-  // };
+
+
 
 
 
   return (
     <>
 <div style={{ textAlign:'center', width:'600px', marginLeft:'100px'}}><br/> {/* //등록 div 시작 */}
-{/* <input type="text" className="form-control" id="festCategoty"onChange={(e)=>{inputCategory (e.target.value)}} /> */}
 
 <select className="form-select" id="fest_category" aria-label="Default select example" style={{width:'150px'}}  onChange={(e)=>{inputCategory (e.target.value)}}>
-  <option  value='' selected>카테고리</option>
+  <option  defaultValue disabled>카테고리</option>
   <option  value="FESTIVAL"  >FESTIVAL</option>
   <option  value="CONCERT"  >CONCERT</option>
 </select><br/>
@@ -128,7 +133,7 @@ const inuptTitle = useCallback((e) => {
           <img id="festivalImgChange" className='thumbNail' src={festImages? festImages:`https://via.placeholder.com/400x300/D9D9D9/979892.png?text=image+upload`} alt="미리보기" />
         {/* - 가로x세로/배경색/글자색.확장자?text=텍스트(공백은+로) */}
         </div><br/>
- <input className="form-control" type="file" accept='image/*' id="festivalImg" onChange={festImage} ref={imgRef}/> <br/>
+ <input className="form-control" type="file" accept='image/*' id="festivalsImg" onChange={festImage} ref={imgRef}/> <br/>
  <div className="form-floating mb-3">
   <input type="text" className="form-control" id="festTitle" onChange={(e)=>{inuptTitle(e.target.value)}} />
   <label htmlFor="floatingInput"> festTitle </label>
