@@ -32,7 +32,7 @@ public class NaverMemberServiceImpl implements NaverMemberService {
         try {
             NaverMemberDto nDto = naverMemberDao.searchMemberbyId(id);
             Map<String, Object> rMap = new HashMap<>();
-            rMap.put("result", 0);
+            rMap.put("result", 1);
             rMap.put("msg", "login success");
             rMap.put("member", nDto);
             result = rMap;

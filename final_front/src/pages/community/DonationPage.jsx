@@ -9,10 +9,16 @@ import { getOpenSoonListDB } from "../../axios/main/main";
 
 const DonationPage = () => {
 /* const [openSoonList, setOpenSoonList] = useState([])
+  const [openSoonList, setOpenSoonList] = useState([])
 
-const getOpenSoonList = () => {
-  getOpenSoonListDB().then(setOpenSoonList);
-};
+  const getOpenSoonList = () => {
+    getOpenSoonListDB().then(setOpenSoonList);
+  };
+
+  useEffect(() => {
+    getOpenSoonList();
+  }, []);
+
 
 useEffect(() => {
   getOpenSoonList();
@@ -40,6 +46,21 @@ useEffect(() => {
         <WeeksHot/>
       </Tab>
     </Tabs>
+          defaultActiveKey="openSoon"
+          id="justify-tab-example"
+          className="tab3"
+          justify
+        >
+          <Tab eventKey="sitePick" title="사이트's PICK!">
+            <SitePick />
+          </Tab>
+          <Tab eventKey="openSoon" title="오픈 예정">
+            <OpenSoon openSoonList={openSoonList} />
+          </Tab>
+          <Tab eventKey="weeksHot" title="이 주의 공연">
+            <WeeksHot />
+          </Tab>
+        </Tabs>
       </div>
     </>
   );
