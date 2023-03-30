@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
 import "./App.css";
+import BoardDetail from "./pages/board/BoardDetail";
 import Write from "./pages/board/Write";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import CalendarPage from "./pages/community/CalendarPage";
@@ -152,7 +153,8 @@ function App({authLogic}) {
         <Route path="/payment/:id" exact={true} element={<PaymentPage />} />
 
         {/* TogetherPage Routes*/}
-        <Route path="together/write*" element={<Write />} />
+        <Route path="together/write/*" element={<Write />} />
+        <Route path="together/boardDetail/" element={<BoardDetail/>} />
       </Routes>
     </>
   );
