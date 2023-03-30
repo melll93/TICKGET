@@ -5,7 +5,7 @@ export const jsonboardListDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/api/selectBoardList",
+        url: "http://localhost:8888/board/selectBoardList",
         params: board, //쿼리스트링은 header에 담김 - get방식
       });
       resolve(response);
@@ -20,7 +20,7 @@ export const boardInsertDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/api/selectBoardList",
+        url: "http://localhost:8888/board/selectBoardList",
         params: board,
       });
       resolve(response);
