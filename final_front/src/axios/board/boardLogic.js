@@ -15,12 +15,27 @@ export const jsonboardListDB = (board) => {
   });
 };
 
+export const deleteBoardListDB = (board) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: "http://localhost:8888/board/deleteBoardList",
+        params: board,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const boardInsertDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/board/selectBoardList",
+        url: "http://localhost:8888/board/deleteBoardList",
         params: board,
       });
       resolve(response);
