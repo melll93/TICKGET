@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Sidebar';
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword } from '../../util/validateLogic';
-import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm } from '../../styles/formStyle';
+import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
 
 const RegisterPage = ({authLogic}) => {
@@ -99,6 +99,10 @@ const RegisterPage = ({authLogic}) => {
     onAuth();
   },[setGoogleEmail, setStar,setMemInfo, userAuth.auth]);
 
+  const handleSignup = (event) => {
+    signup()    
+  }
+
   const passwordView = (e) => {
     const id = e.currentTarget.id;
     if(id==="password") {
@@ -183,6 +187,62 @@ const RegisterPage = ({authLogic}) => {
       setStar({...star, [key]:""});
     }
   }
+
+    /* 회원 가입 */
+    const signup = async() => {
+      try {
+        let uid;
+        const b = memInfo.birthday;
+        let birthday = ""; 
+        if(b!==""){
+          birthday = b.slice(0,4) + '-' + b.slice(4, 6) + '-' + b.slice(6,8);
+        }
+        console.log('입력받은 생일정보 '+birthday);
+        const datas = {
+          /* 
+          MEM_NO:
+          MEM_DOMAIN:
+          MEM_ID:
+          MEM_PASSWORD:
+          MEM_NAME:
+          MEM_AGE:
+          MEM_BIRTH:
+          MEM_EMAIL:
+          MEM_GENDER:
+          MEM_MOBILE:
+          MEM_NICKNAME:
+          MEM_PROFILE_IMAGE:
+          MEM_REGISTER_DATE:
+          */
+          MEM_UID: uid,
+          MEM_NAME: memInfo.name,
+          MEM_PW: memInfo.password,
+          MEM_EMAIL: memInfo.email,
+          MEM_BIRTHDAY: birthday,
+          MEM_TEL: memInfo.hp,
+          MEM_NICKNAME: memInfo.nickname,
+          MEM_ZIPCODE: post.zipcode,
+          MEM_ADDR: post.addr,
+          MEM_ADDR_DTL: post.addrDetail,
+          MEM_STATUS: 0,
+          MEM_AUTH: (type==='member'?'member':'teacher'),
+          MEM_GENDER: memInfo.gender
+        }
+        console.log(datas)
+/*         const response = await memberInsertDB(datas);
+        console.log(response);
+        if(response.data!==1) {
+        return "DB 오류: 관리자에게 연락바랍니다.";
+      } */
+        sessionStorage.clear();
+        navigate('/');
+        return "회원가입되었습니다. 감사합니다.";
+        
+      } catch (error) {
+        console.log(error+" 오류: 관리자에게 연락바랍니다.");
+      }
+    }
+
   const checkboxLable = ['없음','남자','여자']
   const Checkbox = checkboxLable.map((item, index) => (
     <Form.Check inline label={item} value={item} name="group1" type='radio' checked={memInfo.gender===item?true:false} readOnly
@@ -235,15 +295,15 @@ const RegisterPage = ({authLogic}) => {
           <MyInput type="text" id="nickname" defaultValue={memInfo.nickname} placeholder="닉네임을 입력해주세요" 
           onChange={(e)=>{changeMemInfo(e); validate('nickname', e);}}/>
           <MyLabelAb>{comment.nickname}</MyLabelAb>
-        </MyLabel>
         <MyButton type="button" onClick={()=>{overlap('nickname')}}>중복확인</MyButton>
+        </MyLabel>
       {/* 이메일 */}
       <MyLabel> 이메일 <span style={{color:"red"}}>{star.email}</span>
         <MyInput type="email" id="email" placeholder="이메일를 입력해주세요" 
         onChange={(e)=>{changeMemInfo(e); validate('email', e);}}/>
         <MyLabelAb>{comment.email}</MyLabelAb>
-      </MyLabel>
       <MyButton type="button" onClick={()=>{overlap('email');}}>중복확인</MyButton>
+      </MyLabel>
       {/* 전화번호 */}
       <MyLabel> 전화번호 <span style={{color:"red"}}>{star.mobile}</span>
         <MyInput type="text" id="mobile" defaultValue={memInfo.mobile} placeholder="전화번호를 입력해주세요" 
@@ -265,6 +325,12 @@ const RegisterPage = ({authLogic}) => {
         onChange={(e)=>{changeMemInfo(e); validate('birthday', e);}}/>
         <MyLabelAb>{comment.birthday}</MyLabelAb>
       </MyLabel>
+
+      {/* 회원가입 버튼 */}
+      <SubmitButton type="button" style={{backgroundColor:submitBtn.bgColor }}
+            onClick={handleSignup} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
+              {'가입하기'}
+            </SubmitButton>
       </div>
       </SignupForm>
       </div>

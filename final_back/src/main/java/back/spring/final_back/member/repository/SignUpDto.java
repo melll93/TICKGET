@@ -13,16 +13,16 @@ import lombok.ToString;
 @AllArgsConstructor
 public class SignUpDto {
   private int member_no;
-  private String domain;
-  private String id;
-  private String password;
-  private String name;
-  private int age;
-  private Date birth;
-  private String email;
-  private String gender;
-  private String mobile;
-  private String nickname;
-  private String profile_image;
-  private Date register_date;
+  private String member_domain;
+  private String member_id;
+  private String member_password;
+  private String member_name;
+  private int member_age;
+  private Date member_birth;
+  private String member_email;
+  private String member_gender;
+  private String member_mobile;
+  private String member_nickname;
+  private String member_profile_image;
+  private Date member_register_date;
 }
