@@ -3,13 +3,12 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from "react-bootstrap/esm/Tabs";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import OpenSoon from "../../components/MainPage/OpenSoon";
 import SitePick from "../../components/MainPage/SitePick";
 import WeeksHot from "../../components/MainPage/WeeksHot";
 import { getOpenSoonListDB } from "../../axios/main/main";
 
 const DonationPage = () => {
-const [openSoonList, setOpenSoonList] = useState([])
+/* const [openSoonList, setOpenSoonList] = useState([])
 
 const getOpenSoonList = () => {
   getOpenSoonListDB().then(setOpenSoonList);
@@ -18,7 +17,7 @@ const getOpenSoonList = () => {
 useEffect(() => {
   getOpenSoonList();
 }, []);
-  
+   */
   
   return (
     <>
@@ -36,7 +35,6 @@ useEffect(() => {
         <SitePick/>
       </Tab>
       <Tab eventKey="openSoon" title="오픈 예정">
-        <OpenSoon openSoonList={openSoonList}/>
       </Tab>
       <Tab eventKey="weeksHot" title="이 주의 공연">
         <WeeksHot/>
