@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/back.spring.final_back.main.iml" filepath="$PROJECT_DIR$/.idea/modules/back.spring.final_back.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/final_back.main.iml" filepath="$PROJECT_DIR$/.idea/modules/final_back.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/final_back.test.iml" filepath="$PROJECT_DIR$/.idea/modules/final_back.test.iml" />
     </modules>
   </component>
 </project>

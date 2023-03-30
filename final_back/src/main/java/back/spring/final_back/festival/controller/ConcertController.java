@@ -3,6 +3,7 @@ package back.spring.final_back.festival.controller;
 import back.spring.final_back.festival.repository.ConcertDto;
 import back.spring.final_back.festival.service.ConcertService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,14 @@ import java.util.List;
 @ResponseBody
 @RequiredArgsConstructor
 @RequestMapping("/api/*")
+@Slf4j
 public class ConcertController {
-    Logger logger = LoggerFactory.getLogger(ConcertController.class);
+//    Logger logger = LoggerFactory.getLogger(ConcertController.class);
     private final ConcertService concertService;
 
     @GetMapping("/concertList")
     public List<ConcertDto> ConcertList(@RequestParam String category) {
-        logger.info("call ConcertController.ConcertList, param : " + category);
+        log.info("call ConcertController.ConcertList, param : " + category);
         List<ConcertDto> cList = null;
         cList = concertService.ConcertList(category);
         return cList;
@@ -29,7 +31,7 @@ public class ConcertController {
 
     @GetMapping("/concertToday")
     public List<ConcertDto> ConcertToday() {
-        logger.info("call ConcertController.ConcertToday");
+        log.info("call ConcertController.ConcertToday");
         List<ConcertDto> cList = null;
         cList = concertService.ConcertToday();
         return cList;

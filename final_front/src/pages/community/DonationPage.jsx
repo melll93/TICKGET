@@ -6,25 +6,26 @@ import Sidebar from "../../components/Sidebar";
 import SitePick from "../../components/MainPage/SitePick";
 import WeeksHot from "../../components/MainPage/WeeksHot";
 import { getOpenSoonListDB } from "../../axios/main/main";
+import OpenSoon from "../../components/MainPage/OpenSoon";
 
 const DonationPage = () => {
-/* const [openSoonList, setOpenSoonList] = useState([])
   const [openSoonList, setOpenSoonList] = useState([])
-
-  const getOpenSoonList = () => {
-    getOpenSoonListDB().then(setOpenSoonList);
-  };
-
+  /*   const [openSoonList, setOpenSoonList] = useState([])
+  
+    const getOpenSoonList = () => {
+      getOpenSoonListDB().then(setOpenSoonList);
+    };
+  
+    useEffect(() => {
+      getOpenSoonList();
+    }, []);
+  
+  
   useEffect(() => {
     getOpenSoonList();
   }, []);
+     */
 
-
-useEffect(() => {
-  getOpenSoonList();
-}, []);
-   */
-  
   return (
     <>
       <Sidebar />
@@ -32,20 +33,6 @@ useEffect(() => {
         <Header />
         Donation - 메인홈페이지에 추가할 코드 테스트 중 (성훈)
         <Tabs
-      defaultActiveKey="openSoon"
-      id="justify-tab-example"
-      className="tab3"
-      justify
-    >
-      <Tab eventKey="sitePick" title="사이트's PICK!">
-        <SitePick/>
-      </Tab>
-      <Tab eventKey="openSoon" title="오픈 예정">
-      </Tab>
-      <Tab eventKey="weeksHot" title="이 주의 공연">
-        <WeeksHot/>
-      </Tab>
-    </Tabs>
           defaultActiveKey="openSoon"
           id="justify-tab-example"
           className="tab3"
@@ -55,13 +42,25 @@ useEffect(() => {
             <SitePick />
           </Tab>
           <Tab eventKey="openSoon" title="오픈 예정">
-            <OpenSoon openSoonList={openSoonList} />
           </Tab>
           <Tab eventKey="weeksHot" title="이 주의 공연">
             <WeeksHot />
           </Tab>
         </Tabs>
-      </div>
+        defaultActiveKey="openSoon"
+        id="justify-tab-example"
+        className="tab3"
+        justify
+        <Tab eventKey="sitePick" title="사이트's PICK!">
+          <SitePick />
+        </Tab>
+        <Tab eventKey="openSoon" title="오픈 예정">
+          <OpenSoon openSoonList={openSoonList} />
+        </Tab>
+        <Tab eventKey="weeksHot" title="이 주의 공연">
+          <WeeksHot />
+        </Tab>
+      </div >
     </>
   );
 };
