@@ -134,7 +134,7 @@ function App({ authLogic, imageUploader }) {
         <Route path="/carpool" exact={true} element={<CarpoolPage />} />
         <Route path="/donation" exact={true} element={<DonationPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
-        <Route path="/chat" exact={true} element={<ChatPage />} />
+        {/* <Route path="/chat" exact={true} element={<ChatPage />} /> */}
 
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
