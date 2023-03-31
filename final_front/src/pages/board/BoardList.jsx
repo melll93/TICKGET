@@ -47,7 +47,6 @@ const BoardList = () => {
       alert("삭제할 게시글을 선택해주세요.");
       return;
     }
-
     if (window.confirm("정말 삭제하시겠습니까?")) {
       // 삭제할 게시글들의 번호들을 전달하여, axios를 사용하여 백엔드에서 삭제 처리
       const res = await deleteBoardListDB(checkedItems);
@@ -100,7 +99,7 @@ const BoardList = () => {
                 <button
                   style={{border: "none",background: "none",color: "blue",cursor: "pointer",}}
                   onClick={() =>navigate({
-                    pathname: "/together/BoardDetail/",
+                    pathname: "/together/BoardDetail/"+board.boardNo,
                     state:{board}
                   })}>
                   {board.boardTitle}

@@ -27,15 +27,15 @@ export const deleteBoardListDB = (board) => {
     } catch (error) {
       reject(error);
     }
-  });
+  })
 };
 
-export const boardInsertDB = (board) => {
+export const insertBoardListDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/board/deleteBoardList",
+        url: "http://localhost:8888/board/insertBoardList",
         params: board,
       });
       resolve(response);
@@ -44,3 +44,24 @@ export const boardInsertDB = (board) => {
     }
   });
 };
+
+export const uploadImageDB = (file) => {
+  console.log(file);
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "reple/imageUpload",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        processData: false,
+        contentType: false,
+        data: file,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}

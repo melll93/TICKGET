@@ -26,10 +26,9 @@ import MyPage from "./pages/personal/MyPage";
 import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-import AuthLogic from "./util/authLogic";
-import firebaseApp from "./util/firebase";
 
 function App({authLogic}) {
+  const [boardNo, setBoardNo]=useState();
   const [user, setUser] = useState();
   const [domain, setDomain] = useState();
   const navigate = useNavigate();
@@ -148,7 +147,7 @@ function App({authLogic}) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<Write />} />
-        <Route path="together/boardDetail/" element={<BoardDetail/>} />
+        <Route path="together/boardDetail/:boardNo" element={<BoardDetail boardNo={boardNo}/>} />
       </Routes>
     </>
   );

@@ -13,6 +13,7 @@ import rootReducer from "./redux/rootReducer";
 import firebaseApp from "./util/firebase";
 import { setAuth } from './redux/userAuth/action';
 import { Provider } from "react-redux";
+import 'react-quill/dist/quill.snow.css';
 
 const store = legacy_createStore(rootReducer);
 console.log(store.getState()); // getState() state.js
