@@ -16,6 +16,8 @@ import HomePage from "./pages/community/HomePage";
 import ProductsDetails from "./pages/community/ProductsDetails";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
+import DonationWriteForm from "./pages/donation/DonationWriteForm";
+import DonationDetail from "./pages/donation/DonationDetail";
 import LoginPage from "./pages/member/LoginPage";
 import RegisterPage from "./pages/member/RegisterPage";
 import SocialRegisterPage from "./pages/member/SocialRegisterPage";
@@ -29,20 +31,19 @@ import TicketPage from "./pages/personal/TicketPage";
 import AuthLogic from "./util/authLogic";
 import firebaseApp from "./util/firebase";
 
-function App({authLogic}) {
+function App({ authLogic }) {
   const [user, setUser] = useState();
   const [domain, setDomain] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
-  function App({authLogic, imageUploader}) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const session = sessionStorage;
-  const toastStatus = useSelector((state) => state.toastStatus);
-  // 회원 가입 정보 DB 비교
-  /*
+  function App({ authLogic, imageUploader }) {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const session = sessionStorage;
+    const toastStatus = useSelector((state) => state.toastStatus);
+    // 회원 가입 정보 DB 비교
+    /*
   useEffect(() => {
     const asyncDB = async () => {
       const auth = authLogic.getUserAuth();
@@ -102,7 +103,11 @@ function App({authLogic}) {
     <>
       <Routes>
         {/* LoginMenu Routes */}
-        <Route path="/register" exact={true} element={<RegisterPage authLogic={authLogic} />} />
+        <Route
+          path="/register"
+          exact={true}
+          element={<RegisterPage authLogic={authLogic} />}
+        />
         <Route
           path="/socialregister"
           exact={true}
@@ -148,7 +153,19 @@ function App({authLogic}) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<Write />} />
-        <Route path="together/boardDetail/" element={<BoardDetail/>} />
+        <Route path="together/boardDetail/" element={<BoardDetail />} />
+
+        {/* DonationPage Routes - 성훈 작업중 */}
+        <Route
+          path="/donation/write"
+          exact={true}
+          element={<DonationWriteForm />}
+        />
+        <Route
+          path="/donation/detail"
+          exact={true}
+          element={<DonationDetail />}
+        />
       </Routes>
     </>
   );

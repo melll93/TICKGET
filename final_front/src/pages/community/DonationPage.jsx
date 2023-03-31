@@ -4,8 +4,10 @@ import Sidebar from "../../components/Sidebar";
 import { Button, Table } from 'react-bootstrap'
 import DonationFooter from "../donation/DonationFooter";
 import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const DonationPage = () => {
+      const navigate = useNavigate()
 
   
   return (
@@ -13,6 +15,7 @@ const DonationPage = () => {
    <Sidebar/> 
      <div className="center">
      <Header/>
+     
      <div className='container'>
          <div className="page-header">
        {/*   <h2>부서관리&nbsp;<i className="fa-solid fa-angles-right"></i>&nbsp;<small>부서목록</small></h2> */}
@@ -22,7 +25,7 @@ const DonationPage = () => {
             <div className="col-3">
             <select id="gubun" className="form-select" aria-label="분류선택">
                   <option defaultValue>분류선택</option>
-                  <option value="deptno">제목</option> {/* value는 컬럼명에 맞추기 */}
+                  <option value="deptno">글 제목</option> {/* value는 컬럼명에 맞추기 */}
                   <option value="dname">카테고리</option> {/* value는 컬럼명에 맞추기 */}
                   <option value="loc">날짜</option>        {/* value는 컬럼명에 맞추기 */}
             </select>
@@ -44,6 +47,8 @@ const DonationPage = () => {
                   <th>수량</th>
                   <th>가격</th>
                   <th>등록일</th>
+                  <th>작성자</th>
+                  <th>조회수</th>
                   </tr>
             </thead>
             <tbody>
@@ -59,8 +64,8 @@ const DonationPage = () => {
             <Button variant="warning" >
                   전체조회
             </Button>&nbsp;
-            <Button variant="success" >
-                  부서등록
+            <Button variant="success" onClick={()=>navigate('/donation/write')}>
+                  글쓰기
             </Button>
       </div>
          </div>
