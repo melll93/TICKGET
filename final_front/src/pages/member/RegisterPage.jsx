@@ -6,6 +6,7 @@ import Sidebar from '../../components/Sidebar';
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword } from '../../util/validateLogic';
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
+import { memberListDB } from '../../axios/member/memberLogic';
 
 const RegisterPage = ({authLogic}) => {
   const auth = authLogic.getUserAuth();
@@ -30,6 +31,7 @@ const RegisterPage = ({authLogic}) => {
     addr: "",
     addrDetail: ""
   })
+  // 회원가입 입력 정보
   const [memInfo, setMemInfo] = useState({
     email: "",
     password: "",
@@ -40,6 +42,7 @@ const RegisterPage = ({authLogic}) => {
     nickname: "",
     gender: "없음"
   });
+  // 입력 정보 유효성 체크
   const [comment, setComment] = useState({
     email: "",
     password: "",
@@ -49,6 +52,7 @@ const RegisterPage = ({authLogic}) => {
     mobile: "",
     nickname: ""
   });
+  // 필수 작성 항목
   const [star,setStar] = useState({
     email: "*",
     password: "*",
@@ -58,6 +62,7 @@ const RegisterPage = ({authLogic}) => {
     nickname: "*",
     birthday: "*"
   })
+  // 비밀번호 
   const [passwordType, setPasswordType] = useState([
     {
       type:'password',
@@ -97,7 +102,7 @@ const RegisterPage = ({authLogic}) => {
       }
     };
     onAuth();
-  },[setGoogleEmail, setStar,setMemInfo, userAuth.auth]);
+  },[setGoogleEmail, setStar, setMemInfo, userAuth.auth]);
 
   const handleSignup = (event) => {
     signup()    
@@ -127,19 +132,20 @@ const RegisterPage = ({authLogic}) => {
     console.log(value);
     setMemInfo({...memInfo, [id]: value});
   }
+  
   //닉네임 중복확인 
   const overlap = async(key) => {
     console.log('닉네임 중복확인' + key);
     let params;
     if (key === 'email') {
       params = {MEM_EMAIL: memInfo[key], type:'overlap'}
-    } else {
+    } 
+    else {
       params = {MEM_NICKNAME: memInfo[key], type:'overlap'}
     }
     console.log(params);
     let response = {data: 0}
-    // dbLogic 필요
-    // response = await memberListDB(params)
+    response = await memberListDB(params)
     console.log(response.data)
     // Array(1)
     // 0: {MEM_UID:"karina", MEM_NAME:"유지민"}
@@ -171,7 +177,7 @@ const RegisterPage = ({authLogic}) => {
       result = checkPassword(memInfo.password, e); 
     } else if(key==='name'){
       result = validateName(e); 
-    } else if(key==='hp'){
+    } else if(key==='mobile'){
       result = validateHp(e); 
     } else if(key==='birthday'){
       result = validateBirthdate(e); 
@@ -221,11 +227,6 @@ const RegisterPage = ({authLogic}) => {
           MEM_BIRTHDAY: birthday,
           MEM_TEL: memInfo.hp,
           MEM_NICKNAME: memInfo.nickname,
-          MEM_ZIPCODE: post.zipcode,
-          MEM_ADDR: post.addr,
-          MEM_ADDR_DTL: post.addrDetail,
-          MEM_STATUS: 0,
-          MEM_AUTH: (type==='member'?'member':'teacher'),
           MEM_GENDER: memInfo.gender
         }
         console.log(datas)
