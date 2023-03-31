@@ -44,5 +44,5 @@ package back.spring.final_back.chat;
 	        log.info(session + " 클라이언트 접속 해제");
 	        list.remove(session);
 	    }
-	}
+	
 }
