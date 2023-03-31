@@ -1,11 +1,12 @@
 /* 은영 수정중  */
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
-import { Button, Modal, Tab, Tabs } from 'react-bootstrap';
+import { Button, Dropdown, DropdownButton, Modal, Tab, Tabs } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import {useNavigate, useParams} from 'react-router-dom'
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
+import { MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
 import '../../styles/productsdetails.css'
 import PaymentPage from '../personal/PaymentComponent';
 
@@ -24,19 +25,19 @@ function ProductsDetails(){
 
 
     /* 수정중 */
-    const [Data, setData] = useState({});
-
-    useEffect(() => {
-      axios.get(`/festival/festivalList?festMId=${festMId}&type=single`).then((response) => {
-        if (response.data.success) {
-          console.log(response.data);
-          setData(response.data.data[0]);
-          console.log(response.data.data[0])
-        } else {
-          alert("상세 정보 가져오기를 실패했습니다.");
-        }
-      });
-    }, []);
+    /* const [Data, setData] = useState({});
+ */
+    // useEffect(() => {
+    //   axios.get(`/festival/festivalList?festMId=${festMId}&type=single`).then((response) => {
+    //     if (response.data.success) {
+    //       console.log(response.data);
+    //       setData(response.data.data[0]);
+    //       console.log(response.data.data[0])
+    //     } else {
+    //       alert("상세 정보 가져오기를 실패했습니다.");
+    //     }
+    //   });
+    // }, []);
 /* 수정중 */
     
 
@@ -80,6 +81,8 @@ id:  , 날짜...?
       <>
       <Sidebar />
       <div className="center">
+      출력{festMId}
+       {/* 출력{Data} */}
         <Header />
         <h2>상품 상세페이지....</h2>
 
@@ -157,6 +160,57 @@ id:  , 날짜...?
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+
+   {/* 이름 */}
+  <h5>티켓</h5>
+   <div style={{display:"flex"}}>
+<DropdownButton id="dropdown_basic_button" title="0"onSelect={(eventKey)=>{}}>
+  <Dropdown.Item eventKey="item1">1</Dropdown.Item>
+  <Dropdown.Item eventKey="item2">2</Dropdown.Item>
+  <Dropdown.Item eventKey="item3">3</Dropdown.Item>
+  <Dropdown.Item eventKey="item4">4</Dropdown.Item>
+  <Dropdown.Item eventKey="item5">5</Dropdown.Item>
+  <Dropdown.Item eventKey="item6">6</Dropdown.Item>
+  <Dropdown.Item eventKey="item7">7</Dropdown.Item>
+</DropdownButton><h4>매</h4>
+      </div>
+<div class="dropdown">
+  <h3>구매수량</h3>
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    구매수량
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" >1</a></li>
+    <li><a class="dropdown-item" >2</a></li>
+    <li><a class="dropdown-item" >3</a></li>
+    <li><a class="dropdown-item" >4</a></li>
+  </ul>
+</div>
+
+<div style={{display:'flex'}}> 
+        <MyLabel style={{flex:'1', width:'50%'}}> 이름 <span style={{color:"red"}}>*</span>
+          <MyInput type="text" id="name" defaultValue='userName' placeholder="이름을 입력해주세요" />
+          <MyLabelAb>ㅇㅇㅇㅇ</MyLabelAb>
+      </MyLabel>
+      {/* 전화번호 */}
+      <MyLabel style={{flex:'1', width:'50%'}}> 전화번호 <span style={{color:"red"}}>*</span>
+        <MyInput type="text" id="mobile" defaultValue='userTel' placeholder="전화번호를 입력해주세요" 
+        />
+        <MyLabelAb>ㅇㅇㅇㅇ</MyLabelAb>
+      </MyLabel>
+        </div>
+      {/* 이메일 */}
+      <MyLabel> 이메일 <span style={{color:"red", width:'570px'}}>*</span>
+        <MyInput type="email" id="email" placeholder="이메일를 입력해주세요" />
+        <MyLabelAb>ㅇㅇㅇ</MyLabelAb>
+      </MyLabel>
+
+      <div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="email" aria-label="Username"/>
+  <span class="input-group-text">@</span>
+  <input type="text" class="form-control" placeholder="gmail.com" aria-label="Server" />
+</div>
+
 <div className="form-floating">
   <input type="number" className="form-control" id="tAmo"  onChange={(e)=>{inputTAmo (e.target.value)}}/>
   <label htmlFor="floatingInput">구매 수량</label>
@@ -230,8 +284,7 @@ id:  , 날짜...?
       </div>   {/* totalcontainer div */}
 </div>   {/* center div */}
        
-       출력{festMId}
-       출력{Data}
+
        </>
     )
   }
