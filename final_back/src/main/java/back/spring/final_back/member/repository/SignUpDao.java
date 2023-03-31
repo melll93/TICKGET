@@ -1,5 +1,6 @@
 package back.spring.final_back.member.repository;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -8,15 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper
 public interface SignUpDao {
+	// 전체 조회
+	public List<Map<String, Object>> memberList(Map<String, Object> pMap);
 
-  // Insert
-  public int memberInsert(Map<String, Object> pMap);
+	// Insert
+	public int memberInsert(Map<String, Object> pMap);
 
-  // Update
-  public int memberUpdate(Map<String, Object> pMap);
+	// Update
+	public int memberUpdate(Map<String, Object> pMap);
 
-  // Delete
-  public int memberDelete(Map<String, Object> pMap);
+	// Delete
+	public int memberDelete(Map<String, Object> pMap);
 }
 
 // public class SignUpDao {

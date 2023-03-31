@@ -6,21 +6,27 @@
     <select id="selectBoardList" resultType="BoardDto">
         select * from board
     </select>
+
+    <!-- 게시글 상세보기-->
+    <select id="selectBoardDetail" resultType="BoardDto">
+        select * from board where board_no=#{boardNo}
+    </select>
+
     <!-- 게시글 추가 -->
     <insert id="insertBoardList" parameterType="BoardDto">
         INSERT INTO board
         VALUES(
-            #{board_no}
-            , #{member_id}
-            , #{board_title}
-            , #{board_content}
-            , #{board_date}
-            , #{board_views}
-            , #{board_super_no}
-            , #{board_group_no}
-            , #{board_depth}
-            , #{board_reply_count}
-            , #{board_check}
+            #{boardNO}
+            , #{memberId}
+            , #{boardTitle}
+            , #{boardContent}
+            , #{boardDate}
+            , #{boardViews}
+            , #{boardSuperNo}
+            , #{boardGroupNo}
+            , #{boardDepth}
+            , #{boardReplyCount}
+            , #{boardCheck}
         )
     </insert>
     <!-- 게시슬 삭제 -->
@@ -28,7 +34,10 @@
         delete from board where board_no=#{boardNo}
     </delete>
     <!-- 게시글 수정 -->
-    <update id="updateBoardList" parameterType="BoardDto"> update board set board_title = #{boardTitle} ,
-    board_content = #{boardContent} where board_no = #{boardNo}
+    <update id="updateBoardList" parameterType="BoardDto">
+        update board set
+            board_title = #{boardTitle} ,
+            board_content = #{boardContent}
+        where board_no = #{boardNo}
     </update>
 </mapper>

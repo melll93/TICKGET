@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import back.spring.final_back.festival.repository.FestivalDto;
+import back.spring.final_back.festival.repository.FestivalDto2;
 import back.spring.final_back.festival.service.FestivalService;
 import lombok.RequiredArgsConstructor;
 
@@ -29,21 +30,21 @@ public class FestivalController {
 	@Autowired
 	private final FestivalService festivalService;
 	 @GetMapping("festivalList")
-	    public List<FestivalDto> festivalList() {
-	        List<FestivalDto> festival = null;
+	    public List<FestivalDto2> festivalList() {
+	        List<FestivalDto2> festival = null;
 	        festival=festivalService.festivalList();
 	        logger.info(festival.toString());
 	        return festival;
 	    }
 	 @GetMapping("seoulFestivalList")
-	    public List<FestivalDto> seoulFestivalList() {
-	        List<FestivalDto> festival = null;
+	    public List<FestivalDto2> seoulFestivalList() {
+	        List<FestivalDto2> festival = null;
 	        festival=festivalService.seoulFestivalList();
 	        return festival;
 	    }
 	 @GetMapping("kyeongkiFestivalList")
-	    public List<FestivalDto> kyeongkiFestivalList() {
-	        List<FestivalDto> festival = null;
+	    public List<FestivalDto2> kyeongkiFestivalList() {
+	        List<FestivalDto2> festival = null;
 	        festival=festivalService.kyeongkiFestivalList();
 	        return festival;
 	    }

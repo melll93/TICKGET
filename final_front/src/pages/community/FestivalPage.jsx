@@ -1,9 +1,9 @@
+/* 은영 수정중 */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
-import data from "./data";
-import { FestivalListLocationDB, FetivalListDB, KyeongkiFestivalListDB, SeoulFestivalListDB } from "../../axios/main/Festival";
+import {FetivalListDB, KyeongkiFestivalListDB, SeoulFestivalListDB } from "../../axios/main/Festival";
 
 
 
@@ -21,72 +21,68 @@ const Navbar = ({changeModal, modal2open, modal2_1open, modal3open, modal4open})
       <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
         <div className="container-fluid">
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <a
+            <ul className="nav-item">
+              <li
                 className="nav-link"
                 onClick={FestTotalModals}
                 style={{ marginLeft: "150px" }}
               >
                 전체
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" style={{ marginLeft: "150px" }}  onMouseEnter={e => {
-                    setStyle({display: 'block'})
-          }}
-      onMouseLeave={e => {
-                    setStyle({display: 'none'})
-      }} >
+              </li>
+            </ul>
+            <ul className="nav-item">
+              <ul className="nav-link" style={{ marginLeft: "150px" }}  onMouseEnter={e => {
+                    setStyle({display: 'block'})}} onMouseLeave={e => {setStyle({display: 'none'})}} >
                 지역별
-                <div style={style}>
+                <ul style={style}>
 
                 {/* <div style={{display:'flex', backgroundColor:'darkblue'}}> */}
 
-                <li className="nav-item">
-              <a className="nav-link" onClick={Seoul}>
+                <ul className="nav-item">
+              <li className="nav-link" onClick={Seoul}>
               서울
-              </a>
-            </li>
-                <li className="nav-item">
-              <a className="nav-link" onClick={Kyeongki}>
+              </li>
+            </ul>
+                <ul className="nav-item">
+              <li className="nav-link" onClick={Kyeongki}>
               경기
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" onClick={Seoul}>
+              </li>
+            </ul>
+            <ul className="nav-item">
+              <li className="nav-link" onClick={Seoul}>
               강원도
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" onClick={Kyeongki}>
+              </li>
+            </ul>
+            <ul className="nav-item">
+              <li className="nav-link" onClick={Kyeongki}>
               경상도
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" onClick={Seoul}>
+              </li>
+            </ul>
+            <ul className="nav-item">
+              <li className="nav-link" onClick={Seoul}>
               전라도
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" onClick={Kyeongki}>
+              </li>
+            </ul>
+            <ul className="nav-item">
+              <li className="nav-link" onClick={Kyeongki}>
               제주도/광역시
-              </a>
-            </li>
-            </div>
+              </li>
+            </ul>
+            </ul>
 
 
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" style={{ marginLeft: "150px" }} onClick={modalch}>
+              </ul>
+            </ul>
+            <ul className="nav-item">
+              <li className="nav-link" style={{ marginLeft: "150px" }} onClick={modalch}>
                 인기순/랭킹
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4}>
+              </li>
+            </ul>
+            <ul className="nav-item">
+              <li className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4}>
                 기타
-              </a>
-            </li>
+              </li>
+            </ul>
           </ul>
         </div>
       </nav>
@@ -104,18 +100,17 @@ return(
  <div>
  {festivals.data && festivals.data.map((festival, i) => {
 return(
-    <div key={festival.festId} className="card" style={{ width: "18rem", display: "inline-block", margin: "50px 0px 0px 50px", }} >
+    <div key={festival.festMId} className="card" style={{ width: "18rem", display: "inline-block", margin: "50px 0px 0px 50px", }} >
     <a  style={{ textDecoration: "none", color: "black" }} href={"/productsDetail/" + festival.festId}>
-      <img src={"images_key/fev" + (festival.festId) + ".PNG"} width="100%" alt="사진1" />
+      <img  src={festival.festMImg} width="100%" alt="사진1" />
         서울 상품
-      <div className="card-body">
-        <h5 className="card-title">제목 : {festival.festTitle}</h5>  
-        <p className="card-text">설명 : {festival.festDesc}</p>
-        <p className="card-text">{festival.festStartday} ~ {festival.festEndday} </p>
-        <p className="card-text"> 로케:{festival.festLocation}</p>
-        <p className="card-text"> festId: {festival.festId} </p>
-        <p className="card-text"> festcate:{festival.festCategory} </p>
-      </div>
+        <div className="card-body">
+          <h5 className="card-title">제목 : {festival.festMName}</h5>  
+          <p className="card-text">로케 : {festival.festMLoc}</p>
+          <p className="card-text"> {festival.festMStart} ~ {festival.festMEnd} </p>
+          <p className="card-text"> festId: {festival.festMId} </p>
+          <p className="card-text"> festCategory: {festival.festMGenre} </p>
+        </div>
     </a>
   </div>
 )  //안쪽리턴
@@ -134,18 +129,17 @@ return(
  <div>
  {festivals.data && festivals.data.map((festival, i) => {
 return(
-    <div key={festival.festId} className="card" style={{ width: "18rem", display: "inline-block", margin: "50px 0px 0px 50px", }} >
-    <a  style={{ textDecoration: "none", color: "black" }} href={"/productsDetail/" + festival.festId}>
-      <img src={"images_key/fev" + (festival.festId) + ".PNG"} width="100%" alt="사진1" />
+    <div key={festival.festMId} className="card" style={{ width: "18rem", display: "inline-block", margin: "50px 0px 0px 50px", }} >
+    <a  style={{ textDecoration: "none", color: "black" }} href={"/productsDetail/" + festival.festMId}>
+      <img src={festival.festMImg} width="100%" alt="사진1" />
         경기 상품
-      <div className="card-body">
-        <h5 className="card-title">제목 : {festival.festTitle}</h5>  
-        <p className="card-text">설명 : {festival.festDesc}</p>
-        <p className="card-text">{festival.festStartday} ~ {festival.festEndday} </p>
-        <p className="card-text"> 로케:{festival.festLocation}</p>
-        <p className="card-text"> festId: {festival.festId} </p>
-        <p className="card-text"> festcate:{festival.festCategory} </p>
-      </div>
+        <div className="card-body">
+          <h5 className="card-title">제목 : {festival.festMName}</h5>  
+          <p className="card-text">로케 : {festival.festMLoc}</p>
+          <p className="card-text"> {festival.festMStart} ~ {festival.festMEnd} </p>
+          <p className="card-text"> festId: {festival.festMId} </p>
+          <p className="card-text"> festCategory: {festival.festMGenre} </p>
+        </div>
     </a>
   </div>
 )  //안쪽리턴
@@ -171,10 +165,8 @@ const FestivalRankingList=()=>{
         <div className="card-body">
           <h5 className="card-title">제목 :</h5>  
           <p className="card-text">설명 : </p>
-          <p className="card-text">
-          <br/> festId: 
-          <br/> festCategory:
-          </p>
+          <p className="card-text"> festId:  </p>
+          <p className="card-text"> festCategory:  </p>
         </div>
     </div>
     )
@@ -193,10 +185,7 @@ const FestivalRankingList=()=>{
           <div className="card-body">
             <h5 className="card-title">제목 :</h5>  
             <p className="card-text">설명 : </p>
-            <p className="card-text">
-            <br/> festId: 
-            <br/> festCategory:
-            </p>
+            <p className="card-text"> </p>
           </div>
       </div>
       )
@@ -205,8 +194,8 @@ const FestivalRankingList=()=>{
 
 
 const FestivalsTest =() =>{
-  
     const [festivals, setFestivals] = useState([]);
+    const [test, setTest] = useState(0);
     useEffect(() => {
       FetivalListDB().then(setFestivals);
     }, []);
@@ -214,8 +203,9 @@ const FestivalsTest =() =>{
   <>
    <div>
         {festivals.data && festivals.data.map((festival, i) => {
+  // console.log(festival)
 return(
-      <div key={festival.festId}
+      <div key={festival.festMId}
       className="card"
       style={{
         width: "18rem",
@@ -225,22 +215,19 @@ return(
     >
       <a
         style={{ textDecoration: "none", color: "black" }}
-        href={"/productsDetail/" + festival.festId}
+        href={"/productsDetail/" + festival.festMId}
       >
         <img
-          src={"images_key/fev" + (festival.festId) + ".PNG"}
+          src={festival.festMImg}
           width="100%"
           alt="사진1"
         />
-          등록한 상품
         <div className="card-body">
-          <h5 className="card-title">제목 : {festival.festTitle}</h5>  
-          <p className="card-text">설명 : {festival.festDesc}</p>
-          <p className="card-text">
-            {festival.festStartday} ~ {festival.festEndday}
-          <br/> festId: {festival.festId}
-          <br/> festCategory: {festival.festCategory}
-          </p>
+          <h5 className="card-title">제목 : {festival.festMName}</h5>  
+          <p className="card-text">로케 : {festival.festMLoc}</p>
+          <p className="card-text"> {festival.festMStart} ~ {festival.festMEnd} </p>
+          <p className="card-text"> festId: {festival.festMId} </p>
+          <p className="card-text"> festCategory: {festival.festMGenre} </p>
         </div>
       </a>
     </div>
@@ -276,10 +263,10 @@ const FestivalPage = () => {
     <>
       <Sidebar />
       <div className="center">
-        <Header />
         Festival 페이지<br/>
-        <Link to="/addProducts" style={{fontSize:'40px', backgroundColor:'blue', color:'white', borderRadius:'20%', textDecoration:'none'}}>상품등록버튼</Link>
+        <Header />
         <Navbar changeModal={changeModal} modal2open={modal2open} modal2_1open={modal2_1open} modal3open={modal3open} modal4open={modal4open} />
+        <Link to="/addProducts" style={{fontSize:'40px', backgroundColor:'blue', color:'white', borderRadius:'20%', textDecoration:'none'}}>상품등록버튼</Link>
         {totalFest===1?<FestivalsTest></FestivalsTest>:null}<br/>
         {modal2 === 1 ? <SeoulFestivalList /> : null}
         {modal2_1 === 1 ? <KyeongkiFestivalList /> : null}
