@@ -24,7 +24,6 @@ import CartPage from "./pages/personal/CartPage";
 import MessagePage from "./pages/personal/MessagePage";
 import MyPage from "./pages/personal/MyPage";
 import PaymentPage from "./pages/personal/PaymentPage";
-import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import AuthLogic from "./util/authLogic";
@@ -145,9 +144,7 @@ function App({authLogic}) {
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
         <Route path="/productsDetail/:id" element={<ProductsDetails />} />
-        <Route path="/payment/:id" element={<PaymentPage />} />
-        <Route path="/paysuctest" element={<PaySucTestPage />} />
-
+        <Route path="/payment/:id" exact={true} element={<PaymentPage />} />
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<Write />} />

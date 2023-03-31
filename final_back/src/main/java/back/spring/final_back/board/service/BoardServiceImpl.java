@@ -2,6 +2,8 @@ package back.spring.final_back.board.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import back.spring.final_back.board.repository.BoardDao;
@@ -11,14 +13,22 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
-
+    Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
     private final BoardDao boardDao;
 
     // 게시판 조회(SelectAll)
     @Override
     public List<BoardDto> selectBoardList() {
+        logger.info("BoardServiceImpl : selectBoardList");
         List<BoardDto> mList = null;
         mList = boardDao.selectBoardList();
+        return mList;
+    }
+
+    // 게시글 상세보기(SelectOne)
+    @Override
+    public BoardDto selectBoardDetail(BoardDto boardDto) {
+        BoardDto mList = boardDao.selectBoardDetail(boardDto);
         return mList;
     }
 
@@ -42,4 +52,5 @@ public class BoardServiceImpl implements BoardService {
         int result = boardDao.deleteBoardList(boardDto);
         return result;
     }
+
 }
