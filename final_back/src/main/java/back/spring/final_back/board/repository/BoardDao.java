@@ -9,6 +9,9 @@ public interface BoardDao {
     // 게시판 조회(SelectAll)
     public List<BoardDto> selectBoardList();
 
+    // 게시글 상세보기(SelectOne)
+    public BoardDto selectBoardDetail(BoardDto boardDto);
+
     // 게시판 등록(Insert)
     public int insertBoardList(BoardDto boardDto);
 
@@ -17,4 +20,5 @@ public interface BoardDao {
 
     // 게시판 삭제(Delete)
     public int deleteBoardList(BoardDto boardDto);
+
 }
