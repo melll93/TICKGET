@@ -137,7 +137,7 @@ id:  , 날짜...?
           <div className="form-floating" style={{textAlign:'right'}}>
   <textarea className="form-control" placeholder="Leave a comment here" id="product_detail_review_textarea" style={{height: '300px', margin:'10px', maxWidth:'1200px'}}></textarea>
   <label htmlFor="floatingTextarea">관람후기</label>
-<button className="reviewbtn" onClick={()=> {}} style={{backgroundColor:'black', width:'250px', height:'50px', color:'white', margin:'10px 80px 10px 10px'}}> 등록 </button> 
+<button className="reviewbtn" onClick={()=> {}} style={{backgroundColor:'black', width:'250px', height:'50px', color:'white', margin:'10px 80px 10px 10px', borderRadius:'10px'}}> 등록 </button> 
 
 </div>
 

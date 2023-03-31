@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
@@ -26,13 +27,6 @@ import PaymentPage from "./pages/personal/PaymentPage";
 import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-import AddProductsPage from "./pages/community/AddProductsPage";
-import ProductsDetails from "./pages/community/ProductsDetails";
-import PaymentPage from "./pages/personal/PaymentPage";
-import NaverLogin from "./api/login/NaverLogin";
-import KakaoLogin from "./api/login/KakaoLogin";
-import RegisterPage from "./pages/member/RegisterPage";
-import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import AuthLogic from "./util/authLogic";
 import firebaseApp from "./util/firebase";
 
