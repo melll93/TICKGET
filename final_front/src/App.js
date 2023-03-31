@@ -29,16 +29,10 @@ import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 
-function App({authLogic}) {
-  const [boardNo, setBoardNo]=useState();
-function App({ authLogic }) {
-  const [user, setUser] = useState();
+function App({ authLogic, imageUploader }) {
   const [domain, setDomain] = useState();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-
-  function App({authLogic, imageUploader}) {
+  const [boardNo, setBoardNo] = useState();
+  const [user, setUser] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const session = sessionStorage;
@@ -101,7 +95,6 @@ function App({ authLogic }) {
     asyncDB();
   }, [dispatch]);
   */
-  }
   useEffect(() => {
     console.log(user);
   }, [user]);
@@ -156,12 +149,15 @@ function App({ authLogic }) {
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
-        <Route path="/productsDetail/:festMId" element={<ProductsDetails  />} />
-        <Route path="/paymentsucess/:festMId"element={<PaySucTestPage />} />
+        <Route path="/productsDetail/:festMId" element={<ProductsDetails />} />
+        <Route path="/paymentsucess/:festMId" element={<PaySucTestPage />} />
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<Write />} />
-        <Route path="together/boardDetail/:boardNo" element={<BoardDetail boardNo={boardNo}/>} />
+        <Route
+          path="together/boardDetail/:boardNo"
+          element={<BoardDetail boardNo={boardNo} />}
+        />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
 
         {/* DonationPage Routes - 성훈 작업중 */}
@@ -179,5 +175,4 @@ function App({ authLogic }) {
     </>
   );
 }
-
 export default App;

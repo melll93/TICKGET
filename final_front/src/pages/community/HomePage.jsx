@@ -55,7 +55,7 @@ const HomePage = () => {
             <MainCalendar />
           </div>
         </div>
-  
+
         {/* <div className="mainpage box">
           <div className="mainpage div div3">
             <BasicTable />
@@ -64,7 +64,7 @@ const HomePage = () => {
             <BasicTable />
           </div>
         </div> */}
-  
+
       </div>
     </>
   );

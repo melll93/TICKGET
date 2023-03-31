@@ -39,12 +39,10 @@ public class ChatHandler extends TextWebSocketHandler {
 	/* Client가 접속 해제 시 호출되는 메서드드 */
 
 	@Override
-	    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
-	        log.info(session + " 클라이언트 접속 해제");
-	        list.remove(session);
-	    }<<<<<<<HEAD
+		log.info(session + " 클라이언트 접속 해제");
+		list.remove(session);
+	}
 
-}=======}
-
->>>>>>>huni
+}
