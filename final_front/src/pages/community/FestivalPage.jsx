@@ -1,8 +1,8 @@
+/* 은영 수정중 */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
-import data from "./data";
 import { FestivalListLocationDB, FetivalListDB, KyeongkiFestivalListDB, SeoulFestivalListDB } from "../../axios/main/Festival";
 import ProductsDetails from "./ProductsDetails";
 

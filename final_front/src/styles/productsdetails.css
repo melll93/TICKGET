@@ -1,0 +1,165 @@
+
+/* >>>>>>>>중간 세션 (캘린더랑 잔여 좌석 예약버튼 ) <<<<<<<<*/
+
+.midContainerCalendarAndRestSeats{
+    display: flex;
+    max-height: 900px;
+    max-width: 1250px;
+    border: 1px solid #878d95;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding : 40px;
+    margin: 20px 80px 20px 210px; /* 위 오 아 왼 */ 
+}
+
+.calendar{
+    flex:0.8;
+    margin: 20px 50px 50px 50px;
+
+
+}
+ .calendarands1{
+    flex:0.6;
+    text-align: center;
+ }
+
+ .calendarands2{
+    flex:0.6;
+    text-align: center;
+ }
+
+
+ 
+ .researvebtn{
+    background-color: black;
+    border-radius: 5px;
+    width: 250px;
+    height: 50px;
+    color: white;
+ }
+
+
+ /* 중간 세션 캘린더 관련  */
+ .react-calendar{
+   border: transparent !important;
+   width: 100% !important; 
+ }
+.react-calendar__tile--now {
+    background: #8468e0 !important; 
+  }
+/* >>>>>>>>>>>>>>중간 세션 끝<<<<<<<<<<< */
+ 
+/* >>>>>>>>>>>>>>>>>>>>>>탑 섹션<<<<<< */
+.topcontainer{
+    display: flex;
+    max-height: 900px;
+    box-sizing: border-box;
+    padding : 40px;
+    margin: 20px 80px 20px 170px; /* 위 오 아 왼 */ 
+  }
+
+
+  .imgdesc{
+    flex:1;
+    text-align: center;
+  }
+
+  .product_detail_imgdiv {
+    position: relative;
+    overflow: hidden;
+    flex: none;
+    margin-right: 40px;
+    width: 405px;
+    height: 500px;
+    border-radius: 10px;
+    background: #f5f6f9;
+}
+
+/* .product_detail_imgdiv::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #242428;
+    border-radius: 10px;
+    box-sizing: border-box;
+    opacity: 0.1;
+    z-index: 1;
+    content: '';
+} */
+
+.product_detail_img {
+    width: 100%;
+    height: 100%;
+}
+
+
+.product_detail_info .product_detail_head {
+    position: relative;
+    padding: 0 75px 10px 0;
+    border-bottom: 1px solid #242428;
+    line-height: 0;
+    color: #242428;
+}
+
+
+.product_detail_info .product_lnfo_list_col2 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+ul, ol {
+    list-style: none;
+}
+
+
+img, form, fieldset, svg, li {
+    border: 0;
+    vertical-align: top;
+}
+
+/* ul {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+} */
+
+.product_detail_info .product_info_title {
+    flex: none;
+    width: 70px;
+    margin-right: 10px;
+    color: #62676c;
+}
+
+
+.product_detail_info .product_info_list {
+    display: flex;
+    padding: 7px 0 6px;
+    font-size: 15px;
+    line-height: 22px;
+    box-sizing: border-box;
+}
+
+
+/* *, ::after, ::before {
+    box-sizing: border-box;
+} */
+
+.product_detail_info .product_lnfo_list_col2 .product_info_list {
+    width: 50%;
+}
+
+
+.product_lnfo_list_col2{
+    border-top: 1px solid #ecedf2;
+}
+
+ol, ul {
+    padding-left: 2rem;
+}
+
+
