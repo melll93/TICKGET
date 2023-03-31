@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
-import { FestivalListLocationDB, FetivalListDB, KyeongkiFestivalListDB, SeoulFestivalListDB } from "../../axios/main/Festival";
+import {FetivalListDB, KyeongkiFestivalListDB, SeoulFestivalListDB } from "../../axios/main/Festival";
 import ProductsDetails from "./ProductsDetails";
 
 
@@ -101,18 +101,17 @@ return(
  <div>
  {festivals.data && festivals.data.map((festival, i) => {
 return(
-    <div key={festival.festId} className="card" style={{ width: "18rem", display: "inline-block", margin: "50px 0px 0px 50px", }} >
+    <div key={festival.festMId} className="card" style={{ width: "18rem", display: "inline-block", margin: "50px 0px 0px 50px", }} >
     <a  style={{ textDecoration: "none", color: "black" }} href={"/productsDetail/" + festival.festId}>
-      <img src={"images_key/fev" + (festival.festId) + ".PNG"} width="100%" alt="사진1" />
+      <img  src={festival.festMImg} width="100%" alt="사진1" />
         서울 상품
-      <div className="card-body">
-        <h5 className="card-title">제목 : {festival.festTitle}</h5>  
-        <p className="card-text">설명 : {festival.festDesc}</p>
-        <p className="card-text">{festival.festStartday} ~ {festival.festEndday} </p>
-        <p className="card-text"> 로케:{festival.festLocation}</p>
-        <p className="card-text"> festId: {festival.festId} </p>
-        <p className="card-text"> festcate:{festival.festCategory} </p>
-      </div>
+        <div className="card-body">
+          <h5 className="card-title">제목 : {festival.festMName}</h5>  
+          <p className="card-text">로케 : {festival.festMLoc}</p>
+          <p className="card-text"> {festival.festMStart} ~ {festival.festMEnd} </p>
+          <p className="card-text"> festId: {festival.festMId} </p>
+          <p className="card-text"> festCategory: {festival.festMGenre} </p>
+        </div>
     </a>
   </div>
 )  //안쪽리턴
@@ -131,18 +130,17 @@ return(
  <div>
  {festivals.data && festivals.data.map((festival, i) => {
 return(
-    <div key={festival.festId} className="card" style={{ width: "18rem", display: "inline-block", margin: "50px 0px 0px 50px", }} >
-    <a  style={{ textDecoration: "none", color: "black" }} href={"/productsDetail/" + festival.festId}>
-      <img src={"images_key/fev" + (festival.festId) + ".PNG"} width="100%" alt="사진1" />
+    <div key={festival.festMId} className="card" style={{ width: "18rem", display: "inline-block", margin: "50px 0px 0px 50px", }} >
+    <a  style={{ textDecoration: "none", color: "black" }} href={"/productsDetail/" + festival.festMId}>
+      <img src={festival.festMImg} width="100%" alt="사진1" />
         경기 상품
-      <div className="card-body">
-        <h5 className="card-title">제목 : {festival.festTitle}</h5>  
-        <p className="card-text">설명 : {festival.festDesc}</p>
-        <p className="card-text">{festival.festStartday} ~ {festival.festEndday} </p>
-        <p className="card-text"> 로케:{festival.festLocation}</p>
-        <p className="card-text"> festId: {festival.festId} </p>
-        <p className="card-text"> festcate:{festival.festCategory} </p>
-      </div>
+        <div className="card-body">
+          <h5 className="card-title">제목 : {festival.festMName}</h5>  
+          <p className="card-text">로케 : {festival.festMLoc}</p>
+          <p className="card-text"> {festival.festMStart} ~ {festival.festMEnd} </p>
+          <p className="card-text"> festId: {festival.festMId} </p>
+          <p className="card-text"> festCategory: {festival.festMGenre} </p>
+        </div>
     </a>
   </div>
 )  //안쪽리턴
@@ -206,8 +204,9 @@ const FestivalsTest =() =>{
   <>
    <div>
         {festivals.data && festivals.data.map((festival, i) => {
+  // console.log(festival)
 return(
-      <div key={festival.festId}
+      <div key={festival.festMId}
       className="card"
       style={{
         width: "18rem",
@@ -217,20 +216,19 @@ return(
     >
       <a
         style={{ textDecoration: "none", color: "black" }}
-        href={"/productsDetail/" + festival.festId}
+        href={"/productsDetail/" + festival.festMId}
       >
         <img
-          src={"images_key/fev" + (festival.festId) + ".PNG"}
+          src={festival.festMImg}
           width="100%"
           alt="사진1"
         />
-          등록한 상품
         <div className="card-body">
-          <h5 className="card-title">제목 : {festival.festTitle}</h5>  
-          <p className="card-text">설명 : {festival.festDesc}</p>
-          <p className="card-text"> {festival.festStartday} ~ {festival.festEndday} </p>
-          <p className="card-text"> festId: {festival.festId} </p>
-          <p className="card-text"> festCategory: {festival.festCategory} </p>
+          <h5 className="card-title">제목 : {festival.festMName}</h5>  
+          <p className="card-text">로케 : {festival.festMLoc}</p>
+          <p className="card-text"> {festival.festMStart} ~ {festival.festMEnd} </p>
+          <p className="card-text"> festId: {festival.festMId} </p>
+          <p className="card-text"> festCategory: {festival.festMGenre} </p>
         </div>
       </a>
       {test ===1? <ProductsDetails festivals={festivals} /> : null}
@@ -267,10 +265,10 @@ const FestivalPage = () => {
     <>
       <Sidebar />
       <div className="center">
-        <Header />
         Festival 페이지<br/>
-        <Link to="/addProducts" style={{fontSize:'40px', backgroundColor:'blue', color:'white', borderRadius:'20%', textDecoration:'none'}}>상품등록버튼</Link>
+        <Header />
         <Navbar changeModal={changeModal} modal2open={modal2open} modal2_1open={modal2_1open} modal3open={modal3open} modal4open={modal4open} />
+        <Link to="/addProducts" style={{fontSize:'40px', backgroundColor:'blue', color:'white', borderRadius:'20%', textDecoration:'none'}}>상품등록버튼</Link>
         {totalFest===1?<FestivalsTest></FestivalsTest>:null}<br/>
         {modal2 === 1 ? <SeoulFestivalList /> : null}
         {modal2_1 === 1 ? <KyeongkiFestivalList /> : null}
