@@ -46,10 +46,10 @@ const BoardDetail = () => {
           <Button style={{ marginLeft: "10px" }} onClick={() => navigate("/together")}>목록으로
           </Button>
     </div>
-        <h3>{board.board_title}</h3>
-        <p>{board.member_id}</p>
-        <p>{board.board_date}</p>
-        <p>{board.board_content}</p>
+        <h3>{board.boardTitle}</h3>
+        <p>{board.memberId}</p>
+        <p>{board.boardDate}</p>
+        <p>{board.boardContent}</p>
     </div>
     </>
   );
