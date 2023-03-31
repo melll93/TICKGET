@@ -23,11 +23,11 @@ import RegisterPage from "./pages/member/RegisterPage";
 import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
-import MessagePage from "./pages/personal/MessagePage";
 import MyPage from "./pages/personal/MyPage";
 import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
+import ChatPage from "./pages/personal/ChatPage";
 
 function App({ authLogic, imageUploader }) {
   const [domain, setDomain] = useState();
@@ -39,13 +39,6 @@ function App({ authLogic, imageUploader }) {
   const toastStatus = useSelector((state) => state.toastStatus);
   // 회원 가입 정 보 DB 비교
   /*
-  function App({ authLogic, imageUploader }) {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const session = sessionStorage;
-    const toastStatus = useSelector((state) => state.toastStatus);
-    // 회원 가입 정보 DB 비교
-    /*
   useEffect(() => {
     const asyncDB = async () => {
       const auth = authLogic.getUserAuth();
@@ -143,8 +136,7 @@ function App({ authLogic, imageUploader }) {
         <Route path="/carpool" exact={true} element={<CarpoolPage />} />
         <Route path="/donation" exact={true} element={<DonationPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
-        <Route path="/message" exact={true} element={<MessagePage />} />
-        <Route path="/message" exact={true} element={<MessagePage />} />
+        <Route path="/chat" exact={true} element={<ChatPage />} />
 
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />

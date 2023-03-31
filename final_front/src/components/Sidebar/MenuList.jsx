@@ -9,7 +9,7 @@ const MenuList = () => {
     "CARPOOL",
     "DONATION",
     "CALENDAR",
-    "MESSAGE",
+    "CHAT",
   ]);
 
   return (
