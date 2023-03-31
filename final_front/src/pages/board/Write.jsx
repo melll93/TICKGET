@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import { boardInsertDB } from "../../axios/board/boardLogic";
+import { insertBoardListDB } from "../../axios/board/boardLogic";
 
 const Write = () => {
   const navigate = useNavigate()
@@ -34,7 +34,7 @@ const Write = () => {
       board_reply_count,
       board_check,
     }
-    const res = await boardInsertDB(board)
+    const res = await insertBoardListDB(board)
     // window.location.replace("/board")
     navigate("/together")
 }

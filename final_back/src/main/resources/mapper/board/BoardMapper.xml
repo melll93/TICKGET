@@ -9,7 +9,7 @@
 
     <!-- 게시글 상세보기-->
     <select id="selectBoardDetail" resultType="BoardDto">
-        select * from board where board_no=#{board_no}
+        select * from board where board_no=#{boardNo}
     </select>
 
     <!-- 게시글 추가 -->
@@ -31,10 +31,13 @@
     </insert>
     <!-- 게시슬 삭제 -->
     <delete id="deleteBoardList" parameterType="BoardDto">
-        delete from board where board_no=#{board_no}
+        delete from board where board_no=#{boardNo}
     </delete>
     <!-- 게시글 수정 -->
-    <update id="updateBoardList" parameterType="BoardDto"> update board set board_title = #{board_title} ,
-    board_content = #{board_content} where board_no = #{board_no}
+    <update id="updateBoardList" parameterType="BoardDto">
+        update board set
+            board_title = #{boardTitle} ,
+            board_content = #{boardContent}
+        where board_no = #{boardNo}
     </update>
 </mapper>

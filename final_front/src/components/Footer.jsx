@@ -1,9 +1,19 @@
 import React from 'react'
+import { Navbar } from "react-bootstrap";
 
 const Footer = () => {
     return (
-        <div>Footer</div>
-    )
-}
+        <>
+          <Navbar
+            fixed="bottom"
+            className="navbar navbar-expand-sm bg-light justify-content-center"
+            bg="dark"
+            style={{ color: "white" }}
+          >
+            아니너무 어렵자나 리액트 ㅡㅡ Copyright &copy;2023
+          </Navbar>
+        </>
+      );
+    };
 
 export default Footer

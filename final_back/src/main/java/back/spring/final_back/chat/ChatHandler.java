@@ -45,4 +45,3 @@ package back.spring.final_back.chat;
 	        list.remove(session);
 	    }
 	}
-}
