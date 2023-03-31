@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { jsonboardListDB } from "../../axios/board/boardLogic";
-import QuillEditor from "./QuillEditor";
+import Write from "./Write";
 
 const BoardDetail = () => {
   const navigate = useNavigate();
@@ -42,7 +42,9 @@ const jsonBoardList = async () => {
           <p>{board.boardDate}</p>
           <p>{board.boardContent}</p>
         </div>
-        <QuillEditor/>
+        <div>
+        <Write/>
+        </div>
         <div style={{ marginBottom: "20px" }}>
           <Button onClick={() => window.history.back()}>뒤로가기</Button>
           <Button style={{ marginLeft: "10px" }}onClick={() => navigate("/together")}
