@@ -39,6 +39,7 @@ function App({ authLogic, imageUploader }) {
   const dispatch = useDispatch();
   const session = sessionStorage;
   const toastStatus = useSelector((state) => state.toastStatus);
+  
   // 회원 가입 정보 DB 비교
   /*
   useEffect(() => {
@@ -83,7 +84,8 @@ function App({ authLogic, imageUploader }) {
     }
     asyncDB();
   }, [dispatch]);
-  */
+}
+*/
   useEffect(() => {
     console.log(user);
   }, [user]);
