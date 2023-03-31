@@ -23,7 +23,7 @@ import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
 import MessagePage from "./pages/personal/MessagePage";
 import MyPage from "./pages/personal/MyPage";
-import PaymentPage from "./pages/personal/PaymentPage";
+import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import AuthLogic from "./util/authLogic";
@@ -41,7 +41,7 @@ function App({authLogic}) {
   const dispatch = useDispatch();
   const session = sessionStorage;
   const toastStatus = useSelector((state) => state.toastStatus);
-  // 회원 가입 정보 DB 비교
+  // 회원 가입 정 보 DB 비교
   /*
   useEffect(() => {
     const asyncDB = async () => {
@@ -143,8 +143,8 @@ function App({authLogic}) {
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
-        <Route path="/productsDetail/:id" element={<ProductsDetails />} />
-        <Route path="/payment/:id" exact={true} element={<PaymentPage />} />
+        <Route path="/productsDetail/:festMId" element={<ProductsDetails  />} />
+        <Route path="/paymentsucess/:festMId"element={<PaySucTestPage />} />
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<Write />} />

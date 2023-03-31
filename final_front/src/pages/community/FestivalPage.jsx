@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import {FetivalListDB, KyeongkiFestivalListDB, SeoulFestivalListDB } from "../../axios/main/Festival";
-import ProductsDetails from "./ProductsDetails";
 
 
 
@@ -231,7 +230,6 @@ return(
           <p className="card-text"> festCategory: {festival.festMGenre} </p>
         </div>
       </a>
-      {test ===1? <ProductsDetails festivals={festivals} /> : null}
     </div>
 ) 
         })}

@@ -41,12 +41,14 @@ const festivalInsert=async()=>{
     festDetail,
     festPrice,
     festDesc,
+    festImageUrl
     }
     const res =await FestivalInsertDB(festival)
     console.log(festival)
     if(!res.data){
     }
     else{
+      inputFestUrl()
       FestImageUpload()
       navigate("/festival")
     }
@@ -77,6 +79,11 @@ const inuptTitle = useCallback((e) => {
     const inputDesc = useCallback((e) => {
       setFestdesc (e)
     },[])
+    const inputFestUrl = useCallback((e) => {
+      setFestImageUrl (e)
+    },[])
+
+
     
 
 //선택파일 이미지로 교체
@@ -109,6 +116,7 @@ const inuptTitle = useCallback((e) => {
       .then((res) => res.json())
       .then((res) => {
         setFestImageUrl(res.secure_url);
+        console.log(res.secure_url)
       })
       .catch((err) => console.log(err));
   };
@@ -183,7 +191,6 @@ const AddProductsPage = () => {
         <Header />
         상품등록페이지
         <AddProducts />
-
       </div>
     </>
   )

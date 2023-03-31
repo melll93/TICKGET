@@ -1,17 +1,58 @@
 /* 은영 수정중  */
-import { useEffect, useState } from 'react';
-import { Button, Tab, Tabs } from 'react-bootstrap';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { Button, Modal, Tab, Tabs } from 'react-bootstrap';
 import Calendar from 'react-calendar';
-import {Link, useNavigate, useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import '../../styles/productsdetails.css'
+import PaymentPage from '../personal/PaymentComponent';
 
-function ProductsDetails(props){
-    let {id} =useParams();
+function ProductsDetails(){
+    let {festMId} =useParams();
     const [value, onChange] = useState(new Date());
     const [mark, setMark] = useState([]);
     const navigate = useNavigate();
+    const [smShow, setSmShow] = useState(false);
+    const [lgShow, setLgShow] = useState(false);
+    const [mTel, setMTel]=useState("");
+    const [mName, setMName]=useState("");
+    const [mEmail, setMEmail]=useState("");
+    const [tAmo, setTamo]=useState(0);
+
+
+
+    /* 수정중 */
+    const [Data, setData] = useState({});
+
+    useEffect(() => {
+      axios.get(`/festival/festivalList?festMId=${festMId}&type=single`).then((response) => {
+        if (response.data.success) {
+          console.log(response.data);
+          setData(response.data.data[0]);
+          console.log(response.data.data[0])
+        } else {
+          alert("상세 정보 가져오기를 실패했습니다.");
+        }
+      });
+    }, []);
+/* 수정중 */
+    
+
+    const inputMTel = useCallback((e) => {
+      setMTel (e)
+    },[])
+    const inputMName = useCallback((e) => {
+      setMName (e)
+    },[])
+    const inputMEmail = useCallback((e) => {
+      setMEmail (e)
+    },[])
+    const inputTAmo = useCallback((e) => {
+      setTamo (e)
+    },[])
+
     const insertReview=()=>{
 /* 리뷰등록 요기  */
 
@@ -34,7 +75,7 @@ id:  , 날짜...?
 }
 
 
-    console.log(id)
+    
     return(
       <>
       <Sidebar />
@@ -44,11 +85,11 @@ id:  , 날짜...?
 
 
 <div className="totalcontainer"> 
-{/* //////////////////////////////////////탑 섹션/////////////////////////// */}
+{/* //////////////////////////////////////탑 섹션///////////////////////////////////////////////////////////////////// */}
 <section>
         <div className="topcontainer" >
                                <div className="product_detail_imgdiv">
-                                         <img className="product_detail_img" src={'../images_key/fev'+[props.festId]+[id]+'.PNG'}  alt="상품사진" />
+                                         <img className="product_detail_img" src={'../images_key/fev1.PNG'}  alt="상품사진" />
                                </div>
                                <div className="product_detail_info">
                                <div className="product_detail_head">
@@ -69,7 +110,7 @@ id:  , 날짜...?
                                </div>
         </div>
 </section>
-{/* //////////////////////////////////////미드 섹션/////////////////////////// */}
+{/* //////////////////////////////////////미드 섹션////////////////////////////////////////////////////////////////// */}
 
 <section>
 <div className="midContainerCalendarAndRestSeats">
@@ -106,11 +147,45 @@ id:  , 날짜...?
 </span>
 <span className="calendarands2">
 잔여좌석<br></br>
-<button className="researvebtn" onClick={()=>{navigate("/payment/"+[id])}}> 예약하기 </button> 
+{/*///////////////////////////// 모달 수정중 ///////////////////////////////////////////////////////////*/}
+
+<Button className="researvebtn" onClick={() => setLgShow(true)}>예약하기</Button>
+<Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg" >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            결제하기
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+<div className="form-floating">
+  <input type="number" className="form-control" id="tAmo"  onChange={(e)=>{inputTAmo (e.target.value)}}/>
+  <label htmlFor="floatingInput">구매 수량</label>
+</div><br />
+
+<div className="form-floating mb-3">
+  <input type="text" className="form-control" id="mName" onChange={(e)=>{inputMName(e.target.value)}} />
+  <label htmlFor="floatingInput"> mName </label>
+</div><br/>
+
+<div className="form-floating mb-3">
+  <input type="text" className="form-control" id="mEmail" onChange={(e)=>{inputMEmail(e.target.value)}} />
+  <label htmlFor="floatingInput"> mEmail </label>
+</div><br/>
+
+        <div className="form-floating">
+  <input type="number" className="form-control" id="mTel" name="tel" onChange={(e)=>{inputMTel (e.target.value)}}/>
+  <label htmlFor="floatingInput">mTel</label>
+</div><br />
+
+<PaymentPage></PaymentPage>
+        </Modal.Body>
+      </Modal>
+{/* ///////////////////////////////////////////////////////////////여기까지 모달 수정중 */}
+
 </span>
 </div>
 </section>
-{/* ////////////////////////////////////// 바텀 섹션/////////////////////////// */}
+{/* ////////////////////////////////////// 바텀 섹션///////////////////////////////////////////////////////////////////// */}
 <section>
   <div className="bottomcontainer" style={{marginLeft:'220px'}}>
 <Tabs style={{maxWidth:'1200px'}}
@@ -139,6 +214,8 @@ id:  , 날짜...?
   <label htmlFor="floatingTextarea">관람후기</label>
 <button className="reviewbtn" onClick={()=> {}} style={{backgroundColor:'black', width:'250px', height:'50px', color:'white', margin:'10px 80px 10px 10px', borderRadius:'10px'}}> 등록 </button> 
 
+
+
 </div>
 
 <ReviewInsert></ReviewInsert>
@@ -152,7 +229,9 @@ id:  , 날짜...?
 </section>
       </div>   {/* totalcontainer div */}
 </div>   {/* center div */}
-
+       
+       출력{festMId}
+       출력{Data}
        </>
     )
   }
