@@ -81,9 +81,9 @@ const BoardList = () => {
         </thead>
         <tbody>
           {boardList.map((board) => (
-            <tr key={board.board_no}>
+            <tr key={board.boardNo}>
               <td style={{ textAlign: "center" }}>
-                <input type="checkbox" value={board.board_no} checked={checkedItems.includes(board.board_no)}
+                <input type="checkbox" value={board.boardNo} checked={checkedItems.includes(board.boardNo)}
                   onChange={(e) => {const checked = e.target.checked;const value = parseInt(e.target.value);
                     if (checked) {
                       setCheckedItems([...checkedItems, value]);
@@ -95,7 +95,7 @@ const BoardList = () => {
                   }}
                 />
               </td>
-              <td style={{ textAlign: "center" }}>{board.board_no}</td>
+              <td style={{ textAlign: "center" }}>{board.boardNo}</td>
               <td>
                 <button
                   style={{border: "none",background: "none",color: "blue",cursor: "pointer",}}
@@ -103,11 +103,11 @@ const BoardList = () => {
                     pathname: "/together/BoardDetail/",
                     state:{board}
                   })}>
-                  {board.board_title}
+                  {board.boardTitle}
                 </button>
               </td>
-              <td style={{ textAlign: "center" }}>{board.member_id}</td>
-              <td style={{ textAlign: "center" }}>{board.board_date}</td>
+              <td style={{ textAlign: "center" }}>{board.memberId}</td>
+              <td style={{ textAlign: "center" }}>{board.boardDate}</td>
             </tr>
           ))}
         </tbody>
