@@ -4,8 +4,7 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import {
-  deleteBoardListDB,
-  jsonboardListDB
+  deleteBoardListDB, selectBoardListDB,
 } from "../../axios/board/boardLogic";
 
 const BoardList = () => {
@@ -24,7 +23,7 @@ const BoardList = () => {
   /* BACK- BoardDto - @AllArgsConstructor selectBoardList 얘는가능 */
   const jsonBoardList = async () => {
     // axios를 사용하여 게시글 목록을 가져옴
-    const res = await jsonboardListDB();
+    const res = await selectBoardListDB();
     console.log(res.data);
     if (res.data && Array.isArray(res.data)) {
       // 가져온 게시글 목록을 boardList state에 저장
