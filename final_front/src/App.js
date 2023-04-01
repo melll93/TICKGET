@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
 import "./App.css";
+import { memberListDB } from "./axios/member/memberLogic";
 import BoardDetail from "./pages/board/BoardDetail";
 import Write from "./pages/board/Write";
 import AddProductsPage from "./pages/community/AddProductsPage";
@@ -27,6 +28,7 @@ import MyPage from "./pages/personal/MyPage";
 import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
+import { onAuthChange } from "./util/authLogic";
 
 function App({ authLogic, imageUploader }) {
   const [domain, setDomain] = useState();
@@ -38,51 +40,51 @@ function App({ authLogic, imageUploader }) {
   const toastStatus = useSelector((state) => state.toastStatus);
   
   // 회원 가입 정보 DB 비교
-  /*
-  useEffect(() => {
+  useEffect(() => { // 의존성 배열에 있는 변수(함수)가 훅이 변할 때마다 다시 호출
     const asyncDB = async () => {
-      const auth = authLogic.getUserAuth(); // 인증된 사용자 정보 가져오기
-      const user = await onAuthChange(auth); // 구글 로그인 user 정보를 가지고 있는 경우 sessionStorage 담음
+      console.log('asyncDB')
+      const auth = authLogic.getUserAuth();
+      const user = await onAuthChange(auth);
+      //구글 로그인으로 사용자 정보를 가지고 있을 때
+      //user정보가 있으면 sessionStorage에 담는다 - email
       if (user) {
-        console.log("user의 정보가 존재합니다");
-        session.setItem("email", user.email);
+        console.log("user 정보 존재");
+        // sessionStorage에 이메일 주소 등록(단, 구글 로그인이 되어있을 때)
+        session.setItem("id", user.id);
         const res = await memberListDB({ mem_uid: user.uid, type: "auth" });
         console.log(res.data)
-        // DB 테이블에 비교하는 컬럼값이 존재하면 세션에 담는다
-        if (res.data!==0) { // Controller/memberList - 1)0, 2){mem_uid:}
+        //오라클 서버의 회원집합에 uid가 존재하면 - 세션스토리지에 값을 담자
+        if (res.data!==0) { //스프링부트 - RestMemberController - memberList - 1)0, 2){mem_uid:asdasd}
           const temp = JSON.stringify(res.data);
           const jsonDoc = JSON.parse(temp);
-          session.setItem("no", jsonDoc[0].MEMBER_NO); // 채번된 사용자 번호 
-          session.setItem("name", jsonDoc[0].MEMBER_NAME); // 사용자 이름
-          session.setItem("email", jsonDoc[0].MEMBER_EMAIL); // 사용자 이메일
+          session.setItem("nickname", jsonDoc[0].MEM_NICKNAME);
+          session.setItem("no", jsonDoc[0].MEM_NO);
           //navigate("/");
-          return; // 렌더링 종료
+          return; //렌더링이 종료됨
         }
-       // 네이버, 카카오 API 계정 로그인 (추후 구현)
-        //다른 계정으로 로그인을 시도 했을 땐 user.emailVerified가 없음 -> undefined
+        // 구글 계정이 아닌 계정으로 로그인 -> 존재하지 않음 
         if(!user.emailVerified){
-          //navigate("/auth/emailVerified")
+          navigate("") //
         }
-        //DB 테이블에 비교하는 컬럼값이 없는 경우 회원가입 유도
+        //오라클 서버의 회원집합에 uid가 존재하지 않는 경우
         else {
-          console.log("가입되지 않은 회원입니다. 회원가입 해 주세요.")
-          navigate("/register")
+          console.log("해당 구글 계정은 회원가입 대상입니다. 회원가입 부탁드립니다.")
+          navigate("")
         }
       }
       //사용자 정보가 없을때
       else {
-        console.log("user의 정보가 없습니다");
-        if (sessionStorage.getItem("email")) {
+        console.log("user정보가 없을때");
+        if (sessionStorage.getItem("id")) {
           //sessionStorage에 있는 값 모두 삭제하기
           sessionStorage.clear();
           window.location.reload();
         }
       } //end of else
     }
-    asyncDB();
+    asyncDB(); // 함수 호출
+  //  dispatch(setToastMsg("회원가입 하세요"));
   }, [dispatch]);
-}
-*/
   useEffect(() => {
     console.log(user);
   }, [user]);
