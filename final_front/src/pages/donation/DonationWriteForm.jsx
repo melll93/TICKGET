@@ -101,28 +101,78 @@
 
     return (
       <>
+         <Sidebar />
+      <div className='center'>
+        <Header />
            <ContainerDiv>
-        <HeaderDiv>
-          <h3 style={{marginLeft:"10px"}}>공지사항 글작성</h3>
-        </HeaderDiv>
+       <HeaderDiv>
+       <div className="form-floating mb-3">
+        <h3>티켓 중고판매 글 작성</h3>
+
+</div>
+        </HeaderDiv> 
+
         <FormDiv>
    
    <div>
-   <Row className="mb-3">
+   <Row className="mb-4">
         <Form.Group as={Col} controlId="formGridTitle">
           <h3>제목</h3>
-          <Form.Control type="text" placeholder="제목을 입력하세요." style={{ width: '500px'}}/>
+          <Form.Control type="text" placeholder="제목을 입력하세요." style={{ width: '400px', height:'50px'}}/>
         </Form.Group>
+
+
 
         <Form.Group as={Col} controlId="formGridPassword">
           <h3>비밀번호</h3>
-          <Form.Control type="password" placeholder="비밀번호를 입력하세요."/>
+          <Form.Control type="password" placeholder="비밀번호를 입력하세요." style={{ maxWidth: '250px' , height:'50px'}}/>
         </Form.Group>
       </Row>
       </div>
            
+      <div>
+  <Row className="mb-3" >
+    <Col>
+      <div className="form-floating mb-3">
+        <h3>공연일</h3>
+        <input type="date" className="form-control" id="festStartday" name="startDay" style={{width:'400px' , height:'50px'}}/>
+        <label htmlFor="floatingInput"></label>
+      </div>
+    </Col>
+<Col>
+<h3>카테고리</h3>
+  <select className="form-select" id="fest_category" aria-label="Default select example" style={{width:'250px' , height:'50px'}} >
+    <option defaultValue disabled>카테고리</option>
+    <option value="FESTIVAL">FESTIVAL</option>
+    <option value="CONCERT">CONCERT</option>
+  </select>
+</Col>
 
+    
+  </Row>
+</div>
+   
+<div>
+   <Row className="mb-4">
+   <Form.Group as={Col} controlId="formGridTicketSeat">
+          <h3>좌석정보</h3>
+          <Form.Control type="text" placeholder="좌석 정보를 입력하세요." style={{width:'300px' , height:'50px'}} />
+        </Form.Group>
 
+        <Form.Group as={Col} controlId="formGridTicketCount">
+          <h3>판매수량</h3>
+          <Form.Control type="text" placeholder="티켓의 수량을 입력하세요." style={{width:'250px' , height:'50px'}}/>
+        </Form.Group>
+    
+      </Row>
+      <Row className="mb-5">
+        <Form.Group as={Col} controlId="formGridPrice" >
+          <h3>판매등록가</h3>
+          <Form.Control type="text" placeholder="티켓의 판매 가격을 입력하세요." style={{width:'300px' , height:'50px'}}/>
+        </Form.Group>
+        </Row>
+      </div>
+           
 
            
             <h3>상세내용</h3>
@@ -131,6 +181,7 @@
               <BButton onClick={()=>{boardInsert()}}>글쓰기</BButton>
         </FormDiv>
       </ContainerDiv>
+      </div>
       </>
     )
   }
