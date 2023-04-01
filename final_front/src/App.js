@@ -4,7 +4,6 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
 import "./App.css";
-import { memberListDB } from "./axios/member/memberLogic";
 import BoardDetail from "./pages/board/BoardDetail";
 import Write from "./pages/board/Write";
 import AddProductsPage from "./pages/community/AddProductsPage";
@@ -17,8 +16,8 @@ import HomePage from "./pages/community/HomePage";
 import ProductsDetails from "./pages/community/ProductsDetails";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
-import DonationWriteForm from "./pages/donation/DonationWriteForm";
 import DonationDetail from "./pages/donation/DonationDetail";
+import DonationWriteForm from "./pages/donation/DonationWriteForm";
 import LoginPage from "./pages/member/LoginPage";
 import RegisterPage from "./pages/member/RegisterPage";
 import SocialRegisterPage from "./pages/member/SocialRegisterPage";
@@ -28,8 +27,6 @@ import MyPage from "./pages/personal/MyPage";
 import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-import AuthLogic, { onAuthChange } from "./util/authLogic";
-import firebaseApp from "./util/firebase";
 
 function App({ authLogic, imageUploader }) {
   const [domain, setDomain] = useState();
@@ -144,10 +141,7 @@ function App({ authLogic, imageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<Write />} />
-        <Route
-          path="together/boardDetail/:boardNo"
-          element={<BoardDetail boardNo={boardNo} />}
-        />
+        <Route path="together/boardDetail/:boardNo" element={<BoardDetail boardNo={boardNo} />}/>
         <Route path="together/boardDetail/" element={<BoardDetail />} />
 
         {/* DonationPage Routes - 성훈 작업중 */}
