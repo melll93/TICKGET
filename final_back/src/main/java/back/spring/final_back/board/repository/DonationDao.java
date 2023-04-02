@@ -8,16 +8,16 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DonationDao {
      
 	//도네이션 게시판 게시글 조회
-	public List<DonationDto> selectDonationList();
+	public List<DonationDto> don_boardList();
 
 	//도네이션 게시판 게시글 등록
-	public int insertDonationList(DonationDto donationDto);
+	public int don_boardInsert(DonationDto donationDto);
 
  
 	//도네이션 게시판 게시글 수정
-	public int updateDonationList(DonationDto donationDto);
+	public int don_boardUpdate(DonationDto donationDto);
 
 	
 	//도네이션 게시판 게시글 삭제
-	public int deleteDonationList(DonationDto donationDto);
+	public int don_boardDelete(DonationDto donationDto);
 }

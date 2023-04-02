@@ -1,10 +1,18 @@
 import React from 'react'
 
-const DonationRow = () => {
+const DonationRow = ({boards}) => {
+  console.log(boards);
   return (
-    <div>
-    게시판 로우 페이지 (게시글 한 행 씩)      
-    </div>
+    <>
+    <tr>
+    <td>{boards.don_title}</td>
+       <td>{boards.don_ticket_count}</td>
+       <td>{boards.don_ticket_price}</td>
+       <td>{boards.don_board_date}</td> 
+       <td>{boards.mem_name}</td>
+       <td>{boards.don_board_hit}</td> 
+    </tr>
+  </>
   )
 }
 

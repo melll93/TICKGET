@@ -1,12 +1,12 @@
 import axios from "axios";
 
 //도네이션 게시판 게시글 조회 로직
-export const donationListDB = (board) => {
+export const don_boardListDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/donation/donationList",
+        url: "http://localhost:8888/donation/don_boardList",
         params: board,
       });
       resolve(response);
@@ -17,12 +17,12 @@ export const donationListDB = (board) => {
 };
 
 //도네이션 게시판 글쓰기 등록 로직
-export const donationInsertDB = (board) => {
+export const don_boardInsertDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/donation/donationInsert",
+        url: "http://localhost:8888/donation/don_boardInsert",
         data: board,
       });
       resolve(response);
@@ -33,12 +33,12 @@ export const donationInsertDB = (board) => {
 };
 
 //도네이션 게시판 글 수정 로직
-export const donationUpdateDB = (board) => {
+export const don_boardUpdateDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/donation/donationUpdate",
+        url: "http://localhost:8888/donation/don_boardUpdate",
         data: board,
       });
       resolve(response);
@@ -49,13 +49,13 @@ export const donationUpdateDB = (board) => {
 };
 
 //도네이션 게시판 글 삭제 로직
-export const donationDeleteDB = (board) => {
+export const don_boardDeleteDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
-        method: "post",
-        url: "http://localhost:8888/donation/donationDelete",
-        data: board,
+        method: "get",
+        url: "http://localhost:8888/donation/don_boardDelete",
+        params: board,
       });
       resolve(response);
     } catch (error) {

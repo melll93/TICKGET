@@ -2,4 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="back.spring.final_back.board.repository.DonationDao">
+
+<insert id="don_boardInsert" parameterType="map">
+insert into
+donation_board (don_bno, don_title, don_pw, don_ticket_date
+, don_ticket_seat, don_ticket_price, don_ticket_count,don_content, mem_name, don_board_date,don_board_hit)
+VALUES (donation_board_seq.nextval, #{don_title}, #{don_pw}, #{don_ticket_date}, #{don_ticket_seat},#{don_ticket_price}
+,#{don_ticket_count},#{don_content},#{mem_name},#{don_board_date},#{don_board_hit}
+</insert>
+
+<select id="don_boardList" resultType="DonationDto">
+select don_bno, don_title, don_ticket_count, don_ticket_price, don_board_date, mem_name, don_board_hit from donation_board
+</select>
+
+<update id="don_boardUpdate" parameterType="DonationDto">
+ update don_board
+ set don_title = #{don_title},
+     don_ticket_date = #{don_ticket_date},
+     don_ticket_seat = #{don_ticket_seat},
+     don_ticket_price = #{don_ticket_price},
+     don_ticket_count = #{don_ticket_count},
+     don_content = #{don_content}
+<where>
+don_pw = #{don_pw}
+</where>
+</update>
+
+<delete id="don_boardDelete" parameterType="int">
+delete from donation_board
+<where>
+don_pw = #{value}
+</where>
+</delete>
+
+
 </mapper>
