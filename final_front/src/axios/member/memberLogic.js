@@ -5,7 +5,7 @@ export const memberListDB = (member) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/oauth/login/memberList",
+        url: "http://localhost:8888/register/memberList",
         params: member,
       });
       resolve(response);
@@ -20,7 +20,7 @@ export const memberInsertDB = (member) => {
     try {
       const response = axios({
         method: "post", // @RequestBody
-        url: "http://localhost:8888/oauth/login/memberInsert",
+        url: "http://localhost:8888/register/memberInsert",
         data: member, // POST방식으로 테스트 할 때는 반드시 data 속성으로 파라미터 줄 것
       });
       resolve(response);
@@ -36,7 +36,7 @@ export const memberUpdateDB = (member) => {
     try {
       const response = axios({
         method: "post", // @RequestBody
-        url: "http://localhost:8888/oauth/login/memberUpdate",
+        url: "http://localhost:8888/register/memberUpdate",
         data: member, 
       });
       resolve(response); // 요청 처리가 성공 시
@@ -51,7 +51,7 @@ export const memberDeleteDB = (member) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/oauth/login/memberDelete",
+        url: "http://localhost:8888/register/memberDelete",
         params: member, // 쿼리스트링은 header에 담김(get 방식)
       });
       resolve(response);

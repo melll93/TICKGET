@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @ResponseBody
 @CrossOrigin("http://localhost:3333")
-@RequestMapping("/signup")
+@RequestMapping("/register/*")
 @RequiredArgsConstructor
 @Slf4j
 public class SingUpController {
