@@ -79,19 +79,12 @@ const BoardDetail = () => {
                 required
                 class="form-control form-control-lg"
                 id="inputLarge"
-              >
-                {board.boardTitle}
-              </span>
+              >{board.boardTitle}</span>
             </div>
             <div>
               <label>내용</label>
               <span
-                style={{
-                  width: "300px",
-                  margin: "10px",
-                  height: "300px",
-                  fontSize: "40px",
-                }}
+                style={{ width: "300px", margin: "10px", height: "300px", fontSize:"40px" }}
                 name="boardContent"
                 required
                 rows="10"

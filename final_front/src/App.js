@@ -6,7 +6,7 @@ import NaverLogin from "./api/login/NaverLogin";
 import "./App.css";
 import { memberListDB } from "./axios/member/memberLogic";
 import BoardDetail from "./pages/board/BoardDetail";
-import Write from "./pages/board/Write";
+import Write from "./pages/board/BoardWrite";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import CalendarPage from "./pages/community/CalendarPage";
 import CarpoolPage from "./pages/community/CarpoolPage";

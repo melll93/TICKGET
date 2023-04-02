@@ -71,7 +71,7 @@ const Write = () => {
   <>
       <ContainerDiv>
         <HeaderDiv>
-          <h3 style={{marginLeft:"10px"}}>공지사항 글작성</h3>
+          <h3 style={{marginLeft:"10px"}}>게시글 작성해야지?</h3>
         </HeaderDiv>
         <FormDiv>
           <div style={{width:"100%", maxWidth:"2000px"}}>
