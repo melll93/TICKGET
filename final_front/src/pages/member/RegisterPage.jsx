@@ -6,13 +6,12 @@ import Sidebar from '../../components/Sidebar';
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword } from '../../util/validateLogic';
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
-import { memberListDB } from '../../axios/member/memberLogic';
+import { memberInsertDB, memberListDB } from '../../axios/member/memberLogic';
 
 const RegisterPage = ({authLogic}) => {
   const auth = authLogic.getUserAuth();
   const userAuth = useSelector(state => state.userAuth);
   const type = window.location.search.split('&')[0].split('=')[1];
-  const [reSignCheck, setReSignCheck] = useState(false);
   const navigate = useNavigate();
   const[submitBtn, setSubmitBtn] = useState({
     disabled: true,
@@ -26,13 +25,15 @@ const RegisterPage = ({authLogic}) => {
       setSubmitBtn({...submitBtn, hover: true, bgColor: 'rgb(72, 145, 218)'});
     }
   }
-  const[post, setPost] = useState({
+  // 주소 번지 사용 ?
+/*   const[post, setPost] = useState({
     zipcode: "",
     addr: "",
     addrDetail: ""
-  })
+  }) */
   // 회원가입 입력 정보
   const [memInfo, setMemInfo] = useState({
+    id: "",
     email: "",
     password: "",
     password2: "",
@@ -44,6 +45,7 @@ const RegisterPage = ({authLogic}) => {
   });
   // 입력 정보 유효성 체크
   const [comment, setComment] = useState({
+    id: "",
     email: "",
     password: "",
     password2: "",
@@ -54,6 +56,7 @@ const RegisterPage = ({authLogic}) => {
   });
   // 필수 작성 항목
   const [star,setStar] = useState({
+    id: "*",
     email: "*",
     password: "*",
     password2: "*",
@@ -81,6 +84,7 @@ const RegisterPage = ({authLogic}) => {
       if(user){
         setGoogleEmail(user.email);
         setStar({
+          id: "",
           email: "",
           password: "*",
           password2: "*",
@@ -90,6 +94,7 @@ const RegisterPage = ({authLogic}) => {
           birthday: "*"
         });
         setMemInfo({
+          id: "",
           email: user.email,
           password: "",
           password2: "",
@@ -108,8 +113,8 @@ const RegisterPage = ({authLogic}) => {
     signup()    
   }
 
-  const passwordView = (e) => {
-    const id = e.currentTarget.id;
+  const passwordView = (event) => {
+    const id = event.currentTarget.id;
     if(id==="password") {
       if(!passwordType[0].visible) {
         setPasswordType([{type: 'text', visible: true},passwordType[1]]);
@@ -124,29 +129,29 @@ const RegisterPage = ({authLogic}) => {
       }
     }
   }
-  const changeMemInfo = (e) => {
+  const changeMemInfo = (event) => {
     console.log('changeMemInfo');
-    const id = e.currentTarget.id;
+    const id = event.currentTarget.id;
     console.log(id);
-    const value = e.target.value;
+    const value = event.target.value;
     console.log(value);
     setMemInfo({...memInfo, [id]: value});
   }
   
   //닉네임 중복확인 
   const overlap = async(key) => {
-    console.log('닉네임 중복확인' + key);
+    console.log('중복확인 : ' + key);
     let params;
     if (key === 'email') {
       params = {MEM_EMAIL: memInfo[key], type:'overlap'}
     } 
     else {
-      params = {MEM_NICKNAME: memInfo[key], type:'overlap'}
+      params = {MEM_ID: memInfo[key], type:'overlap'}
     }
     console.log(params);
     let response = {data: 0}
     response = await memberListDB(params)
-    console.log(response.data)
+    console.log('DB : ' + response.data)
     // Array(1)
     // 0: {MEM_UID:"karina", MEM_NAME:"유지민"}
     const data = JSON.stringify(response.data)
@@ -155,7 +160,7 @@ const RegisterPage = ({authLogic}) => {
       console.log(jsonDoc[0].MEM_NAME)
     }
     else {
-      console.log('입력한 닉네임은 존재하지 않습니다')
+      console.log('중복되는 값이 없습니다.')
     }
     // 닉네임 존재 시
     if (response.data) {
@@ -197,44 +202,29 @@ const RegisterPage = ({authLogic}) => {
     /* 회원 가입 */
     const signup = async() => {
       try {
-        let uid;
-        const b = memInfo.birthday;
+        let id;
+        const birth = memInfo.birthday;
         let birthday = ""; 
-        if(b!==""){
-          birthday = b.slice(0,4) + '-' + b.slice(4, 6) + '-' + b.slice(6,8);
+        if(birth!==""){
+          birthday = birth.slice(0,4) + '-' + birth.slice(4, 6) + '-' + birth.slice(6,8);
         }
         console.log('입력받은 생일정보 '+birthday);
         const datas = {
-          /* 
-          MEM_NO:
-          MEM_DOMAIN:
-          MEM_ID:
-          MEM_PASSWORD:
-          MEM_NAME:
-          MEM_AGE:
-          MEM_BIRTH:
-          MEM_EMAIL:
-          MEM_GENDER:
-          MEM_MOBILE:
-          MEM_NICKNAME:
-          MEM_PROFILE_IMAGE:
-          MEM_REGISTER_DATE:
-          */
-          MEM_UID: uid,
-          MEM_NAME: memInfo.name,
-          MEM_PW: memInfo.password,
-          MEM_EMAIL: memInfo.email,
-          MEM_BIRTHDAY: birthday,
-          MEM_TEL: memInfo.hp,
-          MEM_NICKNAME: memInfo.nickname,
-          MEM_GENDER: memInfo.gender
+          MEMBER_ID: id,
+          MEMBER_PASSWORD: memInfo.password,
+          MEMBER_NAME: memInfo.name,
+          MEMBER_BIRTH: birthday,
+          MEMBER_EMAIL: memInfo.email,
+          MEMBER_GENDER: memInfo.gender,
+          MEMBER_MOBILE: memInfo.mobile,
+          MEMBER_NICKNAME: memInfo.nickname
         }
         console.log(datas)
-/*         const response = await memberInsertDB(datas);
+        const response = await memberInsertDB(datas);
         console.log(response);
         if(response.data!==1) {
         return "DB 오류: 관리자에게 연락바랍니다.";
-      } */
+      } 
         sessionStorage.clear();
         navigate('/');
         return "회원가입되었습니다. 감사합니다.";

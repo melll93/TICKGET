@@ -40,7 +40,7 @@ function App({ authLogic, imageUploader }) {
   const toastStatus = useSelector((state) => state.toastStatus);
   
   // 회원 가입 정보 DB 비교
-  useEffect(() => { // 의존성 배열에 있는 변수(함수)가 훅이 변할 때마다 다시 호출
+  useEffect(() => { // 의존성 배열에 있는 변수(함수)가 훅이 변할 때마y다 다시 호출
     const asyncDB = async () => {
       console.log('asyncDB')
       const auth = authLogic.getUserAuth();
@@ -51,7 +51,7 @@ function App({ authLogic, imageUploader }) {
         console.log("user 정보 존재");
         // sessionStorage에 이메일 주소 등록(단, 구글 로그인이 되어있을 때)
         session.setItem("id", user.id);
-        const res = await memberListDB({ mem_uid: user.uid, type: "auth" });
+        const res = await memberListDB({ mem_id: user.id, type: "auth" });
         console.log(res.data)
         //오라클 서버의 회원집합에 uid가 존재하면 - 세션스토리지에 값을 담자
         if (res.data!==0) { //스프링부트 - RestMemberController - memberList - 1)0, 2){mem_uid:asdasd}
@@ -68,7 +68,7 @@ function App({ authLogic, imageUploader }) {
         }
         //오라클 서버의 회원집합에 uid가 존재하지 않는 경우
         else {
-          console.log("해당 구글 계정은 회원가입 대상입니다. 회원가입 부탁드립니다.")
+          console.log("해당 계정은 회원가입 대상입니다. 회원가입 부탁드립니다.")
           navigate("")
         }
       }
@@ -83,7 +83,6 @@ function App({ authLogic, imageUploader }) {
       } //end of else
     }
     asyncDB(); // 함수 호출
-  //  dispatch(setToastMsg("회원가입 하세요"));
   }, [dispatch]);
   useEffect(() => {
     console.log(user);
@@ -107,7 +106,7 @@ function App({ authLogic, imageUploader }) {
         <Route
           path="/login"
           exact={true}
-          element={<LoginPage user={user} setUser={setUser} />}
+          element={<LoginPage user={user} setUser={setUser} authLogic={authLogic} />}
         />
         <Route
           path="/oauth/login/naver/callback"
