@@ -8,7 +8,7 @@ insert into
 donation_board (don_bno, don_title, don_pw, don_ticket_date
 , don_ticket_seat, don_ticket_price, don_ticket_count,don_content, mem_name, don_board_date,don_board_hit)
 VALUES (donation_board_seq.nextval, #{don_title}, #{don_pw}, #{don_ticket_date}, #{don_ticket_seat},#{don_ticket_price}
-,#{don_ticket_count},#{don_content},#{mem_name},#{don_board_date},#{don_board_hit}
+,#{don_ticket_count},#{don_content},#{mem_name},#{don_board_date},#{don_board_hit})
 </insert>
 
 <select id="don_boardList" resultType="DonationDto">
