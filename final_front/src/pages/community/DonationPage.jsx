@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import DonationList from '../donation/DonationList'
 import { don_boardListDB } from "../../axios/donation/donationLogic";
 import { FormDiv, HeaderDiv } from "../../styles/formStyle";
+import DonationSearchBar from "../donation/DonationSearchBar";
 
 const DonationPage = () => {
       const navigate = useNavigate()
@@ -38,29 +39,9 @@ const DonationPage = () => {
           <h3 style={{marginLeft:"100px"}}>도네이션 게시판</h3>
         </HeaderDiv>
         <FormDiv style={{marginLeft:'50px'}}>
-     <div className='container'>
-         <div className="page-header">
-            </div>
-         <div className="row">
-            <div className="col-5">
-            <select id="gubun" className="form-select" aria-label="분류선택" style={{width:'200px'}}>
-                  <option defaultValue>분류선택</option>
-                  <option value="don_title">글 제목</option> {/* value는 컬럼명에 맞추기 */}
-                  <option value="don_ticket_date">공연일</option>        {/* value는 컬럼명에 맞추기 */}
-            </select>
-            </div>
-            </div>
-                  <div className="col-6">
-                     <input type="text" id="keyword" className="form-control" placeholder="검색어를 입력하세요"
-                     aria-label="검색어를 입력하세요" aria-describedby="btn_search" style={{width:'500px'}}/>
-                  </div>
-                  <div className="col-3">
-                     <Button variant='danger' id="btn_search">검색</Button>
-                  </div>
-            </div>
-            <hr/>
+            <DonationSearchBar/>
          <div className='book-list'>
-            <Table striped bordered hover>
+            <Table striped bordered hover style={{minWidth:"800px"}}>
             <thead>
                   <tr >
                   <th style={{width:'100px',textAlign:"center"}}>번호</th>

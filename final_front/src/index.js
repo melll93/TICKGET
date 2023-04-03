@@ -3,7 +3,6 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import { legacy_createStore } from "redux";
 import { BrowserRouter } from "react-router-dom";
