@@ -1,0 +1,78 @@
+div .center {
+  margin: 0;
+  padding: 0;
+}
+
+div .chat {
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+div .chat.container {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 80vw;
+  margin-top: 5vh;
+  margin-left: 15vw;
+}
+
+div .chat.bar {
+  display: flex;
+  height: 10%;
+  width: 100%;
+}
+
+div .chat.bar.dm {
+  height: 100%;
+}
+
+div .chat.bar.group {
+  height: 100%;
+}
+
+div .chat.box {
+  display: flex;
+  height: 90%;
+}
+
+div .chat.chatList {
+  height: 100%;
+  width: 30%;
+}
+
+div .chat.chatDisplay {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 70%;
+}
+
+div .chat.outputBox {
+  /* display: flex;
+  flex-direction: row; */
+  width: 100%;
+}
+
+div .chat.inputBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 5%;
+  width: 100%;
+}
+
+.inputTextBox {
+  height: 90%;
+  width: 90%;
+}
+
+.inputButton {
+  display: block;
+  height: 90%;
+  width: 5%;
+}

@@ -5,8 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
-//@NoArgsConstructor
+@RequiredArgsConstructor
 public class ConcertDto {
     private int concert_no;
     private String org_name;

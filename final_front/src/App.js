@@ -165,7 +165,7 @@ function App({ authLogic, imageUploader }) {
         <Route
           path="/donation/update/:bno"
           exact={true}
-          element={<DonationUpdatePage/>}
+          element={<DonationUpdatePage />}
         />
         <Route
           path="/donation/detail/:bno"
