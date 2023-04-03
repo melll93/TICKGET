@@ -24,6 +24,7 @@ import RegisterPage from "./pages/member/RegisterPage";
 import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
+import ChatPage from "./pages/personal/ChatPage";
 import MyPage from "./pages/personal/MyPage";
 import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
@@ -38,11 +39,12 @@ function App({ authLogic, imageUploader }) {
   const dispatch = useDispatch();
   const session = sessionStorage;
   const toastStatus = useSelector((state) => state.toastStatus);
-  
+
   // 회원 가입 정보 DB 비교
-  useEffect(() => { // 의존성 배열에 있는 변수(함수)가 훅이 변할 때마y다 다시 호출
+  useEffect(() => {
+    // 의존성 배열에 있는 변수(함수)가 훅이 변할 때마y다 다시 호출
     const asyncDB = async () => {
-      console.log('asyncDB')
+      console.log("asyncDB");
       const auth = authLogic.getUserAuth();
       const user = await onAuthChange(auth);
       //구글 로그인으로 사용자 정보를 가지고 있을 때
@@ -52,9 +54,10 @@ function App({ authLogic, imageUploader }) {
         // sessionStorage에 이메일 주소 등록(단, 구글 로그인이 되어있을 때)
         session.setItem("id", user.id);
         const res = await memberListDB({ mem_id: user.id, type: "auth" });
-        console.log(res.data)
+        console.log(res.data);
         //오라클 서버의 회원집합에 uid가 존재하면 - 세션스토리지에 값을 담자
-        if (res.data!==0) { //스프링부트 - RestMemberController - memberList - 1)0, 2){mem_uid:asdasd}
+        if (res.data !== 0) {
+          //스프링부트 - RestMemberController - memberList - 1)0, 2){mem_uid:asdasd}
           const temp = JSON.stringify(res.data);
           const jsonDoc = JSON.parse(temp);
           session.setItem("nickname", jsonDoc[0].MEM_NICKNAME);
@@ -62,14 +65,16 @@ function App({ authLogic, imageUploader }) {
           //navigate("/");
           return; //렌더링이 종료됨
         }
-        // 구글 계정이 아닌 계정으로 로그인 -> 존재하지 않음 
-        if(!user.emailVerified){
-          navigate("") //
+        // 구글 계정이 아닌 계정으로 로그인 -> 존재하지 않음
+        if (!user.emailVerified) {
+          navigate(""); //
         }
         //오라클 서버의 회원집합에 uid가 존재하지 않는 경우
         else {
-          console.log("해당 계정은 회원가입 대상입니다. 회원가입 부탁드립니다.")
-          navigate("")
+          console.log(
+            "해당 계정은 회원가입 대상입니다. 회원가입 부탁드립니다."
+          );
+          navigate("");
         }
       }
       //사용자 정보가 없을때
@@ -81,7 +86,7 @@ function App({ authLogic, imageUploader }) {
           window.location.reload();
         }
       } //end of else
-    }
+    };
     asyncDB(); // 함수 호출
   }, [dispatch]);
   useEffect(() => {
@@ -106,7 +111,9 @@ function App({ authLogic, imageUploader }) {
         <Route
           path="/login"
           exact={true}
-          element={<LoginPage user={user} setUser={setUser} authLogic={authLogic} />}
+          element={
+            <LoginPage user={user} setUser={setUser} authLogic={authLogic} />
+          }
         />
         <Route
           path="/oauth/login/naver/callback"
@@ -132,7 +139,7 @@ function App({ authLogic, imageUploader }) {
         <Route path="/carpool" exact={true} element={<CarpoolPage />} />
         <Route path="/donation" exact={true} element={<DonationPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
-        {/* <Route path="/chat" exact={true} element={<ChatPage />} /> */}
+        <Route path="/chat" exact={true} element={<ChatPage />} />
 
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
@@ -142,7 +149,10 @@ function App({ authLogic, imageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<Write />} />
-        <Route path="together/boardDetail/:boardNo" element={<BoardDetail boardNo={boardNo} />}/>
+        <Route
+          path="together/boardDetail/:boardNo"
+          element={<BoardDetail boardNo={boardNo} />}
+        />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
 
         {/* DonationPage Routes - 성훈 작업중 */}
