@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="back.spring.final_back.festival.repository.ReviewDao">
+	<select id="reviewList" resultType="ReviewDto">
+SELECT * FROM review_test
+	</select>
+	<insert id="reviewInsert" parameterType="Map"
+		useGeneratedKeys="true" keyProperty="reviewNo">
+	INSERT INTO
+	review_test (review_no, review_pw,
+	review_hit, review_content,
+	review_festmid, review_memid, review_memnickname)
+	VALUES (#{reviewNo}, #{reviewPw}, #{reviewHit}, #{reviewContent},
+	 #{reviewFestmid}, #{reviewMemid}, #{reviewMemnickname})
+	</insert>
+</mapper>
+
+
