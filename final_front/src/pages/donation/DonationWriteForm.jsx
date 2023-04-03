@@ -30,21 +30,22 @@ import {
 } from "react-bootstrap";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
+import DonationFileInsert from "./DonationFileInsert";
 
 const DonationWriteForm = () => {
   console.log("글쓰기 페이지 호출");
   const navigate = useNavigate();
   const no = window.sessionStorage.getItem("no"); //세션에 저장된 회원번호값
 
-  const [don_title, setTitle] = useState(""); //사용자가 입력한 제목 담기
-  const [don_pw, setPw] = useState(""); //사용자가 입력한 pw 담기
+  const [board_mk_title, setTitle] = useState(""); //사용자가 입력한 제목 담기
+  const [board_mk_pw, setPw] = useState(""); //사용자가 입력한 pw 담기
   const [don_ticket_date, setTicketDate] = useState(""); //판매할 티켓의 공연일
   const [don_ticket_seat, setTicketSeat] = useState(""); //판매할 티켓의 좌석정보
   const [don_ticket_count, setTicketCount] = useState(""); //판매할 티켓의 수량
   const [don_ticket_price, setTicketPrice] = useState(""); //사용자가 입력한 판매가격
   const [file_name, setFilename] = useState(""); //이미지 말고 첨부파일 이름 담기
   const [file_size, setFilesize] = useState(""); //이미지 말고 첨부파일 크기 담기
-  const [don_content, setContent] = useState(""); //사용자가 입력한 내용 담기
+  const [board_mk_content, setContent] = useState(""); //사용자가 입력한 내용 담기
   //QuillEditor이미지 선택하면 imageUploadDB타면 스프링플젝 pds 이미지 업로드
   //pds에 업로드된 파일을 읽어서 Editor안에 보여줌 imageGet?imageName=woman1.png
   const [files, setFiles] = useState([]);
@@ -142,7 +143,7 @@ const DonationWriteForm = () => {
                 <Form.Group as={Col} controlId="formGridTitle">
                   <h3>제목</h3>
                   <Form.Control
-                    id="don_title"
+                    id="board_mk_title"
                     type="text"
                     placeholder="제목을 입력하세요."
                     style={{ width: "600px", height: "50px" }}
@@ -155,7 +156,7 @@ const DonationWriteForm = () => {
                 <Form.Group as={Col} controlId="formGridPassword">
                   <h3>비밀번호</h3>
                   <Form.Control
-                    id="don_pw"
+                    id="board_mk_pw"
                     type="password"
                     placeholder="비밀번호를 입력하세요."
                     style={{ maxWidth: "350px", height: "50px" }}
@@ -202,8 +203,8 @@ const DonationWriteForm = () => {
                 <Form.Group as={Col} controlId="formGridPrice">
                   <h3>판매등록가</h3>
                   <Form.Control
-                    id="don_price"
-                    type="number"
+                    id="don_ticket_price"
+                    type="text"
                     placeholder="티켓의 판매 가격을 입력하세요."
                     style={{ width: "600px", height: "50px" }}
                     onChange={(e) => {
@@ -217,6 +218,7 @@ const DonationWriteForm = () => {
                   <Form.Control
                     id="don_ticket_count"
                     type="number"
+                    min="0"
                     placeholder="티켓의 수량을 입력하세요."
                     style={{ width: "350px", height: "50px" }}
                     onChange={(e) => {
@@ -230,7 +232,7 @@ const DonationWriteForm = () => {
             <h3>상세내용</h3>
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <QuillEditor
-              value={don_content}
+              value={board_mk_content}
               handleContent={handleContent}
               quillRef={quillRef}
               files={files}
@@ -239,6 +241,7 @@ const DonationWriteForm = () => {
                 handleContent(e.target.value);
               }}
             />
+            <DonationFileInsert files={files} />
             <hr style={{ opacity: "0%" }} />
             <Button
               onClick={() => {
