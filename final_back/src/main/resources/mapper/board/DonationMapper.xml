@@ -6,8 +6,8 @@
 <insert id="don_boardInsert" parameterType="map">
 insert into board_market (board_mk_no, board_mk_title, board_mk_pw, board_mk_content, board_mk_date, board_mk_hit, 
                           don_ticket_date, don_ticket_seat, don_ticket_price, don_ticket_count, mem_name)
-VALUES (board_mk_no, board_mk_title, board_mk_pw, board_mk_content, board_mk_date, board_mk_hit, 
-                          don_ticket_date, don_ticket_seat, don_ticket_price, don_ticket_count, mem_name)
+VALUES (#{boardMkNo},#{boardMkTitle},#{boardMkPw},#{boardMkContent},#{boardMkDate},#{boardMkHit},
+        #{donTicketDate}, #{donTicketSeat}, #{donTicketPrice}, #{donTicketCount}, #{memName})
 </insert>
 
 <select id="don_boardList" resultType="DonationDto">

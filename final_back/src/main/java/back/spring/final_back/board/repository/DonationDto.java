@@ -16,17 +16,17 @@ public class DonationDto {
 	// 테이블 컬럼
 	// application.yml에 map-underscore-to-camel-case: true 때문에 snake-case로 된 DB의
 	// Attibute들을 java에서는 camel-case로 매핑해줌.
-	private int donBno;
-	private String donTitle;
-	private String donPw;
+	private int boardMkNo;
+	private String boardMkTitle;
+	private String boardMkPw;
+	private String boardMkContent;
+	private Date boardMkDate;
+	private int boardMkHit;
 	private Date donTicketDate;
 	private String donTicketSeat;
 	private String donTicketPrice;
 	private String donTicketCount;
-	private String donContent;
 	private String memName;
-	private Date donBoardDate;
-	private int donBoardHit;
 
 	// private int don_bno;
 	// private String don_title;
