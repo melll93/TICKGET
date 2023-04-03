@@ -2,7 +2,6 @@
   import { useNavigate } from 'react-router-dom'
   import { BButton, ContainerDiv, FormDiv, HeaderDiv, MyButton, MyH1, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle'
   import QuillEditor from './QuillEditor'
-  import DonationFileDetail from './DonationFileDetail'
   import { donationInsertDB, don_boardInsertDB, uploadFileDB } from '../../axios/donation/donationLogic'
   import { Button, Col, FloatingLabel, Form, InputGroup, Row } from 'react-bootstrap'
   import Sidebar from '../../components/Sidebar'
@@ -62,20 +61,20 @@
     const handleContent = useCallback((value) => { //quilleditor에서 담김 - 태그포함된 정보
       setContent(value)
     },[])
+
   //글쓰기 버튼 클릭시 등록
   const boardInsert = async() => {
   const board = {
-    don_bno:0, // 자동채번 시퀀스 사용
-    don_title : don_title,
-    don_pw : don_pw,
-    don_ticket_date : don_ticket_date,
-    don_ticket_seat : don_ticket_seat,
-    don_ticket_count : don_ticket_count,
-    don_ticket_price : don_ticket_price,
-    don_content : don_content,
-    mem_name : "테스트 작성자1", // 임시 - 세션스토리지로 받아올것
-    don_board_date : "2023-04-02", // 임시
-    don_board_hit : 0 
+    donBno:0, // 자동채번 시퀀스 사용
+    donTitle : don_title,
+    donPw : don_pw,
+    donTicketDate : don_ticket_date,
+    donTicketSeat : don_ticket_seat,
+    donTicketCount : don_ticket_count,
+    donTicketPrice : don_ticket_price,
+    donContent : don_content,
+    memName : "테스트 작성자1", // 임시 - 세션스토리지로 받아올것 
+    donBoardHit : 0 
     
 
   }
@@ -126,34 +125,33 @@
 </div>
         </HeaderDiv> 
 
-        <FormDiv  style={{width:'700px'}}>
-   
+        <FormDiv  style={{width:'1000px'}}>
    <div>
    <Row className="mb-4">
         <Form.Group as={Col} controlId="formGridTitle">
-          <h3>제목</h3>
-          <Form.Control id="don_title" type="text" placeholder="제목을 입력하세요." style={{ width: '400px', height:'50px'}} onChange={(e)=>{handleTitle(e.target.value)}} />
+        <h3>제목</h3> 
+          <Form.Control id="don_title" type="text" placeholder="제목을 입력하세요." style={{ width: '600px', height:'50px'}} onChange={(e)=>{handleTitle(e.target.value)}} />
         </Form.Group>
 
 
 
         <Form.Group as={Col} controlId="formGridPassword">
           <h3>비밀번호</h3>
-          <Form.Control id="don_pw" type="password" placeholder="비밀번호를 입력하세요." style={{ maxWidth: '250px' , height:'50px'}} onChange={(e)=>{handlePw(e.target.value)}}/>
+          <Form.Control id="don_pw" type="password" placeholder="비밀번호를 입력하세요." style={{ maxWidth: '350px' , height:'50px'}} onChange={(e)=>{handlePw(e.target.value)}}/>
         </Form.Group>
       </Row>
       </div>
            
       <div>
-  <Row className="mb-3" >
+  <Row className="mb-4" >
       <Form.Group as={Col} controlId="formGridDate">
         <h3>공연일</h3>
-        <Form.Control id="don_ticket_date" type="date" className="form-control" style={{width:'400px' , height:'50px'}} onChange={(e)=>{handleTicketDate(e.target.value)}}/>
+        <Form.Control id="don_ticket_date" type="date" className="form-control" style={{width:'600px' , height:'50px'}} onChange={(e)=>{handleTicketDate(e.target.value)}}/>
       </Form.Group>
 
 <Form.Group as={Col} controlId="formGridSeat">
           <h3>좌석정보</h3>
-          <Form.Control type="text" id="don_ticket_seat" placeholder="좌석 정보를 입력하세요." style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketSeat(e.target.value)}}/>
+          <Form.Control type="text" id="don_ticket_seat" placeholder="좌석 정보를 입력하세요." style={{width:'350px' , height:'50px'}} onChange={(e)=>{handleTicketSeat(e.target.value)}}/>
           </Form.Group>
 
   </Row>
@@ -164,22 +162,22 @@
   
         <Form.Group as={Col} controlId="formGridPrice" >
           <h3>판매등록가</h3>
-          <Form.Control id="don_price" type="text" placeholder="티켓의 판매 가격을 입력하세요." style={{width:'400px' , height:'50px'}} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
+          <Form.Control id="don_price" type="number" placeholder="티켓의 판매 가격을 입력하세요." style={{width:'600px' , height:'50px'}} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridTicketCount">
           <h3>판매수량</h3>
-          <Form.Control id="don_ticket_count" type="text" placeholder="티켓의 수량을 입력하세요." style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
+          <Form.Control id="don_ticket_count" type="number" placeholder="티켓의 수량을 입력하세요." style={{width:'350px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
         </Form.Group>
     
         </Row>
       </div>
            
 
-           
             <h3>상세내용</h3>
             <hr style={{margin:'10px 0px 10px 0px'}}/>
             <QuillEditor value={don_content} handleContent={handleContent} quillRef={quillRef} files={files} handleFiles={handleFiles} onChange={(e)=>{handleContent(e.target.value)}}/>
+              <hr style={{opacity:'0%'}}/>
               <Button onClick={()=>{boardInsert()}}>글 등록하기</Button>
         </FormDiv>
       </ContainerDiv>

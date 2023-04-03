@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,7 +38,7 @@ public class DonationController {
 
 	// 도네이션 게시판 게시글 등록
 	@PostMapping("/don_boardInsert")
-	public int don_boardInsert(DonationDto donationDto) {
+	public int don_boardInsert(@RequestBody DonationDto donationDto) {
 		logger.info("DonationController : don_boardInsert 호출");
 		int result = 0;
 		result = donationService.don_boardInsert(donationDto);
