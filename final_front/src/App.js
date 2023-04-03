@@ -20,8 +20,10 @@ import TogetherPage from "./pages/community/TogetherPage";
 import DonationDetail from "./pages/donation/DonationDetail";
 import DonationUpdatePage from "./pages/donation/DonationUpdatePage";
 import DonationWriteForm from "./pages/donation/DonationWriteForm";
+import FindIdPage from "./pages/member/FindIdpage";
 import LoginPage from "./pages/member/LoginPage";
 import RegisterPage from "./pages/member/RegisterPage";
+import ResetPwPage from "./pages/member/ResetPwPage";
 import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
@@ -116,6 +118,8 @@ function App({ authLogic, imageUploader }) {
             <LoginPage user={user} setUser={setUser} authLogic={authLogic} />
           }
         />
+        <Route path='/findId' exact={true} element={<FindIdPage />} />
+        <Route path='/resetPw' exact={true} element={<ResetPwPage authLogic={authLogic} />} />
         <Route
           path="/oauth/login/naver/callback"
           element={<NaverLogin setUser={setUser} />}

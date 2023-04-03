@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
+import { MyP } from "../../styles/formStyle";
 import { loginH } from "../../util/authLogic";
 
 const LoginPage = ({ user, setUser, authLogic }) => {
@@ -92,9 +94,17 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             {/* <div id="password" onClick={(event)=> {passwordView(event)}} style={{color: `${password.visible?"gray":"lightgray"}`}}>
             </div> */}
             </Form.Group>
+            <div style={{ textAlign: "center" }}>
             <Button variant="primary" type="login" onClick={()=>{loginHome()}}>
               로그인
             </Button>
+            </div>
+            <br />
+            <Form style={{ textAlign: "center" }}>
+            <MyP>신규 사용자이신가요?&nbsp;<Link to="/register" className="text-decoration-none" style={{color: "blue"}}>회원가입으로</Link></MyP>
+            <MyP>아이디를 잊으셨나요?&nbsp;<Link to="/findId" className="text-decoration-none" style={{color: "blue"}}>아이디 찾기</Link></MyP>
+            <MyP>비밀번호를 잊으셨나요?&nbsp;<Link to="/resetPw" className="text-decoration-none" style={{color: "blue"}}>비밀번호 변경</Link></MyP>
+            </Form>
           </Form>
           {/***************************************************************/}
           <hr />
