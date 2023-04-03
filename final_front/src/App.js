@@ -18,6 +18,7 @@ import ProductsDetails from "./pages/community/ProductsDetails";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
 import DonationDetail from "./pages/donation/DonationDetail";
+import DonationUpdatePage from "./pages/donation/DonationUpdatePage";
 import DonationWriteForm from "./pages/donation/DonationWriteForm";
 import LoginPage from "./pages/member/LoginPage";
 import RegisterPage from "./pages/member/RegisterPage";
@@ -162,7 +163,12 @@ function App({ authLogic, imageUploader }) {
           element={<DonationWriteForm />}
         />
         <Route
-          path="/donation/detail"
+          path="/donation/update/:bno"
+          exact={true}
+          element={<DonationUpdatePage/>}
+        />
+        <Route
+          path="/donation/detail/:bno"
           exact={true}
           element={<DonationDetail />}
         />
