@@ -3,25 +3,26 @@ import { don_boardListDB } from '../../axios/donation/donationLogic'
 import DonationRow from './DonationRow'
 
 const DonationList = () => {
+
+  const [board,setBoard] = useState({
+    cb_gubun:'qna_title',
+    keyword:'PT10회권양도합니다.'
+    })
+
   const [boards,setBoards] = useState([{
   }])
+  
+  useEffect(() => {
+    don_boardListDB().then(setBoards);
+  }, []);
+  
 
 
-  useEffect(()=>{
-   const boardList = async()=>{//비동기 처리로 요청
-     const res = await don_boardListDB(board) // async가 있을 때 await사용 가능함
-     console.log(res.data)
-     setBoards(res.data)
-   }
-   boardList()
- },[]
- )
- 
   return (
     <>
         {boards.map(boards => (
               <DonationRow key={boards.don_bno} boards={boards}/>
-            ))}
+            ))} 
     </>
   )
 }

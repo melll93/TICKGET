@@ -128,7 +128,7 @@
 
         <FormDiv  style={{width:'700px'}}>
    
-   <div>onChange={(e)=>{handleTitle(e.target.value)}}
+   <div>
    <Row className="mb-4">
         <Form.Group as={Col} controlId="formGridTitle">
           <h3>제목</h3>

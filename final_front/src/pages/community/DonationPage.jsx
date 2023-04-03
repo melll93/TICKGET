@@ -5,16 +5,16 @@ import { Button, Table } from 'react-bootstrap'
 import DonationFooter from "../donation/DonationFooter";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
-import {don_boardListDB} from '../../axios/donation/donationLogic'
 import DonationList from '../donation/DonationList'
+import { don_boardListDB } from "../../axios/donation/donationLogic";
 
 const DonationPage = () => {
       const navigate = useNavigate()
       const [boardList , setBoardList] = useState([])
 
-      useEffect = (() => {
-        don_boardList()
-      },[])
+    /*   useEffect = (() => {
+        don_boardListDB()
+      },[]) */
 
       const don_boardList = async() => {
             const res = await don_boardListDB();
@@ -72,7 +72,7 @@ const DonationPage = () => {
         <DeptRow key={dept.DEPTNO} dept={dept} />
       ))} */}
       {/*DonationRow에서 받아온 글 리스트 */}
-<DonationList />
+ <DonationList />
             </tbody>
             </Table>
             <hr />
