@@ -6,31 +6,56 @@
   <insert id="memberInsert" parameterType="map">
     insert into member(
                         member_no,
-                        domain,
-                        id,
-                        password,
-                        name,
-                        age,
-                        birth,
-                        email,
-                        gender,
-                        mobile,
-                        nickname,
-                        profile_image,
-                        register_date)
+                        member_domain,
+                        member_id,
+                        member_password,
+                        member_name,
+                        member_age,
+                        member_birth,
+                        member_email,
+                        member_gender,
+                        member_mobile,
+                        member_nickname,
+                        member_profile_image,
+                        member_register_date)
                 values(
-                        #{member_no},
-                        #{domain},
-                        #{id},
-                        #{password},
-                        #{name},
-                        #{age},
-                        #{email},
-                        #{gender},
-                        #{mobile},
-                        #{nickname},
-                        #{profile_image},
-                        #{register_date})
-    select * from member
+                seq_member_no.nextval
+                <if test="MEM_DOMAIN != null">
+				,#{MEM_DOMAIN}
+				</if>
+                <if test="MEM_ID != null">
+				,#{MEM_ID}
+				</if>
+                <if test="MEM_PASSWORD != null">
+				,#{MEM_PASSWORD}
+				</if>
+                <if test="MEM_NAME != null">
+				,#{MEM_NAME}
+				</if>
+                <if test="MEM_AGE != null">
+				,#{MEM_AGE}
+				</if>
+                <if test="MEM_BIRTHDAY != null">
+				,#{MEM_BIRTHDAY}
+				</if>
+                <if test="MEM_EMAIL != null">
+				,#{MEM_EMAIL}
+				</if>
+                <if test="MEM_GENDER != null">
+				,#{MEM_GENDER}
+				</if>
+                <if test="MEM_MOBILE != null">
+				,#{MEM_MOBILE}
+				</if>
+                <if test="MEM_NICKNAME != null">
+				,#{MEM_NICKNAME}
+				</if>
+                <if test="MEM_PROFILE_IMAGE != null">
+				,#{MEM_PROFILE_IMAGE}
+				</if>
+                <if test="MEM_REGISTER_DATE != null">
+				,#{MEM_REGISTER_DATE}
+				</if>
+				)
   </insert>
 </mapper>

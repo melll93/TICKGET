@@ -43,7 +43,7 @@ const QuillEditor = ({ value, handleContent, quillRef, files, handleFiles}) => {
             if (!res.data) {
                 console.log("이미지 업로드에 실패하였습니다.");
             }
-            const url = process.env.REACT_APP_SPRING_IP+`reple/imageGet?imageName=${res.data}`;
+            const url = `http://localhost:8888/donation/imageGet?imageName=${res.data}`;
             const quill = quillRef.current.getEditor();
             /* ReactQuill 노드에 대한 Ref가 있어야 메서드들을 호출할 수 있으므로
             useRef()로 ReactQuill에 ref를 걸어주자.
@@ -100,7 +100,7 @@ const QuillEditor = ({ value, handleContent, quillRef, files, handleFiles}) => {
 
 
     return (
-        <div style={{height: "500px", display: "flex", justifyContent: "center", padding:"0px"}}>
+        <div style={{height: "350px", display: "flex", justifyContent: "center", padding:"0px"}}>
             <ReactQuill
                 ref={quillRef}
                 style={{height: "270px", width: "100%"}}

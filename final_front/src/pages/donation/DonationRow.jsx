@@ -1,11 +1,20 @@
-import React from 'react'
+  import React from 'react'
 
-const DonationRow = () => {
-  return (
-    <div>
-    게시판 로우 페이지 (게시글 한 행 씩)      
-    </div>
-  )
-}
+  const DonationRow = ({boards}) => {
+    console.log(boards);
+    return (
+      <>
+      <tr>
+        <td style={{ textAlign:"center"}}>{boards.donBno}</td>
+        <td style={{ textAlign:"center"}}>{boards.donTitle}</td>
+        <td style={{textAlign:"center"}}>{boards.donTicketCount}</td>
+        <td style={{textAlign:"center"}}>{boards.donTicketPrice}</td>
+        <td style={{textAlign:"center"}}>{boards.donBoardDate}</td> 
+        <td style={{textAlign:"center"}}>{boards.memName}</td>
+        <td style={{textAlign:"center"}}>{boards.donBoardHit}</td> 
+      </tr>
+    </>
+    )
+  }
 
-export default DonationRow
+  export default DonationRow

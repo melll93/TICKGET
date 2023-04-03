@@ -63,5 +63,6 @@
     <logger name="back.spring.final_back.festival.repository.MovieDao" level="debug" />
     <logger name="back.spring.final_back.member.repository.NaverMemberDao" level="debug" />
     <logger name="back.spring.final_back.member.repository.SignUpDao" level="debug" />
+    <logger name="back.spring.final_back.board.repository.DonationDao" level="debug" />
 
 </configuration>

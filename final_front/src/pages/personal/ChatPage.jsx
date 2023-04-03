@@ -1,67 +1,104 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import "../../styles/chat.css";
 
+const ws = new WebSocket("ws://localhost:8888/ws/chat");
 
 const ChatPage = () => {
-  const username = "asd";
-  const websocket = new WebSocket("ws://localhost:8888/ws/chat");
+  const username = "ADMIN";
   const [msg, setMsg] = useState("");
-  websocket.onmessage = onMessage;
-
-  useEffect(() => {
-    websocket.onopen = onOpen;
-    websocket.onclose = onClose;
-  }, [])
 
   const send = (msg) => {
-    websocket.onopen = () => {
+    if (ws.readyState === ws.OPEN) {
+      console.log("send");
       console.log(username + ":" + msg);
-      websocket.send(username + ":" + msg);
+      ws.send(username + ":" + msg);
       setMsg("");
+    } else {
+      console.log("서버에 연결되지 않았습니다.");
     }
-  }
+  };
 
-  //채팅창에서 나갔을 때
-  function onClose(evt) {
-    var str = username + ": 님이 방을 나가셨습니다.";
-    websocket.send(str);
-  }
+  const onOpen = (e) => {
+    const str = username + "님이 입장하셨습니다.";
+    ws.send(str);
+    console.log("onOpen");
+  };
 
-  //채팅창에 들어왔을 때
-  function onOpen(evt) {
-    var str = username + ": 님이 입장하셨습니다.";
-    websocket.send(str);
-  }
+  const onClose = (e) => {
+    const str = username + "님이 방을 나가셨습니다.";
+    ws.send(str);
+    console.log("onClose");
+  };
 
-  function onMessage(msg) {
-    let sessionId = null;
-    let message = null;
-    const data = msg.data;
-    const arr = data.split(":");
+  ws.onopen = (ws, e) => {
+    onOpen(e);
+  };
 
-    for (var i = 0; i < arr.length; i++) {
-      console.log('arr[' + i + ']: ' + arr[i]);
-    }
+  ws.onclose = (ws, e) => {
+    onClose(e);
+  };
 
-    var cur_session = username;
-
-    //현재 세션에 로그인 한 사람
-    console.log("cur_session : " + cur_session);
-    sessionId = arr[0];
-    message = arr[1];
-
-    console.log("sessionID : " + sessionId);
-    console.log("cur_session : " + cur_session);
-  }
   return (
     <>
       <Sidebar />
       <div className="center">
         <Header />
-        <input id="msg" type="text" onChange={e => setMsg(e.target.value)} />
-        <input type="button" onClick={send(msg)} value="send" />
+        {/****************************** CHAT AREA START ******************************/}
+        <div className="chat container">
+          {/******************** START chat bar ********************/}
+          <div className="chat bar">
+            <div className="chat bar dm">
+              <span>DM</span>
+            </div>
+            <div className="chat bar group">
+              <span>GROUP</span>
+            </div>
+          </div>
+          {/******************** END of chat bar ********************/}
+          {/******************** START chat box ********************/}
+          <div className="chat box">
+            {/* start chat chatList */}
+            <div className="chat box chatList">
+              <li>chatList</li>
+            </div>
+            {/* end of chat chatList */}
+
+            {/* start chat chatDisplay */}
+            <div className="chat box chatDisplay">
+              {/* start chatDisplay outputBox */}
+              <div className="chat box chatDisplay outputBox"></div>
+              {/* end of chatDisplay outputBox */}
+              {/* start chatDisplay inputBox */}
+              <div className="chat box chatDisplay inputBox">
+                <input
+                  className="inputTextBox"
+                  id="msg"
+                  type="text"
+                  onChange={(e) => setMsg(e.target.value)}
+                />
+                <input
+                  type="button"
+                  className="inputButton"
+                  id="inputButton"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    send(msg);
+                  }}
+                  value="send"
+                />
+              </div>
+              {/* end of chatDisplay inputBox */}
+            </div>
+            {/* end of chat chatDisplay */}
+          </div>
+          {/******************** END of chat box ********************/}
+        </div>
+        {/* end of chat container */}
+        {/****************************** CHAT AREA END ******************************/}
       </div>
+      {/* end of div.center */}
     </>
   );
 };

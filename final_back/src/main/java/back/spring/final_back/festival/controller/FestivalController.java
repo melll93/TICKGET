@@ -26,33 +26,36 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/festival/*")
 public class FestivalController {
-	Logger logger=LoggerFactory.getLogger(FestivalController.class);
+	Logger logger = LoggerFactory.getLogger(FestivalController.class);
 	@Autowired
 	private final FestivalService festivalService;
-	 @GetMapping("festivalList")
-	    public List<FestivalDto2> festivalList() {
-	        List<FestivalDto2> festival = null;
-	        festival=festivalService.festivalList();
-	        logger.info(festival.toString());
-	        return festival;
-	    }
-	 @GetMapping("seoulFestivalList")
-	    public List<FestivalDto2> seoulFestivalList() {
-	        List<FestivalDto2> festival = null;
-	        festival=festivalService.seoulFestivalList();
-	        return festival;
-	    }
-	 @GetMapping("kyeongkiFestivalList")
-	    public List<FestivalDto2> kyeongkiFestivalList() {
-	        List<FestivalDto2> festival = null;
-	        festival=festivalService.kyeongkiFestivalList();
-	        return festival;
-	    }
-	 
-	 @PostMapping ("festivalInsert")
-	    public int festivalInsert(@RequestBody FestivalDto festivalDto) {
-	        int result = festivalService.festivalInsert(festivalDto);
-	        logger.info(festivalDto.toString());
-	        return result;
-	    }
+
+	@GetMapping("festivalList")
+	public List<FestivalDto2> festivalList() {
+		List<FestivalDto2> festival = null;
+		festival = festivalService.festivalList();
+		// logger.info(festival.toString());
+		return festival;
 	}
+
+	@GetMapping("seoulFestivalList")
+	public List<FestivalDto2> seoulFestivalList() {
+		List<FestivalDto2> festival = null;
+		festival = festivalService.seoulFestivalList();
+		return festival;
+	}
+
+	@GetMapping("kyeongkiFestivalList")
+	public List<FestivalDto2> kyeongkiFestivalList() {
+		List<FestivalDto2> festival = null;
+		festival = festivalService.kyeongkiFestivalList();
+		return festival;
+	}
+
+	@PostMapping("festivalInsert")
+	public int festivalInsert(@RequestBody FestivalDto festivalDto) {
+		int result = festivalService.festivalInsert(festivalDto);
+		logger.info(festivalDto.toString());
+		return result;
+	}
+}

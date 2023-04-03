@@ -24,7 +24,6 @@ public class BoardController {
     Logger logger = LoggerFactory.getLogger(BoardController.class);
     private final BoardService boardService;
 
-    
     // 게시판 조회(SelectAll)
     @GetMapping("/selectBoardList")
     public List<BoardDto> selectBoardList() {
