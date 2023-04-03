@@ -3,59 +3,76 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="back.spring.final_back.social.repository.SignUpDao">
-  <insert id="memberInsert" parameterType="map">
-    insert into member(
-                        member_no,
-                        member_domain,
-                        member_id,
-                        member_password,
-                        member_name,
-                        member_age,
-                        member_birth,
-                        member_email,
-                        member_gender,
-                        member_mobile,
-                        member_nickname,
-                        member_profile_image,
-                        member_register_date)
-                values(
-                seq_member_no.nextval
-                <if test="MEM_DOMAIN != null">
-				,#{MEM_DOMAIN}
-				</if>
-                <if test="MEM_ID != null">
-				,#{MEM_ID}
-				</if>
-                <if test="MEM_PASSWORD != null">
-				,#{MEM_PASSWORD}
-				</if>
-                <if test="MEM_NAME != null">
-				,#{MEM_NAME}
-				</if>
-                <if test="MEM_AGE != null">
-				,#{MEM_AGE}
-				</if>
-                <if test="MEM_BIRTHDAY != null">
-				,#{MEM_BIRTHDAY}
-				</if>
-                <if test="MEM_EMAIL != null">
-				,#{MEM_EMAIL}
-				</if>
-                <if test="MEM_GENDER != null">
-				,#{MEM_GENDER}
-				</if>
-                <if test="MEM_MOBILE != null">
-				,#{MEM_MOBILE}
-				</if>
-                <if test="MEM_NICKNAME != null">
-				,#{MEM_NICKNAME}
-				</if>
-                <if test="MEM_PROFILE_IMAGE != null">
-				,#{MEM_PROFILE_IMAGE}
-				</if>
-                <if test="MEM_REGISTER_DATE != null">
-				,#{MEM_REGISTER_DATE}
-				</if>
-				)
-  </insert>
+	<insert id="memberInsert" parameterType="map">
+		INSERT INTO member(
+		member_no,
+		member_domain,
+		member_id,
+		member_password,
+		member_name,
+		member_age,
+		member_birth,
+		member_email,
+		member_gender,
+		member_mobile,
+		member_nickname,
+		member_profile_image,
+		member_register_date)
+		VALUES(
+		memberNo.nextval
+		<if test="memberDomain!= null">
+			,#{memberDomain}
+		</if>
+		<if test="memberId!= null">
+			,#{memberId}
+		</if>
+		<if test="memberPassword!= null">
+			,#{memberPassword}
+		</if>
+		<if test="memberName!= null">
+			,#{memberName}
+		</if>
+		<if test="memberAge!= null">
+			,#{memberAge}
+		</if>
+		<if test="memberBirth!= null">
+			,#{memberBirth}
+		</if>
+		<if test="memberEmail!= null">
+			,#{memberEmail}
+		</if>
+		<if test="memberGender!= null">
+			,#{memberGender}
+		</if>
+		<if test="memberMobile!= null">
+			,#{memberMobile}
+		</if>
+		<if test="memberNickname!= null">
+			,#{memberNickname}
+		</if>
+		<if test="memberProfileImage!= null">
+			,#{memberProfileImage}
+		</if>
+		<if test="memberRegisterDate!= null">
+			,#{memberRegisterDate}
+		</if>
+		)
+	</insert>
+	<select id="memberList" parameterType="java.util.HashMap" resultType="map">
+    select
+           member_no,
+           member_domain,
+           member_id,
+           member_password,
+           member_name,
+           member_age,
+           member_birth,
+           member_email,
+           member_gender,
+           member_mobile,
+           member_nickname,
+           member_profile_image,
+           member_register_date
+      from member
+</select >
 </mapper>

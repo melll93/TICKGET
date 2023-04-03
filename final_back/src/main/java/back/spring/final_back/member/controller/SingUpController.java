@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class SingUpController {
-	private SignUpService signUpService = null;
+	private final SignUpService signUpService;
 	@GetMapping("memberList")
 	// 전체 조회
 	public String memberList(@RequestParam Map<String, Object> pMap) {
@@ -49,9 +49,10 @@ public class SingUpController {
 	}
 
 	// Insert
-	@GetMapping("memberInsert")
+	@PostMapping("memberInsert")
 	public String memberInsert(@RequestBody Map<String, Object> pMap) {
 		log.info("memberInsert 확인");
+		log.info(pMap.toString());
 		int result = 0;
 		result = signUpService.memberInsert(pMap);
 		return String.valueOf(result);
@@ -61,6 +62,7 @@ public class SingUpController {
 	@PostMapping("memberUpdate")
 	public String memberUpdate(@RequestBody Map<String, Object> pMap) {
 		log.info("memberUpdate 확인");
+		log.info(pMap.toString());
 		int result = 0;
 		result = signUpService.memberUpdate(pMap);
 		return String.valueOf(result);
@@ -70,6 +72,7 @@ public class SingUpController {
 	@GetMapping("memberDelete")
 	public String memberDelete(@RequestParam Map<String, Object> pMap) {
 		log.info("memberDelete 확인");
+		log.info(pMap.toString());
 		int result = 0;
 		result = signUpService.memberDelete(pMap);
 		return String.valueOf(result);
