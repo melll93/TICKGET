@@ -7,6 +7,7 @@ import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
 import DonationList from '../donation/DonationList'
 import { don_boardListDB } from "../../axios/donation/donationLogic";
+import { FormDiv, HeaderDiv } from "../../styles/formStyle";
 
 const DonationPage = () => {
       const navigate = useNavigate()
@@ -16,7 +17,7 @@ const DonationPage = () => {
         don_boardListDB()
       },[]) */
 
-      const don_boardList = async() => {
+ /*      const don_boardList = async() => {
             const res = await don_boardListDB();
             console.log(res.data);
             if (res.data && Array.isArray(res.data)) {
@@ -26,14 +27,17 @@ const DonationPage = () => {
                   console.log("게시글 목록 조회 실패");
                 }
               };
-            
+             */
   
   return (
      <>
    <Sidebar/> 
      <div className="center">
      <Header/>
-     
+     <HeaderDiv>
+          <h3 style={{marginLeft:"100px"}}>도네이션 게시판</h3>
+        </HeaderDiv>
+        <FormDiv style={{marginLeft:'50px'}}>
      <div className='container'>
          <div className="page-header">
             </div>
@@ -86,6 +90,7 @@ const DonationPage = () => {
             </Button>
       </div>
          </div>
+         </FormDiv>
      </div>
      </>
     )

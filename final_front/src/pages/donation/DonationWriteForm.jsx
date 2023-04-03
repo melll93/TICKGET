@@ -168,7 +168,7 @@ import DonationFileInsert from './DonationFileInsert'
 
         <Form.Group as={Col} controlId="formGridTicketCount">
           <h3>판매수량</h3>
-          <Form.Control id="don_ticket_count" type="number" min="0" placeholder="티켓의 수량을 입력하세요." style={{width:'350px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
+          <Form.Control id="don_ticket_count" type="number" min="1" placeholder="티켓의 수량을 입력하세요." style={{width:'350px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
         </Form.Group>
     
         </Row>

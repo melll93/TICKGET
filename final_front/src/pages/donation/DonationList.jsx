@@ -3,12 +3,12 @@ import { don_boardListDB } from "../../axios/donation/donationLogic";
 import DonationRow from "./DonationRow";
 
 const DonationList = () => {
-  const [board, setBoard] = useState([
+/*   const [board, setBoard] = useState([
     {
       cb_gubun: "qna_title",
       keyword: "PT10회권양도합니다.",
     },
-  ]);
+  ]); */
 
   const [boards, setBoards] = useState([]);
 
