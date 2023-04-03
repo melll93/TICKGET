@@ -2,6 +2,7 @@ import axios from "axios";
 
 //도네이션 게시판 게시글 조회 로직
 export const don_boardListDB = (board) => {
+  console.log(board)
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -18,6 +19,7 @@ export const don_boardListDB = (board) => {
 
 //도네이션 게시판 글쓰기 등록 로직
 export const don_boardInsertDB = (board) => {
+  console.log(board)
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -34,6 +36,7 @@ export const don_boardInsertDB = (board) => {
 
 //도네이션 게시판 글 수정 로직
 export const don_boardUpdateDB = (board) => {
+  console.log(board)
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -50,6 +53,7 @@ export const don_boardUpdateDB = (board) => {
 
 //도네이션 게시판 글 삭제 로직
 export const don_boardDeleteDB = (board) => {
+  console.log(board)
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
