@@ -61,3 +61,35 @@ export const FestivalInsertDB = (festival) => {
       }
     });
   };
+
+
+  
+  export const FestivalReviewDB = (freview) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const response = axios({
+          method: "get",
+          url: "http://localhost:8888/review/reviewList",
+          params: freview, 
+        });
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  export const FestReviewInsertDB = (freview) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const response = axios({
+          method:"post", 
+          url: "http://localhost:8888/review/reviewInsert",
+          data:freview, 
+        });
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
