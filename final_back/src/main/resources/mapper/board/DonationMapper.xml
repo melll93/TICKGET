@@ -5,10 +5,10 @@
 
 <insert id="don_boardInsert" parameterType="map">
 insert into
-donation_board (don_bno, don_title, don_pw, don_ticket_date
+donation_board (don_title, don_pw, don_ticket_date
 , don_ticket_seat, don_ticket_price, don_ticket_count,don_content, mem_name, don_board_date,don_board_hit)
-VALUES (donation_board_seq.nextval, #{don_title}, #{don_pw}, #{don_ticket_date}, #{don_ticket_seat},#{don_ticket_price}
-,#{don_ticket_count},#{don_content},#{mem_name},#{don_board_date},#{don_board_hit})
+VALUES (#{donTitle}, #{donPw}, #{donTicketDate}, #{donTicketSeat},#{donTicketPrice}
+,#{donTicketCount},#{donContent},#{memName}, CURDATE(),#{donBoardHit})
 </insert>
 
 <select id="don_boardList" resultType="DonationDto">
@@ -16,13 +16,13 @@ select don_bno, don_title, don_ticket_count, don_ticket_price, don_board_date, m
 </select>
 
 <update id="don_boardUpdate" parameterType="DonationDto">
- update don_board
- set don_title = #{don_title},
-     don_ticket_date = #{don_ticket_date},
-     don_ticket_seat = #{don_ticket_seat},
-     don_ticket_price = #{don_ticket_price},
-     don_ticket_count = #{don_ticket_count},
-     don_content = #{don_content}
+ update donation_board
+ set don_title = #{donTitle},
+     don_ticket_date = #{donTicketDate},
+     don_ticket_seat = #{donTicketSeat},
+     don_ticket_price = #{donTicketPrice},
+     don_ticket_count = #{donTicketCount},
+     don_content = #{donContent}
 <where>
 don_pw = #{don_pw}
 </where>
@@ -31,7 +31,7 @@ don_pw = #{don_pw}
 <delete id="don_boardDelete" parameterType="int">
 delete from donation_board
 <where>
-don_pw = #{value}
+don_pw = #{donPw}
 </where>
 </delete>
 
