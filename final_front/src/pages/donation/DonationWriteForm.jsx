@@ -87,9 +87,9 @@ const DonationWriteForm = () => {
   const boardInsert = async () => {
     const board = {
       boardMkNo: 0, // 자동채번 시퀀스 사용
-      boardMkTitle: don_title,
-      boardMkPw: don_pw,
-      boardMkContent: don_content,
+      boardMkTitle: board_mk_title,
+      boardMkPw: board_mk_pw,
+      boardMkContent: board_mk_content,
       boardMkHit: 0,
       donTicketDate: don_ticket_date,
       donTicketSeat: don_ticket_seat,
