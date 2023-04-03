@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Button, Dropdown, DropdownButton, Modal, Tab, Tabs } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import {useNavigate, useParams} from 'react-router-dom'
+import { FestivalReviewDB, FestReviewInsertDB } from '../../axios/main/Festival';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import { MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
@@ -22,7 +23,14 @@ function ProductsDetails(){
     const [mEmail, setMEmail]=useState("");
     const [tAmo, setTamo]=useState(0);
 
+    /* 리뷰 */
+    const [reviewContent, setReviewContent]=useState("");
 
+    const resetReviewField = () => {
+      setReviewContent("");
+  document.querySelector('#product_detail_review_textarea').value = null;
+
+    };
 
     /* 수정중 */
     /* const [Data, setData] = useState({});
@@ -40,7 +48,7 @@ function ProductsDetails(){
     // }, []);
 /* 수정중 */
     
-
+/* 결제 */
     const inputMTel = useCallback((e) => {
       setMTel (e)
     },[])
@@ -53,27 +61,55 @@ function ProductsDetails(){
     const inputTAmo = useCallback((e) => {
       setTamo (e)
     },[])
+    /* 리뷰 */
+    const inputReviewContent= useCallback((e) => {
+      setReviewContent (e)
+    },[])
 
-    const insertReview=()=>{
+
+    const insertReview=async()=>{
 /* 리뷰등록 요기  */
-
-    }
+const freview={
+  reviewContent,
+  reviewFestmid:festMId,
+  }
+  const res =await FestReviewInsertDB(freview)
+  console.log(freview)
+  if(!res.data){
+  }
+  else{
+  }
+  navigate('/productsDetail/'+festMId)
+  resetReviewField()
+}
 
 //리뷰컴포
-const ReviewInsert = ()=>{
-
+const ReviewList =()=>{
+  const [freviews, setFreviews] = useState([]);
+  useEffect(() => {FestivalReviewDB().then(setFreviews); }, []);
   return(
     <>
-<div className="product_detail_review_comment" style={{borderBottom:'1px solid lightgray', width:'1100px', margin:'50px'}}>
-내용<br/>
-{/* 여기 인서트  */}
-id:  , 날짜...?
+    {freviews.data && freviews.data.map((review, i) => {
+      if(festMId===review.reviewFestmid){
+      return(
+        <div key={review.reviewNo} className="product_detail_review_comment" style={{borderBottom:'1px solid lightgray', width:'1100px', margin:'50px'}}>
+<h3>
+{review.reviewContent}
+</h3>
+id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}
 </div>
-
-
-    </>
-  )
+)  //안쪽리턴
 }
+})} 
+</>
+  ) //리턴끝
+}  //ReviewList 끝
+
+
+
+
+
+
 
 
     
@@ -264,15 +300,15 @@ id:  , 날짜...?
 
 
           <div className="form-floating" style={{textAlign:'right'}}>
-  <textarea className="form-control" placeholder="Leave a comment here" id="product_detail_review_textarea" style={{height: '300px', margin:'10px', maxWidth:'1200px'}}></textarea>
+  <textarea onChange={(e)=>{inputReviewContent(e.target.value)}} className="form-control" placeholder="Leave a comment here" id="product_detail_review_textarea" style={{height: '300px', margin:'10px', maxWidth:'1200px'}}></textarea>
   <label htmlFor="floatingTextarea">관람후기</label>
-<button className="reviewbtn" onClick={()=> {}} style={{backgroundColor:'black', width:'250px', height:'50px', color:'white', margin:'10px 80px 10px 10px', borderRadius:'10px'}}> 등록 </button> 
+<button className="reviewbtn" onClick={insertReview} style={{backgroundColor:'black', width:'250px', height:'50px', color:'white', margin:'10px 80px 10px 10px', borderRadius:'10px'}}> 등록 </button> 
 
 
 
 </div>
 
-<ReviewInsert></ReviewInsert>
+<ReviewList></ReviewList>
 
 
 
