@@ -6,6 +6,7 @@
   import { Button, Col, FloatingLabel, Form, InputGroup, Row } from 'react-bootstrap'
   import Sidebar from '../../components/Sidebar'
   import Header from '../../components/Header'
+import DonationFileInsert from './DonationFileInsert'
 
   const DonationWriteForm = () => {
     console.log('글쓰기 페이지 호출')
@@ -13,15 +14,15 @@
     const no = window.sessionStorage.getItem('no') //세션에 저장된 회원번호값
     
     
-    const [don_title, setTitle] = useState("") //사용자가 입력한 제목 담기
-    const [don_pw , setPw] = useState("") //사용자가 입력한 pw 담기
+    const [board_mk_title, setTitle] = useState("") //사용자가 입력한 제목 담기
+    const [board_mk_pw , setPw] = useState("") //사용자가 입력한 pw 담기
     const [don_ticket_date, setTicketDate] = useState("") //판매할 티켓의 공연일
     const [don_ticket_seat, setTicketSeat] = useState("") //판매할 티켓의 좌석정보
     const [don_ticket_count, setTicketCount] = useState("") //판매할 티켓의 수량
     const [don_ticket_price, setTicketPrice] = useState("") //사용자가 입력한 판매가격
     const [file_name, setFilename] = useState("") //이미지 말고 첨부파일 이름 담기
     const [file_size, setFilesize] = useState("") //이미지 말고 첨부파일 크기 담기
-    const [don_content, setContent] = useState("") //사용자가 입력한 내용 담기
+    const [board_mk_content, setContent] = useState("") //사용자가 입력한 내용 담기
     //QuillEditor이미지 선택하면 imageUploadDB타면 스프링플젝 pds 이미지 업로드
     //pds에 업로드된 파일을 읽어서 Editor안에 보여줌 imageGet?imageName=woman1.png
     const [files, setFiles] = useState([])
@@ -65,16 +66,16 @@
   //글쓰기 버튼 클릭시 등록
   const boardInsert = async() => {
   const board = {
-    donBno:0, // 자동채번 시퀀스 사용
-    donTitle : don_title,
-    donPw : don_pw,
+    boardMkNo:0, // 자동채번 시퀀스 사용
+    boardMkTitle : board_mk_title,
+    boardMkPw : board_mk_pw,
     donTicketDate : don_ticket_date,
     donTicketSeat : don_ticket_seat,
     donTicketCount : don_ticket_count,
     donTicketPrice : don_ticket_price,
-    donContent : don_content,
+    boardMkContent : board_mk_content,
     memName : "테스트 작성자1", // 임시 - 세션스토리지로 받아올것 
-    donBoardHit : 0 
+    boardMkHit : 0 
     
 
   }
@@ -130,14 +131,14 @@
    <Row className="mb-4">
         <Form.Group as={Col} controlId="formGridTitle">
         <h3>제목</h3> 
-          <Form.Control id="don_title" type="text" placeholder="제목을 입력하세요." style={{ width: '600px', height:'50px'}} onChange={(e)=>{handleTitle(e.target.value)}} />
+          <Form.Control id="board_mk_title" type="text" placeholder="제목을 입력하세요." style={{ width: '600px', height:'50px'}} onChange={(e)=>{handleTitle(e.target.value)}} />
         </Form.Group>
 
 
 
         <Form.Group as={Col} controlId="formGridPassword">
           <h3>비밀번호</h3>
-          <Form.Control id="don_pw" type="password" placeholder="비밀번호를 입력하세요." style={{ maxWidth: '350px' , height:'50px'}} onChange={(e)=>{handlePw(e.target.value)}}/>
+          <Form.Control id="board_mk_pw" type="password" placeholder="비밀번호를 입력하세요." style={{ maxWidth: '350px' , height:'50px'}} onChange={(e)=>{handlePw(e.target.value)}}/>
         </Form.Group>
       </Row>
       </div>
@@ -162,12 +163,12 @@
   
         <Form.Group as={Col} controlId="formGridPrice" >
           <h3>판매등록가</h3>
-          <Form.Control id="don_price" type="number" placeholder="티켓의 판매 가격을 입력하세요." style={{width:'600px' , height:'50px'}} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
+          <Form.Control id="don_ticket_price" type="text" placeholder="티켓의 판매 가격을 입력하세요." style={{width:'600px' , height:'50px'}} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridTicketCount">
           <h3>판매수량</h3>
-          <Form.Control id="don_ticket_count" type="number" placeholder="티켓의 수량을 입력하세요." style={{width:'350px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
+          <Form.Control id="don_ticket_count" type="number" min="0" placeholder="티켓의 수량을 입력하세요." style={{width:'350px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
         </Form.Group>
     
         </Row>
@@ -176,7 +177,8 @@
 
             <h3>상세내용</h3>
             <hr style={{margin:'10px 0px 10px 0px'}}/>
-            <QuillEditor value={don_content} handleContent={handleContent} quillRef={quillRef} files={files} handleFiles={handleFiles} onChange={(e)=>{handleContent(e.target.value)}}/>
+            <QuillEditor value={board_mk_content} handleContent={handleContent} quillRef={quillRef} files={files} handleFiles={handleFiles} onChange={(e)=>{handleContent(e.target.value)}}/>
+             <DonationFileInsert files={files}/>
               <hr style={{opacity:'0%'}}/>
               <Button onClick={()=>{boardInsert()}}>글 등록하기</Button>
         </FormDiv>
