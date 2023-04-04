@@ -1,6 +1,7 @@
 package back.spring.final_back.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,4 +54,16 @@ public class BoardServiceImpl implements BoardService {
         return result;
     }
 
+    public int qnaInsert(Map<String, Object> pMap) {
+        logger.info("qnaInsert호출");
+        int result = 0;
+        result = boardDao.qnaInsert(pMap);
+        return result;
+     }
+     public List<Map<String, Object>> qnaList(Map<String, Object> pMap) {
+        logger.info("qnaList 호출");
+        List<Map<String,Object>> bList = null;
+        bList = boardDao.qnaList(pMap);
+        return bList;
+     }
 }

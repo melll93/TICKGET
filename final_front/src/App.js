@@ -6,7 +6,7 @@ import NaverLogin from "./api/login/NaverLogin";
 import "./App.css";
 import { memberListDB } from "./axios/member/memberLogic";
 import BoardDetail from "./pages/board/BoardDetail";
-import Write from "./pages/board/BoardWrite";
+import BoardWriteForm from "./pages/board/BoardWriteForm";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import CalendarPage from "./pages/community/CalendarPage";
 import CarpoolPage from "./pages/community/CarpoolPage";
@@ -142,7 +142,7 @@ function App({ authLogic, imageUploader }) {
         <Route path="/paymentsucess/:festMId" element={<PaySucTestPage />} />
 
         {/* TogetherPage Routes*/}
-        <Route path="together/write/*" element={<Write />} />
+        <Route path="together/write/*" element={<BoardWriteForm />} />
         <Route path="together/boardDetail/:boardNo" element={<BoardDetail boardNo={boardNo} />}/>
         <Route path="together/boardDetail/" element={<BoardDetail />} />
 

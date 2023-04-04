@@ -9,7 +9,7 @@ const DonationList = () => {
 
   useEffect(()=>{
    const boardList = async()=>{//비동기 처리로 요청
-     const res = await don_boardListDB(board) // async가 있을 때 await사용 가능함
+     const res = await don_boardListDB(/* board */) // async가 있을 때 await사용 가능함
      console.log(res.data)
      setBoards(res.data)
    }
