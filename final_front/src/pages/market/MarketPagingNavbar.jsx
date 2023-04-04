@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DonationPagingNavbar = () => {
+const MarketPagingNavbar = () => {
   return (
     <div>
   게시판 페이징 처리      
@@ -8,4 +8,4 @@ const DonationPagingNavbar = () => {
   )
 }
 
-export default DonationPagingNavbar
+export default MarketPagingNavbar
