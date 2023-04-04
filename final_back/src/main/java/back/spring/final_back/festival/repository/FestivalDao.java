@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface FestivalDao {
-    public List<FestivalDto2> festivalList();
-    public List<FestivalDto2> seoulFestivalList();
-    public List<FestivalDto2> kyeongkiFestivalList();
+    public List<FestivalDto> festivalList();
+    public List<FestivalDto> seoulFestivalList();
+    public List<FestivalDto> kyeongkiFestivalList();
     int festivalInsert(FestivalDto festival);
 }
 

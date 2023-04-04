@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import back.spring.final_back.festival.repository.FestivalDao;
 import back.spring.final_back.festival.repository.FestivalDto;
-import back.spring.final_back.festival.repository.FestivalDto2;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,23 +24,23 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     @Override
-    public List<FestivalDto2> festivalList() {
-        List<FestivalDto2> festival = null;
+    public List<FestivalDto> festivalList() {
+        List<FestivalDto> festival = null;
         festival = festivalDao.festivalList();
         // logger.info(festival.toString());
         return festival;
     }
 
     @Override
-    public List<FestivalDto2> seoulFestivalList() {
-        List<FestivalDto2> festival = null;
+    public List<FestivalDto> seoulFestivalList() {
+        List<FestivalDto> festival = null;
         festival = festivalDao.seoulFestivalList();
         return festival;
     }
 
     @Override
-    public List<FestivalDto2> kyeongkiFestivalList() {
-        List<FestivalDto2> festival = null;
+    public List<FestivalDto> kyeongkiFestivalList() {
+        List<FestivalDto> festival = null;
         festival = festivalDao.kyeongkiFestivalList();
         return festival;
     }

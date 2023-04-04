@@ -4,22 +4,34 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="back.spring.final_back.festival.repository.FestivalDao">
-	<select id="seoulFestivalList" resultType="FestivalDto2">
+	<select id="seoulFestivalList" resultType="FestivalDto">
 SELECT * FROM fest_main where fest_m_area LIKE '%서울%'
 	</select>
-	<select id="kyeongkiFestivalList" resultType="FestivalDto2">
+	<select id="kyeongkiFestivalList" resultType="FestivalDto">
 SELECT * FROM fest_main where fest_m_area LIKE '%경기%'
 	</select>
-	<select id="festivalList" resultType="FestivalDto2">
+	<select id="festivalList" resultType="FestivalDto">
 SELECT * FROM fest_main
 	</select>
-	<insert id="festivalInsert" parameterType="Map"
-		useGeneratedKeys="true" keyProperty="festId">
+	<insert id="festivalInsert" parameterType="Map">
 	INSERT INTO
-	festival_test (fest_title, fest_location,
-	fest_category, fest_startday,
-	fest_endday, fest_detail, fest_price, fest_desc)
-	VALUES (#{festTitle}, #{festLocation}, #{festCategory}, #{festStartday},
-	#{festEndday}, #{festDetail}, #{festPrice}, #{festDesc})
+	fest_main (
+	fest_m_author, 
+	fest_m_name, 
+	fest_m_start,
+	fest_m_end, 
+	fest_m_loc, 
+	fest_m_img, 
+	fest_m_genre, 
+	fest_m_area)
+	VALUES
+	('admin_자체등록 member_id', 
+	#{festMName}, 
+	#{festMStart}, 
+	#{festMEnd},
+	#{festMLoc},
+	#{festMImg},
+	#{festMGenre}, 
+	#{festMArea})
 	</insert>
 </mapper>
