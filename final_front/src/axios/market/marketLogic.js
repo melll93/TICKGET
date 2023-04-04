@@ -1,13 +1,13 @@
 import axios from "axios";
 
-//도네이션 게시판 게시글 조회 로직
-export const don_boardListDB = (board) => {
-  console.log(board)
+//마켓 게시판 게시글 조회 로직
+export const mk_boardListDB = (board) => {
+  console.log(board);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/donation/don_boardList",
+        url: "http://localhost:8888/market/mk_boardList",
         params: board,
       });
       resolve(response);
@@ -17,14 +17,14 @@ export const don_boardListDB = (board) => {
   });
 };
 
-//도네이션 게시판 글쓰기 등록 로직
-export const don_boardInsertDB = (board) => {
-  console.log(board)
+//마켓 게시판 글쓰기 등록 로직
+export const mk_boardInsertDB = (board) => {
+  console.log(board);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/donation/don_boardInsert",
+        url: "http://localhost:8888/market/mk_boardInsert",
         data: board,
       });
       resolve(response);
@@ -34,14 +34,14 @@ export const don_boardInsertDB = (board) => {
   });
 };
 
-//도네이션 게시판 글 수정 로직
-export const don_boardUpdateDB = (board) => {
-  console.log(board)
+//마켓 게시판 글 수정 로직
+export const mk_boardUpdateDB = (board) => {
+  console.log(board);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/donation/don_boardUpdate",
+        url: "http://localhost:8888/market/mk_boardUpdate",
         data: board,
       });
       resolve(response);
@@ -51,14 +51,14 @@ export const don_boardUpdateDB = (board) => {
   });
 };
 
-//도네이션 게시판 글 삭제 로직
-export const don_boardDeleteDB = (board) => {
-  console.log(board)
+//마켓 게시판 글 삭제 로직
+export const mk_boardDeleteDB = (board) => {
+  console.log(board);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/donation/don_boardDelete",
+        url: "http://localhost:8888/market/mk_boardDelete",
         params: board,
       });
       resolve(response);
@@ -75,7 +75,7 @@ export const uploadImageDB = (file) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/donation/imageUpload",
+        url: "http://localhost:8888/market/imageUpload",
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -97,7 +97,7 @@ export const uploadFileDB = (file) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/donation/fileUpload",
+        url: "http://localhost:8888/market/fileUpload",
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { Button, Table } from 'react-bootstrap'
-import DonationFooter from "../donation/DonationFooter";
+import DonationFooter from "../market/MarketFooter";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
-import DonationList from '../donation/DonationList'
-import { don_boardListDB } from "../../axios/donation/donationLogic";
+import DonationList from '../market/MarketList'
+import { don_boardListDB } from "../../axios/market/marketLogic";
 import { FormDiv, HeaderDiv } from "../../styles/formStyle";
-import DonationSearchBar from "../donation/DonationSearchBar";
+import DonationSearchBar from "../market/MarketSearchBar";
+import MarketList from "../market/MarketList";
+import MarketSearchBar from "../market/MarketSearchBar";
 
-const DonationPage = () => {
+const MarketPage = () => {
       const navigate = useNavigate()
       const [boardList , setBoardList] = useState([])
 
@@ -36,10 +38,10 @@ const DonationPage = () => {
      <div className="center">
      <Header/>
      <HeaderDiv>
-          <h3 style={{marginLeft:"100px"}}>도네이션 게시판</h3>
+          <h3 style={{marginLeft:"100px"}}>마켓 게시판</h3>
         </HeaderDiv>
         <FormDiv style={{marginLeft:'50px'}}>
-            <DonationSearchBar/>
+            <MarketSearchBar/>
          <div className='book-list'>
             <Table striped bordered hover style={{minWidth:"800px"}}>
             <thead>
@@ -58,7 +60,7 @@ const DonationPage = () => {
         <DeptRow key={dept.DEPTNO} dept={dept} />
       ))} */}
       {/*DonationRow에서 받아온 글 리스트 */}
- <DonationList />
+ <MarketList />
             </tbody>
             </Table>
             <hr />
@@ -66,7 +68,7 @@ const DonationPage = () => {
             <Button variant="primary" >
                   전체조회
             </Button>&nbsp;
-            <Button variant="primary" onClick={()=>navigate('/donation/write')}>
+            <Button variant="primary" onClick={()=>navigate('/market/write')}>
                   글쓰기
             </Button>
       </div>
@@ -77,4 +79,4 @@ const DonationPage = () => {
     )
 };
 
-export default DonationPage;
+export default MarketPage;

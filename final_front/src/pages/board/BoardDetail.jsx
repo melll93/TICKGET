@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import {
+  deleteBoardListDB,
   selectBoardDetailDB,
   selectBoardListDB,
 } from "../../axios/board/boardLogic";
@@ -16,11 +17,11 @@ const BoardDetail = () => {
 
   // 게시글 정보를 담을 객체
   const [board, setBoard] = useState({
-    boardNo: 0,
-    memberId: "",
-    boardTitle: "",
-    boardContent: "",
-    boardDate: "",
+    boardTgNo: 0,
+    TgmemberId: "",
+    boardTgTitle: "",
+    boardTgContent: "",
+    boardTgDate: "",
   });
   // 컴포넌트가 처음 로딩될 때, 백엔드 API를 호출하여 게시글 정보를 가져옴
   // useEffect(() => {
@@ -35,11 +36,11 @@ const BoardDetail = () => {
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
       setBoard({
-        boardNo: jsonDoc.boardNo,
-        memberId: jsonDoc.memberId,
-        boardTitle: jsonDoc.boardTitle,
-        boardContent: jsonDoc.boardContent,
-        boardDate: jsonDoc.boardDate,
+        boardNo: jsonDoc.boardTgNo,
+        memberId: jsonDoc.TgmemberId,
+        boardTitle: jsonDoc.boardTgTitle,
+        boardContent: jsonDoc.boardTgContent,
+        boardDate: jsonDoc.boardTgDate,
       });
       if (res.data) {
         console.log("if문 안에 있니?", res.data);
@@ -49,12 +50,27 @@ const BoardDetail = () => {
         console.log("게시글 조회 실패");
       }
     };
-
     asyncDB();
     return () => {
       //언마운트 될 때 처리할 일이 있으면 여기에 코딩할 것
     };
   }, [boardNo]);
+
+  const boardDelete = async () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      // 게시글 번호를 전달하여, axios를 사용하여 백엔드에서 삭제 처리
+      const res = await deleteBoardListDB(boardNo);
+      console.log(res);
+      if (res.data) {
+        // 삭제가 성공하면 게시글 목록 페이지로 이동함
+        alert("삭제되었습니다.");
+        navigate("/together");
+      } else {
+        alert("삭제 실패");
+      }
+    }
+  };
+
 
   /*   if (!board.boardTitle) {
     console.log(board.boardTitle)
@@ -106,12 +122,8 @@ const BoardDetail = () => {
               />
             </div>
             <div>
-              <Button
-                style={{ margin: "10px" }}
-                onClick={() => navigate("/together")}
-              >
-                목록으로
-              </Button>
+            <Button style={{ backgroundColor: "black" }} onClick={boardDelete}> 글 삭제하기 </Button>
+            <Button style={{ margin: "10px" }} onClick={() => navigate("/together")}>목록으로</Button>
             </div>
           </form>
         </div>

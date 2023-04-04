@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { BButton } from '../../styles/formStyle';
 import MyFilter from './MyFilter';
 
-const DonationSearch = () => {
+const MarketSearchBar = () => {
    //사용자가 입력한 문자열 담기
    const[content, setContent]= useState('');
    const[types]= useState(['제목','내용','작성자']);
@@ -64,4 +64,4 @@ const DonationSearch = () => {
    );
  };
 
-export default DonationSearch
+export default MarketSearchBar

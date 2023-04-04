@@ -13,18 +13,19 @@ import lombok.ToString;
 // @Data
 @ToString
 // @RequiredArgsConstructor    //selectBoardList 얘는 null뜸
-@AllArgsConstructor //selectBoardList 얘 만됌
-// @NoArgsConstructor  //selectBoardList 얘는 null뜸
+// @AllArgsConstructor //selectBoardList 얘 만됌
+@NoArgsConstructor  //selectBoardList 얘는 null뜸
 public class BoardDto {
-    private int boardNo;
-    private String memberId;
-    private String boardTitle;
-    private String boardContent;
-    private String boardDate;
-    private int boardViews;
-    private int boardSuperNo;
-    private int boardGroupNo;
-    private int boardDepth;
-    private int boardReplyCount;
-    private String boardCheck;
+    private int boardTgNo;
+    private String boardTgMemId;
+    private String boardTgTitle;
+    private String boardTgContent;
+    private String boardTgDate;
+    private int boardTgViews;
+    private int boardTgSuperNo;
+    private int boardTgGroupNo;
+    private int boardTgDepth;
+    private int boardTgReplyCount;
+    private String boardTgCheck;
+    private String boardTgSecret;
 }

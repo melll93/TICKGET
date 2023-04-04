@@ -7,21 +7,21 @@ import lombok.*;
 @ToString
 @RequiredArgsConstructor
 public class ConcertDto {
-    private int concert_no;
-    private String org_name;
-    private String use_fee;
+    private int concertNo;
+    private String orgName;
+    private String useFee;
     private String player;
-    private String org_link;
+    private String orgLink;
     private String guname;
-    private String main_img;
+    private String mainImg;
     private String themecode;
     private String date;
-    private String etc_desc;
-    private long end_date;
+    private String etcDesc;
+    private long endDate;
     private String title;
     private String ticket;
     private String codename;
-    private String use_trgt;
+    private String useTrgt;
     private String program;
     private String rgstdate;
     private long strtdate;

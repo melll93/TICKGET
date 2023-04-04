@@ -10,7 +10,7 @@ const Footer = () => {
             bg="dark"
             style={{ color: "white" }}
           >
-            아니너무 어렵자나 리액트 ㅡㅡ Copyright &copy;2023
+           Copyright &copy;2023
           </Navbar>
         </>
       );

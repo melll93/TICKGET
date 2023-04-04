@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class DonationDto {
+public class MarketDto {
 	// 테이블 컬럼
 	// application.yml에 map-underscore-to-camel-case: true 때문에 snake-case로 된 DB의
 	// Attibute들을 java에서는 camel-case로 매핑해줌.
@@ -22,10 +22,11 @@ public class DonationDto {
 	private String boardMkContent;
 	private Date boardMkDate;
 	private int boardMkHit;
-	private Date donTicketDate;
-	private String donTicketSeat;
-	private String donTicketPrice;
-	private String donTicketCount;
+	private Date mkTicketDate;
+	private String mkTicketSeat;
+	private String mkTicketPrice;
+	private String mkTicketCount;
+	private String mkTicketPlace;
 	private String memName;
 
 	// private int don_bno;

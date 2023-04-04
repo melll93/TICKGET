@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DonationHeader = () => {
+const MarketHeader = () => {
   return (
     <div>
   게시판 헤더      
@@ -8,4 +8,4 @@ const DonationHeader = () => {
   )
 }
 
-export default DonationHeader
+export default MarketHeader

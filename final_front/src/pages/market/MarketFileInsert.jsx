@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DonationFileInsert = ({files}) => {
+const MarketFileInsert = ({files}) => {
    console.log(files);
    return (
      <div style={{display:'block', border:'1px solid lightGray', borderRadius:'10px', minHeight:'60px', padding:'5px'}}>
@@ -13,4 +13,4 @@ const DonationFileInsert = ({files}) => {
      </div>
    );
  };
-export default DonationFileInsert
+export default MarketFileInsert

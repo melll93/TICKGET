@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DonationUpdatePage = () => {
+const MarketUpdatePage = () => {
   return (
     <div>
       작성글 수정
@@ -8,4 +8,4 @@ const DonationUpdatePage = () => {
   )
 }
 
-export default DonationUpdatePage
+export default MarketUpdatePage

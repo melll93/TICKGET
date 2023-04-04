@@ -7,7 +7,7 @@ const MenuList = () => {
     "CONCERT",
     "TOGETHER",
     "CARPOOL",
-    "DONATION",
+    "MARKET",
     "CALENDAR",
     "CHAT",
   ]);
