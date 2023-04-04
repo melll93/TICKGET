@@ -1,13 +1,13 @@
 import axios from "axios";
 
 /* 전체조회 */
-export const selectBoardListDB = (board) => {
+export const selectBoardListDB = (board_together) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/board/selectBoardList",
-        params: board, //쿼리스트링은 header에 담김 - get방식
+        params: board_together, //쿼리스트링은 header에 담김 - get방식
       });
       resolve(response);
     } catch (error) {
@@ -15,6 +15,7 @@ export const selectBoardListDB = (board) => {
     }
   });
 };
+/*  */
 export const selectBoardDetailDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
@@ -80,6 +81,7 @@ export const uploadFileDB = (file) => {
     }
   });
 };
+
 /* 작업 중 */
 export const uploadImageDB = (file) => {
   console.log(file);
@@ -101,6 +103,7 @@ export const uploadImageDB = (file) => {
     }
   });
 };
+
 /* 작업 중 */
 export const qnaListDB = (board) => {
   return new Promise((resolve, reject) => {
@@ -119,6 +122,7 @@ export const qnaListDB = (board) => {
     }
   });
 };
+
 /* 작업 중 */
 export const qnaInsertDB = (board) => {
   return new Promise((resolve, reject) => {
