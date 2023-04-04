@@ -5,8 +5,10 @@ import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Sidebar';
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword } from '../../util/validateLogic';
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
-import { onAuthChange } from '../../util/authLogic';
+import { linkEmail, onAuthChange, signupEmail } from '../../util/authLogic';
 import { memberInsertDB, memberListDB } from '../../axios/member/memberLogic';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const RegisterPage = ({authLogic}) => {
   const auth = authLogic.getUserAuth();
@@ -18,6 +20,7 @@ const RegisterPage = ({authLogic}) => {
     bgColor: 'rgb(175, 210, 244)',
     hover: false
   });
+
   const toggleHover = () => {
     if(submitBtn.hover){
       setSubmitBtn({...submitBtn, hover: false, bgColor: 'rgb(105, 175, 245)'});
@@ -43,7 +46,7 @@ const RegisterPage = ({authLogic}) => {
     nickname: "",
     gender: "없음"
   });
-  // 입력 정보 유효성 체크
+  // 입력 정보 코멘트 체크
   const [comment, setComment] = useState({
     id: "",
     email: "",
@@ -76,6 +79,14 @@ const RegisterPage = ({authLogic}) => {
       visible:false
     }
   ]);
+    // 성별 체크 박스
+    const checkboxLable = ['없음','남자','여자']
+    const Checkbox = checkboxLable.map((item, index) => (
+      <Form.Check inline label={item} value={item} name="group1" type='radio' checked={memInfo.gender===item?true:false} readOnly
+      id={`inline-radio-${item}`} key={index} onClick={(e)=> {setMemInfo({...memInfo, gender: e.target.value})}}/>
+    ))
+    
+  // 구글 계정 회원가입
   const [googleEmail, setGoogleEmail] = useState('');
 
   useEffect(()=> {
@@ -109,9 +120,16 @@ const RegisterPage = ({authLogic}) => {
     onAuth();
   },[setGoogleEmail, setStar, setMemInfo, userAuth.auth]);
 
-  const handleSignup = (event) => {
-    signup()    
-  }
+  // DatePicker를 사용한 생년월일 캘린더 
+/*   const [birthDate, setBirthDate] = useState(null);
+  const handleDelete = () => {
+    setBirthDate(null);
+  };
+  const isFutureDate = (date) => {
+    return date > new Date();
+  };
+  const today = new Date();
+  const endDay = new Date(today.getFullYear(), today.getMonth(), today.getDate()); */
 
   const passwordView = (event) => {
     const id = event.currentTarget.id;
@@ -170,22 +188,22 @@ const RegisterPage = ({authLogic}) => {
     }
   } 
 
-  const validate = (key, e) => {
+  const validate = (key, event) => {
     let result;
     if(key==='email'){
-      result = validateEmail(e); 
+      result = validateEmail(event); 
     } else if(key==='nickname'){
-      result = validateNickname(e); 
+      result = validateNickname(event); 
     } else if(key==='password'){
-      result = validatePassword(e); 
+      result = validatePassword(event); 
     } else if(key==='password2'){
-      result = checkPassword(memInfo.password, e); 
+      result = checkPassword(memInfo.password, event); 
     } else if(key==='name'){
-      result = validateName(e); 
+      result = validateName(event); 
     } else if(key==='mobile'){
-      result = validateHp(e); 
+      result = validateHp(event); 
     } else if(key==='birthday'){
-      result = validateBirthdate(e); 
+      result = validateBirthdate(event); 
     } 
     setComment({...comment, [key]: result}); 
     if(result){
@@ -198,40 +216,48 @@ const RegisterPage = ({authLogic}) => {
       setStar({...star, [key]:""});
     }
   }
-
+  useEffect(()=> {
+    let check = true;
+    Object.keys(star).forEach((key)=>{
+      if(star[key]==='*') check = false;
+    })
+    if(check){ 
+      setSubmitBtn({disabled:false, bgColor: 'rgb(105, 175, 245)'});
+    } else {
+      setSubmitBtn({disabled:true, bgColor: 'rgb(175, 210, 244)'});
+    }
+  },[star]);
     /* 회원 가입 */
     const signup = async() => {
+      console.log('회원가입 구현 확인')
       try {
-        let id;
+        let googleUid;
+        console.log(googleEmail);
+        if(googleEmail){
+          console.log(auth); 
+          console.log(memInfo); 
+          googleUid = await linkEmail(auth, memInfo);
+          console.log(googleUid);
+        } else {
+          googleUid = await signupEmail(auth, memInfo);
+        }
+        console.log(googleUid);
         const birth = memInfo.birthday;
         let birthday = ""; 
         if(birth!==""){
           birthday = birth.slice(0,4) + '-' + birth.slice(4, 6) + '-' + birth.slice(6,8);
         }
         console.log('입력받은 생일정보 '+birthday);
+        
         const datas = {
-          memberId: id,
-          memberPassword: memInfo.password,
-          memberName: memInfo.name,
-          memberBirth: birthday,
-          memberEmail: memInfo.email,
-          memberGender: memInfo.gender,
-          memberMobile: memInfo.mobile,
-          memberNickname: memInfo.nickname
-          /* 
-          		,#{memberDomain}
-		,#{memberId}
-		,#{memberPassword}
-		,#{memberName}
-		,#{memberAge}
-		,#{memberBirth}
-		,#{memberEmail}
-		,#{memberGender}
-		,#{memberMobile}
-		,#{memberNickname}
-		,#{memberProfileImage}
-		,#{memberRegisterDate}
-          */
+          member_id: memInfo.id,
+          member_password: memInfo.password,
+          member_name: memInfo.name,
+          member_birth: birthday,
+          member_email: memInfo.email,
+          member_gender: memInfo.gender,
+          member_mobile: memInfo.mobile,
+          member_nickname: memInfo.nickname
         }
         console.log(datas)
         const response = await memberInsertDB(datas);
@@ -248,12 +274,10 @@ const RegisterPage = ({authLogic}) => {
       }
     }
 
-  const checkboxLable = ['없음','남자','여자']
-  const Checkbox = checkboxLable.map((item, index) => (
-    <Form.Check inline label={item} value={item} name="group1" type='radio' checked={memInfo.gender===item?true:false} readOnly
-    id={`inline-radio-${item}`} key={index} onClick={(e)=> {setMemInfo({...memInfo, gender: e.target.value})}}/>
-  ))
-  
+  const handleSignup = (event) => {
+    console.log('가입 확인')
+    signup()    
+  }
   return (
     <div>
       <Sidebar />
@@ -304,13 +328,23 @@ const RegisterPage = ({authLogic}) => {
         </MyLabel>
 
       {/* 생년월일 */}
-      {/* <input type="text" name="birth" readonly />
-				<span id="delete" style="color: red; position: relative; right: 25px; display: none;"><i class="fas fa-times font-img"></i></span> */}
       <MyLabel> 생년월일 <span style={{color:"red"}}>{star.birthday}</span>
-        <MyInput type="text" id="birthday" defaultValue={memInfo.birthday} placeholder="생년월일을 입력해주세요" 
+              <MyInput type="text" id="birthday" defaultValue={memInfo.birthday} placeholder="생년월일을 입력해주세요" 
         onChange={(e)=>{changeMemInfo(e); validate('birthday', e);}}/>
         <MyLabelAb>{comment.birthday}</MyLabelAb>
-      </MyLabel>
+      {/* <DatePicker
+        name="birth"
+        selected={birthDate}
+        onChange={(date) => setBirthDate(date)}
+        // onChange={(date) => {setBirthDate(date); changeMemInfo(date); validate('birthday', date);}}
+        dateFormat="yyyy-MM-dd"
+        maxDate={endDay}
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+        dayClassName={(date) => isFutureDate(date) && 'future-date'}/> 
+        */}
+        </MyLabel>
 
       {/* 이메일 */}
       <MyLabel> 이메일 <span style={{color:"red"}}>{star.email}</span>
