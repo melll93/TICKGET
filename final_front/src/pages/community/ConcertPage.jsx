@@ -9,12 +9,11 @@ const ConcertPage = () => {
   // JSON 파일을 배열 객체로 저장
   const [concerts, setConcerts] = useState([]);
   const [page, setPage] = useState("");
-  const AMOUNT = 20;
   useEffect(() => {
     getConcertListDB("콘서트").then(setConcerts);
   }, []);
 
-  // console.log(concerts);
+  console.log(concerts);
   const pagination = (param) => {
     const _page = param;
     setPage(_page);
@@ -24,8 +23,7 @@ const ConcertPage = () => {
     pagination();
     if (page) {
     }
-  })
-
+  });
 
   return (
     <>
@@ -37,7 +35,7 @@ const ConcertPage = () => {
             {concerts.map((concert, index) => (
               <div key={index} className="item">
                 <li style={{ listStyle: "none" }}>
-                  <img src={concert.main_img} style={{ objectFit: "cover" }} />
+                  <img src={concert.mainImg} style={{ objectFit: "cover" }} />
                   {concert.title}
                   <br />
                   <span>{concert.date}</span>

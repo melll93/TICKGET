@@ -5,7 +5,7 @@ const CarouselOne = ({ festival }) => {
 
   return (
     <img
-      src={festival.main_img}
+      src={festival.mainImg}
       style={{
         width: 280,
         height: 350,
