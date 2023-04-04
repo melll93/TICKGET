@@ -13,7 +13,7 @@ const ConcertPage = () => {
     getConcertListDB("콘서트").then(setConcerts);
   }, []);
 
-  console.log(concerts);
+  // console.log(concerts);
   const pagination = (param) => {
     const _page = param;
     setPage(_page);
