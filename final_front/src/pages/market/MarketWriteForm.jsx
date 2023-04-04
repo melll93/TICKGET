@@ -16,10 +16,9 @@ import {
 } from "../../styles/formStyle";
 import QuillEditor from "./QuillEditor";
 import {
-  donationInsertDB,
-  don_boardInsertDB,
+  mk_boardInsertDB,
   uploadFileDB,
-} from "../../axios/donation/donationLogic";
+} from "../../axios/market/marketLogic";
 import {
   Button,
   Col,
@@ -30,19 +29,21 @@ import {
 } from "react-bootstrap";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
-import DonationFileInsert from "./DonationFileInsert";
+import MarketFileInsert from "./MarketFileInsert";
 
-const DonationWriteForm = () => {
+
+const MarketWriteForm = () => {
   console.log("글쓰기 페이지 호출");
   const navigate = useNavigate();
   const no = window.sessionStorage.getItem("no"); //세션에 저장된 회원번호값
 
   const [board_mk_title, setTitle] = useState(""); //사용자가 입력한 제목 담기
   const [board_mk_pw, setPw] = useState(""); //사용자가 입력한 pw 담기
-  const [don_ticket_date, setTicketDate] = useState(""); //판매할 티켓의 공연일
-  const [don_ticket_seat, setTicketSeat] = useState(""); //판매할 티켓의 좌석정보
-  const [don_ticket_count, setTicketCount] = useState(""); //판매할 티켓의 수량
-  const [don_ticket_price, setTicketPrice] = useState(""); //사용자가 입력한 판매가격
+  const [mk_ticket_place, setTicketPlace] = useState(""); //판매할 티켓의 공연장소
+  const [mk_ticket_date, setTicketDate] = useState(""); //판매할 티켓의 공연일
+  const [mk_ticket_seat, setTicketSeat] = useState(""); //판매할 티켓의 좌석정보
+  const [mk_ticket_count, setTicketCount] = useState(""); //판매할 티켓의 수량
+  const [mk_ticket_price, setTicketPrice] = useState(""); //사용자가 입력한 판매가격
   const [file_name, setFilename] = useState(""); //이미지 말고 첨부파일 이름 담기
   const [file_size, setFilesize] = useState(""); //이미지 말고 첨부파일 크기 담기
   const [board_mk_content, setContent] = useState(""); //사용자가 입력한 내용 담기
@@ -62,6 +63,10 @@ const DonationWriteForm = () => {
     setPw(e);
   }, []);
 
+  const handleTicketPlace = useCallback((e) => {
+    setTicketPlace(e);
+  }, []);
+
   const handleTicketDate = useCallback((e) => {
     setTicketDate(e);
   }, []);
@@ -78,6 +83,10 @@ const DonationWriteForm = () => {
     setTicketPrice(e);
   }, []);
 
+  const handleFiles = useCallback((value) => {
+    setFiles([...files, value]); //deep copy
+  },[files]);
+
   const handleContent = useCallback((value) => {
     //quilleditor에서 담김 - 태그포함된 정보
     setContent(value);
@@ -91,16 +100,17 @@ const DonationWriteForm = () => {
       boardMkPw: board_mk_pw,
       boardMkContent: board_mk_content,
       boardMkHit: 0,
-      donTicketDate: don_ticket_date,
-      donTicketSeat: don_ticket_seat,
-      donTicketCount: don_ticket_count,
-      donTicketPrice: don_ticket_price,
+      mkTicketPlace: mk_ticket_place,
+      mkTicketDate: mk_ticket_date,
+      mkTicketSeat: mk_ticket_seat,
+      mkTicketCount: mk_ticket_count,
+      mkTicketPrice: mk_ticket_price,
       memName: "테스트 작성자1", // 임시 - 세션스토리지로 받아올것
     };
-    const res = await don_boardInsertDB(board);
+    const res = await mk_boardInsertDB(board);
     console.log(res.data);
 
-    navigate("/donation");
+    navigate("/market");
   };
 
   /* const handleChange = async (event) => {
@@ -123,8 +133,6 @@ const DonationWriteForm = () => {
   }
   */
 
-  const handleFiles = () => {};
-
   return (
     <>
       <Sidebar />
@@ -133,7 +141,7 @@ const DonationWriteForm = () => {
         <ContainerDiv>
           <HeaderDiv>
             <div className="form-floating mb-3">
-              <h3 style={{marginLeft:"50px"}}>티켓 중고판매 글 작성</h3>
+              <h3 style={{marginLeft:"450px"}}>티켓 중고판매 글 작성</h3>
             </div>
           </HeaderDiv>
 
@@ -169,42 +177,54 @@ const DonationWriteForm = () => {
             </div>
 
             <div>
-              <Row className="mb-4">
+                  <Row className="mb-4">
+                <Form.Group as={Col} controlId="formGridPlace">
+                  <h3>장소</h3>
+                  <Form.Control
+                    id="mk_ticket_place"
+                    type="text"
+                    placeholder="공연 장소를 입력하세요."
+                    style={{ width: "600px", height: "50px" }}
+                    onChange={(e) => {
+                      handleTicketPlace(e.target.value);
+                    }}
+                  />
+                </Form.Group>
                 <Form.Group as={Col} controlId="formGridDate">
                   <h3>공연일</h3>
                   <Form.Control
-                    id="don_ticket_date"
+                    id="mk_ticket_date"
                     type="date"
                     className="form-control"
-                    style={{ width: "600px", height: "50px" }}
+                    style={{ width: "350px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketDate(e.target.value);
                     }}
                   />
                 </Form.Group>
-
-
-<Form.Group as={Col} controlId="formGridSeat">
-          <h3>좌석정보</h3>
-          <Form.Control type="text" id="don_ticket_seat" placeholder="좌석 정보를 입력하세요." style={{width:'350px' , height:'50px'}} onChange={(e)=>{handleTicketSeat(e.target.value)}}/>
-          </Form.Group>
-
+              
   </Row>
+
 </div>
    
 <div>
    <Row className="mb-5">
-  
-        <Form.Group as={Col} controlId="formGridPrice" >
-          <h3>판매등록가</h3>
-          <Form.Control id="don_ticket_price" type="text" placeholder="티켓의 판매 가격을 입력하세요." style={{width:'600px' , height:'50px'}} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
-        </Form.Group>
+
+   <Form.Group as={Col} controlId="formGridSeat">
+          <h3>좌석정보</h3>
+          <Form.Control type="text" id="mk_ticket_seat" placeholder="좌석 정보를 입력하세요." style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketSeat(e.target.value)}}/>
+          </Form.Group>
 
         <Form.Group as={Col} controlId="formGridTicketCount">
           <h3>판매수량</h3>
-          <Form.Control id="don_ticket_count" type="number" min="1" placeholder="티켓의 수량을 입력하세요." style={{width:'350px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
+          <Form.Control id="mk_ticket_count" type="number" min="1" placeholder="티켓의 수량을 입력하세요." style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
         </Form.Group>
     
+        <Form.Group as={Col} controlId="formGridPrice" >
+          <h3>판매등록가</h3>
+          <Form.Control id="mk_ticket_price" type="text" placeholder="티켓의 판매 가격을 입력하세요." style={{width:'400px' , height:'50px'}} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
+        </Form.Group>
+
         </Row>
       </div>
            
@@ -221,7 +241,7 @@ const DonationWriteForm = () => {
                 handleContent(e.target.value);
               }}
             />
-            <DonationFileInsert files={files} />
+            <MarketFileInsert files={files} />
             <hr style={{ opacity: "0%" }} />
             <Button
               onClick={() => {
@@ -237,4 +257,4 @@ const DonationWriteForm = () => {
   );
 };
 
-export default DonationWriteForm;
+export default MarketWriteForm;

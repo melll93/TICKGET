@@ -11,15 +11,15 @@ import AddProductsPage from "./pages/community/AddProductsPage";
 import CalendarPage from "./pages/community/CalendarPage";
 import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
-import DonationPage from "./pages/community/DonationPage";
+import MarketPage from "./pages/community/MarketPage";
 import FestivalPage from "./pages/community/FestivalPage";
 import HomePage from "./pages/community/HomePage";
 import ProductsDetails from "./pages/community/ProductsDetails";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
-import DonationDetail from "./pages/donation/DonationDetail";
-import DonationUpdatePage from "./pages/donation/DonationUpdatePage";
-import DonationWriteForm from "./pages/donation/DonationWriteForm";
+import MarketDetail from "./pages/market/MarketDetail";
+import MarketUpdatePage from "./pages/market/MarketUpdatePage";
+import MarketWriteForm from "./pages/market/MarketWriteForm";
 import FindIdPage from "./pages/member/FindIdpage";
 import LoginPage from "./pages/member/LoginPage";
 import RegisterPage from "./pages/member/RegisterPage";
@@ -118,8 +118,12 @@ function App({ authLogic, imageUploader }) {
             <LoginPage user={user} setUser={setUser} authLogic={authLogic} />
           }
         />
-        <Route path='/findId' exact={true} element={<FindIdPage />} />
-        <Route path='/resetPw' exact={true} element={<ResetPwPage authLogic={authLogic} />} />
+        <Route path="/findId" exact={true} element={<FindIdPage />} />
+        <Route
+          path="/resetPw"
+          exact={true}
+          element={<ResetPwPage authLogic={authLogic} />}
+        />
         <Route
           path="/oauth/login/naver/callback"
           element={<NaverLogin setUser={setUser} />}
@@ -142,7 +146,7 @@ function App({ authLogic, imageUploader }) {
         <Route path="/concert" exact={true} element={<ConcertPage />} />
         <Route path="/together" exact={true} element={<TogetherPage />} />
         <Route path="/carpool" exact={true} element={<CarpoolPage />} />
-        <Route path="/donation" exact={true} element={<DonationPage />} />
+        <Route path="/market" exact={true} element={<MarketPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
         <Route path="/chat" exact={true} element={<ChatPage />} />
 
@@ -160,21 +164,21 @@ function App({ authLogic, imageUploader }) {
         />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
 
-        {/* DonationPage Routes - 성훈 작업중 */}
+        {/* MarketPage Routes - 성훈 작업중 */}
         <Route
-          path="/donation/write"
+          path="/market/write"
           exact={true}
-          element={<DonationWriteForm />}
+          element={<MarketWriteForm />}
         />
         <Route
-          path="/donation/update/:bno"
+          path="/market/update/:bno"
           exact={true}
-          element={<DonationUpdatePage />}
+          element={<MarketUpdatePage />}
         />
         <Route
-          path="/donation/detail/:bno"
+          path="/market/detail/:bno"
           exact={true}
-          element={<DonationDetail />}
+          element={<MarketDetail />}
         />
       </Routes>
     </>

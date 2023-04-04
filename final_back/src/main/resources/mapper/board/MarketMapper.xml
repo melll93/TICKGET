@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="back.spring.final_back.board.repository.MarketDao">
+
+<select id="mk_boardList" resultType="MarketDto">
+select * from board_market
+</select>
+
+
+<insert id="mk_boardInsert" parameterType="map">
+insert into board_market (board_mk_title, board_mk_pw,board_mk_content, board_mk_date, board_mk_hit, 
+                          mk_ticket_place,  mk_ticket_date, mk_ticket_seat, mk_ticket_price, mk_ticket_count, mem_name)
+VALUES (#{boardMkTitle},#{boardMkPw}, #{boardMkContent},#{boardMkDate},#{boardMkHit},
+        #{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketPrice}, #{mkTicketCount}, #{mkTicketPlace}, #{memName})
+</insert>
+
+
+<update id="mk_boardUpdate" parameterType="MarketDto">
+ update board_market
+ set board_mk_title = #{boardMkTitle},
+     board_mk_pw    = #{boardMkPw},
+     board_mk_content = #{boardMkContent}
+     mk_ticket_place = #{mkTicketPlace},
+     mk_ticket_date = #{mkTicketDate},
+     mk_ticket_seat = #{mkTicketSeat},
+     mk_ticket_price = #{mkTicketPrice},
+     mk_ticket_count = #{mkTicketCount},
+<where>
+board_mk_pw = #{boardMkPw}
+</where>
+</update>
+
+
+<delete id="mk_boardDelete" parameterType="int">
+delete from board_market
+<where>
+board_mk_no = #{Value}
+and
+board_mk_pw = #{Value}
+</where>
+</delete>
+
+
+</mapper>

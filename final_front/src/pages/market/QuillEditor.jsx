@@ -1,7 +1,7 @@
 import React from 'react'
 import { useCallback, useEffect, useMemo } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
-import { uploadImageDB } from '../../axios/donation/donationLogic';
+import { uploadImageDB } from '../../axios/market/marketLogic';
 
 
 const QuillEditor = ({ value, handleContent, quillRef, files, handleFiles}) => {
@@ -43,7 +43,7 @@ const QuillEditor = ({ value, handleContent, quillRef, files, handleFiles}) => {
             if (!res.data) {
                 console.log("이미지 업로드에 실패하였습니다.");
             }
-            const url = `http://localhost:8888/donation/imageGet?imageName=${res.data}`;
+            const url = `http://localhost:8888/market/imageGet?imageName=${res.data}`;
             const quill = quillRef.current.getEditor();
             /* ReactQuill 노드에 대한 Ref가 있어야 메서드들을 호출할 수 있으므로
             useRef()로 ReactQuill에 ref를 걸어주자.

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar } from 'react-bootstrap'
 
-const DonationFooter = () => {
+const MarketFooter = () => {
   return (
     <div>
 
@@ -15,4 +15,4 @@ const DonationFooter = () => {
   )
 }
 
-export default DonationFooter
+export default MarketFooter
