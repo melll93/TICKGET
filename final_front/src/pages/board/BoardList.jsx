@@ -33,32 +33,10 @@ const BoardList = () => {
     }
   };
 
-
-  // 게시글 수정하기 (아직 미구현)
-  const boardUpdate = () => {};
-
   // 게시글 삭제하기
   /* BACK- BoardDto - @AllArgsConstructor deleteBoardList 얘는 불 가능 */
   /* BACK- BoardDto - @RequiredArgsConstructor,  @NoArgsConstructor deleteBoardList 얘는 가능 */
-  const boardDelete = async () => {
-    if (checkedItems.length === 0) {
-      alert("삭제할 게시글을 선택해주세요.");
-      return;
-    }
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      // 삭제할 게시글들의 번호들을 전달하여, axios를 사용하여 백엔드에서 삭제 처리
-      const res = await deleteBoardListDB(checkedItems);
-      console.log(res);
-      if (res.data) {
-        // 삭제가 성공하면 게시글 목록을 다시 불러와서 화면을 갱신함
-        alert("삭제되었습니다.");
-        jsonBoardList();
-        setCheckedItems([]);
-      } else {
-        alert("삭제 실패");
-      }
-    }
-  };
+
 
   if (boardList === null) {
     return <div>데이터를 불러오는 중입니다...</div>;
@@ -117,9 +95,7 @@ const BoardList = () => {
         글 작성하기
       </Button>
       &nbsp;
-      <Button style={{ backgroundColor: "black" }} onClick={boardDelete}>
-        글 삭제하기
-      </Button>
+
     </div>
   );
 };

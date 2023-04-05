@@ -47,23 +47,24 @@ const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조
     console.log(secret) //true
     console.log(typeof secret)  //boolean타입 출력
     const board ={
-      board_title:title,
-      board_content:content,
-      board_secret:(secret ? 'true':'false'),
-      board_type: tTitle,
-      board_views:views,
-      member_id:sessionStorage.getItem('id'),
-    }//사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
-    //inser here
+      board_tg_title: title, // 제목 추가
+      board_tg_content: content, // 내용 추가
+      board_tg_secret: (secret ? 'true':'false'),
+      board_tg_type: tTitle,
+      board_tg_views: views,
+      board_tg_mem_id: sessionStorage.getItem('id'),
+    }
+    // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
+    // inser here
     try{
-    const res = await insertBoardListDB(board)
-    console.log(res.data)
-    //성공시에 페이지 이동처리하기
-    window.location.replace('/together')
-  }catch(error){
-    console.log(error)
+      const res = await insertBoardListDB(board)
+      console.log(res.data)
+      // 성공시에 페이지 이동처리하기
+      window.location.replace('/together')
+    } catch(error){
+      console.log(error)
+    }
   }
-}
 
 
   return (

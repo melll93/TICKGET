@@ -32,7 +32,7 @@ import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 
 function App({ imageUploader }) {
-  const [boardNo, setBoardNo] = useState();
+  const [boardTgNo, setBoardTgNo] = useState();
   const [user, setUser] = useState();
 
   // pages로 routing 처리
@@ -88,8 +88,8 @@ function App({ imageUploader }) {
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<BoardWriteForm />} />
         <Route
-          path="together/boardDetail/:boardNo"
-          element={<BoardDetail boardNo={boardNo} />}
+          path="together/boardDetail/:boardTgNo"
+          element={<BoardDetail boardTgNo={boardTgNo} />}
         />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
 
