@@ -12,17 +12,17 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class SignUpDto {
-  private int member_no;
-  private String member_domain;
-  private String member_id;
-  private String member_password;
-  private String member_name;
-  private int member_age;
-  private Date member_birth;
-  private String member_email;
-  private String member_gender;
-  private String member_mobile;
-  private String member_nickname;
-  private String member_profile_image;
-  private Date member_register_date;
+  private int memberNo;
+  private String memberDomain;
+  private String memberId;
+  private String memberPassword;
+  private String memberName;
+  private int memberAge;
+  private Date memberBirth;
+  private String memberEmail;
+  private String memberGender;
+  private String memberMobile;
+  private String memberNickname;
+  private String memberProfileImage;
+  private Date memberRegisterDate;
 }
