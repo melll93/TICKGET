@@ -5,8 +5,8 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
-import { MyP } from "../../styles/formStyle";
-import { loginH } from "../../util/authLogic";
+import { GoogleButton, MyP } from "../../styles/formStyle";
+import { loginGoogle, loginH } from "../../util/authLogic";
 
 const LoginPage = ({ user, setUser, authLogic }) => {
   const CALLBACK_URL = "http://localhost:3333/oauth/login/kakao/callback";
@@ -59,20 +59,31 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   }, [tempUser]);
 
   // 자체 로그인  
-  // const loginHome = async () => {
+  // const loginLocal = async () => {
   //   try {
-  //     const result = await loginH(auth, tempUser)
-  //     console.log(result)
-  //     console.log(result.user.uid)
-  //     window.sessionStorage.setItem('userId', result.user.uid)
-  //     window.localStorage.setItem('userId', result.user.uid)
+  // const result = await loginH(auth, tempUser)
+  // console.log(result)
+  // console.log(result.user.uid)
+  // window.sessionStorage.setItem('userId', result.user.uid)
+  // window.localStorage.setItem('userId', result.user.uid)
   //     window.localStorage.setItem('member', JSON.stringify({ mem_id: 'test', mem_pw: '123' }))
-  //     // navigate("/") 
+  //     navigate("/")
   //     window.location.reload()
   //   } catch (error) {
   //     console.log(error + ": 로그인 에러입니다");
   //   }
   // }
+  // 구글 로그인
+  const loginG = async () => {
+    try {
+      const result = await loginGoogle(authLogic.getUserAuth(), authLogic.getGoogleAuthProvider())
+      console.log(result.data)
+      //navigate("/")
+      //window.location.reload()
+    } catch (error) {
+      console.log('로그인 오류입니다')
+    }
+  }
   return (
     <>
       <Sidebar />
@@ -95,9 +106,10 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             </div> */}
             </Form.Group>
             <div style={{ textAlign: "center" }}>
-              {/* <Button variant="primary" type="login" onClick={() => { loginHome() }}>
+              {/* <Button variant="primary" type="login" onClick={() => { loginLocal() }}> */}
+              <Button variant="primary" type="login" onClick={() => { }}>
                 로그인
-              </Button> */}
+              </Button>
             </div>
             <br />
             <div style={{ textAlign: "center" }}>
@@ -127,8 +139,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
               </a>
             </div>
             {/************************** 카카오 끝 **************************/}
-            {/********************** 카카오 로그인 버튼 **********************/}
-            <div className="loginbutton">
+            {/********************** 구글 로그인 버튼 **********************/}
+            <div className="loginbutton" type="button" onClick={() => { loginG(); }}>
               <a href="#">
                 <img
                   className="loginbuttonimg"
@@ -136,7 +148,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 />
               </a>
             </div>
-            {/************************** 카카오 끝 **************************/}
+            {/************************** 구글 끝 **************************/}
           </div>
           {/************************ 소셜 로그인 끝 ************************/}
         </div>

@@ -25,12 +25,12 @@ const RegisterPage = ({ authLogic }) => {
       setSubmitBtn({ ...submitBtn, hover: true, bgColor: 'rgb(72, 145, 218)' });
     }
   }
-  // 주소 번지 사용
-  const [post, setPost] = useState({
-    zipcode: "",
-    addr: "",
-    addrDetail: ""
-  })
+  // 주소 번지 사용 ?
+  /*   const[post, setPost] = useState({
+      zipcode: "",
+      addr: "",
+      addrDetail: ""
+    }) */
   // 회원가입 입력 정보
   const [memInfo, setMemInfo] = useState({
     id: "",
@@ -143,10 +143,10 @@ const RegisterPage = ({ authLogic }) => {
     console.log('중복확인 : ' + key);
     let params;
     if (key === 'email') {
-      params = { MEMBER_EMAIL: memInfo[key], type: 'overlap' }
+      params = { MEM_EMAIL: memInfo[key], type: 'overlap' }
     }
     else {
-      params = { MEMBER_ID: memInfo[key], type: 'overlap' }
+      params = { MEM_ID: memInfo[key], type: 'overlap' }
     }
     console.log(params);
     let response = { data: 0 }
@@ -157,7 +157,7 @@ const RegisterPage = ({ authLogic }) => {
     const data = JSON.stringify(response.data)
     const jsonDoc = JSON.parse(data)
     if (jsonDoc) {
-      console.log(jsonDoc[0].MEMBER_NAME)
+      console.log(jsonDoc[0].MEM_NAME)
     }
     else {
       console.log('중복되는 값이 없습니다.')
@@ -210,28 +210,14 @@ const RegisterPage = ({ authLogic }) => {
       }
       console.log('입력받은 생일정보 ' + birthday);
       const datas = {
-        memberId: id,
-        memberPassword: memInfo.password,
-        memberName: memInfo.name,
-        memberBirth: birthday,
-        memberEmail: memInfo.email,
-        memberGender: memInfo.gender,
-        memberMobile: memInfo.mobile,
-        memberNickname: memInfo.nickname
-        /* 
-            ,#{memberDomain}
-  ,#{memberId}
-  ,#{memberPassword}
-  ,#{memberName}
-  ,#{memberAge}
-  ,#{memberBirth}
-  ,#{memberEmail}
-  ,#{memberGender}
-  ,#{memberMobile}
-  ,#{memberNickname}
-  ,#{memberProfileImage}
-  ,#{memberRegisterDate}
-        */
+        MEMBER_ID: id,
+        MEMBER_PASSWORD: memInfo.password,
+        MEMBER_NAME: memInfo.name,
+        MEMBER_BIRTH: birthday,
+        MEMBER_EMAIL: memInfo.email,
+        MEMBER_GENDER: memInfo.gender,
+        MEMBER_MOBILE: memInfo.mobile,
+        MEMBER_NICKNAME: memInfo.nickname
       }
       console.log(datas)
       const response = await memberInsertDB(datas);
@@ -302,16 +288,6 @@ const RegisterPage = ({ authLogic }) => {
               <MyLabelAb>{comment.nickname}</MyLabelAb>
               <MyButton type="button" onClick={() => { overlap('nickname') }}>중복확인</MyButton>
             </MyLabel>
-
-            {/* 생년월일 */}
-            {/* <input type="text" name="birth" readonly />
-				<span id="delete" style="color: red; position: relative; right: 25px; display: none;"><i class="fas fa-times font-img"></i></span> */}
-            <MyLabel> 생년월일 <span style={{ color: "red" }}>{star.birthday}</span>
-              <MyInput type="text" id="birthday" defaultValue={memInfo.birthday} placeholder="생년월일을 입력해주세요"
-                onChange={(e) => { changeMemInfo(e); validate('birthday', e); }} />
-              <MyLabelAb>{comment.birthday}</MyLabelAb>
-            </MyLabel>
-
             {/* 이메일 */}
             <MyLabel> 이메일 <span style={{ color: "red" }}>{star.email}</span>
               <MyInput type="email" id="email" placeholder="이메일를 입력해주세요"
@@ -330,6 +306,15 @@ const RegisterPage = ({ authLogic }) => {
               <div style={{ marginTop: 10 }} key={`inline-radio`} className="mb-3">
                 {Checkbox}
               </div>
+            </MyLabel>
+
+            {/* 생년월일 */}
+            {/* <input type="text" name="birth" readonly />
+				<span id="delete" style="color: red; position: relative; right: 25px; display: none;"><i class="fas fa-times font-img"></i></span> */}
+            <MyLabel> 생년월일 <span style={{ color: "red" }}>{star.birthday}</span>
+              <MyInput type="text" id="birthday" defaultValue={memInfo.birthday} placeholder="생년월일을 입력해주세요"
+                onChange={(e) => { changeMemInfo(e); validate('birthday', e); }} />
+              <MyLabelAb>{comment.birthday}</MyLabelAb>
             </MyLabel>
 
             {/* 회원가입 버튼 */}
