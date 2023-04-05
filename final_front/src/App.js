@@ -99,16 +99,8 @@ function App({ imageUploader }) {
           exact={true}
           element={<MarketWriteForm />}
         />
-        <Route
-          path="/market/update/:bno"
-          exact={true}
-          element={<MarketUpdatePage />}
-        />
-        <Route
-          path="/market/detail/:bno"
-          exact={true}
-          element={<MarketDetail />}
-        />
+        <Route path="/market/update/*" element={<MarketUpdatePage />} />
+        <Route path="/market/mk_boardDetail/*" element={<MarketDetail />} />
       </Routes>
     </>
   );
