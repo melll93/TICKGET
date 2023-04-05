@@ -158,7 +158,10 @@ function App({ authLogic, imageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<BoardWriteForm />} />
-        <Route path="together/boardDetail/:boardNo" element={<BoardDetail boardNo={boardNo} />}/>
+        <Route
+          path="together/boardDetail/:boardNo"
+          element={<BoardDetail boardNo={boardNo} />}
+        />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
 
         {/* MarketPage Routes - 성훈 작업중 */}
@@ -167,16 +170,8 @@ function App({ authLogic, imageUploader }) {
           exact={true}
           element={<MarketWriteForm />}
         />
-        <Route
-          path="/market/update/:bno"
-          exact={true}
-          element={<MarketUpdatePage />}
-        />
-        <Route
-          path="/market/detail/:bno"
-          exact={true}
-          element={<MarketDetail />}
-        />
+        <Route path="/market/update/*" element={<MarketUpdatePage />} />
+        <Route path="/market/mk_boardDetail/*" element={<MarketDetail />} />
       </Routes>
     </>
   );

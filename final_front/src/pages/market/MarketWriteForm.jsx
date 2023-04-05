@@ -59,9 +59,6 @@ const MarketWriteForm = () => {
     setTitle(e);
   }, []);
 
-  const handlePw = useCallback((e) => {
-    setPw(e);
-  }, []);
 
   const handleTicketPlace = useCallback((e) => {
     setTicketPlace(e);
@@ -97,7 +94,6 @@ const MarketWriteForm = () => {
     const board = {
       boardMkNo: 0, // 자동채번 시퀀스 사용
       boardMkTitle: board_mk_title,
-      boardMkPw: board_mk_pw,
       boardMkContent: board_mk_content,
       boardMkHit: 0,
       mkTicketPlace: mk_ticket_place,
@@ -146,6 +142,7 @@ const MarketWriteForm = () => {
           </HeaderDiv>
 
           <FormDiv style={{ width: "1000px" }}>
+            <hr style={{opacity:'0%'}}/>
             <div>
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridTitle">
@@ -154,27 +151,17 @@ const MarketWriteForm = () => {
                     id="board_mk_title"
                     type="text"
                     placeholder="제목을 입력하세요."
-                    style={{ width: "600px", height: "50px" }}
+                    style={{ width: "970px", height: "50px" }}
                     onChange={(e) => {
                       handleTitle(e.target.value);
                     }}
                   />
                 </Form.Group>
 
-                <Form.Group as={Col} controlId="formGridPassword">
-                  <h3>비밀번호</h3>
-                  <Form.Control
-                    id="board_mk_pw"
-                    type="password"
-                    placeholder="비밀번호를 입력하세요."
-                    style={{ maxWidth: "350px", height: "50px" }}
-                    onChange={(e) => {
-                      handlePw(e.target.value);
-                    }}
-                  />
-                </Form.Group>
               </Row>
             </div>
+
+<hr style={{opacity:'0%'}}/>
 
             <div>
                   <Row className="mb-4">
@@ -184,7 +171,7 @@ const MarketWriteForm = () => {
                     id="mk_ticket_place"
                     type="text"
                     placeholder="공연 장소를 입력하세요."
-                    style={{ width: "600px", height: "50px" }}
+                    style={{ width: "475px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketPlace(e.target.value);
                     }}
@@ -196,17 +183,16 @@ const MarketWriteForm = () => {
                     id="mk_ticket_date"
                     type="date"
                     className="form-control"
-                    style={{ width: "350px", height: "50px" }}
+                    style={{ width: "475px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketDate(e.target.value);
                     }}
                   />
                 </Form.Group>
-              
   </Row>
-
 </div>
-   
+<hr style={{opacity:'0%'}}/>
+
 <div>
    <Row className="mb-5">
 
@@ -227,7 +213,7 @@ const MarketWriteForm = () => {
 
         </Row>
       </div>
-           
+           <hr style={{opacity:'0%'}}/>
 
             <h3>상세내용</h3>
             <hr style={{ margin: "10px 0px 10px 0px" }} />
