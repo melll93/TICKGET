@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import {
-  deleteBoardListDB,
   selectBoardDetailDB,
   selectBoardListDB,
 } from "../../axios/board/boardLogic";
@@ -13,12 +12,12 @@ import Header from "../../components/Header";
 const BoardDetail = () => {
   const navigate = useNavigate();
   // URL 파라미터에서 게시글 번호 가져오기
-  const { boardNo } = useParams();
+  const { boardTgNo } = useParams();
 
   // 게시글 정보를 담을 객체
   const [board, setBoard] = useState({
     boardTgNo: 0,
-    TgmemberId: "",
+    boardTgMemId: "",
     boardTgTitle: "",
     boardTgContent: "",
     boardTgDate: "",
@@ -31,16 +30,17 @@ const BoardDetail = () => {
   useEffect(() => {
     //파라미터로 넘어오는 deptno가 바뀌면 *다시 실행됨*
     const asyncDB = async () => {
-      const res = await selectBoardDetailDB({ boardNo });
+      const res = await selectBoardDetailDB({ boardTgNo });
       console.log("여기보세요 =- ", res.data);
       const result = JSON.stringify(res.data);
+      console.log("내가바로 result다 : "+result)
       const jsonDoc = JSON.parse(result);
       setBoard({
-        boardNo: jsonDoc.boardTgNo,
-        memberId: jsonDoc.TgmemberId,
-        boardTitle: jsonDoc.boardTgTitle,
-        boardContent: jsonDoc.boardTgContent,
-        boardDate: jsonDoc.boardTgDate,
+        boardTgNo: jsonDoc.boardTgNo,
+        boardTgMemId: jsonDoc.boardTgMemId,
+        boardTgTitle: jsonDoc.boardTgTitle,
+        boardTgContent: jsonDoc.boardTgContent,
+        boardTgDate: jsonDoc.boardTgDate,
       });
       if (res.data) {
         console.log("if문 안에 있니?", res.data);
@@ -50,27 +50,12 @@ const BoardDetail = () => {
         console.log("게시글 조회 실패");
       }
     };
+
     asyncDB();
     return () => {
       //언마운트 될 때 처리할 일이 있으면 여기에 코딩할 것
     };
-  }, [boardNo]);
-
-  const boardDelete = async () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      // 게시글 번호를 전달하여, axios를 사용하여 백엔드에서 삭제 처리
-      const res = await deleteBoardListDB(boardNo);
-      console.log(res);
-      if (res.data) {
-        // 삭제가 성공하면 게시글 목록 페이지로 이동함
-        alert("삭제되었습니다.");
-        navigate("/together");
-      } else {
-        alert("삭제 실패");
-      }
-    }
-  };
-
+  }, []);
 
   /*   if (!board.boardTitle) {
     console.log(board.boardTitle)
@@ -85,29 +70,36 @@ const BoardDetail = () => {
         <h2>게시글 훔쳐봐야지? 가야지?</h2>
         <div>
           <form method="post">
-            <input type="hidden" name="boardNo" value="" />
+            <input type="hidden" name="boardTgNo" value="" />
             <div>
               <label>제목</label>
               <span
                 style={{ width: "300px", margin: "10px" }}
                 type="text"
-                name="boardTitle"
+                name="boardTgTitle"
                 required
                 class="form-control form-control-lg"
                 id="inputLarge"
-              >{board.boardTitle}</span>
+              >
+                {board.boardTgTitle}
+              </span>
             </div>
             <div>
               <label>내용</label>
               <span
-                style={{ width: "300px", margin: "10px", height: "300px", fontSize:"40px" }}
+                style={{
+                  width: "300px",
+                  margin: "10px",
+                  height: "300px",
+                  fontSize: "40px",
+                }}
                 name="boardContent"
                 required
                 rows="10"
                 class="form-control"
                 id="exampleTextarea"
               >
-                {board.boardContent}
+                {board.boardTgContent}
               </span>
             </div>
             <div>
@@ -122,8 +114,12 @@ const BoardDetail = () => {
               />
             </div>
             <div>
-            <Button style={{ backgroundColor: "black" }} onClick={boardDelete}> 글 삭제하기 </Button>
-            <Button style={{ margin: "10px" }} onClick={() => navigate("/together")}>목록으로</Button>
+              <Button
+                style={{ margin: "10px" }}
+                onClick={() => navigate("/together")}
+              >
+                목록으로
+              </Button>
             </div>
           </form>
         </div>

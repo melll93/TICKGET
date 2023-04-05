@@ -18,7 +18,10 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
   @Override
   public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+    registry.addHandler(chatHandler, "ws/chat")
+            .setAllowedOrigins("http://localhost:3333")
+            .withSockJS() // WebSocket을 지원하지 않는 브라우저 환경에서 WebSocket을 Polling같은 기능으로 변환하여 사용 가능케 해주는 것.
+            .setClientLibraryUrl("https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js");
 
-    registry.addHandler(chatHandler, "ws/chat").setAllowedOrigins("*");
   }
 }

@@ -1,7 +1,15 @@
 import axios from "axios";
 
 //마켓 게시판 게시글 조회 로직
-export const mk_boardListDB = (board) => {
+export const mk_boardListDB = async () => {
+  const result = await axios({
+    method: "GET",
+    url: "http://localhost:8888/market/mk_boardList",
+  }).then((res) => res.data);
+  console.log(result);
+  return result;
+};
+/* export const mk_boardListDB = (board) => {
   console.log(board);
   return new Promise((resolve, reject) => {
     try {
@@ -9,6 +17,23 @@ export const mk_boardListDB = (board) => {
         method: "get",
         url: "http://localhost:8888/market/mk_boardList",
         params: board,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}; */
+
+//마켓 게시판 상세보기 로직
+export const mk_boardDetailDB = (board) => {
+  console.log(board);
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: "http://localhost:8888/market/mk_boardDetail",
+        params: board, //post 방식일땐 params 대신 data
       });
       resolve(response);
     } catch (error) {
@@ -23,9 +48,9 @@ export const mk_boardInsertDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
-        method: "post",
+        method: "post", //@RequestBody
         url: "http://localhost:8888/market/mk_boardInsert",
-        data: board,
+        data: board, //post 방식일땐 params 대신 data
       });
       resolve(response);
     } catch (error) {
@@ -40,9 +65,9 @@ export const mk_boardUpdateDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
-        method: "post",
+        method: "post", //@RequestBody
         url: "http://localhost:8888/market/mk_boardUpdate",
-        data: board,
+        data: board, //post 방식일땐 params 대신 data
       });
       resolve(response);
     } catch (error) {
@@ -59,7 +84,7 @@ export const mk_boardDeleteDB = (board) => {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/market/mk_boardDelete",
-        params: board,
+        param: board,
       });
       resolve(response);
     } catch (error) {

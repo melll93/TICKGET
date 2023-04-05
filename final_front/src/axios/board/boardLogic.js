@@ -1,13 +1,13 @@
 import axios from "axios";
 
 /* 전체조회 */
-export const selectBoardListDB = (board_together) => {
+export const selectBoardListDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/board/selectBoardList",
-        params: board_together, //쿼리스트링은 header에 담김 - get방식
+        params: board, //쿼리스트링은 header에 담김 - get방식
       });
       resolve(response);
     } catch (error) {

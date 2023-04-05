@@ -9,7 +9,7 @@
 
     <!-- 게시글 상세보기-->
     <select id="selectBoardDetail" resultType="BoardDto">
-        select * from board_together where board_no=#{boardNo}
+        select * from board_together where board_tg_no=#{boardTgNo}
     </select>
 
     <!-- 게시글 추가 -->

@@ -26,6 +26,7 @@
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
+    "sockjs-client": "^1.6.1",
     "styled-components": "^5.3.9",
     "swiper": "6.8.4",
     "tosspayments-react-native": "^1.0.7",

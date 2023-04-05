@@ -42,7 +42,7 @@
         </rollingPolicy>
     </appender>
 
-    <property name="STDOUT_LOG_PATTERN" value="${STDOUT_LOG_PATTERN:-%clr([%d{yyyy-MM-dd HH:mm:ss}:%-3relative]){cyan}%clr([%thread]){magenta} %clr(%-5level){red} %clr(%logger{36}){blue} - %msg%n}" />
+    <property name="STDOUT_LOG_PATTERN" value="${STDOUT_LOG_PATTERN:-%clr([%d{yyyy-MM-dd HH:mm:ss}:%-3relative]){cyan}%clr([%thread]){magenta} %clr(%-5level){red} %clr([%logger{30} : %line line]){blue} - %msg%n}" />
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <Pattern>${STDOUT_LOG_PATTERN}</Pattern>

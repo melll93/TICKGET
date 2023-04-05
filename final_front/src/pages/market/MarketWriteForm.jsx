@@ -1,36 +1,13 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  BButton,
-  ContainerDiv,
-  FormDiv,
-  HeaderDiv,
-  MyButton,
-  MyH1,
-  MyInput,
-  MyLabel,
-  MyLabelAb,
-  PwEye,
-  SignupForm,
-  SubmitButton,
+import {  BButton,  ContainerDiv,  FormDiv,  HeaderDiv,  MyButton,  MyH1,  MyInput,  MyLabel,  MyLabelAb,  PwEye,  SignupForm,  SubmitButton,
 } from "../../styles/formStyle";
 import QuillEditor from "./QuillEditor";
-import {
-  mk_boardInsertDB,
-  uploadFileDB,
-} from "../../axios/market/marketLogic";
-import {
-  Button,
-  Col,
-  FloatingLabel,
-  Form,
-  InputGroup,
-  Row,
-} from "react-bootstrap";
+import { mk_boardInsertDB, uploadFileDB } from "../../axios/market/marketLogic";
+import {  Button,  Col,  FloatingLabel,  Form,  InputGroup,  Row,} from "react-bootstrap";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import MarketFileInsert from "./MarketFileInsert";
-
 
 const MarketWriteForm = () => {
   console.log("글쓰기 페이지 호출");
@@ -59,9 +36,6 @@ const MarketWriteForm = () => {
     setTitle(e);
   }, []);
 
-  const handlePw = useCallback((e) => {
-    setPw(e);
-  }, []);
 
   const handleTicketPlace = useCallback((e) => {
     setTicketPlace(e);
@@ -83,9 +57,12 @@ const MarketWriteForm = () => {
     setTicketPrice(e);
   }, []);
 
-  const handleFiles = useCallback((value) => {
-    setFiles([...files, value]); //deep copy
-  },[files]);
+  const handleFiles = useCallback(
+    (value) => {
+      setFiles([...files, value]); //deep copy
+    },
+    [files]
+  );
 
   const handleContent = useCallback((value) => {
     //quilleditor에서 담김 - 태그포함된 정보
@@ -97,7 +74,6 @@ const MarketWriteForm = () => {
     const board = {
       boardMkNo: 0, // 자동채번 시퀀스 사용
       boardMkTitle: board_mk_title,
-      boardMkPw: board_mk_pw,
       boardMkContent: board_mk_content,
       boardMkHit: 0,
       mkTicketPlace: mk_ticket_place,
@@ -141,11 +117,12 @@ const MarketWriteForm = () => {
         <ContainerDiv>
           <HeaderDiv>
             <div className="form-floating mb-3">
-              <h3 style={{marginLeft:"450px"}}>티켓 중고판매 글 작성</h3>
+              <h3 style={{ marginLeft: "450px" }}>티켓 중고판매 글 작성</h3>
             </div>
           </HeaderDiv>
 
           <FormDiv style={{ width: "1000px" }}>
+            <hr style={{opacity:'0%'}}/>
             <div>
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridTitle">
@@ -154,37 +131,27 @@ const MarketWriteForm = () => {
                     id="board_mk_title"
                     type="text"
                     placeholder="제목을 입력하세요."
-                    style={{ width: "600px", height: "50px" }}
+                    style={{ width: "970px", height: "50px" }}
                     onChange={(e) => {
                       handleTitle(e.target.value);
                     }}
                   />
                 </Form.Group>
 
-                <Form.Group as={Col} controlId="formGridPassword">
-                  <h3>비밀번호</h3>
-                  <Form.Control
-                    id="board_mk_pw"
-                    type="password"
-                    placeholder="비밀번호를 입력하세요."
-                    style={{ maxWidth: "350px", height: "50px" }}
-                    onChange={(e) => {
-                      handlePw(e.target.value);
-                    }}
-                  />
-                </Form.Group>
               </Row>
             </div>
 
+<hr style={{opacity:'0%'}}/>
+
             <div>
-                  <Row className="mb-4">
+              <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridPlace">
                   <h3>장소</h3>
                   <Form.Control
                     id="mk_ticket_place"
                     type="text"
                     placeholder="공연 장소를 입력하세요."
-                    style={{ width: "600px", height: "50px" }}
+                    style={{ width: "475px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketPlace(e.target.value);
                     }}
@@ -196,24 +163,32 @@ const MarketWriteForm = () => {
                     id="mk_ticket_date"
                     type="date"
                     className="form-control"
-                    style={{ width: "350px", height: "50px" }}
+                    style={{ width: "475px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketDate(e.target.value);
                     }}
                   />
                 </Form.Group>
-              
   </Row>
-
 </div>
-   
+<hr style={{opacity:'0%'}}/>
+
 <div>
    <Row className="mb-5">
 
-   <Form.Group as={Col} controlId="formGridSeat">
-          <h3>좌석정보</h3>
-          <Form.Control type="text" id="mk_ticket_seat" placeholder="좌석 정보를 입력하세요." style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketSeat(e.target.value)}}/>
-          </Form.Group>
+                <Form.Group as={Col} controlId="formGridTicketCount">
+                  <h3>판매수량</h3>
+                  <Form.Control
+                    id="mk_ticket_count"
+                    type="number"
+                    min="1"
+                    placeholder="티켓의 수량을 입력하세요."
+                    style={{ width: "250px", height: "50px" }}
+                    onChange={(e) => {
+                      handleTicketCount(e.target.value);
+                    }}
+                  />
+                </Form.Group>
 
         <Form.Group as={Col} controlId="formGridTicketCount">
           <h3>판매수량</h3>
@@ -227,7 +202,7 @@ const MarketWriteForm = () => {
 
         </Row>
       </div>
-           
+           <hr style={{opacity:'0%'}}/>
 
             <h3>상세내용</h3>
             <hr style={{ margin: "10px 0px 10px 0px" }} />

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { Button, Table } from 'react-bootstrap'
-import DonationFooter from "../market/MarketFooter";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
 import DonationList from '../market/MarketList'
