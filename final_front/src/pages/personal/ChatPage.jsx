@@ -21,6 +21,7 @@ const ChatPage = () => {
     console.log("send");
     console.log(username + ":" + msg);
     ws.send(username + ":" + msg);
+
     /*************** 채팅 박스 구현 ***************/
     const chatBox = document.createElement('div') // 한 줄 담기 (세로 사이즈 조정)
     const chat = document.createElement('div') // 컴포 디비전 좌우 처리
@@ -36,6 +37,7 @@ const ChatPage = () => {
     chatBox.appendChild(chat)
     document.querySelector('#outputBox').appendChild(chatBox)
     /*************** 채팅 박스 구현 ***************/
+
     setMsg("");
     document.querySelector('#msg').value = ""
   };
