@@ -21,7 +21,7 @@ public class BoardDto {
     private String boardTgTitle;
     private String boardTgContent;
     private String boardTgDate;
-    private int boardTgViews;
+    private String boardTgViews;
     private int boardTgSuperNo;
     private int boardTgGroupNo;
     private int boardTgDepth;

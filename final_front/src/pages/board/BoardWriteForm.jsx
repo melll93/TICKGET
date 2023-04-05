@@ -47,12 +47,12 @@ const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조
     console.log(secret) //true
     console.log(typeof secret)  //boolean타입 출력
     const board ={
-      board_tg_title: title, // 제목 추가
-      board_tg_content: content, // 내용 추가
-      board_tg_secret: (secret ? 'true':'false'),
-      board_tg_type: tTitle,
-      board_tg_views: views,
-      board_tg_mem_id: sessionStorage.getItem('id'),
+      boardTgTitle: title, // 제목 추가
+      boardTgContent: content, // 내용 추가
+      boardTgSecret: (secret ? 'true':'false'),
+      boardTgType: tTitle,
+      boardTgViews: views,
+      boardTgMemId: sessionStorage.getItem('id'),
     }
     // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
     // inser here
@@ -93,6 +93,7 @@ const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조
             <hr style={{margin:'10px 0px 10px 0px'}}/>
             <h3>상세내용</h3>
             <QuillEditor value={content} handleContent={handleContent} quillRef={quillRef} files={files} handleFiles={handleFiles}/>
+            {/* <QuillEditor value={content} handleContent={(e)=>e.target.value} quillRef={quillRef} files={files} handleFiles={handleFiles}/> */}
             <BoardFileInsert files={files}/>
           </div>
         </FormDiv>

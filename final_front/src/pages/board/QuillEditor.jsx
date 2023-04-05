@@ -41,7 +41,7 @@ const QuillEditor = ({value,handleContent,quillRef,files,handleFiles,}) => {
       if (!res.data) {
         console.log("이미지 업로드에 실패하였습니다.");
       }
-      const url ="http://localhost:8888/board/imageGet?imageName=$`{res.data}`";
+      const url =`http://localhost:8888/board/imageGet?imageName=${res.data}`;
       const quill = quillRef.current.getEditor();
       /* ReactQuill 노드에 대한 Ref가 있어야 메서드들을 호출할 수 있으므로
         useRef()로 ReactQuill에 ref를 걸어주자.
@@ -94,6 +94,7 @@ const QuillEditor = ({value,handleContent,quillRef,files,handleFiles,}) => {
   useEffect(() => {
     console.log("QuillEditor useEffect");
   }, []);
+  console.log(value)
   const formats = [
     //'font',    "header",    "bold",    "italic",    "underline",    "strike",    "blockquote",    "list",
     "bullet",    "indent",    "link",    "image",    "align",    "color",    "background",
@@ -110,7 +111,7 @@ const QuillEditor = ({value,handleContent,quillRef,files,handleFiles,}) => {
         formats={formats}
         value={value}
         onChange={(content, delta, source, editor) => {
-          handleContent(editor.getHTML());
+          handleContent(editor.getText());
         }}
       />
     </div>
