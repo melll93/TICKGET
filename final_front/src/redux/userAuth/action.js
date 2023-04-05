@@ -4,18 +4,14 @@ export const LOGOUT = "user/LOGOUT";
 export const login = (user) => {
   return {
     type: LOGIN,
-    user: { id: user.id, email: user.email, name: user.name },
+    user: user,
     isLogin: true,
   };
 };
 export const logout = () => {
   return {
     type: LOGOUT,
-    user: {
-      id: "",
-      email: "",
-      name: "",
-    },
+    user: {},
     isLogin: false,
   };
 };

@@ -107,6 +107,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             </Form.Group>
             <div style={{ textAlign: "center" }}>
               {/* <Button variant="primary" type="login" onClick={() => { loginLocal() }}> */}
+              {/* axios 이벤트로 처리 여기서 */}
               <Button variant="primary" type="login" onClick={() => { }}>
                 로그인
               </Button>

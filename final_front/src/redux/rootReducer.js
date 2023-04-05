@@ -1,10 +1,9 @@
 import { combineReducers } from "redux";
-import userAuth from './userAuth/reducer'
-import toastStatus from './toastStatus/reducer'
+import userStatus from "./userAuth/reducer";
+import toastStatus from "./toastStatus/reducer";
 
 const rootReducer = combineReducers({
-  userAuth,
-  toastStatus
-})
+  userStatus,
+});
 
 export default rootReducer;

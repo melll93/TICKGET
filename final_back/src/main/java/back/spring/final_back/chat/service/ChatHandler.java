@@ -1,5 +1,5 @@
 
-package back.spring.final_back.chat;
+package back.spring.final_back.chat.service;
 
 import java.util.ArrayList;
 import java.util.List;
