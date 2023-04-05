@@ -21,7 +21,7 @@ public interface BoardDao {
 
     // 게시판 삭제(Delete)
     public int deleteBoardList(BoardDto boardDto);
-    
+
     //-----------------아직 작업 중----------------
     public int qnaInsert(Map<String, Object> pMap);
 
