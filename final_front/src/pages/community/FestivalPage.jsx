@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import {FetivalListDB, KyeongkiFestivalListDB, SeoulFestivalListDB } from "../../axios/main/Festival";
+import PaginationPrac from "../../components/PaginationPrac";
 
 
 
@@ -45,27 +46,32 @@ const Navbar = ({changeModal, modal2open, modal2_1open, modal3open, modal4open})
             </ul>
                 <ul className="nav-item">
               <li className="nav-link" onClick={Kyeongki}>
-              경기
+              경기/인천
               </li>
             </ul>
             <ul className="nav-item">
               <li className="nav-link" onClick={Seoul}>
-              강원도
+              충청/강원
               </li>
             </ul>
             <ul className="nav-item">
               <li className="nav-link" onClick={Kyeongki}>
-              경상도
+              대구/경북
               </li>
             </ul>
             <ul className="nav-item">
               <li className="nav-link" onClick={Seoul}>
-              전라도
+              부산/경남
               </li>
             </ul>
             <ul className="nav-item">
               <li className="nav-link" onClick={Kyeongki}>
-              제주도/광역시
+              광주/전라
+              </li>
+            </ul>
+            <ul className="nav-item">
+              <li className="nav-link" onClick={Kyeongki}>
+              제주
               </li>
             </ul>
             </ul>
@@ -191,18 +197,33 @@ const FestivalRankingList=()=>{
       )
     }
 
-
-
-const FestivalsTest =() =>{
-    const [festivals, setFestivals] = useState([]);
+    
+    
+    const FestivalsTest =() =>{
+      const [festivals, setFestivals] = useState([]);
+      const [page, setPage] = useState("");
+      const [perPage] = useState(20)
     const [test, setTest] = useState(0);
+    // console.log('랭스:'+festivals.length)
+    // console.log('perPage: ' + perPage)
     useEffect(() => {
       FetivalListDB().then(setFestivals);
     }, []);
+    const indexOfLastPost = page*perPage;
+    const indexOfFirstPost=indexOfLastPost -perPage
+
+const currentFest = (festivals)=>{
+  let currentFest=0;
+  currentFest=festivals.slice(indexOfFirstPost, indexOfLastPost)
+return currentFest;
+}
+
+
+
   return(
   <>
    <div>
-        {festivals.data && festivals.data.map((festival, i) => {
+        {currentFest(festivals) && currentFest(festivals).map((festival, i) => {
   // console.log(festival)
 return(
       <div key={festival.festMId}
@@ -234,6 +255,9 @@ return(
 ) 
         })}
       </div>
+      <div style={{ textAlign: "center" }}>
+          <PaginationPrac  currentFest={currentFest(festivals)} pagination={setPage} perPage={perPage} totalFest={festivals.length}/>
+        </div>
   </>
     )
 }  ///////////////////////////////////// FestivalsTest 끝////////////////////////////////////////
@@ -259,11 +283,13 @@ const FestivalPage = () => {
   const modal3open=()=>{setTotalFest(0); setModal2(0);  setModal2_1(0); setModal3(1); setModal4(0) }
   const modal4open=()=>{setTotalFest(0); setModal2(0);  setModal2_1(0); setModal3(0); setModal4(1) }
 
+  
   return (
     <>
       <Sidebar />
       <div className="center">
         Festival 페이지<br/>
+
         <Header />
         <Navbar changeModal={changeModal} modal2open={modal2open} modal2_1open={modal2_1open} modal3open={modal3open} modal4open={modal4open} />
         <Link to="/addProducts" style={{fontSize:'40px', backgroundColor:'blue', color:'white', borderRadius:'20%', textDecoration:'none'}}>상품등록버튼</Link>

@@ -16,20 +16,14 @@ export const FestivalInsertDB = (festival) => {
   };
 
 
-  export const FetivalListDB = (festival) => {
-    return new Promise((resolve, reject) => {
-      try {
-        const response = axios({
+  export const FetivalListDB =async(festival) => {
+    const result = await axios({
           method: "get",
           url: "http://localhost:8888/festival/festivalList",
           params: festival, 
-        });
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  };
+        }).then((res) => res.data);
+        return result;
+      };
 
 
   export const SeoulFestivalListDB = (festival) => {

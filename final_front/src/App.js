@@ -33,6 +33,7 @@ import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import { onAuthChange } from "./util/authLogic";
+import PaymentPage from "./pages/personal/PaymentPage";
 
 function App({ authLogic, imageUploader }) {
   const [domain, setDomain] = useState();
@@ -155,6 +156,8 @@ function App({ authLogic, imageUploader }) {
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
         <Route path="/productsDetail/:festMId" element={<ProductsDetails />} />
         <Route path="/paymentsucess/:festMId" element={<PaySucTestPage />} />
+        <Route path="/payment/:festMId" element={<PaymentPage />} />
+
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<BoardWriteForm />} />

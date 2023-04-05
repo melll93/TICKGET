@@ -9,14 +9,13 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import { MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
 import '../../styles/productsdetails.css'
-import PaymentPage from '../personal/PaymentComponent';
+import PaymentComponent from '../personal/PaymentComponent';
 
 function ProductsDetails(){
     let {festMId} =useParams();
     const [value, onChange] = useState(new Date());
     const [mark, setMark] = useState([]);
     const navigate = useNavigate();
-    const [smShow, setSmShow] = useState(false);
     const [lgShow, setLgShow] = useState(false);
     const [mTel, setMTel]=useState("");
     const [mName, setMName]=useState("");
@@ -28,8 +27,6 @@ function ProductsDetails(){
 
     const resetReviewField = () => {
       setReviewContent("");
-  document.querySelector('#product_detail_review_textarea').value = null;
-
     };
 
     /* 수정중 */
@@ -188,7 +185,8 @@ id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}
 잔여좌석<br></br>
 {/*///////////////////////////// 모달 수정중 ///////////////////////////////////////////////////////////*/}
 
-<Button className="researvebtn" onClick={() => setLgShow(true)}>예약하기</Button>
+<Button className="researvebtn" onClick={() => setLgShow(true)}>예약하기_모달_삭제예정</Button>
+<Button className="researvebtn" onClick={() => navigate("/payment/"+festMId)}>예약하기2_결제페이지로이동</Button>
 <Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg" >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
@@ -267,7 +265,7 @@ id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}
   <label htmlFor="floatingInput">mTel</label>
 </div><br />
 
-<PaymentPage></PaymentPage>
+<PaymentComponent></PaymentComponent>
         </Modal.Body>
       </Modal>
 {/* ///////////////////////////////////////////////////////////////여기까지 모달 수정중 */}
