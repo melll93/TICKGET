@@ -20,7 +20,6 @@ const BoardList = () => {
   }, []);
 
   // 전체 게시글 조회
-  /* BACK- BoardDto - @AllArgsConstructor selectBoardList 얘는가능 */
   const jsonBoardList = async () => {
     // axios를 사용하여 게시글 목록을 가져옴
     const res = await selectBoardListDB();
@@ -32,11 +31,6 @@ const BoardList = () => {
       console.log("부서목록 조회 실패");
     }
   };
-
-  // 게시글 삭제하기
-  /* BACK- BoardDto - @AllArgsConstructor deleteBoardList 얘는 불 가능 */
-  /* BACK- BoardDto - @RequiredArgsConstructor,  @NoArgsConstructor deleteBoardList 얘는 가능 */
-
 
   if (boardList === null) {
     return <div>데이터를 불러오는 중입니다...</div>;
@@ -55,10 +49,10 @@ const BoardList = () => {
           </tr>
         </thead>
         <tbody>
-          {boardList.map((board_together) => (
-            <tr key={board_together.boarTgdNo}>
+          {boardList.map((board) => (
+            <tr key={board.boarTgdNo}>
               <td style={{ textAlign: "center" }}>
-                <input type="checkbox" value={board_together.boardTgNo} checked={checkedItems.includes(board_together.boardTgNo)}
+                <input type="checkbox" value={board.boardTgNo} checked={checkedItems.includes(board.boardTgNo)}
                   onChange={(e) => {const checked = e.target.checked;const value = parseInt(e.target.value);
                     if (checked) {
                       setCheckedItems([...checkedItems, value]);
@@ -70,19 +64,19 @@ const BoardList = () => {
                   }}
                 />
               </td>
-              <td style={{ textAlign: "center" }}>{board_together.boardTgNo}</td>
+              <td style={{ textAlign: "center" }}>{board.boardTgNo}</td>
               <td>
                 <button
                   style={{border: "none",background: "none",color: "blue",cursor: "pointer",}}
                   onClick={() =>navigate({
-                    pathname: "/together/BoardDetail/"+board_together.boardTgNo,
-                    state:{board_together}
+                    pathname: "/together/BoardDetail/"+board.boardTgNo,
+                    state:{board}
                   })}>
-                  {board_together.boardTgTitle}
+                  {board.boardTgTitle}
                 </button>
               </td>
-              <td style={{ textAlign: "center" }}>{board_together.boardTgMemId}</td>
-              <td style={{ textAlign: "center" }}>{board_together.boardTgDate}</td>
+              <td style={{ textAlign: "center" }}>{board.boardTgMemId}</td>
+              <td style={{ textAlign: "center" }}>{board.boardTgDate}</td>
             </tr>
           ))}
         </tbody>

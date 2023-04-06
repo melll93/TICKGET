@@ -6,6 +6,7 @@ import {
   deleteBoardListDB,
   selectBoardDetailDB,
   selectBoardListDB,
+  updateBoardListDB,
 } from "../../axios/board/boardLogic";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
@@ -26,7 +27,7 @@ const BoardDetail = () => {
       const res = await selectBoardDetailDB({ boardTgNo });
       console.log("여기보세요 =- ", res.data);
       const result = JSON.stringify(res.data);
-      console.log("내가바로 result다 : "+result)
+      console.log("내가바로 result다 : " + result);
       const jsonDoc = JSON.parse(result);
       setBoard({
         boardTgNo: jsonDoc.boardTgNo,
@@ -55,16 +56,17 @@ const BoardDetail = () => {
     return <div>데이터를 불러오는 중입니다...</div>;
   } */
 
-  const deleteBoardList = async() => {
+  const deleteBoardList = async () => {
     const board = {
-      boardTgNo : boardTgNo
-    }
-    const res = await deleteBoardListDB(board)
-    console.log(res.data)
-    alert('게시글 삭제 완료')
-    navigate('/together')
- 
-    }
+      boardTgNo: boardTgNo,
+    };
+    const res = await deleteBoardListDB(board);
+    console.log(res.data);
+    alert("게시글 삭제 완료");
+    navigate("/together");
+  };
+
+
 
   return (
     <div>
@@ -78,73 +80,52 @@ const BoardDetail = () => {
             <input type="hidden" name="boardTgNo" value="" />
             <div>
               <label>제목</label>
-              <span
-                style={{ width: "300px", margin: "10px" }}
-                type="text"
-                name="boardTgTitle"
-                required
-                class="form-control form-control-lg"
-                id="inputLarge"
-              >
+              <span style={{ width: "300px", margin: "10px" }} type="text" name="boardTgTitle" required class="form-control form-control-lg" id="inputLarge">
                 {board.boardTgTitle}
               </span>
             </div>
+
             <div>
               <label>작성자</label>
-              <span
-                style={{ width: "300px", margin: "10px" }}
-                type="text"
-                name="boardTgMemId"
-                required
-                class="form-control form-control-lg"
-                id="inputLarge"
-              >
+              <span style={{ width: "300px", margin: "10px" }} type="text" name="boardTgMemId" required class="form-control form-control-lg" id="inputLarge">
                 {board.boardTgMemId}
               </span>
             </div>
+            
+            <div>
+              <label>날짜</label>
+              <span style={{ width: "300px", margin: "10px" }} type="text" name="boardTgMemDate" required class="form-control form-control-lg" id="inputLarge">
+                {board.boardTgDate}
+              </span>
+            </div>
+
             <div>
               <label>내용</label>
-              <span
-                style={{
-                  width: "300px",
-                  margin: "10px",
-                  height: "300px",
-                  fontSize: "40px",
-                }}
-                name="boardContent"
-                required
-                rows="10"
-                class="form-control"
-                id="exampleTextarea"
-              >
+              <span style={{width: "300px", margin: "10px", height: "300px", fontSize: "40px"}}
+                name="boardContent" required rows="10" class="form-control" id="exampleTextarea">
                 {board.boardTgContent}
               </span>
             </div>
+
             <div>
               <label class="form-block">첨부파일</label>
-              <input
-                style={{ width: "300px", margin: "10px" }}
-                type="file"
-                name="attach"
-                accept="image/*"
-                multiple="multiple"
-                class="form-control"
-              />
+              <input style={{ width: "300px", margin: "10px" }}
+                type="file" name="attach" accept="image/*" multiple="multiple" class="form-control"/>
             </div>
+            
             <div>
-              <Button
-                style={{ margin: "10px" }}
-                onClick={() => navigate("/together")}
-              >
-                목록으로
+              <Button style={{ margin: "10px" }} onClick={() => navigate("/together")}>
+                목록으로(완)
               </Button>
-            </div>
-            <div>
-              <Button
-                style={{ margin: "10px" }}
-                onClick={deleteBoardList}
-              >
-                삭제를 해보자
+              &nbsp;
+              <Button style={{ margin: "10px" }} onClick={deleteBoardList}>
+                삭제(완)
+              </Button>
+              {/* <Button style={{ margin: "10px" }} onClick={() =>navigate({
+                    pathname: "/together/BoardDetail/"+board.boardTgNo,
+                    state:{board}})}> */}
+              <Button style={{ marginLeft: "10px" }}onClick={() => navigate("/together/boardUpdate")}>
+                수정
               </Button>
             </div>
           </form>
