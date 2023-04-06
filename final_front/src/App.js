@@ -87,7 +87,6 @@ function App({ imageUploader }) {
         <Route path="/paymentsucess/:festMId" element={<PaySucTestPage />} />
         <Route path="/payment/:festMId" element={<PaymentPage />} />
 
-
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<BoardWriteForm />} />
         <Route
@@ -102,7 +101,11 @@ function App({ imageUploader }) {
           exact={true}
           element={<MarketWriteForm />}
         />
-        <Route path="/market/update/*" element={<MarketUpdatePage />} />
+        <Route
+          path="/market/update/:no"
+          exact={true}
+          element={<MarketUpdatePage />}
+        />
         <Route path="/market/mk_boardDetail/*" element={<MarketDetail />} />
       </Routes>
     </>

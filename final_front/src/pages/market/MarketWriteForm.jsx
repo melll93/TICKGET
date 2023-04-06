@@ -176,16 +176,15 @@ const MarketWriteForm = () => {
 <div>
    <Row className="mb-5">
 
-                <Form.Group as={Col} controlId="formGridTicketCount">
-                  <h3>판매수량</h3>
+                <Form.Group as={Col} controlId="formGridTicketSeat">
+                  <h3>좌석정보</h3>
                   <Form.Control
-                    id="mk_ticket_count"
-                    type="number"
-                    min="1"
-                    placeholder="티켓의 수량을 입력하세요."
+                    id="mk_ticket_seat"
+                    type="text"
+                    placeholder="좌석 정보를 입력하세요."
                     style={{ width: "250px", height: "50px" }}
                     onChange={(e) => {
-                      handleTicketCount(e.target.value);
+                      handleTicketSeat(e.target.value);
                     }}
                   />
                 </Form.Group>
