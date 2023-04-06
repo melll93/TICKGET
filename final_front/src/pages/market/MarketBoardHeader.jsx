@@ -11,7 +11,7 @@ import { mk_boardDeleteDB } from '../../axios/market/marketLogic';
 
    const boardDelete = async() => {
    const board = {
-      board_mk_no : no
+      boardMkNo : no
    }
    const res = await mk_boardDeleteDB(board)
    console.log(res.data)

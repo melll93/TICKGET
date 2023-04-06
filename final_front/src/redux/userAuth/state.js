@@ -1,8 +1,10 @@
 export const userInfo = {
   user: {
-    id: "",
-    email: "",
-    name: "",
+    id: "test",
+    email: "test@naver.com",
+    name: "관리자",
+    nickname: "관리자",
+    profile_img: "",
   },
   isLogin: false,
 };

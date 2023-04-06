@@ -7,12 +7,28 @@ import { checkPassword, validateBirthdate, validateEmail, validateHp, validateNa
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
 import { memberInsertDB, memberListDB } from '../../axios/member/memberLogic';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const RegisterPage = ({ authLogic }) => {
   // const auth = authLogic.getUserAuth();
   const userAuth = useSelector(state => state.userAuth);
   const type = window.location.search.split('&')[0].split('=')[1];
   const navigate = useNavigate();
+  /* datepicker */
+  const [birthDate, setBirthDate] = useState(null);
+
+  const handleBirthDateChange = (date) => {
+    setBirthDate(date);
+  };
+
+  const handleDeleteClick = () => {
+    setBirthDate(null);
+  };
+
+  const today = new Date();
+  const endDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  /*  */
   const [submitBtn, setSubmitBtn] = useState({
     disabled: true,
     bgColor: 'rgb(175, 210, 244)',
@@ -201,6 +217,12 @@ const RegisterPage = ({ authLogic }) => {
 
   /* 회원 가입 */
   const signup = async () => {
+    /* 사용 시 이력 받은 정보가 하루 씩 당겨지고 insert 컬럼값이 아예 안 담김
+        try {
+      let id;
+      const birthday = birthDate ? birthDate.toISOString().slice(0, 10) : "";
+      console.log('입력받은 생일정보 ' + birthday);
+      const datas = { */
     try {
       let id;
       const birth = memInfo.birthday;
@@ -316,6 +338,30 @@ const RegisterPage = ({ authLogic }) => {
                 onChange={(e) => { changeMemInfo(e); validate('birthday', e); }} />
               <MyLabelAb>{comment.birthday}</MyLabelAb>
             </MyLabel>
+            {/* react datepicker 이용한 생년월일 */}
+            <div>
+              <DatePicker
+                name="birth"
+                selected={birthDate}
+                onChange={handleBirthDateChange}
+                dateFormat="yyyy-MM-dd"
+                isClearable
+                placeholderText="생년월일을 선택하세요"
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                minDate={new Date('1900-01-01')}
+                maxDate={endDay}
+                dayOfWeekShort={['일', '월', '화', '수', '목', '금', '토']}
+                dateFormatCalendar="yyyy년 M월"
+                monthShortNames={['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']}
+              />
+              {birthDate && (
+                <button id="delete" onClick={handleDeleteClick}>
+                  삭제
+                </button>
+              )}
+            </div>
 
             {/* 회원가입 버튼 */}
             <SubmitButton type="button" style={{ backgroundColor: submitBtn.bgColor }}

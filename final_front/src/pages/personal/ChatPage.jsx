@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -14,13 +15,23 @@ const ws = new SockJS("http://localhost:8888/ws/chat");
  * chatBox 안에 chatText, profile, time
  ******************************************************************/
 const ChatPage = () => {
-  const username = "ADMIN";
-  const [msg, setMsg] = useState("");
+  const userStatus = useSelector((state) => state.userStatus)
+
+  const username = userStatus.user.nickname;
+  const [msg, setMsg] = useState({});
 
   const send = (msg) => {
     console.log("send");
     console.log(username + ":" + msg);
     ws.send(username + ":" + msg);
+
+    const msg_payload = {
+      id: username,
+      room: 1,
+      msg: msg,
+    }
+    ws.send(msg_payload)
+    console.log(msg_payload);
 
     /*************** 채팅 박스 구현 ***************/
     const chatBox = document.createElement('div') // 한 줄 담기 (세로 사이즈 조정)
@@ -38,7 +49,7 @@ const ChatPage = () => {
     document.querySelector('#outputBox').appendChild(chatBox)
     /*************** 채팅 박스 구현 ***************/
 
-    setMsg("");
+    setMsg({});
     document.querySelector('#msg').value = ""
   };
 

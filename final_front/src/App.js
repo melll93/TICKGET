@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
-import "./App.css";
 import BoardDetail from "./pages/board/BoardDetail";
+import BoardUpdate from "./pages/board/BoardUpdate";
 import BoardWriteForm from "./pages/board/BoardWriteForm";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import CalendarPage from "./pages/community/CalendarPage";
-import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
-import MarketPage from "./pages/community/MarketPage";
 import FestivalPage from "./pages/community/FestivalPage";
 import HomePage from "./pages/community/HomePage";
+import MarketPage from "./pages/community/MarketPage";
 import ProductsDetails from "./pages/community/ProductsDetails";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
+import CarpoolPage from "./pages/community/CarpoolPage";
 import MarketDetail from "./pages/market/MarketDetail";
 import MarketUpdatePage from "./pages/market/MarketUpdatePage";
 import MarketWriteForm from "./pages/market/MarketWriteForm";
@@ -27,14 +28,22 @@ import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
 import ChatPage from "./pages/personal/ChatPage";
 import MyPage from "./pages/personal/MyPage";
+<<<<<<< HEAD
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import PaymentPage from "./pages/personal/PaymentPage";
 import PaySucPage from "./pages/personal/PaySucPage";
 import PayFailPage from "./pages/personal/PayFailPage";
+=======
+import PaySucTestPage from "./pages/personal/PaySucTestPage";
+import PaymentPage from "./pages/personal/PaymentPage";
+import SettingPage from "./pages/personal/SettingPage";
+import TicketPage from "./pages/personal/TicketPage";
+
+>>>>>>> 8d8105418210549ff50b9fd7dff59fcd8625e255
 
 function App({ imageUploader }) {
-  const [boardTgNo, setBoardTgNo] = useState();
+  const [board, setBoard] = useState();
   const [user, setUser] = useState();
 
   // pages로 routing 처리
@@ -76,7 +85,7 @@ function App({ imageUploader }) {
         <Route path="/search" exact={true} element={<SearchResultPage />} />
         <Route path="/concert" exact={true} element={<ConcertPage />} />
         <Route path="/together" exact={true} element={<TogetherPage />} />
-        <Route path="/carpool" exact={true} element={<CarpoolPage />} />
+        <Route path="/carpool" exact={true} element={<CarpoolPage/>} />
         <Route path="/market" exact={true} element={<MarketPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
         <Route path="/chat" exact={true} element={<ChatPage />} />
@@ -90,14 +99,14 @@ function App({ imageUploader }) {
 
         <Route path="/payment/:festMId" element={<PaymentPage />} />
 
-
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<BoardWriteForm />} />
-        <Route
-          path="together/boardDetail/:boardTgNo"
-          element={<BoardDetail boardTgNo={boardTgNo} />}
+        <Route path="together/boardDetail/:boardTgNo" element={<BoardDetail board={board} />}
         />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
+        <Route path="together/boardUpdate/" element={<BoardUpdate />} />
+
+
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route
@@ -105,7 +114,11 @@ function App({ imageUploader }) {
           exact={true}
           element={<MarketWriteForm />}
         />
-        <Route path="/market/update/*" element={<MarketUpdatePage />} />
+        <Route
+          path="/market/update/:no"
+          exact={true}
+          element={<MarketUpdatePage />}
+        />
         <Route path="/market/mk_boardDetail/*" element={<MarketDetail />} />
       </Routes>
     </>

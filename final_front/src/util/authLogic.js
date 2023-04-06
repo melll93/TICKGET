@@ -1,4 +1,5 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, EmailAuthProvider } from "firebase/auth";
+import { memberListDB } from "../axios/member/memberLogic";
 
 class AuthLogic {
   constructor() {
@@ -43,11 +44,31 @@ export const logout = (auth) => {
   });
 };
 // 자체 로그인 처리 
-export const loginH = (auth, user) => { // user = onAuthChange = (auth)의 auth와 동일
-  console.log(auth)
+export const loginH = (user) => {
+  return memberListDB(user)
+    .then((response) => {
+      const result = response.data;
+      const isValidUser = result.some((member) => {
+        return member.mem_id === user.id && member.mem_pw === user.password;
+      });
+      if (isValidUser) {
+        // 유저 정보가 유효한 경우 로그인 성공
+        const userCredential = { user: { id: user.id } };
+        return Promise.resolve(userCredential);
+      } else {
+        // 유저 정보가 유효하지 않은 경우 로그인 실패
+        const errorMessage = "로그인에 실패하였습니다";
+        return Promise.reject(errorMessage);
+      }
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+}
+/* export const loginH = (user) => { // user = onAuthChange = (auth)의 auth와 동일
   console.log(user.id + user.password)
   return new Promise((resolve, reject) => {
-    signInWithEmailAndPassword(auth, user.id, user.password)
+    signInWithEmailAndPassword(user.id, user.password)
   .then((userCredential) => {
     // Signed in
     const user = userCredential.user;
@@ -61,7 +82,7 @@ export const loginH = (auth, user) => { // user = onAuthChange = (auth)의 auth�
     reject(error)
   });
   })
-}
+} */
 
 export const loginGoogle = (auth, googleProvider) => {
   return new Promise((resolve, reject) => {

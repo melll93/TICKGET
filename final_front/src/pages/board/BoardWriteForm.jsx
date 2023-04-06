@@ -10,10 +10,13 @@ import BoardFileInsert from './BoardFileInsert';
 import MyFilter from './MyFilter';
 import QuillEditor from './QuillEditor';
 
-const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조분해 할당하기
+const BoardWriteForm = ({board_together}) => { //props를 넘어온 값 즉시 구조분해 할당하기
 
   const navigate = useNavigate();
   const[title, setTitle]= useState(''); //제목
+  //mem_id를 받아오자
+  //const[writer, setWriter]= useState(''); //작성자
+  const[date, setDate]= useState(''); //날짜
   const[content, setContent]= useState(''); //내용작성
   const[secret, setSecret]= useState(false);  //비밀글
   const[tTitle, setTTitle]= useState('일반'); //qna_type
@@ -37,6 +40,15 @@ const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조
   const handleTitle = useCallback((e) => {
     setTitle(e);
   },[]);
+  
+  // mem_id 받아온 후
+  // const handleWriter = useCallback((e) => {
+  //   setWriter(e);
+  // },[]);
+
+  const handleDate = useCallback((e) => {
+    setDate(e);
+  },[]);
 
   const handleTTitle = useCallback((e) => {
     setTTitle(e);
@@ -47,12 +59,13 @@ const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조
     console.log(secret) //true
     console.log(typeof secret)  //boolean타입 출력
     const board ={
-      board_tg_title: title, // 제목 추가
-      board_tg_content: content, // 내용 추가
-      board_tg_secret: (secret ? 'true':'false'),
-      board_tg_type: tTitle,
-      board_tg_views: views,
-      board_tg_mem_id: sessionStorage.getItem('id'),
+      boardTgTitle: title, // 제목 추가
+      boardTgContent: content, // 내용 추가
+      boardTgSecret: (secret ? 'true':'false'),
+      boardTgType: tTitle,
+      boardTgViews: views,
+      boardTgMemId: sessionStorage.getItem('id'),
+      boardTgDate: date,
     }
     // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
     // inser here
@@ -69,7 +82,7 @@ const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조
 
   return (
     <>
-      <Header authLogic={authLogic} />
+      <Header  />
       <ContainerDiv>
         <HeaderDiv>
           <h3>QNA 글작성</h3>
@@ -88,8 +101,17 @@ const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조
                 <BButton variant="success" style={{marginLeft:'10px'}}onClick={()=>{insertBoardList()}}>글쓰기</BButton>
               </div>
             </div>
-            <input id="dataset-title" type="text" maxLength="50" placeholder="제목을 입력하세요."
+            
+            <input id="board_title" type="text" maxLength="50" placeholder="제목을 입력하세요."
             style={{width:"100%",height:'40px' , border:'1px solid lightGray'}} onChange={(e)=>{handleTitle(e.target.value)}}/>
+            
+            {/* mem_id를 받아오자 */}
+            {/* <input id="board_writer" type="text" maxLength="50" placeholder="작성자?"
+            style={{width:"100%",height:'40px' , border:'1px solid lightGray'}} onChange={(e)=>{handleWriter(e.target.value)}}/> */}
+
+            <input type="date" className="form-control" id="festStartday" name="startDay" onChange={(e)=>{handleDate (e.target.value)}}/>
+            <label htmlFor="floatingInput"/>
+
             <hr style={{margin:'10px 0px 10px 0px'}}/>
             <h3>상세내용</h3>
             <QuillEditor value={content} handleContent={handleContent} quillRef={quillRef} files={files} handleFiles={handleFiles}/>

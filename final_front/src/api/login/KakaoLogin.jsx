@@ -65,7 +65,7 @@ const KakaoLogin = () => {
     //insert here 로그아웃 처리
     await axios({
       method: "GET",
-      url: `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&logout_redirect_uri=http://localhost:3000/`,
+      url: `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&logout_redirect_uri=http://localhost:3333/`,
     })
       .then((res) => {
         console.log(res);
