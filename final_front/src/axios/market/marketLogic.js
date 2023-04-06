@@ -84,7 +84,7 @@ export const mk_boardDeleteDB = (board) => {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/market/mk_boardDelete",
-        param: board,
+        params: board,
       });
       resolve(response);
     } catch (error) {
