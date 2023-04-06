@@ -6,7 +6,7 @@ import MyFilter from './MyFilter';
 const MarketSearchBar = () => {
    //사용자가 입력한 문자열 담기
    const[content, setContent]= useState('');
-   const[types]= useState(['제목','내용','작성자']);
+   const[types]= useState(['제목','장소','작성자']);
    const location = useLocation();
    const search = decodeURIComponent(location.search);
    console.log(search);
@@ -15,7 +15,7 @@ const MarketSearchBar = () => {
    const[tTitle, setTTitle]= useState('제목'); //제목,내용,작성자 중에 한 가지 담겨있을 것이다.
  
    const handleTTitle = useCallback((e) => {
-     //console.log(e);사용자가 선택한 콤보박스명 제목,내용,작성자
+     //console.log(e);사용자가 선택한 콤보박스명 제목,장소,작성자
      setTTitle(e);
    },[]) 
  
