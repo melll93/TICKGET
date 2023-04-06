@@ -101,8 +101,18 @@ const BoardDetail = () => {
 
             <div>
               <label>내용</label>
+<<<<<<< Updated upstream
               <span style={{width: "300px", margin: "10px", height: "300px", fontSize: "40px"}}
                 name="boardContent" required rows="10" class="form-control" id="exampleTextarea">
+=======
+              <span style={{ width: "300px", margin: "10px", height: "300px",fontSize: "40px",}}
+                name="boardContent"
+                required
+                rows="10"
+                class="form-control"
+                id="exampleTextarea"
+              >
+>>>>>>> Stashed changes
                 {board.boardTgContent}
               </span>
             </div>
