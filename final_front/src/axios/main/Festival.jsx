@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import axios from "axios";
 
 export const FestivalInsertDB = (festival) => {
@@ -24,6 +25,17 @@ export const FestivalInsertDB = (festival) => {
         }).then((res) => res.data);
         return result;
       };
+
+
+export const DeleteFestReviewDB = async(freview) => {
+  const result = await axios({
+        method: "get",
+        url: "http://localhost:8888/review/reviewDelete",
+        params: freview,
+      }).then((res) => res.data);
+      return result;
+    };
+
 
 
   export const SeoulFestivalListDB = (festival) => {
@@ -58,20 +70,18 @@ export const FestivalInsertDB = (festival) => {
 
 
   
-  export const FestivalReviewDB = (freview) => {
-    return new Promise((resolve, reject) => {
-      try {
-        const response = axios({
+  export const FestivalReviewDB = async(freview) => {
+    const result = await axios({
           method: "get",
           url: "http://localhost:8888/review/reviewList",
           params: freview, 
-        });
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  };
+      }).then((res) => res.data);
+      return result;
+    };
+
+
+
+
 
   export const FestReviewInsertDB = (freview) => {
     return new Promise((resolve, reject) => {
@@ -87,3 +97,14 @@ export const FestivalInsertDB = (festival) => {
       }
     });
   };
+
+
+  export const UpdateFestReviewDB= async(freview) => {
+    const result = await axios({
+          method:"post", 
+          url: "http://localhost:8888/review/reviewUpdate",
+          data:freview, 
+        }).then((res) => res.data);
+        return result;
+} ;
+

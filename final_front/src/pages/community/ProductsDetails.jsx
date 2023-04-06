@@ -1,13 +1,14 @@
 /* 은영 수정중  */
+import { async } from '@firebase/util';
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { Button, Dropdown, DropdownButton, Modal, Tab, Tabs } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import {useNavigate, useParams} from 'react-router-dom'
-import { FestivalReviewDB, FestReviewInsertDB } from '../../axios/main/Festival';
+import { DeleteFestReviewDB, FestivalReviewDB, FestReviewInsertDB, UpdateFestReviewDB } from '../../axios/main/Festival';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import { MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
+import { BButton, MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
 import '../../styles/productsdetails.css'
 import PaymentComponent from '../personal/PaymentComponent';
 
@@ -16,18 +17,36 @@ function ProductsDetails(){
     const [value, onChange] = useState(new Date());
     const [mark, setMark] = useState([]);
     const navigate = useNavigate();
-    const [lgShow, setLgShow] = useState(false);
-    const [mTel, setMTel]=useState("");
-    const [mName, setMName]=useState("");
-    const [mEmail, setMEmail]=useState("");
-    const [tAmo, setTamo]=useState(0);
+    const [lgShow, setLgShow] = useState(false);   //결제모달처리(삭제예정)
+    const [mTel, setMTel]=useState("");   //결제용(모달내부에)_결제페이지로 이관/삭제예정
+    const [mName, setMName]=useState(""); //결제용(모달내부에)_결제페이지로 이관/삭제예정
+    const [mEmail, setMEmail]=useState(""); //결제용(모달내부에)_결제페이지로 이관/삭제예정
+    const [tAmo, setTamo]=useState(0); //결제용(모달내부에)_결제페이지로 이관/삭제예정
+
+
+
+  // useEffect(() => {
+  //   axios.get(`/festival/festivalList?festMid=${festMId}&type=single`).then((response) => {
+  //     if (response.data.success) {
+  //       console.log(response.data);
+  //     } else {
+  //       alert("상세 정보 가져오기를 실패했습니다.");
+  //     }
+  //   });
+  // }, []);
+
 
     /* 리뷰 */
     const [reviewContent, setReviewContent]=useState("");
 
+
+
+    /* 리뷰 작성 textarea clear */
     const resetReviewField = () => {
       setReviewContent("");
+      document.querySelector('#product_detail_review_textarea').value=null;
     };
+
 
     /* 수정중 */
     /* const [Data, setData] = useState({});
@@ -45,33 +64,23 @@ function ProductsDetails(){
     // }, []);
 /* 수정중 */
     
-/* 결제 */
-    const inputMTel = useCallback((e) => {
-      setMTel (e)
-    },[])
-    const inputMName = useCallback((e) => {
-      setMName (e)
-    },[])
-    const inputMEmail = useCallback((e) => {
-      setMEmail (e)
-    },[])
-    const inputTAmo = useCallback((e) => {
-      setTamo (e)
-    },[])
-    /* 리뷰 */
+
+
+
+    /* 리뷰  관련*/
     const inputReviewContent= useCallback((e) => {
       setReviewContent (e)
     },[])
-
-
+    
+    
+    /* 리뷰 인서트 요기  */
     const insertReview=async()=>{
-/* 리뷰등록 요기  */
 const freview={
   reviewContent,
   reviewFestmid:festMId,
   }
   const res =await FestReviewInsertDB(freview)
-  console.log(freview)
+  //console.log(freview)
   if(!res.data){
   }
   else{
@@ -80,20 +89,97 @@ const freview={
   resetReviewField()
 }
 
+
+
+
 //리뷰컴포
 const ReviewList =()=>{
   const [freviews, setFreviews] = useState([]);
+  const [reviewRevisedContent, setReviewRevisedContent]=useState('');
+
   useEffect(() => {FestivalReviewDB().then(setFreviews); }, []);
+  const click=()=>{
+    setLgShow(true)
+  }
+  const inputReviewReviseContent
+  = useCallback((e) => {
+    setReviewRevisedContent (e)
+  },[])
+
   return(
     <>
-    {freviews.data && freviews.data.map((review, i) => {
+    {freviews && freviews.map((review, i) => {
       if(festMId===review.reviewFestmid){
       return(
         <div key={review.reviewNo} className="product_detail_review_comment" style={{borderBottom:'1px solid lightgray', width:'1100px', margin:'50px'}}>
 <h3>
 {review.reviewContent}
 </h3>
-id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}
+id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}   
+{/* test_ reviewNo: {review.reviewNo} */}
+{
+  //로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람과 작성자 일치 시 수정, 삭제 버튼 보이기 
+  // sessionStorage.getItem('Member_name')==='Member_name(작성자)'&&       
+  <div>
+                <BButton style={{width:"80px", height:"38px"}} onClick={click} >수정</BButton>
+
+
+{/*///////////////////////////// 모달 수정중 ///////////////////////////////////////////////////////////*/}
+
+<Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg" >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            리뷰수정
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+<div className="form-floating mb-3">
+<textarea 
+onChange={  (e)=>{inputReviewReviseContent(e.target.value)}} 
+className="form-control" placeholder="Leave a comment here" id="product_detail_review_revised_textarea" style={{height: '300px', margin:'10px', maxWidth:'1200px'}}></textarea>
+<button className="reviseBtn" onClick={async()=>{
+                      const freview={
+                        reviewContent,
+                        review_no:review.reviewNo,
+                  }
+const res = await UpdateFestReviewDB(freview);
+                  if(!res.data){
+                  }
+                  else{
+                  }
+setLgShow(false)
+                  console.log('수정이벤트처리예정')
+                  }
+}>ddddd </button>
+</div><br/>
+
+        </Modal.Body>
+      </Modal>
+{/* ///////////////////////////////////////////////////////////////여기까지 모달 수정중 */}
+
+
+
+
+
+
+
+
+
+
+                <BButton style={{width:"80px", height:"38px"}} onClick={async()=>{
+    const freview={
+      review_no:review.reviewNo,
+}
+const res = await DeleteFestReviewDB(freview);
+if(!res.data){
+}
+else{
+}
+navigate('/productsDetail/'+festMId)
+console.log('삭제완료')}}>삭제</BButton>
+                </div>
+}
 </div>
 )  //안쪽리턴
 }
@@ -101,7 +187,6 @@ id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}
 </>
   ) //리턴끝
 }  //ReviewList 끝
-
 
 
 
@@ -183,92 +268,7 @@ id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}
 </span>
 <span className="calendarands2">
 잔여좌석<br></br>
-{/*///////////////////////////// 모달 수정중 ///////////////////////////////////////////////////////////*/}
 
-<Button className="researvebtn" onClick={() => setLgShow(true)}>예약하기_모달_삭제예정</Button>
-<Button className="researvebtn" onClick={() => navigate("/payment/"+festMId)}>예약하기2_결제페이지로이동</Button>
-<Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg" >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
-            결제하기
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-
-   {/* 이름 */}
-  <h5>티켓</h5>
-   <div style={{display:"flex"}}>
-<DropdownButton id="dropdown_basic_button" title="0"onSelect={(eventKey)=>{}}>
-  <Dropdown.Item eventKey="item1">1</Dropdown.Item>
-  <Dropdown.Item eventKey="item2">2</Dropdown.Item>
-  <Dropdown.Item eventKey="item3">3</Dropdown.Item>
-  <Dropdown.Item eventKey="item4">4</Dropdown.Item>
-  <Dropdown.Item eventKey="item5">5</Dropdown.Item>
-  <Dropdown.Item eventKey="item6">6</Dropdown.Item>
-  <Dropdown.Item eventKey="item7">7</Dropdown.Item>
-</DropdownButton><h4>매</h4>
-      </div>
-<div class="dropdown">
-  <h3>구매수량</h3>
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    구매수량
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" >1</a></li>
-    <li><a class="dropdown-item" >2</a></li>
-    <li><a class="dropdown-item" >3</a></li>
-    <li><a class="dropdown-item" >4</a></li>
-  </ul>
-</div>
-
-<div style={{display:'flex'}}> 
-        <MyLabel style={{flex:'1', width:'50%'}}> 이름 <span style={{color:"red"}}>*</span>
-          <MyInput type="text" id="name" defaultValue='userName' placeholder="이름을 입력해주세요" />
-          <MyLabelAb>ㅇㅇㅇㅇ</MyLabelAb>
-      </MyLabel>
-      {/* 전화번호 */}
-      <MyLabel style={{flex:'1', width:'50%'}}> 전화번호 <span style={{color:"red"}}>*</span>
-        <MyInput type="text" id="mobile" defaultValue='userTel' placeholder="전화번호를 입력해주세요" 
-        />
-        <MyLabelAb>ㅇㅇㅇㅇ</MyLabelAb>
-      </MyLabel>
-        </div>
-      {/* 이메일 */}
-      <MyLabel> 이메일 <span style={{color:"red", width:'570px'}}>*</span>
-        <MyInput type="email" id="email" placeholder="이메일를 입력해주세요" />
-        <MyLabelAb>ㅇㅇㅇ</MyLabelAb>
-      </MyLabel>
-
-      <div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="email" aria-label="Username"/>
-  <span class="input-group-text">@</span>
-  <input type="text" class="form-control" placeholder="gmail.com" aria-label="Server" />
-</div>
-
-<div className="form-floating">
-  <input type="number" className="form-control" id="tAmo"  onChange={(e)=>{inputTAmo (e.target.value)}}/>
-  <label htmlFor="floatingInput">구매 수량</label>
-</div><br />
-
-<div className="form-floating mb-3">
-  <input type="text" className="form-control" id="mName" onChange={(e)=>{inputMName(e.target.value)}} />
-  <label htmlFor="floatingInput"> mName </label>
-</div><br/>
-
-<div className="form-floating mb-3">
-  <input type="text" className="form-control" id="mEmail" onChange={(e)=>{inputMEmail(e.target.value)}} />
-  <label htmlFor="floatingInput"> mEmail </label>
-</div><br/>
-
-        <div className="form-floating">
-  <input type="number" className="form-control" id="mTel" name="tel" onChange={(e)=>{inputMTel (e.target.value)}}/>
-  <label htmlFor="floatingInput">mTel</label>
-</div><br />
-
-<PaymentComponent></PaymentComponent>
-        </Modal.Body>
-      </Modal>
-{/* ///////////////////////////////////////////////////////////////여기까지 모달 수정중 */}
 
 </span>
 </div>

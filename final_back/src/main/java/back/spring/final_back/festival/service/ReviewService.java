@@ -9,7 +9,8 @@ public interface ReviewService {
 
     List<ReviewDto> reviewList();
     int reviewInsert(ReviewDto review);
-
+	int reviewDelete(Integer review_no);
+	int reviewUpdate(ReviewDto reviewDto);
 }
 
 

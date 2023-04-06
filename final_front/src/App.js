@@ -27,10 +27,11 @@ import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
 import ChatPage from "./pages/personal/ChatPage";
 import MyPage from "./pages/personal/MyPage";
-import PaySucTestPage from "./pages/personal/PaySucTestPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import PaymentPage from "./pages/personal/PaymentPage";
+import PaySucPage from "./pages/personal/PaySucPage";
+import PayFailPage from "./pages/personal/PayFailPage";
 
 function App({ imageUploader }) {
   const [boardTgNo, setBoardTgNo] = useState();
@@ -84,7 +85,9 @@ function App({ imageUploader }) {
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
         <Route path="/productsDetail/:festMId" element={<ProductsDetails />} />
-        <Route path="/paymentsucess/:festMId" element={<PaySucTestPage />} />
+        <Route path="/paymentsucess/:festMId" element={<PaySucPage />} />
+        <Route path="/paymentfailed/:festMId" element={<PayFailPage />} />
+
         <Route path="/payment/:festMId" element={<PaymentPage />} />
 
 

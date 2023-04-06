@@ -18,7 +18,7 @@ const PaymentComponent = () => {
       orderName: '은영 테스트 중_제품명  fest_m_title/fest_m_id',  //100자 이하 fest_m_id
       customerName: '은영 테스트 중_고객명  member_name',  //
       successUrl: `${window.location.origin}/paymentsucess/:festMId`,  // 성공시 리다이렉트 URL
-      failUrl: `${window.location.origin}/api/payments/fail`,  //실패시 리다이렉트 URL - 안만들어놈
+      failUrl: `${window.location.origin}/paymentfailed/:festMId`,  //실패시 리다이렉트 URL - 안만들어놈
       // windowTarget:'self'
       // customerEmail:''  //결제결과 확인 이메일 
     }).catch(function (error) {

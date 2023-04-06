@@ -201,7 +201,7 @@ const FestivalRankingList=()=>{
     
     const FestivalsTest =() =>{
       const [festivals, setFestivals] = useState([]);
-      const [page, setPage] = useState("");
+      const [page, setPage] = useState(1);
       const [perPage] = useState(20)
     const [test, setTest] = useState(0);
     // console.log('랭스:'+festivals.length)

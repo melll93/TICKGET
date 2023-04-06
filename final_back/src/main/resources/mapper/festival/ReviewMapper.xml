@@ -16,6 +16,19 @@ SELECT * FROM review_test
 	VALUES (#{reviewNo}, #{reviewPw}, #{reviewHit}, #{reviewContent},
 	 #{reviewFestmid}, #{reviewMemid}, #{reviewMemnickname})
 	</insert>
+	<delete id="reviewDelete" parameterType="Integer">
+		delete from review_test
+		<where>
+			<if test='review_no!=null and review_no>0'>
+				and review_no=#{reviewNo}
+			</if>
+		</where>
+	</delete>
+	<update id="reviewUpdate" parameterType="ReviewDto">
+ update review_test
+ set review_content = #{reviewContent} where review_no=#{reviewNo}
+</update>
+	
 </mapper>
 
 
