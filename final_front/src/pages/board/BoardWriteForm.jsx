@@ -10,7 +10,7 @@ import BoardFileInsert from './BoardFileInsert';
 import MyFilter from './MyFilter';
 import QuillEditor from './QuillEditor';
 
-const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조분해 할당하기
+const BoardWriteForm = ({board_together}) => { //props를 넘어온 값 즉시 구조분해 할당하기
 
   const navigate = useNavigate();
   const[title, setTitle]= useState(''); //제목
@@ -69,7 +69,7 @@ const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조
 
   return (
     <>
-      <Header authLogic={authLogic} />
+      <Header  />
       <ContainerDiv>
         <HeaderDiv>
           <h3>QNA 글작성</h3>
@@ -88,7 +88,8 @@ const BoardWriteForm = ({authLogic}) => { //props를 넘어온 값 즉시 구조
                 <BButton variant="success" style={{marginLeft:'10px'}}onClick={()=>{insertBoardList()}}>글쓰기</BButton>
               </div>
             </div>
-            <input id="dataset-title" type="text" maxLength="50" placeholder="제목을 입력하세요."
+            
+            <input id="dataset-mem" type="text" maxLength="50" placeholder="제목을 입력하세요."
             style={{width:"100%",height:'40px' , border:'1px solid lightGray'}} onChange={(e)=>{handleTitle(e.target.value)}}/>
             <hr style={{margin:'10px 0px 10px 0px'}}/>
             <h3>상세내용</h3>

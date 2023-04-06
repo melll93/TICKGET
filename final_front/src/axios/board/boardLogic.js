@@ -16,13 +16,13 @@ export const selectBoardListDB = (board) => {
   });
 };
 /*  */
-export const selectBoardDetailDB = (board) => {
+export const selectBoardDetailDB = (board_together) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/board/selectBoardDetail",
-        params: board, //쿼리스트링은 header에 담김 - get방식
+        params: board_together, //쿼리스트링은 header에 담김 - get방식
       });
       resolve(response);
     } catch (error) {
@@ -31,13 +31,13 @@ export const selectBoardDetailDB = (board) => {
   });
 };
 /* 삭제 */
-export const deleteBoardListDB = (board) => {
+export const deleteBoardListDB = (board_together) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/board/deleteBoardList",
-        params: board,
+        params: board_together,
       });
       resolve(response);
     } catch (error) {
@@ -46,13 +46,13 @@ export const deleteBoardListDB = (board) => {
   });
 };
 /* 작성 */
-export const insertBoardListDB = (board) => {
+export const insertBoardListDB = (board_together) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/board/insertBoardList",
-        params: board,
+        params: board_together,
       });
       resolve(response);
     } catch (error) {

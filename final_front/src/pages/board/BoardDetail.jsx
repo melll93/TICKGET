@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import {
+  deleteBoardListDB,
   selectBoardDetailDB,
   selectBoardListDB,
 } from "../../axios/board/boardLogic";
@@ -11,10 +12,8 @@ import Header from "../../components/Header";
 
 const BoardDetail = () => {
   const navigate = useNavigate();
-  // URL 파라미터에서 게시글 번호 가져오기
   const { boardTgNo } = useParams();
 
-  // 게시글 정보를 담을 객체
   const [board, setBoard] = useState({
     boardTgNo: 0,
     boardTgMemId: "",
@@ -22,13 +21,7 @@ const BoardDetail = () => {
     boardTgContent: "",
     boardTgDate: "",
   });
-  // 컴포넌트가 처음 로딩될 때, 백엔드 API를 호출하여 게시글 정보를 가져옴
-  // useEffect(() => {
-
-  //   jsonBoardList();
-  // }, []);
   useEffect(() => {
-    //파라미터로 넘어오는 deptno가 바뀌면 *다시 실행됨*
     const asyncDB = async () => {
       const res = await selectBoardDetailDB({ boardTgNo });
       console.log("여기보세요 =- ", res.data);
@@ -61,6 +54,18 @@ const BoardDetail = () => {
     console.log(board.boardTitle)
     return <div>데이터를 불러오는 중입니다...</div>;
   } */
+
+  const deleteBoardList = async() => {
+    const board = {
+      boardTgNo : boardTgNo
+    }
+    const res = await deleteBoardListDB(board)
+    console.log(res.data)
+    alert('게시글 삭제 완료')
+    navigate('/together')
+ 
+    }
+
   return (
     <div>
       <Sidebar />
@@ -82,6 +87,19 @@ const BoardDetail = () => {
                 id="inputLarge"
               >
                 {board.boardTgTitle}
+              </span>
+            </div>
+            <div>
+              <label>작성자</label>
+              <span
+                style={{ width: "300px", margin: "10px" }}
+                type="text"
+                name="boardTgMemId"
+                required
+                class="form-control form-control-lg"
+                id="inputLarge"
+              >
+                {board.boardTgMemId}
               </span>
             </div>
             <div>
@@ -119,6 +137,14 @@ const BoardDetail = () => {
                 onClick={() => navigate("/together")}
               >
                 목록으로
+              </Button>
+            </div>
+            <div>
+              <Button
+                style={{ margin: "10px" }}
+                onClick={deleteBoardList}
+              >
+                삭제를 해보자
               </Button>
             </div>
           </form>
