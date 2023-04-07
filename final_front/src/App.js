@@ -33,9 +33,8 @@ import PaymentPage from "./pages/personal/PaymentPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import CalendarPage from "./pages/personal/CalendarPage";
-import PaymentPage from "./pages/personal/PaymentPage";
-import PaySucPage from "./pages/personal/PaySucPage";
-import PayFailPage from "./pages/personal/PayFailPage";
+/* import PaySucPage from "./pages/personal/PaySucPage"; */
+// import PayFailPage from "./pages/personal/PayFailPage";
 import mkImageUploader from "./axios/market/mkImageUploader";
 
 function App({ mkImageUploader }) {

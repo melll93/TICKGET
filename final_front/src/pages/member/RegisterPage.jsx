@@ -1,3 +1,4 @@
+/* global daum */
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -15,8 +16,8 @@ const RegisterPage = ({ authLogic }) => {
   const userAuth = useSelector(state => state.userAuth);
   const type = window.location.search.split('&')[0].split('=')[1];
   const navigate = useNavigate();
-  /* datepicker */
-  const [birthDate, setBirthDate] = useState(null);
+  /* datepicker 안 예쁘다... */
+/*   const [birthDate, setBirthDate] = useState(null);
 
   const handleBirthDateChange = (date) => {
     setBirthDate(date);
@@ -27,8 +28,9 @@ const RegisterPage = ({ authLogic }) => {
   };
 
   const today = new Date();
-  const endDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const endDay = new Date(today.getFullYear(), today.getMonth(), today.getDate()); */
   /*  */
+
   const [submitBtn, setSubmitBtn] = useState({
     disabled: true,
     bgColor: 'rgb(175, 210, 244)',
@@ -41,13 +43,15 @@ const RegisterPage = ({ authLogic }) => {
       setSubmitBtn({ ...submitBtn, hover: true, bgColor: 'rgb(72, 145, 218)' });
     }
   }
-  // 주소 번지 사용 ?
-  /*   const[post, setPost] = useState({
+  /* 주소 번지 사용?
+  ex) 티켓 구매 후 수령 -> 주소 번지 필요할 것 같음 */
+  const[post, setPost] = useState({
       zipcode: "",
-      addr: "",
+      address: "",
       addrDetail: ""
-    }) */
+    })
   // 회원가입 입력 정보
+  /* 우편번호, 주소, 상세 주소 추가 (member 테이블에도 추가) */
   const [memInfo, setMemInfo] = useState({
     id: "",
     email: "",
@@ -92,8 +96,8 @@ const RegisterPage = ({ authLogic }) => {
       visible: false
     }
   ]);
+  // 구글 로그인 구현 시 필요
   const [googleEmail, setGoogleEmail] = useState('');
-
   useEffect(() => {
     const onAuth = async () => {
       const user = await onAuthChange(userAuth.auth);
@@ -214,6 +218,26 @@ const RegisterPage = ({ authLogic }) => {
       setStar({ ...star, [key]: "" });
     }
   }
+  // 다음 주소 찾기
+  const searchAddress = () => {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        let addr = ''; 
+        if (data.userSelectedType === 'R') { 
+          addr = data.roadAddress;//도로명
+        } else { 
+          addr = data.jibunAddress;//지번
+        }
+        console.log(data);
+        console.log(addr);
+        console.log(post.zipcode);
+        setPost({...post, zipcode:data.zonecode, addr:addr}) ;
+        document.getElementById("zipcode").value = data.zonecode;
+        document.getElementById("addr").value = addr;
+        document.getElementById("addrDetail").focus();
+      }
+    }).open();
+  }
 
   /* 회원 가입 */
   const signup = async () => {
@@ -245,14 +269,14 @@ const RegisterPage = ({ authLogic }) => {
       const response = await memberInsertDB(datas);
       console.log(response);
       if (response.data !== 1) {
-        return "DB 오류: 관리자에게 연락바랍니다.";
+        return "DB 오류: 관리자에게 연락바랍니다";
       }
       sessionStorage.clear();
       navigate('/');
-      return "회원가입되었습니다. 감사합니다.";
+      return "회원가입을 축하합니다";
 
     } catch (error) {
-      console.log(error + " 오류: 관리자에게 연락바랍니다.");
+      console.log(error + " 오류: 관리자에게 연락바랍니다");
     }
   }
 
@@ -270,7 +294,7 @@ const RegisterPage = ({ authLogic }) => {
           {/* 아이디 */}
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             <MyLabel> 아이디 <span style={{ color: "red" }}>{star.id}</span>
-              <MyInput type="text" id="id" placeholder="아이디를 입력해주세요"
+              <MyInput type="text" id="id" placeholder="아이디를 입력해 주세요"
                 onChange={(e) => { changeMemInfo(e); validate('id', e); }} />
               <MyLabelAb>{comment.id}</MyLabelAb>
             </MyLabel>
@@ -278,7 +302,7 @@ const RegisterPage = ({ authLogic }) => {
           </div>
           {/* 비밀번호 */}
           <MyLabel> 비밀번호 <span style={{ color: "red" }}>{star.password}</span>
-            <MyInput type={passwordType[0].type} id="password" autoComplete="off" placeholder="비밀번호를 입력해주세요"
+            <MyInput type={passwordType[0].type} id="password" autoComplete="off" placeholder="비밀번호를 입력해 주세요"
               onKeyUp={(e) => { setComment({ ...comment, password2: checkPassword(e.target.value, memInfo.password2) }); }}
               onChange={(e) => { changeMemInfo(e); validate('password', e); }} />
             <div id="password" onClick={(e) => { passwordView(e) }} style={{ color: `${passwordType[0].visible ? "gray" : "lightgray"}` }}>
@@ -288,7 +312,7 @@ const RegisterPage = ({ authLogic }) => {
           </MyLabel>
 
           <MyLabel> 비밀번호 확인 <span style={{ color: "red" }}>{star.password2}</span>
-            <MyInput type={passwordType[1].type} id="password2" autoComplete="off" placeholder="비밀번호를 한번 더 입력해주세요"
+            <MyInput type={passwordType[1].type} id="password2" autoComplete="off" placeholder="비밀번호를 한번 더 입력해 주세요"
               onChange={(e) => { changeMemInfo(e); validate('password2', e.target.value) }} />
             <div id="password2" onClick={(e) => { passwordView(e) }} style={{ color: `${passwordType[1].visible ? "gray" : "lightgray"}` }}>
               <PwEye className="fa fa-eye fa-lg"></PwEye>
@@ -299,7 +323,7 @@ const RegisterPage = ({ authLogic }) => {
           {/* 이름 */}
           <div style={{ padding: '30px 30px 0px 30px' }}>
             <MyLabel> 이름 <span style={{ color: "red" }}>{star.name}</span>
-              <MyInput type="text" id="name" defaultValue={memInfo.name} placeholder="이름을 입력해주세요"
+              <MyInput type="text" id="name" defaultValue={memInfo.name} placeholder="이름을 입력해 주세요"
                 onChange={(e) => { changeMemInfo(e); validate('name', e); }} />
               <MyLabelAb>{comment.name}</MyLabelAb>
             </MyLabel>
@@ -319,10 +343,27 @@ const RegisterPage = ({ authLogic }) => {
             </MyLabel>
             {/* 전화번호 */}
             <MyLabel> 전화번호 <span style={{ color: "red" }}>{star.mobile}</span>
-              <MyInput type="text" id="mobile" defaultValue={memInfo.mobile} placeholder="전화번호를 입력해주세요"
+              <MyInput type="text" id="mobile" defaultValue={memInfo.mobile} placeholder="전화 번호를 입력해 주세요"
                 onChange={(e) => { changeMemInfo(e); validate('hp', e); }} />
               <MyLabelAb>{comment.mobile}</MyLabelAb>
             </MyLabel>
+            {/* 주소(우편번호, 주소지) */}
+            <MyLabel> 우편번호
+                <MyInput type="text" id="zipcode" defaultValue={memInfo.zipcode} placeholder="우편 번호를 입력해 주세요" 
+                onChange={(e)=>{changeMemInfo(e);}} />
+                <MyLabelAb>{comment.zipcode}</MyLabelAb>
+              </MyLabel>
+
+              <div style={{display: 'flex'}}>
+                <MyLabel> 주소
+                  <MyInput type="text" id="address" defaultValue={post.address} readOnly placeholder="주소를 검색해 주세요"/>
+                </MyLabel>
+                <MyButton type="button" onClick={()=>{searchAddress()}}>주소검색</MyButton>
+              </div>
+              <MyLabel> 상세 주소
+                <MyInput type="text" id="addrDetail" defaultValue={post.addrDetail} readOnly={post.addr?false:true}
+                onChange={(e)=>{setPost({...post, addrDetail : e.target.value})}}/>
+              </MyLabel>
             {/* 성별 */}
             <MyLabel style={{ margin: 0 }}> 성별
               <div style={{ marginTop: 10 }} key={`inline-radio`} className="mb-3">
@@ -339,7 +380,7 @@ const RegisterPage = ({ authLogic }) => {
               <MyLabelAb>{comment.birthday}</MyLabelAb>
             </MyLabel>
             {/* react datepicker 이용한 생년월일 */}
-            <div>
+            {/* <div>
               <DatePicker
                 name="birth"
                 selected={birthDate}
@@ -361,7 +402,7 @@ const RegisterPage = ({ authLogic }) => {
                   삭제
                 </button>
               )}
-            </div>
+            </div> */}
 
             {/* 회원가입 버튼 */}
             <SubmitButton type="button" style={{ backgroundColor: submitBtn.bgColor }}
