@@ -5,7 +5,6 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import KakaoMap from "../carpool/KakaoMap";
 import LandingPage from "../carpool/LandingPage";
-import MapContainer from "../carpool/MapContainer";
 
 
 const CarpoolPage = () => {
