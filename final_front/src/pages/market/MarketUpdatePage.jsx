@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
+import styled from 'styled-components'
 import { mk_boardDetailDB, mk_boardUpdateDB } from '../../axios/market/marketLogic'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
@@ -8,7 +9,24 @@ import { ContainerDiv, FormDiv, HeaderDiv } from '../../styles/formStyle'
 import MarketFileInsert from './MarketFileInsert'
 import QuillEditor from './QuillEditor'
 
-const MarketUpdatePage = () => {
+
+/* CSS */
+const DivUploadImg = styled.div`
+display:flex;
+width:200px;
+height:250px;
+overflow:hidden;
+margin:10px auto;
+`;
+
+const Img = styled.img`
+ width:100%;
+ height:100%;
+ object-fit:cover;
+`
+
+
+const MarketUpdatePage = ({mkImageUploader}) => {
    const navigate = useNavigate()
    
    const {no} = useParams() //보드헤더에서 해시값 가져옴
@@ -21,15 +39,11 @@ const MarketUpdatePage = () => {
    const [mk_ticket_seat, setTicketSeat] = useState(""); //판매할 티켓의 좌석정보
    const [mk_ticket_count, setTicketCount] = useState(); //판매할 티켓의 수량
    const [mk_ticket_price, setTicketPrice] = useState(""); //사용자가 입력한 판매가격
-   const [file_name, setFilename] = useState(""); //이미지 말고 첨부파일 이름 담기
-   const [file_size, setFilesize] = useState(""); //이미지 말고 첨부파일 크기 담기
    const [board_mk_content, setContent] = useState(""); //사용자가 입력한 내용 담기
    //QuillEditor이미지 선택하면 imageUploadDB타면 스프링플젝 pds 이미지 업로드
    //pds에 업로드된 파일을 읽어서 Editor안에 보여줌 imageGet?imageName=woman1.png
-   const [files, setFiles] = useState([]);
- 
+   const [files, setFiles] = useState({filename:null, fileurl:null})
    const quillRef = useRef();
-   const fileRef = useRef();
 
 
 
@@ -90,13 +104,6 @@ const MarketUpdatePage = () => {
      setTicketPrice(e);
    }, []);
  
-   const handleFiles = useCallback(
-     (value) => {
-       setFiles([...files, value]); //deep copy
-     },
-     [files]
-   );
- 
    const handleContent = useCallback((value) => {
      //quilleditor에서 담김 - 태그포함된 정보
      setContent(value);
@@ -118,12 +125,42 @@ const MarketUpdatePage = () => {
     mkTicketSeat: mk_ticket_seat,
     mkTicketCount: mk_ticket_count,
     mkTicketPrice: mk_ticket_price,
+    boardMkFilename : files.fileName,
+    boardMkFileurl : files.fileUrl,
    }
    const res = await mk_boardUpdateDB(board)
    if(!res.data) return console.log('게시글 수정 실패')
    navigate("/market")
 
    }
+
+
+   
+ //이미지 파일 첨부
+ const imageChange =async(event)=>{
+  const uploaded = await mkImageUploader.upload(event.target.files[0])
+  setFiles({
+     fileName:uploaded.public_id+"."+uploaded.format,
+     fileUrl:uploaded.url
+  })
+  //imput의 이미지 객체 얻어오기
+  const upload = document.querySelector("#dimg")
+  //이미지를 집어넣을 곳의 부모태그
+  const holder = document.querySelector("#uploadImg")
+  const file = upload.files[0]
+  const reader = new FileReader()
+  reader.onload =(event)=>{
+     const img = new Image()
+     img.src=event.target.result
+     if(img.width>150){
+           img.width=150
+     }
+     holder.innerHTML="";
+     holder.appendChild(img)
+  }
+  reader.readAsDataURL(file)
+  return false
+}
 
 
 
@@ -229,7 +266,7 @@ const MarketUpdatePage = () => {
 
             <h3>상세내용</h3>
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-            <QuillEditor
+   {/*          <QuillEditor
               value={board_mk_content}
               handleContent={handleContent}
               quillRef={quillRef}
@@ -238,8 +275,25 @@ const MarketUpdatePage = () => {
               onChange={(e) => {
                 handleContent(e.target.value);
               }}
-            />
-            <MarketFileInsert files={files} />
+            /> */}
+            <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
+        <Form.Control id="board_mk_content" type="text" rows={3} style={{height:'150px'}} 
+              value={board_mk_content}
+              handleContent={handleContent}
+              onChange={(e) => {
+                handleContent(e.target.value);
+              }}/>
+      </Form.Group>
+
+      <Form.Group controlId="formFileMultiple" className="mb-3">
+        <Form.Control type="file" multiple  onChange={()=>imageChange()}/>
+      </Form.Group>
+      <DivUploadImg div id="uploadImg">
+                  <img src="http://via.placeholder.com/200X250" alt="미리보기" />
+            </DivUploadImg>
+
+
+          {/*   <MarketFileInsert files={files} /> */}
             <hr style={{ opacity: "0%" }} />
             <Button
               onClick={() => {
@@ -251,9 +305,8 @@ const MarketUpdatePage = () => {
           </FormDiv>
         </ContainerDiv>
       </div>
-    
     </>
-  )
-}
+  );
+};
 
 export default MarketUpdatePage

@@ -8,28 +8,54 @@ import {  Button,  Col,  FloatingLabel,  Form,  InputGroup,  Row,} from "react-b
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import MarketFileInsert from "./MarketFileInsert";
+import styled from "styled-components";
 
-const MarketWriteForm = () => {
+
+/* CSS */
+const DivUploadImg = styled.div`
+display:flex;
+width:200px;
+height:250px;
+overflow:hidden;
+margin:10px auto;
+`;
+
+const Img = styled.img`
+ width:100%;
+ height:100%;
+ object-fit:cover;
+`
+
+
+
+
+const MarketWriteForm = ({mkImageUploader}) => {
+
+
+
   console.log("글쓰기 페이지 호출");
   const navigate = useNavigate();
   const no = window.sessionStorage.getItem("no"); //세션에 저장된 회원번호값
 
+
+
+
   const [board_mk_title, setTitle] = useState(""); //사용자가 입력한 제목 담기
-  const [board_mk_pw, setPw] = useState(""); //사용자가 입력한 pw 담기
   const [mk_ticket_place, setTicketPlace] = useState(""); //판매할 티켓의 공연장소
   const [mk_ticket_date, setTicketDate] = useState(""); //판매할 티켓의 공연일
   const [mk_ticket_seat, setTicketSeat] = useState(""); //판매할 티켓의 좌석정보
   const [mk_ticket_count, setTicketCount] = useState(""); //판매할 티켓의 수량
   const [mk_ticket_price, setTicketPrice] = useState(""); //사용자가 입력한 판매가격
-  const [file_name, setFilename] = useState(""); //이미지 말고 첨부파일 이름 담기
-  const [file_size, setFilesize] = useState(""); //이미지 말고 첨부파일 크기 담기
   const [board_mk_content, setContent] = useState(""); //사용자가 입력한 내용 담기
-  //QuillEditor이미지 선택하면 imageUploadDB타면 스프링플젝 pds 이미지 업로드
-  //pds에 업로드된 파일을 읽어서 Editor안에 보여줌 imageGet?imageName=woman1.png
-  const [files, setFiles] = useState([]);
 
-  const quillRef = useRef();
-  const fileRef = useRef();
+  //filename 하나 fileurl 둘이니 객체로 선언할 것
+  const [files, setFiles] = useState({filename:null, fileurl:null})
+
+
+
+
+
+
 
   //사용자가 입력한 값을 useState에 초기화 하기
   const handleTitle = useCallback((e) => {
@@ -57,17 +83,17 @@ const MarketWriteForm = () => {
     setTicketPrice(e);
   }, []);
 
-  const handleFiles = useCallback(
-    (value) => {
-      setFiles([...files, value]); //deep copy
-    },
-    [files]
-  );
 
   const handleContent = useCallback((value) => {
     //quilleditor에서 담김 - 태그포함된 정보
     setContent(value);
   }, []);
+
+
+
+
+
+
 
   //글쓰기 버튼 클릭시 등록
   const boardInsert = async () => {
@@ -82,12 +108,18 @@ const MarketWriteForm = () => {
       mkTicketCount: mk_ticket_count,
       mkTicketPrice: mk_ticket_price,
       memName: "테스트 작성자1", // 임시 - 세션스토리지로 받아올것
+      boardMkFilename:files.filename,
+      boardMkFileurl:files.fileurl
     };
     const res = await mk_boardInsertDB(board);
     console.log(res.data);
 
     navigate("/market");
   };
+
+
+
+
 
   /* const handleChange = async (event) => {
     console.log('첨부파일 선택'+event.target.value);
@@ -108,6 +140,41 @@ const MarketWriteForm = () => {
     setFilesize(fileinfo[1])
   }
   */
+
+
+ //이미지 파일 첨부
+      const imageChange =async(event)=>{
+         const uploaded = await mkImageUploader.upload(event.target.files[0])
+         setFiles({
+            fileName:uploaded.public_id+"."+uploaded.format,
+            fileUrl:uploaded.url
+         })
+         //imput의 이미지 객체 얻어오기
+         const upload = document.querySelector("#dimg")
+         //이미지를 집어넣을 곳의 부모태그
+         const holder = document.querySelector("#uploadImg")
+         const file = upload.files[0]
+         const reader = new FileReader()
+         reader.onload =(event)=>{
+            const img = new Image()
+            img.src=event.target.result
+            if(img.width>150){
+                  img.width=150
+            }
+            holder.innerHTML="";
+            holder.appendChild(img)
+         }
+         reader.readAsDataURL(file)
+         return false
+      }
+
+
+
+
+
+
+
+
 
   return (
     <>
@@ -205,7 +272,7 @@ const MarketWriteForm = () => {
 
             <h3>상세내용</h3>
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-            <QuillEditor
+   {/*          <QuillEditor
               value={board_mk_content}
               handleContent={handleContent}
               quillRef={quillRef}
@@ -214,8 +281,25 @@ const MarketWriteForm = () => {
               onChange={(e) => {
                 handleContent(e.target.value);
               }}
-            />
-            <MarketFileInsert files={files} />
+            /> */}
+            <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
+        <Form.Control id="board_mk_content" type="text" rows={3} style={{height:'150px'}} 
+              value={board_mk_content}
+              handleContent={handleContent}
+              onChange={(e) => {
+                handleContent(e.target.value);
+              }}/>
+      </Form.Group>
+
+      <Form.Group controlId="formFileMultiple" className="mb-3">
+        <Form.Control type="file" multiple  onChange={()=>imageChange()}/>
+      </Form.Group>
+      <DivUploadImg div id="uploadImg">
+                  <img src="http://via.placeholder.com/200X250" alt="미리보기" />
+            </DivUploadImg>
+
+
+          {/*   <MarketFileInsert files={files} /> */}
             <hr style={{ opacity: "0%" }} />
             <Button
               onClick={() => {

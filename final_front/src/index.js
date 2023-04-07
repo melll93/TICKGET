@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import rootReducer from "./redux/rootReducer";
 import { Provider } from "react-redux";
 import "react-quill/dist/quill.snow.css";
-
+import marketImageUploader from "./axios/market/mkImageUploader";
 
 const store = legacy_createStore(rootReducer);
 // console.log(store.getState());
@@ -18,12 +18,15 @@ const store = legacy_createStore(rootReducer);
 // store.dispatch();
 console.log(store.getState());
 
+//마켓 게시판 이미지업로더 객체 생성
+const mkImageUploader = new marketImageUploader();
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <App mkImageUploader={mkImageUploader} />
       </BrowserRouter>
     </Provider>
   </>

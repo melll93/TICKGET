@@ -33,8 +33,9 @@ import TicketPage from "./pages/personal/TicketPage";
 import PaymentPage from "./pages/personal/PaymentPage";
 import PaySucPage from "./pages/personal/PaySucPage";
 import PayFailPage from "./pages/personal/PayFailPage";
+import mkImageUploader from "./axios/market/mkImageUploader";
 
-function App({ imageUploader }) {
+function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
   const [user, setUser] = useState();
 
@@ -77,7 +78,7 @@ function App({ imageUploader }) {
         <Route path="/search" exact={true} element={<SearchResultPage />} />
         <Route path="/concert" exact={true} element={<ConcertPage />} />
         <Route path="/together" exact={true} element={<TogetherPage />} />
-        <Route path="/carpool" exact={true} element={<CarpoolPage/>} />
+        <Route path="/carpool" exact={true} element={<CarpoolPage />} />
         <Route path="/market" exact={true} element={<MarketPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
         <Route path="/chat" exact={true} element={<ChatPage />} />
@@ -93,25 +94,28 @@ function App({ imageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<BoardWriteForm />} />
-        <Route path="together/boardDetail/:boardTgNo" element={<BoardDetail board={board} />}
+        <Route
+          path="together/boardDetail/:boardTgNo"
+          element={<BoardDetail board={board} />}
         />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
         <Route path="together/boardUpdate/" element={<BoardUpdate />} />
-
-
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route
           path="/market/write"
           exact={true}
-          element={<MarketWriteForm />}
+          element={<MarketWriteForm mkImageUploader={mkImageUploader} />}
         />
         <Route
           path="/market/update/:no"
           exact={true}
-          element={<MarketUpdatePage />}
+          element={<MarketUpdatePage mkImageUploader={mkImageUploader} />}
         />
-        <Route path="/market/mk_boardDetail/*" element={<MarketDetail />} />
+        <Route
+          path="/market/mk_boardDetail/*"
+          element={<MarketDetail mkImageUploader={mkImageUploader} />}
+        />
       </Routes>
     </>
   );
