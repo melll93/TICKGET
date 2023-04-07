@@ -7,7 +7,6 @@ import BoardDetail from "./pages/board/BoardDetail";
 import BoardUpdate from "./pages/board/BoardUpdate";
 import BoardWriteForm from "./pages/board/BoardWriteForm";
 import AddProductsPage from "./pages/community/AddProductsPage";
-import CalendarPage from "./pages/community/CalendarPage";
 import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
 import FestivalPage from "./pages/community/FestivalPage";
@@ -33,7 +32,7 @@ import PaySucPage from "./pages/personal/PaySucPage";
 import PaymentPage from "./pages/personal/PaymentPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-import MyCalendar from "./pages/calendar/MyCalendar";
+import CalendarPage from "./pages/personal/CalendarPage";
 
 function App({ imageUploader }) {
   const [board, setBoard] = useState();
@@ -100,9 +99,6 @@ function App({ imageUploader }) {
         />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
         <Route path="together/boardUpdate/" element={<BoardUpdate />} />
-
-        {/* Calendar */}
-        <Route exact path="/" component={MyCalendar} />
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route
