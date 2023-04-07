@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import MapContainer from "./MapContainer";
+import "./index.css"
 
 function LandingPage() {
   const [InputText, setInputText] = useState("");

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 const { kakao } = window
 
 const MapContainer = ({ searchPlace }) => {
@@ -12,7 +11,7 @@ const MapContainer = ({ searchPlace }) => {
     var markers = []
     const container = document.getElementById('myMap')
     const options = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      center: new kakao.maps.LatLng(37.4989931, 127.0329085),
       level: 3,
     }
     const map = new kakao.maps.Map(container, options)
@@ -82,7 +81,12 @@ const MapContainer = ({ searchPlace }) => {
   }, [searchPlace])
 
   return (
-    <div style={{display: "flex", alignItems:"center", justifyContent:"space-around", flexDirection:"column"}}>
+    <div style={{
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-around",
+      alignItems: "center"
+    }}>
       <div
         id="myMap"
         style={{
@@ -90,28 +94,39 @@ const MapContainer = ({ searchPlace }) => {
           height: '500px',
         }}
       ></div>
-      <div id="result-list">
-        {Places.map((item, i) => (
-          <div key={i} style={{ marginTop: '20px' }}>
-            <span>{i + 1}</span>
-            <div>
-              <h5>{item.place_name}</h5>
-              {item.road_address_name ? (
-                <div>
-                  <span>{item.road_address_name}</span>
+  
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <div id="result-list">
+          {Places.map((item, i) => (
+            <div key={i} style={{ marginTop: '10px' }}>
+              <span>{i + 1}</span>
+              <div>
+                <h5>{item.place_name}</h5>
+                {item.road_address_name ? (
+                  <div>
+                    <span>{item.road_address_name}</span>
+                    <span>{item.address_name}</span>
+                  </div>
+                ) : (
                   <span>{item.address_name}</span>
-                </div>
-              ) : (
-                <span>{item.address_name}</span>
-              )}
-              <span>{item.phone}</span>
+                )}
+                <span>{item.phone}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
         <div id="pagination"></div>
       </div>
     </div>
-  )
+  );
+  
 }
 
 export default MapContainer
