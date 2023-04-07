@@ -55,6 +55,7 @@ const HomePage = () => {
             <MainCalendar />
           </div>
         </div>
+            <img src="images_key/WOONGS.jpg" alt="웅이지롱"></img>
 
         {/* <div className="mainpage box">
           <div className="mainpage div div3">

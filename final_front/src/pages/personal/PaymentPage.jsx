@@ -1,7 +1,7 @@
 /* 은영 결제페이지 수정중 */
 
 import React, { useCallback, useState } from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -108,6 +108,7 @@ const PaymentPage = () => {
 </div><br />
 
 <PaymentComponent></PaymentComponent>
+<Button className="researvebtn" onClick={() => navigate(-1)}>취소/이전으로</Button>
 
 </div> {/* paymentDiv 끝 */}
 </section>  {/* midSection 끝 */}

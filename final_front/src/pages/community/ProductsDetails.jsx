@@ -95,17 +95,17 @@ const freview={
 //리뷰컴포
 const ReviewList =()=>{
   const [freviews, setFreviews] = useState([]);
-  const [reviewRevisedContent, setReviewRevisedContent]=useState('');
+  const [reviewRevisedContent, setReviewRevisedContent]=useState("");
 
+  const inputReviewRevisedContent
+  = useCallback((e) => {
+    setReviewRevisedContent (e)
+    console.log(e.value)
+  },[])
   useEffect(() => {FestivalReviewDB().then(setFreviews); }, []);
   const click=()=>{
     setLgShow(true)
   }
-  const inputReviewReviseContent
-  = useCallback((e) => {
-    setReviewRevisedContent (e)
-  },[])
-
   return(
     <>
     {freviews && freviews.map((review, i) => {
@@ -115,7 +115,8 @@ const ReviewList =()=>{
 <h3>
 {review.reviewContent}
 </h3>
-id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}   
+id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}    
+리뷰번호: {review.reviewNo}
 {/* test_ reviewNo: {review.reviewNo} */}
 {
   //로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람과 작성자 일치 시 수정, 삭제 버튼 보이기 
@@ -136,12 +137,12 @@ id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}
 
 <div className="form-floating mb-3">
 <textarea 
-onChange={  (e)=>{inputReviewReviseContent(e.target.value)}} 
-className="form-control" placeholder="Leave a comment here" id="product_detail_review_revised_textarea" style={{height: '300px', margin:'10px', maxWidth:'1200px'}}></textarea>
+onChange={  (e)=>{inputReviewRevisedContent(e.target.value)}} 
+className="form-control2" placeholder="Leave a comment here" id="product_detail_review_revised_textarea" style={{height: '300px', margin:'10px', maxWidth:'1200px'}}></textarea>
 <button className="reviseBtn" onClick={async()=>{
                       const freview={
-                        reviewContent,
-                        review_no:review.reviewNo,
+                        reviewNo:review.reviewNo,
+                        reviewContent:reviewRevisedContent,
                   }
 const res = await UpdateFestReviewDB(freview);
                   if(!res.data){
@@ -149,7 +150,8 @@ const res = await UpdateFestReviewDB(freview);
                   else{
                   }
 setLgShow(false)
-                  console.log('수정이벤트처리예정')
+                  console.log('수정완료'+ reviewRevisedContent + review.reviewNo)
+                  console.log('리뷰번호' +review.reviewNo)
                   }
 }>ddddd </button>
 </div><br/>
@@ -210,7 +212,7 @@ console.log('삭제완료')}}>삭제</BButton>
 <section>
         <div className="topcontainer" >
                                <div className="product_detail_imgdiv">
-                                         <img className="product_detail_img" src={'../images_key/fev1.PNG'}  alt="상품사진" />
+                                         <img className="product_detail_img" src={'../images_key/WOONGS.jpg'}  alt="상품사진" />
                                </div>
                                <div className="product_detail_info">
                                <div className="product_detail_head">
@@ -268,7 +270,7 @@ console.log('삭제완료')}}>삭제</BButton>
 </span>
 <span className="calendarands2">
 잔여좌석<br></br>
-
+<Button className="researvebtn" onClick={() => navigate("/payment/"+festMId)}>예매하기</Button>
 
 </span>
 </div>

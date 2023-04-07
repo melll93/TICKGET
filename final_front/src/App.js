@@ -28,19 +28,11 @@ import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
 import ChatPage from "./pages/personal/ChatPage";
 import MyPage from "./pages/personal/MyPage";
-<<<<<<< HEAD
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import PaymentPage from "./pages/personal/PaymentPage";
 import PaySucPage from "./pages/personal/PaySucPage";
 import PayFailPage from "./pages/personal/PayFailPage";
-=======
-import PaySucTestPage from "./pages/personal/PaySucTestPage";
-import PaymentPage from "./pages/personal/PaymentPage";
-import SettingPage from "./pages/personal/SettingPage";
-import TicketPage from "./pages/personal/TicketPage";
-
->>>>>>> 8d8105418210549ff50b9fd7dff59fcd8625e255
 
 function App({ imageUploader }) {
   const [board, setBoard] = useState();
