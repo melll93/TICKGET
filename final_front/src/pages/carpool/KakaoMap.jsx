@@ -2,11 +2,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 const KakaoMap = () => {
+  
   const kakaomap = useRef()
   const [map, setMap] = useState();
   const[positions, setPositions] = useState([
     {
-      content: '<div>터짐블로그</div>',
+      content: '<div>All Is Well</div>',
       latlng: new kakao.maps.LatLng(37.4989931, 127.0329085)
     }
   ])
@@ -14,7 +15,7 @@ const KakaoMap = () => {
     const container = document.getElementById("map");
     const options = {
       center: positions[0].latlng,
-      level: 4,
+      level: 3,
     };
     if(!map) {
       setMap(new kakao.maps.Map(container,options));

@@ -18,9 +18,9 @@ public class MarketDto {
 	// Attibute들을 java에서는 camel-case로 매핑해줌.
 	private int boardMkNo;
 	private String boardMkTitle;
-	private String boardMkPw;
 	private String boardMkContent;
 	private Date boardMkDate;
+	private Date boardMkUpdate;
 	private int boardMkHit;
 	private Date mkTicketDate;
 	private String mkTicketSeat;

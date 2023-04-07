@@ -3,43 +3,104 @@
 
 <mapper namespace="back.spring.final_back.board.repository.MarketDao">
 
+
+
+
+
+<!-- 게시글 조회 -->
 <select id="mk_boardList" resultType="MarketDto">
 select * from board_market
+order by board_mk_date DESC
 </select>
 
 
-<insert id="mk_boardInsert" parameterType="map">
-insert into board_market (board_mk_title, board_mk_pw,board_mk_content, board_mk_date, board_mk_hit, 
-                          mk_ticket_place,  mk_ticket_date, mk_ticket_seat, mk_ticket_price, mk_ticket_count, mem_name)
-VALUES (#{boardMkTitle},#{boardMkPw}, #{boardMkContent},#{boardMkDate},#{boardMkHit},
-        #{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketPrice}, #{mkTicketCount}, #{mkTicketPlace}, #{memName})
+
+
+
+<!-- 게시글 입력 -->
+<insert id="mk_boardInsert" parameterType="MarketDto">
+insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
+mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name)
+VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
+#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName})
 </insert>
 
 
+
+
+
+<!-- 게시글 수정 -->
 <update id="mk_boardUpdate" parameterType="MarketDto">
  update board_market
- set board_mk_title = #{boardMkTitle},
-     board_mk_pw    = #{boardMkPw},
-     board_mk_content = #{boardMkContent}
+ set 
+     <if test='boardMkTitle!=null'>
+     board_mk_title = #{boardMkTitle},
+     </if>
+     <if test='boardMkContent!=null'>
+     board_mk_content = #{boardMkContent},
+     </if>
+      <if test='mkTicketPlace!=null'>
      mk_ticket_place = #{mkTicketPlace},
+     </if>
+      <if test='mkTicketDate!=null'>
      mk_ticket_date = #{mkTicketDate},
+     </if>
+      <if test='mkTicketSeat!=null'>
      mk_ticket_seat = #{mkTicketSeat},
-     mk_ticket_price = #{mkTicketPrice},
+     </if>
+     <if test='mkTicketCount!=null'>
      mk_ticket_count = #{mkTicketCount},
-<where>
-board_mk_pw = #{boardMkPw}
-</where>
+     </if>
+     <if test='mkTicketPrice!=null'>
+     mk_ticket_price = #{mkTicketPrice},
+     </if>
+     board_mk_date = CURDATE()
+     WHERE board_mk_no = #{boardMkNo} 
 </update>
 
 
-<delete id="mk_boardDelete" parameterType="int">
+
+
+
+
+<!-- 게시글 삭제 -->
+<delete id="mk_boardDelete" parameterType="MarketDto">
 delete from board_market
 <where>
-board_mk_no = #{Value}
-and
-board_mk_pw = #{Value}
+<if test='boardMkNo!=null and boardMkNo>0'>
+board_mk_no = #{boardMkNo}
+</if>
 </where>
 </delete>
+
+
+
+
+
+<!-- 게시글 상세보기 -->
+<select id="mk_boardDetail" parameterType="MarketDto" resultType="MarketDto">
+select * from board_market 
+<where>
+  <if test='boardMkNo!=null'> <!-- setNull(1,1111)에러 타입, 부적합한 열 유형 Integer.parseInt() -->
+    board_mk_no = #{boardMkNo}
+    </if>
+     </where>
+</select>
+
+
+
+
+
+
+<!-- 조회수 증가  -->	
+	<update id="mk_boardHit" parameterType="MarketDto">
+	<choose>
+	<when test='boardMkNo!=null'>
+	 UPDATE board_market SET board_mk_hit = board_mk_hit+1
+	  WHERE board_mk_no = #{boardMkNo}
+	</when>
+	</choose>
+	</update>
 
 
 </mapper>

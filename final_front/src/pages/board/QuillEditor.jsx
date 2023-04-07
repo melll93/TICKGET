@@ -111,7 +111,7 @@ const QuillEditor = ({value,handleContent,quillRef,files,handleFiles,}) => {
         formats={formats}
         value={value}
         onChange={(content, delta, source, editor) => {
-          handleContent(editor.getText());
+          handleContent(editor.getHTML());
         }}
       />
     </div>

@@ -1,15 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteBoardListDB,
-  selectBoardDetailDB,
-  selectBoardListDB,
-  updateBoardListDB,
+  selectBoardDetailDB
 } from "../../axios/board/boardLogic";
-import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 
 const BoardDetail = () => {
   const navigate = useNavigate();
@@ -65,8 +63,6 @@ const BoardDetail = () => {
     alert("게시글 삭제 완료");
     navigate("/together");
   };
-
-
 
   return (
     <div>

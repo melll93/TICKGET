@@ -11,6 +11,7 @@ import rootReducer from "./redux/rootReducer";
 import { Provider } from "react-redux";
 import "react-quill/dist/quill.snow.css";
 
+
 const store = legacy_createStore(rootReducer);
 // console.log(store.getState());
 // store에 있는 초기 상태 정보 출력
