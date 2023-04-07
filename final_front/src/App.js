@@ -8,6 +8,7 @@ import BoardUpdate from "./pages/board/BoardUpdate";
 import BoardWriteForm from "./pages/board/BoardWriteForm";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import CalendarPage from "./pages/community/CalendarPage";
+import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
 import FestivalPage from "./pages/community/FestivalPage";
 import HomePage from "./pages/community/HomePage";
@@ -15,7 +16,6 @@ import MarketPage from "./pages/community/MarketPage";
 import ProductsDetails from "./pages/community/ProductsDetails";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
-import CarpoolPage from "./pages/community/CarpoolPage";
 import MarketDetail from "./pages/market/MarketDetail";
 import MarketUpdatePage from "./pages/market/MarketUpdatePage";
 import MarketWriteForm from "./pages/market/MarketWriteForm";
@@ -28,11 +28,12 @@ import BookmarkPage from "./pages/personal/BookmarkPage";
 import CartPage from "./pages/personal/CartPage";
 import ChatPage from "./pages/personal/ChatPage";
 import MyPage from "./pages/personal/MyPage";
+import PayFailPage from "./pages/personal/PayFailPage";
+import PaySucPage from "./pages/personal/PaySucPage";
+import PaymentPage from "./pages/personal/PaymentPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-import PaymentPage from "./pages/personal/PaymentPage";
-import PaySucPage from "./pages/personal/PaySucPage";
-import PayFailPage from "./pages/personal/PayFailPage";
+import MyCalendar from "./pages/calendar/MyCalendar";
 
 function App({ imageUploader }) {
   const [board, setBoard] = useState();
@@ -77,7 +78,7 @@ function App({ imageUploader }) {
         <Route path="/search" exact={true} element={<SearchResultPage />} />
         <Route path="/concert" exact={true} element={<ConcertPage />} />
         <Route path="/together" exact={true} element={<TogetherPage />} />
-        <Route path="/carpool" exact={true} element={<CarpoolPage/>} />
+        <Route path="/carpool" exact={true} element={<CarpoolPage />} />
         <Route path="/market" exact={true} element={<MarketPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
         <Route path="/chat" exact={true} element={<ChatPage />} />
@@ -93,12 +94,15 @@ function App({ imageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<BoardWriteForm />} />
-        <Route path="together/boardDetail/:boardTgNo" element={<BoardDetail board={board} />}
+        <Route
+          path="together/boardDetail/:boardTgNo"
+          element={<BoardDetail board={board} />}
         />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
         <Route path="together/boardUpdate/" element={<BoardUpdate />} />
 
-
+        {/* Calendar */}
+        <Route exact path="/" component={MyCalendar} />
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route

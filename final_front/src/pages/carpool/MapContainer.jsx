@@ -12,7 +12,7 @@ const MapContainer = ({ searchPlace }) => {
     const container = document.getElementById('myMap')
     const options = {
       center: new kakao.maps.LatLng(37.4989931, 127.0329085),
-      level: 3,
+      level: 4,
     }
     const map = new kakao.maps.Map(container, options)
 
@@ -84,8 +84,9 @@ const MapContainer = ({ searchPlace }) => {
     <div style={{
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-around",
-      alignItems: "center"
+      // justifyContent: "space-around",
+      justifyContent: "center",
+      alignItems: "center",
     }}>
       <div
         id="myMap"
@@ -105,7 +106,7 @@ const MapContainer = ({ searchPlace }) => {
       >
         <div id="result-list">
           {Places.map((item, i) => (
-            <div key={i} style={{ marginTop: '10px' }}>
+            <div key={i} style={{ marginTop: '5px' }}>
               <span>{i + 1}</span>
               <div>
                 <h5>{item.place_name}</h5>
@@ -122,7 +123,7 @@ const MapContainer = ({ searchPlace }) => {
             </div>
           ))}
         </div>
-        <div id="pagination"></div>
+        <div style={{fontSize:"50px"}} id="pagination"></div>
       </div>
     </div>
   );

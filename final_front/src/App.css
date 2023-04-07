@@ -219,3 +219,26 @@ div .Menu {
   width: 50px;
   object-fit: cover;
 }
+
+/*  */
+.add-event-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 80%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.form-group {
+  margin: 10px 0;
+}
+
+textarea {
+  height: 100px;
+  width: 100%;
+}
+/*  */
