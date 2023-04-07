@@ -31,6 +31,7 @@
     "styled-components": "^5.3.9",
     "swiper": "6.8.4",
     "tosspayments-react-native": "^1.0.7",
+    "typescript": "^5.0.3",
     "web-vitals": "^2.1.0"
   },
   "scripts": {

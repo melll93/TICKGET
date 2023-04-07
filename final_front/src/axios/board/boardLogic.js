@@ -61,13 +61,13 @@ export const insertBoardListDB = (board_together) => {
   });
 };
 /* 작성 */
-export const updateBoardListDB = (board_together) => {
+export const updateBoardListDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/board/updateBoardList",
-        params: board_together,
+        params: board,
       });
       resolve(response);
     } catch (error) {

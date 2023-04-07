@@ -1,15 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteBoardListDB,
-  selectBoardDetailDB,
-  selectBoardListDB,
-  updateBoardListDB,
+  selectBoardDetailDB
 } from "../../axios/board/boardLogic";
-import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 
 const BoardDetail = () => {
   const navigate = useNavigate();
@@ -66,8 +64,6 @@ const BoardDetail = () => {
     navigate("/together");
   };
 
-
-
   return (
     <div>
       <Sidebar />
@@ -101,18 +97,8 @@ const BoardDetail = () => {
 
             <div>
               <label>내용</label>
-<<<<<<< Updated upstream
               <span style={{width: "300px", margin: "10px", height: "300px", fontSize: "40px"}}
                 name="boardContent" required rows="10" class="form-control" id="exampleTextarea">
-=======
-              <span style={{ width: "300px", margin: "10px", height: "300px",fontSize: "40px",}}
-                name="boardContent"
-                required
-                rows="10"
-                class="form-control"
-                id="exampleTextarea"
-              >
->>>>>>> Stashed changes
                 {board.boardTgContent}
               </span>
             </div>
