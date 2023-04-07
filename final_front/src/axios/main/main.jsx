@@ -10,7 +10,6 @@ export const xgetFestivalTodayDB = async () => {
     url: "http://localhost:8888/api/concertToday",
     // process.env.BACKEND_URL + "api/concertToday"
   }).then((res) => res.data);
-  // console.log(result);
   return result;
 };
 

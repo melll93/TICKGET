@@ -132,7 +132,7 @@ div .SearchBarDiv {
 div .SearchBar {
   width: 400px;
   height: 50px;
-  margin: 0px 15px 15px 0px;
+  margin: 0px 15px 0px 0px;  /* 위 오 밑 왼 */
   border-radius: 20px;
 }
 
@@ -218,4 +218,9 @@ div .Menu {
   display: inline-block;
   width: 50px;
   object-fit: cover;
+}
+
+
+div.Gnb{
+  margin:0px;
 }

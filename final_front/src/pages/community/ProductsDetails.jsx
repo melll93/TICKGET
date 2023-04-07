@@ -10,7 +10,6 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import { BButton, MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
 import '../../styles/productsdetails.css'
-import PaymentComponent from '../personal/PaymentComponent';
 
 function ProductsDetails(){
     let {festMId} =useParams();
