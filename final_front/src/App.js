@@ -33,8 +33,12 @@ import PaymentPage from "./pages/personal/PaymentPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import CalendarPage from "./pages/personal/CalendarPage";
+import PaymentPage from "./pages/personal/PaymentPage";
+import PaySucPage from "./pages/personal/PaySucPage";
+import PayFailPage from "./pages/personal/PayFailPage";
+import mkImageUploader from "./axios/market/mkImageUploader";
 
-function App({ imageUploader }) {
+function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
   const [user, setUser] = useState();
 
@@ -104,14 +108,17 @@ function App({ imageUploader }) {
         <Route
           path="/market/write"
           exact={true}
-          element={<MarketWriteForm />}
+          element={<MarketWriteForm mkImageUploader={mkImageUploader} />}
         />
         <Route
           path="/market/update/:no"
           exact={true}
-          element={<MarketUpdatePage />}
+          element={<MarketUpdatePage mkImageUploader={mkImageUploader} />}
         />
-        <Route path="/market/mk_boardDetail/*" element={<MarketDetail />} />
+        <Route
+          path="/market/mk_boardDetail/*"
+          element={<MarketDetail mkImageUploader={mkImageUploader} />}
+        />
       </Routes>
     </>
   );

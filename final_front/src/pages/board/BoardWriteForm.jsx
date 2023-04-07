@@ -114,8 +114,10 @@ const BoardWriteForm = ({board_together}) => { //props를 넘어온 값 즉시 �
 
             <hr style={{margin:'10px 0px 10px 0px'}}/>
             <h3>상세내용</h3>
-            <QuillEditor value={content} handleContent={handleContent} quillRef={quillRef} files={files} handleFiles={handleFiles}/>
+             <QuillEditor value={content} handleContent={handleContent} quillRef={quillRef} files={files} handleFiles={handleFiles}/> 
+           
             <BoardFileInsert files={files}/>
+          
           </div>
         </FormDiv>
       </ContainerDiv>
