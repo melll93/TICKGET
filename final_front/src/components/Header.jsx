@@ -1,10 +1,10 @@
 import React from "react";
-import SearchBar from "./Gnb/SearchBar";
+import HeaderSearchBar from "./Gnb/HeaderSearchBar";
 
 const Header = () => {
   return (
     <div className="Gnb">
-      <SearchBar />
+      <HeaderSearchBar />
     </div>
   );
 };
