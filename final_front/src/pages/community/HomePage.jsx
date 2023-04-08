@@ -28,8 +28,51 @@ const HomePage = () => {
     <>
       <Sidebar />
       <div className="center">
-        <Header />
-        <CarouselList festivalToday={festivalToday} />
+        {/* <Header /> */}
+        <section className="total_section" style={{paddingLeft:'100px', display:'flex'}}>
+    <div className="top_sec_div" style={{margin:'50px', textAlign:'center', flex:'1'}}>
+
+        {/* <CarouselList festivalToday={festivalToday} /> */}
+          <img src="./images_key/WOONGS.jpg" style={{width:'80px', height:'80px',borderRadius:'50%', margin:'5px'}}></img>
+          <img src="./images_key/WOONGS.jpg" style={{width:'80px', height:'80px',borderRadius:'50%', margin:'5px'}}></img>
+          <img src="./images_key/WOONGS.jpg" style={{width:'80px', height:'80px',borderRadius:'50%', margin:'5px'}}></img>
+          <img src="./images_key/WOONGS.jpg" style={{width:'80px', height:'80px',borderRadius:'50%', margin:'5px'}}></img>
+   
+          <div className="card" >
+        <p>
+          이 주의 공연
+          </p>
+      <img  src="./images_key/WOONGS.jpg" width="100%" alt="사진1" />
+        서울 상품
+        <div className="card-body">
+          <h5 className="card-title">제목 </h5>  
+          <p className="card-text">로케  </p>
+        </div>
+  </div>
+
+  <div className="card" >
+      <img  src="./images_key/WOONGS.jpg" width="100%" alt="사진1" />
+        서울 상품
+        <div className="card-body">
+          <h5 className="card-title">제목 </h5>  
+          <p className="card-text">로케  </p>
+        </div>
+  </div>
+
+  <div className="card" >
+      <img  src="./images_key/WOONGS.jpg" width="100%" alt="사진1" />
+        서울 상품
+        <div className="card-body">
+          <h5 className="card-title">제목 </h5>  
+          <p className="card-text">로케  </p>
+        </div>
+  </div>
+   
+    </div>
+   
+          <div className="mainpage div div2" style={{flex:'0.3', margin:'50px'}}>
+            {/* <MainCalendar/>
+             */}
         <div className="mainpage box">
           <div className="mainpage div div1">
             <Tabs
@@ -50,12 +93,13 @@ const HomePage = () => {
                 <BasicTable />
               </Tab>
             </Tabs>
+          </div>  {/* mainpage div div1 */}
+          </div>  {/* mainpage box*/}
+
           </div>
-          <div className="mainpage div div2">
-            <MainCalendar />
-          </div>
-        </div>
-            <img src="images_key/WOONGS.jpg" alt="웅이지롱"></img>
+   
+   
+   
 
         {/* <div className="mainpage box">
           <div className="mainpage div div3">
@@ -65,6 +109,7 @@ const HomePage = () => {
             <BasicTable />
           </div>
         </div> */}
+        </section>
 
       </div>
     </>

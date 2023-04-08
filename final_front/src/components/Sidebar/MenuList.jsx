@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Menu from "./Menu";
+import SearchBar from "../Gnb/SearchBar";
 
 const MenuList = () => {
   const [items, setItems] = useState([
