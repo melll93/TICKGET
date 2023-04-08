@@ -13,8 +13,8 @@ import QuillEditor from './QuillEditor'
 /* CSS */
 const DivUploadImg = styled.div`
 display:flex;
-width:200px;
-height:250px;
+width:300px;
+height:350px;
 overflow:hidden;
 margin:10px auto;
 `;
@@ -42,7 +42,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
    const [board_mk_content, setContent] = useState(""); //사용자가 입력한 내용 담기
    //QuillEditor이미지 선택하면 imageUploadDB타면 스프링플젝 pds 이미지 업로드
    //pds에 업로드된 파일을 읽어서 Editor안에 보여줌 imageGet?imageName=woman1.png
-   const [files, setFiles] = useState({filename:null, fileurl:null})
+   const [files, setFiles] = useState({fileName:null, fileUrl:null})
    const quillRef = useRef();
 
 
@@ -110,6 +110,33 @@ const MarketUpdatePage = ({mkImageUploader}) => {
    }, []);
 
 
+   //이미지 파일 첨부
+   const imageChange =async(event)=>{
+    const uploaded = await mkImageUploader.upload(event.target.files[0])
+    setFiles({
+       fileName:uploaded.public_id+"."+uploaded.format,
+       fileUrl:uploaded.url
+    })
+    //imput의 이미지 객체 얻어오기
+    const upload = document.querySelector("#dimg")
+    //이미지를 집어넣을 곳의 부모태그
+    const holder = document.querySelector("#uploadImg")
+    const file = upload.files[0]
+    const reader = new FileReader()
+    reader.onload =(event)=>{
+       const img = new Image()
+       img.src=event.target.result
+       if(img.width>150){
+             img.width=150
+       }
+       holder.innerHTML="";
+       holder.appendChild(img)
+    }
+    reader.readAsDataURL(file)
+    return false
+  }
+  
+  
 
 
 
@@ -136,38 +163,6 @@ const MarketUpdatePage = ({mkImageUploader}) => {
 
 
    
- //이미지 파일 첨부
- const imageChange =async(event)=>{
-  const uploaded = await mkImageUploader.upload(event.target.files[0])
-  setFiles({
-     fileName:uploaded.public_id+"."+uploaded.format,
-     fileUrl:uploaded.url
-  })
-  //imput의 이미지 객체 얻어오기
-  const upload = document.querySelector("#dimg")
-  //이미지를 집어넣을 곳의 부모태그
-  const holder = document.querySelector("#uploadImg")
-  const file = upload.files[0]
-  const reader = new FileReader()
-  reader.onload =(event)=>{
-     const img = new Image()
-     img.src=event.target.result
-     if(img.width>150){
-           img.width=150
-     }
-     holder.innerHTML="";
-     holder.appendChild(img)
-  }
-  reader.readAsDataURL(file)
-  return false
-}
-
-
-
-
-
-
-
 
   return (
     <>
@@ -222,7 +217,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
                   <h3>공연일</h3>
                   <Form.Control
                     id="mk_ticket_date"
-                    type="date"
+                    type="datetime-local"
                     className="form-control"
                     style={{ width: "475px", height: "50px" }}
                     onChange={(e) => {
@@ -285,11 +280,12 @@ const MarketUpdatePage = ({mkImageUploader}) => {
               }}/>
       </Form.Group>
 
+
       <Form.Group controlId="formFileMultiple" className="mb-3">
-        <Form.Control type="file" multiple  onChange={()=>imageChange()}/>
+      <input className="form-control" type="file" accept='image/*' id="dimg" name="dimg" onChange={imageChange}/>
       </Form.Group>
       <DivUploadImg div id="uploadImg">
-                  <img src="http://via.placeholder.com/200X250" alt="미리보기" />
+                  <img src="http://via.placeholder.com/300X350" alt="미리보기" />
             </DivUploadImg>
 
 

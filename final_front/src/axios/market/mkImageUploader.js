@@ -8,8 +8,8 @@ class marketImageUploader {
     //input type file에서 선택한 파일에 대한 정보 담기
     data.append("file", file);
     // Cloudinary에서 제공하는 서비스를 이용하여 사용자가 선택한 파일에 대한 URL 정보만
-    // 제공 받아서 처리하므로 upload_preset dms  unsigned로 받을 것
-    data.append("upload_preset", "k5augxut");
+    // 제공 받아서 처리하므로 upload_preset은  unsigned로 받을 것
+    data.append("upload_preset", "boardmk");
     /*
          POST를 이용하니까 POST에 추가하는 데이터 입력하고 fetch를 이용해서 여기 우리가 URL 만들고
          POST한 거 데이터를 전송한 다음에 완료가 되면 이제 result를 받아서 result에 있는 것을 json으로

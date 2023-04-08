@@ -1,15 +1,17 @@
 import axios from "axios";
 
 //마켓 게시판 게시글 조회 로직
-export const mk_boardListDB = async () => {
+/* export const mk_boardListDB = async () => {
   const result = await axios({
     method: "GET",
     url: "http://localhost:8888/market/mk_boardList",
   }).then((res) => res.data);
   console.log(result);
   return result;
-};
-/* export const mk_boardListDB = (board) => {
+}; */
+
+
+ export const mk_boardListDB = (board) => {
   console.log(board);
   return new Promise((resolve, reject) => {
     try {
@@ -23,7 +25,7 @@ export const mk_boardListDB = async () => {
       reject(error);
     }
   });
-}; */
+}; 
 
 //마켓 게시판 상세보기 로직
 export const mk_boardDetailDB = (board) => {

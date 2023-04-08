@@ -31,6 +31,13 @@ const MarketPage = () => {
               };
              */
   
+   const reactSearch = () => {
+
+   }
+    
+
+
+
   return (
      <>
    <Sidebar/> 
@@ -62,15 +69,13 @@ const MarketPage = () => {
                   </tr>
             </thead>
             <tbody>
-      {/*       {deptList.map(dept => (
-        <DeptRow key={dept.DEPTNO} dept={dept} />
-      ))} */}
-      {/*DonationRow에서 받아온 글 리스트 */}
+
  <MarketList />
             </tbody>
             </Table>
             <hr />
             <div className='booklist-footer'>
+
      <MarketSearchBar/>
       </div>
          </div>

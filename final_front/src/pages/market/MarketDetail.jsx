@@ -41,13 +41,14 @@
         console.log(jsonDoc[3]) //3.png
       //이미지처리
         
-        console.log(jsonDoc[0].boardMkTitle);
         console.log(jsonDoc[0].memName);
         console.log(jsonDoc[0].boardMkTitle);
         console.log(jsonDoc[0].boardMkDate);
         console.log(jsonDoc[0].mkTicketPlace);
         console.log(jsonDoc[0].mkTicketSeat);
         console.log(jsonDoc[0].mKTicketCount);
+        console.log(jsonDoc[0].boardMkFilename);
+        console.log(jsonDoc[0].boardMkFileurl);
 
 
   /*       //이미지 파일을 담을 배열 선언
@@ -74,6 +75,8 @@
     mk_ticket_count : jsonDoc[0].mkTicketCount,
     mk_ticket_seat : jsonDoc[0].mkTicketSeat,
     mk_ticket_price : jsonDoc[0].mkTicketPrice, 
+    board_mk_filename : jsonDoc[0].boardMkFilename, 
+    board_mk_fileurl : jsonDoc[0].boardMkFileurl, 
   })
   }
   boardDetail()
@@ -97,7 +100,7 @@
 
 
                                <div className="product_detail_imgdiv">
-                                         <img className="product_detail_img" src={'../images_key/fev1.PNG'}  alt="상품사진" />
+                                         <img className="product_detail_img" src={detail.board_mk_fileurl}  alt="상품사진" />
                                </div>
 
 

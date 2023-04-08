@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const MyFilter = ({types, type, id, title, handleTitle}) => {
-  console.log(id);//qna_type
+  console.log(id);//
   const navigate = useNavigate();
   const location = useLocation();
 
