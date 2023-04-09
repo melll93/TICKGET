@@ -64,7 +64,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
       console.log(result);
       console.log(result.user.id);
       // 세션 스토리지에 아이디값 저장
-      window.sessionStorage.setItem('userId', result.user.id);
       // 로컬 스토리지에 아이디값 저장
       window.localStorage.setItem('userId', result.user.id);
       navigate("/")
