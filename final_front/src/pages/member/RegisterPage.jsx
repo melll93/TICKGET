@@ -16,20 +16,7 @@ const RegisterPage = ({ authLogic }) => {
   const userAuth = useSelector(state => state.userAuth);
   const type = window.location.search.split('&')[0].split('=')[1];
   const navigate = useNavigate();
-  /* datepicker 안 예쁘다... */
-/*   const [birthDate, setBirthDate] = useState(null);
 
-  const handleBirthDateChange = (date) => {
-    setBirthDate(date);
-  };
-
-  const handleDeleteClick = () => {
-    setBirthDate(null);
-  };
-
-  const today = new Date();
-  const endDay = new Date(today.getFullYear(), today.getMonth(), today.getDate()); */
-  /*  */
 
   const [submitBtn, setSubmitBtn] = useState({
     disabled: true,
@@ -43,15 +30,13 @@ const RegisterPage = ({ authLogic }) => {
       setSubmitBtn({ ...submitBtn, hover: true, bgColor: 'rgb(72, 145, 218)' });
     }
   }
-  /* 주소 번지 사용?
-  ex) 티켓 구매 후 수령 -> 주소 번지 필요할 것 같음 */
+  // 주소 번지
   const[post, setPost] = useState({
-      zipcode: "",
-      address: "",
-      addrDetail: ""
-    })
+    zipcode: "",
+    address: "",
+    addrDetail: ""
+  })
   // 회원가입 입력 정보
-  /* 우편번호, 주소, 상세 주소 추가 (member 테이블에도 추가) */
   const [memInfo, setMemInfo] = useState({
     id: "",
     email: "",
@@ -61,7 +46,8 @@ const RegisterPage = ({ authLogic }) => {
     birthday: "",
     mobile: "",
     nickname: "",
-    gender: "없음"
+    gender: "없음",
+    zipcode: ""
   });
   // 입력 정보 유효성 체크
   const [comment, setComment] = useState({
@@ -72,7 +58,8 @@ const RegisterPage = ({ authLogic }) => {
     name: "",
     birthday: "",
     mobile: "",
-    nickname: ""
+    nickname: "",
+    zipcode: ""
   });
   // 필수 작성 항목
   const [star, setStar] = useState({
@@ -97,7 +84,7 @@ const RegisterPage = ({ authLogic }) => {
     }
   ]);
   // 구글 로그인 구현 시 필요
-  const [googleEmail, setGoogleEmail] = useState('');
+/*   const [googleEmail, setGoogleEmail] = useState('');
   useEffect(() => {
     const onAuth = async () => {
       const user = await onAuthChange(userAuth.auth);
@@ -127,7 +114,7 @@ const RegisterPage = ({ authLogic }) => {
       }
     };
     onAuth();
-  }, [setGoogleEmail, setStar, setMemInfo, userAuth.auth]);
+  }, [setGoogleEmail, setStar, setMemInfo, userAuth.auth]); */
 
   const handleSignup = (event) => {
     signup()
@@ -222,18 +209,18 @@ const RegisterPage = ({ authLogic }) => {
   const searchAddress = () => {
     new daum.Postcode({
       oncomplete: function(data) {
-        let addr = ''; 
+        let address = ''; 
         if (data.userSelectedType === 'R') { 
-          addr = data.roadAddress;//도로명
+          address = data.roadAddress;//도로명
         } else { 
-          addr = data.jibunAddress;//지번
+          address = data.jibunAddress;//지번
         }
         console.log(data);
-        console.log(addr);
+        console.log(address);
         console.log(post.zipcode);
-        setPost({...post, zipcode:data.zonecode, addr:addr}) ;
+        setPost({...post, zipcode:data.zonecode, address:address}) ;
         document.getElementById("zipcode").value = data.zonecode;
-        document.getElementById("addr").value = addr;
+        document.getElementById("address").value = address;
         document.getElementById("addrDetail").focus();
       }
     }).open();
@@ -241,12 +228,6 @@ const RegisterPage = ({ authLogic }) => {
 
   /* 회원 가입 */
   const signup = async () => {
-    /* 사용 시 이력 받은 정보가 하루 씩 당겨지고 insert 컬럼값이 아예 안 담김
-        try {
-      let id;
-      const birthday = birthDate ? birthDate.toISOString().slice(0, 10) : "";
-      console.log('입력받은 생일정보 ' + birthday);
-      const datas = { */
     try {
       let id;
       const birth = memInfo.birthday;
@@ -263,7 +244,10 @@ const RegisterPage = ({ authLogic }) => {
         MEMBER_EMAIL: memInfo.email,
         MEMBER_GENDER: memInfo.gender,
         MEMBER_MOBILE: memInfo.mobile,
-        MEMBER_NICKNAME: memInfo.nickname
+        MEMBER_NICKNAME: memInfo.nickname,
+        MEMBER_ZIPCODE: post.zipcode,
+        MEMBER_ADDRESS: post.address,
+        MEMBER_ADDRDETAIL: post.addrDetail,
       }
       console.log(datas)
       const response = await memberInsertDB(datas);
@@ -349,19 +333,19 @@ const RegisterPage = ({ authLogic }) => {
             </MyLabel>
             {/* 주소(우편번호, 주소지) */}
             <MyLabel> 우편번호
-                <MyInput type="text" id="zipcode" defaultValue={memInfo.zipcode} placeholder="우편 번호를 입력해 주세요" 
+                <MyInput type="text" id="zipcode" defaultValue={memInfo.zipcode} placeholder="우편번호를 입력해주세요." 
                 onChange={(e)=>{changeMemInfo(e);}} />
                 <MyLabelAb>{comment.zipcode}</MyLabelAb>
               </MyLabel>
 
               <div style={{display: 'flex'}}>
                 <MyLabel> 주소
-                  <MyInput type="text" id="address" defaultValue={post.address} readOnly placeholder="주소를 검색해 주세요"/>
+                  <MyInput type="text" id="address" defaultValue={post.address} readOnly placeholder="주소검색을 해주세요."/>
                 </MyLabel>
                 <MyButton type="button" onClick={()=>{searchAddress()}}>주소검색</MyButton>
               </div>
-              <MyLabel> 상세 주소
-                <MyInput type="text" id="addrDetail" defaultValue={post.addrDetail} readOnly={post.addr?false:true}
+              <MyLabel> 상세주소
+                <MyInput type="text" id="addrDetail" defaultValue={post.addrDetail} readOnly={post.address?false:true}
                 onChange={(e)=>{setPost({...post, addrDetail : e.target.value})}}/>
               </MyLabel>
             {/* 성별 */}
@@ -372,37 +356,12 @@ const RegisterPage = ({ authLogic }) => {
             </MyLabel>
 
             {/* 생년월일 */}
-            {/* <input type="text" name="birth" readonly />
-				<span id="delete" style="color: red; position: relative; right: 25px; display: none;"><i class="fas fa-times font-img"></i></span> */}
             <MyLabel> 생년월일 <span style={{ color: "red" }}>{star.birthday}</span>
               <MyInput type="text" id="birthday" defaultValue={memInfo.birthday} placeholder="생년월일을 입력해주세요"
                 onChange={(e) => { changeMemInfo(e); validate('birthday', e); }} />
               <MyLabelAb>{comment.birthday}</MyLabelAb>
             </MyLabel>
-            {/* react datepicker 이용한 생년월일 */}
-            {/* <div>
-              <DatePicker
-                name="birth"
-                selected={birthDate}
-                onChange={handleBirthDateChange}
-                dateFormat="yyyy-MM-dd"
-                isClearable
-                placeholderText="생년월일을 선택하세요"
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                minDate={new Date('1900-01-01')}
-                maxDate={endDay}
-                dayOfWeekShort={['일', '월', '화', '수', '목', '금', '토']}
-                dateFormatCalendar="yyyy년 M월"
-                monthShortNames={['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']}
-              />
-              {birthDate && (
-                <button id="delete" onClick={handleDeleteClick}>
-                  삭제
-                </button>
-              )}
-            </div> */}
+
 
             {/* 회원가입 버튼 */}
             <SubmitButton type="button" style={{ backgroundColor: submitBtn.bgColor }}
