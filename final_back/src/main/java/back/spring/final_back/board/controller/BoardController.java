@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,11 +64,20 @@ public class BoardController {
         return result;
     }
 
+	// 게시글 수정(Update)
+	@GetMapping("/updateBoardList")
+	public BoardDto updateBoardList(BoardDto BoardDto) {
+		logger.info("RestMemberController : memberUpdate select");
+		BoardDto mList = boardService.selectBoardDetail(BoardDto);
+		return mList;
+	}
+
     // 게시판 수정(Update)
-    @GetMapping("/updateBoardList")
-    public int updateBoardList(BoardDto boardDto) {
-        logger.info("RestMemberController : memberUpdate");
+    @PostMapping("/updateBoardList")
+    public int updateBoardListSubmit(@RequestBody BoardDto boardDto) {
+        logger.info("RestMemberController : memberUpdate submit");
         int result = 0;
+		logger.error("boardDto = {}", boardDto);
         result = boardService.updateBoardList(boardDto);
         return result;
     }
