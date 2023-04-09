@@ -14,13 +14,23 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FestivalDto {
-	private int festId;
-	private String festTitle;
-	private String festLocation;
-	private String festCategory;
-	private Date festStartday; // date
-	private Date festEndday; // date
-	private String festDetail;
-	private int festPrice;
-	private String festDesc;
+	private String festMId;
+	private String festMAuthor;
+	private String festMName;
+	private Date festMStart; // date
+	private Date festMEnd; // date
+	private String festMLoc;
+	private String festMImg;
+	private String festMGenre;
+	private String festMArea;
 }
+
+//private int festId;
+//private String festTitle;
+//private String festLocation;
+//private String festCategory;
+//private Date festStartday; // date
+//private Date festEndday; // date
+//private String festDetail;
+//private int festPrice;
+//private String festDesc;

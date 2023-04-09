@@ -1,18 +1,15 @@
 import React from "react";
+import '../../styles/mainhomepage.css'
+
 
 const CarouselOne = ({ festival }) => {
   // console.log(festival);
 
   return (
-    <img
-      src={festival.main_img}
-      style={{
-        width: 280,
-        height: 350,
-        objectFit: "cover",
-        border: "1px solid black",
-      }}
-    />
+    <a  href={"/productsDetail/" + festival.mainId}>   {/* ??? */}
+    <img className="compo_carouselone_img"
+    src={festival.mainImg}    />
+    </a>
   );
 };
 

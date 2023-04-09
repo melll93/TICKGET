@@ -15,6 +15,7 @@ div .chat {
 div .chat.container {
   display: flex;
   flex-direction: column;
+
   height: 80vh;
   width: 80vw;
   margin-top: 5vh;
@@ -75,4 +76,16 @@ div .chat.inputBox {
   display: block;
   height: 90%;
   width: 5%;
+}
+
+.myChat {
+  display: flex;
+  justify-content: right;
+  text-align: right;
+}
+
+.otherChat {
+  display: flex;
+  justify-content: left;
+  text-align: left;
 }

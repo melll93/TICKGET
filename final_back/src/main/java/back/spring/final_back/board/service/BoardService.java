@@ -21,4 +21,8 @@ public interface BoardService {
     // 게시판 삭제(Delete)
     int deleteBoardList(BoardDto boardDto);
 
+    List<Map<String, Object>> qnaList(Map<String, Object> pMap);
+
+    int qnaInsert(Map<String, Object> pMap);
+
 }

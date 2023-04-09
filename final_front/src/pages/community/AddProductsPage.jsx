@@ -26,6 +26,7 @@ const[festEndday, setFestend] = useState("")
 const[festDetail, setFestdetail] = useState("")
 const[festPrice, setFestprice] = useState("")
 const[festDesc, setFestdesc] = useState("")
+const[festArea, setFestArea] = useState("")
 const [festImages, setFestImages] = useState("");
 const [festImageUrl, setFestImageUrl] = useState(null);
 const imgRef = useRef();
@@ -33,15 +34,16 @@ const imgRef = useRef();
 
 const festivalInsert=async()=>{
   const festival={
-    festTitle,
-    festLocation,
-    festCategory,
-    festStartday,
-    festEndday,
+    festMName:festTitle,
+    festMLoc: festLocation,
+    festMGenre:festCategory,
+    festMStart:festStartday,
+    festMEnd:festEndday,
     festDetail,
     festPrice,
     festDesc,
-    festImageUrl
+    festMArea:festArea,      
+    festMImg:festImageUrl
     }
     const res =await FestivalInsertDB(festival)
     console.log(festival)
@@ -79,6 +81,9 @@ const inuptTitle = useCallback((e) => {
     const inputDesc = useCallback((e) => {
       setFestdesc (e)
     },[])
+    const inputArea = useCallback((e) => {
+      setFestArea (e)
+    },[])
     const inputFestUrl = useCallback((e) => {
       setFestImageUrl (e)
     },[])
@@ -95,6 +100,7 @@ const inuptTitle = useCallback((e) => {
         setFestImages(reader.result);
       }
   }
+
 
 
 //클라우디너리에 업로드
@@ -116,7 +122,8 @@ const inuptTitle = useCallback((e) => {
       .then((res) => res.json())
       .then((res) => {
         setFestImageUrl(res.secure_url);
-        console.log(res.secure_url)
+        console.log(res.secure_url
+      )
       })
       .catch((err) => console.log(err));
   };
@@ -128,10 +135,11 @@ const inuptTitle = useCallback((e) => {
 
   return (
     <>
+
 <div style={{ textAlign:'center', width:'600px', marginLeft:'100px'}}><br/> {/* //등록 div 시작 */}
 
-<select className="form-select" id="fest_category" aria-label="Default select example" style={{width:'150px'}}  onChange={(e)=>{inputCategory (e.target.value)}}>
-  <option  defaultValue disabled>카테고리</option>
+<select defaultValue="1" className="form-select" id="fest_category" aria-label="Default select example" style={{width:'150px'}}  onChange={(e)=>{inputCategory (e.target.value)}}>
+  <option  value="1" disabled >카테고리 (NOT NULL)</option>
   <option  value="FESTIVAL"  >FESTIVAL</option>
   <option  value="CONCERT"  >CONCERT</option>
 </select><br/>
@@ -144,12 +152,22 @@ const inuptTitle = useCallback((e) => {
  <input className="form-control" type="file" accept='image/*' id="festivalsImg" onChange={festImage} ref={imgRef}/> <br/>
  <div className="form-floating mb-3">
   <input type="text" className="form-control" id="festTitle" onChange={(e)=>{inuptTitle(e.target.value)}} />
-  <label htmlFor="floatingInput"> festTitle </label>
+  <label htmlFor="floatingInput"> festTitle  (NOT NULL) </label>
 </div>
 <div className="form-floating mb-3">
   <input type="text" className="form-control" id="festDesc" onChange={(e)=>{inputDesc  (e.target.value)}}/>
   <label htmlFor="floatingInput"> desc </label>
 </div>
+<select defaultValue="" className="form-select" id="festArea" aria-label="Default select example" style={{width:'150px'}}  onChange={(e)=>{inputArea (e.target.value)}}>
+  <option  disabled value="" >지역  (NOT NULL) </option>
+  <option  value="서울"   >서울</option>
+  <option  value="경기/인천"  >경기/인천</option>
+  <option  value="충청/강원"  >충청/강원</option>
+  <option  value="대구/경북"  >대구/경북</option>
+  <option  value="부산/경남"  >부산/경남</option>
+  <option  value="광주/전라"  >광주/전라</option>
+  <option  value="제주"  >제주</option>
+</select><br/>
 <div className="form-floating">
   <input type="text" className="form-control" id="festLocation"onChange={(e)=>{inputLocation (e.target.value)}} />
   <label htmlFor="floatingInput">location</label>
@@ -160,11 +178,11 @@ const inuptTitle = useCallback((e) => {
 </div><br />
 <div className="form-floating mb-3">
   <input type="date" className="form-control" id="festStartday" name="startDay" onChange={(e)=>{inputStartday (e.target.value)}}/>
-  <label htmlFor="floatingInput"> 행사시작일 </label>
+  <label htmlFor="floatingInput"> 행사시작일 (NOT NULL)</label>
 </div>
 <div className="form-floating mb-3">
   <input type="date" className="form-control" id="festEndday" name="startDay" onChange={(e)=>{inputEndday (e.target.value)}}/>
-  <label htmlFor="floatingInput"> 행사종료일 </label>
+  <label htmlFor="floatingInput"> 행사종료일  (NOT NULL)</label>
 </div>
  <div className="form-floating">
   <textarea className="form-control" placeholder="Leave a comment here" id="festDetail" style={{height: '300px',}} onChange={(e)=>{inputDetail (e.target.value)}}></textarea>

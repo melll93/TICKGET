@@ -1,8 +1,17 @@
-export const SET_AUTH = 'USER_AUTH/SET_AUTH'
-export const setAuth = (auth, googleProvider) => {
+export const LOGIN = "user/LOGIN";
+export const LOGOUT = "user/LOGOUT";
+
+export const reduxLogin = (user) => {
   return {
-    type: SET_AUTH,
-    auth: auth,
-    googleProvider: googleProvider
-  }
-}
+    type: LOGIN,
+    user: user,
+    isLogin: true,
+  };
+};
+export const reduxLogout = () => {
+  return {
+    type: LOGOUT,
+    user: {},
+    isLogin: false,
+  };
+};

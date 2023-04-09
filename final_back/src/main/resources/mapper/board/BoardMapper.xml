@@ -4,40 +4,65 @@
 <mapper namespace="back.spring.final_back.board.repository.BoardDao">
     <!-- 게시글 전체조회-->
     <select id="selectBoardList" resultType="BoardDto">
-        select * from board
+        select * from board_together
     </select>
 
     <!-- 게시글 상세보기-->
     <select id="selectBoardDetail" resultType="BoardDto">
-        select * from board where board_no=#{boardNo}
+        select * from board_together where board_tg_no=#{boardTgNo}
     </select>
 
     <!-- 게시글 추가 -->
     <insert id="insertBoardList" parameterType="BoardDto">
-        INSERT INTO board
+        INSERT INTO board_together
         VALUES(
-            #{boardNO}
-            , #{memberId}
-            , #{boardTitle}
-            , #{boardContent}
-            , #{boardDate}
-            , #{boardViews}
-            , #{boardSuperNo}
-            , #{boardGroupNo}
-            , #{boardDepth}
-            , #{boardReplyCount}
-            , #{boardCheck}
+            #{boardTgNo}
+            , #{boardTgMemId}
+            , #{boardTgTitle}
+            , #{boardTgContent}
+            , #{boardTgDate}
+            , #{boardTgViews}
+            , #{boardTgSuperNo}
+            , #{boardTgGroupNo}
+            , #{boardTgDepth}
+            , #{boardTgReplyCount}
+            , #{boardTgCheck}
+            , #{boardTgSecret}
         )
     </insert>
     <!-- 게시슬 삭제 -->
     <delete id="deleteBoardList" parameterType="BoardDto">
-        delete from board where board_no=#{boardNo}
+        delete from board_together where board_tg_no=#{boardTgNo}
     </delete>
     <!-- 게시글 수정 -->
     <update id="updateBoardList" parameterType="BoardDto">
-        update board set
-            board_title = #{boardTitle} ,
-            board_content = #{boardContent}
-        where board_no = #{boardNo}
+        update board_together set
+            board_tg_title = #{boardTgTitle} ,
+            board_tg_content = #{boardTgContent}
+        where board_tg_no = #{boardTgNo}
     </update>
+    
+    <!--================== 수정 중 ===================-->
+    <select id="qnaList" parameterType="java.util.HashMap" resultType="map">
+		select
+				board_tg_no
+				, member_tg_id
+				, board_tg_title
+				, board_tg_content
+				, board_tg_date
+				, board_tg_views
+				, board_tg_super_no
+				, board_tg_group_no
+		from	qna q, member230324 m
+		where	q.mem_no = m.mem_no
+	</select>
+
+    <insert id="qnaInsert" parameterType="map">
+		INSERT INTO qna(qna_bno, mem_no, qna_title
+						,qna_content, qna_type, qna_secret
+						,qna_hit, qna_date)
+			VALUES(qna_seq.nextval, #{mem_no}, #{qna_title}
+				, #{qna_content}, '양도', #{qna_secret}
+				,#{qna_hit}, to_char(sysdate,'YYYY-MM-DD'))
+	</insert>
 </mapper>

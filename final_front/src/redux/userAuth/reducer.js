@@ -1,14 +1,21 @@
-import { SET_AUTH } from "./action";
-import userAuth from "./state";
-export default function userInfo(state = userAuth, action){
+import { LOGIN, LOGOUT } from "./action";
+import { userInfo } from "./state";
+export default function userStatus(state = userInfo, action) {
   switch (action.type) {
-    case SET_AUTH:
+    case LOGIN:
       return {
         ...state,
-        auth: action.auth,
-        googleProvider: action.googleProvider,
+        user: action.user,
+        isLogin: action.isLogin,
+      };
+
+    case LOGOUT:
+      return {
+        ...state,
+        user: action.user,
+        isLogin: action.isLogin,
       };
     default:
       return { ...state };
   }
-};
+}

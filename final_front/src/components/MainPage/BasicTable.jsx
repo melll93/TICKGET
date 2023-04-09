@@ -3,38 +3,34 @@ import { Table } from "react-bootstrap";
 
 const BasicTable = () => {
     return (
-        <Table striped bordered hover>
+        <Table solid hover>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td colSpan={2}>글 제목 1</td>
-                    <td>시간</td>
+                <tr style={{ borderBottom: 'white' }}>
+                    <td><img src="./images_key/WOONGS.jpg" style={{ width: '40px', height: '40px', borderRadius: '50%' }}></img></td>
+                    <td colSpan={2}>fest_m_name 1</td>
+                    <td>runtime</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td colSpan={2}>글 제목 2</td>
-                    <td>시간</td>
+                <tr style={{ borderBottom: 'white' }}>
+                    <td><img src="./images_key/WOONGS.jpg" style={{ width: '40px', height: '40px', borderRadius: '50%' }}></img></td>
+                    <td colSpan={2}>fest_m_name 2</td>
+                    <td>runtime</td>
                 </tr>
-                <tr>
-                    <td>3</td>
-                    <td colSpan={2}>글 제목 3</td>
-                    <td>시간</td>
+                <tr style={{ borderBottom: 'white' }}>
+                    <td><img src="./images_key/WOONGS.jpg" style={{ width: '40px', height: '40px', borderRadius: '50%' }}></img></td>
+                    <td colSpan={2}>fest_m_name 3</td>
+                    <td>runtime</td>
                 </tr>
-                <tr>
-                    <td>4</td>
-                    <td colSpan={2}>글 제목 4</td>
-                    <td>시간</td>
+                <tr style={{ borderBottom: 'white' }}>
+                    <td><img src="./images_key/WOONGS.jpg" style={{ width: '40px', height: '40px', borderRadius: '50%' }}></img></td>
+                    <td colSpan={2}>fest_m_name 4</td>
+                    <td>runtime</td>
                 </tr>
-                <tr>
-                    <td>5</td>
-                    <td colSpan={2}>글 제목 5</td>
-                    <td>시간</td>
+                <tr style={{ borderBottom: 'white' }}>
+                    <td><img src="./images_key/WOONGS.jpg" style={{ width: '40px', height: '40px', borderRadius: '50%' }}></img></td>
+                    <td colSpan={2}>fest_m_name 5</td>
+                    <td>runtime</td>
                 </tr>
-                <tr>
-                    <td>6</td>
-                    <td colSpan={2}>글 제목 6</td>
-                    <td>시간</td>
-                </tr>
+
             </tbody>
         </Table>
     )

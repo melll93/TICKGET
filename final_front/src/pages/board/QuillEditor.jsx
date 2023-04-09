@@ -1,9 +1,15 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import ReactQuill from "react-quill";
 import { uploadImageDB } from "../../axios/board/boardLogic";
-const QuillEditor = ({value,handleContent,quillRef,files,handleFiles,}) => {
+const QuillEditor = ({
+  value,
+  handleContent,
+  quillRef,
+  files,
+  handleFiles,
+}) => {
   console.log(files);
-  console.log(Array.isArray(files))
+  console.log(Array.isArray(files));
   //const dispatch = useDispatch();
   const imageHandler = useCallback(() => {
     console.log(files);
@@ -36,12 +42,12 @@ const QuillEditor = ({value,handleContent,quillRef,files,handleFiles,}) => {
       }
       // 폼데이터를 서버에 넘겨 multer로 이미지 URL 받아오기
       const res = await uploadImageDB(formData);
-      files.push(res.data)
-      console.log(res.data);    //xxx.png => wendy.png
+      files.push(res.data);
+      console.log(res.data); //xxx.png => wendy.png
       if (!res.data) {
         console.log("이미지 업로드에 실패하였습니다.");
       }
-      const url ="http://localhost:8888/board/imageGet?imageName=$`{res.data}`";
+      const url = `http://localhost:8888/board/imageGet?imageName=${res.data}`;
       const quill = quillRef.current.getEditor();
       /* ReactQuill 노드에 대한 Ref가 있어야 메서드들을 호출할 수 있으므로
         useRef()로 ReactQuill에 ref를 걸어주자.
@@ -94,13 +100,26 @@ const QuillEditor = ({value,handleContent,quillRef,files,handleFiles,}) => {
   useEffect(() => {
     console.log("QuillEditor useEffect");
   }, []);
+  console.log(value);
   const formats = [
     //'font',    "header",    "bold",    "italic",    "underline",    "strike",    "blockquote",    "list",
-    "bullet",    "indent",    "link",    "image",    "align",    "color",    "background",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "align",
+    "color",
+    "background",
   ];
   return (
     <div
-      style={{height: "550px", display: "flex", justifyContent: "center",   padding: "0px", }}  >
+      style={{
+        height: "550px",
+        display: "flex",
+        justifyContent: "center",
+        padding: "0px",
+      }}
+    >
       <ReactQuill
         ref={quillRef}
         style={{ height: "470px", width: "100%" }}

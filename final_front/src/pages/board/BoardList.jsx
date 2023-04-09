@@ -4,7 +4,8 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import {
-  deleteBoardListDB, selectBoardListDB,
+  deleteBoardListDB,
+  selectBoardListDB,
 } from "../../axios/board/boardLogic";
 
 const BoardList = () => {
@@ -20,7 +21,6 @@ const BoardList = () => {
   }, []);
 
   // 전체 게시글 조회
-  /* BACK- BoardDto - @AllArgsConstructor selectBoardList 얘는가능 */
   const jsonBoardList = async () => {
     // axios를 사용하여 게시글 목록을 가져옴
     const res = await selectBoardListDB();
@@ -33,34 +33,6 @@ const BoardList = () => {
     }
   };
 
-  console.log(boardList);
-
-  // 게시글 수정하기 (아직 미구현)
-  const boardUpdate = () => {};
-
-  // 게시글 삭제하기
-  /* BACK- BoardDto - @AllArgsConstructor deleteBoardList 얘는 불 가능 */
-  /* BACK- BoardDto - @RequiredArgsConstructor,  @NoArgsConstructor deleteBoardList 얘는 가능 */
-  const boardDelete = async () => {
-    if (checkedItems.length === 0) {
-      alert("삭제할 게시글을 선택해주세요.");
-      return;
-    }
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      // 삭제할 게시글들의 번호들을 전달하여, axios를 사용하여 백엔드에서 삭제 처리
-      const res = await deleteBoardListDB(checkedItems);
-      console.log(res);
-      if (res.data === "success") {
-        // 삭제가 성공하면 게시글 목록을 다시 불러와서 화면을 갱신함
-        alert("삭제되었습니다.");
-        jsonBoardList();
-        setCheckedItems([]);
-      } else {
-        alert("삭제 실패");
-      }
-    }
-  };
-
   if (boardList === null) {
     return <div>데이터를 불러오는 중입니다...</div>;
   }
@@ -70,7 +42,6 @@ const BoardList = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th style={{ textAlign: "center", width: "80px" }}>구분</th>
             <th style={{ textAlign: "center", width: "80px" }}>번호</th>
             <th>제목</th>
             <th style={{ textAlign: "center", width: "180px" }}>작성자</th>
@@ -79,48 +50,48 @@ const BoardList = () => {
         </thead>
         <tbody>
           {boardList.map((board) => (
-            <tr key={board.boardNo}>
-              <td style={{ textAlign: "center" }}>
-                <input type="checkbox" value={board.boardNo} checked={checkedItems.includes(board.boardNo)}
-                  onChange={(e) => {const checked = e.target.checked;const value = parseInt(e.target.value);
-                    if (checked) {
-                      setCheckedItems([...checkedItems, value]);
-                    } else {
-                      setCheckedItems(
-                        checkedItems.filter((item) => item !== value)
-                      );
-                    }
-                  }}
-                />
-              </td>
-              <td style={{ textAlign: "center" }}>{board.boardNo}</td>
+            <tr key={board.boarTgdNo}>
+              <td style={{ textAlign: "center" }}>{board.boardTgNo}</td>
               <td>
                 <button
-                  style={{border: "none",background: "none",color: "blue",cursor: "pointer",}}
-                  onClick={() =>navigate({
-                    pathname: "/together/BoardDetail/"+board.boardNo,
-                    state:{board}
-                  })}>
-                  {board.boardTitle}
+                  style={{
+                    border: "none",
+                    background: "none",
+                    color: "blue",
+                    cursor: "pointer",
+                  }}
+                  onClick={() =>
+                    navigate({
+                      pathname: "/together/BoardDetail/" + board.boardTgNo,
+                      state: { board },
+                    })
+                  }
+                >
+                  {board.boardTgTitle}
                 </button>
               </td>
-              <td style={{ textAlign: "center" }}>{board.memberId}</td>
-              <td style={{ textAlign: "center" }}>{board.boardDate}</td>
+              <td style={{ textAlign: "center" }}>{board.boardTgMemId}</td>
+              <td style={{ textAlign: "center" }}>{board.boardTgDate}</td>
             </tr>
           ))}
         </tbody>
       </Table>
-      <Button style={{ backgroundColor: "black", color: "white" }}onClick={jsonBoardList}>
+      <Button
+        variant="warning"
+        style={{ backgroundColor: "black", color: "white" }}
+        onClick={jsonBoardList}
+      >
         전체조회
       </Button>
       &nbsp;
-      <Button style={{ backgroundColor: "black" }} onClick={() => navigate("/together/write")}>
+      <Button
+        variant="success"
+        style={{ backgroundColor: "black" }}
+        onClick={() => navigate("/together/write")}
+      >
         글 작성하기
       </Button>
       &nbsp;
-      <Button style={{ backgroundColor: "black" }} onClick={boardDelete}>
-        글 삭제하기
-      </Button>
     </div>
   );
 };
