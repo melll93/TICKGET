@@ -60,14 +60,15 @@ export const insertBoardListDB = (board_together) => {
     }
   });
 };
-/* 작성 */
+/*  */
 export const updateBoardListDB = (board) => {
+  console.log('board?? ?SD S, ',board)
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
-        method: "get",
+        method: "post",
         url: "http://localhost:8888/board/updateBoardList",
-        params: board,
+        data: board,
       });
       resolve(response);
     } catch (error) {

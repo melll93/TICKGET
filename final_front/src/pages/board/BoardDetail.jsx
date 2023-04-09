@@ -23,9 +23,7 @@ const BoardDetail = () => {
   useEffect(() => {
     const asyncDB = async () => {
       const res = await selectBoardDetailDB({ boardTgNo });
-      console.log("여기보세요 =- ", res.data);
       const result = JSON.stringify(res.data);
-      console.log("내가바로 result다 : " + result);
       const jsonDoc = JSON.parse(result);
       setBoard({
         boardTgNo: jsonDoc.boardTgNo,
@@ -35,7 +33,6 @@ const BoardDetail = () => {
         boardTgDate: jsonDoc.boardTgDate,
       });
       if (res.data) {
-        console.log("if문 안에 있니?", res.data);
         // 가져온 게시글 정보를 board state에 저장
         setBoard(res.data);
       } else {
@@ -120,7 +117,10 @@ const BoardDetail = () => {
               {/* <Button style={{ margin: "10px" }} onClick={() =>navigate({
                     pathname: "/together/BoardDetail/"+board.boardTgNo,
                     state:{board}})}> */}
-              <Button style={{ marginLeft: "10px" }}onClick={() => navigate("/together/boardUpdate")}>
+              <Button style={{ marginLeft: "10px" }}onClick={() =>navigate({
+                    pathname: "/together/BoardUpdate/"+board.boardTgNo,
+                    state:{board}
+                  })}>
                 수정
               </Button>
             </div>

@@ -1,176 +1,161 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect, useState, useCallback } from "react";
+import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   selectBoardDetailDB,
-  updateBoardListDB,
+  updateBoardListDB
 } from "../../axios/board/boardLogic";
-import QuillEditor from "./QuillEditor";
-import {
-  BButton,
-  ContainerDiv,
-  FormDiv,
-  HeaderDiv,
-} from "../../styles/formStyle";
-import { Form } from "react-bootstrap";
-import MyFilter from "./MyFilter";
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 
-const BoardUpdate = () => {
-  const naviagte = useNavigate();
-  const { no } = useParams(); //해시값
-  console.log("detail의 boardTgNo :" + no);
+const BoardDetail = () => {
+  const navigate = useNavigate();
+  const { boardTgNo } = useParams();
+  const [boardTgTitle, setTitle] = useState(""); //사용자가 입력한 내용 담기
+  const [boardTgDate, setDate] = useState(""); //사용자가 입력한 내용 담기
+  const [boardTgContent, setContent] = useState(""); //사용자가 입력한 내용 담기
 
-  const [board_tg_title, setTitle] = useState("");
-  const [board_tg_content, setContent] = useState("");
-  const [files, setFiles] = useState([]);
-  const [board_tg_secret, setSecret] = useState(false);
-  const [tTitle, setTTitle] = useState("일반");
-  const [types] = useState(["일반", "결제", "양도", "회원", "수업"]);
-
-  const quillRef = useRef();
+  const [board, setBoard] = useState({
+    boardTgNo: 0,
+    boardTgMemId: "",
+    boardTgTitle: "",
+    boardTgContent: "",
+    boardTgDate: "",
+  },);
 
   useEffect(() => {
-    //한 건 가져오기
-    const BoardDetail = async () => {
-      const board = {
-        boardTgNo: no,
-        boardTgTitle: board_tg_title,
-        boardTgContent: board_tg_content,
-      };
-      const res = await selectBoardDetailDB(board);
-      console.log("useEffect 의 res : "+res)
-      const temp = JSON.stringify(res.data); //문자열 전환
-      console.log(temp);
-      const jsonDoc = JSON.parse(temp); // 배열로 접근처리
-      setTitle(jsonDoc[0].board_tg_title);
-      setContent(jsonDoc[0].board_tg_content);
-      //여기서 parse는 'true'를 boolean true변경
-      setSecret(JSON.parse(jsonDoc[0].boardTgSecret));
-      //작성자가 아닌데? 수정해도 되나?
-      if (jsonDoc[0].MEM_NO !== sessionStorage.getItem("no")) {
-        //글에 회원번호와 로그인한 no가 달라? 네 -> 다른사람글
-        return console.log("작성자가 아닙니다.");
+    const asyncDB = async () => {
+      const res = await selectBoardDetailDB({ boardTgNo });
+      const result = JSON.stringify(res.data);
+      const jsonDoc = JSON.parse(result);
+      console.log('asda = ', jsonDoc);
+      setBoard({
+        boardTgNo: jsonDoc.boardTgNo,
+        boardTgMemId: jsonDoc.boardTgMemId,
+        boardTgTitle: jsonDoc.boardTgTitle,
+        boardTgContent: jsonDoc.boardTgContent,
+        boardTgDate: jsonDoc.boardTgDate,
+      });
+      if (res.data) {
+        console.log(jsonDoc);
+        setBoard(res.data);
+      } else {
+        console.log("게시글 조회 실패");
       }
     };
-    BoardDetail();
-  }, [no]);
 
-  const boardUpdate = async () => {
-    const board = {
-      boardTgNo: no,
-      boardTgTitle: board_tg_title,
-      boardTgContent: board_tg_content,
+    asyncDB();
+    return () => {
     };
-    const res = await updateBoardListDB(board);
-    console.log(res.data);
-    alert("게시글 수정 완료?");
-    naviagte("/together")
-  };
-
-  const handleContent = useCallback((value) => {
-    console.log(value);
-    setContent(value);
   }, []);
 
-  const handleFiles = useCallback(
-    (value) => {
-      setFiles([...files, value]);
-    },
-    [files]
-  );
+  const updateBoard = async() => {
 
+    if (!boardTgTitle) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+
+    const board ={
+      boardTgNo: boardTgNo, // 게시글 번호
+      boardTgTitle: boardTgTitle, // 제목 추가
+      boardTgContent: boardTgContent, // 내용 추가
+      boardTgDate: boardTgDate,
+    }
+
+    console.log('board = ', JSON.stringify(board));
+    try{
+      const res = await updateBoardListDB(board)
+      console.log(res.data)
+    } catch(error){
+      console.log(error)
+    }
+    alert("게시글 수정 완료");
+    navigate("/together")
+  }
+   
   const handleTitle = useCallback((e) => {
     setTitle(e);
   }, []);
-
-  const handleTTitle = useCallback((e) => {
-    setTTitle(e);
+  const handleDate = useCallback((e) => {
+    setDate(e);
+  }, []);
+  const handleContent = useCallback((e) => {
+    setContent(e);
   }, []);
 
   return (
-    <>
-      <ContainerDiv>
-        <HeaderDiv>
-          <h3 style={{ marginLeft: "10px" }}>게시판 글수정</h3>
-        </HeaderDiv>
-        <FormDiv>
-          <div style={{ width: "100%", maxWidth: "2000px" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "10px",
-              }}
-            >
-              <h2>제목</h2>
-              <div style={{ display: "flex" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    marginRight: "10px",
-                    alignItems: "center",
-                  }}
-                >
-                  <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    checked={board_tg_secret === true ? true : false}
-                    readOnly
-                    style={{ paddingLeft: "46px" }}
-                    onClick={() => {
-                      setSecret(!board_tg_secret);
-                    }}
-                  />
-                </div>
-                <MyFilter
-                  types={types}
-                  id={"qna_type"}
-                  title={tTitle}
-                  handleTitle={handleTTitle}
-                ></MyFilter>
-                <BButton
-                  style={{ marginLeft: "10px" }}
-                  onClick={() => {
-                    boardUpdate();
-                  }}
-                >
-                  글수정
-                </BButton>
-              </div>
+    <div>
+      <Sidebar />
+      <div className="center">
+        <Header />
+        <br />
+        <h2>게시글 훔쳐봐야지? 가야지?</h2>
+        <div>
+          <form method="post">
+            <div>
+              <label>수정 할 제목</label>
+              <br/>
+              <input id="board_tg_title" type="text" maxLength="50"
+              value={boardTgTitle}
+            style={{width:"300px",height:'40px' , margin:"10px",
+            border:'1px solid lightGray'}}
+            placeholder="수정할 제목을 입력해 주세요"
+            onChange={(e) => {
+              handleTitle(e.target.value);
+            }}
+            />
             </div>
-            <input
-              id="dataset-title"
-              type="text"
-              placeholder="제목을 입력하세요."
-              defaultValue={board_tg_title}
-              style={{
-                width: "100%",
-                height: "40px",
-                border: "1px solid lightGray",
-              }}
-              onChange={(e) => {
-                handleTitle(e.target.value);
-              }}
+
+            <div>
+              <label>작성자</label>
+              <span style={{ width: "300px", margin: "10px" }} type="text" name="boardTgMemId" required class="form-control form-control-lg" id="inputLarge">
+                {board.boardTgMemId}
+              </span>
+            </div>
+            
+            <div>
+              <label>수정된 날짜</label>
+              <br/>
+              <input id="board_tg_date" type="text" maxLength="50"
+              value={boardTgDate}
+            style={{width:"300px",height:'40px' , margin:"10px",
+            border:'1px solid lightGray'}}
+            placeholder="YYYY-MM-DD"
+            onChange={(e) => {
+              handleDate(e.target.value);
+            }}
             />
-            <hr />
-            <h3 style={{ textAlign: "left", marginBottom: "10px" }}>
-              상세내용
-            </h3>
-            <QuillEditor
-              value={board_tg_content}
-              handleContent={handleContent}
-              quillRef={quillRef}
-              files={files}
-              handleFiles={handleFiles}
-              onChange={(e) => {
-                handleContent(e.target.value);
-              }}
+            </div>
+
+            <div>
+              <label>수정할 내용</label>
+              <br/>
+              <input id="board_tg_date" type="text" maxLength="50"
+              value={boardTgContent}
+            style={{width: "300px", margin: "10px", height: "300px", fontSize: "20px"}}
+            placeholder="수정할 내용을 입력해 주세요"
+            onChange={(e) => {
+              handleContent(e.target.value);
+            }}
             />
-          </div>
-        </FormDiv>
-      </ContainerDiv>
-    </>
+            </div>
+
+            <div>
+              <label class="form-block">첨부파일</label>
+              <input style={{ width: "300px", margin: "10px" }}
+                type="file" name="attach" accept="image/*" multiple="multiple" class="form-control"/>
+            </div>
+            
+            <div>
+               <Button variant="success" style={{marginLeft:'10px'}}onClick={()=>{updateBoard()}}>수정하기</Button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default BoardUpdate;
+export default BoardDetail;

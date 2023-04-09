@@ -101,7 +101,7 @@ function App({ mkImageUploader }) {
           element={<BoardDetail board={board} />}
         />
         <Route path="together/boardDetail/" element={<BoardDetail />} />
-        <Route path="together/boardUpdate/" element={<BoardUpdate />} />
+        <Route path="together/boardUpdate/:boardTgNo" element={<BoardUpdate />} />
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route
