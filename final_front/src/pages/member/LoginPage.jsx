@@ -50,7 +50,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
         profile_img: res.data.memberProfileImage,
       }
       dispatch(reduxLogin(user))
-    })
+    }).then(navigate("/"))
     console.log(reduxUser);
   }
 
