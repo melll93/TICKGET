@@ -4,7 +4,8 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import {
-  deleteBoardListDB, selectBoardListDB,
+  deleteBoardListDB,
+  selectBoardListDB,
 } from "../../axios/board/boardLogic";
 
 const BoardList = () => {
@@ -41,7 +42,6 @@ const BoardList = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th style={{ textAlign: "center", width: "80px" }}>구분</th>
             <th style={{ textAlign: "center", width: "80px" }}>번호</th>
             <th>제목</th>
             <th style={{ textAlign: "center", width: "180px" }}>작성자</th>
@@ -51,27 +51,22 @@ const BoardList = () => {
         <tbody>
           {boardList.map((board) => (
             <tr key={board.boarTgdNo}>
-              <td style={{ textAlign: "center" }}>
-                <input type="checkbox" value={board.boardTgNo} checked={checkedItems.includes(board.boardTgNo)}
-                  onChange={(e) => {const checked = e.target.checked;const value = parseInt(e.target.value);
-                    if (checked) {
-                      setCheckedItems([...checkedItems, value]);
-                    } else {
-                      setCheckedItems(
-                        checkedItems.filter((item) => item !== value)
-                      );
-                    }
-                  }}
-                />
-              </td>
               <td style={{ textAlign: "center" }}>{board.boardTgNo}</td>
               <td>
                 <button
-                  style={{border: "none",background: "none",color: "blue",cursor: "pointer",}}
-                  onClick={() =>navigate({
-                    pathname: "/together/BoardDetail/"+board.boardTgNo,
-                    state:{board}
-                  })}>
+                  style={{
+                    border: "none",
+                    background: "none",
+                    color: "blue",
+                    cursor: "pointer",
+                  }}
+                  onClick={() =>
+                    navigate({
+                      pathname: "/together/BoardDetail/" + board.boardTgNo,
+                      state: { board },
+                    })
+                  }
+                >
                   {board.boardTgTitle}
                 </button>
               </td>
@@ -81,15 +76,22 @@ const BoardList = () => {
           ))}
         </tbody>
       </Table>
-      <Button variant="warning" style={{ backgroundColor: "black", color: "white" }}onClick={jsonBoardList}>
+      <Button
+        variant="warning"
+        style={{ backgroundColor: "black", color: "white" }}
+        onClick={jsonBoardList}
+      >
         전체조회
       </Button>
       &nbsp;
-      <Button variant="success" style={{ backgroundColor: "black" }} onClick={() => navigate("/together/write")}>
+      <Button
+        variant="success"
+        style={{ backgroundColor: "black" }}
+        onClick={() => navigate("/together/write")}
+      >
         글 작성하기
       </Button>
       &nbsp;
-
     </div>
   );
 };

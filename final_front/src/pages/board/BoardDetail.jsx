@@ -4,10 +4,11 @@ import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteBoardListDB,
-  selectBoardDetailDB
+  selectBoardDetailDB,
 } from "../../axios/board/boardLogic";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import { FormDiv } from "../../styles/formStyle";
 
 const BoardDetail = () => {
   const navigate = useNavigate();
@@ -68,64 +69,115 @@ const BoardDetail = () => {
         <Header />
         <br />
         <h2>게시글 훔쳐봐야지? 가야지?</h2>
-        <div>
-          <form method="post">
-            <input type="hidden" name="boardTgNo" value="" />
-            <div>
-              <label>제목</label>
-              <span style={{ width: "300px", margin: "10px" }} type="text" name="boardTgTitle" required class="form-control form-control-lg" id="inputLarge">
-                {board.boardTgTitle}
-              </span>
-            </div>
+        <FormDiv style={{ width: "98%", margin: "10px" }}>
+          <div>
+            <form method="post">
+              <input type="hidden" name="boardTgNo" value="" />
+              <div>
+                <label>제목</label>
+                <span
+                  style={{ width: "98%", margin: "10px" }}
+                  type="text"
+                  name="boardTgTitle"
+                  required
+                  class="form-control form-control-lg"
+                  id="inputLarge"
+                >
+                  {board.boardTgTitle}
+                </span>
+              </div>
 
-            <div>
-              <label>작성자</label>
-              <span style={{ width: "300px", margin: "10px" }} type="text" name="boardTgMemId" required class="form-control form-control-lg" id="inputLarge">
-                {board.boardTgMemId}
-              </span>
-            </div>
-            
-            <div>
-              <label>날짜</label>
-              <span style={{ width: "300px", margin: "10px" }} type="text" name="boardTgMemDate" required class="form-control form-control-lg" id="inputLarge">
-                {board.boardTgDate}
-              </span>
-            </div>
+              <div>
+                <label>작성자</label>
+                <span
+                  style={{ width: "98%", margin: "10px" }}
+                  type="text"
+                  name="boardTgMemId"
+                  required
+                  class="form-control form-control-lg"
+                  id="inputLarge"
+                >
+                  {board.boardTgMemId}
+                </span>
+              </div>
 
-            <div>
-              <label>내용</label>
-              <span style={{width: "300px", margin: "10px", height: "300px", fontSize: "40px"}}
-                name="boardContent" required rows="10" class="form-control" id="exampleTextarea">
-                {board.boardTgContent}
-              </span>
-            </div>
+              <div>
+                <label>날짜</label>
+                <span
+                  style={{ width: "98%", margin: "10px" }}
+                  type="text"
+                  name="boardTgMemDate"
+                  required
+                  class="form-control form-control-lg"
+                  id="inputLarge"
+                >
+                  {board.boardTgDate}
+                </span>
+              </div>
 
-            <div>
-              <label class="form-block">첨부파일</label>
-              <input style={{ width: "300px", margin: "10px" }}
-                type="file" name="attach" accept="image/*" multiple="multiple" class="form-control"/>
-            </div>
-            
-            <div>
-              <Button style={{ margin: "10px" }} onClick={() => navigate("/together")}>
-                목록으로(완)
-              </Button>
-              &nbsp;
-              <Button style={{ margin: "10px" }} onClick={deleteBoardList}>
-                삭제(완)
-              </Button>
-              {/* <Button style={{ margin: "10px" }} onClick={() =>navigate({
+              <div>
+                <label>내용</label>
+                <span
+                  style={{
+                    width: "98%",
+                    margin: "10px",
+                    height: "300px",
+                    fontSize: "20px",
+                  }}
+                  name="boardContent"
+                  required
+                  rows="10"
+                  class="form-control"
+                  id="exampleTextarea"
+                >
+                  {board.boardTgContent}
+                </span>
+              </div>
+
+              <div>
+                <label class="form-block">첨부파일</label>
+                <input
+                  style={{ width: "98%", margin: "10px" }}
+                  type="file"
+                  name="attach"
+                  accept="image/*"
+                  multiple="multiple"
+                  class="form-control"
+                />
+              </div>
+
+              <div style={{ textAlign: "center" }}>
+                <Button
+                  style={{ margin: "10px", backgroundColor: "black" }}
+                  onClick={() => navigate("/together")}
+                >
+                  목록으로
+                </Button>
+                &nbsp;
+                <Button
+                  style={{ margin: "10px", backgroundColor: "black" }}
+                  onClick={deleteBoardList}
+                >
+                  삭제하자
+                </Button>
+                {/* <Button style={{ margin: "10px" }} onClick={() =>navigate({
                     pathname: "/together/BoardDetail/"+board.boardTgNo,
                     state:{board}})}> */}
-              <Button style={{ marginLeft: "10px" }}onClick={() =>navigate({
-                    pathname: "/together/BoardUpdate/"+board.boardTgNo,
-                    state:{board}
-                  })}>
-                수정
-              </Button>
-            </div>
-          </form>
-        </div>
+                <Button
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
+                  onClick={() =>
+                    navigate({
+                      pathname: "/together/BoardUpdate/" + board.boardTgNo,
+                      state: { board },
+                    })
+                  }
+                >
+                  수정하자
+                </Button>
+              </div>
+            </form>
+          </div>
+        </FormDiv>
       </div>
     </div>
   );
