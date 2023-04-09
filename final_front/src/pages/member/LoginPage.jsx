@@ -8,10 +8,15 @@ import Sidebar from "../../components/Sidebar";
 import { GoogleButton, MyInput, MyLabel, MyP, PwEye } from "../../styles/formStyle";
 import { loginGoogle, loginH } from "../../util/authLogic";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { reduxLogin } from "../../redux/userAuth/action";
 /* import { EyeFill, EyeSlashFill } from 'react-icons/io5';
  */
 
 const LoginPage = ({ user, setUser, authLogic }) => {
+  const dispatch = useDispatch();
+  const reduxUser = useSelector(state => state.userStatus.user);
+
   const navigate = useNavigate()
   const CALLBACK_URL = "http://localhost:3333/oauth/login/kakao/callback";
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${CALLBACK_URL}&response_type=code`;
@@ -21,30 +26,40 @@ const LoginPage = ({ user, setUser, authLogic }) => {
    * id, password로 처리할 경우 추후 보안처리할 때 변수를 수정해야 할 가능성이 높아보임.
    * 이벤트 처리는 각 변수를 따로 state로 처리하고 BE로 전송할 member(tempUser)객체를 따로 담아줌.
    *******************************************************************************/
-  const [userId, setUserId] = useState();
-  const [userPw, setUserPw] = useState();
+  const [userId, setUserId] = useState("");
+  const [userPw, setUserPw] = useState("");
 
   // 로그인 필요 정보
-  const [member, setMember] = useState({
+  const member = {
     memberId: userId,
     memberPassword: userPw
-  });
+  };
 
   const login = async (paramMember) => {
     const result = await axios({
       method: "POST",
-      url: "",
-      member: paramMember
+      url: "http://localhost:8888/member/login/local",
+      data: paramMember
+    }).then((res) => {
+      // console.log(res.data)
+      const user = {
+        id: res.data.memberId,
+        email: res.data.memberEmail,
+        name: res.data.memberName,
+        nickname: res.data.memberNickname,
+        profile_img: res.data.memberProfileImage,
+      }
+      dispatch(reduxLogin(user))
     })
-    console.log(result);
+    console.log(reduxUser);
   }
 
   /************************************comment************************************
    * 조장 생각 : 변수와 메소드가 많아지며 명칭이 많아져 코드가 많아질수록 혼동할 가능성이 높아짐.
    * 하나의 메소드로 핸들링할 수 있는 경우, 각 변수별 메소드를 만드는 것이 아닌 하나의 메소드 내에서 케이스를 다룬다.
-   * => handleChange
+   * => handleChange 참고
    * 짧은 코드의 메소드같은 경우 따로 선언하기보단 Component의 onChange/onClick내에서 익명함수로 처리한다.
-   * => <Button>로그인</Button>
+   * => <Button>로그인</Button> 참고
    *******************************************************************************/
   // tempUser 값이 변경될 때마다 이벤트
   // const changeUser = (event) => {
@@ -196,8 +211,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             {/************************** 구글 끝 **************************/}
           </div>
           {/************************************************* 소셜 로그인 끝 *************************************************/}
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 };

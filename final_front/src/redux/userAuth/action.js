@@ -1,14 +1,14 @@
 export const LOGIN = "user/LOGIN";
 export const LOGOUT = "user/LOGOUT";
 
-export const login = (user) => {
+export const reduxLogin = (user) => {
   return {
     type: LOGIN,
     user: user,
     isLogin: true,
   };
 };
-export const logout = () => {
+export const reduxLogout = () => {
   return {
     type: LOGOUT,
     user: {},
