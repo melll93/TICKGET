@@ -7,6 +7,7 @@ import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
 import { GoogleButton, MyInput, MyLabel, MyP, PwEye } from "../../styles/formStyle";
 import { loginGoogle, loginH } from "../../util/authLogic";
+import axios from "axios";
 /* import { EyeFill, EyeSlashFill } from 'react-icons/io5';
  */
 
@@ -15,44 +16,65 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   const CALLBACK_URL = "http://localhost:3333/oauth/login/kakao/callback";
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${CALLBACK_URL}&response_type=code`;
   // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=6a3741ce2b33e194c3e799c86fdc2cb2&redirect_uri=${CALLBACK_URL}&response_type=code`;
-  
+
+  /************************************comment************************************
+   * id, password로 처리할 경우 추후 보안처리할 때 변수를 수정해야 할 가능성이 높아보임.
+   * 이벤트 처리는 각 변수를 따로 state로 처리하고 BE로 전송할 member(tempUser)객체를 따로 담아줌.
+   *******************************************************************************/
+  const [userId, setUserId] = useState();
+  const [userPw, setUserPw] = useState();
+
   // 로그인 필요 정보
-  const [tempUser, setTempUser] = useState({
-    id: "",
-    password: ""
-  });
-  const [password, setPassword] = useState({ 
-    type: "password",
-    visible: false
+  const [member, setMember] = useState({
+    memberId: userId,
+    memberPassword: userPw
   });
 
-  // tempUser 값이 변경될 때마다 이벤트
-  const changeUser = (event) => {
-    const id = event.currentTarget.id;
-    const value = event.target.value;
-    console.log(id)
-    console.log(value)
-    setTempUser({...tempUser, [id]: value});
-  };
-
-  const handleIdChange = (event) => {
-    const id = event.currentTarget.id;
-    const value = event.target.value;
-    console.log(id)
-    setTempUser({ ...tempUser, [id]: value });
+  const login = async (paramMember) => {
+    const result = await axios({
+      method: "POST",
+      url: "",
+      member: paramMember
+    })
+    console.log(result);
   }
 
-  const handlePasswordChange = (event) => {
-    const id = event.currentTarget.id;
-    console.log()
-    if (id === "password") {
-      if (!password.visible) {
-        setPassword({ ...password, type: 'text', visible: true });
-      } else {
-        setPassword({ ...password, type: 'password', visible: false });
-      }
+  /************************************comment************************************
+   * 조장 생각 : 변수와 메소드가 많아지며 명칭이 많아져 코드가 많아질수록 혼동할 가능성이 높아짐.
+   * 하나의 메소드로 핸들링할 수 있는 경우, 각 변수별 메소드를 만드는 것이 아닌 하나의 메소드 내에서 케이스를 다룬다.
+   * => handleChange
+   * 짧은 코드의 메소드같은 경우 따로 선언하기보단 Component의 onChange/onClick내에서 익명함수로 처리한다.
+   * => <Button>로그인</Button>
+   *******************************************************************************/
+  // tempUser 값이 변경될 때마다 이벤트
+  // const changeUser = (event) => {
+  //   const id = event.currentTarget.id;
+  //   const value = event.target.value;
+  //   console.log(id)
+  //   console.log(value)
+  //   setTempUser({ ...tempUser, [id]: value });
+  // };
+
+  // const handleIdChange = (event) => {
+  //   const id = event.currentTarget.id;
+  //   const value = event.target.value;
+  //   console.log(id)
+  //   setTempUser({ ...tempUser, [id]: value });
+  // }
+
+  const handleChange = (event) => {
+    const type = event.target.type;
+    const targetId = event.target.id;
+    console.log(type)
+
+    if (targetId == "id") {
+      setUserId(event.target.value);
+    } else if (targetId == "pw") {
+      setUserPw(event.target.value);
     }
   }
+  console.log("id : " + userId);
+  console.log("pw : " + userPw);
 
 
   // 자체 로그인 
@@ -60,7 +82,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   // axios 구현
   const loginLocal = async () => {
     try {
-      const result = await loginH(tempUser);
+      const result = await loginH(member);
       console.log(result);
       console.log(result.user.id);
       // 세션 스토리지에 아이디값 저장
@@ -91,21 +113,37 @@ const LoginPage = ({ user, setUser, authLogic }) => {
         <div className="login">
           {/********************** 자체 회원 로그인 **********************/}
           <Form>
+            {/**************************************************** ID START ***************************************************/}
+            <MyLabel htmlFor="id"> ID
+              <MyInput id="id" type="text" name="member_id" placeholder="ID를 입력해주세요."
+                onChange={(event) => { handleChange(event) }
+                } />
+            </MyLabel>
+            {/***************************************************** ID END ****************************************************/}
+            {/**************************************************** PW START ***************************************************/}
+            <MyLabel htmlFor="pw"> Password
+              <MyInput id="pw" type="password" autoComplete="off" name="member_pw" placeholder="비밀번호를 입력해주세요."
+                onChange={(event) => { handleChange(event) }
+                } />
+              {/* <div id="password" onClick={(event) => { handlePasswordChange(event) }} style={{ color: `${password.visible ? "gray" : "lightgray"}` }}> */}
+              {/* <PwEye className="fa fa-eye fa-lg"></PwEye> */}
+              {/* </div> */}
+            </MyLabel>
+            {/***************************************************** PW END ****************************************************/}
             {/*  */}
-            <MyLabel htmlFor="id"> ID     
-          <MyInput type="text" id="id" name="member_id" placeholder="ID를 입력해주세요." 
-            onChange={(event)=>changeUser(event)}/>   
-        </MyLabel>
-        <MyLabel htmlFor="pw"> Password
-          <MyInput type={password.type} autoComplete="off" id="pw" name="member_pw" placeholder="비밀번호를 입력해주세요."
-            onChange={(event)=>changeUser(event)}/>
-          <div id="password" onClick={(event)=> {handlePasswordChange(event)}} style={{color: `${password.visible?"gray":"lightgray"}`}}>
-            <PwEye className="fa fa-eye fa-lg"></PwEye>
-          </div>
-        </MyLabel>
-            {/*  */}
+            <div style={{ textAlign: "right" }}>
+              {/* <Button variant="primary" type="login" onClick={() => { loginLocal() }}> */}
+              {/* axios 이벤트로 처리 여기서 */}
+              <Button variant="primary" type="login" onClick={(e) => {
+                e.preventDefault()
+                login(member)
+              }}>
+                로그인
+              </Button>
+            </div>
 
-{/*           <Form.Group className="mb-3" controlId="id">
+
+            {/*           <Form.Group className="mb-3" controlId="id">
         <Form.Label>ID</Form.Label>
         <Form.Control type="text" placeholder="ID를 입력해주세요." onChange={(event) => {changeUser}}  />
       </Form.Group>
@@ -119,13 +157,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
         </div>
       </Form.Group> */}
 
-            <div style={{ textAlign: "center" }}>
-              {/* <Button variant="primary" type="login" onClick={() => { loginLocal() }}> */}
-              {/* axios 이벤트로 처리 여기서 */}
-              <Button variant="primary" type="login" onClick={ loginLocal }>
-                로그인
-              </Button>
-            </div>
+
             <br />
             <div style={{ textAlign: "center" }}>
               <MyP>신규 사용자이신가요?&nbsp;<Link to="/register" className="text-decoration-none" style={{ color: "blue" }}>회원가입으로</Link></MyP>
@@ -136,7 +168,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           {/***************************************************************/}
           <hr />
 
-          {/************************* 소셜 로그인 *************************/}
+          {/************************************************** 소셜 로그인 **************************************************/}
           <div className="socialLogin">
             {/********************** 네이버 로그인 버튼 **********************/}
             <NaverLogin user={user} setUser={setUser} />
@@ -163,7 +195,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             </div>
             {/************************** 구글 끝 **************************/}
           </div>
-          {/************************ 소셜 로그인 끝 ************************/}
+          {/************************************************* 소셜 로그인 끝 *************************************************/}
         </div>
       </div>
     </>
