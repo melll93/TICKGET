@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import MapContainer from "./MapContainer";
+import { BButton, FormDiv } from "../../../styles/formStyle";
 
 function LandingPage() {
   const [InputText, setInputText] = useState("");
@@ -17,6 +18,7 @@ function LandingPage() {
 
   return (
     <>
+    <br/>
       <form
         style={{
           display: "flex",
@@ -28,13 +30,16 @@ function LandingPage() {
         onSubmit={handleSubmit}
       >
         <input
+          style={{ width: "300px", height: "30px" }}
           placeholder="검색어를 입력하세요"
           onChange={onChange}
           value={InputText}
         />
-        <button type="submit">검색</button>
+        <BButton style={{ height: "30px" }} type="submit">
+          검색
+        </BButton>
       </form>
-      <br/>
+      <br />
       <MapContainer searchPlace={Place} />
     </>
   );

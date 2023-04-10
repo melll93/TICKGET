@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -10,7 +10,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { FormDiv } from "../../styles/formStyle";
 
-const BoardDetail = () => {
+const TogetherBoardUpdate = () => {
   const navigate = useNavigate();
   const { boardTgNo } = useParams();
   const [boardTgTitle, setTitle] = useState(""); //사용자가 입력한 내용 담기
@@ -87,9 +87,21 @@ const BoardDetail = () => {
   const handleTitle = useCallback((e) => {
     setTitle(e);
   }, []);
-  const handleDate = useCallback((e) => {
-    setDate(e);
-  }, []);
+
+  const handleDate = (date) => {
+    // "YYYY-MM-DD" 형식이 아닐 경우 에러 처리
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!regex.test(date)) {
+      alert("날짜 형식이 올바르지 않습니다.");
+      return;
+    }
+    // "YYYY-MM-DD" 형식으로 변환
+    const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+    // 변환된 값을 상태 변수에 저장
+    setDate(formattedDate);
+    // setDate();
+  };
+
   const handleContent = useCallback((e) => {
     setContent(e);
   }, []);
@@ -145,7 +157,7 @@ const BoardDetail = () => {
                 <br />
                 <input
                   id="board_tg_date"
-                  type="text"
+                  type="date"
                   maxLength="50"
                   value={boardTgDate}
                   style={{
@@ -155,7 +167,10 @@ const BoardDetail = () => {
                     border: "1px solid lightGray",
                     borderRadius: "10px",
                   }}
-                  placeholder={"YYYY-MM-DD 형식으로 입력해주세요. ex) : "+new Date().toISOString().substr(0, 10)}
+                  placeholder={
+                    "YYYY-MM-DD 형식으로 입력해주세요. ex) : " +
+                    new Date().toISOString().substr(0, 10)
+                  }
                   onChange={(e) => {
                     handleDate(e.target.value);
                   }}
@@ -165,7 +180,7 @@ const BoardDetail = () => {
               <div>
                 <label>수정할 내용</label>
                 <br />
-                <input
+                <textarea
                   id="board_tg_date"
                   type="text"
                   maxLength="50"
@@ -229,4 +244,4 @@ const BoardDetail = () => {
   );
 };
 
-export default BoardDetail;
+export default TogetherBoardUpdate;

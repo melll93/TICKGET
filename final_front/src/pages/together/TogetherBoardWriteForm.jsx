@@ -11,11 +11,11 @@ import {
   FormDiv,
   HeaderDiv,
 } from "../../styles/formStyle";
-import BoardFileInsert from "./BoardFileInsert";
-import MyFilter from "./MyFilter";
-import QuillEditor from "./QuillEditor";
+import TogetherQuillEditor from "./TogetherQuillEditor";
+import TogetherMyFilter from "./TogetherMyFilter";
+import TogetherBoardFileInsert from "./TogetherBoardFileInsert";
 
-const BoardWriteForm = ({ board_together }) => {
+const TogetherBoardWriteForm = ({ board_together }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
 
   const navigate = useNavigate();
@@ -130,11 +130,11 @@ const BoardWriteForm = ({ board_together }) => {
                     }}
                   />
                 </div>
-                <MyFilter
+                <TogetherMyFilter
                   title={tTitle}
                   types={types}
                   handleTitle={handleTTitle}
-                ></MyFilter>
+                ></TogetherMyFilter>
                 <BButton
                   variant="success"
                   style={{ marginLeft: "10px" }}
@@ -181,7 +181,7 @@ const BoardWriteForm = ({ board_together }) => {
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h3>상세내용</h3>
-            <QuillEditor
+            <TogetherQuillEditor
               value={content}
               handleContent={handleContent}
               quillRef={quillRef}
@@ -189,22 +189,25 @@ const BoardWriteForm = ({ board_together }) => {
               handleFiles={handleFiles}
             />
 
-            <BoardFileInsert files={files} />
+            <TogetherBoardFileInsert files={files} />
+          </div>
+          <br/>
+          <div style={{ textAlign: "center" }}>
+            <div style={{ marginBottom: "20px" }}>
+              <Button onClick={() => window.history.back()}>뒤로가기</Button>
+              <Button
+                style={{ marginLeft: "10px" }}
+                onClick={() => navigate("/together")}
+              >
+                목록으로
+              </Button>
+            </div>
           </div>
         </FormDiv>
       </ContainerDiv>
-      <div style={{ marginBottom: "20px" }}>
-        <Button onClick={() => window.history.back()}>뒤로가기</Button>
-        <Button
-          style={{ marginLeft: "10px" }}
-          onClick={() => navigate("/together")}
-        >
-          목록으로
-        </Button>
-      </div>
       <Footer />
     </>
   );
 };
 
-export default BoardWriteForm;
+export default TogetherBoardWriteForm;

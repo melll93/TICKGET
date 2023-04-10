@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import back.spring.final_back.board.controller.BoardController;
-import back.spring.final_back.board.repository.BoardDao;
 import back.spring.final_back.board.repository.MarketDao;
 import back.spring.final_back.board.repository.MarketDto;
 import lombok.RequiredArgsConstructor;

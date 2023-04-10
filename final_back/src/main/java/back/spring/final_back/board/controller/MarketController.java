@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
-import back.spring.final_back.board.repository.BoardDto;
 import back.spring.final_back.board.repository.MarketDto;
-import back.spring.final_back.board.service.BoardService;
 import back.spring.final_back.board.service.MarketService;
 import lombok.RequiredArgsConstructor;
 

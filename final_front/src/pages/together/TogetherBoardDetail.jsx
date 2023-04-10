@@ -10,7 +10,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { FormDiv } from "../../styles/formStyle";
 
-const BoardDetail = () => {
+const TogetherBoardDetail = () => {
   const navigate = useNavigate();
   const { boardTgNo } = useParams();
 
@@ -80,7 +80,7 @@ const BoardDetail = () => {
                   type="text"
                   name="boardTgTitle"
                   required
-                  class="form-control form-control-lg"
+                  className="form-control form-control-lg"
                   id="inputLarge"
                 >
                   {board.boardTgTitle}
@@ -94,7 +94,7 @@ const BoardDetail = () => {
                   type="text"
                   name="boardTgMemId"
                   required
-                  class="form-control form-control-lg"
+                  className="form-control form-control-lg"
                   id="inputLarge"
                 >
                   {board.boardTgMemId}
@@ -108,7 +108,7 @@ const BoardDetail = () => {
                   type="text"
                   name="boardTgMemDate"
                   required
-                  class="form-control form-control-lg"
+                  className="form-control form-control-lg"
                   id="inputLarge"
                 >
                   {board.boardTgDate}
@@ -124,10 +124,11 @@ const BoardDetail = () => {
                     height: "300px",
                     fontSize: "20px",
                   }}
+                  type="html"
                   name="boardContent"
                   required
                   rows="10"
-                  class="form-control"
+                  className="form-control"
                   id="exampleTextarea"
                 >
                   {board.boardTgContent}
@@ -135,14 +136,14 @@ const BoardDetail = () => {
               </div>
 
               <div>
-                <label class="form-block">첨부파일</label>
+                <label className="form-block">첨부파일</label>
                 <input
                   style={{ width: "98%", margin: "10px" }}
                   type="file"
                   name="attach"
                   accept="image/*"
                   multiple="multiple"
-                  class="form-control"
+                  className="form-control"
                 />
               </div>
 
@@ -183,4 +184,4 @@ const BoardDetail = () => {
   );
 };
 
-export default BoardDetail;
+export default TogetherBoardDetail;
