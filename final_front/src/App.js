@@ -3,9 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
-import BoardDetail from "./pages/board/BoardDetail";
-import BoardUpdate from "./pages/board/BoardUpdate";
-import BoardWriteForm from "./pages/board/BoardWriteForm";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
@@ -36,6 +33,9 @@ import CalendarPage from "./pages/personal/CalendarPage";
 /* import PaySucPage from "./pages/personal/PaySucPage"; */
 // import PayFailPage from "./pages/personal/PayFailPage";
 import mkImageUploader from "./axios/market/mkImageUploader";
+import TogetherBoardWriteForm from "./pages/together/TogetherBoardWriteForm";
+import TogetherBoardDetail from "./pages/together/TogetherBoardDetail";
+import TogetherBoardUpdate from "./pages/together/TogetherBoardUpdate";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -95,13 +95,13 @@ function App({ mkImageUploader }) {
         <Route path="/payment/:festMId" element={<PaymentPage />} />
 
         {/* TogetherPage Routes*/}
-        <Route path="together/write/*" element={<BoardWriteForm />} />
+        <Route path="together/write/*" element={<TogetherBoardWriteForm />} />
         <Route
           path="together/boardDetail/:boardTgNo"
-          element={<BoardDetail board={board} />}
+          element={<TogetherBoardDetail board={board} />}
         />
-        <Route path="together/boardDetail/" element={<BoardDetail />} />
-        <Route path="together/boardUpdate/:boardTgNo" element={<BoardUpdate />} />
+        <Route path="together/boardDetail/" element={<TogetherBoardDetail />} />
+        <Route path="together/boardUpdate/:boardTgNo" element={<TogetherBoardUpdate />} />
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route

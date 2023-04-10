@@ -6,21 +6,21 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface BoardDao {
+public interface TogetherDao {
     // 게시판 조회(SelectAll)
-    public List<BoardDto> selectBoardList();
+    public List<TogetherDto> selectBoardList();
 
     // 게시글 상세보기(SelectOne)
-    public BoardDto selectBoardDetail(BoardDto boardDto);
+    public TogetherDto selectBoardDetail(TogetherDto togetherDto);
 
     // 게시판 등록(Insert)
-    public int insertBoardList(BoardDto boardDto);
+    public int insertBoardList(TogetherDto togetherDto);
 
     // 게시판 수정(Update)
-    public int updateBoardList(BoardDto boardDto);
+    public int updateBoardList(TogetherDto togetherDto);
 
     // 게시판 삭제(Delete)
-    public int deleteBoardList(BoardDto boardDto);
+    public int deleteBoardList(TogetherDto togetherDto);
 
     //-----------------아직 작업 중----------------
     public int qnaInsert(Map<String, Object> pMap);

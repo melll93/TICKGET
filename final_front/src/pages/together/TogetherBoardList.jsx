@@ -3,12 +3,9 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteBoardListDB,
-  selectBoardListDB,
-} from "../../axios/board/boardLogic";
+import { selectBoardListDB } from "../../axios/board/boardLogic";
 
-const BoardList = () => {
+const TogetherBoardList = () => {
   console.log("BoardList");
   const navigate = useNavigate();
   // 현재 체크된 항목들의 배열
@@ -17,11 +14,11 @@ const BoardList = () => {
   const [boardList, setBoardList] = useState([]);
   // 컴포넌트가 처음 로딩될 때, 백엔드 API를 호출하여 게시글 목록을 가져옴
   useEffect(() => {
-    jsonBoardList();
+    selectBoardList();
   }, []);
 
   // 전체 게시글 조회
-  const jsonBoardList = async () => {
+  const selectBoardList = async () => {
     // axios를 사용하여 게시글 목록을 가져옴
     const res = await selectBoardListDB();
     console.log(res.data);
@@ -79,7 +76,7 @@ const BoardList = () => {
       <Button
         variant="warning"
         style={{ backgroundColor: "black", color: "white" }}
-        onClick={jsonBoardList}
+        onClick={selectBoardList}
       >
         전체조회
       </Button>
@@ -96,4 +93,4 @@ const BoardList = () => {
   );
 };
 
-export default BoardList;
+export default TogetherBoardList;

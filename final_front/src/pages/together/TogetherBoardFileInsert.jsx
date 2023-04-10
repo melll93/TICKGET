@@ -1,6 +1,6 @@
 import React from "react";
 
-const BoardFileInsert = ({ files }) => {
+const TogetherBoardFileInsert = ({ files }) => {
   console.log(files);
   return (
     <div
@@ -24,4 +24,4 @@ const BoardFileInsert = ({ files }) => {
   );
 };
 
-export default BoardFileInsert;
+export default TogetherBoardFileInsert;

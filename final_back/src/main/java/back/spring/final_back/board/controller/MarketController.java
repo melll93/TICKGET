@@ -34,9 +34,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
 
-import back.spring.final_back.board.repository.BoardDto;
 import back.spring.final_back.board.repository.MarketDto;
-import back.spring.final_back.board.service.BoardService;
 import back.spring.final_back.board.service.MarketService;
 import lombok.RequiredArgsConstructor;
 
