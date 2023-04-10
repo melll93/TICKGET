@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -17,12 +19,27 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Object localMemberLogin(MemberDto memberDto) {
-        Object result = null;
-//        MemberDto memberDto = new MemberDto();
-//        memberDto.setMemberId(member.get("memberId").toString());
-//        memberDto.setMemberPassword(member.get("memberPassword").toString());
-        log.info(memberDto.toString());
-        result = memberDao.localMemberLogin(memberDto);
+        Map<String, Object> result = new HashMap<>();
+
+        if (memberDto.getMemberId() == null || memberDto.getMemberId() == "") {
+            result.put("code", 0);
+            result.put("msg", "ID를 입력해주세요.");
+            return result;
+        } else if (memberDto.getMemberPassword() == null || memberDto.getMemberPassword() == "") {
+            result.put("code", 0);
+            result.put("msg", "PASSWORD를 입력해주세요.");
+            return result;
+        } else {
+            MemberDto user = memberDao.localMemberLogin(memberDto);
+            if (user == null) {
+                result.put("code", 0);
+                result.put("msg", "일치하는 회원 정보가 없습니다.");
+                return result;
+            } else {
+                result.put("code", 1);
+                result.put("user", user);
+            }
+        }
         log.info(result.toString());
         return result;
     }
