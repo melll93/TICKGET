@@ -37,6 +37,9 @@ import TogetherBoardWriteForm from "./pages/together/TogetherBoardWriteForm";
 import TogetherBoardDetail from "./pages/together/TogetherBoardDetail";
 import TogetherBoardUpdate from "./pages/together/TogetherBoardUpdate";
 
+import CarpoolWrietForm from "./pages/carpool/CarpoolWriteForm";
+import CarpoolDetail from "./pages/carpool/CarpoolDetail";
+
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
   const [user, setUser] = useState();
@@ -96,12 +99,14 @@ function App({ mkImageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<TogetherBoardWriteForm />} />
-        <Route
-          path="together/boardDetail/:boardTgNo"
-          element={<TogetherBoardDetail board={board} />}
-        />
+        <Route path="together/boardDetail/:boardTgNo" element={<TogetherBoardDetail board={board} />}/>
         <Route path="together/boardDetail/" element={<TogetherBoardDetail />} />
         <Route path="together/boardUpdate/:boardTgNo" element={<TogetherBoardUpdate />} />
+
+        {/* CarpoolPage Routes */}
+        <Route path="carpool/write/*" element={<CarpoolWrietForm />} />
+        <Route path="carpool/carpoolDetail/:carpoolNo" element={<CarpoolDetail />}/>
+
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route

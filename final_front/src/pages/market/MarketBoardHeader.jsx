@@ -34,7 +34,7 @@ import { mk_boardDeleteDB } from '../../axios/market/marketLogic';
          <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
          <div style={{display: 'flex', justifyContent:"space-between"}}>
             <div style={{overflow: "auto"}}>
-               <span style={{marginBottom:'15px', fontSize: "30px", display:"block"}}>
+               <span style={{marginLeft:'10px' , marginBottom:'12px', fontSize: "30px", display:"block"}}>
                {detail.board_mk_title}
                </span>
             </div>
@@ -52,16 +52,16 @@ import { mk_boardDeleteDB } from '../../axios/market/marketLogic';
                </div>
             }
          </div>
-         <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '14px'}}>
+         <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '16px'}}>
             <div style={{display: 'flex', flexDirection: 'column'}}>
-               <span>작성자 : {detail.mem_name}</span>
-               <span>작성일 : {detail.board_mk_date}</span>
+               <span>▪ {detail.mem_name}</span> 
+               <span>▪ {detail.board_mk_date} | 조회수 {detail.board_mk_hit}</span>
             </div>
-            <div style={{display: 'flex', flexDirection: 'column', marginRight:'10px'}}>
-               <div style={{display: 'flex'}}>
-               <span style={{marginRight:'5px'}}>조회수 :</span>
+            <div style={{display: 'flex', flexDirection: 'column', marginRight:'10px' , fontSize:'16px'}}>
+{/*                <div style={{display: 'flex'}}>
+               <span style={{marginLeft:'10px' }}>조회수 :</span>
                <div style={{display: 'flex', justifyContent: 'flex-end', width:'30px'}}>{detail.board_mk_hit}</div>
-               </div>
+               </div> */}
                <div style={{display: 'flex'}}>
                {detail.COMMENT?<>
                   <span style={{marginRight:'5px'}}>댓글수 :</span>

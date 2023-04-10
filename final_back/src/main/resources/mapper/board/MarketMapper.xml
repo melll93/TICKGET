@@ -10,6 +10,36 @@
 <!-- 게시글 조회 -->
 <select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
   select * from board_market
+  <if test='condition!=null and condition.equals("전체")'>
+    <choose>
+      <when test='content!=null and condition.equals("제목")'>
+        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
+      </when>
+      <when test='content!=null and condition.equals("장소")'>
+        WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+      </when>
+      <when test='content!=null and condition.equals("작성자")'>
+        WHERE mem_name LIKE CONCAT('%', #{content}, '%')
+      </when>
+    </choose>
+  </if>
+  <if test='condition!=null and !condition.equals("전체")'>
+    <where>
+      <if test='content!=null and condition.equals("제목")'>
+        AND board_mk_title LIKE CONCAT('%', #{content}, '%')
+      </if>
+      <if test='content!=null and condition.equals("장소")'>
+        AND mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+      </if>
+      <if test='content!=null and condition.equals("작성자")'>
+        AND mem_name LIKE CONCAT('%', #{content}, '%')
+      </if>
+    </where>
+  </if>
+  order by board_mk_date DESC
+</select>
+
+ <!--   select * from board_market
   <if test='content!=null'>
     where 
     <choose>
@@ -17,7 +47,7 @@
         board_mk_title LIKE CONCAT('%', #{content}, '%')
       </when>
       <when test='condition!=null and condition.equals("장소")'>
-        mk_tikcket_place LIKE CONCAT('%', #{content}, '%')
+        mk_ticket_place LIKE CONCAT('%', #{content}, '%')
       </when>
       <when test='condition!=null and condition.equals("작성자")'>
         mem_name LIKE CONCAT('%', #{content}, '%')
@@ -25,7 +55,7 @@
     </choose>
   </if>
   order by board_mk_date DESC
-</select>
+</select>-->
 
 
 
@@ -68,10 +98,17 @@ VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
      <if test='mkTicketPrice!=null'>
      mk_ticket_price = #{mkTicketPrice},
      </if>
-     board_mk_date = CURDATE()
+     <if test='boardMkFilename!=null'>
+     board_mk_filename = #{boardMkFilename},
+     </if>
+     <if test='boardMkFileurl!=null'>
+     board_mk_fileurl = #{boardMkFileurl},
+     </if>
+        <if test='boardMkDate == null'>
+      board_mk_date = CURDATE()
+    </if>
      WHERE board_mk_no = #{boardMkNo} 
 </update>
-
 
 
 
