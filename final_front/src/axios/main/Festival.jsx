@@ -37,6 +37,15 @@ export const DeleteFestReviewDB = async(freview) => {
     };
 
 
+    export const DeleteFestivalDB = async(festival) => {
+      const result = await axios({
+            method: "get",
+            url: "http://localhost:8888/festival/festivalDelete",
+            params: festival,
+          }).then((res) => res.data);
+          return result;
+        };
+
 
   export const SeoulFestivalListDB = (festival) => {
     return new Promise((resolve, reject) => {

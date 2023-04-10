@@ -28,17 +28,10 @@ public class MarketDto {
 	private String mkTicketCount;
 	private String mkTicketPlace;
 	private String memName;
+	private String boardMkFilename;
+	private String boardMkFileurl;
+	private String content;
+	private String condition;
 
-	// private int don_bno;
-	// private String don_title;
-	 //private String don_pw;
-	 //private Date don_ticket_date;
-	 //private String don_ticket_seat;
-	 //private int don_ticket_price;
-	 //private int don_ticket_count;
-	 //private String don_content;
-	 //private String mem_name;
-	 //private Date don_board_date;
-	 //private int don_board_hit;
 
 }

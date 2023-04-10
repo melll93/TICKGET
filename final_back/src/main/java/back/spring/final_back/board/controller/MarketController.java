@@ -1,10 +1,26 @@
 package back.spring.final_back.board.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
 
@@ -31,10 +49,10 @@ public class MarketController {
 
 	// 마켓 게시판 게시글 조회
 	@GetMapping("/mk_boardList")
-	public List<MarketDto> mk_boardList() {
+	public List<MarketDto> mk_boardList(MarketDto marketDto) {
 		logger.info("MarketController : mk_boardList 호출");
 		List<MarketDto> dList = null;
-		dList = marketService.mk_boardList();
+		dList = marketService.mk_boardList(marketDto);
 		return dList;
 	}
 
@@ -46,10 +64,6 @@ public class MarketController {
 		qList = marketService.mk_boardDetail(marketDto);
 		return qList;
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -78,6 +92,7 @@ public class MarketController {
 		int result = 0;
 		result = marketService.mk_boardDelete(marketDto);
 		return result;
-
 	}
-}
+	
+		
+	}
