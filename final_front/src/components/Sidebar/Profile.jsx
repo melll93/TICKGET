@@ -1,29 +1,30 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const reduxUser = useSelector(state => state.userStatus.user);
   const [token, setToken] = useState();
   const navigate = useNavigate();
 
-  const getProfile = async () => {
-    if (window.localStorage.getItem("login_domain") === "kakao") {
-      try {
-        let data = await window.Kakao.API.request({
-          url: "/v2/user/me",
-        });
-        // setUserId(data.id);
-        // window.localStorage.setItem("userId", userId);
-        // setUserNickname(data.properties.nickname);
-        // window.localStorage.setItem("userNickname", userNickname);
-        // setUserImage(data.properties.profile_image);
-        // window.localStorage.setItem("userImage", userImage);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
+  const getUser = () => {
+    if (reduxUser != {} || reduxUser != null) {
+      console.log(reduxUser);
     }
-  };
+  }
+  // const getProfile = async () => {
+  //   if (window.localStorage.getItem("login_domain") === "kakao") {
+  //     try {
+  //       let data = await window.Kakao.API.request({
+  //         url: "/v2/user/me",
+  //       });
+  //       console.log(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   const logout = () => {
     window.localStorage.clear();
@@ -31,9 +32,10 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getProfile();
-  });
-
+    getUser();
+    // getProfile();
+    // console.log(reduxUser);
+  }, []);
   return (
     <div className="Profile">
       <Link to="/mypage">

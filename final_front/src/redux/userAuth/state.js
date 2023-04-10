@@ -1,11 +1,5 @@
 export const userInfo = {
-  user: {
-    id: "",
-    email: "",
-    name: "",
-    nickname: "",
-    profile_img: "",
-  },
+  user: {},
   isLogin: false,
 };
 export default userInfo;

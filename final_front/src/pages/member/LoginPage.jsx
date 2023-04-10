@@ -43,7 +43,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
     }).then((res) => {
       console.log(res);
       if (res.data.code === 0) {
-        window.prompt(res.data.msg)
+        // 팝업창 구현
+        window.alert(res.data.msg)
       } else if (res.data.code === 1) {
         const userResponse = res.data.user;
         const user = {
@@ -54,6 +55,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           profile_img: userResponse.memberProfileImage,
         }
         dispatch(reduxLogin(user))
+        window.alert("로그인 성공")
         navigate("/")
       }
     }).catch(console.log)
