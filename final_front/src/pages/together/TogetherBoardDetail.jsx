@@ -2,13 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  deleteBoardListDB,
-  selectBoardDetailDB,
-} from "../../axios/board/boardLogic";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { FormDiv } from "../../styles/formStyle";
+import { deleteTogetherDB, selectTogetherDetailDB } from "../../axios/together/TogetherLogic";
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
@@ -23,7 +20,7 @@ const TogetherBoardDetail = () => {
   });
   useEffect(() => {
     const asyncDB = async () => {
-      const res = await selectBoardDetailDB({ boardTgNo });
+      const res = await selectTogetherDetailDB({ boardTgNo });
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
       setBoard({
@@ -56,7 +53,7 @@ const TogetherBoardDetail = () => {
     const board = {
       boardTgNo: boardTgNo,
     };
-    const res = await deleteBoardListDB(board);
+    const res = await deleteTogetherDB(board);
     console.log(res.data);
     alert("게시글 삭제 완료");
     navigate("/together");

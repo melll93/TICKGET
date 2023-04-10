@@ -2,13 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useCallback, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  selectBoardDetailDB,
-  updateBoardListDB,
-} from "../../axios/board/boardLogic";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { FormDiv } from "../../styles/formStyle";
+import { selectTogetherDetailDB, updateTogetherDB } from "../../axios/together/TogetherLogic";
 
 const TogetherBoardUpdate = () => {
   const navigate = useNavigate();
@@ -27,7 +24,7 @@ const TogetherBoardUpdate = () => {
 
   useEffect(() => {
     const asyncDB = async () => {
-      const res = await selectBoardDetailDB({ boardTgNo });
+      const res = await selectTogetherDetailDB({ boardTgNo });
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
       console.log("asda = ", jsonDoc);
@@ -75,7 +72,7 @@ const TogetherBoardUpdate = () => {
 
     console.log("board = ", JSON.stringify(board));
     try {
-      const res = await updateBoardListDB(board);
+      const res = await updateTogetherDB(board);
       console.log(res.data);
     } catch (error) {
       console.log(error);

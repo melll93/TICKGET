@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import KakaoMap from "../carpool/Map/KakaoMap"
 import LandingPage from "../carpool/Map/LandingPage"
+import CarpoolBoardList from "../carpool/CarpoolBoardList";
 
 const CarpoolPage = () => {
   const [dbResults, setDbResults] = useState([]);
@@ -18,6 +19,7 @@ const CarpoolPage = () => {
       <Sidebar />
       <div className="center">
         <Header />
+        {<CarpoolBoardList/>}
         {<KakaoMap />}
         <br/>
         <div style={{

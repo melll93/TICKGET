@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import ReactQuill from "react-quill";
 import { uploadImageDB } from "../../axios/together/TogetherLogic";
+
 const TogetherQuillEditor = ({
   value,
   handleContent,

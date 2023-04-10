@@ -10,12 +10,13 @@ import {
   FormDiv,
   HeaderDiv,
 } from "../../styles/formStyle";
-import TogetherQuillEditor from "./TogetherQuillEditor";
-import TogetherMyFilter from "./TogetherMyFilter";
-import TogetherBoardFileInsert from "./TogetherBoardFileInsert";
-import { insertTogetherDB } from "../../axios/together/TogetherLogic";
+import { insertCarpoolDB } from "../../axios/carpool/CarpoolLogic";
+import CarpoolFileInsert from "./CarpoolFileInsert";
+import CarpoolMyFilter from "./CarpoolMyFilter";
+import CarpoolQuillEditor from "./CarpoolQuillEditor";
+import LandingPage from "./Map/LandingPage";
 
-const TogetherBoardWriteForm = ({ board_together }) => {
+const CarpoolWriteForm = ({ carpool }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
 
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
     setTTitle(e);
   }, []);
 
-  const insertBoardList = async () => {
+  const insertCarpool = async () => {
     if (!title) {
       alert("제목을 입력해주세요.");
       return;
@@ -69,25 +70,23 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       alert("내용을 입력해주세요.");
       return;
     }
-    console.log("insertBoardList");
-    console.log(secret); //true
-    console.log(typeof secret); //boolean타입 출력
-    const board = {
-      boardTgTitle: title, // 제목 추가
-      boardTgContent: content, // 내용 추가
-      boardTgSecret: secret ? "true" : "false",
-      boardTgType: tTitle,
-      boardTgViews: views,
-      boardTgMemId: sessionStorage.getItem("id"),
-      boardTgDate: date,
+    console.log("insertCarpool");
+    const carpool = {
+      carpoolTitle: title, // 제목 추가
+      carpoolContent: content, // 내용 추가
+      // carpoolSecret: secret ? "true" : "false",
+      // carpoolType: tTitle,
+      // carpoolViews: views,
+      // carpoolMemId: sessionStorage.getItem("id"),
+      carpoolDate: date,
     };
     // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
     // inser here
     try {
-      const res = await insertTogetherDB(board);
+      const res = await insertCarpoolDB(carpool);
       console.log(res.data);
       // 성공시에 페이지 이동처리하기
-      window.location.replace("/together");
+      window.location.replace("/carpool");
     } catch (error) {
       console.log(error);
     }
@@ -130,16 +129,16 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                     }}
                   />
                 </div>
-                <TogetherMyFilter
+                <CarpoolMyFilter
                   title={tTitle}
                   types={types}
                   handleTitle={handleTTitle}
-                ></TogetherMyFilter>
+                ></CarpoolMyFilter>
                 <BButton
                   variant="success"
                   style={{ marginLeft: "10px" }}
                   onClick={() => {
-                    insertBoardList();
+                    insertCarpool();
                   }}
                 >
                   글쓰기
@@ -148,7 +147,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             </div>
 
             <input
-              id="board_title"
+              id="carpool_title"
               type="text"
               maxLength="50"
               placeholder="제목을 입력하세요."
@@ -181,7 +180,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h3>상세내용</h3>
-            <TogetherQuillEditor
+            <CarpoolQuillEditor
               value={content}
               handleContent={handleContent}
               quillRef={quillRef}
@@ -189,15 +188,28 @@ const TogetherBoardWriteForm = ({ board_together }) => {
               handleFiles={handleFiles}
             />
 
-            <TogetherBoardFileInsert files={files} />
+            <CarpoolFileInsert files={files} />
           </div>
-          <br/>
+          <br />
+          <div
+            style={{
+              border: "1px solid lightGray",
+              borderRadius: "10px",
+              width: "90%",
+              margin: "0 auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {<LandingPage />}
+          </div>
           <div style={{ textAlign: "center" }}>
             <div style={{ marginBottom: "20px" }}>
               <Button onClick={() => window.history.back()}>뒤로가기</Button>
               <Button
                 style={{ marginLeft: "10px" }}
-                onClick={() => navigate("/together")}
+                onClick={() => navigate("/carpool")}
               >
                 목록으로
               </Button>
@@ -210,4 +222,4 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   );
 };
 
-export default TogetherBoardWriteForm;
+export default CarpoolWriteForm;

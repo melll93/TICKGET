@@ -1,7 +1,8 @@
 import axios from "axios";
 
 /* 전체조회 */
-export const selectBoardListDB = (board) => {
+// export const selectBoardListDB = (board) => {
+export const selectTogetherDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -16,7 +17,8 @@ export const selectBoardListDB = (board) => {
   });
 };
 /* 상세보기 */
-export const selectBoardDetailDB = (board) => {
+// export const selectBoardDetailDB = (board) => {
+export const selectTogetherDetailDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -31,7 +33,8 @@ export const selectBoardDetailDB = (board) => {
   });
 };
 /* 삭제 */
-export const deleteBoardListDB = (board) => {
+// export const deleteBoardListDB = (board) => {
+export const deleteTogetherDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -46,7 +49,8 @@ export const deleteBoardListDB = (board) => {
   });
 };
 /* 작성 */
-export const insertBoardListDB = (board_together) => {
+// export const insertBoardListDB = (board_together) => {
+export const insertTogetherDB = (board_together) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -61,7 +65,8 @@ export const insertBoardListDB = (board_together) => {
   });
 };
 /*  */
-export const updateBoardListDB = (board) => {
+// export const updateBoardListDB = (board) => {
+export const updateTogetherDB = (board) => {
   console.log('board?? ?SD S, ',board)
   return new Promise((resolve, reject) => {
     try {
