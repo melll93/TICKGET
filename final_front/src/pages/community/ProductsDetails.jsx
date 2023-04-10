@@ -4,8 +4,9 @@ import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { Button, Dropdown, DropdownButton, Modal, Tab, Tabs } from 'react-bootstrap';
 import Calendar from 'react-calendar';
+import { useSelector } from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom'
-import { DeleteFestReviewDB, FestivalReviewDB, FestReviewInsertDB, UpdateFestReviewDB } from '../../axios/main/Festival';
+import { DeleteFestivalDB, DeleteFestReviewDB, FestivalReviewDB, FestReviewInsertDB, UpdateFestReviewDB } from '../../axios/main/Festival';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import { BButton, MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
@@ -21,9 +22,8 @@ function ProductsDetails(){
     const [mName, setMName]=useState(""); //결제용(모달내부에)_결제페이지로 이관/삭제예정
     const [mEmail, setMEmail]=useState(""); //결제용(모달내부에)_결제페이지로 이관/삭제예정
     const [tAmo, setTamo]=useState(0); //결제용(모달내부에)_결제페이지로 이관/삭제예정
-
-
-
+    const reduxUser = useSelector(state => state.userStatus.user);
+    console.log(reduxUser)
   // useEffect(() => {
   //   axios.get(`/festival/festivalList?festMid=${festMId}&type=single`).then((response) => {
   //     if (response.data.success) {
@@ -89,6 +89,22 @@ const freview={
 }
 
 
+/* 상품삭제 */
+const deleteProducts=async()=>{
+const festival={
+  fest_m_id:festMId,
+}
+const res = await DeleteFestivalDB(festival)
+console.log(festival)
+if(!res.data){
+}
+else{
+}
+navigate(-1)
+console.log(festMId)
+}
+
+
 
 
 //리뷰컴포
@@ -124,7 +140,7 @@ id:  {review.reviewMemid}      등록일시: {review.reviewRegdate}
                 <BButton style={{width:"80px", height:"38px"}} onClick={click} >수정</BButton>
 
 
-{/*///////////////////////////// 모달 수정중 ///////////////////////////////////////////////////////////*/}
+{/*/////////////////////////////리뷰 수정 모달//////////////////////////////////*/}
 
 <Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg" >
         <Modal.Header closeButton>
@@ -157,14 +173,7 @@ setLgShow(false)
 
         </Modal.Body>
       </Modal>
-{/* ///////////////////////////////////////////////////////////////여기까지 모달 수정중 */}
-
-
-
-
-
-
-
+{/* //////   리뷰 수정용 모달    여기까지///////*/}
 
 
 
@@ -204,6 +213,13 @@ console.log('삭제완료')}}>삭제</BButton>
        {/* 출력{Data} */}
         <Header />
         <h2>상품 상세페이지....</h2>
+        
+  {/* 로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람이 관리자일경우 삭제 버튼 보이기 
+   {sessionStorage.getItem('Auth')===''관리자"'&&       
+   */}
+  <div>
+                <BButton style={{width:"200px", height:"38px", backgroundColor:'black' }} onClick={deleteProducts} >상품삭제(누르지마세요.)</BButton>
+</div>
 
 
 <div className="totalcontainer"> 
@@ -237,32 +253,7 @@ console.log('삭제완료')}}>삭제</BButton>
 <section>
 <div className="midContainerCalendarAndRestSeats">
                    <span className="calendar">
-                    <Calendar
-// onChange={onChange} // useState로 포커스 변경 시 현재 날짜 받아오기
-//   // formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
-//   value={value}
-//   minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-//   maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-//   navigationLabel={null}
-//   showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
-//   className="mx-auto w-full text-sm border-b"
-//   tileContent={({ date, view }) => { // 날짜 타일에 컨텐츠 추가하기 (html 태그)
-//     // 추가할 html 태그를 변수 초기화
-//     let html = [];
-//     // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
-//     // if (mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
-//     //   html.push(<div className="dot"></div>);
-//     // }
-//     // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
-//     return (
-//       <>
-//         <div className="flex justify-center items-center absoluteDiv">
-//           {html}
-//         </div>
-//       </>
-//     );       ***yarn add moment   //  import moment from "moment";
-//   }}
-/>
+                    <Calendar/>
 </span>
 <span className="calendarands1">
 내용물1

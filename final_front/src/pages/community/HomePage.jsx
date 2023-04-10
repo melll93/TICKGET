@@ -7,6 +7,7 @@ import Sidebar from "../../components/Sidebar";
 import MainCalendar from "../../components/MainPage/MainCalendar";
 import { getFestivalTodayDB } from "../../axios/main/main";
 import { useSelector } from "react-redux";
+import CalendarPage from "../personal/CalendarPage";
 
 const HomePage = () => {
   /******************************
@@ -33,15 +34,16 @@ const HomePage = () => {
       <Sidebar />
       <div className="center">
         {/* <Header /> */}
-        <section className="total_section" style={{ paddingLeft: '100px', display: 'flex' }}>
+<div style={{margin:'100px 0px 20px 50px', width:'900px'}}>
+
+            <CarouselList festivalToday={festivalToday} />
+</div>
+
+<section className="home_total_sec" style={{paddingLeft:'150px'}}> 
+
+
+        <section className="total_section" style={{display:'flex'}}>
           <div className="top_sec_div" style={{ margin: '50px', textAlign: 'center', flex: '1' }}>
-
-            {/* <CarouselList festivalToday={festivalToday} /> */}
-            <img src="./images_key/WOONGS.jpg" style={{ width: '80px', height: '80px', borderRadius: '50%', margin: '5px' }}></img>
-            <img src="./images_key/WOONGS.jpg" style={{ width: '80px', height: '80px', borderRadius: '50%', margin: '5px' }}></img>
-            <img src="./images_key/WOONGS.jpg" style={{ width: '80px', height: '80px', borderRadius: '50%', margin: '5px' }}></img>
-            <img src="./images_key/WOONGS.jpg" style={{ width: '80px', height: '80px', borderRadius: '50%', margin: '5px' }}></img>
-
             <div className="card" >
               <p>
                 이 주의 공연
@@ -87,14 +89,14 @@ const HomePage = () => {
                   <Tab eventKey="festival" title="Festival">
                     <BasicTable />
                   </Tab>
-                  <Tab eventKey="concert" title="Concert">
-                    <BasicTable />
-                  </Tab>
                   <Tab eventKey="together" title="Together">
                     <BasicTable />
                   </Tab>
-                  <Tab eventKey="carpool" title="Carpool">
+                  <Tab eventKey="market" title="Market">
                     <BasicTable />
+                  </Tab>
+                  <Tab eventKey="calendar" title="Calendar">
+                  <CalendarPage />
                   </Tab>
                 </Tabs>
               </div>  {/* mainpage div div1 */}
@@ -113,6 +115,7 @@ const HomePage = () => {
             <BasicTable />
           </div>
         </div> */}
+        </section>
         </section>
 
       </div>

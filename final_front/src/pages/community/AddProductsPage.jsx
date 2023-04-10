@@ -5,6 +5,7 @@ import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import { useNavigate } from 'react-router'
 import { FestivalInsertDB } from '../../axios/main/Festival';
+import ImageUploader from '../../util/imageUploader';
 
 
 
@@ -28,7 +29,7 @@ const[festPrice, setFestprice] = useState("")
 const[festDesc, setFestdesc] = useState("")
 const[festArea, setFestArea] = useState("")
 const [festImages, setFestImages] = useState("");
-const [festImageUrl, setFestImageUrl] = useState(null);
+const [festImageUrl, setFestImageUrl] = useState("");
 const imgRef = useRef();
 
 
@@ -43,15 +44,13 @@ const festivalInsert=async()=>{
     festPrice,
     festDesc,
     festMArea:festArea,      
-    festMImg:festImageUrl
+    festMImg:festImageUrl,
     }
     const res =await FestivalInsertDB(festival)
     console.log(festival)
     if(!res.data){
     }
     else{
-      inputFestUrl()
-      FestImageUpload()
       navigate("/festival")
     }
 }
@@ -84,27 +83,25 @@ const inuptTitle = useCallback((e) => {
     const inputArea = useCallback((e) => {
       setFestArea (e)
     },[])
-    const inputFestUrl = useCallback((e) => {
-      setFestImageUrl (e)
-    },[])
 
 
     
 
 //선택파일 이미지로 교체
-    const festImage=()=>{
-      const file = imgRef.current.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend=()=>{
-        setFestImages(reader.result);
-      }
+const festImage=()=>{
+  const file = imgRef.current.files[0];
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend=()=>{
+    setFestImages(reader.result);
+  }
   }
 
 
 
 //클라우디너리에 업로드
-  const FestImageUpload = () => {
+  const FestImageUpload = (e)=> {
+    festImage()
     const { files } = document.querySelector('#festivalsImg');
     const imageFile = document.querySelector('#festivalsImg');
     const filesa = imageFile.files;
@@ -121,11 +118,15 @@ const inuptTitle = useCallback((e) => {
       //"https://api.Cloudinary.com/v1_1/본인 클라우드 네임/image/upload"
       .then((res) => res.json())
       .then((res) => {
-        setFestImageUrl(res.secure_url);
-        console.log(res.secure_url
-      )
+        console.log(res.secure_url);
+        const festImageUrl=res.secure_url;
+        localStorage.setItem('imageUrl', festImageUrl)
+        console.log('페스트 이미지 유알엘 : '+festImageUrl)
+        setFestImageUrl(festImageUrl);
+      
       })
       .catch((err) => console.log(err));
+
   };
 
 
@@ -149,7 +150,7 @@ const inuptTitle = useCallback((e) => {
           <img id="festivalImgChange" className='thumbNail' src={festImages? festImages:`https://via.placeholder.com/400x300/D9D9D9/979892.png?text=image+upload`} alt="미리보기" />
         {/* - 가로x세로/배경색/글자색.확장자?text=텍스트(공백은+로) */}
         </div><br/>
- <input className="form-control" type="file" accept='image/*' id="festivalsImg" onChange={festImage} ref={imgRef}/> <br/>
+ <input className="form-control" type="file" accept='image/*' id="festivalsImg" onChange={FestImageUpload} ref={imgRef}/> <br/>
  <div className="form-floating mb-3">
   <input type="text" className="form-control" id="festTitle" onChange={(e)=>{inuptTitle(e.target.value)}} />
   <label htmlFor="floatingInput"> festTitle  (NOT NULL) </label>
