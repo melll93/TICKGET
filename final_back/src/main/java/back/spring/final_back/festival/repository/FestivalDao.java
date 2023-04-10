@@ -10,5 +10,6 @@ public interface FestivalDao {
     public List<FestivalDto> seoulFestivalList();
     public List<FestivalDto> kyeongkiFestivalList();
     int festivalInsert(FestivalDto festival);
+	public int festivalDelete(Integer fest_m_id);
 }
 
