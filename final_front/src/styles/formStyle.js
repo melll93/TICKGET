@@ -180,7 +180,7 @@ export const FormDiv = styled.div`
   border: 2px solid lightGray;
   border-radius: 20px;
   padding: 10px;
-  max-width: 1200px;
+  max-width: 1500px;
   min-height: 650px;
   justify-content: space-between;
 `;

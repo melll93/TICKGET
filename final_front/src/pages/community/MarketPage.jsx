@@ -45,18 +45,18 @@ const MarketPage = () => {
      <Header/>
      <HeaderDiv>
           <h3 style={{marginLeft:"100px"}}>마켓 게시판</h3>
-          <Button variant="primary" style={{marginLeft:'700px'}}>
+ {/*          <Button variant="primary" style={{marginLeft:'700px'}}>
                   전체조회
           </Button>
           <Button variant="primary" onClick={()=>navigate('/market/write')}  style={{marginRight:'80px'}}>
                   글쓰기
-            </Button>
+            </Button> */}
         </HeaderDiv>
         <FormDiv style={{marginLeft:'50px'}}>
          
 
          <div className='book-list'>
-            <Table striped bordered hover style={{minWidth:"800px"}}>
+            <Table striped bordered hover style={{minWidth:"1000px"}}>
             <thead>
                   <tr >
                   <th style={{width:'100px',textAlign:"center"}}>번호</th>
