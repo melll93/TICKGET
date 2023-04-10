@@ -10,6 +10,7 @@
   import MarketBoardFileDetail from './MarketBoardFileDetail';
   import MarketBoardHeader from './MarketBoardHeader';
 
+   
   const MarketDetail = () => {
     const search = window.location.search;
     console.log(search);
@@ -99,26 +100,36 @@
             <div className="topcontainer" >
 
 
-                               <div className="product_detail_imgdiv">
+                               <div className="product_detail_imgdiv" >
                                          <img className="product_detail_img" src={detail.board_mk_fileurl}  alt="상품사진" />
                                </div>
 
 
-                               <div className="product_detail_info">
+                               <div className="product_detail_info" style={{marginLeft:'80px'}}>
                                <div className="product_detail_head">
                                 <h3 className="product_title">상품 정보</h3>
                                 </div>
                                 <ListGroup variant="flush" style={{width:'300px'}}>
       <ListGroup.Item>{detail.board_mk_title}</ListGroup.Item>
-      <ListGroup.Item >장소 : {detail.mk_ticket_place}</ListGroup.Item>
+      <ListGroup.Item>장소 : {detail.mk_ticket_place}</ListGroup.Item>
       <ListGroup.Item>공연일 : {detail.mk_ticket_date}</ListGroup.Item>
       <ListGroup.Item>좌석정보 : {detail.mk_ticket_seat}</ListGroup.Item>
       <ListGroup.Item></ListGroup.Item>
     </ListGroup>
                                   <hr style={{opacity:'0%'}}/>
                                 <div className="product_detail_payments" >
-                                <h3 className="product_title">결제</h3>
-                                  </div>
+                                <h3 className="product_title">구매</h3>
+                                </div>
+                                <ListGroup variant="flush" style={{width:'300px'}}>
+      <ListGroup.Item>수량 : {detail.mk_ticket_count}장</ListGroup.Item>
+      <ListGroup.Item>가격 : {detail.mk_ticket_price}</ListGroup.Item>
+      <hr style={{opacity:'0'}}/>
+      <hr style={{opacity:'0'}}/>
+      <Button>구매하기</Button>
+      <ListGroup.Item></ListGroup.Item>
+
+    </ListGroup>
+                                 
                                   <div>
                                 </div>
                                </div>
@@ -155,10 +166,10 @@
             <hr style={{height:"2px"}}/>
             <div>
               <div style={{display:"flex", justifyContent: "space-between", marginBottom: "10px" }}>
-                  <h3>상세 정보&nbsp;</h3>
+                  <h3>상세 내용&nbsp;</h3>
               </div>
                 <div dangerouslySetInnerHTML={{__html:detail.board_mk_content}} style={{height:'250px'}}></div>
-                <MarketBoardFileDetail files={files} />
+             {/*    <MarketBoardFileDetail files={files} /> */}
             </div>
           </FormDiv>
         </ContainerDiv>
