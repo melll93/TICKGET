@@ -1,8 +1,17 @@
 package back.spring.final_back.board.service;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
-import org.springframework.stereotype.Service;
+import java.util.Map;
 
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +30,8 @@ public class MarketServiceImpl implements MarketService {
 
 	// 마켓 게시판 조회
 	@Override
-	public List<MarketDto> mk_boardList() {
-		List<MarketDto> mList = marketDao.mk_boardList();
+	public List<MarketDto> mk_boardList(MarketDto marketDto) {
+		List<MarketDto> mList = marketDao.mk_boardList(marketDto);
 		return mList;
 	}
 	
@@ -65,6 +74,8 @@ public class MarketServiceImpl implements MarketService {
 		result = marketDao.mk_boardDelete(marketDto);
 		return result;
 	}
+
+
 
 
 }

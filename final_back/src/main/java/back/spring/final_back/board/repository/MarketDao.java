@@ -1,6 +1,7 @@
 package back.spring.final_back.board.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MarketDao {
      
 	//마켓 게시판 게시글 조회
-	public List<MarketDto> mk_boardList();
+	public List<MarketDto> mk_boardList(MarketDto marketDto);
 
 	//마켓 게시판 게시글 상세보기
 	public List<MarketDto> mk_boardDetail(MarketDto marketDto);
@@ -26,7 +27,12 @@ public interface MarketDao {
 	public int mk_boardDelete(MarketDto marketDto);
     
 	//마켓 게시판 게시글 조회수 증가
-	public void mk_boardHit(MarketDto marketDto); 
+	public void mk_boardHit(MarketDto marketDto);
+
+	
+	//파일 등록
+	public int fileInsert(Map<String, Object> pMap);
+
 	
 }
                            
