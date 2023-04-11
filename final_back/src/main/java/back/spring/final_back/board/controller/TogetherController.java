@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,33 +35,33 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/board")
 @RequiredArgsConstructor
 public class TogetherController {
-    Logger logger = LoggerFactory.getLogger(TogetherController.class);
-    private final TogetherService togetherService;
+	Logger logger = LoggerFactory.getLogger(TogetherController.class);
+	private final TogetherService togetherService;
 
-    // 게시판 조회(SelectAll)
-    @GetMapping("/selectBoardList")
-    public List<TogetherDto> selectBoardList() {
-        logger.info("BoardController : selectBoardList 호출");
-        List<TogetherDto> mList = null;
-        mList = togetherService.selectBoardList();
-        return mList;
-    }
+	// 게시판 조회(SelectAll)
+	@GetMapping("/selectBoardList")
+	public List<TogetherDto> selectBoardList() {
+		logger.info("BoardController : selectBoardList 호출");
+		List<TogetherDto> mList = null;
+		mList = togetherService.selectBoardList();
+		return mList;
+	}
 
-    // 게시글 상세보기(SelectOne)
-    @GetMapping("/selectBoardDetail")
-    public TogetherDto selectBoardDetail(TogetherDto togetherDto) {
-        logger.info("BoardController : selectBoardDetail 호출");
-        TogetherDto mList = togetherService.selectBoardDetail(togetherDto);
-        return mList;
-    }
+	// 게시글 상세보기(SelectOne)
+	@GetMapping("/selectBoardDetail")
+	public TogetherDto selectBoardDetail(TogetherDto togetherDto) {
+		logger.info("BoardController : selectBoardDetail 호출");
+		TogetherDto mList = togetherService.selectBoardDetail(togetherDto);
+		return mList;
+	}
 
-    // 게시판 등록(Insert)
-    @GetMapping("/insertBoardList")
-    public int insertBoardList(TogetherDto togetherDto) {
-        logger.info("BoardController : inserBoard호출");
-        int result = togetherService.insertBoardList(togetherDto);
-        return result;
-    }
+	// 게시판 등록(Insert)
+	@GetMapping("/insertBoardList")
+	public int insertBoardList(TogetherDto togetherDto) {
+		logger.info("BoardController : inserBoard호출");
+		int result = togetherService.insertBoardList(togetherDto);
+		return result;
+	}
 
 	// 게시글 수정(Update)
 	@GetMapping("/updateBoardList")
@@ -72,35 +71,45 @@ public class TogetherController {
 		return mList;
 	}
 
-    // 게시판 수정(Update)
-    @PostMapping("/updateBoardList")
-    public int updateBoardListSubmit(@RequestBody TogetherDto togetherDto) {
-        logger.info("RestMemberController : memberUpdate submit");
-        int result = 0;
+	// 게시판 수정(Update)
+	@PostMapping("/updateBoardList")
+	public int updateBoardListSubmit(@RequestBody TogetherDto togetherDto) {
+		logger.info("RestMemberController : memberUpdate submit");
+		int result = 0;
 		logger.error("boardDto = {}", togetherDto);
-        result = togetherService.updateBoardList(togetherDto);
-        return result;
-    }
+		result = togetherService.updateBoardList(togetherDto);
+		return result;
+	}
 
-    // 게시판 삭제(Delete)
-    @GetMapping("/deleteBoardList")
-    public int deleteBoardList(TogetherDto togetherDto) {
-        logger.info("RestMemberController : memberDelete 호출");
-        int result = 0;
-        result = togetherService.deleteBoardList(togetherDto);
-        return result;
-    }
+	// 게시판 삭제(Delete)
+	@GetMapping("/deleteBoardList")
+	public int deleteBoardList(TogetherDto togetherDto) {
+		logger.info("RestMemberController : memberDelete 호출");
+		int result = 0;
+		result = togetherService.deleteBoardList(togetherDto);
+		return result;
+	}
 
-    @GetMapping("/imageGet")
+	@GetMapping("/viewUp")
+	public String viewUp(@RequestParam int board_tg_no, @RequestParam String board_tg_mem_id) {
+		togetherService.viewUp(board_tg_no, board_tg_mem_id);
+		return "redirect:detail?boardNo=" + board_tg_no;
+	}
+
+
+
+	
+	/* ====================================== */
+	@GetMapping("/imageGet")
 	public Object imageGet(HttpServletRequest req, HttpServletResponse res) {
 		// imagename 정보는 공통코드로 제공된 QuillEditor.jsx에서 파라미터로 넘어오는 값임
 		// imageupload 메소드에서는 업로드된 파일정보(팜일명, 파일크기)가 리턴됨
 		String b_file = req.getParameter("imageName");// get방식으로 넘어온
 		logger.info("imageGet 호출 성공===>" + b_file);// XXX.png
 
-         /* --------------클라우드 너리 써야 하나요..?-------------- */
+		/* --------------클라우드 너리 써야 하나요..?-------------- */
 		String filePath = "C:\\Users\\user1\\Desktop\\practice"; // 절대경로.
-        /* --------------클라우드 너리 써야 하나요..?-------------- */
+		/* --------------클라우드 너리 써야 하나요..?-------------- */
 
 		String fname = b_file;
 		logger.info("b_file: 8->euc" + b_file);
@@ -156,11 +165,11 @@ public class TogetherController {
 		String filename = null;
 		if (!file_name.isEmpty()) {
 			filename = file_name.getOriginalFilename();
-             
-            /* --------------클라우드 너리 써야 하나요..?-------------- */
+
+			/* --------------클라우드 너리 써야 하나요..?-------------- */
 			String saveFolder = "C:\\Users\\user1\\Desktop\\practice";
-             /* --------------클라우드 너리 써야 하나요..?-------------- */
-            
+			/* --------------클라우드 너리 써야 하나요..?-------------- */
+
 			String fullPath = saveFolder + "\\" + filename;
 			try {
 				File file = new File(fullPath);
@@ -186,9 +195,9 @@ public class TogetherController {
 		if (!image.isEmpty()) {
 			filename = image.getOriginalFilename();
 
-            /* --------------클라우드 너리 써야 하나요..?-------------- */
+			/* --------------클라우드 너리 써야 하나요..?-------------- */
 			String saveFolder = "C:\\Users\\user1\\Desktop\\practice";
-            /* --------------클라우드 너리 써야 하나요..?-------------- */
+			/* --------------클라우드 너리 써야 하나요..?-------------- */
 
 			String fullPath = saveFolder + "\\" + filename;
 			try {
@@ -205,7 +214,7 @@ public class TogetherController {
 		return temp;
 	}
 
-    @GetMapping("/qnaList")
+	@GetMapping("/qnaList")
 	public String boardList(@RequestParam Map<String, Object> pMap) {
 		logger.info("qnaList 호출");
 		List<Map<String, Object>> bList = null;

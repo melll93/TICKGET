@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MapContainer from "./MapContainer";
 import { BButton, FormDiv } from "../../../styles/formStyle";
+import { Button } from "bootstrap";
 
 function LandingPage() {
   const [InputText, setInputText] = useState("");
@@ -18,7 +19,7 @@ function LandingPage() {
 
   return (
     <>
-    <br/>
+      <br />
       <form
         style={{
           display: "flex",
@@ -35,9 +36,9 @@ function LandingPage() {
           onChange={onChange}
           value={InputText}
         />
-        <BButton style={{ height: "30px" }} type="submit">
+        <button style={{ height: "30px" }} type="button" onClick={handleSubmit}>
           검색
-        </BButton>
+        </button>
       </form>
       <br />
       <MapContainer searchPlace={Place} />

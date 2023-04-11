@@ -29,4 +29,14 @@
     <delete id="deleteCarpool" parameterType="CarpoolDto">
         delete from board_carpool where carpool_no=#{carpoolNo}
     </delete>
+
+     <!-- 게시글 수정 -->
+     <update id="updateCarpool" parameterType="CarpoolDto">
+        update board_carpool set
+            carpool_title = #{carpoolTitle} ,
+            carpool_content = #{carpoolContent},
+            carpool_date = #{carpoolDate}
+        where carpool_no = #{carpoolNo}
+    </update>
+    
 </mapper>

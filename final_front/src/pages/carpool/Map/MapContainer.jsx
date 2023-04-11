@@ -97,7 +97,7 @@ const MapContainer = ({ searchPlace }) => {
           id="myMap"
           style={{
             width: "550px",
-            height: "530px",
+            height: "650px",
           }}
         ></div>
 
@@ -109,9 +109,9 @@ const MapContainer = ({ searchPlace }) => {
             alignItems: "center",
           }}
         >
-          <div id="result-list" style={{margin:"20px 0px 0px 50px", textAlign:"center"}}>
+          <div id="result-list" style={{margin:"20px 0px 0px 50px", /* textAlign:"center" */}}>
             {Places.map((item, i) => (
-              <div key={i} style={{ marginTop: "5px" }}>
+              <div key={i} style={{ marginTop: "15px" }}>
                 <span>{i + 1}</span>
                 <div>
                   <h5>{item.place_name}</h5>

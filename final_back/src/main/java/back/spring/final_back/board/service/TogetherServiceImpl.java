@@ -1,5 +1,6 @@
 package back.spring.final_back.board.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,18 @@ public class TogetherServiceImpl implements TogetherService {
         return result;
     }
 
+    //조회수 증가
+    @Override
+    public void viewUp(int board_tg_no, String board_tg_mem_id) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("boardNo", board_tg_no);
+  
+        if(board_tg_mem_id != null) {
+          param.put("memberId", board_tg_mem_id);
+        }
+    }
+
+
     public int qnaInsert(Map<String, Object> pMap) {
         logger.info("qnaInsert호출");
         int result = 0;
@@ -66,4 +79,6 @@ public class TogetherServiceImpl implements TogetherService {
         bList = togetherDao.qnaList(pMap);
         return bList;
      }
+
+
 }

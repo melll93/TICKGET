@@ -40,9 +40,11 @@ import TogetherBoardUpdate from "./pages/together/TogetherBoardUpdate";
 import CarpoolWrietForm from "./pages/carpool/CarpoolWriteForm";
 import CarpoolDetail from "./pages/carpool/CarpoolDetail";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
+import CarpoolUpdate from "./pages/carpool/CarpoolUpdate";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
+  const [carpool, setCarpool] = useState();
   const [user, setUser] = useState();
 
   // pages로 routing 처리
@@ -112,10 +114,10 @@ function App({ mkImageUploader }) {
 
         {/* CarpoolPage Routes */}
         <Route path="carpool/write/*" element={<CarpoolWrietForm />} />
-        <Route
-          path="carpool/carpoolDetail/:carpoolNo"
-          element={<CarpoolDetail />}
-        />
+        <Route path="carpool/carpoolDetail/:carpoolNo" element={<CarpoolDetail  carpool={carpool }/>}/>
+        <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
+        <Route path="carpool/carpoolUpdate/:carpoolNo" element={<CarpoolUpdate />} />
+
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route

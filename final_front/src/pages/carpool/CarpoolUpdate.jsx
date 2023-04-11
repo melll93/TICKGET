@@ -5,42 +5,39 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { FormDiv } from "../../styles/formStyle";
-import {
-  selectTogetherDetailDB,
-  updateTogetherDB,
-} from "../../axios/together/TogetherLogic";
+import { CarpoolDetailDB, updateCarpoolDB } from "../../axios/carpool/CarpoolLogic";
 
-const TogetherBoardUpdate = () => {
+const CarpoolUpdate = () => {
   const navigate = useNavigate();
-  const { boardTgNo } = useParams();
-  const [boardTgTitle, setTitle] = useState(""); //사용자가 입력한 내용 담기
-  const [boardTgDate, setDate] = useState(""); //사용자가 입력한 내용 담기
-  const [boardTgContent, setContent] = useState(""); //사용자가 입력한 내용 담기
+  const { carpoolNo } = useParams();
+  const [carpoolTitle, setCarpoolTitle] = useState(""); //사용자가 입력한 내용 담기
+  const [carpoolDate, setCarpoolDate] = useState(""); //사용자가 입력한 내용 담기
+  const [carpoolContent, setCarpoolContent] = useState(""); //사용자가 입력한 내용 담기
 
-  const [board, setBoard] = useState({
-    boardTgNo: 0,
-    boardTgMemId: "",
-    boardTgTitle: "",
-    boardTgContent: "",
-    boardTgDate: "",
+  const [carpool, setCarpool] = useState({
+    carpoolNo: 0,
+    carpoolMemId: "",
+    carpoolTitle: "",
+    carpoolContent: "",
+    carpoolDate: "",
   });
 
   useEffect(() => {
     const asyncDB = async () => {
-      const res = await selectTogetherDetailDB({ boardTgNo });
+      const res = await CarpoolDetailDB({ carpoolNo });
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
       console.log("asda = ", jsonDoc);
-      setBoard({
-        boardTgNo: jsonDoc.boardTgNo,
-        boardTgMemId: jsonDoc.boardTgMemId,
-        boardTgTitle: jsonDoc.boardTgTitle,
-        boardTgContent: jsonDoc.boardTgContent,
-        boardTgDate: jsonDoc.boardTgDate,
+      setCarpool({
+        carpoolNo: jsonDoc.carpoolNo,
+        carpoolMemId: jsonDoc.carpoolMemId,
+        carpoolTitle: jsonDoc.carpoolTitle,
+        carpoolContent: jsonDoc.carpoolContent,
+        carpoolDate: jsonDoc.carpoolDate,
       });
       if (res.data) {
         console.log(jsonDoc);
-        setBoard(res.data);
+        setCarpool(res.data);
       } else {
         console.log("게시글 조회 실패");
       }
@@ -50,42 +47,42 @@ const TogetherBoardUpdate = () => {
     return () => {};
   }, []);
 
-  const updateBoard = async () => {
-    if (!boardTgTitle) {
+  const updateCarpool = async () => {
+    if (!carpoolTitle) {
       alert("제목을 입력해주세요.");
       return;
     }
 
-    if (!boardTgDate) {
+    if (!carpoolDate) {
       alert("날짜를 입력해 주세요.");
       return;
     }
 
-    if (!boardTgContent) {
+    if (!carpoolContent) {
       alert("내용을 입력해주세요.");
       return;
     }
 
-    const board = {
-      boardTgNo: boardTgNo, // 게시글 번호
-      boardTgTitle: boardTgTitle, // 제목 추가
-      boardTgContent: boardTgContent, // 내용 추가
-      boardTgDate: boardTgDate,
+    const carpool = {
+      carpoolNo: carpoolNo, // 게시글 번호
+      carpoolTitle: carpoolTitle, // 제목 추가
+      carpoolContent: carpoolContent, // 내용 추가
+      carpoolDate: carpoolDate,
     };
 
-    console.log("board = ", JSON.stringify(board));
+    console.log("carpool = ", JSON.stringify(carpool));
     try {
-      const res = await updateTogetherDB(board);
+      const res = await updateCarpoolDB(carpool);
       console.log(res.data);
     } catch (error) {
       console.log(error);
     }
     alert("게시글 수정 완료");
-    navigate("/together");
+    navigate("/carpool");
   };
 
   const handleTitle = useCallback((e) => {
-    setTitle(e);
+    setCarpoolTitle(e);
   }, []);
 
   const handleDate = (date) => {
@@ -98,12 +95,12 @@ const TogetherBoardUpdate = () => {
     // "YYYY-MM-DD" 형식으로 변환
     const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
     // 변환된 값을 상태 변수에 저장
-    setDate(formattedDate);
+    setCarpoolDate(formattedDate);
     // setDate();
   };
 
   const handleContent = useCallback((e) => {
-    setContent(e);
+    setCarpoolContent(e);
   }, []);
 
   return (
@@ -120,10 +117,10 @@ const TogetherBoardUpdate = () => {
                 <label>수정 할 제목</label>
                 <br />
                 <input
-                  id="board_tg_title"
+                  id="carpool_title"
                   type="text"
                   maxLength="50"
-                  value={boardTgTitle}
+                  value={carpoolTitle}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -143,12 +140,12 @@ const TogetherBoardUpdate = () => {
                 <span
                   style={{ width: "98%", margin: "10px" }}
                   type="text"
-                  name="boardTgMemId"
+                  name="carpoolMemId"
                   required
                   class="form-control form-control-lg"
                   id="inputLarge"
                 >
-                  {board.boardTgMemId}
+                  {carpool.carpoolMemId}
                 </span>
               </div>
 
@@ -156,10 +153,10 @@ const TogetherBoardUpdate = () => {
                 <label>수정된 날짜</label>
                 <br />
                 <input
-                  id="board_tg_date"
+                  id="carpool_tg_date"
                   type="date"
                   maxLength="50"
-                  value={boardTgDate}
+                  value={carpoolDate}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -181,10 +178,10 @@ const TogetherBoardUpdate = () => {
                 <label>수정할 내용</label>
                 <br />
                 <textarea
-                  id="board_tg_date"
+                  id="carpool_tg_date"
                   type="text"
                   maxLength="50"
-                  value={boardTgContent}
+                  value={carpoolContent}
                   style={{
                     width: "98%",
                     margin: "10px",
@@ -217,7 +214,7 @@ const TogetherBoardUpdate = () => {
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
                   onClick={() => {
-                    updateBoard();
+                    updateCarpool();
                   }}
                 >
                   수정하기
@@ -227,8 +224,8 @@ const TogetherBoardUpdate = () => {
                   onClick={() => {
                     if (window.confirm("정말 돌아가시겠습니까?")) {
                       navigate({
-                        pathname: "/together/BoardDetail/" + board.boardTgNo,
-                        state: { board },
+                        pathname: "/carpool/carpoolDetail/" + carpool.carpoolNo,
+                        state: { carpool },
                       });
                     }
                   }}
@@ -244,4 +241,4 @@ const TogetherBoardUpdate = () => {
   );
 };
 
-export default TogetherBoardUpdate;
+export default CarpoolUpdate;

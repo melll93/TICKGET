@@ -20,20 +20,6 @@ const CarpoolPage = () => {
       <div className="center">
         <Header />
         {<CarpoolBoardList/>}
-        {<KakaoMap />}
-        <br/>
-        <div style={{
-          border: "1px solid lightGray",
-          borderRadius: "10px",
-          width: "90%",
-          margin: "0 auto",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}>
-
-        {<LandingPage />}
-        </div>
       </div>
     </>
   );

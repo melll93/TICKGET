@@ -66,6 +66,10 @@ const CarpoolWriteForm = ({ carpool }) => {
       alert("제목을 입력해주세요.");
       return;
     }
+    if (!date) {
+      alert("날짜를 입력해주세요.");
+      return;
+    }
     if (!content) {
       alert("내용을 입력해주세요.");
       return;
@@ -97,7 +101,7 @@ const CarpoolWriteForm = ({ carpool }) => {
       <Header />
       <ContainerDiv>
         <HeaderDiv>
-          <h3>QNA 글작성</h3>
+          <h3>Carpool 글작성</h3>
         </HeaderDiv>
         <FormDiv>
           <div style={{ width: "100%", maxWidth: "2000px" }}>
@@ -136,7 +140,7 @@ const CarpoolWriteForm = ({ carpool }) => {
                 ></CarpoolMyFilter>
                 <BButton
                   variant="success"
-                  style={{ marginLeft: "10px" }}
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
                   onClick={() => {
                     insertCarpool();
                   }}
@@ -168,6 +172,7 @@ const CarpoolWriteForm = ({ carpool }) => {
 
             <h3>날짜</h3>
             <input
+              style={{ width: "100%" }}
               type="date"
               className="form-control"
               id="festStartday"
@@ -188,27 +193,34 @@ const CarpoolWriteForm = ({ carpool }) => {
               handleFiles={handleFiles}
             />
 
+            <div
+              style={{
+                border: "1px solid lightGray",
+                borderRadius: "10px",
+                width: "auto",
+                margin: "0 auto",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              {<LandingPage />}
+            </div>
+            <br />
             <CarpoolFileInsert files={files} />
           </div>
           <br />
-          <div
-            style={{
-              border: "1px solid lightGray",
-              borderRadius: "10px",
-              width: "90%",
-              margin: "0 auto",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {<LandingPage />}
-          </div>
+
           <div style={{ textAlign: "center" }}>
             <div style={{ marginBottom: "20px" }}>
-              <Button onClick={() => window.history.back()}>뒤로가기</Button>
               <Button
-                style={{ marginLeft: "10px" }}
+                onClick={() => window.history.back()}
+                style={{ backgroundColor: "black" }}
+              >
+                뒤로가기
+              </Button>
+              <Button
+                style={{ marginLeft: "10px", backgroundColor: "black" }}
                 onClick={() => navigate("/carpool")}
               >
                 목록으로

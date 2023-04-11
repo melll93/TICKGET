@@ -26,7 +26,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   const [content, setContent] = useState(""); //내용작성
   const [secret, setSecret] = useState(false); //비밀글
   const [tTitle, setTTitle] = useState("일반"); //qna_type
-  const [views, setViews] = useState("일반"); //조회수
+  const [views, setViews] = useState(); //조회수
   const [types] = useState(["일반", "결제", "양도", "회원", "수업"]); //qna_type의 라벨값
   const [files, setFiles] = useState([]); //파일처리
   const quillRef = useRef();
@@ -63,6 +63,10 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   const insertBoardList = async () => {
     if (!title) {
       alert("제목을 입력해주세요.");
+      return;
+    }
+    if (!date) {
+      alert("날짜를 입력해주세요.");
       return;
     }
     if (!content) {
@@ -177,7 +181,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                 handleDate(e.target.value);
               }}
             />
-            <label htmlFor="floatingInput" />
+            {/* <label htmlFor="floatingInput" /> */}
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h3>상세내용</h3>
@@ -191,7 +195,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
 
             <TogetherBoardFileInsert files={files} />
           </div>
-          <br/>
+          <br />
           <div style={{ textAlign: "center" }}>
             <div style={{ marginBottom: "20px" }}>
               <Button onClick={() => window.history.back()}>뒤로가기</Button>

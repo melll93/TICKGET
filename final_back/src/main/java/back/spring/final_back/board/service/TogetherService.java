@@ -22,8 +22,12 @@ public interface TogetherService {
     // 게시판 삭제(Delete)
     int deleteBoardList(TogetherDto togetherDto);
 
+    //조회수 확인하자
+    void viewUp(int board_tg_no, String board_tg_mem_id);
+
     List<Map<String, Object>> qnaList(Map<String, Object> pMap);
 
     int qnaInsert(Map<String, Object> pMap);
+
 
 }

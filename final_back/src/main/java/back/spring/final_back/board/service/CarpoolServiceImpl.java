@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import back.spring.final_back.board.repository.CarpoolDao;
 import back.spring.final_back.board.repository.CarpoolDto;
-import back.spring.final_back.board.repository.TogetherDto;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,23 +18,25 @@ public class CarpoolServiceImpl implements CarpoolService {
 
     // 게시판 조회(SelectAll)
     @Override
-    public List<TogetherDto> selectCarpool() {
+    public List<CarpoolDto> selectCarpool() {
         logger.info("CarpoolServiceImpl : selectCarpoolList");
-        List<TogetherDto> mList = null;
+        List<CarpoolDto> mList = null;
         mList = carpoolDao.selectCarpool();
         return mList;
     }
 
     // 게시글 상세보기(SelectOne)
     @Override
-    public TogetherDto CarpoolDetail(CarpoolDto carpoolDto) {
-        TogetherDto mList = carpoolDao.carpoolDetail(carpoolDto);
+    public CarpoolDto CarpoolDetail(CarpoolDto carpoolDto) {
+        logger.info("CarpoolServiceImpl : CarpoolDetail");
+        CarpoolDto mList = carpoolDao.carpoolDetail(carpoolDto);
         return mList;
     }
 
     // 게시판 등록(Insert)
     @Override
     public int insertCarpool(CarpoolDto carpoolDto) {
+        logger.info("CarpoolServiceImpl : insertCarpool");
         int result = carpoolDao.insertCarpool(carpoolDto);
         return result;
     }
@@ -43,7 +44,15 @@ public class CarpoolServiceImpl implements CarpoolService {
     // 게시판 글 삭제
     @Override
     public int deleteCarpool(CarpoolDto carpoolDto) {
+        logger.info("CarpoolServiceImpl : deleteCarpool");
         int result = carpoolDao.deleteCarpool(carpoolDto);
+        return result;
+    }
+
+    // 게시판 수정(Update)
+    @Override
+    public int updateCarpool(CarpoolDto carpoolDto) {
+        int result = carpoolDao.updateCarpool(carpoolDto);
         return result;
     }
 

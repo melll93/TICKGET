@@ -7,11 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import back.spring.final_back.board.repository.CarpoolDto;
-import back.spring.final_back.board.repository.TogetherDto;
 import back.spring.final_back.board.service.CarpoolService;
 import lombok.RequiredArgsConstructor;
 
@@ -26,18 +27,18 @@ public class CarpoolController {
 
     // carpool 게시판 조회(SelectAll)
     @GetMapping("/selectCarpool")
-    public List<TogetherDto> selectCarpool() {
+    public List<CarpoolDto> selectCarpool() {
         logger.info("CarpoolController : selectCarpool 호출");
-        List<TogetherDto> mList = null;
+        List<CarpoolDto> mList = null;
         mList = carpoolService.selectCarpool();
         return mList;
     }
 
     // 게시글 상세보기(SelectOne)
     @GetMapping("/carpoolDetail")
-    public TogetherDto CarpoolDetail(CarpoolDto carpoolDto) {
-        logger.info("BoardController : selectBoardDetail 호출");
-        TogetherDto mList = carpoolService.CarpoolDetail(carpoolDto);
+    public CarpoolDto CarpoolDetail(CarpoolDto carpoolDto) {
+        logger.info("CarpoolController : CarpoolDetail 호출");
+        CarpoolDto mList = carpoolService.CarpoolDetail(carpoolDto);
         return mList;
     }
 
@@ -52,9 +53,28 @@ public class CarpoolController {
     // 게시판 삭제(Delete)
     @GetMapping("/deleteCarpool")
     public int deleteCarpool(CarpoolDto carpoolDto) {
-        logger.info("RestMemberController : deleteCarpool 호출");
+        logger.info("CarpoolController : deleteCarpool 호출");
         int result = 0;
         result = carpoolService.deleteCarpool(carpoolDto);
         return result;
     }
+
+    // 게시글 수정(Update)
+    @GetMapping("/updateCarpool")
+    public CarpoolDto updateCarpool(CarpoolDto carpoolDto) {
+        logger.info("CarpoolController : updateCarpool select");
+        CarpoolDto mList = carpoolService.CarpoolDetail(carpoolDto);
+        return mList;
+    }
+
+    // 게시판 수정(Update)
+    @PostMapping("/updateCarpool")
+    public int updateCarpoolSubmit(@RequestBody CarpoolDto carpoolDto) {
+        logger.info("CarpoolController : updateCarpoolSubmit submit");
+        int result = 0;
+        logger.error("carpoolDto = {}", carpoolDto);
+        result = carpoolService.updateCarpool(carpoolDto);
+        return result;
+    }
+
 }

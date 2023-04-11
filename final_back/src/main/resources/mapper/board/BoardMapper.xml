@@ -43,27 +43,13 @@
         where board_tg_no = #{boardTgNo}
     </update>
     
-    <!-- ================== 수정 중 ===================
-    <select id="qnaList" parameterType="java.util.HashMap" resultType="map">
-		select
-				board_tg_no
-				, member_tg_id
-				, board_tg_title
-				, board_tg_content
-				, board_tg_date
-				, board_tg_views
-				, board_tg_super_no
-				, board_tg_group_no
-		from	qna q, member230324 m
-		where	q.mem_no = m.mem_no
-	</select>
-
-    <insert id="qnaInsert" parameterType="map">
-		INSERT INTO qna(qna_bno, mem_no, qna_title
-						,qna_content, qna_type, qna_secret
-						,qna_hit, qna_date)
-			VALUES(qna_seq.nextval, #{mem_no}, #{qna_title}
-				, #{qna_content}, '양도', #{qna_secret}
-				,#{qna_hit}, to_char(sysdate,'YYYY-MM-DD'))
-	</insert> -->
+    <!-- 남의 글일 경우에만 조회수를 증가 -->
+    <update id="viewUp" parameterType="map">
+        update board set
+            board_views = board_views +1
+        where board_no = #{boardNo}
+        <if test="memberNo != null">
+        and member_id != ${memberId}
+        </if>
+      </update>
 </mapper>

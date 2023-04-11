@@ -8,8 +8,6 @@ import { selectTogetherDB } from "../../axios/together/TogetherLogic";
 const TogetherBoardList = () => {
   console.log("BoardList");
   const navigate = useNavigate();
-  // 현재 체크된 항목들의 배열
-  const [checkedItems, setCheckedItems] = useState([]);
   // 게시글 목록을 담을 배열
   const [boardList, setBoardList] = useState([]);
   // 컴포넌트가 처음 로딩될 때, 백엔드 API를 호출하여 게시글 목록을 가져옴
@@ -35,61 +33,77 @@ const TogetherBoardList = () => {
   }
   // 게시글 목록이 있을 경우, 테이블로 화면을 출력함
   return (
-    <div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th style={{ textAlign: "center", width: "80px" }}>번호</th>
-            <th>제목</th>
-            <th style={{ textAlign: "center", width: "180px" }}>작성자</th>
-            <th style={{ textAlign: "center", width: "250px" }}>작성일</th>
-          </tr>
-        </thead>
-        <tbody>
-          {boardList.map((board) => (
-            <tr key={board.boarTgdNo}>
-              <td style={{ textAlign: "center" }}>{board.boardTgNo}</td>
-              <td>
-                <button
-                  style={{
-                    border: "none",
-                    background: "none",
-                    color: "blue",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    navigate({
-                      pathname: "/together/BoardDetail/" + board.boardTgNo,
-                      state: { board },
-                    })
-                  }
-                >
-                  {board.boardTgTitle}
-                </button>
-              </td>
-              <td style={{ textAlign: "center" }}>{board.boardTgMemId}</td>
-              <td style={{ textAlign: "center" }}>{board.boardTgDate}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <Button
-        variant="warning"
-        style={{ backgroundColor: "black", color: "white" }}
-        onClick={selectBoardList}
-      >
-        전체조회
-      </Button>
-      &nbsp;
-      <Button
-        variant="success"
-        style={{ backgroundColor: "black" }}
-        onClick={() => navigate("/together/write")}
-      >
-        글 작성하기
-      </Button>
-      &nbsp;
-    </div>
+    <>
+      <div style={{ width: "1500px", marginLeft: "auto", marginRight: "auto" }}>
+        <div className="row" style={{ marginTop: "40px" }}>
+          <Table className="table table-hover">
+            <thead>
+              <tr>
+                <th style={{ textAlign: "center" }}>번호</th>
+                <th width="40%">제목</th>
+                <th style={{ textAlign: "center" }}>작성자</th>
+                <th style={{ textAlign: "center" }}>작성일</th>
+                <th style={{ textAlign: "center" }}>조회수</th>
+              </tr>
+            </thead>
+            <tbody>
+              {boardList.map((board) => (
+                <tr key={board.boarTgNo}>
+                  <td style={{ textAlign: "center" }}>{board.boardTgNo}</td>
+                  <td>
+                    <button
+                      style={{
+                        border: "none",
+                        background: "none",
+                        color: "blue",
+                        cursor: "pointer",
+                      }}
+                      onClick={() =>
+                        navigate({
+                          pathname: "/together/BoardDetail/" + board.boardTgNo,
+                          state: { board },
+                        })
+                      }
+                    >
+                      {board.boardTgTitle}
+                    </button>
+                  </td>
+                  <td style={{ textAlign: "center" }}>{board.boardTgMemId}</td>
+                  <td style={{ textAlign: "center" }}>{board.boardTgDate}</td>
+                  <td style={{ textAlign: "center" }}>{board.boardTgViews}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          <Button
+            variant="warning"
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              marginRight: "10px",
+            }}
+            onClick={selectBoardList}
+          >
+            전체조회
+          </Button>{" "}
+          <Button
+            variant="success"
+            style={{ backgroundColor: "black" }}
+            onClick={() => navigate("/together/write")}
+          >
+            글 작성하기
+          </Button>
+        </div>
+      </div>
+    </>
   );
 };
 
