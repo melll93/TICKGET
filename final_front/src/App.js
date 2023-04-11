@@ -39,6 +39,7 @@ import TogetherBoardUpdate from "./pages/together/TogetherBoardUpdate";
 
 import CarpoolWrietForm from "./pages/carpool/CarpoolWriteForm";
 import CarpoolDetail from "./pages/carpool/CarpoolDetail";
+import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -99,14 +100,22 @@ function App({ mkImageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<TogetherBoardWriteForm />} />
-        <Route path="together/boardDetail/:boardTgNo" element={<TogetherBoardDetail board={board} />}/>
+        <Route
+          path="together/boardDetail/:boardTgNo"
+          element={<TogetherBoardDetail board={board} />}
+        />
         <Route path="together/boardDetail/" element={<TogetherBoardDetail />} />
-        <Route path="together/boardUpdate/:boardTgNo" element={<TogetherBoardUpdate />} />
+        <Route
+          path="together/boardUpdate/:boardTgNo"
+          element={<TogetherBoardUpdate />}
+        />
 
         {/* CarpoolPage Routes */}
         <Route path="carpool/write/*" element={<CarpoolWrietForm />} />
-        <Route path="carpool/carpoolDetail/:carpoolNo" element={<CarpoolDetail />}/>
-
+        <Route
+          path="carpool/carpoolDetail/:carpoolNo"
+          element={<CarpoolDetail />}
+        />
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route
@@ -122,6 +131,10 @@ function App({ mkImageUploader }) {
         <Route
           path="/market/mk_boardDetail/*"
           element={<MarketDetail mkImageUploader={mkImageUploader} />}
+        />
+        <Route
+          path="/market/mk_boardDetail/payment/:payId"
+          element={<MarketPaymentPage />}
         />
       </Routes>
     </>

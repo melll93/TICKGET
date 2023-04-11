@@ -7,7 +7,7 @@
 
 
 
-<!-- 게시글 조회 -->
+<!-- 게시글 조회 및 조건검색 -->
 <select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
   select * from board_market
   <if test='condition!=null and condition.equals("전체")'>

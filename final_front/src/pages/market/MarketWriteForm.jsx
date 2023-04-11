@@ -204,7 +204,7 @@ const handleSubmit = (event) => {
                     required
                     id="board_mk_title"
                     type="text"
-                    placeholder="제목을 입력하세요."
+                    placeholder="상품 제목을 입력하세요."
                     style={{ width: "970px", height: "50px" }}
                     onChange={(e) => {
                       handleTitle(e.target.value);
@@ -212,7 +212,7 @@ const handleSubmit = (event) => {
                   />
 
 <Form.Control.Feedback type="invalid">
-            제목을 입력해주세요.
+            상품 제목을 입력해주세요.
           </Form.Control.Feedback>
                 </Form.Group>
 
