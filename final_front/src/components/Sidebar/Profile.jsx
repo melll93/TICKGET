@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const reduxUser = useSelector(state => state.userStatus.user);
+  const reduxUser = useSelector((state) => state.userStatus.user);
   const [token, setToken] = useState();
   const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ const Profile = () => {
     if (reduxUser != {} || reduxUser != null) {
       console.log(reduxUser);
     }
-  }
+  };
   // const getProfile = async () => {
   //   if (window.localStorage.getItem("login_domain") === "kakao") {
   //     try {
@@ -41,6 +41,7 @@ const Profile = () => {
       <Link to="/mypage">
         <img className="icon image50" src={"../logos/PROFILE.png"} />
       </Link>
+      {/*  */}
       <div className="ProfileButton">
         <Link to="/login" className="link">
           <span>로그인</span>
@@ -49,6 +50,7 @@ const Profile = () => {
         <Link to="/register" className="link">
           <span>회원가입</span>
         </Link>
+        {/*  */}
         <br />
         <Link to="/" className="link" onClick={logout}>
           <span>로그아웃</span>
