@@ -12,6 +12,8 @@
 
    
   const MarketDetail = () => {
+
+
     const search = window.location.search;
     console.log(search);
     const page = search.split('&').filter((item)=>{return item.match('page')})[0]?.split('=')[1];
@@ -85,6 +87,11 @@
 
     
 
+ const linkToPayment = () => {
+    navigate(`./payment/${no}`)
+ }
+
+
     return (
       <>
       <Sidebar />
@@ -101,31 +108,34 @@
 
 
                                <div className="product_detail_imgdiv" >
-                                         <img className="product_detail_img" src={detail.board_mk_fileurl}  alt="상품사진" />
+                                         <img className="product_detail_img" src={detail.board_mk_fileurl}  alt="상품사진"
+                                         style={{objectFit:'cover'}} />
                                </div>
 
 
-                               <div className="product_detail_info" style={{marginLeft:'80px'}}>
-                               <div className="product_detail_head">
+                               <div className="product_detail_info" style={{marginLeft:'120px'}}>
+                               <div className="product_detail">
                                 <h3 className="product_title">상품 정보</h3>
                                 </div>
                                 <ListGroup variant="flush" style={{width:'300px'}}>
-      <ListGroup.Item>{detail.board_mk_title}</ListGroup.Item>
-      <ListGroup.Item>장소 : {detail.mk_ticket_place}</ListGroup.Item>
-      <ListGroup.Item>공연일 : {detail.mk_ticket_date}</ListGroup.Item>
-      <ListGroup.Item>좌석정보 : {detail.mk_ticket_seat}</ListGroup.Item>
-      <ListGroup.Item></ListGroup.Item>
+      <ListGroup.Item style={{textAlign:'center'}}>{detail.board_mk_title}</ListGroup.Item> 
+      <ListGroup.Item style={{textAlign:'center'}}>{detail.mk_ticket_place}</ListGroup.Item>  {/* 장소 */}
+      <ListGroup.Item style={{textAlign:'center'}}>{detail.mk_ticket_date}</ListGroup.Item>   {/* 공연일 */}
+      <ListGroup.Item style={{textAlign:'center'}}>{detail.mk_ticket_seat}</ListGroup.Item>   {/* 좌석정보 */}
+      <ListGroup.Item style={{textAlign:'center'}}></ListGroup.Item>
     </ListGroup>
                                   <hr style={{opacity:'0%'}}/>
                                 <div className="product_detail_payments" >
                                 <h3 className="product_title">구매</h3>
                                 </div>
                                 <ListGroup variant="flush" style={{width:'300px'}}>
-      <ListGroup.Item>수량 : {detail.mk_ticket_count}장</ListGroup.Item>
-      <ListGroup.Item>가격 : {detail.mk_ticket_price}</ListGroup.Item>
+      <h4 style={{textAlign:'center'}}>{detail.mk_ticket_count}장</h4>
+      <ListGroup.Item></ListGroup.Item>
+       <h2 style={{textAlign:'center' , marginTop:'15px'}}>{detail.mk_ticket_price}</h2>
+      <ListGroup.Item></ListGroup.Item>
+    
       <hr style={{opacity:'0'}}/>
-      <hr style={{opacity:'0'}}/>
-      <Button>구매하기</Button>
+      <span><Button style={{width:'145px'}}>채팅하기</Button>  <Button style={{width:'145px'}} onClick={linkToPayment}>구매하기</Button></span>
       <ListGroup.Item></ListGroup.Item>
 
     </ListGroup>
