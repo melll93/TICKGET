@@ -149,30 +149,41 @@ const RegisterPage = ({ authLogic }) => {
   const overlap = async (key) => {
     console.log('중복확인 : ' + key);
     let params;
-    if (key === 'email') {
-      params = { MEM_EMAIL: memInfo[key], type: 'overlap' }
+    if (key === 'id') {
+      params = { MEMBER_ID: memInfo[key], type: 'overlap' };
+    }
+    else if (key === 'email') {
+      params = { MEMBER_EMAIL: memInfo[key], type: 'overlap' };
+    }
+    else if (key === 'nickname') {
+      params = { MEMBER_NICKNAME: memInfo[key], type: 'overlap' };
     }
     else {
-      params = { MEM_ID: memInfo[key], type: 'overlap' }
+      console.log('유효하지 않은 키 값입니다.');
+      return; // 유효하지 않은 키 값이면 함수 종료
     }
+    
     console.log(params);
-    let response = { data: 0 }
-    response = await memberListDB(params)
-    console.log('DB : ' + response.data)
-    // Array(1)
-    // 0: {MEM_UID:"karina", MEM_NAME:"유지민"}
-    const data = JSON.stringify(response.data)
-    const jsonDoc = JSON.parse(data)
-    if (jsonDoc) {
-      console.log(jsonDoc[0].MEM_NAME)
+    
+    let response = { data: 0 };
+    response = await memberListDB(params);
+    console.log('DB : ' + response.data);
+    
+    const data = JSON.stringify(response.data);
+    const jsonDoc = JSON.parse(data);
+    
+    if (jsonDoc && jsonDoc.length > 0) {
+      console.log('중복되는 값이 있습니다');
+      console.log(jsonDoc[0].MEMBER_NAME); // 중복된 값의 이름 출력
     }
     else {
-      console.log('중복되는 값이 없습니다.')
+      console.log('중복되는 값이 없습니다');
     }
-    // 닉네임 존재 시
-    if (response.data) {
+    
+    // 중복된 값이 있을 시
+    if (response.data && jsonDoc && jsonDoc.length > 0) {
     }
-    // 닉네임 없을 시
+    // 중복된 값이 없을 시
     else {
     }
   }
