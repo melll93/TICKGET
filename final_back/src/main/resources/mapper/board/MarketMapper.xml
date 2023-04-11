@@ -8,10 +8,54 @@
 
 
 <!-- 게시글 조회 -->
-<select id="mk_boardList" resultType="MarketDto">
-select * from board_market
-order by board_mk_date DESC
+<select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
+  select * from board_market
+  <if test='condition!=null and condition.equals("전체")'>
+    <choose>
+      <when test='content!=null and condition.equals("제목")'>
+        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
+      </when>
+      <when test='content!=null and condition.equals("장소")'>
+        WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+      </when>
+      <when test='content!=null and condition.equals("작성자")'>
+        WHERE mem_name LIKE CONCAT('%', #{content}, '%')
+      </when>
+    </choose>
+  </if>
+  <if test='condition!=null and !condition.equals("전체")'>
+    <where>
+      <if test='content!=null and condition.equals("제목")'>
+        AND board_mk_title LIKE CONCAT('%', #{content}, '%')
+      </if>
+      <if test='content!=null and condition.equals("장소")'>
+        AND mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+      </if>
+      <if test='content!=null and condition.equals("작성자")'>
+        AND mem_name LIKE CONCAT('%', #{content}, '%')
+      </if>
+    </where>
+  </if>
+  order by board_mk_date DESC
 </select>
+
+ <!--   select * from board_market
+  <if test='content!=null'>
+    where 
+    <choose>
+      <when test='condition!=null and condition.equals("제목")'>
+        board_mk_title LIKE CONCAT('%', #{content}, '%')
+      </when>
+      <when test='condition!=null and condition.equals("장소")'>
+        mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+      </when>
+      <when test='condition!=null and condition.equals("작성자")'>
+        mem_name LIKE CONCAT('%', #{content}, '%')
+      </when>
+    </choose>
+  </if>
+  order by board_mk_date DESC
+</select>-->
 
 
 
@@ -20,9 +64,9 @@ order by board_mk_date DESC
 <!-- 게시글 입력 -->
 <insert id="mk_boardInsert" parameterType="MarketDto">
 insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
-mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name)
+mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl)
 VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
-#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName})
+#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl})
 </insert>
 
 
@@ -54,10 +98,17 @@ VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
      <if test='mkTicketPrice!=null'>
      mk_ticket_price = #{mkTicketPrice},
      </if>
-     board_mk_date = CURDATE()
+     <if test='boardMkFilename!=null'>
+     board_mk_filename = #{boardMkFilename},
+     </if>
+     <if test='boardMkFileurl!=null'>
+     board_mk_fileurl = #{boardMkFileurl},
+     </if>
+        <if test='boardMkDate == null'>
+      board_mk_date = CURDATE()
+    </if>
      WHERE board_mk_no = #{boardMkNo} 
 </update>
-
 
 
 
@@ -101,6 +152,7 @@ select * from board_market
 	</when>
 	</choose>
 	</update>
+
 
 
 </mapper>

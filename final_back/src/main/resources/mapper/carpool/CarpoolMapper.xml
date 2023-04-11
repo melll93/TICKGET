@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="back.spring.final_back.board.repository.CarpoolDao">
+    
+    <!-- 게시글 전체조회-->
+    <select id="selectCarpool" resultType="CarpoolDto">
+        select * from board_carpool
+    </select>
+
+    <!-- 게시글 상세보기-->
+    <select id="carpoolDetail" resultType="CarpoolDto">
+        select * from board_carpool where carpool_no=#{carpoolNo}
+    </select>
+
+    <!-- 게시글 추가 -->
+    <insert id="insertCarpool" parameterType="CarpoolDto">
+      INSERT INTO board_carpool
+      VALUES(
+          #{carpoolNo}
+          , #{carpoolMemId}
+          , #{carpoolTitle}
+          , #{carpoolContent}
+          , #{carpoolDate}
+      )
+    </insert>
+
+    <!-- 게시슬 삭제 -->
+    <delete id="deleteCarpool" parameterType="CarpoolDto">
+        delete from board_carpool where carpool_no=#{carpoolNo}
+    </delete>
+</mapper>

@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import back.spring.final_back.festival.repository.FestivalDao;
 import back.spring.final_back.festival.repository.FestivalDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class FestivalServiceImpl implements FestivalService {
     Logger logger = LoggerFactory.getLogger(FestivalServiceImpl.class);
@@ -44,5 +46,13 @@ public class FestivalServiceImpl implements FestivalService {
         festival = festivalDao.kyeongkiFestivalList();
         return festival;
     }
+
+	@Override
+	public int festivalDelete(Integer fest_m_id) {
+		log.info("fest 서비스임플 삭제");
+		int result = 0;
+		result = festivalDao.festivalDelete(fest_m_id);
+		return result;
+	}
 
 }

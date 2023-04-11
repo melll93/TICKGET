@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="back.spring.final_back.board.repository.BoardDao">
+<mapper namespace="back.spring.final_back.board.repository.TogetherDao">
     <!-- 게시글 전체조회-->
-    <select id="selectBoardList" resultType="BoardDto">
+    <select id="selectBoardList" resultType="TogetherDto">
         select * from board_together
     </select>
 
     <!-- 게시글 상세보기-->
-    <select id="selectBoardDetail" resultType="BoardDto">
+    <select id="selectBoardDetail" resultType="TogetherDto">
         select * from board_together where board_tg_no=#{boardTgNo}
     </select>
 
     <!-- 게시글 추가 -->
-    <insert id="insertBoardList" parameterType="BoardDto">
+    <insert id="insertBoardList" parameterType="TogetherDto">
         INSERT INTO board_together
         VALUES(
             #{boardTgNo}
@@ -31,18 +31,19 @@
         )
     </insert>
     <!-- 게시슬 삭제 -->
-    <delete id="deleteBoardList" parameterType="BoardDto">
+    <delete id="deleteBoardList" parameterType="TogetherDto">
         delete from board_together where board_tg_no=#{boardTgNo}
     </delete>
     <!-- 게시글 수정 -->
-    <update id="updateBoardList" parameterType="BoardDto">
+    <update id="updateBoardList" parameterType="TogetherDto">
         update board_together set
             board_tg_title = #{boardTgTitle} ,
-            board_tg_content = #{boardTgContent}
+            board_tg_content = #{boardTgContent},
+            board_tg_date = #{boardTgDate}
         where board_tg_no = #{boardTgNo}
     </update>
     
-    <!--================== 수정 중 ===================-->
+    <!-- ================== 수정 중 ===================
     <select id="qnaList" parameterType="java.util.HashMap" resultType="map">
 		select
 				board_tg_no
@@ -64,5 +65,5 @@
 			VALUES(qna_seq.nextval, #{mem_no}, #{qna_title}
 				, #{qna_content}, '양도', #{qna_secret}
 				,#{qna_hit}, to_char(sysdate,'YYYY-MM-DD'))
-	</insert>
+	</insert> -->
 </mapper>

@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { getMovieListDB } from "../../axios/main/main";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import KakaoMap from "../carpool/KakaoMap";
-import LandingPage from "../carpool/LandingPage";
-
+import KakaoMap from "../carpool/Map/KakaoMap"
+import LandingPage from "../carpool/Map/LandingPage"
+import CarpoolBoardList from "../carpool/CarpoolBoardList";
 
 const CarpoolPage = () => {
   const [dbResults, setDbResults] = useState([]);
@@ -19,8 +19,21 @@ const CarpoolPage = () => {
       <Sidebar />
       <div className="center">
         <Header />
+        {<CarpoolBoardList/>}
         {<KakaoMap />}
+        <br/>
+        <div style={{
+          border: "1px solid lightGray",
+          borderRadius: "10px",
+          width: "90%",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}>
+
         {<LandingPage />}
+        </div>
       </div>
     </>
   );

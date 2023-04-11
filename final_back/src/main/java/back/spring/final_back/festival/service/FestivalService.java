@@ -11,6 +11,7 @@ public interface FestivalService {
     List<FestivalDto> seoulFestivalList();
     List<FestivalDto> kyeongkiFestivalList();
     int festivalInsert(FestivalDto festivalDto);
+	int festivalDelete(Integer fest_m_id);
 
 }
 

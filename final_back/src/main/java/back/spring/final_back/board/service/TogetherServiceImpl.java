@@ -7,63 +7,63 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import back.spring.final_back.board.repository.BoardDao;
-import back.spring.final_back.board.repository.BoardDto;
+import back.spring.final_back.board.repository.TogetherDao;
+import back.spring.final_back.board.repository.TogetherDto;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService {
-    Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
-    private final BoardDao boardDao;
+public class TogetherServiceImpl implements TogetherService {
+    Logger logger = LoggerFactory.getLogger(TogetherServiceImpl.class);
+    private final TogetherDao togetherDao;
 
     // 게시판 조회(SelectAll)
     @Override
-    public List<BoardDto> selectBoardList() {
+    public List<TogetherDto> selectBoardList() {
         logger.info("BoardServiceImpl : selectBoardList");
-        List<BoardDto> mList = null;
-        mList = boardDao.selectBoardList();
+        List<TogetherDto> mList = null;
+        mList = togetherDao.selectBoardList();
         return mList;
     }
 
     // 게시글 상세보기(SelectOne)
     @Override
-    public BoardDto selectBoardDetail(BoardDto boardDto) {
-        BoardDto mList = boardDao.selectBoardDetail(boardDto);
+    public TogetherDto selectBoardDetail(TogetherDto togetherDto) {
+        TogetherDto mList = togetherDao.selectBoardDetail(togetherDto);
         return mList;
     }
 
     // 게시판 등록(Insert)
     @Override
-    public int insertBoardList(BoardDto boardDto) {
-        int result = boardDao.insertBoardList(boardDto);
+    public int insertBoardList(TogetherDto togetherDto) {
+        int result = togetherDao.insertBoardList(togetherDto);
         return result;
     }
 
     // 게시판 수정(Update)
     @Override
-    public int updateBoardList(BoardDto boardDto) {
-        int result = boardDao.updateBoardList(boardDto);
+    public int updateBoardList(TogetherDto togetherDto) {
+        int result = togetherDao.updateBoardList(togetherDto);
         return result;
     }
 
     // 게시판 삭제(Delete)
     @Override
-    public int deleteBoardList(BoardDto boardDto) {
-        int result = boardDao.deleteBoardList(boardDto);
+    public int deleteBoardList(TogetherDto togetherDto) {
+        int result = togetherDao.deleteBoardList(togetherDto);
         return result;
     }
 
     public int qnaInsert(Map<String, Object> pMap) {
         logger.info("qnaInsert호출");
         int result = 0;
-        result = boardDao.qnaInsert(pMap);
+        result = togetherDao.qnaInsert(pMap);
         return result;
      }
      public List<Map<String, Object>> qnaList(Map<String, Object> pMap) {
         logger.info("qnaList 호출");
         List<Map<String,Object>> bList = null;
-        bList = boardDao.qnaList(pMap);
+        bList = togetherDao.qnaList(pMap);
         return bList;
      }
 }

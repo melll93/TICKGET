@@ -30,20 +30,11 @@ const MainCarousel = ({ festivalToday }) => {
 
   return (
     <>
-    <section className="top_todays_contents">
-
-      <div className="div_todays_contents">
-        <h1>Today's Pick!</h1>
-      </div>
-      <div className="carousel_div" style={{padding:'50px'}}>
-
       <Carousel responsive={responsive}>
         {festivalToday.map((festival, index) => (
           <CarouselOne key={index} festival={festival} />
           ))}
       </Carousel>
-          </div>
-          </section>
     </>
   );
 };

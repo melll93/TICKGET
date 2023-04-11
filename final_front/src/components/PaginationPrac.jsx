@@ -1,35 +1,65 @@
 import React, { useEffect, useState } from 'react'
 import { Pagination } from 'react-bootstrap';
+import '../styles/pagination.css'; 
+
 // import { Pagination } from '@mui/material'
 
 const PaginationPrac= ({currentFest, pagination, perPage, totalFest}
  ) => {
 const pageNum=[];
 
-for(let i = 1; i<Math.ceil(totalFest/perPage); i++){
+const endPage=Math.ceil(totalFest/perPage)
+console.log(endPage)
+
+for(let i = 1; i<=endPage; i++){
     pageNum.push(i);
 }
 
 
-    return (
-        <div>
-            <nav>
-<ul className="pagination" >
-    {pageNum.map(num=><li key={num}> &nbsp;
-        <a style={{ borderRadius:'50%', backgroundColor:'yellow'}} onClick={()=>pagination(num)} >{num} </a> 
-    </li>
-)}
+const [currentPage, setCurrentPage] = useState(1);
 
+const handleClick = (page) => { setCurrentPage(page);  pagination(page);};
 
-</ul>
+const handlePrevClick = () => { if (currentPage > 1) { setCurrentPage(currentPage - 10); pagination(currentPage - 10); }};
 
-            </nav>
+const handleNextClick = () => {  if (currentPage < endPage) { setCurrentPage(currentPage + 10);  pagination(currentPage + 10);}};
 
-<Pagination  count={Math.ceil(totalFest/perPage)}  color="secondary" /> {/* ...? ...? */}
+const startpppage = (Math.ceil(currentPage / 10) - 1) * 10;
+const endpppage = Math.min(startpppage + 10, endPage);
 
-        </div>
-    );
-}
+return (
+  <div>
+    <nav>
+      <ul className="pagination">
+        {startpppage > 0 && (
+          <li>
+            <a onClick={handlePrevClick}>&laquo;</a>
+          </li>
+        )}
+        {pageNum.slice(startpppage, endpppage).map((num) => (
+          <li key={num}>
+            <a
+              style={{
+                borderRadius: "50%",
+                backgroundColor: num === currentPage ? "black" : "white",
+                color: num === currentPage ? "white" : "black",
+              }}
+              onClick={() => handleClick(num)}
+            >
+              {num}{" "}
+            </a>
+          </li>
+        ))}
+        {endpppage < endPage && (
+          <li>
+            <a onClick={handleNextClick}>&raquo;</a>
+          </li>
+        )}
+      </ul>
+    </nav>
+  </div>
+);
+};
 
 export default PaginationPrac
 

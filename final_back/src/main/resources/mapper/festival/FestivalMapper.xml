@@ -34,4 +34,13 @@ SELECT * FROM fest_main
 	#{festMGenre}, 
 	#{festMArea})
 	</insert>
+		<delete id="festivalDelete" parameterType="String">
+		delete from fest_main
+				<where>
+			<if test='fest_m_id!=null'>
+				and fest_m_id=#{festMId}
+			</if>
+		</where>
+
+	</delete>
 </mapper>

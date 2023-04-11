@@ -2,7 +2,7 @@ import React from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const MyFilter = ({ types, type, id, title, handleTitle }) => {
+const TogetherMyFilter = ({ types, type, id, title, handleTitle }) => {
   console.log(id); //qna_type
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,4 +41,4 @@ const MyFilter = ({ types, type, id, title, handleTitle }) => {
     </DropdownButton>
   );
 };
-export default MyFilter;
+export default TogetherMyFilter;

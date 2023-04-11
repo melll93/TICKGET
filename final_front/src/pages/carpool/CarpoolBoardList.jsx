@@ -3,30 +3,21 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteBoardListDB,
-  selectBoardListDB,
-} from "../../axios/board/boardLogic";
+import { selectCarpoolDB } from "../../axios/carpool/CarpoolLogic";
 
-const BoardList = () => {
-  console.log("BoardList");
+const CarpoolBoardList = () => {
+  console.log("CarpoolBoardList");
   const navigate = useNavigate();
-  // 현재 체크된 항목들의 배열
-  const [checkedItems, setCheckedItems] = useState([]);
-  // 게시글 목록을 담을 배열
   const [boardList, setBoardList] = useState([]);
-  // 컴포넌트가 처음 로딩될 때, 백엔드 API를 호출하여 게시글 목록을 가져옴
   useEffect(() => {
-    jsonBoardList();
+    selectCarpoolList();
   }, []);
 
   // 전체 게시글 조회
-  const jsonBoardList = async () => {
-    // axios를 사용하여 게시글 목록을 가져옴
-    const res = await selectBoardListDB();
+  const selectCarpoolList = async () => {
+    const res = await selectCarpoolDB();
     console.log(res.data);
     if (res.data && Array.isArray(res.data)) {
-      // 가져온 게시글 목록을 boardList state에 저장
       setBoardList(res.data);
     } else {
       console.log("부서목록 조회 실패");
@@ -49,9 +40,9 @@ const BoardList = () => {
           </tr>
         </thead>
         <tbody>
-          {boardList.map((board) => (
-            <tr key={board.boarTgdNo}>
-              <td style={{ textAlign: "center" }}>{board.boardTgNo}</td>
+          {boardList.map((carpool) => (
+            <tr key={carpool.carpoolNo}>
+              <td style={{ textAlign: "center" }}>{carpool.carpoolNo}</td>
               <td>
                 <button
                   style={{
@@ -62,16 +53,16 @@ const BoardList = () => {
                   }}
                   onClick={() =>
                     navigate({
-                      pathname: "/together/BoardDetail/" + board.boardTgNo,
-                      state: { board },
+                      pathname: "/carpool/carpoolDetail/" + carpool.carpoolNo,
+                      state: { carpool },
                     })
                   }
                 >
-                  {board.boardTgTitle}
+                  {carpool.carpoolTitle}
                 </button>
               </td>
-              <td style={{ textAlign: "center" }}>{board.boardTgMemId}</td>
-              <td style={{ textAlign: "center" }}>{board.boardTgDate}</td>
+              <td style={{ textAlign: "center" }}>{carpool.carpoolMemId}</td>
+              <td style={{ textAlign: "center" }}>{carpool.carpoolDate}</td>
             </tr>
           ))}
         </tbody>
@@ -79,7 +70,7 @@ const BoardList = () => {
       <Button
         variant="warning"
         style={{ backgroundColor: "black", color: "white" }}
-        onClick={jsonBoardList}
+        onClick={selectCarpoolList}
       >
         전체조회
       </Button>
@@ -87,7 +78,7 @@ const BoardList = () => {
       <Button
         variant="success"
         style={{ backgroundColor: "black" }}
-        onClick={() => navigate("/together/write")}
+        onClick={() => navigate("/carpool/write")}
       >
         글 작성하기
       </Button>
@@ -96,4 +87,4 @@ const BoardList = () => {
   );
 };
 
-export default BoardList;
+export default CarpoolBoardList;

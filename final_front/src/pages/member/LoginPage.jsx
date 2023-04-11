@@ -26,8 +26,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
    * id, password로 처리할 경우 추후 보안처리할 때 변수를 수정해야 할 가능성이 높아보임.
    * 이벤트 처리는 각 변수를 따로 state로 처리하고 BE로 전송할 member(tempUser)객체를 따로 담아줌.
    *******************************************************************************/
-  const [userId, setUserId] = useState("");
-  const [userPw, setUserPw] = useState("");
+  const [userId, setUserId] = useState();
+  const [userPw, setUserPw] = useState();
 
   // 로그인 필요 정보
   const member = {
@@ -41,18 +41,26 @@ const LoginPage = ({ user, setUser, authLogic }) => {
       url: "http://localhost:8888/member/login/local",
       data: paramMember
     }).then((res) => {
-      // console.log(res.data)
-      const user = {
-        id: res.data.memberId,
-        email: res.data.memberEmail,
-        name: res.data.memberName,
-        nickname: res.data.memberNickname,
-        profile_img: res.data.memberProfileImage,
+      console.log(res);
+      if (res.data.code === 0) {
+        // 팝업창 구현
+        window.alert(res.data.msg)
+      } else if (res.data.code === 1) {
+        const userResponse = res.data.user;
+        const user = {
+          id: userResponse.memberId,
+          email: userResponse.memberEmail,
+          name: userResponse.memberName,
+          nickname: userResponse.memberNickname,
+          profile_img: userResponse.memberProfileImage,
+        }
+        dispatch(reduxLogin(user))
+        window.alert("로그인 성공")
+        navigate("/")
       }
-      dispatch(reduxLogin(user))
-    }).then(navigate("/"))
-    console.log(reduxUser);
+    }).catch(console.log)
   }
+
 
   /************************************comment************************************
    * 조장 생각 : 변수와 메소드가 많아지며 명칭이 많아져 코드가 많아질수록 혼동할 가능성이 높아짐.
@@ -101,7 +109,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
       console.log(result);
       console.log(result.user.id);
       // 세션 스토리지에 아이디값 저장
-      window.sessionStorage.setItem('userId', result.user.id);
       // 로컬 스토리지에 아이디값 저장
       window.localStorage.setItem('userId', result.user.id);
       navigate("/")
