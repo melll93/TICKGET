@@ -5,96 +5,13 @@ import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import {FetivalListDB, KyeongkiFestivalListDB, SeoulFestivalListDB } from "../../axios/main/Festival";
 import PaginationPrac from "../../components/PaginationPrac";
+import FestivalNavbar from "../Festival/FestivalNavbar";
 
 
 
 
 
-const Navbar = ({changeModal, modal2open, modal2_1open, modal3open, modal4open}) => {
-  const [ style, setStyle ] = useState({display: 'none'})
-  const FestTotalModals=() => {changeModal()}
-  const Seoul=() => {  modal2open()}
-  const Kyeongki=()=>{modal2_1open()}
-  const modalch=()=>{modal3open()}
-  const modal4=()=>{modal4open()}
-  return (
-    <>
-      <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div className="container-fluid">
-          <ul className="navbar-nav">
-            <ul className="nav-item">
-              <li
-                className="nav-link"
-                onClick={FestTotalModals}
-                style={{ marginLeft: "150px" }}
-              >
-                전체
-              </li>
-            </ul>
-            <ul className="nav-item">
-              <ul className="nav-link" style={{ marginLeft: "150px" }}  onMouseEnter={e => {
-                    setStyle({display: 'block'})}} onMouseLeave={e => {setStyle({display: 'none'})}} >
-                지역별
-                <ul style={style}>
 
-                {/* <div style={{display:'flex', backgroundColor:'darkblue'}}> */}
-
-                <ul className="nav-item">
-              <li className="nav-link" onClick={Seoul}>
-              서울
-              </li>
-            </ul>
-                <ul className="nav-item">
-              <li className="nav-link" onClick={Kyeongki}>
-              경기/인천
-              </li>
-            </ul>
-            <ul className="nav-item">
-              <li className="nav-link" onClick={Seoul}>
-              충청/강원
-              </li>
-            </ul>
-            <ul className="nav-item">
-              <li className="nav-link" onClick={Kyeongki}>
-              대구/경북
-              </li>
-            </ul>
-            <ul className="nav-item">
-              <li className="nav-link" onClick={Seoul}>
-              부산/경남
-              </li>
-            </ul>
-            <ul className="nav-item">
-              <li className="nav-link" onClick={Kyeongki}>
-              광주/전라
-              </li>
-            </ul>
-            <ul className="nav-item">
-              <li className="nav-link" onClick={Kyeongki}>
-              제주
-              </li>
-            </ul>
-            </ul>
-
-
-              </ul>
-            </ul>
-            <ul className="nav-item">
-              <li className="nav-link" style={{ marginLeft: "150px" }} onClick={modalch}>
-                인기순/랭킹
-              </li>
-            </ul>
-            <ul className="nav-item">
-              <li className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4}>
-                기타
-              </li>
-            </ul>
-          </ul>
-        </div>
-      </nav>
-    </>
-  );
-};
 
 
 ///////////////////////////////      페스티발 지역별(서울)   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -288,15 +205,17 @@ const FestivalPage = () => {
     <>
       <Sidebar />
       <div className="center">
-        Festival 페이지<br/>
+        <FestivalNavbar changeModal={changeModal} modal2open={modal2open} modal2_1open={modal2_1open} modal3open={modal3open} modal4open={modal4open} />
+        
+        {/* 상품등록버튼 - 관리자 페이지로 이동..? or 기업회원 로그인시에만 보이도록 수정 예정 */}
+        <Link to="/addProducts" style={{fontSize:'40px', backgroundColor:'black', color:'white', borderRadius:'10px', textDecoration:'none'}}>상품등록버튼</Link>
+        
 
-        <Header />
-        <Navbar changeModal={changeModal} modal2open={modal2open} modal2_1open={modal2_1open} modal3open={modal3open} modal4open={modal4open} />
-        <Link to="/addProducts" style={{fontSize:'40px', backgroundColor:'blue', color:'white', borderRadius:'20%', textDecoration:'none'}}>상품등록버튼</Link>
-        {totalFest===1?<FestivalsTest></FestivalsTest>:null}<br/>
+        {/* 나브바 카테고리별 클릭시 화면 전환 */}
+        {totalFest===1?<FestivalsTest />:null}<br/>
         {modal2 === 1 ? <SeoulFestivalList /> : null}
         {modal2_1 === 1 ? <KyeongkiFestivalList /> : null}
-        {modal3 === 1 ? <FestivalRankingList> </FestivalRankingList> : null}
+        {modal3 === 1 ? <FestivalRankingList />: null}
         {modal4 === 1 ? <FestivalExtraList /> : null}
         </div>
     </>

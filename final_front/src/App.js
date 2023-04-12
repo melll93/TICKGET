@@ -9,7 +9,7 @@ import ConcertPage from "./pages/community/ConcertPage";
 import FestivalPage from "./pages/community/FestivalPage";
 import HomePage from "./pages/community/HomePage";
 import MarketPage from "./pages/community/MarketPage";
-import ProductsDetails from "./pages/community/ProductsDetails";
+import FestivalsDetail from "./pages/Festival/FestivalsDetail";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
 import MarketDetail from "./pages/market/MarketDetail";
@@ -30,8 +30,6 @@ import PaymentPage from "./pages/personal/PaymentPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import CalendarPage from "./pages/personal/CalendarPage";
-/* import PaySucPage from "./pages/personal/PaySucPage"; */
-// import PayFailPage from "./pages/personal/PayFailPage";
 import mkImageUploader from "./axios/market/mkImageUploader";
 import TogetherBoardWriteForm from "./pages/together/TogetherBoardWriteForm";
 import TogetherBoardDetail from "./pages/together/TogetherBoardDetail";
@@ -94,7 +92,7 @@ function App({ mkImageUploader }) {
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
-        <Route path="/productsDetail/:festMId" element={<ProductsDetails />} />
+        <Route path="/productsDetail/:festMId" element={<FestivalsDetail />} />
         <Route path="/paymentsucess/:festMId" element={<PaySucPage />} />
         <Route path="/paymentfailed/:festMId" element={<PayFailPage />} />
 
@@ -102,14 +100,9 @@ function App({ mkImageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<TogetherBoardWriteForm />} />
-        <Route
-          path="together/boardDetail/:boardTgNo"
-          element={<TogetherBoardDetail board={board} />}
-        />
+        <Route path="together/boardDetail/:boardTgNo" element={<TogetherBoardDetail board={board} />} />
         <Route path="together/boardDetail/" element={<TogetherBoardDetail />} />
-        <Route
-          path="together/boardUpdate/:boardTgNo"
-          element={<TogetherBoardUpdate />}
+        <Route path="together/boardUpdate/:boardTgNo" element={<TogetherBoardUpdate />}
         />
 
         {/* CarpoolPage Routes */}
@@ -120,24 +113,10 @@ function App({ mkImageUploader }) {
 
 
         {/* MarketPage Routes - 성훈 작업중 */}
-        <Route
-          path="/market/write"
-          exact={true}
-          element={<MarketWriteForm mkImageUploader={mkImageUploader} />}
-        />
-        <Route
-          path="/market/update/:no"
-          exact={true}
-          element={<MarketUpdatePage mkImageUploader={mkImageUploader} />}
-        />
-        <Route
-          path="/market/mk_boardDetail/*"
-          element={<MarketDetail mkImageUploader={mkImageUploader} />}
-        />
-        <Route
-          path="/market/mk_boardDetail/payment/:payId"
-          element={<MarketPaymentPage />}
-        />
+        <Route path="/market/write" exact={true} element={<MarketWriteForm mkImageUploader={mkImageUploader} />} />
+        <Route path="/market/update/:no" exact={true} element={<MarketUpdatePage mkImageUploader={mkImageUploader} />} />
+        <Route path="/market/mk_boardDetail/*" element={<MarketDetail mkImageUploader={mkImageUploader} />} />
+        <Route path="/market/mk_boardDetail/payment/:payId" element={<MarketPaymentPage />} />
       </Routes>
     </>
   );

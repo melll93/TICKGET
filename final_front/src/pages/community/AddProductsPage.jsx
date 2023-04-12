@@ -6,6 +6,8 @@ import Sidebar from '../../components/Sidebar'
 import { useNavigate } from 'react-router'
 import { FestivalInsertDB } from '../../axios/main/Festival';
 import ImageUploader from '../../util/imageUploader';
+import AddProductsOptionalDetail from '../Festival/AddProductsOptionalDetail';
+import { Button } from 'react-bootstrap';
 
 
 
@@ -31,6 +33,10 @@ const[festArea, setFestArea] = useState("")
 const [festImages, setFestImages] = useState("");
 const [festImageUrl, setFestImageUrl] = useState("");
 const imgRef = useRef();
+
+const [optionModal, setOptionModal]=useState(0); 
+const optionModalOpen=()=>{setOptionModal(1); }
+
 
 
 const festivalInsert=async()=>{
@@ -108,7 +114,6 @@ const festImage=()=>{
     console.log("Image file", filesa[0]);
     const formData = new FormData();
     setFestImageUrl(festImageUrl);
-
     formData.append("file", files[0]);
     formData.append("upload_preset", "dpa186u8");// "본인 프리셋 업로드 네임"
     const options = {
@@ -142,7 +147,7 @@ const festImage=()=>{
 <div style={{ textAlign:'center', width:'600px', marginLeft:'100px'}}><br/> {/* //등록 div 시작 */}
 
 <select defaultValue="1" className="form-select" id="fest_category" aria-label="Default select example" style={{width:'150px'}}  onChange={(e)=>{inputCategory (e.target.value)}}>
-  <option  value="1" disabled >카테고리 (NOT NULL)</option>
+  <option  value="1" disabled >카테고리 </option>
   <option  value="FESTIVAL"  >FESTIVAL</option>
   <option  value="CONCERT"  >CONCERT</option>
 </select><br/>
@@ -155,14 +160,14 @@ const festImage=()=>{
  <input className="form-control" type="file" accept='image/*' id="festivalsImg" onChange={FestImageUpload} ref={imgRef}/> <br/>
  <div className="form-floating mb-3">
   <input type="text" className="form-control" id="festTitle" onChange={(e)=>{inuptTitle(e.target.value)}} />
-  <label htmlFor="floatingInput"> festTitle  (NOT NULL) </label>
+  <label htmlFor="floatingInput"> festTitle </label>
 </div>
 <div className="form-floating mb-3">
   <input type="text" className="form-control" id="festDesc" onChange={(e)=>{inputDesc  (e.target.value)}}/>
   <label htmlFor="floatingInput"> desc </label>
 </div>
 <select defaultValue="" className="form-select" id="festArea" aria-label="Default select example" style={{width:'150px'}}  onChange={(e)=>{inputArea (e.target.value)}}>
-  <option  disabled value="" >지역  (NOT NULL) </option>
+  <option  disabled value="" >지역 </option>
   <option  value="서울"   >서울</option>
   <option  value="경기/인천"  >경기/인천</option>
   <option  value="충청/강원"  >충청/강원</option>
@@ -181,16 +186,25 @@ const festImage=()=>{
 </div><br />
 <div className="form-floating mb-3">
   <input type="date" className="form-control" id="festStartday" name="startDay" onChange={(e)=>{inputStartday (e.target.value)}}/>
-  <label htmlFor="floatingInput"> 행사시작일 (NOT NULL)</label>
+  <label htmlFor="floatingInput"> 행사시작일</label>
 </div>
 <div className="form-floating mb-3">
   <input type="date" className="form-control" id="festEndday" name="startDay" onChange={(e)=>{inputEndday (e.target.value)}}/>
-  <label htmlFor="floatingInput"> 행사종료일  (NOT NULL)</label>
+  <label htmlFor="floatingInput"> 행사종료일</label>
 </div>
  <div className="form-floating">
   <textarea className="form-control" placeholder="Leave a comment here" id="festDetail" style={{height: '300px',}} onChange={(e)=>{inputDetail (e.target.value)}}></textarea>
   <label htmlFor="floatingTextarea2">상세내용</label>
 </div><br/>
+
+{/* 추가 정보 입력 */}
+<Button onClick={optionModalOpen}> 그냥 </Button>
+{optionModal === 1 ? <AddProductsOptionalDetail /> : null }
+
+
+
+{/* 추가 정보 입력 */}
+
 <button type="button" className="btn btn-dark" onClick={()=>{navigate(-1)}}>취소</button>&nbsp;
 <button type="button" className="btn btn-dark" onClick={festivalInsert}>상품등록하기</button>
 </div>  {/* //등록 div 끝 */}
@@ -205,6 +219,7 @@ const festImage=()=>{
 
 
 const AddProductsPage = () => {
+
   return (
     <>
       <Sidebar />
@@ -212,6 +227,7 @@ const AddProductsPage = () => {
         <Header />
         상품등록페이지
         <AddProducts />
+
       </div>
     </>
   )

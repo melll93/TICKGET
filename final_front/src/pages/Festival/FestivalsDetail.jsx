@@ -1,4 +1,3 @@
-/* 은영 수정중  */
 import { async } from '@firebase/util';
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
@@ -12,28 +11,13 @@ import Sidebar from '../../components/Sidebar';
 import { BButton, MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
 import '../../styles/productsdetails.css'
 
-function ProductsDetails(){
+
+const FestivalsDetail = () => {
     let {festMId} =useParams();
-    const [value, onChange] = useState(new Date());
-    const [mark, setMark] = useState([]);
     const navigate = useNavigate();
-    const [lgShow, setLgShow] = useState(false);   //결제모달처리(삭제예정)
-    const [mTel, setMTel]=useState("");   //결제용(모달내부에)_결제페이지로 이관/삭제예정
-    const [mName, setMName]=useState(""); //결제용(모달내부에)_결제페이지로 이관/삭제예정
-    const [mEmail, setMEmail]=useState(""); //결제용(모달내부에)_결제페이지로 이관/삭제예정
-    const [tAmo, setTamo]=useState(0); //결제용(모달내부에)_결제페이지로 이관/삭제예정
+    const [lgShow, setLgShow] = useState(false);   //리뷰수정모달
     const reduxUser = useSelector(state => state.userStatus.user);
     console.log(reduxUser)
-  // useEffect(() => {
-  //   axios.get(`/festival/festivalList?festMid=${festMId}&type=single`).then((response) => {
-  //     if (response.data.success) {
-  //       console.log(response.data);
-  //     } else {
-  //       alert("상세 정보 가져오기를 실패했습니다.");
-  //     }
-  //   });
-  // }, []);
-
 
     /* 리뷰 */
     const [reviewContent, setReviewContent]=useState("");
@@ -315,4 +299,5 @@ console.log('삭제완료')}}>삭제</BButton>
     )
   }
 
-export default ProductsDetails;
+
+export default FestivalsDetail

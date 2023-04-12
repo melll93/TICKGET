@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import PaymentComponent from "./PaymentComponent";
 
 const TicketPage = () => {  
   const [selectedFile, setSelectedFile] = useState(null);
@@ -39,6 +40,7 @@ const TicketPage = () => {
       {imageURL && <img src={imageURL} alt="uploaded image" />}
 
 
+<PaymentComponent></PaymentComponent>
 
 
 
