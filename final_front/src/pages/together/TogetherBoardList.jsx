@@ -4,12 +4,14 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import { selectTogetherDB } from "../../axios/together/TogetherLogic";
+import { viewUpDB } from "../../axios/together/TogetherLogic";
 
-const TogetherBoardList = () => {
+const TogetherBoardList = (board) => {
   console.log("BoardList");
   const navigate = useNavigate();
   // 게시글 목록을 담을 배열
   const [boardList, setBoardList] = useState([]);
+  
   // 컴포넌트가 처음 로딩될 때, 백엔드 API를 호출하여 게시글 목록을 가져옴
   useEffect(() => {
     selectBoardList();
@@ -28,9 +30,16 @@ const TogetherBoardList = () => {
     }
   };
 
+  const updateViews = async (boardTgNo) => {
+    console.log("boardTgNo넌 누구야? "+boardTgNo)
+    await viewUpDB(boardTgNo);
+    await selectBoardList();
+  };
+
   if (boardList === null) {
     return <div>데이터를 불러오는 중입니다...</div>;
   }
+
   // 게시글 목록이 있을 경우, 테이블로 화면을 출력함
   return (
     <>
@@ -48,7 +57,7 @@ const TogetherBoardList = () => {
             </thead>
             <tbody>
               {boardList.map((board) => (
-                <tr key={board.boarTgNo}>
+                <tr key={board.boardTgNo}>
                   <td style={{ textAlign: "center" }}>{board.boardTgNo}</td>
                   <td>
                     <button
@@ -58,12 +67,13 @@ const TogetherBoardList = () => {
                         color: "blue",
                         cursor: "pointer",
                       }}
-                      onClick={() =>
+                      onClick={() => {
+                        updateViews(board.boardTgNo);
                         navigate({
                           pathname: "/together/BoardDetail/" + board.boardTgNo,
                           state: { board },
-                        })
-                      }
+                        });
+                      }}
                     >
                       {board.boardTgTitle}
                     </button>

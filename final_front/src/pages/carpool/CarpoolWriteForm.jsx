@@ -185,13 +185,13 @@ const CarpoolWriteForm = ({ carpool }) => {
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h3>상세내용</h3>
-            <CarpoolQuillEditor
+            {/* <CarpoolQuillEditor
               value={content}
               handleContent={handleContent}
               quillRef={quillRef}
               files={files}
               handleFiles={handleFiles}
-            />
+            /> */}
 
             <div
               style={{
@@ -207,7 +207,7 @@ const CarpoolWriteForm = ({ carpool }) => {
               {<LandingPage />}
             </div>
             <br />
-            <CarpoolFileInsert files={files} />
+            {/* <CarpoolFileInsert files={files} /> */}
           </div>
           <br />
 

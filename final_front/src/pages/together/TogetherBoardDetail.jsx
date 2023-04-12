@@ -5,7 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { FormDiv } from "../../styles/formStyle";
-import { deleteTogetherDB, selectTogetherDetailDB } from "../../axios/together/TogetherLogic";
+import {
+  deleteTogetherDB,
+  selectTogetherDetailDB,
+  viewUpDB,
+} from "../../axios/together/TogetherLogic";
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
@@ -18,6 +22,7 @@ const TogetherBoardDetail = () => {
     boardTgContent: "",
     boardTgDate: "",
   });
+
   useEffect(() => {
     const asyncDB = async () => {
       const res = await selectTogetherDetailDB({ boardTgNo });
@@ -130,18 +135,6 @@ const TogetherBoardDetail = () => {
                 >
                   {board.boardTgContent}
                 </span>
-              </div>
-
-              <div>
-                <label className="form-block">첨부파일</label>
-                <input
-                  style={{ width: "98%", margin: "10px" }}
-                  type="file"
-                  name="attach"
-                  accept="image/*"
-                  multiple="multiple"
-                  className="form-control"
-                />
               </div>
 
               <div style={{ textAlign: "center" }}>

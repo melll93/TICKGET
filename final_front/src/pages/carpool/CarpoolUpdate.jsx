@@ -2,10 +2,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useCallback, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  CarpoolDetailDB,
+  updateCarpoolDB,
+} from "../../axios/carpool/CarpoolLogic";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { FormDiv } from "../../styles/formStyle";
-import { CarpoolDetailDB, updateCarpoolDB } from "../../axios/carpool/CarpoolLogic";
+import LandingPage from "./Map/LandingPage";
 
 const CarpoolUpdate = () => {
   const navigate = useNavigate();
@@ -195,6 +199,20 @@ const CarpoolUpdate = () => {
                     handleContent(e.target.value);
                   }}
                 />
+              </div>
+
+              <div
+                style={{
+                  border: "1px solid lightGray",
+                  borderRadius: "10px",
+                  width: "98%",
+                  margin: "0 auto",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <LandingPage />
               </div>
 
               <div>

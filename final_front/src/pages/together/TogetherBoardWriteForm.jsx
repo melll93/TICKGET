@@ -1,7 +1,7 @@
-import React, { useCallback, useRef, useState } from "react";
-import { Form } from "react-bootstrap";
+import React, { useCallback, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import { insertTogetherDB } from "../../axios/together/TogetherLogic";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import {
@@ -10,10 +10,6 @@ import {
   FormDiv,
   HeaderDiv,
 } from "../../styles/formStyle";
-import TogetherQuillEditor from "./TogetherQuillEditor";
-import TogetherMyFilter from "./TogetherMyFilter";
-import TogetherBoardFileInsert from "./TogetherBoardFileInsert";
-import { insertTogetherDB } from "../../axios/together/TogetherLogic";
 
 const TogetherBoardWriteForm = ({ board_together }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
@@ -24,40 +20,19 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   //const[writer, setWriter]= useState(''); //작성자
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
-  const [secret, setSecret] = useState(false); //비밀글
-  const [tTitle, setTTitle] = useState("일반"); //qna_type
-  const [views, setViews] = useState(); //조회수
   const [types] = useState(["일반", "결제", "양도", "회원", "수업"]); //qna_type의 라벨값
-  const [files, setFiles] = useState([]); //파일처리
-  const quillRef = useRef();
 
   const handleContent = useCallback((value) => {
     console.log(value);
     setContent(value);
   }, []);
 
-  const handleFiles = useCallback(
-    (value) => {
-      setFiles([...files, value]);
-    },
-    [files]
-  );
-
   const handleTitle = useCallback((e) => {
     setTitle(e);
   }, []);
 
-  // mem_id 받아온 후
-  // const handleWriter = useCallback((e) => {
-  //   setWriter(e);
-  // },[]);
-
   const handleDate = useCallback((e) => {
     setDate(e);
-  }, []);
-
-  const handleTTitle = useCallback((e) => {
-    setTTitle(e);
   }, []);
 
   const insertBoardList = async () => {
@@ -74,14 +49,11 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       return;
     }
     console.log("insertBoardList");
-    console.log(secret); //true
+    // console.log(secret); //true
     console.log(typeof secret); //boolean타입 출력
     const board = {
       boardTgTitle: title, // 제목 추가
       boardTgContent: content, // 내용 추가
-      boardTgSecret: secret ? "true" : "false",
-      boardTgType: tTitle,
-      boardTgViews: views,
       boardTgMemId: sessionStorage.getItem("id"),
       boardTgDate: date,
     };
@@ -123,22 +95,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                     alignItems: "center",
                     borderRadius: "10px",
                   }}
-                >
-                  <span style={{ fontSize: "14px" }}>비밀글</span>
-                  <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    style={{ paddingLeft: "46px" }}
-                    onClick={() => {
-                      setSecret(!secret);
-                    }}
-                  />
-                </div>
-                <TogetherMyFilter
-                  title={tTitle}
-                  types={types}
-                  handleTitle={handleTTitle}
-                ></TogetherMyFilter>
+                ></div>
                 <BButton
                   variant="success"
                   style={{ marginLeft: "10px" }}
@@ -181,19 +138,28 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                 handleDate(e.target.value);
               }}
             />
-            {/* <label htmlFor="floatingInput" /> */}
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h3>상세내용</h3>
-            <TogetherQuillEditor
+            <input
+              style={{
+                width: "98%",
+                margin: "10px",
+                height: "300px",
+                fontSize: "20px",
+              }}
               value={content}
               handleContent={handleContent}
-              quillRef={quillRef}
-              files={files}
-              handleFiles={handleFiles}
-            />
-
-            <TogetherBoardFileInsert files={files} />
+              type="html"
+              name="carpoolContent"
+              required
+              rows="10"
+              className="form-control"
+              id="exampleTextarea"
+              onChange={(e) => {
+                handleContent(e.target.value);
+              }}
+            ></input>
           </div>
           <br />
           <div style={{ textAlign: "center" }}>

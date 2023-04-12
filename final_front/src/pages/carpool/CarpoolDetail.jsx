@@ -2,7 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
-import { CarpoolDetailDB, deleteCarpoolDB } from "../../axios/carpool/CarpoolLogic";
+import {
+  CarpoolDetailDB,
+  deleteCarpoolDB,
+} from "../../axios/carpool/CarpoolLogic";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { FormDiv } from "../../styles/formStyle";
@@ -128,18 +131,6 @@ const CarpoolDetail = () => {
                 </span>
               </div>
 
-              <div>
-                <label className="form-block">첨부파일</label>
-                <input
-                  style={{ width: "98%", margin: "10px" }}
-                  type="file"
-                  name="attach"
-                  accept="image/*"
-                  multiple="multiple"
-                  className="form-control"
-                />
-              </div>
-
               <div
                 style={{
                   border: "1px solid lightGray",
@@ -154,6 +145,17 @@ const CarpoolDetail = () => {
                 <LandingPage />
               </div>
 
+              <div>
+                <label className="form-block">첨부파일</label>
+                <input
+                  style={{ width: "98%", margin: "10px" }}
+                  type="file"
+                  name="attach"
+                  accept="image/*"
+                  multiple="multiple"
+                  className="form-control"
+                />
+              </div>
             </form>
           </div>
           <div style={{ textAlign: "center" }}>
