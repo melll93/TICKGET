@@ -107,10 +107,19 @@ function App({ mkImageUploader }) {
 
         {/* CarpoolPage Routes */}
         <Route path="carpool/write/*" element={<CarpoolWrietForm />} />
-        <Route path="carpool/carpoolDetail/:carpoolNo" element={<CarpoolDetail  carpool={carpool }/>}/>
+        <Route path="carpool/carpoolDetail/:boardCpNo" element={<CarpoolDetail  carpool={carpool }/>}/>
         <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
-        <Route path="carpool/carpoolUpdate/:carpoolNo" element={<CarpoolUpdate />} />
+        <Route path="carpool/carpoolUpdate/:boardCpNo" element={<CarpoolUpdate />} />
 
+        <Route
+          path="carpool/carpoolDetail/:carpoolNo"
+          element={<CarpoolDetail carpool={carpool} />}
+        />
+        <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
+        <Route
+          path="carpool/carpoolUpdate/:carpoolNo"
+          element={<CarpoolUpdate />}
+        />
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route path="/market/write" exact={true} element={<MarketWriteForm mkImageUploader={mkImageUploader} />} />

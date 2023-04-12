@@ -19,6 +19,7 @@ const CarpoolPage = () => {
       <Sidebar />
       <div className="center">
         <Header />
+        <h3 style={{marginLeft:"100px"}}>Carpool 게시판</h3>
         {<CarpoolBoardList/>}
       </div>
     </>

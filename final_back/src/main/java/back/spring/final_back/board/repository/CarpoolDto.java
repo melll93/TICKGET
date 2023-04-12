@@ -12,9 +12,10 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class CarpoolDto {
-    private int carpoolNo;
-    private String carpoolMemId;
-    private String carpoolTitle;
-    private String carpoolContent;
-    private Date carpoolDate;
+    private int boardCpNo;
+    private String boardCpMemId;
+    private String boardCpTitle;
+    private String boardCpContent;
+    private Date boardCpDate;
+    private int boardCpViews;
 }

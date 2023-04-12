@@ -10,6 +10,7 @@ const TogetherPage = () => {
       <Sidebar />
       <div className="center">
         <Header />
+        <h3 style={{marginLeft:"100px"}}>Together 게시판</h3>
         <TogetherBoardList/>
         <Footer/>
       </div>
