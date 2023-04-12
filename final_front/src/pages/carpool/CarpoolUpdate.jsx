@@ -9,31 +9,31 @@ import { CarpoolDetailDB, updateCarpoolDB } from "../../axios/carpool/CarpoolLog
 
 const CarpoolUpdate = () => {
   const navigate = useNavigate();
-  const { carpoolNo } = useParams();
-  const [carpoolTitle, setCarpoolTitle] = useState(""); //사용자가 입력한 내용 담기
-  const [carpoolDate, setCarpoolDate] = useState(""); //사용자가 입력한 내용 담기
-  const [carpoolContent, setCarpoolContent] = useState(""); //사용자가 입력한 내용 담기
+  const { boardCpNo } = useParams();
+  const [boardCpTitle, setCarpoolTitle] = useState(""); //사용자가 입력한 내용 담기
+  const [boardCpDate, setCarpoolDate] = useState(""); //사용자가 입력한 내용 담기
+  const [boardCpContent, setCarpoolContent] = useState(""); //사용자가 입력한 내용 담기
 
   const [carpool, setCarpool] = useState({
-    carpoolNo: 0,
-    carpoolMemId: "",
-    carpoolTitle: "",
-    carpoolContent: "",
-    carpoolDate: "",
+    boardCpNo: 0,
+    boardCpMemId: "",
+    boardCpTitle: "",
+    boardCpContent: "",
+    boardCpDate: "",
   });
 
   useEffect(() => {
     const asyncDB = async () => {
-      const res = await CarpoolDetailDB({ carpoolNo });
+      const res = await CarpoolDetailDB({ boardCpNo });
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
       console.log("asda = ", jsonDoc);
       setCarpool({
-        carpoolNo: jsonDoc.carpoolNo,
-        carpoolMemId: jsonDoc.carpoolMemId,
-        carpoolTitle: jsonDoc.carpoolTitle,
-        carpoolContent: jsonDoc.carpoolContent,
-        carpoolDate: jsonDoc.carpoolDate,
+        boardCpNo: jsonDoc.boardCpNo,
+        boardCpMemId: jsonDoc.boardCpMemId,
+        boardCpTitle: jsonDoc.boardCpTitle,
+        boardCpContent: jsonDoc.boardCpContent,
+        boardCpDate: jsonDoc.boardCpDate,
       });
       if (res.data) {
         console.log(jsonDoc);
@@ -48,26 +48,26 @@ const CarpoolUpdate = () => {
   }, []);
 
   const updateCarpool = async () => {
-    if (!carpoolTitle) {
+    if (!boardCpTitle) {
       alert("제목을 입력해주세요.");
       return;
     }
 
-    if (!carpoolDate) {
+    if (!boardCpDate) {
       alert("날짜를 입력해 주세요.");
       return;
     }
 
-    if (!carpoolContent) {
+    if (!boardCpContent) {
       alert("내용을 입력해주세요.");
       return;
     }
 
     const carpool = {
-      carpoolNo: carpoolNo, // 게시글 번호
-      carpoolTitle: carpoolTitle, // 제목 추가
-      carpoolContent: carpoolContent, // 내용 추가
-      carpoolDate: carpoolDate,
+      boardCpNo: boardCpNo, // 게시글 번호
+      boardCpTitle: boardCpTitle, // 제목 추가
+      boardCpContent: boardCpContent, // 내용 추가
+      boardCpDate: boardCpDate,
     };
 
     console.log("carpool = ", JSON.stringify(carpool));
@@ -109,7 +109,7 @@ const CarpoolUpdate = () => {
       <div className="center">
         <Header />
         <br />
-        <h2>게시글 훔쳐봐야지? 가야지?</h2>
+        <h2>카풀 게시판 상세보기</h2>
         <FormDiv style={{ width: "98%", margin: "10px" }}>
           <div>
             <form method="post">
@@ -117,10 +117,10 @@ const CarpoolUpdate = () => {
                 <label>수정 할 제목</label>
                 <br />
                 <input
-                  id="carpool_title"
+                  id="board_cp_title"
                   type="text"
                   maxLength="50"
-                  value={carpoolTitle}
+                  value={boardCpTitle}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -140,12 +140,12 @@ const CarpoolUpdate = () => {
                 <span
                   style={{ width: "98%", margin: "10px" }}
                   type="text"
-                  name="carpoolMemId"
+                  name="boadrCpMemId"
                   required
                   class="form-control form-control-lg"
                   id="inputLarge"
                 >
-                  {carpool.carpoolMemId}
+                  {carpool.boardCpMemId}
                 </span>
               </div>
 
@@ -153,10 +153,10 @@ const CarpoolUpdate = () => {
                 <label>수정된 날짜</label>
                 <br />
                 <input
-                  id="carpool_tg_date"
+                  id="board_cp_date"
                   type="date"
                   maxLength="50"
-                  value={carpoolDate}
+                  value={boardCpDate}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -178,10 +178,10 @@ const CarpoolUpdate = () => {
                 <label>수정할 내용</label>
                 <br />
                 <textarea
-                  id="carpool_tg_date"
+                  id="board_cp_date"
                   type="text"
                   maxLength="50"
-                  value={carpoolContent}
+                  value={boardCpContent}
                   style={{
                     width: "98%",
                     margin: "10px",
@@ -224,7 +224,7 @@ const CarpoolUpdate = () => {
                   onClick={() => {
                     if (window.confirm("정말 돌아가시겠습니까?")) {
                       navigate({
-                        pathname: "/carpool/carpoolDetail/" + carpool.carpoolNo,
+                        pathname: "/carpool/carpoolDetail/" + carpool.boardCpNo,
                         state: { carpool },
                       });
                     }

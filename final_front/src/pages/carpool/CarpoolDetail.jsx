@@ -10,27 +10,27 @@ import LandingPage from "./Map/LandingPage";
 
 const CarpoolDetail = () => {
   const navigate = useNavigate();
-  const { carpoolNo } = useParams();
+  const { boardCpNo } = useParams();
 
   const [carpool, setCarpool] = useState({
-    carpoolNo: 0,
-    carpoolMemId: "",
-    carpoolTitle: "",
-    carpoolContent: "",
-    carpoolDate: "",
+    boardCpNo: 0,
+    boardCpMemId: "",
+    boardCpTitle: "",
+    boardCpContent: "",
+    boardCpDate: "",
   });
   useEffect(() => {
     const asyncDB = async () => {
-      const res = await CarpoolDetailDB({ carpoolNo });
+      const res = await CarpoolDetailDB({ boardCpNo });
       console.log(res);
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
       setCarpool({
-        carpoolNo: jsonDoc.carpoolNo,
-        carpoolMemId: jsonDoc.carpoolMemId,
-        carpoolTitle: jsonDoc.carpoolTitle,
-        carpoolContent: jsonDoc.carpoolContent,
-        carpoolDate: jsonDoc.carpoolDate,
+        boardCpNo: jsonDoc.boardCpNo,
+        boardCpMemId: jsonDoc.boardCpMemId,
+        boardCpTitle: jsonDoc.boardCpTitle,
+        boardCpContent: jsonDoc.boardCpContent,
+        boardCpDate: jsonDoc.boardCpDate,
       });
       if (res.data) {
         setCarpool(res.data);
@@ -47,7 +47,7 @@ const CarpoolDetail = () => {
 
   const deleteCarpool = async () => {
     const carpool = {
-      carpoolNo: carpoolNo,
+      boardCpNo: boardCpNo,
     };
     const res = await deleteCarpoolDB(carpool);
     console.log(res.data);
@@ -61,11 +61,11 @@ const CarpoolDetail = () => {
       <div className="center">
         <Header />
         <br />
-        <h2>게시글 훔쳐봐야지? 가야지?</h2>
+        <h2>카풀 디테일</h2>
         <FormDiv style={{ width: "98%", margin: "10px" }}>
           <div>
             <form method="post">
-              <input type="hidden" name="carpoolNo" value="" />
+              <input type="hidden" name="boardCpNo" value="" />
               <div>
                 <label>제목</label>
                 <span
@@ -76,7 +76,7 @@ const CarpoolDetail = () => {
                   className="form-control form-control-lg"
                   id="inputLarge"
                 >
-                  {carpool.carpoolTitle}
+                  {carpool.boardCpTitle}
                 </span>
               </div>
 
@@ -90,7 +90,7 @@ const CarpoolDetail = () => {
                   className="form-control form-control-lg"
                   id="inputLarge"
                 >
-                  {carpool.carpoolMemId}
+                  {carpool.boardCpMemId}
                 </span>
               </div>
 
@@ -104,7 +104,7 @@ const CarpoolDetail = () => {
                   className="form-control form-control-lg"
                   id="inputLarge"
                 >
-                  {carpool.carpoolDate}
+                  {carpool.boardCpDate}
                 </span>
               </div>
 
@@ -124,7 +124,7 @@ const CarpoolDetail = () => {
                   className="form-control"
                   id="exampleTextarea"
                 >
-                  {carpool.carpoolContent}
+                  {carpool.boardCpContent}
                 </span>
               </div>
 
@@ -177,7 +177,7 @@ const CarpoolDetail = () => {
               style={{ marginLeft: "10px", backgroundColor: "black" }}
               onClick={() =>
                 navigate({
-                  pathname: "/carpool/CarpoolUpdate/" + carpool.carpoolNo,
+                  pathname: "/carpool/CarpoolUpdate/" + carpool.boardCpNo,
                   state: { carpool },
                 })
               }

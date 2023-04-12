@@ -10,33 +10,33 @@
 
     <!-- 게시글 상세보기-->
     <select id="carpoolDetail" resultType="CarpoolDto">
-        select * from board_carpool where carpool_no=#{carpoolNo}
+        select * from board_carpool where board_cp_no=#{boardCpNo}
     </select>
 
     <!-- 게시글 추가 -->
     <insert id="insertCarpool" parameterType="CarpoolDto">
       INSERT INTO board_carpool
       VALUES(
-          #{carpoolNo}
-          , #{carpoolMemId}
-          , #{carpoolTitle}
-          , #{carpoolContent}
-          , #{carpoolDate}
+          #{boardCpNo}
+          , #{boardCpMemId}
+          , #{boardCpTitle}
+          , #{boardCpContent}
+          , #{boardCpDate}
       )
     </insert>
 
     <!-- 게시슬 삭제 -->
     <delete id="deleteCarpool" parameterType="CarpoolDto">
-        delete from board_carpool where carpool_no=#{carpoolNo}
+        delete from board_carpool where board_cp_no=#{boardCpNo}
     </delete>
 
      <!-- 게시글 수정 -->
      <update id="updateCarpool" parameterType="CarpoolDto">
         update board_carpool set
-            carpool_title = #{carpoolTitle} ,
-            carpool_content = #{carpoolContent},
-            carpool_date = #{carpoolDate}
-        where carpool_no = #{carpoolNo}
+            board_cp_title = #{boardCpTitle} ,
+            board_cp_content = #{boardCpContent},
+            board_cp_date = #{boardCpDate}
+        where board_cp_no = #{boardCpNo}
     </update>
     
 </mapper>

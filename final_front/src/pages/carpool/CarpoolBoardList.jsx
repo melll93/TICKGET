@@ -43,8 +43,8 @@ const CarpoolBoardList = () => {
             </thead>
             <tbody>
               {carpoolList.map((carpool) => (
-                <tr key={carpool.carpoolNo}>
-                  <td style={{ textAlign: "center" }}>{carpool.carpoolNo}</td>
+                <tr key={carpool.boardCpNo}>
+                  <td style={{ textAlign: "center" }}>{carpool.boardCpNo}</td>
                   <td>
                     <button
                       style={{
@@ -56,19 +56,19 @@ const CarpoolBoardList = () => {
                       onClick={() =>
                         navigate({
                           pathname:
-                            "/carpool/carpoolDetail/" + carpool.carpoolNo,
+                            "/carpool/carpoolDetail/" + carpool.boardCpNo,
                           state: { carpool },
                         })
                       }
                     >
-                      {carpool.carpoolTitle}
+                      {carpool.boardCpTitle}
                     </button>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    {carpool.carpoolMemId}
+                    {carpool.boardCpMemId}
                   </td>
-                  <td style={{ textAlign: "center" }}>{carpool.carpoolDate}</td>
-                  {/* <td style={{ textAlign: "center" }}>{carpool.carpoolViews}</td> */}
+                  <td style={{ textAlign: "center" }}>{carpool.boardCpDate}</td>
+                  <td style={{ textAlign: "center" }}>{carpool.boardCpViews}</td>
                 </tr>
               ))}
             </tbody>
