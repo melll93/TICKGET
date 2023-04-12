@@ -107,6 +107,8 @@ const festImage=()=>{
     const filesa = imageFile.files;
     console.log("Image file", filesa[0]);
     const formData = new FormData();
+    setFestImageUrl(festImageUrl);
+
     formData.append("file", files[0]);
     formData.append("upload_preset", "dpa186u8");// "본인 프리셋 업로드 네임"
     const options = {
