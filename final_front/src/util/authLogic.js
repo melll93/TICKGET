@@ -1,4 +1,4 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, EmailAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, EmailAuthProvider, sendPasswordResetEmail } from "firebase/auth";
 import { memberListDB } from "../axios/member/memberLogic";
 
 class AuthLogic {
@@ -140,5 +140,16 @@ export const sendEmail = (user) => {
       .catch((e) => reject(e + ": 인증 메일 오류입니다."));
   });
 };
+
+export const sendResetpwEmail = (auth, email) => {
+  console.log(email)
+  return new Promise((resolve, reject) => {
+    sendPasswordResetEmail(auth, email)
+    .then(() => {
+      resolve('비밀번호 변경 이메일을 전송합니다')
+    })
+    .catch((e) => reject(e))
+  })
+}
 
 export default AuthLogic;

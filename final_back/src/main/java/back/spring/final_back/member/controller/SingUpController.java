@@ -31,6 +31,7 @@ public class SingUpController {
 	// 전체 조회
 	public String memberList(@RequestParam Map<String, Object> pMap) {
 		log.info("memberList 확인");
+		log.info(pMap.toString());
 		String temp = null;
 		List<Map<String, Object>> mList = new ArrayList<>();
 		mList = signUpService.memberList(pMap);
