@@ -1,15 +1,15 @@
-// package back.spring.final_back.jwt;
+package back.spring.final_back.jwt;
 
-// import lombok.AllArgsConstructor;
-// import lombok.Builder;
-// import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
-// @Builder
-// @Data
-// @AllArgsConstructor
-// public class TokenInfo {
+@Builder
+@Data
+@AllArgsConstructor
+public class TokenInfo {
 
-// private String grantType;
-// private String accessToken;
-// private String refreshToken;
-// }
+  private String grantType;
+  private String accessToken;
+  private String refreshToken;
+}
