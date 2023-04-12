@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Sidebar';
-import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword } from '../../util/validateLogic';
+import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword, validateId } from '../../util/validateLogic';
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
 import { memberInsertDB, memberListDB } from '../../axios/member/memberLogic';
@@ -192,6 +192,8 @@ const RegisterPage = ({ authLogic }) => {
     let result;
     if (key === 'email') {
       result = validateEmail(e);
+    } else if (key === 'id') {
+      result = validateId(e);
     } else if (key === 'nickname') {
       result = validateNickname(e);
     } else if (key === 'password') {
@@ -248,17 +250,17 @@ const RegisterPage = ({ authLogic }) => {
       }
       console.log('입력받은 생일정보 ' + birthday);
       const datas = {
-        MEMBER_ID: id,
-        MEMBER_PASSWORD: memInfo.password,
-        MEMBER_NAME: memInfo.name,
-        MEMBER_BIRTH: birthday,
-        MEMBER_EMAIL: memInfo.email,
-        MEMBER_GENDER: memInfo.gender,
-        MEMBER_MOBILE: memInfo.mobile,
-        MEMBER_NICKNAME: memInfo.nickname,
-        MEMBER_ZIPCODE: post.zipcode,
-        MEMBER_ADDRESS: post.address,
-        MEMBER_ADDRDETAIL: post.addrDetail,
+        memberId: memInfo.id,
+        memberPassword: memInfo.password,
+        memberName: memInfo.name,
+        memberBirth: birthday,
+        memberEmail: memInfo.email,
+        memberGender: memInfo.gender,
+        memberMobile: memInfo.mobile,
+        memberNickname: memInfo.nickname,
+        memberZipcode: post.zipcode,
+        memberAddress: post.address,
+        memberAddrDetail: post.addrDetail,
       }
       console.log(datas)
       const response = await memberInsertDB(datas);
@@ -289,7 +291,7 @@ const RegisterPage = ({ authLogic }) => {
           {/* 아이디 */}
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             <MyLabel> 아이디 <span style={{ color: "red" }}>{star.id}</span>
-              <MyInput type="text" id="id" placeholder="아이디를 입력해 주세요"
+              <MyInput type="text" id="id" placeholder="아이디를 입력해 주세요" 
                 onChange={(e) => { changeMemInfo(e); validate('id', e); }} />
               <MyLabelAb>{comment.id}</MyLabelAb>
             </MyLabel>
