@@ -139,6 +139,7 @@ const CarpoolDetail = () => {
                   className="form-control"
                 />
               </div>
+
               <div
                 style={{
                   border: "1px solid lightGray",
@@ -150,8 +151,9 @@ const CarpoolDetail = () => {
                   alignItems: "center",
                 }}
               >
-                {<LandingPage />}
+                <LandingPage />
               </div>
+
             </form>
           </div>
           <div style={{ textAlign: "center" }}>
