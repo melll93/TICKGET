@@ -1,48 +1,51 @@
-import { addMonths, subMonths } from 'date-fns';
-import React, { useState } from 'react'
-import '../../styles/calendarcategory.css'; 
-import Sidebar from '../../components/Sidebar';
-import Header from '../../components/Header';
-import RenderHeader from '../../components/CalendarTab/RenderHeader';
-import RenderDays from '../../components/CalendarTab/RenderDays';
-import RenderCells from '../../components/CalendarTab/RenderCells';
-
+import { addMonths, subMonths } from "date-fns";
+import React, { useState } from "react";
+import "../../styles/calendarcategory.css";
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
+import RenderHeader from "../../components/CalendarTab/RenderHeader";
+import RenderDays from "../../components/CalendarTab/RenderDays";
+import RenderCells from "../../components/CalendarTab/RenderCells";
 
 const CalendarPage = () => {
-    const [currentMonth, setCurrentMonth] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const prevMonth = () => {
-        setCurrentMonth(subMonths(currentMonth, 1))
-    }
+  const prevMonth = () => {
+    setCurrentMonth(subMonths(currentMonth, 1));
+  };
 
-    const nextMonth = () => {
-        setCurrentMonth(addMonths(currentMonth, 1))
-    }
+  const nextMonth = () => {
+    setCurrentMonth(addMonths(currentMonth, 1));
+  };
 
-    const onDateClick = (date) => {
-        setSelectedDate(date);
-        console.log("Clicked date:", date);
+  const onDateClick = (date) => {
+    setSelectedDate(date);
+    console.log("Clicked date:", date);
   };
 
   return (
     <>
-          <Sidebar />
+      <Sidebar />
       <div className="center">
         <Header />
 
-
-<section className="calendar_main_section">
-
-        <div className='calendar'>
-            <RenderHeader currentMonth={currentMonth} prevMonth ={prevMonth} nextMonth ={nextMonth} />
-            <RenderDays/>
-            <RenderCells currentMonth={currentMonth} selectedDate={selectedDate} onDateClick={onDateClick} />
-        </div>
-</section>
-
-        </div>
-
+        <section className="calendar_main_section">
+          <div className="calendar">
+            <RenderHeader
+              currentMonth={currentMonth}
+              prevMonth={prevMonth}
+              nextMonth={nextMonth}
+            />
+            <RenderDays />
+            <RenderCells
+              currentMonth={currentMonth}
+              selectedDate={selectedDate}
+              onDateClick={onDateClick}
+            />
+          </div>
+        </section>
+      </div>
     </>
   );
 };

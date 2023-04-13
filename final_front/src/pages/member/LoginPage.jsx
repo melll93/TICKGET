@@ -140,7 +140,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   return (
     <>
       <Sidebar />
-      <div className="center">
+      <div style={{ alignItems: "center", display: "inline-block", position: "absolute", left: "15vw", width: "85vw", height: "100vh" }}>
         <div className="login">
           {/********************** 자체 회원 로그인 **********************/}
           <Form>
@@ -280,7 +280,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           </div>
           {/************************************************* 소셜 로그인 끝 *************************************************/}
         </div>
-      </div>
+      </div >
     </>
   );
 };

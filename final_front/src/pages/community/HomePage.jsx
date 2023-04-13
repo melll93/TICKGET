@@ -30,11 +30,11 @@ const HomePage = () => {
 
   return (
     <>
+      <Header />
       <Sidebar />
       <div className="center">
-        
-{/*      <Header /> */}
-        <div style={{ margin: "100px 0px 20px 0px", width: "1900px"}}>
+
+        <div style={{ margin: "100px 0px 20px 0px", width: "1900px" }}>
           <CarouselList festivalToday={festivalToday} />
         </div>
 

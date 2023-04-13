@@ -30,10 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtTokenProvider {
 
   private final Key key;
-  private final String secret = "and0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdp";
 
-  // public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
-  public JwtTokenProvider(@Value(secret) String secretKey) {
+  public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+    // public JwtTokenProvider(@Value(secret) String secretKey) {
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     this.key = Keys.hmacShaKeyFor(keyBytes);
   }
