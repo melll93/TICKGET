@@ -34,7 +34,7 @@ public class ConcertController {
         log.info("call ConcertController.ConcertToday");
         List<ConcertDto> cList = null;
         cList = concertService.ConcertToday();
-        log.info(cList.toString());
+        // log.info(cList.toString());
         return cList;
     }
 
