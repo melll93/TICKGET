@@ -2,7 +2,19 @@ span {
   color: white;
 }
 
-div .Sidebar {
+/* div .sidebar.container {
+  height: 100%;
+  display: inline-block;
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(47, 47, 47, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+  width: 300px;
+  height: 100%;
+} */
+
+div .sidebar.items {
   height: 100%;
   display: inline-block;
   position: fixed;
@@ -11,11 +23,17 @@ div .Sidebar {
   overflow-x: hidden;
   transition: 0.5s;
 
-  width: 0;
-  /* width: 15vw; */
   top: 8vh;
   left: 0;
   border-right: 1px solid black;
+}
+
+div .sidebar.button {
+  /* display: inline-block;
+  position: fixed;
+  z-index: 1; */
+  width: 50px;
+  height: 100%;
 }
 
 .icon {

@@ -24,7 +24,11 @@ const SearchBar = () => {
         placeholder="  검색어를 입력해주세요."
         onChange={onChange}
       />
-      <img className="icon image20" src="../logos/SEARCH.png" onClick={search} />
+      <img
+        className="icon image20"
+        src="../logos/SEARCH.png"
+        onClick={search}
+      />
     </div>
   );
 };
