@@ -6,12 +6,12 @@ const HomeButton = () => {
   return (
     <>
 
-    <Link to="/" className="link">
-      <div className="HomeButton">
-        <img className="icon image40" src="../logos/LOGOSIAN.png" style={{width:'230px'}}/>
-      </div>
-    </Link>
-    
+      <Link to="/" className="link">
+        <div className="HomeButton">
+          <img className="icon image40" src="../logos/tickget.png" style={{ width: '230px' }} />
+        </div>
+      </Link>
+
     </>
   );
 };

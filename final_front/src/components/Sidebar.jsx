@@ -5,6 +5,7 @@ import PersonalTabs from "./Sidebar/PersonalTabs";
 import Profile from "./Sidebar/Profile";
 import SearchBar from "./Gnb/SearchBar";
 import "../styles/sidebar.css"
+import zIndex from "@mui/material/styles/zIndex";
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(0);

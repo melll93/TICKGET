@@ -46,13 +46,13 @@ div .Sidebar {
   display: inline-block;
   position: fixed;
   z-index: 1;
-  background-color: rgba(15, 15, 15, 0.8); /*까만색(0,0,0) 80% 불투명도*/
+  background-color: rgba(47, 47, 47, 0.9); /*까만색(0,0,0) 80% 불투명도*/
   overflow-x: hidden;
   transition: 0.5s;
 
   width: 0;
   /* width: 15vw; */
-  top: 0;
+  top: 5vh;
   left: 0;
   border-right: 1px solid black;
 }
