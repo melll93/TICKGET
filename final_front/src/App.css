@@ -73,8 +73,8 @@ div .center {
   align-items: center;
   display: inline-block;
   position: absolute;
-  /*   left:15dvw; */
-  /*   width: 85vw; */
+  /* left: 15dvw;
+  width: 85vw; */
   height: 100vh;
 }
 
@@ -175,9 +175,7 @@ div .Profile {
   display: flex;
   justify-content: space-around;
 }
-span {
-  color: white;
-}
+
 div .ProfileButton {
   display: inline-block;
   margin: 10px;
