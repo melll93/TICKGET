@@ -35,7 +35,12 @@ const [festImageUrl, setFestImageUrl] = useState("");
 const imgRef = useRef();
 
 const [optionModal, setOptionModal]=useState(0); 
-const optionModalOpen=()=>{setOptionModal(1); }
+const optionModalOpen=()=>{
+  if(optionModal===0){
+    setOptionModal(1); }
+    else {
+      setOptionModal(0); }
+  }
 
 
 
@@ -144,7 +149,7 @@ const festImage=()=>{
   return (
     <>
 
-<div style={{ textAlign:'center', width:'600px', marginLeft:'100px'}}><br/> {/* //등록 div 시작 */}
+<div className="addproductstotalDiv"style={{ textAlign:'center', width:'600px', marginLeft:'25%'}}><br/> {/* //등록 div 시작 */}
 
 <select defaultValue="1" className="form-select" id="fest_category" aria-label="Default select example" style={{width:'150px'}}  onChange={(e)=>{inputCategory (e.target.value)}}>
   <option  value="1" disabled >카테고리 </option>
@@ -198,13 +203,13 @@ const festImage=()=>{
 </div><br/>
 
 {/* 추가 정보 입력 */}
-<Button onClick={optionModalOpen}> 그냥 </Button>
+<Button style={{backgroundColor:'black', color:'white'}} onClick={optionModalOpen}> 판매 추가정보 입력 (추후기재가능)</Button>
 {optionModal === 1 ? <AddProductsOptionalDetail /> : null }
 
 
 
 {/* 추가 정보 입력 */}
-
+<br/><br/>
 <button type="button" className="btn btn-dark" onClick={()=>{navigate(-1)}}>취소</button>&nbsp;
 <button type="button" className="btn btn-dark" onClick={festivalInsert}>상품등록하기</button>
 </div>  {/* //등록 div 끝 */}
@@ -225,7 +230,6 @@ const AddProductsPage = () => {
       <Sidebar />
       <div className='center'>
         <Header />
-        상품등록페이지
         <AddProducts />
 
       </div>

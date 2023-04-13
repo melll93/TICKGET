@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import '../../styles/calendarcategory.css'; 
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
-import RenderHeader from '../../components/CalendarTab.jsx/RenderHeader';
-import RenderDays from '../../components/CalendarTab.jsx/RenderDays';
-import RenderCells from '../../components/CalendarTab.jsx/RenderCells';
+import RenderHeader from '../../components/CalendarTab/RenderHeader';
+import RenderDays from '../../components/CalendarTab/RenderDays';
+import RenderCells from '../../components/CalendarTab/RenderCells';
 
 
 const CalendarPage = () => {
