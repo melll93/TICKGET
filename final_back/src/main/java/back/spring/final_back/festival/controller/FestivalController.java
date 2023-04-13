@@ -29,6 +29,11 @@ public class FestivalController {
 	@Autowired
 	private final FestivalService festivalService;
 
+	@GetMapping("festivalToday")
+	public List<FestivalDto> festivalToday() {
+		return festivalService.festivalToday();
+	}
+
 	@GetMapping("festivalList")
 	public List<FestivalDto> festivalList() {
 		List<FestivalDto> festival = null;
@@ -57,10 +62,10 @@ public class FestivalController {
 		logger.info(festivalDto.toString());
 		return result;
 	}
-	
+
 	@GetMapping("festivalDelete")
 	public String festivalDelete(Integer fest_m_id) {
-		logger.info("컨트롤러 페스티발삭제 id넘버 "+fest_m_id);
+		logger.info("컨트롤러 페스티발삭제 id넘버 " + fest_m_id);
 		int result = 0;
 		result = festivalService.festivalDelete(fest_m_id);
 		return String.valueOf(result);

@@ -2,6 +2,8 @@ package back.spring.final_back.festival.service;
 
 import java.util.List;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,13 @@ public class FestivalServiceImpl implements FestivalService {
     Logger logger = LoggerFactory.getLogger(FestivalServiceImpl.class);
 
     private final FestivalDao festivalDao;
+
+    @Override
+    public List<FestivalDto> festivalToday() {
+        List<FestivalDto> result = null;
+        result = festivalDao.festivalToday();
+        return result;
+    }
 
     @Override
     public int festivalInsert(FestivalDto festivalDto) {
@@ -47,12 +56,12 @@ public class FestivalServiceImpl implements FestivalService {
         return festival;
     }
 
-	@Override
-	public int festivalDelete(Integer fest_m_id) {
-		log.info("fest 서비스임플 삭제");
-		int result = 0;
-		result = festivalDao.festivalDelete(fest_m_id);
-		return result;
-	}
+    @Override
+    public int festivalDelete(Integer fest_m_id) {
+        log.info("fest 서비스임플 삭제");
+        int result = 0;
+        result = festivalDao.festivalDelete(fest_m_id);
+        return result;
+    }
 
 }

@@ -4,9 +4,16 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="back.spring.final_back.festival.repository.FestivalDao">
+	<select id="festivalToday" resultType="FestivalDto">
+			SELECT *
+        FROM fest_main
+       WHERE CURDATE() &lt; fest_m_start
+	</select>
+
 	<select id="seoulFestivalList" resultType="FestivalDto">
 SELECT * FROM fest_main where fest_m_area LIKE '%서울%'
 	</select>
+	
 	<select id="kyeongkiFestivalList" resultType="FestivalDto">
 SELECT * FROM fest_main where fest_m_area LIKE '%경기%'
 	</select>
