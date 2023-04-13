@@ -8,7 +8,7 @@ const HomeButton = () => {
 
       <Link to="/" className="link">
         <div className="HomeButton">
-          <img className="icon image40" src="../logos/tickget.png" style={{ width: '230px' }} />
+          <img className="icon image40" src="../logos/tickget.png" style={{ width: '100px' }} />
         </div>
       </Link>
 
