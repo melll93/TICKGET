@@ -27,9 +27,9 @@ const ConcertPage = () => {
 
   return (
     <>
+      <Header />
       <Sidebar />
       <div className="center">
-        <Header />
         <ul className="items">
           <div className="container">
             {concerts.map((concert, index) => (

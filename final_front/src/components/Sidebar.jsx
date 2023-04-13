@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import HomeButton from "./Sidebar/HomeButton";
 import MenuList from "./Sidebar/MenuList";
 import PersonalTabs from "./Sidebar/PersonalTabs";
 import Profile from "./Sidebar/Profile";
 import SearchBar from "./Gnb/SearchBar";
 import "../styles/sidebar.css"
-import zIndex from "@mui/material/styles/zIndex";
 
 const Sidebar = () => {
-  const [sidebar, setSidebar] = useState(0);
+  const [sidebar, setSidebar] = useState(250);
   const openSidebar = () => {
     setSidebar(250);
   };
@@ -34,8 +32,6 @@ const Sidebar = () => {
           alt="x버튼"
           style={{ width: "40px" }}
         ></img>
-
-        <HomeButton />
         <Profile />
         <PersonalTabs />
         <MenuList />
