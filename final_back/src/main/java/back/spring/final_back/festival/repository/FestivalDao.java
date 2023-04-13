@@ -7,13 +7,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface FestivalDao {
+	public FestivalDto festivalDetail(FestivalDto festivalDto);
+	
+	
     public List<FestivalDto> festivalListByDate(Date date);
 
     public List<FestivalDto> festivalList();
 
-    public List<FestivalDto> seoulFestivalList();
-
-    public List<FestivalDto> kyeongkiFestivalList();
+    public List<FestivalDto> areaFestivalList();
 
     int festivalInsert(FestivalDto festival);
 

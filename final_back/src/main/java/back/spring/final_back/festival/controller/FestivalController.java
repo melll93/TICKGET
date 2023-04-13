@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.festival.repository.FestivalDto;
 import back.spring.final_back.festival.service.FestivalService;
 import lombok.RequiredArgsConstructor;
@@ -49,19 +50,20 @@ public class FestivalController {
 		return festival;
 	}
 
-	@GetMapping("seoulFestivalList")
-	public List<FestivalDto> seoulFestivalList() {
+	@GetMapping("areaFestivalList")
+	public List<FestivalDto> areaFestivalList() {
 		List<FestivalDto> festival = null;
-		festival = festivalService.seoulFestivalList();
+		festival = festivalService.areaFestivalList();
 		return festival;
 	}
 
-	@GetMapping("kyeongkiFestivalList")
-	public List<FestivalDto> kyeongkiFestivalList() {
-		List<FestivalDto> festival = null;
-		festival = festivalService.kyeongkiFestivalList();
-		return festival;
-	}
+	
+
+    @GetMapping("/festivalDetail")
+    public FestivalDto festivalDetail(FestivalDto festivalDto) {
+    	FestivalDto festival = festivalService.festivalDetail(festivalDto);
+        return festival;
+    }
 
 	@PostMapping("festivalInsert")
 	public int festivalInsert(@RequestBody FestivalDto festivalDto) {

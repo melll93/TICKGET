@@ -8,6 +8,7 @@ import { FestivalInsertDB } from '../../axios/main/Festival';
 import ImageUploader from '../../util/imageUploader';
 import AddProductsOptionalDetail from '../Festival/AddProductsOptionalDetail';
 import { Button } from 'react-bootstrap';
+import { BlackBtn } from '../../styles/formStyle';
 
 
 
@@ -203,15 +204,15 @@ const festImage=()=>{
 </div><br/>
 
 {/* 추가 정보 입력 */}
-<Button style={{backgroundColor:'black', color:'white'}} onClick={optionModalOpen}> 판매 추가정보 입력 (추후기재가능)</Button>
+<BlackBtn onClick={optionModalOpen}> 판매 추가정보 입력 (추후기재가능)</BlackBtn>
 {optionModal === 1 ? <AddProductsOptionalDetail /> : null }
 
 
 
 {/* 추가 정보 입력 */}
 <br/><br/>
-<button type="button" className="btn btn-dark" onClick={()=>{navigate(-1)}}>취소</button>&nbsp;
-<button type="button" className="btn btn-dark" onClick={festivalInsert}>상품등록하기</button>
+<BlackBtn onClick={()=>{navigate(-1)}}>취소</BlackBtn>&nbsp;
+<BlackBtn onClick={festivalInsert}>상품등록하기</BlackBtn>
 </div>  {/* //등록 div 끝 */}
     </>
   )

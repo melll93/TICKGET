@@ -118,3 +118,30 @@ export const UpdateFestReviewDB = async (freview) => {
   }).then((res) => res.data);
   return result;
 };
+
+
+
+export const FetivalDetailDB2 =async(festival) => {
+  const result = await axios({
+        method: "get",
+        url: "http://localhost:8888/festival/festivalDetail",
+        params: festival, 
+      }).then((res) => res.data);
+      return result;
+    };
+
+    export const FetivalDetailDB = (festival) => {
+      return new Promise((resolve, reject) => {
+        try {
+          const response = axios({
+            method: "get",
+            url: "http://localhost:8888/festival/festivalDetail",
+            params: festival, 
+          });
+          resolve(response);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    };
+    
