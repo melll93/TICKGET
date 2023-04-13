@@ -1,12 +1,13 @@
 package back.spring.final_back.festival.repository;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface FestivalDao {
-    public List<FestivalDto> festivalToday();
+    public List<FestivalDto> festivalListByDate(Date date);
 
     public List<FestivalDto> festivalList();
 

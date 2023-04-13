@@ -1,5 +1,6 @@
 package back.spring.final_back.festival.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.naming.spi.DirStateFactory.Result;
@@ -22,9 +23,9 @@ public class FestivalServiceImpl implements FestivalService {
     private final FestivalDao festivalDao;
 
     @Override
-    public List<FestivalDto> festivalToday() {
+    public List<FestivalDto> festivalListByDate(Date date) {
         List<FestivalDto> result = null;
-        result = festivalDao.festivalToday();
+        result = festivalDao.festivalListByDate(date);
         return result;
     }
 
