@@ -9,7 +9,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { MyInput, MyLabel, MyLabelAb } from "../../styles/formStyle";
 import PaymentComponent from "./PaymentComponent";
-import MarketPaymentComponent from "./MarketPaymentComponent";
+import { loadTossPayments } from "@tosspayments/payment-sdk";
 
 
 const Cimg = styled.img`
@@ -55,19 +55,41 @@ useEffect(() => {
 
   /* 결제 정보 */
     mk_ticket_count : jsonDoc[0].mkTicketCount, /* 상품 수량  */
-    mk_ticket_price : jsonDoc[0].mkTicketPrice, /* 결제 금액  */
-   })
+    mk_ticket_price : jsonDoc[0].mkTicketPrice.toLocaleString(), /* 결제 금액 (쉼표붙임->문자열) */
+    ticketPrice : jsonDoc[0].mkTicketPrice /* 토스페이먼츠로 넘길 금액 (숫자형) */
+  })
   }
   boardDetail()
 },[])
 
 
- const mkpdata = {
-  mkpTitle : mkpDetail.board_mk_title, /* 상품제목 (게시글제목) */
-  mkpCustomerName : '회원이름', /* 세션에서 가져오기 */
-  mkpCustomerEmail : '회원이메일', /* 세션에서 가져오기 */
-  mkpPrice : mkpDetail.mk_ticket_price /* 상품 가격 */ 
- }
+
+
+
+const handleClick = async () => {
+    const tossPayments = await loadTossPayments(
+      // process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY
+      'test_ck_aBX7zk2yd8yjXw0pyNE3x9POLqKQ' //clientKey
+    );
+    await tossPayments.requestPayment("", {   //첫번째 파라미터 - 카드, 가상계좌, 계좌이체, 휴대폰, 문화상품권, 도서문화상품권, 게임문화상품권 가능  // 두번째 파라미터-결제정보
+      amount: mkpDetail.ticketPrice,   //
+      orderId: 'KjnHngSBVHXivyFnT4bMd',  //영문 대소문자, 숫자, 특수문자-,_,= 사용가능 (6~64자 이하 문자열)
+      orderName: mkpDetail.board_mk_title,  // 주문명 - 상품정보
+      customerName: 'member_name',  // *회원이름으로 수정해야함 (세션스토리지에서 가져옴)
+      successUrl: `${window.location.origin}/paymentsucess/:festMId`,  // 성공시 리다이렉트 URL 
+      failUrl: `${window.location.origin}/paymentfailed/:festMId`,  //실패시 리다이렉트 URL - 안만들어놈
+      flowMode: 'DEFAULT',
+      easyPay: '토스페이'
+      // windowTarget:'self'
+      // customerEmail:''  //결제결과 확인 이메일 발송 - 회원이메일(세션스토리지에서 가져옴)
+    }).catch(function (error) {
+      if (error.code === 'USER_CANCEL') {     // 결제 고객이 결제창을 닫았을 때 에러
+
+      } else if (error.code === 'INVALID_CARD_COMPANY') {        // 유효하지 않은 카드  에러
+      }
+    });
+  };
+
 
 
   return (
@@ -133,7 +155,7 @@ useEffect(() => {
 
  {/*  결제 정보 섹션  */}
 <h3 style={{ fontWeight: 'bold', marginTop:'80px' }}>◽결제 정보</h3>
-   <section style={{ justifyContent: 'space-between'}}>
+   <section style={{  justifyContent: 'space-between'}}>
    <Card style={{width:'800px' , height:'150px' , border:'2px solid' , borderColor:'' 
    ,display: 'flex' ,  alignItems:'center'}}>
       <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
@@ -145,17 +167,17 @@ useEffect(() => {
         <hr/>
         <div>
           <Card.Title style={{ fontSize: '24px' , fontWeight:'bold' , opacity:'0.9'}}>
-            결제 금액 <span style={{marginLeft:'320px', color:'red'}}>{mkpDetail.mk_ticket_price}</span></Card.Title>
+            결제 금액 <span style={{marginLeft:'320px', color:'red'}}>{mkpDetail.mk_ticket_price} 원</span></Card.Title>
         </div>
         <hr style={{ opacity: '0.0' }} />
       </div>
     </Card.Body>
   </Card>
   <div>
-  {/* <MarketPaymentComponent></MarketPaymentComponent> */}
-  <PaymentComponent/>
+  <Button style={{width:'400px'}} onClick={handleClick}>토스 결제하기</Button>
+  {/* <PaymentComponent /> */}
 {/* <Button className="researvebtn" onClick={MarketPaymentComponent}>토스페이 결제하기</Button> */}
-<Button className="researvebtn" onClick={() => navigate(`../market/mk_boardDetail?no=${loc}`)}>취소/이전으로</Button>
+<Button style={{width:'400px'}} onClick={() => navigate(`../market/mk_boardDetail?no=${loc}`)}>취소/이전으로</Button>
   </div>
 </section>
 
