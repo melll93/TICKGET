@@ -167,10 +167,6 @@ const TogetherBoardUpdate = () => {
                     border: "1px solid lightGray",
                     borderRadius: "10px",
                   }}
-                  placeholder={
-                    "YYYY-MM-DD 형식으로 입력해주세요. ex) : " +
-                    new Date().toISOString().substr(0, 10)
-                  }
                   onChange={(e) => {
                     handleDate(e.target.value);
                   }}
@@ -197,18 +193,6 @@ const TogetherBoardUpdate = () => {
                   onChange={(e) => {
                     handleContent(e.target.value);
                   }}
-                />
-              </div>
-
-              <div>
-                <label class="form-block">첨부파일</label>
-                <input
-                  style={{ width: "98%", margin: "10px" }}
-                  type="file"
-                  name="attach"
-                  accept="image/*"
-                  multiple="multiple"
-                  class="form-control"
                 />
               </div>
 

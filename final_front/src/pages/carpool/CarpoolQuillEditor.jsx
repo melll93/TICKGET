@@ -39,21 +39,21 @@ const TogetherQuillEditor = ({
         console.log(pair[0], pair[1]);
       }
       // 폼데이터를 서버에 넘겨 multer로 이미지 URL 받아오기
-      const res = await uploadImageDB(formData);
-      files.push(res.data);
-      console.log(res.data); //xxx.png => wendy.png
-      if (!res.data) {
-        console.log("이미지 업로드에 실패하였습니다.");
-      }
-      const url = `http://localhost:8888/board/imageGet?imageName=${res.data}`;
-      const quill = quillRef.current.getEditor();
-      const range = quill.getSelection().index;
-      if (typeof range !== "number") return;
-      quill.setSelection(range, 1);
-      quill.clipboard.dangerouslyPasteHTML(
-        range,
-        `<img src=${url} style="width: 100%; height: auto;" alt="image" />`
-      );
+      // const res = await uploadImageDB(formData);
+      // files.push(res.data);
+      // console.log(res.data); //xxx.png => wendy.png
+      // if (!res.data) {
+      //   console.log("이미지 업로드에 실패하였습니다.");
+      // }
+      // const url = `http://localhost:8888/board/imageGet?imageName=${res.data}`;
+      // const quill = quillRef.current.getEditor();
+      // const range = quill.getSelection().index;
+      // if (typeof range !== "number") return;
+      // quill.setSelection(range, 1);
+      // quill.clipboard.dangerouslyPasteHTML(
+      //   range,
+      //   `<img src=${url} style="width: 100%; height: auto;" alt="image" />`
+      // );
     }; //주어진 인덱스에 HTML로 작성된 내용물을 에디터에 삽입한다.
   }, [quillRef, files]);
   const modules = useMemo(

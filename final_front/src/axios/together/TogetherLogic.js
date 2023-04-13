@@ -16,6 +16,7 @@ export const selectTogetherDB = (board) => {
     }
   });
 };
+
 /* 상세보기 */
 // export const selectBoardDetailDB = (board) => {
 export const selectTogetherDetailDB = (board) => {
@@ -32,6 +33,7 @@ export const selectTogetherDetailDB = (board) => {
     }
   });
 };
+
 /* 삭제 */
 // export const deleteBoardListDB = (board) => {
 export const deleteTogetherDB = (board) => {
@@ -48,15 +50,16 @@ export const deleteTogetherDB = (board) => {
     }
   });
 };
+
 /* 작성 */
 // export const insertBoardListDB = (board_together) => {
-export const insertTogetherDB = (board_together) => {
+export const insertTogetherDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/board/insertBoardList",
-        params: board_together,
+        params: board,
       });
       resolve(response);
     } catch (error) {
@@ -64,10 +67,11 @@ export const insertTogetherDB = (board_together) => {
     }
   });
 };
-/*  */
+
+/* 수정 */
 // export const updateBoardListDB = (board) => {
 export const updateTogetherDB = (board) => {
-  console.log('board?? ?SD S, ',board)
+  console.log("board?? ?SD S, ", board);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -82,79 +86,16 @@ export const updateTogetherDB = (board) => {
   });
 };
 
-
-
-/* 작업 중 */
-export const uploadFileDB = (file) => {
-  console.log(file);
+/* 조회수 */
+export const viewUpDB = async(boardTgNo) => {
+  /* 오케이 여기까진 진출했어 */
+  console.log("viewUpDB boardTgNo ", boardTgNo);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
-        method: "post",
-        url: "http://localhost:8888/board/fileUpload",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        processData: false,
-        contentType: false,
-        data: file,
-      });
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-
-/* 작업 중 */
-export const uploadImageDB = (file) => {
-  console.log(file);
-  return new Promise((resolve, reject) => {
-    try {
-      const response = axios({
-        method: "post",
-        url: "http://localhost:8888/board/imageUpload",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        processData: false,
-        contentType: false,
-        data: file,
-      });
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-
-/* 작업 중 */
-export const qnaListDB = (board) => {
-  return new Promise((resolve, reject) => {
-    try {
-      console.log(board);
-      //axios - 비동기 요청 처리 ajax - fetch(브라우저) - axios(NodeJS - oracle서버연동)
-      const response = axios({
-        //3000번 서버에서 8000서버로 요청을 함 - 네트워크(다른서버 - cors이슈)
         method: "get",
-        url: "http://localhost:8888/board/qnaList",
-        params: board, //쿼리스트링은 header에 담김 - get방식
-      });
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-
-/* 작업 중 */
-export const qnaInsertDB = (board) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const response = axios({
-        method: "post", //@RequestBody
-        url: "http://localhost:8888/board/qnaInsert",
-        data: board, //post방식으로 전송시 반드시 data속성으로 ㅈ파라미터 줄것
+        url: "http://localhost:8888/board/viewUp",
+        params: {boardTgNo :boardTgNo }
       });
       resolve(response);
     } catch (error) {
