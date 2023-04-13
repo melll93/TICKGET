@@ -1,9 +1,18 @@
 import { async } from "@firebase/util";
 import axios from "axios";
 
-export const festivalToday = (date) => {
-
-}
+export const festivalListByDate = async (date) => {
+  const result = await axios({
+    method: "GET",
+    url:
+      // process.env.BACKEND_URL
+      "http://localhost:8888/" + "festival/festivalListByDate",
+    params: {
+      date: date,
+    },
+  }).then((res) => res.data);
+  return result;
+};
 
 export const FestivalInsertDB = (festival) => {
   return new Promise((resolve, reject) => {

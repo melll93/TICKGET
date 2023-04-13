@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import back.spring.final_back.festival.repository.FestivalDto;
 import back.spring.final_back.festival.service.FestivalService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @ResponseBody
@@ -26,14 +27,18 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin("http://localhost:3333/")
 @RestController
 @RequestMapping("/festival/*")
+@Slf4j
 public class FestivalController {
 	Logger logger = LoggerFactory.getLogger(FestivalController.class);
 	@Autowired
 	private final FestivalService festivalService;
 
-	@GetMapping("festivalToday")
+	@GetMapping("festivalListByDate")
 	public List<FestivalDto> festivalListByDate(@RequestParam Date date) {
-		return festivalService.festivalListByDate(date);
+		List<FestivalDto> result = null;
+		result = festivalService.festivalListByDate(date);
+		log.info(result.toString());
+		return result;
 	}
 
 	@GetMapping("festivalList")
