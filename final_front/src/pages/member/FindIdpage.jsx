@@ -3,15 +3,14 @@ import { useState } from 'react';
 import { BButton, LoginForm, MyH1, MyInput, MyLabel, SubmitButton } from '../../styles/formStyle';
 import { useNavigate } from 'react-router-dom';
 import { memberListDB } from '../../axios/member/memberLogic';
-import axios from 'axios';
-
+import { setToastMsg } from '../../redux/toastStatus/action';
 
 const FindIdPage = () => {
   const [memInfo, setMemInfo] = useState({
     name: "",
     mobile: "",
   });
-  const [toastMsg, setToastMsg] = useState(""); // 알림 메시지 상태 관리
+  // const [toastMsg, setToastMsg] = useState(""); // 알림 메시지 상태 관리
   const navigate = useNavigate();
 
   const handleChangeMemInfo = (event) => { // 입력 값 변경 시 상태 업데이트
@@ -22,23 +21,29 @@ const FindIdPage = () => {
   // 아이디 찾기
   const handleFindId = async () => { 
     const member = {
-      memberName: memInfo.name, // 입력 받은 이름
-      memberMobile: memInfo.mobile, // 입력 받은 번호
+      member_name : memInfo.name,
+      member_mobile : memInfo.mobile,
+      type : 'id',
     }
     try {
-      const res = await axios.post('memberList', member); // memberListDB에 요청을 보내 일치하는 회원 정보를 가져옴
-      if (res.data.length === 0) {
-        setToastMsg("일치하는 아이디가 없습니다");
+      console.log(member);
+      const res = await memberListDB(member);
+      console.log(res);
+      if(res.data.length === 0) {
+        setToastMsg("일치하는 아이디가 없습니다.");
       } else {
-        let msg = '회원님의 아이디입니다 \n';
-        Object.keys(res.data).forEach((key) => {
-          msg += `[ ${res.data[key].member_id} ]\n`; // 일치하는 회원의 아이디를 메시지에 추가
-        });
+        let msg = '회원님의 아이디입니다.';
+        Object.keys(res.data).forEach((key)=> {
+          console.log(res.data[key]);
+          console.log(res.data[key].member_id);
+          msg += `\n[ ${res.data[key].member_id} ]`;
+        })
         setToastMsg(msg);
-        navigate('/login');
+        console.log(msg);
+        //navigate('/login');
       }
     } catch (error) {
-      setToastMsg("DB 오류입니다.");
+      setToastMsg(error + ": DB 오류입니다.");
     }
   }
 
@@ -58,7 +63,7 @@ const FindIdPage = () => {
           <BButton onClick={() => { handleFindId(); }}>찾기</BButton>
         </div>
       </LoginForm>
-      {toastMsg && <toastMsg>{toastMsg}</toastMsg>} {/* 알림 메시지 표시 */}
+      {/* {toastMsg && <toastMsg>{toastMsg}</toastMsg>}  */}
     </>
   )
 }
