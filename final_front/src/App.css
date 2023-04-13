@@ -42,25 +42,46 @@ div .loginbutton {
 }
 
 div .Sidebar {
-  width: 15vw;
-  height: 100vh;
+  height: 100%;
   display: inline-block;
   position: fixed;
-  top: 0;
-  left: 0;
+  z-index: 1;
+  background-color:rgba(15, 15, 15, 0.8);/*까만색(0,0,0) 80% 불투명도*/
+  overflow-x: hidden;
+  transition: 0.5s;
+
+  width:0;
+  /* width: 15vw; */
+  top:0;
+  left:0;
   border-right: 1px solid black;
 }
+
+.openSidebarButton{
+  font-size: 20px;
+  cursor:pointer;
+  background-color: #ffffff;
+  color:white;
+  border: 1px solid lavender;
+  
+}
+
+.openSidebarButton:hover{
+  background-color: #444;
+
+}
+
 
 div .center {
   align-items: center;
   display: inline-block;
   position: absolute;
-  left: 15dvw;
-  width: 85vw;
+/*   left:15dvw; */
+/*   width: 85vw; */
   height: 100vh;
 }
 
-.center {
+.center{
   margin-left: 500px;
 }
 
@@ -125,41 +146,34 @@ div .register {
 div .HomeButton {
   justify-content: center;
   border-right: 1px solid black;
+
 }
 
 div .SearchBarDiv {
   display: inline-block;
-  margin-top: 100px;
+  margin-top:100px;
   margin-left: 5%;
 }
 
 div .SearchBarDiv_header {
   display: inline-block;
-  margin-top: 2px;
+  margin-top:2px;
   margin-left: 80%;
 }
 
 div .SearchBar {
   width: 80%;
   height: 2em;
-  margin: 0px 5px 0px 5px; /* 위 오 밑 왼 */
+  margin: 0px 5px 0px 5px;  /* 위 오 밑 왼 */
   border-radius: 20px;
 }
+
 
 .SearchButton {
   width: 50px;
 }
 
-div .profile {
-  border: 1px solid black;
-  border-radius: 50%;
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-}
-
-div .ProfileBox {
+div .Profile {
   padding: 0px 30px 0 30px;
   margin-top: 50px;
   height: 6vh;
@@ -239,7 +253,8 @@ div .Menu {
   object-fit: cover;
 }
 
-div.Gnb {
-  margin: 0px;
+
+div.Gnb{
+  margin:0px;
 }
 /*  */
