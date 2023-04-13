@@ -59,10 +59,9 @@ const MarketPage = () => {
             <Table striped bordered hover style={{minWidth:"1000px"}}>
             <thead>
                   <tr >
-                  <th style={{width:'100px',textAlign:"center"}}>번호</th>
                   <th style={{width:'500px', textAlign:"center"}}>상품정보</th>
                   <th style={{width:'100px', textAlign:"center"}}>수량</th>
-                  <th style={{width:'100px',textAlign:"center"}}>가격</th>
+                  <th style={{width:'200px',textAlign:"center"}}>가격</th>
                   <th style={{width:'150px',textAlign:"center"}}>등록일</th>
                   <th style={{width:'200px',textAlign:"center"}}>작성자</th>
                   <th style={{width:'100px',textAlign:"center"}}>조회수</th>
