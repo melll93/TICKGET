@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.festival.repository.FestivalDao;
 import back.spring.final_back.festival.repository.FestivalDto;
 import lombok.RequiredArgsConstructor;
@@ -34,16 +35,9 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     @Override
-    public List<FestivalDto> seoulFestivalList() {
+    public List<FestivalDto> areaFestivalList() {
         List<FestivalDto> festival = null;
-        festival = festivalDao.seoulFestivalList();
-        return festival;
-    }
-
-    @Override
-    public List<FestivalDto> kyeongkiFestivalList() {
-        List<FestivalDto> festival = null;
-        festival = festivalDao.kyeongkiFestivalList();
+        festival = festivalDao.areaFestivalList();
         return festival;
     }
 
@@ -54,5 +48,12 @@ public class FestivalServiceImpl implements FestivalService {
 		result = festivalDao.festivalDelete(fest_m_id);
 		return result;
 	}
+
+	@Override
+	public FestivalDto festivalDetail(FestivalDto festivalDto) {
+		FestivalDto festival = festivalDao.festivalDetail(festivalDto);
+		 return festival;
+		    }
+	
 
 }

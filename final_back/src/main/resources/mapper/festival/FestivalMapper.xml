@@ -4,11 +4,11 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="back.spring.final_back.festival.repository.FestivalDao">
-	<select id="seoulFestivalList" resultType="FestivalDto">
-SELECT * FROM fest_main where fest_m_area LIKE '%서울%'
-	</select>
-	<select id="kyeongkiFestivalList" resultType="FestivalDto">
-SELECT * FROM fest_main where fest_m_area LIKE '%경기%'
+	<select id="festivalDetail" resultType="FestivalDto">
+        select * from fest_main where fest_m_id=#{festMId}
+    </select>
+	<select id="areaFestivalList" resultType="FestivalDto">
+SELECT * FROM fest_main where fest_m_area=#{festMArea}
 	</select>
 	<select id="festivalList" resultType="FestivalDto">
 SELECT * FROM fest_main

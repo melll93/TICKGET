@@ -27,6 +27,34 @@ export const FestivalInsertDB = (festival) => {
       };
 
 
+      export const FetivalDetailDB2 =async(festival) => {
+        const result = await axios({
+              method: "get",
+              url: "http://localhost:8888/festival/festivalDetail",
+              params: festival, 
+            }).then((res) => res.data);
+            return result;
+          };
+
+          export const FetivalDetailDB = (festival) => {
+            return new Promise((resolve, reject) => {
+              try {
+                const response = axios({
+                  method: "get",
+                  url: "http://localhost:8888/festival/festivalDetail",
+                  params: festival, 
+                });
+                resolve(response);
+              } catch (error) {
+                reject(error);
+              }
+            });
+          };
+          
+
+
+
+
 export const DeleteFestReviewDB = async(freview) => {
   const result = await axios({
         method: "get",
@@ -36,6 +64,9 @@ export const DeleteFestReviewDB = async(freview) => {
       return result;
     };
 
+
+
+    
 
     export const DeleteFestivalDB = async(festival) => {
       const result = await axios({

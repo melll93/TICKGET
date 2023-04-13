@@ -5,16 +5,61 @@ import { Button, Dropdown, DropdownButton, Modal, Tab, Tabs } from 'react-bootst
 import Calendar from 'react-calendar';
 import { useSelector } from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom'
-import { DeleteFestivalDB, DeleteFestReviewDB, FestivalReviewDB, FestReviewInsertDB, UpdateFestReviewDB } from '../../axios/main/Festival';
+import { DeleteFestivalDB, DeleteFestReviewDB, FestivalReviewDB, FestReviewInsertDB, FetivalDetailDB, FetivalListDB, UpdateFestReviewDB } from '../../axios/main/Festival';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import { BButton, MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
-import '../../styles/productsdetails.css'
+import { BButton, BlackBtn, MyButton, MyInput, MyLabel, MyLabelAb } from '../../styles/formStyle';
+import '../../styles/festivaldetails.css'
 
 
 const FestivalsDetail = () => {
+  const navigate = useNavigate();
     let {festMId} =useParams();
-    const navigate = useNavigate();
+
+  
+
+const[festName, setFestMName]=useState('');
+const[festStart, setFestMStart]=useState('');
+const[festEnd, setFestMEnd]=useState('');
+const[festLoc, setFestMLoc]=useState('');
+const[festImg, setFestMImg]=useState('');
+
+
+const[festival, setFestival]=useState({
+festMId:'',
+festMName:'',
+festMStart:'',
+festMEnd:'',
+festMLoc:'',
+festMImg:'',
+})
+useEffect (() => {
+  const asyncDB = async() => {
+    const res = await FetivalDetailDB({festMId})
+    const result = JSON.stringify(res.data)
+    const jsonDoc = JSON.parse(result)
+    setFestival({ 
+      festMName: jsonDoc.festMName
+                  , festMStart: jsonDoc.festMStart
+            ,festMEnd: jsonDoc.festMEnd
+            ,festMLoc: jsonDoc.festMLoc
+            ,festMImg: jsonDoc.festMImg
+  });
+  if (res.data) {
+    setFestival(res.data);
+  } else {
+    console.log("조회 실패");
+  }
+};
+asyncDB();
+return () => {
+};
+}, []);
+
+
+console.log(festival.festMId)
+
+
     const [lgShow, setLgShow] = useState(false);   //리뷰수정모달
     const reduxUser = useSelector(state => state.userStatus.user);
     console.log(reduxUser)
@@ -185,9 +230,6 @@ console.log('삭제완료')}}>삭제</BButton>
 
 
 
-
-
-
     
     return(
       <>
@@ -197,12 +239,11 @@ console.log('삭제완료')}}>삭제</BButton>
        {/* 출력{Data} */}
         <Header />
         <h2>상품 상세페이지....</h2>
-        
   {/* 로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람이 관리자일경우 삭제 버튼 보이기 
    {sessionStorage.getItem('Auth')===''관리자"'&&       
    */}
   <div>
-                <BButton style={{width:"200px", height:"38px", backgroundColor:'black' }} onClick={deleteProducts} >상품삭제(누르지마세요.)</BButton>
+    <BlackBtn onClick={deleteProducts}>상품삭제(누르지마세요.)</BlackBtn>
 </div>
 
 
@@ -211,18 +252,18 @@ console.log('삭제완료')}}>삭제</BButton>
 <section>
         <div className="topcontainer" >
                                <div className="product_detail_imgdiv">
-                                         <img className="product_detail_img" src={'../images_key/WOONGS.jpg'}  alt="상품사진" />
+                                         <img className="product_detail_img" src={festival.festMImg}  alt="상품사진" />
                                </div>
                                <div className="product_detail_info">
                                <div className="product_detail_head">
-                                <h3 className="product_title">타이틀 및 상세 설명 여기</h3>
+                                <h3 className="product_title">{festival.festMName}</h3>
                                 <p className="product_sub_title">subtitle</p>
                                 </div>
                                 <div className="product_info" ></div>
                                 <ul className="product_lnfo_list_col2">
-                                <li className="product_info_list"><span className="product_info_title">장소</span><div className="product_info_desc">fest_location</div></li>
+                                <li className="product_info_list"><span className="product_info_title">장소</span><div className="product_info_desc">{festival.festMLoc}</div></li>
                                 <li className="product_info_list"><span className="product_info_title">관람시간</span><div className="product_info_desc">fest_runtime</div></li>
-                                <li className="product_info_list"><span className="product_info_title">기간</span><div className="product_info_desc">fest_startdate~fest_enddate</div></li>
+                                <li className="product_info_list"><span className="product_info_title">기간</span><div className="product_info_desc">{festival.festMStart}~{festival.festMEnd}</div></li>
                                <li className="product_info_list"><span className="product_info_title">관람등급</span><div className="product_info_desc">fest_age</div></li>
                                 </ul>
                      <ul className="product_lnfo_list_col2">
@@ -236,7 +277,7 @@ console.log('삭제완료')}}>삭제</BButton>
 
 <section>
 <div className="midContainerCalendarAndRestSeats">
-                   <span className="calendar">
+                   <span className="products_calendar">
                     <Calendar/>
 </span>
 <span className="calendarands1">
@@ -244,7 +285,7 @@ console.log('삭제완료')}}>삭제</BButton>
 </span>
 <span className="calendarands2">
 잔여좌석<br></br>
-<Button className="researvebtn" onClick={() => navigate("/payment/"+festMId)}>예매하기</Button>
+<BlackBtn width="250px" onClick={() => navigate("/payment/"+festMId)}>예매하기</BlackBtn>
 
 </span>
 </div>
@@ -276,16 +317,13 @@ console.log('삭제완료')}}>삭제</BButton>
           <div className="form-floating" style={{textAlign:'right'}}>
   <textarea onChange={(e)=>{inputReviewContent(e.target.value)}} className="form-control" placeholder="Leave a comment here" id="product_detail_review_textarea" style={{height: '300px', margin:'10px', maxWidth:'1200px'}}></textarea>
   <label htmlFor="floatingTextarea">관람후기</label>
-<button className="reviewbtn" onClick={insertReview} style={{backgroundColor:'black', width:'250px', height:'50px', color:'white', margin:'10px 80px 10px 10px', borderRadius:'10px'}}> 등록 </button> 
+  <BlackBtn width='250px' height='50px' margin='10px 80px 10px 10px' onClick={insertReview}> 등록 </BlackBtn> 
 
 
 
 </div>
 
 <ReviewList></ReviewList>
-
-
-
           </div>
           </Tab>
 </Tabs>
