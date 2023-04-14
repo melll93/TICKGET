@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { sendNaverMember } from "../../axios/main/socialLogin";
+import { sendNaverMember } from "../../axios/member/socialLogin";
 const { naver } = window;
 const NAVER_CLIENT_ID = "3fiEhnoQMSqSfg5o2LKi";
 const NAVER_CALLBACK_URL = encodeURI(

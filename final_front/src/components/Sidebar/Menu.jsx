@@ -1,8 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../Sidebar";
-import SearchBar from "../Gnb/SearchBar";
 
 const Menu = ({ item }) => {
   const urlLower = item.toLowerCase();

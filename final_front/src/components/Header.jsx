@@ -1,7 +1,7 @@
 import React from "react";
-import HeaderSearchBar from "./Gnb/HeaderSearchBar";
-import HomeButton from "./Sidebar/HomeButton";
-import SearchBar from "./Gnb/SearchBar";
+import HeaderSearchBar from "./header/HeaderSearchBar";
+import HomeButton from "./sidebar/HomeButton";
+import SearchBar from "./header/SearchBar";
 import "../styles/header.css";
 
 const Header = () => {

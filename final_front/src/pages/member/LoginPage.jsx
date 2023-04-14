@@ -17,6 +17,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies, useCookies } from "react-cookie";
+import Header from "../../components/Header";
 /* import { EyeFill, EyeSlashFill } from 'react-icons/io5';
  */
 const cookies = new Cookies();
@@ -129,6 +130,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   };
   return (
     <>
+      <Header />
       <Sidebar />
       <div
         style={{

@@ -29,10 +29,10 @@ div .sidebar.items {
 }
 
 div .sidebar.button {
-  /* display: inline-block;
+  display: inline-block;
   position: fixed;
-  z-index: 1; */
-  width: 50px;
+  z-index: 1;
+  top: 8vh;
   height: 100%;
 }
 

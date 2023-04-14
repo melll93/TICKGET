@@ -54,6 +54,7 @@ div .center {
   position: absolute;
   height: 100vh;
   width: 100vw;
+  top: 8vh;
 }
 
 div .carouselDiv {
@@ -110,7 +111,6 @@ div .register {
   margin-top: 15%;
   width: 40%;
 }
-
 
 div .SearchBarDiv_header {
   display: inline-block;

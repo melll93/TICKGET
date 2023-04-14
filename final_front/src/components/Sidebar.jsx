@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import MenuList from "./Sidebar/MenuList";
-import PersonalTabs from "./Sidebar/PersonalTabs";
-import Profile from "./Sidebar/Profile";
-import SearchBar from "./Gnb/SearchBar";
+import MenuList from "./sidebar/MenuList";
+import PersonalTabs from "./sidebar/PersonalTabs";
+import Profile from "./sidebar/Profile";
+import SearchBar from "./header/SearchBar";
 import "../styles/sidebar.css";
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(300);
-  const [isVisible, setIsVisible] = useState("visible");
+  const [isVisible, setIsVisible] = useState(0);
   const openSidebar = () => {
     setSidebar(300);
-    setIsVisible("hidden");
+    setIsVisible(0);
   };
   const closeSidebar = () => {
     setSidebar(0);
-    setIsVisible("visible");
+    setIsVisible(40);
   };
 
   return (
@@ -49,7 +49,7 @@ const Sidebar = () => {
             className="openSidebarButton"
             onClick={openSidebar}
             alt="sidebarbtn"
-            style={{ width: "40px", visibility: isVisible }}
+            style={{ width: isVisible }}
           ></img>
         </div>
       </div>

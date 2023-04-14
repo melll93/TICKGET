@@ -20,7 +20,7 @@ import {
   FetivalDetailDB,
   FetivalListDB,
   UpdateFestReviewDB,
-} from "../../axios/main/Festival";
+} from "../../axios/festival/festival";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import {

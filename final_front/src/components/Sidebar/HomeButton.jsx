@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "../Gnb/SearchBar";
+import SearchBar from "../header/SearchBar";
 
 const HomeButton = () => {
   return (

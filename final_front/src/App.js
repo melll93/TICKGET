@@ -3,41 +3,41 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
-import FestivalsDetail from "./pages/Festival/FestivalsDetail";
-import AddProductsPage from "./pages/community/AddProductsPage";
-import CarpoolPage from "./pages/community/CarpoolPage";
-import ConcertPage from "./pages/community/ConcertPage";
-import FestivalPage from "./pages/community/FestivalPage";
-import HomePage from "./pages/community/HomePage";
-import MarketPage from "./pages/community/MarketPage";
-import SearchResultPage from "./pages/community/SearchResultPage";
-import TogetherPage from "./pages/community/TogetherPage";
-import MarketDetail from "./pages/market/MarketDetail";
-import MarketUpdatePage from "./pages/market/MarketUpdatePage";
-import MarketWriteForm from "./pages/market/MarketWriteForm";
+import FestivalsDetail from "./pages/festival/FestivalsDetail";
+import AddProductsPage from "./pages/menu/AddProductsPage";
+import CarpoolPage from "./pages/menu/CarpoolPage";
+import ConcertPage from "./pages/menu/ConcertPage";
+import FestivalPage from "./pages/menu/FestivalPage";
+import HomePage from "./pages/menu/HomePage";
+import MarketPage from "./pages/menu/MarketPage";
+import SearchResultPage from "./pages/menu/SearchResultPage";
+import TogetherPage from "./pages/menu/TogetherPage";
+import MarketDetail from "./pages/board/market/MarketDetail";
+import MarketUpdatePage from "./pages/board/market/MarketUpdatePage";
+import MarketWriteForm from "./pages/board/market/MarketWriteForm";
 import FindIdPage from "./pages/member/FindIdpage";
 import LoginPage from "./pages/member/LoginPage";
 import RegisterPage from "./pages/member/RegisterPage";
 import ResetPwPage from "./pages/member/ResetPwPage";
 import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import BookmarkPage from "./pages/personal/BookmarkPage";
-import CalendarPage from "./pages/personal/CalendarPage";
+import CalendarPage from "./pages/menu/CalendarPage";
 import CartPage from "./pages/personal/CartPage";
-import ChatPage from "./pages/personal/ChatPage";
+import ChatPage from "./pages/menu/ChatPage";
 import MyPage from "./pages/personal/MyPage";
-import PayFailPage from "./pages/personal/PayFailPage";
-import PaySucPage from "./pages/personal/PaySucPage";
-import PaymentPage from "./pages/personal/PaymentPage";
+import PayFailPage from "./pages/payment/PayFailPage";
+import PaySucPage from "./pages/payment/PaySucPage";
+import PaymentPage from "./pages/payment/PaymentPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-import TogetherBoardDetail from "./pages/together/TogetherBoardDetail";
-import TogetherBoardUpdate from "./pages/together/TogetherBoardUpdate";
-import TogetherBoardWriteForm from "./pages/together/TogetherBoardWriteForm";
+import TogetherBoardDetail from "./pages/board/together/TogetherBoardDetail";
+import TogetherBoardUpdate from "./pages/board/together/TogetherBoardUpdate";
+import TogetherBoardWriteForm from "./pages/board/together/TogetherBoardWriteForm";
 
-import CarpoolDetail from "./pages/carpool/CarpoolDetail";
-import CarpoolUpdate from "./pages/carpool/CarpoolUpdate";
-import CarpoolWrietForm from "./pages/carpool/CarpoolWriteForm";
-import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
+import CarpoolDetail from "./pages/board/carpool/CarpoolDetail";
+import CarpoolUpdate from "./pages/board/carpool/CarpoolUpdate";
+import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
+import MarketPaymentPage from "./pages/board/market/MarketPaymentPage";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -99,15 +99,27 @@ function App({ mkImageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<TogetherBoardWriteForm />} />
-        <Route path="together/boardDetail/:boardTgNo" element={<TogetherBoardDetail board={board} />} />
+        <Route
+          path="together/boardDetail/:boardTgNo"
+          element={<TogetherBoardDetail board={board} />}
+        />
         <Route path="together/boardDetail/" element={<TogetherBoardDetail />} />
-        <Route path="together/boardUpdate/:boardTgNo" element={<TogetherBoardUpdate />}/>
+        <Route
+          path="together/boardUpdate/:boardTgNo"
+          element={<TogetherBoardUpdate />}
+        />
 
         {/* CarpoolPage Routes */}
         <Route path="carpool/write/*" element={<CarpoolWrietForm />} />
-        <Route path="carpool/carpoolDetail/:boardCpNo" element={<CarpoolDetail  carpool={carpool }/>}/>
+        <Route
+          path="carpool/carpoolDetail/:boardCpNo"
+          element={<CarpoolDetail carpool={carpool} />}
+        />
         <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
-        <Route path="carpool/carpoolUpdate/:boardCpNo" element={<CarpoolUpdate />} />
+        <Route
+          path="carpool/carpoolUpdate/:boardCpNo"
+          element={<CarpoolUpdate />}
+        />
 
         <Route
           path="carpool/carpoolDetail/:carpoolNo"
@@ -120,10 +132,24 @@ function App({ mkImageUploader }) {
         />
 
         {/* MarketPage Routes - 성훈 작업중 */}
-        <Route path="/market/write" exact={true} element={<MarketWriteForm mkImageUploader={mkImageUploader} />} />
-        <Route path="/market/update/:no" exact={true} element={<MarketUpdatePage mkImageUploader={mkImageUploader} />} />
-        <Route path="/market/mk_boardDetail/*" element={<MarketDetail mkImageUploader={mkImageUploader} />} />
-        <Route path="/market/mk_boardDetail/payment/:payId" element={<MarketPaymentPage />} />
+        <Route
+          path="/market/write"
+          exact={true}
+          element={<MarketWriteForm mkImageUploader={mkImageUploader} />}
+        />
+        <Route
+          path="/market/update/:no"
+          exact={true}
+          element={<MarketUpdatePage mkImageUploader={mkImageUploader} />}
+        />
+        <Route
+          path="/market/mk_boardDetail/*"
+          element={<MarketDetail mkImageUploader={mkImageUploader} />}
+        />
+        <Route
+          path="/market/mk_boardDetail/payment/:payId"
+          element={<MarketPaymentPage />}
+        />
       </Routes>
     </>
   );
