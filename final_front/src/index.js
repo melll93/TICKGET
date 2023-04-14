@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import rootReducer from "./redux/rootReducer";
 import { Provider } from "react-redux";
 import "react-quill/dist/quill.snow.css";
-import marketImageUploader from "./axios/market/mkImageUploader";
+import marketImageUploader from "./axios/board/market/mkImageUploader";
 
 const store = legacy_createStore(rootReducer);
 // console.log(store.getState());

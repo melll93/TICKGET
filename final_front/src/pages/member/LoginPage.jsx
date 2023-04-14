@@ -16,8 +16,11 @@ import { loginGoogle, loginH } from "../../util/authLogic";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxLogin } from "../../redux/userAuth/action";
+import { Cookies, useCookies } from "react-cookie";
+import Header from "../../components/Header";
 /* import { EyeFill, EyeSlashFill } from 'react-icons/io5';
  */
+const cookies = new Cookies();
 
 const LoginPage = ({ user, setUser, authLogic }) => {
   const dispatch = useDispatch();
@@ -44,7 +47,9 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   const login = async (paramMember) => {
     const result = await axios({
       method: "POST",
-      url: "http://localhost:8888/member/login/local",
+      url:
+        // process.env.BACKEND_URL + "member/login/local",
+        "http://localhost:8888/member/login/local",
       data: paramMember,
     })
       .then((res) => {
@@ -61,6 +66,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             nickname: userResponse.memberNickname,
             profile_img: userResponse.memberProfileImage,
           };
+          cookies.set("_userData", user);
           dispatch(reduxLogin(user));
           window.alert("로그인 성공");
           navigate("/");
@@ -76,21 +82,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
    * 짧은 코드의 메소드같은 경우 따로 선언하기보단 Component의 onChange/onClick내에서 익명함수로 처리한다.
    * => <Button>로그인</Button> 참고
    *******************************************************************************/
-  // tempUser 값이 변경될 때마다 이벤트
-  // const changeUser = (event) => {
-  //   const id = event.currentTarget.id;
-  //   const value = event.target.value;
-  //   console.log(id)
-  //   console.log(value)
-  //   setTempUser({ ...tempUser, [id]: value });
-  // };
-
-  // const handleIdChange = (event) => {
-  //   const id = event.currentTarget.id;
-  //   const value = event.target.value;
-  //   console.log(id)
-  //   setTempUser({ ...tempUser, [id]: value });
-  // }
 
   const handleChange = (event) => {
     const type = event.target.type;
@@ -139,8 +130,18 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   };
   return (
     <>
+      <Header />
       <Sidebar />
-      <div style={{ alignItems: "center", display: "inline-block", position: "absolute", left: "15vw", width: "85vw", height: "100vh" }}>
+      <div
+        style={{
+          alignItems: "center",
+          display: "inline-block",
+          position: "absolute",
+          left: "15vw",
+          width: "85vw",
+          height: "100vh",
+        }}
+      >
         <div className="login">
           {/********************** 자체 회원 로그인 **********************/}
           <Form>
@@ -193,20 +194,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 로그인
               </Button>
             </div>
-
-            {/*           <Form.Group className="mb-3" controlId="id">
-        <Form.Label>ID</Form.Label>
-        <Form.Control type="text" placeholder="ID를 입력해주세요." onChange={(event) => {changeUser}}  />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="password">
-        <Form.Label>Password</Form.Label>
-        <div className="d-flex align-items-center">
-          <Form.Control type={password.type} placeholder="Password를 입력해주세요." onChange={(event) => {changeUser}} />
-          <div className="ms-2" onClick={handlePasswordChange}>
-          </div>
-        </div>
-      </Form.Group> */}
 
             <br />
             <div style={{ textAlign: "center" }}>
@@ -280,7 +267,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           </div>
           {/************************************************* 소셜 로그인 끝 *************************************************/}
         </div>
-      </div >
+      </div>
     </>
   );
 };
