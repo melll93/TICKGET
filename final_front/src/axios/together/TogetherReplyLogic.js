@@ -16,6 +16,7 @@ import axios from "axios";
     });
   };
 
+  /* 등록하기 */
 export const insertTogetherReplyDB = (boardReply) => {
     return new Promise((resolve, reject) => {
       try {

@@ -30,7 +30,6 @@ public class TogetherRepleController {
 	// 게시판 조회(SelectAll)
 	@GetMapping("/selectTogetherReplyList")
 	public List<TogetherReplyDto> selectTogetherReplyList(TogetherReplyDto togetherReplyDto) {
-		logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ = ", togetherReplyDto);
 		logger.info("TogetherRepleController : selectTogetherReplyList 호출");
 		List<TogetherReplyDto> mList = null;
 		mList = togetherReplyService.selectTogetherReplyList(togetherReplyDto);
@@ -64,12 +63,4 @@ public class TogetherRepleController {
 		return result;
 	}
 
-	// 조회수 증가시켜줘
-	@GetMapping("/viewTogetherReplyUp")
-	public void viewTogetherReplyUp(@RequestParam Map<String, Object> pMap) {
-		logger.info("TogetherRepleController : viewTogetherReplyUp 호출");
-		togetherReplyService.viewTogetherReplyUp(pMap);
-	}
-
-	/* ====================================== */
 }

@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import { insertCarpoolDB } from "../../axios/carpool/CarpoolLogic";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import {
@@ -10,10 +11,6 @@ import {
   FormDiv,
   HeaderDiv,
 } from "../../styles/formStyle";
-import { insertCarpoolDB } from "../../axios/carpool/CarpoolLogic";
-import CarpoolFileInsert from "./CarpoolFileInsert";
-import CarpoolMyFilter from "./CarpoolMyFilter";
-import CarpoolQuillEditor from "./CarpoolQuillEditor";
 import LandingPage from "./Map/LandingPage";
 
 const CarpoolWriteForm = ({ carpool }) => {
@@ -133,11 +130,6 @@ const CarpoolWriteForm = ({ carpool }) => {
                     }}
                   />
                 </div>
-                <CarpoolMyFilter
-                  title={tTitle}
-                  types={types}
-                  handleTitle={handleTTitle}
-                ></CarpoolMyFilter>
                 <BButton
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
