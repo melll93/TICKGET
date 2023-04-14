@@ -6,15 +6,14 @@ import SearchBar from "./header/SearchBar";
 import "../styles/sidebar.css";
 
 const Sidebar = () => {
-  const [defaultSize, setDefaultSize] = useState();
-  const [sidebar, setSidebar] = useState("300");
+  const [sidebar, setSidebar] = useState("240");
   const [isVisible, setIsVisible] = useState(0);
 
   const path = window.location.pathname;
 
   const setDefault = () => {
     if (path === "/") {
-      setSidebar(300)
+      setSidebar(240)
       setIsVisible(0)
     } else {
       setSidebar(0)
@@ -23,7 +22,7 @@ const Sidebar = () => {
   }
 
   const openSidebar = () => {
-    setSidebar(300);
+    setSidebar(240);
     setIsVisible(0);
   };
   const closeSidebar = () => {
@@ -37,16 +36,6 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* <div>
-        <img
-          src="../logos/MENUBAR.png"
-          className="openSidebarButton"
-          onClick={openSidebar}
-          alt="sidebarbtn"
-          style={{ width: "40px" }}
-        ></img>
-      </div> */}
-
       <div className="sidebar container" style={{ width: sidebar }}>
         <div className="sidebar items" style={{ width: sidebar }}>
           <img

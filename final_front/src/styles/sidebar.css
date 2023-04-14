@@ -14,6 +14,11 @@ span {
   height: 100%;
 } */
 
+div .ProfileBox {
+  display: flex;
+  justify-content: center;
+}
+
 div .sidebar.items {
   height: 100%;
   display: inline-block;
@@ -39,4 +44,16 @@ div .sidebar.button {
 .icon {
   filter: invert(100%);
   display: inline-block;
+}
+
+.userImage {
+  display: inline-block;
+}
+
+.ProfileButton {
+  display: inline-block;
+}
+
+.dropdown.items {
+  background-color: rgba(162, 162, 162, 0.95); /*까만색(0,0,0) 80% 불투명도*/
 }
