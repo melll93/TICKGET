@@ -16,8 +16,10 @@ import { loginGoogle, loginH } from "../../util/authLogic";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxLogin } from "../../redux/userAuth/action";
+import { Cookies, useCookies } from "react-cookie";
 /* import { EyeFill, EyeSlashFill } from 'react-icons/io5';
  */
+const cookies = new Cookies();
 
 const LoginPage = ({ user, setUser, authLogic }) => {
   const dispatch = useDispatch();
@@ -61,6 +63,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             nickname: userResponse.memberNickname,
             profile_img: userResponse.memberProfileImage,
           };
+          cookies.set("_userData", user);
           dispatch(reduxLogin(user));
           window.alert("로그인 성공");
           navigate("/");
@@ -140,7 +143,16 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   return (
     <>
       <Sidebar />
-      <div style={{ alignItems: "center", display: "inline-block", position: "absolute", left: "15vw", width: "85vw", height: "100vh" }}>
+      <div
+        style={{
+          alignItems: "center",
+          display: "inline-block",
+          position: "absolute",
+          left: "15vw",
+          width: "85vw",
+          height: "100vh",
+        }}
+      >
         <div className="login">
           {/********************** 자체 회원 로그인 **********************/}
           <Form>
@@ -280,7 +292,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           </div>
           {/************************************************* 소셜 로그인 끝 *************************************************/}
         </div>
-      </div >
+      </div>
     </>
   );
 };
