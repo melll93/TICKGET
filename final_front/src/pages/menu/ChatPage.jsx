@@ -75,9 +75,9 @@ const ChatPage = () => {
 
   return (
     <>
+      <Header />
       <Sidebar />
       <div className="center">
-        <Header />
         {/****************************** CHAT AREA START ******************************/}
         <div className="chat container">
           {/******************** START chat bar ********************/}
