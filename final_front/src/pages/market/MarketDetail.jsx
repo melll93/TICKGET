@@ -99,9 +99,9 @@ const mktPrice = detail.mk_ticket_price.toLocaleString(); */
 
     return (
       <>
+        <Header/>
       <Sidebar />
       <div className="center">
-        <Header/>
         <ContainerDiv>
           <HeaderDiv>
             <h3 style={{marginLeft:"10px"}}>마켓 게시글</h3>

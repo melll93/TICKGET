@@ -36,9 +36,9 @@ const PaymentPage = () => {
 
   return (
     <>
+        <Header />
       <Sidebar />
       <div className="center">
-        <Header />
       결제페이지_ 은영 수정중
       {/* ----------------------------------결제페이지---------------------------------- */}
       

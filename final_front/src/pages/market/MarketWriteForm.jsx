@@ -183,9 +183,9 @@ const handleSubmit = (event) => {
 
   return (
     <>
+        <Header />
       <Sidebar />
       <div className="center">
-        <Header />
         <ContainerDiv>
           <HeaderDiv>
             <div className="form-floating mb-3">
