@@ -3,45 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="back.spring.final_back.member.repository.SignUpDao">
-	<select id="login" parameterType="map" resultType="string">
-				select * from member
-		<where>
-			<if test='memberId!=null and memberId.length()>0'>
-				AND member_id = #{memberId}
-			</if>
-			<if test='memberPw!=null and memberPw.length()>0'>
-				AND member_pw = #{memberPw}
-			</if>
-		</where>
-	</select>
-
 	<insert id="memberInsert" parameterType="map">
 		INSERT INTO member(
-		<!-- member_no, -->
-		member_domain,
+<!-- 		member_no, -->
+<!-- 		member_domain, -->
 		member_id,
 		member_password,
 		member_name,
-		member_age,
+		<!-- member_age, -->
 		member_birth,
 		member_email,
 		member_gender,
 		member_mobile,
 		member_nickname,
-		member_profile_image,
-		member_register_date,
+ 		<!-- member_profile_image, -->
+ 		member_register_date,
 		member_zipcode,
 		member_address,
 		member_addr_detail)
 		VALUES(
-		<!-- <if test="memberNo!= null">
+<!-- 		<if test="memberNo!= null">
 			#{memberNo}
 		</if> -->
-		<if test="memberDomain!= null">
+<!-- 		<if test="memberDomain!= null">
 			#{memberDomain}
-		</if>
+		</if> -->
 		<if test="memberId!= null">
-			,#{memberId}
+			#{memberId}
 		</if>
 		<if test="memberPassword!= null">
 			,#{memberPassword}
@@ -49,9 +37,9 @@
 		<if test="memberName!= null">
 			,#{memberName}
 		</if>
-		<if test="memberAge!= null">
+<!-- 		<if test="memberAge!= null">
 			,#{memberAge}
-		</if>
+		</if> -->
 		<if test="memberBirth!= null">
 			,#{memberBirth}
 		</if>
@@ -67,11 +55,11 @@
 		<if test="memberNickname!= null">
 			,#{memberNickname}
 		</if>
-		<if test="memberProfileImage!= null">
+<!--  		<if test="memberProfileImage!= null">
 			,#{memberProfileImage}
-		</if>
-		<if test="memberRegisterDate!= null">
-			,#{memberRegisterDate}
+		</if> -->
+  		<if test="memberRegisterDate == null">
+			,CURDATE()
 		</if>
 		<if test="memberZipcode!= null">
 			,#{memberZipcode}
@@ -84,6 +72,7 @@
 		</if>
 		)
 	</insert>
+
 	<select id="memberList" parameterType="java.util.HashMap" resultType="map">
     select
            member_no,
@@ -98,7 +87,18 @@
            member_mobile,
            member_nickname,
            member_profile_image,
-           member_register_date
+           member_register_date,
+           member_zipcode,
+           member_address,
+           member_addr_detail
       from member
+      <where>
+	    <if test='memberName!=null and memberName.length()>0'>
+	      AND member_name = #{memberName}
+	    </if>
+	    <if test='memberMobile!=null and memberMobile.length()>0'>
+	      AND member_mobile = #{memberMobile}
+	    </if>
+	  </where>
 </select >
 </mapper>

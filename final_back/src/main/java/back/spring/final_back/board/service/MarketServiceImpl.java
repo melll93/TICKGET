@@ -32,23 +32,18 @@ public class MarketServiceImpl implements MarketService {
 		List<MarketDto> mList = marketDao.mk_boardList(marketDto);
 		return mList;
 	}
-	
-	
-	
-	//마켓 게시판 게시글 상세보기
+
+	// 마켓 게시판 게시글 상세보기
 	@Override
 	public List<MarketDto> mk_boardDetail(MarketDto marketDto) {
 		logger.info("MarketServiceImpl : mk_boardDetail 호출");
 		List<MarketDto> mList = marketDao.mk_boardDetail(marketDto);
-		if(mList.size()>0) {
+		if (mList.size() > 0) {
 			marketDao.mk_boardHit(marketDto);
 		}
 		return mList;
 	}
 
-	
-	
-	
 	// 마켓 게시판 게시글 등록
 	@Override
 	public int mk_boardInsert(MarketDto marketDto) {
@@ -65,15 +60,12 @@ public class MarketServiceImpl implements MarketService {
 		return result;
 	}
 
-	//마켓 게시판 게시글 삭제
+	// 마켓 게시판 게시글 삭제
 	@Override
 	public int mk_boardDelete(MarketDto marketDto) {
 		int result = 0;
 		result = marketDao.mk_boardDelete(marketDto);
 		return result;
 	}
-
-
-
 
 }

@@ -2,11 +2,8 @@ package back.spring.final_back.board.repository;
 
 import java.sql.Date;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -23,7 +20,7 @@ public class TogetherDto {
     private String boardTgTitle;
     private String boardTgContent;
     private Date boardTgDate;
-    private String boardTgViews;
+    private int boardTgViews;
     private int boardTgSuperNo;
     private int boardTgGroupNo;
     private int boardTgDepth;

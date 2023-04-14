@@ -1,3 +1,15 @@
+export const validateId = (e) => {
+const id = e.target.value;
+const numAndEng = /^[a-zA-Z0-9]+$/;
+if (id.length === 0) {
+return " ";
+} else if (id.length <= 16 && numAndEng.test(id)) {
+return "아이디는 영어와 숫자를 조합한 16자 이하로만 입력 가능합니다.";
+} else {
+return "중복확인을 해 주세요.";
+}
+}
+
 export const validateEmail = (e) => {
   //eslint-disable-next-line
   const re = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;

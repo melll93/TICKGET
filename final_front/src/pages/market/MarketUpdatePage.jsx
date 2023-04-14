@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { mk_boardDetailDB, mk_boardUpdateDB } from '../../axios/market/marketLogic'
@@ -107,7 +107,6 @@ const MarketUpdatePage = ({mkImageUploader}) => {
    }, []);
  
    const handleContent = useCallback((value) => {
-     //quilleditor에서 담김 - 태그포함된 정보
      setContent(value);
    }, []);
 
@@ -179,9 +178,9 @@ const MarketUpdatePage = ({mkImageUploader}) => {
   return (
     <>
     
+        <Header />
     <Sidebar />
       <div className="center">
-        <Header />
         <ContainerDiv>
           <HeaderDiv>
             <div className="form-floating mb-3">
@@ -282,30 +281,23 @@ const MarketUpdatePage = ({mkImageUploader}) => {
           </Form.Control.Feedback>
         </Form.Group>
     
-        <Form.Group as={Col} controlId="formGridPrice" >
+        <Form.Group as={Col} controlId="formGridPrice" style={{marginLeft:'auto' }} >
           <h3>판매등록가</h3>
-          <Form.Control required id="mk_ticket_price" type="text" placeholder="티켓의 판매 가격을 입력하세요." style={{width:'400px' , height:'50px'}} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
+          <InputGroup>
+          <Form.Control required id="mk_ticket_price" type="text" placeholder="판매 가격(숫자만) 입력하세요." style={{width:'250px' , height:'50px'}}
+         value={mk_ticket_price}  handleTicketPrice={handleTicketPrice} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
+          <InputGroup.Text>원</InputGroup.Text>
           <Form.Control.Feedback type="invalid">
             티켓의 판매가를 입력해주세요.
           </Form.Control.Feedback>
+          </InputGroup>
         </Form.Group>
-
         </Row>
       </div>
            <hr style={{opacity:'0%'}}/>
 
             <h3>상세내용</h3>
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-   {/*          <QuillEditor
-              value={board_mk_content}
-              handleContent={handleContent}
-              quillRef={quillRef}
-              files={files}
-              handleFiles={handleFiles}
-              onChange={(e) => {
-                handleContent(e.target.value);
-              }}
-            /> */}
             <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
         <Form.Control id="board_mk_content" type="text" rows={3} style={{height:'150px'}} 
               value={board_mk_content}

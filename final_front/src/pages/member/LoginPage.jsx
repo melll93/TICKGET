@@ -5,19 +5,28 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
-import { GoogleButton, MyInput, MyLabel, MyP, PwEye } from "../../styles/formStyle";
+import {
+  GoogleButton,
+  MyInput,
+  MyLabel,
+  MyP,
+  PwEye,
+} from "../../styles/formStyle";
 import { loginGoogle, loginH } from "../../util/authLogic";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxLogin } from "../../redux/userAuth/action";
+import { Cookies, useCookies } from "react-cookie";
+import Header from "../../components/Header";
 /* import { EyeFill, EyeSlashFill } from 'react-icons/io5';
  */
+const cookies = new Cookies();
 
 const LoginPage = ({ user, setUser, authLogic }) => {
   const dispatch = useDispatch();
-  const reduxUser = useSelector(state => state.userStatus.user);
+  const reduxUser = useSelector((state) => state.userStatus.user);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const CALLBACK_URL = "http://localhost:3333/oauth/login/kakao/callback";
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${CALLBACK_URL}&response_type=code`;
   // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=6a3741ce2b33e194c3e799c86fdc2cb2&redirect_uri=${CALLBACK_URL}&response_type=code`;
@@ -32,35 +41,39 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   // 로그인 필요 정보
   const member = {
     memberId: userId,
-    memberPassword: userPw
+    memberPassword: userPw,
   };
 
   const login = async (paramMember) => {
     const result = await axios({
       method: "POST",
-      url: "http://localhost:8888/member/login/local",
-      data: paramMember
-    }).then((res) => {
-      console.log(res);
-      if (res.data.code === 0) {
-        // 팝업창 구현
-        window.alert(res.data.msg)
-      } else if (res.data.code === 1) {
-        const userResponse = res.data.user;
-        const user = {
-          id: userResponse.memberId,
-          email: userResponse.memberEmail,
-          name: userResponse.memberName,
-          nickname: userResponse.memberNickname,
-          profile_img: userResponse.memberProfileImage,
+      url:
+        // process.env.BACKEND_URL + "member/login/local",
+        "http://localhost:8888/member/login/local",
+      data: paramMember,
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data.code === 0) {
+          // 팝업창 구현
+          window.alert(res.data.msg);
+        } else if (res.data.code === 1) {
+          const userResponse = res.data.user;
+          const user = {
+            id: userResponse.memberId,
+            email: userResponse.memberEmail,
+            name: userResponse.memberName,
+            nickname: userResponse.memberNickname,
+            profile_img: userResponse.memberProfileImage,
+          };
+          cookies.set("_userData", user);
+          dispatch(reduxLogin(user));
+          window.alert("로그인 성공");
+          navigate("/");
         }
-        dispatch(reduxLogin(user))
-        window.alert("로그인 성공")
-        navigate("/")
-      }
-    }).catch(console.log)
-  }
-
+      })
+      .catch(console.log);
+  };
 
   /************************************comment************************************
    * 조장 생각 : 변수와 메소드가 많아지며 명칭이 많아져 코드가 많아질수록 혼동할 가능성이 높아짐.
@@ -69,38 +82,22 @@ const LoginPage = ({ user, setUser, authLogic }) => {
    * 짧은 코드의 메소드같은 경우 따로 선언하기보단 Component의 onChange/onClick내에서 익명함수로 처리한다.
    * => <Button>로그인</Button> 참고
    *******************************************************************************/
-  // tempUser 값이 변경될 때마다 이벤트
-  // const changeUser = (event) => {
-  //   const id = event.currentTarget.id;
-  //   const value = event.target.value;
-  //   console.log(id)
-  //   console.log(value)
-  //   setTempUser({ ...tempUser, [id]: value });
-  // };
-
-  // const handleIdChange = (event) => {
-  //   const id = event.currentTarget.id;
-  //   const value = event.target.value;
-  //   console.log(id)
-  //   setTempUser({ ...tempUser, [id]: value });
-  // }
 
   const handleChange = (event) => {
     const type = event.target.type;
     const targetId = event.target.id;
-    console.log(type)
+    console.log(type);
 
     if (targetId == "id") {
       setUserId(event.target.value);
     } else if (targetId == "pw") {
       setUserPw(event.target.value);
     }
-  }
+  };
   console.log("id : " + userId);
   console.log("pw : " + userPw);
 
-
-  // 자체 로그인 
+  // 자체 로그인
   // DB 타는 것까지는 구현 성공(전체 memberList) -> login mapper 수정 필요
   // axios 구현
   const loginLocal = async () => {
@@ -110,43 +107,73 @@ const LoginPage = ({ user, setUser, authLogic }) => {
       console.log(result.user.id);
       // 세션 스토리지에 아이디값 저장
       // 로컬 스토리지에 아이디값 저장
-      window.localStorage.setItem('userId', result.user.id);
-      navigate("/")
+      window.localStorage.setItem("userId", result.user.id);
+      navigate("/");
     } catch (error) {
       console.log(error + ": 로그인 에러입니다");
     }
-  }
+  };
 
   // 구글 로그인
   const loginG = async () => {
     try {
-      const result = await loginGoogle(authLogic.getUserAuth(), authLogic.getGoogleAuthProvider())
-      console.log(result.data)
+      const result = await loginGoogle(
+        authLogic.getUserAuth(),
+        authLogic.getGoogleAuthProvider()
+      );
+      console.log(result.data);
       //navigate("/")
       //window.location.reload()
     } catch (error) {
-      console.log('로그인 오류입니다')
+      console.log("로그인 오류입니다");
     }
-  }
+  };
   return (
     <>
+      <Header />
       <Sidebar />
-      <div className="center">
+      <div
+        style={{
+          alignItems: "center",
+          display: "inline-block",
+          position: "absolute",
+          left: "15vw",
+          width: "85vw",
+          height: "100vh",
+        }}
+      >
         <div className="login">
           {/********************** 자체 회원 로그인 **********************/}
           <Form>
             {/**************************************************** ID START ***************************************************/}
-            <MyLabel htmlFor="id"> ID
-              <MyInput id="id" type="text" name="member_id" placeholder="ID를 입력해주세요."
-                onChange={(event) => { handleChange(event) }
-                } />
+            <MyLabel htmlFor="id">
+              {" "}
+              ID
+              <MyInput
+                id="id"
+                type="text"
+                name="member_id"
+                placeholder="ID를 입력해주세요."
+                onChange={(event) => {
+                  handleChange(event);
+                }}
+              />
             </MyLabel>
             {/***************************************************** ID END ****************************************************/}
             {/**************************************************** PW START ***************************************************/}
-            <MyLabel htmlFor="pw"> Password
-              <MyInput id="pw" type="password" autoComplete="off" name="member_pw" placeholder="비밀번호를 입력해주세요."
-                onChange={(event) => { handleChange(event) }
-                } />
+            <MyLabel htmlFor="pw">
+              {" "}
+              Password
+              <MyInput
+                id="pw"
+                type="password"
+                autoComplete="off"
+                name="member_pw"
+                placeholder="비밀번호를 입력해주세요."
+                onChange={(event) => {
+                  handleChange(event);
+                }}
+              />
               {/* <div id="password" onClick={(event) => { handlePasswordChange(event) }} style={{ color: `${password.visible ? "gray" : "lightgray"}` }}> */}
               {/* <PwEye className="fa fa-eye fa-lg"></PwEye> */}
               {/* </div> */}
@@ -156,35 +183,50 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             <div style={{ textAlign: "right" }}>
               {/* <Button variant="primary" type="login" onClick={() => { loginLocal() }}> */}
               {/* axios 이벤트로 처리 여기서 */}
-              <Button variant="primary" type="login" onClick={(e) => {
-                e.preventDefault()
-                login(member)
-              }}>
+              <Button
+                variant="primary"
+                type="login"
+                onClick={(e) => {
+                  e.preventDefault();
+                  login(member);
+                }}
+              >
                 로그인
               </Button>
             </div>
 
-
-            {/*           <Form.Group className="mb-3" controlId="id">
-        <Form.Label>ID</Form.Label>
-        <Form.Control type="text" placeholder="ID를 입력해주세요." onChange={(event) => {changeUser}}  />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="password">
-        <Form.Label>Password</Form.Label>
-        <div className="d-flex align-items-center">
-          <Form.Control type={password.type} placeholder="Password를 입력해주세요." onChange={(event) => {changeUser}} />
-          <div className="ms-2" onClick={handlePasswordChange}>
-          </div>
-        </div>
-      </Form.Group> */}
-
-
             <br />
             <div style={{ textAlign: "center" }}>
-              <MyP>신규 사용자이신가요?&nbsp;<Link to="/register" className="text-decoration-none" style={{ color: "blue" }}>회원가입으로</Link></MyP>
-              <MyP>아이디를 잊으셨나요?&nbsp;<Link to="/findId" className="text-decoration-none" style={{ color: "blue" }}>아이디 찾기</Link></MyP>
-              <MyP>비밀번호를 잊으셨나요?&nbsp;<Link to="/resetPw" className="text-decoration-none" style={{ color: "blue" }}>비밀번호 변경</Link></MyP>
+              <MyP>
+                신규 사용자이신가요?&nbsp;
+                <Link
+                  to="/register"
+                  className="text-decoration-none"
+                  style={{ color: "blue" }}
+                >
+                  회원가입으로
+                </Link>
+              </MyP>
+              <MyP>
+                아이디를 잊으셨나요?&nbsp;
+                <Link
+                  to="/findId"
+                  className="text-decoration-none"
+                  style={{ color: "blue" }}
+                >
+                  아이디 찾기
+                </Link>
+              </MyP>
+              <MyP>
+                비밀번호를 잊으셨나요?&nbsp;
+                <Link
+                  to="/resetPw"
+                  className="text-decoration-none"
+                  style={{ color: "blue" }}
+                >
+                  비밀번호 변경
+                </Link>
+              </MyP>
             </div>
           </Form>
           {/***************************************************************/}
@@ -207,7 +249,13 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             </div>
             {/************************** 카카오 끝 **************************/}
             {/********************** 구글 로그인 버튼 **********************/}
-            <div className="loginbutton" type="button" onClick={() => { loginG(); }}>
+            <div
+              className="loginbutton"
+              type="button"
+              onClick={() => {
+                loginG();
+              }}
+            >
               <a href="#">
                 <img
                   className="loginbuttonimg"
@@ -218,8 +266,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             {/************************** 구글 끝 **************************/}
           </div>
           {/************************************************* 소셜 로그인 끝 *************************************************/}
-        </div >
-      </div >
+        </div>
+      </div>
     </>
   );
 };

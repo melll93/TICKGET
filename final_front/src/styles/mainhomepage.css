@@ -2,13 +2,31 @@
    * 캐로셀 css  
    /components/CarouiselOnejsx,  
    ******************************/
-/* .compo_carouselone_img{
-    width: 100%;
+.compo_carouselone_img{
+
+  height:450PX; 
+   border-radius: 20px;
+   padding-left: 30px;
+/*     width: 100%;
     height: 80%;
     object-fit:  cover;
-    border: 1px solid black;
-    border-radius: 20px;
-} */
+    border: 1px solid black; */
+}
+
+.carouselDiv{
+  padding: 30px;
+margin: 20px;
+}
+
+.compo_carouselone_img:hover{
+
+
+/*     width: 100%;
+    height: 80%;
+    object-fit:  cover;
+    border: 1px solid black; */
+
+}
 
      /******************************
    * 캐로셀 css  

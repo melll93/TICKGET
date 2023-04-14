@@ -3,30 +3,51 @@
 
 <mapper namespace="back.spring.final_back.board.repository.CarpoolDao">
     
-    <!-- 게시글 전체조회-->
+    <!-- 댓글 전체조회-->
     <select id="selectCarpool" resultType="CarpoolDto">
         select * from board_carpool
+        ORDER BY board_cp_no DESC;
     </select>
 
-    <!-- 게시글 상세보기-->
+    <!-- 댓글 상세보기-->
     <select id="carpoolDetail" resultType="CarpoolDto">
-        select * from board_carpool where carpool_no=#{carpoolNo}
+        select * from board_carpool where board_cp_no=#{boardCpNo}
     </select>
 
-    <!-- 게시글 추가 -->
+    <!-- 댓글 추가 -->
     <insert id="insertCarpool" parameterType="CarpoolDto">
       INSERT INTO board_carpool
       VALUES(
-          #{carpoolNo}
-          , #{carpoolMemId}
-          , #{carpoolTitle}
-          , #{carpoolContent}
-          , #{carpoolDate}
+          #{boardCpNo}
+          , #{boardCpMemId}
+          , #{boardCpTitle}
+          , #{boardCpContent}
+          , #{boardCpDate}
       )
     </insert>
 
-    <!-- 게시슬 삭제 -->
+    <!-- 댓글 삭제 -->
     <delete id="deleteCarpool" parameterType="CarpoolDto">
-        delete from board_carpool where carpool_no=#{carpoolNo}
+        delete from board_carpool where board_cp_no=#{boardCpNo}
     </delete>
+
+     <!-- 댓글 수정 -->
+     <update id="updateCarpool" parameterType="CarpoolDto">
+        update board_carpool set
+            board_cp_title = #{boardCpTitle} ,
+            board_cp_content = #{boardCpContent},
+            board_cp_date = #{boardCpDate}
+        where board_cp_no = #{boardCpNo}
+    </update>
+    
+
+     <!-- 남의 글일 경우에만 조회수를 증가 -->
+    <update id="viewUp" parameterType="map">
+        update board_carpool set
+            board_cp_views = board_cp_views +1
+        where board_cp_no = #{boardCpNo}
+        <!-- <if test="memberNo != null">
+        and board_tg_member_id != #{boardTgMemId}
+        </if> -->
+      </update>
 </mapper>

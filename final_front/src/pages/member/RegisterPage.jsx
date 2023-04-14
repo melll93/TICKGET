@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Sidebar';
-import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword } from '../../util/validateLogic';
+import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword, validateId } from '../../util/validateLogic';
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
 import { memberInsertDB, memberListDB } from '../../axios/member/memberLogic';
@@ -149,30 +149,41 @@ const RegisterPage = ({ authLogic }) => {
   const overlap = async (key) => {
     console.log('중복확인 : ' + key);
     let params;
-    if (key === 'email') {
-      params = { MEM_EMAIL: memInfo[key], type: 'overlap' }
+    if (key === 'id') {
+      params = { MEMBER_ID: memInfo[key], type: 'overlap' };
+    }
+    else if (key === 'email') {
+      params = { MEMBER_EMAIL: memInfo[key], type: 'overlap' };
+    }
+    else if (key === 'nickname') {
+      params = { MEMBER_NICKNAME: memInfo[key], type: 'overlap' };
     }
     else {
-      params = { MEM_ID: memInfo[key], type: 'overlap' }
+      console.log('유효하지 않은 키 값입니다.');
+      return; // 유효하지 않은 키 값이면 함수 종료
     }
+    
     console.log(params);
-    let response = { data: 0 }
-    response = await memberListDB(params)
-    console.log('DB : ' + response.data)
-    // Array(1)
-    // 0: {MEM_UID:"karina", MEM_NAME:"유지민"}
-    const data = JSON.stringify(response.data)
-    const jsonDoc = JSON.parse(data)
-    if (jsonDoc) {
-      console.log(jsonDoc[0].MEM_NAME)
+    
+    let response = { data: 0 };
+    response = await memberListDB(params);
+    console.log('DB : ' + response.data);
+    
+    const data = JSON.stringify(response.data);
+    const jsonDoc = JSON.parse(data);
+    
+    if (jsonDoc && jsonDoc.length > 0) {
+      console.log('중복되는 값이 있습니다');
+      console.log(jsonDoc[0].MEMBER_NAME); // 중복된 값의 이름 출력
     }
     else {
-      console.log('중복되는 값이 없습니다.')
+      console.log('중복되는 값이 없습니다');
     }
-    // 닉네임 존재 시
-    if (response.data) {
+    
+    // 중복된 값이 있을 시
+    if (response.data && jsonDoc && jsonDoc.length > 0) {
     }
-    // 닉네임 없을 시
+    // 중복된 값이 없을 시
     else {
     }
   }
@@ -181,6 +192,8 @@ const RegisterPage = ({ authLogic }) => {
     let result;
     if (key === 'email') {
       result = validateEmail(e);
+    } else if (key === 'id') {
+      result = validateId(e);
     } else if (key === 'nickname') {
       result = validateNickname(e);
     } else if (key === 'password') {
@@ -237,17 +250,17 @@ const RegisterPage = ({ authLogic }) => {
       }
       console.log('입력받은 생일정보 ' + birthday);
       const datas = {
-        MEMBER_ID: id,
-        MEMBER_PASSWORD: memInfo.password,
-        MEMBER_NAME: memInfo.name,
-        MEMBER_BIRTH: birthday,
-        MEMBER_EMAIL: memInfo.email,
-        MEMBER_GENDER: memInfo.gender,
-        MEMBER_MOBILE: memInfo.mobile,
-        MEMBER_NICKNAME: memInfo.nickname,
-        MEMBER_ZIPCODE: post.zipcode,
-        MEMBER_ADDRESS: post.address,
-        MEMBER_ADDRDETAIL: post.addrDetail,
+        memberId: memInfo.id,
+        memberPassword: memInfo.password,
+        memberName: memInfo.name,
+        memberBirth: birthday,
+        memberEmail: memInfo.email,
+        memberGender: memInfo.gender,
+        memberMobile: memInfo.mobile,
+        memberNickname: memInfo.nickname,
+        memberZipcode: post.zipcode,
+        memberAddress: post.address,
+        memberAddrDetail: post.addrDetail,
       }
       console.log(datas)
       const response = await memberInsertDB(datas);
@@ -278,7 +291,7 @@ const RegisterPage = ({ authLogic }) => {
           {/* 아이디 */}
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             <MyLabel> 아이디 <span style={{ color: "red" }}>{star.id}</span>
-              <MyInput type="text" id="id" placeholder="아이디를 입력해 주세요"
+              <MyInput type="text" id="id" placeholder="아이디를 입력해 주세요" 
                 onChange={(e) => { changeMemInfo(e); validate('id', e); }} />
               <MyLabelAb>{comment.id}</MyLabelAb>
             </MyLabel>
