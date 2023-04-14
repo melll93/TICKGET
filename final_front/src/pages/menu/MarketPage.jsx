@@ -6,8 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { FormDiv, HeaderDiv } from "../../styles/formStyle";
 import MarketList from "../board/market/MarketList";
 import MarketSearchBar from "../board/market/MarketSearchBar";
+import { Cookies } from "react-cookie";
+const cookies = new Cookies();
+
 
 const MarketPage = () => {
+
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData)
+
   const navigate = useNavigate();
   const [boardList, setBoardList] = useState([]);
 
