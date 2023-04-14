@@ -46,7 +46,10 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   const login = async (paramMember) => {
     const result = await axios({
       method: "POST",
-      url: "http://localhost:8888/member/login/local",
+      url:
+        process.env.BACKEND_URL +
+        // "http://localhost:8888/
+        "member/login/local",
       data: paramMember,
     })
       .then((res) => {
@@ -79,21 +82,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
    * 짧은 코드의 메소드같은 경우 따로 선언하기보단 Component의 onChange/onClick내에서 익명함수로 처리한다.
    * => <Button>로그인</Button> 참고
    *******************************************************************************/
-  // tempUser 값이 변경될 때마다 이벤트
-  // const changeUser = (event) => {
-  //   const id = event.currentTarget.id;
-  //   const value = event.target.value;
-  //   console.log(id)
-  //   console.log(value)
-  //   setTempUser({ ...tempUser, [id]: value });
-  // };
-
-  // const handleIdChange = (event) => {
-  //   const id = event.currentTarget.id;
-  //   const value = event.target.value;
-  //   console.log(id)
-  //   setTempUser({ ...tempUser, [id]: value });
-  // }
 
   const handleChange = (event) => {
     const type = event.target.type;
@@ -205,20 +193,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 로그인
               </Button>
             </div>
-
-            {/*           <Form.Group className="mb-3" controlId="id">
-        <Form.Label>ID</Form.Label>
-        <Form.Control type="text" placeholder="ID를 입력해주세요." onChange={(event) => {changeUser}}  />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="password">
-        <Form.Label>Password</Form.Label>
-        <div className="d-flex align-items-center">
-          <Form.Control type={password.type} placeholder="Password를 입력해주세요." onChange={(event) => {changeUser}} />
-          <div className="ms-2" onClick={handlePasswordChange}>
-          </div>
-        </div>
-      </Form.Group> */}
 
             <br />
             <div style={{ textAlign: "center" }}>
