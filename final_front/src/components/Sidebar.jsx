@@ -6,28 +6,35 @@ import SearchBar from "./header/SearchBar";
 import "../styles/sidebar.css";
 
 const Sidebar = () => {
-  const [sidebar, setSidebar] = useState("240");
-  const [isVisible, setIsVisible] = useState(0);
-
+  const [sidebar, setSidebar] = useState(240);
+  const [isVisible, setIsVisible] = useState();
   const path = window.location.pathname;
 
   const setDefault = () => {
     if (path === "/") {
       setSidebar(240)
-      setIsVisible(0)
+      setIsVisible(true)
     } else {
       setSidebar(0)
-      setIsVisible(40)
+      setIsVisible(false)
+    }
+  }
+
+  const handleSidebar = (boolean) => {
+    if (isVisible) {
+      setSidebar(240)
+    } else {
+
     }
   }
 
   const openSidebar = () => {
     setSidebar(240);
-    setIsVisible(0);
+    // setIsVisible(0);
   };
   const closeSidebar = () => {
     setSidebar(0);
-    setIsVisible(40);
+    // setIsVisible(40);
   };
 
   useEffect(() => {
@@ -36,7 +43,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="sidebar container" style={{ width: sidebar }}>
+      <div className="sidebar container" style={{ width: sidebar + 40 }}>
         <div className="sidebar items" style={{ width: sidebar }}>
           <img
             src="../logos/XBTN.png"
@@ -44,7 +51,7 @@ const Sidebar = () => {
             onClick={closeSidebar}
             alt="x버튼"
             style={{ width: "40px" }}
-          ></img>
+          />
           <Profile />
           <PersonalTabs />
           <MenuList />
@@ -56,8 +63,8 @@ const Sidebar = () => {
             className="openSidebarButton"
             onClick={openSidebar}
             alt="sidebarbtn"
-            style={{ width: isVisible }}
-          ></img>
+            style={{ width: "40px", left: "240px" }}
+          />
         </div>
       </div>
     </>

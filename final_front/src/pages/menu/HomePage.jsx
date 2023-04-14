@@ -22,7 +22,7 @@ const HomePage = () => {
   const getTodayList = () => {
     const getDate = new Date();
     const year = getDate.getFullYear();
-    const month = getDate.getMonth() + 1;
+    const month = getDate.getMonth() - 2;
     const date = getDate.getDate();
     const fullDate = year + "-" + month + "-" + date;
     console.log(fullDate);
@@ -101,9 +101,9 @@ const HomePage = () => {
                     <Tab eventKey="market" title="Market">
                       <BasicTable />
                     </Tab>
-                    <Tab eventKey="calendar" title="Calendar">
+                    {/* <Tab eventKey="calendar" title="Calendar">
                       <CalendarPage />
-                    </Tab>
+                    </Tab> */}
                   </Tabs>
                 </div>{" "}
                 {/* mainpage div div1 */}
