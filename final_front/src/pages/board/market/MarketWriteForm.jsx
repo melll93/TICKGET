@@ -285,7 +285,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                     <h3>판매수량</h3>
                     <Form.Control required id="mk_ticket_count" type="number" min="1" placeholder="티켓의 수량을 입력하세요." style={{ width: '270px', height: '50px' }} onChange={(e) => { handleTicketCount(e.target.value) }} />
                     <Form.Control.Feedback type="invalid">
-                      판매할 티켓의 수량을 입력해주세요.
+                      판매할 티켓의 수량을 선택해주세요.
                     </Form.Control.Feedback>
                   </Form.Group>
 

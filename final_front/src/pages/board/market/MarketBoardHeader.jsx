@@ -33,6 +33,7 @@ const MarketBoardHeader = ({ detail, no }) => {
                 marginBottom: "12px",
                 fontSize: "30px",
                 display: "block",
+                color:'black'
               }}
             >
               {detail.board_mk_title}
@@ -73,8 +74,8 @@ const MarketBoardHeader = ({ detail, no }) => {
           }}
         >
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span>▪ {detail.mem_name}</span>
-            <span>
+            <span style={{color:'black'}}>▪ {detail.mem_name}</span>
+            <span style={{color:'black'}}>
               ▪ {detail.board_mk_date} | 조회수 {detail.board_mk_hit}
             </span>
           </div>

@@ -25,7 +25,7 @@ public class MarketDto {
 	private LocalDateTime mkTicketDate;
 	private String mkTicketSeat;
 	private int mkTicketPrice;
-	private String mkTicketCount;
+	private int mkTicketCount;
 	private String mkTicketPlace;
 	private String memName;
 	private String boardMkFilename;
