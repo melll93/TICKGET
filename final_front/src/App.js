@@ -95,7 +95,7 @@ function App({ mkImageUploader }) {
         <Route path="/paymentsucess/:festMId" element={<PaySucPage />} />
         <Route path="/paymentfailed/:festMId" element={<PayFailPage />} />
 
-        <Route path="/payment/:festMId" element={<PaymentPage />} />
+        <Route path="/paymentsssss/:festMId" element={<PaymentPage />} />
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<TogetherBoardWriteForm />} />
@@ -146,10 +146,7 @@ function App({ mkImageUploader }) {
           path="/market/mk_boardDetail/*"
           element={<MarketDetail mkImageUploader={mkImageUploader} />}
         />
-        <Route
-          path="/market/mk_boardDetail/payment/:payId"
-          element={<MarketPaymentPage />}
-        />
+        <Route path="/payment/:no" element={<MarketPaymentPage />} />
       </Routes>
     </>
   );

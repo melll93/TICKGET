@@ -85,7 +85,7 @@ const MarketDetail = () => {
 
 
   const linkToPayment = () => {
-    navigate(`./payment/${no}`)
+    navigate(`/payment/${no}`)
   }
 
 
