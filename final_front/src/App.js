@@ -38,6 +38,7 @@ import CarpoolDetail from "./pages/board/carpool/CarpoolDetail";
 import CarpoolUpdate from "./pages/board/carpool/CarpoolUpdate";
 import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import MarketPaymentPage from "./pages/board/market/MarketPaymentPage";
+import ChangePwPage from "./pages/member/ChangePwPage";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -62,6 +63,7 @@ function App({ mkImageUploader }) {
         />
         <Route path="/findId" exact={true} element={<FindIdPage />} />
         <Route path="/resetPw" exact={true} element={<ResetPwPage />} />
+        <Route path="/changePw" exact={true} element={<ChangePwPage />} />
         <Route
           path="/oauth/login/naver/callback"
           element={<NaverLogin user={user} setUser={setUser} />}

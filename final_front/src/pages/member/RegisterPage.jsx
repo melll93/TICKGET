@@ -4,6 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Sidebar';
+import Header from "../../components/Header";
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword, validateId } from '../../util/validateLogic';
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
@@ -285,6 +286,7 @@ const RegisterPage = ({ authLogic }) => {
 
   return (
     <div>
+      <Header />
       <Sidebar />
       <div className='center'>
         <SignupForm suggested={false}>
