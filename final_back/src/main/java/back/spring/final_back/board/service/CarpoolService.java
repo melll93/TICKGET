@@ -1,6 +1,7 @@
 package back.spring.final_back.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import back.spring.final_back.board.repository.CarpoolDto;
 
@@ -19,4 +20,6 @@ public interface CarpoolService {
 
      // 게시판 수정(Update)
      int updateCarpool(CarpoolDto carpoolDto);
+
+    public void viewUp(Map<String, Object> pMap);
 }

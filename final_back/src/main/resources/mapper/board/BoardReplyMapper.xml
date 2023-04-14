@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="back.spring.final_back.board.repository.TogetherReplyDao">
+    <!-- 게시글 전체조회-->
+    <select id="selectTogetherReplyList" parameterType="TogetherReplyDto" resultType="TogetherReplyDto">
+        select * from board_reply_together WHERE board_tg_no = #{boardTgNo}
+        ORDER BY board_reply_tg_no DESC;
+    </select>
+
+    <!-- 게시글 추가 -->
+    <insert id="insertTogetherReply" parameterType="TogetherReplyDto">
+        INSERT INTO board_reply_together
+        (
+                  board_tg_no
+                , board_reply_tg_no
+                , board_reply_tg_mem_id
+                , board_reply_tg_content
+        )
+        VALUES(
+              #{boardTgNo} 
+            , (select A.* from (SELECT IFNULL(MAX(board_reply_tg_no), 0) +1 
+                 FROM board_reply_together 
+                 where board_tg_no = #{boardTgNo}) A )
+            , #{boardReplyTgMemId}
+            , #{boardReplyTgContent}
+        )
+    </insert>
+
+    <!-- 게시슬 삭제 -->
+    <delete id="deleteTogetherReply" parameterType="TogetherReplyDto">
+        delete from board_reply_together where board_reply_tg_no=#{boardReplyTgNo}
+    </delete>
+
+    <!-- 게시글 수정 -->
+    <update id="updateTogetherReply" parameterType="TogetherReplyDto">
+        update board_reply_together set
+            board_reply_tg_title = #{boardReplyTgTitle} ,
+            board_reply_tg_content = #{boardReplyTgContent},
+            board_reply_tg_date = #{boardReplyTgDate}
+        where board_reply_tg_no = #{boardReplyTgNo}
+    </update>
+    
+</mapper>

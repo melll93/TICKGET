@@ -20,6 +20,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   //const[writer, setWriter]= useState(''); //작성자
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
+  const [writer, setWriter] = useState(""); //내용작성
   const [types] = useState(["일반", "결제", "양도", "회원", "수업"]); //qna_type의 라벨값
 
   const handleContent = useCallback((value) => {
@@ -29,6 +30,9 @@ const TogetherBoardWriteForm = ({ board_together }) => {
 
   const handleTitle = useCallback((e) => {
     setTitle(e);
+  }, []);
+  const handleWriter = useCallback((e) => {
+    setWriter(e);
   }, []);
 
   const handleDate = useCallback((e) => {
@@ -122,10 +126,25 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                 handleTitle(e.target.value);
               }}
             />
-
+            <br />
+            <hr style={{ margin: "10px 0px 10px 0px" }} />
+            <h2>작성자</h2>
             {/* mem_id를 받아오자 */}
-            {/* <input id="board_writer" type="text" maxLength="50" placeholder="작성자?"
-            style={{width:"100%",height:'40px' , border:'1px solid lightGray'}} onChange={(e)=>{handleWriter(e.target.value)}}/> */}
+            <span
+              id="board_writer"
+              type="text"
+              maxLength="50"
+              placeholder="작성자?"
+              style={{
+                width: "100%",
+                height: "40px",
+                border: "1px solid lightGray",
+              }}
+              value={sessionStorage.getItem("id")}
+              onChange={(e) => {
+                handleWriter(e.target.value);
+              }}
+            />
             <hr style={{ margin: "10px 0px 10px 0px" }} />
 
             <h3>날짜</h3>

@@ -1,6 +1,7 @@
 package back.spring.final_back.board.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.board.service.CarpoolService;
+import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -77,4 +80,10 @@ public class CarpoolController {
         return result;
     }
 
+	// 조회수 증가시켜줘
+	@GetMapping("/carpoolViewUp")
+	public void viewUp(@RequestParam Map<String, Object> pMap) {
+		logger.info("CarpoolController : viewUp 호출");
+		carpoolService.viewUp(pMap);
+	}
 }

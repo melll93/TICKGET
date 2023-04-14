@@ -87,15 +87,15 @@ export const updateTogetherDB = (board) => {
 };
 
 /* 조회수 */
-export const viewUpDB = async(boardTgNo) => {
+export const togetherViewUpDB = async(board) => {
   /* 오케이 여기까진 진출했어 */
-  console.log("viewUpDB boardTgNo ", boardTgNo);
+  console.log("viewUpDB boardTgNo ", board);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/board/viewUp",
-        params: {boardTgNo :boardTgNo }
+        url: "http://localhost:8888/board/togetherViewUp",
+        params: {board :board }
       });
       resolve(response);
     } catch (error) {

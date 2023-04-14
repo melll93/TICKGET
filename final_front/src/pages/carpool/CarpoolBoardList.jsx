@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
-import { selectCarpoolDB } from "../../axios/carpool/CarpoolLogic";
+import { carpoolViewUpDB, selectCarpoolDB } from "../../axios/carpool/CarpoolLogic";
 
 const CarpoolBoardList = () => {
   console.log("CarpoolBoardList");
@@ -22,6 +22,12 @@ const CarpoolBoardList = () => {
     } else {
       console.log("부서목록 조회 실패");
     }
+  };
+
+  const updateViews = async (boardCpNo) => {
+    console.log("boardCpNo넌 누구야? "+boardCpNo)
+    await carpoolViewUpDB(boardCpNo);
+    await selectCarpoolList();
   };
 
   if (carpoolList === null) {
@@ -53,13 +59,14 @@ const CarpoolBoardList = () => {
                         color: "blue",
                         cursor: "pointer",
                       }}
-                      onClick={() =>
+                      onClick={() =>{
+                        updateViews(carpool.boardCpNo);
                         navigate({
                           pathname:
                             "/carpool/carpoolDetail/" + carpool.boardCpNo,
                           state: { carpool },
                         })
-                      }
+                      }}
                     >
                       {carpool.boardCpTitle}
                     </button>

@@ -3,6 +3,8 @@ package back.spring.final_back.board.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
 import back.spring.final_back.board.repository.TogetherDao;
 import back.spring.final_back.board.repository.TogetherDto;
 
@@ -23,11 +25,6 @@ public interface TogetherService {
     int deleteBoardList(TogetherDto togetherDto);
 
     //조회수 확인하자
-    void viewUp(int board_tg_no, String board_tg_mem_id);
-
-    List<Map<String, Object>> qnaList(Map<String, Object> pMap);
-
-    int qnaInsert(Map<String, Object> pMap);
-
+    void viewUp(@RequestParam Map<String, Object> pMap);
 
 }
