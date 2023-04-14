@@ -30,6 +30,8 @@ public class MarketDto {
 	private String memName;
 	private String boardMkFilename;
 	private String boardMkFileurl;
+	private int boardMkStatus;
+	private int memNo;
 	private String content;
 	private String condition;
 

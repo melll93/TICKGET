@@ -1,9 +1,18 @@
 import React from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components';
 import { handlePayment } from '../../components/handlePayment'
 
+const Cimg = styled.img`
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+`;
+
+
 const PaymentPage = ({orderDetail, paymentData}) => {
+  console.log(paymentData)
    const navigate = useNavigate()
 
   return (
@@ -22,7 +31,7 @@ const PaymentPage = ({orderDetail, paymentData}) => {
 <section>
 <Card style={{width:'800px' , height:'200px' , border:'2px solid' , borderColor:'' }}>
    <Card.Body style={{ display: 'flex', alignItems: 'center' , marginLeft:'100px' }}>
-      <Card.img src={orderDetail.board_mk_fileurl}/>
+      <Cimg src={orderDetail.board_mk_fileurl}/>
       <div style={{ marginLeft: '50px' , textAlign:'center' }}>
      <div style={{ display: 'inline-block' , marginTop:'30px' }}>
        <Card.Title style={{  fontSize: '24px'}}>{/* 상품명 */}{orderDetail.board_mk_title}</Card.Title>

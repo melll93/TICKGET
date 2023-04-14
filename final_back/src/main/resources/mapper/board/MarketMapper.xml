@@ -9,9 +9,13 @@
 
 <!-- 게시글 조회 및 조건검색 -->
 <select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
-  select * from board_market
+  select *
+  from board_market
   <if test='condition!=null and condition.equals("전체")'>
     <choose>
+      <when test='content=null and condition.equals("전체")'>
+        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
+      </when>
       <when test='content!=null and condition.equals("제목")'>
         WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
       </when>
@@ -38,24 +42,7 @@
   </if>
   order by board_mk_date ASC
 </select>
-
- <!--   select * from board_market
-  <if test='content!=null'>
-    where 
-    <choose>
-      <when test='condition!=null and condition.equals("제목")'>
-        board_mk_title LIKE CONCAT('%', #{content}, '%')
-      </when>
-      <when test='condition!=null and condition.equals("장소")'>
-        mk_ticket_place LIKE CONCAT('%', #{content}, '%')
-      </when>
-      <when test='condition!=null and condition.equals("작성자")'>
-        mem_name LIKE CONCAT('%', #{content}, '%')
-      </when>
-    </choose>
-  </if>
-  order by board_mk_date DESC
-</select>-->
+<!-- 판매여부가 0인 (판매처리되지 않은) 게시글만 조회되게하기, board_mk_status -->
 
 
 
@@ -64,9 +51,9 @@
 <!-- 게시글 입력 -->
 <insert id="mk_boardInsert" parameterType="MarketDto">
 insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
-mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl)
+mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl,<!-- mem_no -->)
 VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
-#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl})
+#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl},<!-- #{mem_no} -->)
 </insert>
 
 
