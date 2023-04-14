@@ -111,12 +111,6 @@ div .register {
   width: 40%;
 }
 
-div .HomeButton {
-  z-index: 1;
-  width: 200px;
-  justify-content: center;
-  border-right: 1px solid black;
-}
 
 div .SearchBarDiv_header {
   display: inline-block;

@@ -47,9 +47,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
     const result = await axios({
       method: "POST",
       url:
-        process.env.BACKEND_URL +
-        // "http://localhost:8888/
-        "member/login/local",
+        // process.env.BACKEND_URL + "member/login/local",
+        "http://localhost:8888/member/login/local",
       data: paramMember,
     })
       .then((res) => {

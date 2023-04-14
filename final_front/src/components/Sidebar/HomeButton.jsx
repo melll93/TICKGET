@@ -5,13 +5,15 @@ import SearchBar from "../Gnb/SearchBar";
 const HomeButton = () => {
   return (
     <>
-
-      <Link to="/" className="link">
-        <div className="HomeButton">
-          <img className="icon image40" src="../logos/tickget.png" style={{ width: '100px' }} />
-        </div>
-      </Link>
-
+      <div className="HomeButton">
+        <Link to="/" className="link">
+          <img
+            className="icon image40"
+            src="../logos/tickget.png"
+            style={{ width: "100px" }}
+          />
+        </Link>
+      </div>
     </>
   );
 };

@@ -1,25 +1,34 @@
 div .header {
-  position: flex;
-  /* z-index: 1; */
+  position: fixed;
+  z-index: 1;
   background-color: black;
   margin-top: 15px;
   width: 100vw;
   height: 8vh;
   border-bottom: 0.5px solid black;
-  margin-bottom: 20px;
-  margin: 0px;
+  margin: 0 auto;
+}
+
+div .HomeButton {
+  display: inline-block;
+  z-index: 1;
+  width: 300px;
+  text-align: center;
+  margin-top: 1.5vh;
 }
 
 div .SearchBarDiv {
   display: inline-block;
-  margin-top: 100px;
+  width: 70%;
   margin-left: 5%;
 }
 
 div .SearchBar {
+  color: white;
   width: 80%;
   height: 2em;
   margin: 0px 5px 0px 5px; /* 위 오 밑 왼 */
+  padding-left: 20px;
   border-radius: 20px;
 }
 
