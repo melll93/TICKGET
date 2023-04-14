@@ -9,8 +9,6 @@ import { checkPassword, validateBirthdate, validateEmail, validateHp, validateNa
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
 import { memberInsertDB, memberListDB } from '../../axios/member/memberLogic';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
 const RegisterPage = ({ authLogic }) => {
   // const auth = authLogic.getUserAuth();

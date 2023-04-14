@@ -10,29 +10,26 @@ const [memInfo, setMemInfo] = useState({
 const [passwordMatch, setPasswordMatch] = useState(true); 
 
 const changeMemInfo = (e) => {
-   const id = e.currentTarget.id;
-   const value = e.target.value;
-   if (id === "pw") {
-    console.log("pw: " + value); // Log pw value
-    setMemInfo({ ...memInfo, pw: value }); // Update pw value in state
+  const id = e.currentTarget.id;
+  const value = e.target.value;
+  if (id === "pw") {
+    console.log("pw: " + value); 
+    setMemInfo({ ...memInfo, pw: value });
   } else if (id === "pwConfirm") {
-    console.log("pwconfirm: " + value); // Log pwconfirm value
-    setMemInfo({ ...memInfo, pwConfirm: value }); // Update pwConfirm value in state
-    setPasswordMatch(memInfo.pw === value); // Check if passwords match
+    console.log("pwconfirm: " + value); 
+    setMemInfo({ ...memInfo, pwConfirm: value });
   }
 }
 
-const handleFormSubmit = async (e) => {
-  e.preventDefault();
-
-  // Check if passwords match
-  if (!passwordMatch) {
-    console.log("비밀번호가 일치하지 않습니다.");
-    return;
+const handleFormSubmit = async(e) => {
+e.preventDefault();
+  if (memInfo.pw === memInfo.pwConfirm) {
+    console.log("비밀번호가 일치합니다."); 
+    alert("비밀번호가 일치합니다."); 
+  } else {
+    console.log("비밀번호가 일치하지 않습니다."); 
+    alert("비밀번호가 일치하지 않습니다."); 
   }
-
-  console.log("입력 받은 비밀번호: ", memInfo.pw);
-
   try {
     // Call memberUpdateDB with updated password
     const member = {
@@ -41,17 +38,18 @@ const handleFormSubmit = async (e) => {
     }
     const res = await memberUpdateDB(member);
     console.log(res.data);
-
+  
     // Show success message and redirect to resetPwPage
-    alert("비밀번호가 성공적으로 변경되었습니다.");
+    alert("비밀번호가 성공적으로 변경되었습니다");
     // Redirect to resetPwPage
     // window.location.href = '/resetPwPage';
   } catch (error) {
     console.error(error);
     // Show error message
-    alert("비밀번호 변경에 실패하였습니다.");
+    alert("비밀번호 변경에 실패하였습니다");
   }
 }
+
 
   return (
 <>
