@@ -5,8 +5,14 @@ import { useNavigate } from "react-router-dom";
 import LandingPage from "./Map/LandingPage";
 import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
 import Header from "../../../components/Header";
-import { BButton, ContainerDiv, FormDiv, HeaderDiv } from "../../../styles/formStyle";
+import {
+  BButton,
+  ContainerDiv,
+  FormDiv,
+  HeaderDiv,
+} from "../../../styles/formStyle";
 import Footer from "../../../components/Footer";
+import Sidebar from "../../../components/Sidebar";
 
 const CarpoolWriteForm = ({ carpool }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
@@ -91,11 +97,12 @@ const CarpoolWriteForm = ({ carpool }) => {
   return (
     <>
       <Header />
+      <Sidebar />
       <ContainerDiv>
-        <HeaderDiv>
-          <h3>Carpool 글작성</h3>
-        </HeaderDiv>
+        <div style={{ height: "100px" }}></div>
         <FormDiv>
+          <h3>Carpool 글작성 하기</h3>
+          <br />
           <div style={{ width: "100%", maxWidth: "2000px" }}>
             <div
               style={{
@@ -190,12 +197,10 @@ const CarpoolWriteForm = ({ carpool }) => {
                 flexDirection: "column",
                 alignItems: "center",
               }}
-            >
-              {<LandingPage />}
-            </div>
+            ></div>
             <br />
-            {/* <CarpoolFileInsert files={files} /> */}
           </div>
+          {<LandingPage />}
           <br />
 
           <div style={{ textAlign: "center" }}>

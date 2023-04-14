@@ -10,6 +10,7 @@ import {
 } from "../../axios/festival/festival";
 import PaginationPrac from "../../components/PaginationPrac";
 import FestivalNavbar from "../festival/FestivalNavbar";
+import HeaderSearchBar from "../../components/header/HeaderSearchBar";
 
 ///////////////////////////////      페스티발 지역별(서울)   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const SeoulFestivalList = () => {
@@ -265,6 +266,7 @@ const FestivalPage = () => {
 
   return (
     <>
+          <Header />
       <Sidebar />
       <div className="center">
         <FestivalNavbar

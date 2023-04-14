@@ -33,6 +33,12 @@ const PaymentPage = () => {
    // setTamo (e)
   },[])
 
+const selectitem = (eventKey)=>{
+alert(eventKey)
+
+}
+
+
 
   return (
     <>
@@ -52,14 +58,14 @@ const PaymentPage = () => {
 {/* 이름 */}
 <div style={{display:"flex"}}>
 <h4>티켓 구매 수량 </h4>
-<DropdownButton id="dropdown_basic_button" title="0" onSelect={(eventKey)=>{}}>
-<Dropdown.Item eventKey="item1">1</Dropdown.Item>
-<Dropdown.Item eventKey="item2">2</Dropdown.Item>
-<Dropdown.Item eventKey="item3">3</Dropdown.Item>
-<Dropdown.Item eventKey="item4">4</Dropdown.Item>
-<Dropdown.Item eventKey="item5">5</Dropdown.Item>
-<Dropdown.Item eventKey="item6">6</Dropdown.Item>
-<Dropdown.Item eventKey="item7">7</Dropdown.Item>
+<DropdownButton id="dropdown_basic_button" title={selectitem} onSelect={selectitem}>
+<Dropdown.Item eventKey="1" >1</Dropdown.Item>
+<Dropdown.Item eventKey="2" >2</Dropdown.Item>
+<Dropdown.Item eventKey="3" >3</Dropdown.Item>
+<Dropdown.Item eventKey="4" >4</Dropdown.Item>
+<Dropdown.Item eventKey="5" >5</Dropdown.Item>
+<Dropdown.Item eventKey="6" >6</Dropdown.Item>
+<Dropdown.Item eventKey="7" >7</Dropdown.Item>
 </DropdownButton><h4>매</h4>
    </div>
 
