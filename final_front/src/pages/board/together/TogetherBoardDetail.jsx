@@ -10,9 +10,9 @@ import {
   insertTogetherReplyDB,
   selectTogetherReplyDB,
 } from "../../../axios/board/together/TogetherReplyLogic";
+import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { FormDiv } from "../../../styles/formStyle";
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
@@ -109,12 +109,12 @@ const TogetherBoardDetail = () => {
 
   return (
     <div>
+      <Header />
       <Sidebar />
-      <div className="center">
-        <Header />
-        <br />
-        <h2>게시글 상세보기</h2>
+      <ContainerDiv>
+        <div style={{ height: "100px" }}></div>
         <FormDiv style={{ width: "98%", margin: "10px" }}>
+          <h2>게시글 상세보기</h2>
           <div>
             <form method="post">
               <input type="hidden" name="boardTgNo" value="" />
@@ -287,7 +287,7 @@ const TogetherBoardDetail = () => {
             </form>
           </div>
         </FormDiv>
-      </div>
+      </ContainerDiv>
     </div>
   );
 };

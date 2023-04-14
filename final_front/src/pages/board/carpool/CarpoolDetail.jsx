@@ -8,11 +8,11 @@ import {
 } from "../../../axios/board/carpool/CarpoolLogic";
 import {
   selectCarpoolReplyDB,
-  insertCarpoolReplyDB
+  insertCarpoolReplyDB,
 } from "../../../axios/board/carpool/CarpoolReplyLogic";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { FormDiv } from "../../../styles/formStyle";
+import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import LandingPage from "./Map/LandingPage";
 
 const CarpoolDetail = () => {
@@ -110,12 +110,14 @@ const CarpoolDetail = () => {
   };
   return (
     <div>
+      <Header />
       <Sidebar />
-      <div className="center">
-        <Header />
+      <ContainerDiv>
+        <div style={{ height: "100px" }}></div>
         <br />
-        <h2>카풀 디테일</h2>
         <FormDiv style={{ width: "98%", margin: "10px" }}>
+        <h2>카풀 상세보기</h2>
+        <br/>
           <div>
             <form method="post">
               <input type="hidden" name="boardCpNo" value="" />
@@ -315,7 +317,7 @@ const CarpoolDetail = () => {
             </div>
           ))}
         </FormDiv>
-      </div>
+      </ContainerDiv>
     </div>
   );
 };
