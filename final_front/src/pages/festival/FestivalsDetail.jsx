@@ -1,37 +1,27 @@
-import { async } from "@firebase/util";
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import {
   Button,
-  Dropdown,
-  DropdownButton,
   Modal,
   Tab,
-  Tabs,
+  Tabs
 } from "react-bootstrap";
 import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  DeleteFestivalDB,
   DeleteFestReviewDB,
-  FestivalReviewDB,
+  DeleteFestivalDB,
   FestReviewInsertDB,
+  FestivalReviewDB,
   FetivalDetailDB,
-  FetivalListDB,
   UpdateFestReviewDB,
 } from "../../axios/festival/festival";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import {
-  BButton,
-  BlackBtn,
-  MyButton,
-  MyInput,
-  MyLabel,
-  MyLabelAb,
-} from "../../styles/formStyle";
 import "../../styles/festivaldetails.css";
+import {
+  BButton, BlackBtn
+} from "../../styles/formStyle";
 
 const FestivalsDetail = () => {
   const navigate = useNavigate();

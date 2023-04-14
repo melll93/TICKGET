@@ -6,14 +6,13 @@ import {
   deleteTogetherDB,
   selectTogetherDetailDB,
 } from "../../../axios/board/together/TogetherLogic";
-import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
-import { BButton, FormDiv } from "../../../styles/formStyle";
 import {
   insertTogetherReplyDB,
   selectTogetherReplyDB,
 } from "../../../axios/board/together/TogetherReplyLogic";
-import Table from "react-bootstrap/esm/Table";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import { FormDiv } from "../../../styles/formStyle";
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
@@ -52,27 +51,25 @@ const TogetherBoardDetail = () => {
     boardTgDate: "",
   });
 
+  const asyncDB = async () => {
+    const res = await selectTogetherDetailDB({ boardTgNo });
+    const result = JSON.stringify(res.data);
+    const jsonDoc = JSON.parse(result);
+    setBoard({
+      boardTgNo: jsonDoc.boardTgNo,
+      boardTgMemId: jsonDoc.boardTgMemId,
+      boardTgTitle: jsonDoc.boardTgTitle,
+      boardTgContent: jsonDoc.boardTgContent,
+      boardTgDate: jsonDoc.boardTgDate,
+    });
+    if (res.data) {
+      setBoard(res.data);
+    } else {
+      console.log("게시글 조회 실패");
+    }
+  };
   useEffect(() => {
-    const asyncDB = async () => {
-      const res = await selectTogetherDetailDB({ boardTgNo });
-      const result = JSON.stringify(res.data);
-      const jsonDoc = JSON.parse(result);
-      setBoard({
-        boardTgNo: jsonDoc.boardTgNo,
-        boardTgMemId: jsonDoc.boardTgMemId,
-        boardTgTitle: jsonDoc.boardTgTitle,
-        boardTgContent: jsonDoc.boardTgContent,
-        boardTgDate: jsonDoc.boardTgDate,
-      });
-      if (res.data) {
-        setBoard(res.data);
-      } else {
-        console.log("게시글 조회 실패");
-      }
-    };
-
     asyncDB();
-    return () => {};
   }, []);
 
   if (!board.boardTgTitle) {
@@ -100,14 +97,11 @@ const TogetherBoardDetail = () => {
 
     if (!boardReplyTgContent) {
       alert("내용을 입력해주세요.");
-      return;
     }
     try {
       const res = await insertTogetherReplyDB(boardReply);
       // 성공시에 페이지 이동처리하기
-      window.location.replace(
-        "http://localhost:3333/together/BoardDetail/" + boardTgNo
-      );
+      alert("http://localhost:3333/together/BoardDetail/" + boardTgNo);
     } catch (error) {
       console.log(error);
     }
@@ -119,7 +113,7 @@ const TogetherBoardDetail = () => {
       <div className="center">
         <Header />
         <br />
-        <h2>게시글 훔쳐봐야지? 가야지?</h2>
+        <h2>게시글 상세보기</h2>
         <FormDiv style={{ width: "98%", margin: "10px" }}>
           <div>
             <form method="post">
@@ -157,7 +151,7 @@ const TogetherBoardDetail = () => {
                 <span
                   style={{ width: "98%", margin: "10px" }}
                   type="text"
-                  name="boardTgMemDate"
+                  name="boardTgDate"
                   required
                   className="form-control form-control-lg"
                   id="inputLarge"
@@ -243,47 +237,9 @@ const TogetherBoardDetail = () => {
                   marginLeft: "auto",
                   marginRight: "auto",
                 }}
-              >
-                <div className="row" style={{ marginTop: "40px" }}>
-                  <Table className="table table-hover">
-                    <thead>
-                      <tr>
-                        <th style={{ textAlign: "center" }}>번호</th>
-                        <th width="40%">제목</th>
-                        <th style={{ textAlign: "center" }}>작성자</th>
-                        <th style={{ textAlign: "center" }}>작성일</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {boardReplyList.map((boardReply) => (
-                        <tr key={boardReply.boardReplyTgNo}>
-                          <td style={{ textAlign: "center" }}>
-                            {boardReply.boardReplyTgNo}
-                          </td>
-                          <td>
-                            <button
-                              style={{
-                                border: "none",
-                                background: "none",
-                                color: "blue",
-                                cursor: "pointer",
-                              }}
-                            >
-                              {boardReply.boardReplyTgContent}
-                            </button>
-                          </td>
-                          <td style={{ textAlign: "center" }}>
-                            {boardReply.boardReplyTgMemId}
-                          </td>
-                          <td style={{ textAlign: "center" }}>
-                            {boardReply.boardReplyTgDate}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </div>
-              </div>
+              />
+              <br />
+              <label>댓글리스트</label>
               {boardReplyList.map((boardReply) => (
                 <div
                   key={boardReply.boardReplyTgNo}
@@ -295,16 +251,15 @@ const TogetherBoardDetail = () => {
                   }}
                 >
                   회원아이디 : {boardReply.boardReplyTgMemId} 아이디없음{" "}
-                  <span style={{ fontSize: "12px" }}>
-                    ({boardReply.boardReplyTgDate})
-                  </span>
+                  <div style={{ fontSize: "12px" }}>
+                    작성 시간 : ({boardReply.boardReplyTgDate})
+                  </div>
                   <h3>
-                    &nbsp; <span style={{ color: "red" }}>凸</span>
+                    &nbsp; <span style={{ color: "red" }}>→</span>
                     {boardReply.boardReplyTgContent}
-                    <span style={{ color: "red" }}>凸</span>
                   </h3>
                   <Button
-                    style={{ marginLeft: "10px", backgroundColor: "YELLOW" }}
+                    style={{ marginLeft: "10px", backgroundColor: "black" }}
                     onClick={() =>
                       navigate({
                         pathname: "/together/BoardUpdate/" + board.boardTgNo,
@@ -312,12 +267,10 @@ const TogetherBoardDetail = () => {
                       })
                     }
                   >
-                    <span style={{ color: "black", fontWeight: "bold" }}>
-                      수정
-                    </span>
+                    <span style={{ fontWeight: "bold" }}>수정</span>
                   </Button>
                   <Button
-                    style={{ marginLeft: "10px", backgroundColor: "BLUE" }}
+                    style={{ marginLeft: "10px", backgroundColor: "black" }}
                     onClick={() =>
                       navigate({
                         pathname: "/together/BoardUpdate/" + board.boardTgNo,

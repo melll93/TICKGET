@@ -2,19 +2,11 @@ import React, { useCallback, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../../components/Footer";
-import Header from "../../../components/Header";
-import {
-  BButton,
-  ContainerDiv,
-  FormDiv,
-  HeaderDiv,
-} from "../../../styles/formStyle";
-import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
-import CarpoolFileInsert from "./CarpoolFileInsert";
-import CarpoolMyFilter from "./CarpoolMyFilter";
-import CarpoolQuillEditor from "./CarpoolQuillEditor";
 import LandingPage from "./Map/LandingPage";
+import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
+import Header from "../../../components/Header";
+import { BButton, ContainerDiv, FormDiv, HeaderDiv } from "../../../styles/formStyle";
+import Footer from "../../../components/Footer";
 
 const CarpoolWriteForm = ({ carpool }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
@@ -133,11 +125,6 @@ const CarpoolWriteForm = ({ carpool }) => {
                     }}
                   />
                 </div>
-                <CarpoolMyFilter
-                  title={tTitle}
-                  types={types}
-                  handleTitle={handleTTitle}
-                ></CarpoolMyFilter>
                 <BButton
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
