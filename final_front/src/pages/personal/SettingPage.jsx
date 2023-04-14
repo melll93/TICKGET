@@ -12,9 +12,9 @@ const SettingPage = () => {
 
   return (
     <>
+      <Header />
       <Sidebar />
       <div className="center">
-        <Header />
         <section>
           <div
             style={{

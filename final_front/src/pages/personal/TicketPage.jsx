@@ -31,9 +31,9 @@ const TicketPage = () => {
   };
   return (
     <>
+      <Header />
       <Sidebar />
       <div className="center">
-        <Header />
         Ticket 은영 클라우디너리 연습중
         <input type="file" onChange={handleFileInput} />
         <button onClick={handleUpload}>Upload</button>

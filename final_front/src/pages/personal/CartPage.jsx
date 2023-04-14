@@ -6,9 +6,9 @@ import Sidebar from "../../components/Sidebar";
 const CartPage = () => {
   return (
     <>
+      <Header />
       <Sidebar />
       <div className="center">
-        <Header />
 
         <section className="cart_main_section">
           <div className="main_left_div"></div> {/* main_left_div */}
