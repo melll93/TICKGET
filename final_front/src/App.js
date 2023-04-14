@@ -3,13 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
+import FestivalsDetail from "./pages/Festival/FestivalsDetail";
 import AddProductsPage from "./pages/community/AddProductsPage";
 import CarpoolPage from "./pages/community/CarpoolPage";
 import ConcertPage from "./pages/community/ConcertPage";
 import FestivalPage from "./pages/community/FestivalPage";
 import HomePage from "./pages/community/HomePage";
 import MarketPage from "./pages/community/MarketPage";
-import FestivalsDetail from "./pages/Festival/FestivalsDetail";
 import SearchResultPage from "./pages/community/SearchResultPage";
 import TogetherPage from "./pages/community/TogetherPage";
 import MarketDetail from "./pages/market/MarketDetail";
@@ -21,6 +21,7 @@ import RegisterPage from "./pages/member/RegisterPage";
 import ResetPwPage from "./pages/member/ResetPwPage";
 import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import BookmarkPage from "./pages/personal/BookmarkPage";
+import CalendarPage from "./pages/personal/CalendarPage";
 import CartPage from "./pages/personal/CartPage";
 import ChatPage from "./pages/personal/ChatPage";
 import MyPage from "./pages/personal/MyPage";
@@ -29,16 +30,14 @@ import PaySucPage from "./pages/personal/PaySucPage";
 import PaymentPage from "./pages/personal/PaymentPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-import CalendarPage from "./pages/personal/CalendarPage";
-import mkImageUploader from "./axios/market/mkImageUploader";
-import TogetherBoardWriteForm from "./pages/together/TogetherBoardWriteForm";
 import TogetherBoardDetail from "./pages/together/TogetherBoardDetail";
 import TogetherBoardUpdate from "./pages/together/TogetherBoardUpdate";
+import TogetherBoardWriteForm from "./pages/together/TogetherBoardWriteForm";
 
-import CarpoolWrietForm from "./pages/carpool/CarpoolWriteForm";
 import CarpoolDetail from "./pages/carpool/CarpoolDetail";
-import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import CarpoolUpdate from "./pages/carpool/CarpoolUpdate";
+import CarpoolWrietForm from "./pages/carpool/CarpoolWriteForm";
+import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -102,8 +101,7 @@ function App({ mkImageUploader }) {
         <Route path="together/write/*" element={<TogetherBoardWriteForm />} />
         <Route path="together/boardDetail/:boardTgNo" element={<TogetherBoardDetail board={board} />} />
         <Route path="together/boardDetail/" element={<TogetherBoardDetail />} />
-        <Route path="together/boardUpdate/:boardTgNo" element={<TogetherBoardUpdate />}
-        />
+        <Route path="together/boardUpdate/:boardTgNo" element={<TogetherBoardUpdate />}/>
 
         {/* CarpoolPage Routes */}
         <Route path="carpool/write/*" element={<CarpoolWrietForm />} />

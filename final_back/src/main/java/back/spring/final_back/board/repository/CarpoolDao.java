@@ -22,4 +22,6 @@ public interface CarpoolDao {
     //카풀 게시글 업데이트
     public int updateCarpool(CarpoolDto carpoolDto);
 
+    public void viewUp(Map<String, Object> pMap);
+
 }
