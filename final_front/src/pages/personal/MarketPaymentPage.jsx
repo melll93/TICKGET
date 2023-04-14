@@ -94,7 +94,7 @@ const handleClick = async () => {
 
   return (
     <>
-        <Header />
+    <Header/>
       <Sidebar />
       <div className="center">
       {/* ----------------------------------결제페이지---------------------------------- */}
