@@ -1,10 +1,11 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { handlePayment } from '../../components/handlePayment'
 
-const PaymentPage = ({orderDetail,paymentData}) => {
+const PaymentPage = ({orderDetail, paymentData}) => {
    const navigate = useNavigate()
+
   return (
    <div className="center">
    {/* ----------------------------------결제페이지---------------------------------- */}
@@ -21,7 +22,7 @@ const PaymentPage = ({orderDetail,paymentData}) => {
 <section>
 <Card style={{width:'800px' , height:'200px' , border:'2px solid' , borderColor:'' }}>
    <Card.Body style={{ display: 'flex', alignItems: 'center' , marginLeft:'100px' }}>
-      <Cimg src={orderDetail.board_mk_fileurl}/>
+      <Card.img src={orderDetail.board_mk_fileurl}/>
       <div style={{ marginLeft: '50px' , textAlign:'center' }}>
      <div style={{ display: 'inline-block' , marginTop:'30px' }}>
        <Card.Title style={{  fontSize: '24px'}}>{/* 상품명 */}{orderDetail.board_mk_title}</Card.Title>
@@ -87,7 +88,7 @@ const PaymentPage = ({orderDetail,paymentData}) => {
 <Button style={{width:'400px'}} onClick={handlePayment(paymentData)}>토스 결제하기</Button>
 {/* <PaymentComponent /> */}
 {/* <Button className="researvebtn" onClick={MarketPaymentComponent}>토스페이 결제하기</Button> */}
-<Button style={{width:'400px'}} onClick={() => navigate(`../market/mk_boardDetail?no=${loc}`)}>취소/이전으로</Button>
+<Button style={{width:'400px'}} onClick={() => navigate(-1)}>취소/이전으로</Button>
 </div>
 </section>
    </div>

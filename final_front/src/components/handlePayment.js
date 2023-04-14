@@ -1,14 +1,14 @@
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 
-// const paymentData = {
-//   amount,
-//   orderId,
-//   orderName,
-//   customerName,
-//   no,
-// };
+/* const paymentData = {
+  amount,
+  orderId,
+  orderName,
+  customerName,
+  no,
+};  */
 
-export const handlePayment = async (paymentData) => {
+export const handlePayment = async (paymentData, no) => {
   const tossPayments = await loadTossPayments(
     // process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY
     "test_ck_aBX7zk2yd8yjXw0pyNE3x9POLqKQ" //clientKey
