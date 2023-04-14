@@ -32,6 +32,7 @@ import {
   MyLabelAb,
 } from "../../styles/formStyle";
 import "../../styles/festivaldetails.css";
+import TicketCancleInfo from "../../components/mypage/TicketCancleInfo";
 
 const FestivalsDetail = () => {
   const navigate = useNavigate();
@@ -50,6 +51,10 @@ const FestivalsDetail = () => {
     festMEnd: "",
     festMLoc: "",
     festMImg: "",
+    festPsUrl:"",
+    festTcPrice:"",
+    festDtRuntime:"",
+    festDtAge:"",
   });
   useEffect(() => {
     const asyncDB = async () => {
@@ -62,6 +67,11 @@ const FestivalsDetail = () => {
         festMEnd: jsonDoc.festMEnd,
         festMLoc: jsonDoc.festMLoc,
         festMImg: jsonDoc.festMImg,
+        festPsUrl:jsonDoc.festPsUrl,
+        festTcPrice:jsonDoc.festTcPrice,
+        festDtRuntime:jsonDoc.festDtRuntime,
+        festDtAge:jsonDoc.festDtAge,
+        
       });
       if (res.data) {
         setFestival(res.data);
@@ -72,8 +82,11 @@ const FestivalsDetail = () => {
     asyncDB();
     return () => {};
   }, []);
-
+  console.log(festival)
   console.log(festival.festMId);
+  console.log(festival.festPsUrl);
+  console.log(festival.festTcPrice);
+
 
   const [lgShow, setLgShow] = useState(false); //리뷰수정모달
   const reduxUser = useSelector((state) => state.userStatus.user);
@@ -267,12 +280,10 @@ const FestivalsDetail = () => {
 
   return (
     <>
+
+        <Header />
       <Sidebar />
       <div className="center">
-        출력{festMId}
-        {/* 출력{Data} */}
-        <Header />
-        <h2>상품 상세페이지....</h2>
         {/* 로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람이 관리자일경우 삭제 버튼 보이기 
    {sessionStorage.getItem('Auth')===''관리자"'&&       
    */}
@@ -303,7 +314,7 @@ const FestivalsDetail = () => {
                   </li>
                   <li className="product_info_list">
                     <span className="product_info_title">관람시간</span>
-                    <div className="product_info_desc">fest_runtime</div>
+                    <div className="product_info_desc">{festival.festDtRuntime===null? <p>미제공</p>: <p>{festival.festDtRuntime}</p>}</div>
                   </li>
                   <li className="product_info_list">
                     <span className="product_info_title">기간</span>
@@ -313,7 +324,7 @@ const FestivalsDetail = () => {
                   </li>
                   <li className="product_info_list">
                     <span className="product_info_title">관람등급</span>
-                    <div className="product_info_desc">fest_age</div>
+                    <div className="product_info_desc">{festival.festDtAge===null? <p>미제공</p>: <p>{festival.festDtAge}</p>}</div>
                   </li>
                 </ul>
                 <ul className="product_lnfo_list_col2">
@@ -322,7 +333,7 @@ const FestivalsDetail = () => {
                     <div className="product_info_desc">
                       <ul className="product_info_sublist">
                         <li className="product_info_subitem">
-                          일반석<em className="text_emphasis"> fest_price </em>
+                          일반석<em className="text_emphasis"> {festival.festTcPrice===null? <p>0</p>: <p>{festival.festTcPrice}</p>}</em>
                           원
                         </li>
                       </ul>
@@ -380,7 +391,10 @@ const FestivalsDetail = () => {
                       height: "1000px",
                       border: "1px solid red",
                     }}
-                  ></div>
+                  >
+                    {festival.festPsUrl===null? <div><h1>상품 상세보기 정보가 없습니다.</h1> <TicketCancleInfo/>  </div>: <img src={festival.festPsUrl} alt="상품상세정보이미지"></img>}
+
+             </div>
                 </Tab>
                 <Tab eventKey="product_detail_review" title="상품리뷰">
                   리뷰리뷰
