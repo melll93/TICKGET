@@ -260,6 +260,7 @@ const handleSubmit = (event) => {
 <hr style={{opacity:'0%'}}/>
 
 <div>
+  
    <Row className="mb-5">
 
                 <Form.Group as={Col} controlId="formGridTicketSeat">
@@ -269,7 +270,7 @@ const handleSubmit = (event) => {
                     id="mk_ticket_seat"
                     type="text"
                     placeholder="좌석 정보를 입력하세요."
-                    style={{ width: "250px", height: "50px" }}
+                    style={{ width: "270px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketSeat(e.target.value);
                     }}
@@ -279,20 +280,23 @@ const handleSubmit = (event) => {
           </Form.Control.Feedback>
                 </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridTicketCount">
+        <Form.Group as={Col} controlId="formGridTicketCount" style={{marginRight:'30px'}}>
           <h3>판매수량</h3>
-          <Form.Control required id="mk_ticket_count" type="number" min="1" placeholder="티켓의 수량을 입력하세요." style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
+          <Form.Control required id="mk_ticket_count" type="number" min="1" placeholder="티켓의 수량을 입력하세요." style={{width:'270px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
           <Form.Control.Feedback type="invalid">
             판매할 티켓의 수량을 입력해주세요.
           </Form.Control.Feedback>
         </Form.Group>
     
-        <Form.Group as={Col} controlId="formGridPrice" >
+        <Form.Group as={Col} controlId="formGridPrice" style={{marginLeft:'auto' }} >
           <h3>판매등록가</h3>
-          <Form.Control required id="mk_ticket_price" type="text" placeholder="티켓의 판매 가격을 입력하세요." style={{width:'400px' , height:'50px'}} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
+          <InputGroup>
+          <Form.Control required id="mk_ticket_price" type="text" placeholder="판매 가격(숫자만) 입력하세요." style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
+          <InputGroup.Text>원</InputGroup.Text>
           <Form.Control.Feedback type="invalid">
             티켓의 판매가를 입력해주세요.
           </Form.Control.Feedback>
+          </InputGroup>
         </Form.Group>
 
         </Row>

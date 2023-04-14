@@ -13,8 +13,9 @@ const Profile = () => {
   const logout = () => {
     window.localStorage.clear();
     dispatch(reduxLogin({}));
-    window.location.reload();
-    navigate("/");
+    // window.location.reload();
+    // navigate("/");
+    window.location.href = "/"
   };
 
   const getProfile = () => {
@@ -52,10 +53,6 @@ const Profile = () => {
       );
     }
   };
-
-  // useEffect(() => {
-  //   getProfile();
-  // }, []);
 
   return (
     <>

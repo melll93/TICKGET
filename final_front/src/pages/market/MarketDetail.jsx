@@ -77,15 +77,20 @@
     mk_ticket_date : jsonDoc[0].mkTicketDate,
     mk_ticket_count : jsonDoc[0].mkTicketCount,
     mk_ticket_seat : jsonDoc[0].mkTicketSeat,
-    mk_ticket_price : jsonDoc[0].mkTicketPrice, 
+    mk_ticket_price : jsonDoc[0].mkTicketPrice.toLocaleString(), 
     board_mk_filename : jsonDoc[0].boardMkFilename, 
     board_mk_fileurl : jsonDoc[0].boardMkFileurl, 
   })
+  
   }
   boardDetail()
     },[setDetail,no,dispatch,navigate])
 
     
+/* //구매금액 쉼표 처리    
+const mktPrice = detail.mk_ticket_price.toLocaleString(); */
+
+
 
  const linkToPayment = () => {
     navigate(`./payment/${no}`)
@@ -131,7 +136,7 @@
                                 <ListGroup variant="flush" style={{width:'300px'}}>
       <h4 style={{textAlign:'center'}}>{detail.mk_ticket_count}장</h4>
       <ListGroup.Item></ListGroup.Item>
-       <h2 style={{textAlign:'center' , marginTop:'15px'}}>{detail.mk_ticket_price}</h2>
+       <h2 style={{textAlign:'center' , marginTop:'15px'}}>{detail.mk_ticket_price} 원</h2>
       <ListGroup.Item></ListGroup.Item>
     
       <hr style={{opacity:'0'}}/>

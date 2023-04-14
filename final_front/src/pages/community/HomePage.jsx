@@ -8,6 +8,7 @@ import MainCalendar from "../../components/MainPage/MainCalendar";
 import { getFestivalTodayDB } from "../../axios/main/main";
 import { useSelector } from "react-redux";
 import CalendarPage from "../personal/CalendarPage";
+import { festivalListByDate } from "../../axios/main/Festival";
 
 const HomePage = () => {
   /******************************
@@ -21,7 +22,15 @@ const HomePage = () => {
   const [festivalToday, setFestivalToday] = useState([]);
 
   const getTodayList = () => {
-    getFestivalTodayDB().then(setFestivalToday);
+    const getDate = new Date();
+    const year = getDate.getFullYear();
+    const month = getDate.getMonth() + 1;
+    const date = getDate.getDate();
+    const fullDate = year + "-" + month + "-" + date;
+    console.log(fullDate);
+    // paramete : YYYY-MM-DD
+    festivalListByDate(fullDate).then(console.log);
+    festivalListByDate(fullDate).then(setFestivalToday);
   };
 
   useEffect(() => {
@@ -30,10 +39,10 @@ const HomePage = () => {
 
   return (
     <>
+      <Header />
       <Sidebar />
       <div className="center">
-        {/* <Header /> */}
-        <div style={{ margin: "100px 0px 20px 50px", width: "900px" }}>
+        <div style={{ margin: "100px 0px 20px 0px", width: "1900px" }}>
           <CarouselList festivalToday={festivalToday} />
         </div>
 

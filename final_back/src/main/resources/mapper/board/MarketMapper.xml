@@ -36,7 +36,7 @@
       </if>
     </where>
   </if>
-  order by board_mk_date DESC
+  order by board_mk_date ASC
 </select>
 
  <!--   select * from board_market

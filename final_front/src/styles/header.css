@@ -1,0 +1,28 @@
+div .header {
+  position: flex;
+  /* z-index: 1; */
+  background-color: black;
+  margin-top: 15px;
+  width: 100vw;
+  height: 8vh;
+  border-bottom: 0.5px solid black;
+  margin-bottom: 20px;
+  margin: 0px;
+}
+
+div .SearchBarDiv {
+  display: inline-block;
+  margin-top: 100px;
+  margin-left: 5%;
+}
+
+div .SearchBar {
+  width: 80%;
+  height: 2em;
+  margin: 0px 5px 0px 5px; /* 위 오 밑 왼 */
+  border-radius: 20px;
+}
+
+.SearchButton {
+  width: 50px;
+}

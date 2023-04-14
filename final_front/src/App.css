@@ -36,32 +36,29 @@ div .loginbutton {
   /* border: 0.5px gray solid; */
 }
 
-.icon {
-  /* filter: invert(100%); */
-  display: inline-block;
+.openSidebarButton {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: white;
+  border: 1px solid lavender;
 }
 
-div .Sidebar {
-  width: 15vw;
-  height: 100vh;
-  display: inline-block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  border-right: 1px solid black;
+.openSidebarButton:hover {
+  background-color: #444;
 }
 
 div .center {
   align-items: center;
   display: inline-block;
   position: absolute;
-  left: 15dvw;
-  width: 85vw;
   height: 100vh;
+  width: 100vw;
 }
 
-.center {
-  margin-left: 500px;
+div .carouselDiv {
+  width: 100vw;
+  margin: 0 auto;
 }
 
 ul .items {
@@ -102,14 +99,6 @@ div .mainpage.div {
   height: 34vh;
 }
 
-div .Gnb {
-  margin-top: 15px;
-  width: 85vw;
-  height: 5vh;
-  border-bottom: 0.5px solid black;
-  margin-bottom: 20px;
-}
-
 div .login {
   margin-left: 35%;
   margin-top: 15%;
@@ -123,14 +112,10 @@ div .register {
 }
 
 div .HomeButton {
+  z-index: 1;
+  width: 200px;
   justify-content: center;
   border-right: 1px solid black;
-}
-
-div .SearchBarDiv {
-  display: inline-block;
-  margin-top: 100px;
-  margin-left: 5%;
 }
 
 div .SearchBarDiv_header {
@@ -139,27 +124,7 @@ div .SearchBarDiv_header {
   margin-left: 80%;
 }
 
-div .SearchBar {
-  width: 80%;
-  height: 2em;
-  margin: 0px 5px 0px 5px; /* 위 오 밑 왼 */
-  border-radius: 20px;
-}
-
-.SearchButton {
-  width: 50px;
-}
-
-div .profile {
-  border: 1px solid black;
-  border-radius: 50%;
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-}
-
-div .ProfileBox {
+div .Profile {
   padding: 0px 30px 0 30px;
   margin-top: 50px;
   height: 6vh;
@@ -238,8 +203,3 @@ div .Menu {
   width: 50px;
   object-fit: cover;
 }
-
-div.Gnb {
-  margin: 0px;
-}
-/*  */

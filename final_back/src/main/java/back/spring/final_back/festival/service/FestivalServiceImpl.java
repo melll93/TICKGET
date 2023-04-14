@@ -1,11 +1,15 @@
 package back.spring.final_back.festival.service;
 
+import java.sql.Date;
 import java.util.List;
+
+import javax.naming.spi.DirStateFactory.Result;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.festival.repository.FestivalDao;
 import back.spring.final_back.festival.repository.FestivalDto;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +22,13 @@ public class FestivalServiceImpl implements FestivalService {
     Logger logger = LoggerFactory.getLogger(FestivalServiceImpl.class);
 
     private final FestivalDao festivalDao;
+
+    @Override
+    public List<FestivalDto> festivalListByDate(Date date) {
+        List<FestivalDto> result = null;
+        result = festivalDao.festivalListByDate(date);
+        return result;
+    }
 
     @Override
     public int festivalInsert(FestivalDto festivalDto) {
@@ -34,25 +45,25 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     @Override
-    public List<FestivalDto> seoulFestivalList() {
+    public List<FestivalDto> areaFestivalList() {
         List<FestivalDto> festival = null;
-        festival = festivalDao.seoulFestivalList();
+        festival = festivalDao.areaFestivalList();
         return festival;
     }
 
     @Override
-    public List<FestivalDto> kyeongkiFestivalList() {
-        List<FestivalDto> festival = null;
-        festival = festivalDao.kyeongkiFestivalList();
-        return festival;
+    public int festivalDelete(Integer fest_m_id) {
+        log.info("fest 서비스임플 삭제");
+        int result = 0;
+        result = festivalDao.festivalDelete(fest_m_id);
+        return result;
     }
 
 	@Override
-	public int festivalDelete(Integer fest_m_id) {
-		log.info("fest 서비스임플 삭제");
-		int result = 0;
-		result = festivalDao.festivalDelete(fest_m_id);
-		return result;
-	}
+	public FestivalDto festivalDetail(FestivalDto festivalDto) {
+		FestivalDto festival = festivalDao.festivalDetail(festivalDto);
+		 return festival;
+		    }
+	
 
 }
