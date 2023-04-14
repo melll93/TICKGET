@@ -37,7 +37,7 @@ import TogetherBoardWriteForm from "./pages/board/together/TogetherBoardWriteFor
 import CarpoolDetail from "./pages/board/carpool/CarpoolDetail";
 import CarpoolUpdate from "./pages/board/carpool/CarpoolUpdate";
 import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
-import MarketPaymentPage from "./pages/board/market/MarketPaymentPage";
+import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import ChangePwPage from "./pages/member/ChangePwPage";
 
 function App({ mkImageUploader }) {

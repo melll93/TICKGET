@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, ListGroup } from 'react-bootstrap';
+import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,8 +11,11 @@ import { ContainerDiv, FormDiv, HeaderDiv, QnACommentArea } from '../../../style
 import MarketBoardFileDetail from './MarketBoardFileDetail';
 import MarketBoardHeader from './MarketBoardHeader';
 
-
+const cookies = new Cookies();
+ 
 const MarketDetail = () => {
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData)
 
 
   const search = window.location.search;
@@ -27,6 +31,7 @@ const MarketDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const boardDetail = async () => {
       const board = {
@@ -39,6 +44,7 @@ const MarketDetail = () => {
       const temp = JSON.stringify(res.data)
       const jsonDoc = JSON.parse(temp)
       console.log(jsonDoc[0].memName);
+      /* console.log(jsonDoc[0].memNo); */
       console.log(jsonDoc[0].boardMkTitle);
       console.log(jsonDoc[0].boardMkDate);
       console.log(jsonDoc[0].mkTicketPlace);
@@ -55,6 +61,7 @@ const MarketDetail = () => {
         board_mk_date: jsonDoc[0].boardMkDate,
         board_mk_hit: jsonDoc[0].boardMkHit,
         mem_name: jsonDoc[0].memName,
+      /*   mem_no: jsonDoc[0].memNo, */
         mk_ticket_place: jsonDoc[0].mkTicketPlace,
         mk_ticket_date: jsonDoc[0].mkTicketDate,   
         mk_ticket_count: jsonDoc[0].mkTicketCount,

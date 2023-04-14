@@ -1,9 +1,18 @@
 import React from "react";
+import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { mk_boardDeleteDB } from "../../../axios/board/market/marketLogic";
 import { BButton } from "../../../styles/formStyle";
 
+const cookies = new Cookies();
+
 const MarketBoardHeader = ({ detail, no }) => {
+
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData)
+
+
+
   console.log(detail);
   console.log(no);
   const navigate = useNavigate();
@@ -49,6 +58,34 @@ const MarketBoardHeader = ({ detail, no }) => {
               >
                 수정
               </BButton>
+
+
+     {/*          { _userData.no == detail.mem_no &&
+                   <BButton
+                   style={{ margin: "0px 10px 0px 10px" }}
+                   onClick={() => {
+                     navigate(`/market/update/${no}`);
+                   }}
+                 >
+                   수정
+                 </BButton>
+              
+              }    게시글 작성자의 회원번호와 현재 글을 조회한 사용자의 회원번호가 일치할 때만 수정 및 삭제 가능
+ 
+              { _userData.no == detail.mem_no &&}
+    <BButton
+                style={{ margin: "0px 10px 0px 10px" }}
+                onClick={() => {
+                  boardDelete();
+                }}
+              >
+                삭제
+              </BButton>
+              }
+ 
+ 
+ */}
+
               <BButton
                 style={{ margin: "0px 10px 0px 10px" }}
                 onClick={() => {

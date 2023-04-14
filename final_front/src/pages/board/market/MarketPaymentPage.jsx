@@ -10,6 +10,7 @@ import Sidebar from "../../../components/Sidebar";
 import { MyInput, MyLabel, MyLabelAb } from "../../../styles/formStyle";
 import PaymentComponent from "../../payment/PaymentComponent";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
+import { Cookies } from "react-cookie";
 
 const Cimg = styled.img`
   width: 150px;
@@ -17,7 +18,16 @@ const Cimg = styled.img`
   object-fit: cover;
 `;
 
+
+const cookies = new Cookies();
+
 const MarketPaymentPage = () => {
+
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData)
+  
+
+
   const href = window.location.href; //url 주소 전체 가져옴
   console.log(href);
   const loc = useLocation().pathname.split("/").pop();

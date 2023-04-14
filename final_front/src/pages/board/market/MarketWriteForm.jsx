@@ -10,6 +10,7 @@ import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
 import MarketFileInsert from "./MarketFileInsert";
 import styled from "styled-components";
+import { Cookies } from "react-cookie";
 
 
 /* CSS */
@@ -27,11 +28,14 @@ const Img = styled.img`
  object-fit:cover;
 `
 
-
+const cookies = new Cookies();
 
 
 const MarketWriteForm = ({ mkImageUploader }) => {
 
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData)
+ /*  mem_no : sessionStorage.getItem('no'), _userData에서 꺼낸 회원번호값 담기*/ 
 
   console.log("글쓰기 페이지 호출");
   const navigate = useNavigate();
@@ -145,7 +149,8 @@ const MarketWriteForm = ({ mkImageUploader }) => {
       mkTicketSeat: mk_ticket_seat,
       mkTicketCount: mk_ticket_count,
       mkTicketPrice: mk_ticket_price,
-      memName: "테스트 작성자1", // 임시 - 세션스토리지로 받아올것
+      memName: "테스트 작성자1", // 임시 - 쿠키값으로 받아올것
+     /*  memNo:'mem_no' // 쿠키에서 회원번호 가져오기 */
       boardMkFilename: files.fileName,
       boardMkFileurl: files.fileUrl,
     };
@@ -155,28 +160,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
   };
 
 
-
-
-
-  /* const handleChange = async (event) => {
-    console.log('첨부파일 선택'+event.target.value);
-    //console.log(fileRef.current.value);
-    //fileRef에서 가져온 값중 파일명만 담기
-    const str = fileRef.current.value.split('/').pop().split('\\').pop()
-    setFilename(str)
-    console.log(str);
-    //선택한 파일을 url로 바꾸기 위해 서버로 전달할 폼데이터 만들기
-    const formData = new FormData()
-    const file = document.querySelector("#file-input").files[0]
-    formData.append("file_name", file)
-    const res = await uploadFileDB(formData)
-    console.log(res.data)
-    const fileinfo = res.data.split(',')
-    console.log(fileinfo)
-    setFilename(fileinfo[0])
-    setFilesize(fileinfo[1])
-  }
-  */
 
 
 
