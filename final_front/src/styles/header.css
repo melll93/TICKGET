@@ -12,14 +12,14 @@ div .header {
 div .HomeButton {
   display: inline-block;
   z-index: 1;
-  width: 300px;
+  width: 240px;
   text-align: center;
   margin-top: 1.5vh;
 }
 
 div .SearchBarDiv {
   display: inline-block;
-  width: 70%;
+  width: 80%;
   margin-left: 5%;
 }
 

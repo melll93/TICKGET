@@ -20,7 +20,4 @@ public interface TogetherReplyService {
     // 게시판 삭제(Delete)
     int deleteTogetherReply(TogetherReplyDto togetherReplyDto);
 
-    //조회수 확인하자
-    void viewTogetherReplyUp(@RequestParam Map<String, Object> pMap);
-
 }

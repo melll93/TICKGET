@@ -31,9 +31,9 @@ const MarketPage = () => {
 
   return (
     <>
+        <Header />
       <Sidebar />
       <div className="center">
-        <Header />
         <HeaderDiv>
           <h3 style={{ marginLeft: "100px" }}>마켓 게시판</h3>
           {/*          <Button variant="primary" style={{marginLeft:'700px'}}>

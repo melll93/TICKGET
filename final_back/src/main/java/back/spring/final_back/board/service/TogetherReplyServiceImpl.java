@@ -49,12 +49,4 @@ public class TogetherReplyServiceImpl implements TogetherReplyService {
         int result = togetherReplyDao.insertTogetherReply(togetherReplyDto);
         return result;
     }
-
-    // 조회수 증가
-    @Override
-    public void viewTogetherReplyUp(Map<String, Object> pMap) {
-        logger.info("TogetherReplyServiceImpl : viewTogetherReplyUp");
-        togetherReplyDao.viewTogetherReplyUp(pMap);
-    }
-
 }

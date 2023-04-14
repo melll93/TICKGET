@@ -7,9 +7,9 @@ import "../../styles/mypage.css";
 const MyPage = () => {
   return (
     <>
+      <Header />
       <Sidebar />
       <div className="center">
-        <Header />
 
         <section>
           <div className="MainDIv">

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies } from "react-cookie";
+import { Dropdown } from "react-bootstrap";
 
 const cookies = new Cookies();
 
@@ -19,6 +20,10 @@ const Profile = () => {
     // navigate("/"); // cookie가 갱신이 안됨
     window.location.href = "/";
   };
+
+  const handleChatFromProfile = () => {
+    navigate("/chat")
+  }
 
   const getProfile = () => {
     if (!_userData) {
@@ -37,18 +42,33 @@ const Profile = () => {
       console.log(_userData);
       return (
         <>
-          <Link to="/mypage">
-            {/* 프로필 이미지 버튼 */}
-            <img
-              id="profile"
-              className="image40"
-              src={_userData.profile_img ?? "../logos/PROFILE.png"}
-            />
-          </Link>
+          {/* 프로필 버튼 시작 */}
+          <div className="userImage">
+            <Dropdown>
+              <Dropdown.Toggle variant="none" id="profile-dropdown" style={{ border: "none" }}>
+                <img
+                  id="profile"
+                  className="icon image40"
+                  src={_userData.profile_img ?? "../logos/PROFILE.png"}
+                />
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="dropdown items">
+                <Dropdown.Item onClick={handleChatFromProfile}>1:1 채팅</Dropdown.Item>
+                <Dropdown.Item>프로필</Dropdown.Item>
+                {/* <Dropdown.Item href="#/action-3"></Dropdown.Item> */}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+          {/* 프로필 버튼 끝 */}
+
           <br />
           <div className="ProfileButton">
             <Link to="/" className="link" onClick={logout}>
               <span>로그아웃</span>
+            </Link>
+            <br />
+            <Link to="/mypage" className="link">
+              <span>마이페이지</span>
             </Link>
           </div>
         </>
@@ -58,7 +78,7 @@ const Profile = () => {
 
   return (
     <>
-      <div id="ProfileBox" className="ProfileBox">
+      <div className="ProfileBox">
         {getProfile()}
       </div>
     </>

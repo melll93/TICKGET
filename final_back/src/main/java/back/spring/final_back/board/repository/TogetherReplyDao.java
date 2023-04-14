@@ -1,7 +1,6 @@
 package back.spring.final_back.board.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,8 +20,4 @@ public interface TogetherReplyDao {
 
     // 게시판 삭제(Delete)
     public int deleteTogetherReply(TogetherReplyDto togetherReplyDto);
-
-    // 조회수 증가
-    public void viewTogetherReplyUp(Map<String, Object> pMap);
-
 }
