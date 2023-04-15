@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.board.service.CarpoolService;
-import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 
 @Controller

@@ -2,17 +2,12 @@ import React, { useCallback, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
-import LandingPage from "./Map/LandingPage";
 import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
 import Header from "../../../components/Header";
-import {
-  BButton,
-  ContainerDiv,
-  FormDiv,
-  HeaderDiv,
-} from "../../../styles/formStyle";
-import Footer from "../../../components/Footer";
 import Sidebar from "../../../components/Sidebar";
+import { BButton, ContainerDiv, FormDiv } from "../../../styles/formStyle";
+import Footer from "../../../components/Footer";
+import LandingPage from "./Map/LandingPage";
 
 const CarpoolWriteForm = ({ carpool }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
@@ -23,24 +18,13 @@ const CarpoolWriteForm = ({ carpool }) => {
   //const[writer, setWriter]= useState(''); //작성자
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
-  const [secret, setSecret] = useState(false); //비밀글
-  const [tTitle, setTTitle] = useState("일반"); //qna_type
-  const [views, setViews] = useState("일반"); //조회수
   const [types] = useState(["일반", "결제", "양도", "회원", "수업"]); //qna_type의 라벨값
-  const [files, setFiles] = useState([]); //파일처리
-  const quillRef = useRef();
 
   const handleContent = useCallback((value) => {
     console.log(value);
     setContent(value);
   }, []);
 
-  const handleFiles = useCallback(
-    (value) => {
-      setFiles([...files, value]);
-    },
-    [files]
-  );
 
   const handleTitle = useCallback((e) => {
     setTitle(e);
@@ -53,10 +37,6 @@ const CarpoolWriteForm = ({ carpool }) => {
 
   const handleDate = useCallback((e) => {
     setDate(e);
-  }, []);
-
-  const handleTTitle = useCallback((e) => {
-    setTTitle(e);
   }, []);
 
   const insertCarpool = async () => {
@@ -74,19 +54,17 @@ const CarpoolWriteForm = ({ carpool }) => {
     }
     console.log("insertCarpool");
     const carpool = {
-      carpoolTitle: title, // 제목 추가
-      carpoolContent: content, // 내용 추가
-      // carpoolSecret: secret ? "true" : "false",
-      // carpoolType: tTitle,
-      // carpoolViews: views,
-      // carpoolMemId: sessionStorage.getItem("id"),
-      carpoolDate: date,
+      boardCpTitle: title, // 제목 추가
+      boardCpContent: content, // 내용 추가
+      boardCpMemId: sessionStorage.getItem("id"),
+      boardCpDate: date,
     };
+    console.log(carpool)
     // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
     // inser here
     try {
       const res = await insertCarpoolDB(carpool);
-      console.log(res.data);
+      console.log("insertCarpoolDB : ",res.data);
       // 성공시에 페이지 이동처리하기
       window.location.replace("/carpool");
     } catch (error) {
@@ -122,15 +100,6 @@ const CarpoolWriteForm = ({ carpool }) => {
                     borderRadius: "10px",
                   }}
                 >
-                  <span style={{ fontSize: "14px" }}>비밀글</span>
-                  <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    style={{ paddingLeft: "46px" }}
-                    onClick={() => {
-                      setSecret(!secret);
-                    }}
-                  />
                 </div>
                 <BButton
                   variant="success"
@@ -179,13 +148,25 @@ const CarpoolWriteForm = ({ carpool }) => {
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h3>상세내용</h3>
-            {/* <CarpoolQuillEditor
+            <input
+              style={{
+                width: "98%",
+                margin: "10px",
+                height: "300px",
+                fontSize: "20px",
+              }}
               value={content}
               handleContent={handleContent}
-              quillRef={quillRef}
-              files={files}
-              handleFiles={handleFiles}
-            /> */}
+              type="html"
+              name="carpoolContent"
+              required
+              rows="10"
+              className="form-control"
+              id="exampleTextarea"
+              onChange={(e) => {
+                handleContent(e.target.value);
+              }}
+            ></input>
 
             <div
               style={{

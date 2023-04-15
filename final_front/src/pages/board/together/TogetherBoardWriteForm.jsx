@@ -8,7 +8,6 @@ import {
   BButton,
   ContainerDiv,
   FormDiv,
-  HeaderDiv,
 } from "../../../styles/formStyle";
 import Sidebar from "../../../components/Sidebar";
 

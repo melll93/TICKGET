@@ -18,6 +18,7 @@ export const selectCarpoolDB = (carpool) => {
 
 /* 작성 */
 export const insertCarpoolDB = (carpool) => {
+  console.log("여기보아라~~~~~~~~~",carpool)
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
