@@ -3,9 +3,17 @@ span {
 }
 
 div .sidebar.container {
-  width: 280px;
   height: 100%;
-  display: flex;
+  display: inline-block;
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0);
+  overflow-x: hidden;
+  transition: 0.5s;
+  width: 300px;
+  height: 100%;
+  top: 8vh;
+  left: 0;
 }
 
 div .ProfileBox {
@@ -14,12 +22,11 @@ div .ProfileBox {
 }
 
 div .sidebar.items {
-  width: 240px;
   height: 100%;
   display: inline-block;
   position: fixed;
   z-index: 1;
-  background-color: rgba(47, 47, 47, 0.9); /*까만색(0,0,0) 80% 불투명도*/
+  background-color: rgba(47, 47, 47, 0.9);
   overflow-x: hidden;
   transition: 0.5s;
   top: 8vh;
@@ -28,13 +35,14 @@ div .sidebar.items {
 }
 
 div .sidebar.button {
+  background-color: rgba(255, 255, 255, 0);
   display: inline-block;
-  position: fixed;
+  position: absolute;
   z-index: 1;
-  top: 8vh;
-  width: 40px;
+  top: 6.5vh;
   height: 100%;
-  left: 240px;
+  overflow-x: hidden;
+  transition: 0.5s;
 }
 
 .icon {

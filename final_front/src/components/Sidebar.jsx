@@ -8,6 +8,7 @@ import "../styles/sidebar.css";
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(240);
   const [isVisible, setIsVisible] = useState();
+  const [buttonIcon, setButtonIcon] = useState("bi bi-caret-left-square-fill");
   const path = window.location.pathname;
 
   const setDefault = () => {
@@ -57,16 +58,10 @@ const Sidebar = () => {
           <MenuList />
           <SearchBar />
         </div>
-        <div className="sidebar button">
-          <img
-            src="../logos/MENUBAR.png"
-            className="openSidebarButton"
-            onClick={openSidebar}
-            alt="sidebarbtn"
-            style={{ width: "40px", left: "240px" }}
-          />
+        <div className="sidebar button" style={{ width: 40, left: sidebar - 10 }}>
+          <i className={buttonIcon} style={{ fontSize: 30 }} onClick={openSidebar}></i>
         </div>
-      </div>
+      </div >
     </>
   );
 };

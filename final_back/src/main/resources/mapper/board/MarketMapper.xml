@@ -7,176 +7,151 @@
 
 
 
-<<<<<<< Updated upstream
-<!-- 게시글 조회 및 조건검색 -->
-<select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
-  select *
-  from board_market
-  <if test='condition!=null and condition.equals("전체")'>
-    <choose>
-      <when test='content=null and condition.equals("전체")'>
-        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
-      </when>
-      <when test='content!=null and condition.equals("제목")'>
-        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
-      </when>
-      <when test='content!=null and condition.equals("장소")'>
-        WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%')
-      </when>
-      <when test='content!=null and condition.equals("작성자")'>
-        WHERE mem_name LIKE CONCAT('%', #{content}, '%')
-      </when>
-    </choose>
-  </if>
-  <if test='condition!=null and !condition.equals("전체")'>
-    <where>
-      <if test='content!=null and condition.equals("제목")'>
-        AND board_mk_title LIKE CONCAT('%', #{content}, '%')
-      </if>
-      <if test='content!=null and condition.equals("장소")'>
-        AND mk_ticket_place LIKE CONCAT('%', #{content}, '%')
-      </if>
-      <if test='content!=null and condition.equals("작성자")'>
-        AND mem_name LIKE CONCAT('%', #{content}, '%')
-      </if>
-    </where>
-  </if>
-  order by board_mk_date ASC
-=======
-<!-- 게시글 조회 -->
-<select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
-select * from board_market
-<if test='content != null'>
-  <choose>
-    <when test='condition != null and condition.equals("제목")'>
-      WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
-    </when>
-    <when test='condition != null and condition.equals("장소")'>
-      WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%')
-    </when>
-    <when test='condition != null and condition.equals("작성자")'>
-      WHERE mem_name LIKE CONCAT('%', #{content}, '%')
-    </when>
-  </choose>
-</if>
-ORDER BY `board_mk_date` DESC
->>>>>>> Stashed changes
-</select>
-<!-- 판매여부가 0인 (판매처리되지 않은) 게시글만 조회되게하기, board_mk_status -->
+    <!-- 게시글 조회 및 조건검색 -->
+    <select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
+        select * from board_market
+        <if test='condition!=null and condition.equals("전체")'>
+            <choose>
+                <when test='content!=null and condition.equals("제목")'>
+                    WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
+                </when>
+                <when test='content!=null and condition.equals("장소")'>
+                    WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+                </when>
+                <when test='content!=null and condition.equals("작성자")'>
+                    WHERE mem_name LIKE CONCAT('%', #{content}, '%')
+                </when>
+            </choose>
+        </if>
+        <if test='condition!=null and !condition.equals("전체")'>
+            <where>
+                <if test='content!=null and condition.equals("제목")'>
+                    AND board_mk_title LIKE CONCAT('%', #{content}, '%')
+                </if>
+                <if test='content!=null and condition.equals("장소")'>
+                    AND mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+                </if>
+                <if test='content!=null and condition.equals("작성자")'>
+                    AND mem_name LIKE CONCAT('%', #{content}, '%')
+                </if>
+            </where>
+        </if>
+        order by board_mk_date ASC
+    </select>
 
-
-
-
-
-
-
-
-<!-- 게시글 입력 -->
-<insert id="mk_boardInsert" parameterType="MarketDto">
-insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
-<<<<<<< Updated upstream
-mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl,<!-- mem_no -->)
-VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
-#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl},<!-- #{mem_no} -->)
-=======
-mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl)
-VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
-#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl})
->>>>>>> Stashed changes
-</insert>
-
-
-
-
-
-<!-- 게시글 수정 -->
-<update id="mk_boardUpdate" parameterType="MarketDto">
- update board_market
- set 
-     <if test='boardMkTitle!=null'>
-     board_mk_title = #{boardMkTitle},
+    <!--   select * from board_market
+     <if test='content!=null'>
+       where
+       <choose>
+         <when test='condition!=null and condition.equals("제목")'>
+           board_mk_title LIKE CONCAT('%', #{content}, '%')
+         </when>
+         <when test='condition!=null and condition.equals("장소")'>
+           mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+         </when>
+         <when test='condition!=null and condition.equals("작성자")'>
+           mem_name LIKE CONCAT('%', #{content}, '%')
+         </when>
+       </choose>
      </if>
-     <if test='boardMkContent!=null'>
-     board_mk_content = #{boardMkContent},
-     </if>
-      <if test='mkTicketPlace!=null'>
-     mk_ticket_place = #{mkTicketPlace},
-     </if>
-      <if test='mkTicketDate!=null'>
-     mk_ticket_date = #{mkTicketDate},
-     </if>
-      <if test='mkTicketSeat!=null'>
-     mk_ticket_seat = #{mkTicketSeat},
-     </if>
-     <if test='mkTicketCount!=null'>
-     mk_ticket_count = #{mkTicketCount},
-     </if>
-     <if test='mkTicketPrice!=null'>
-     mk_ticket_price = #{mkTicketPrice},
-     </if>
-     <if test='boardMkFilename!=null'>
-<<<<<<< Updated upstream
-     board_mk_filename = #{boardMkFilename},
-     </if>
-     <if test='boardMkFileurl!=null'>
-     board_mk_fileurl = #{boardMkFileurl},
-     </if>
+     order by board_mk_date DESC
+   </select>-->
+
+
+
+
+
+    <!-- 게시글 입력 -->
+    <insert id="mk_boardInsert" parameterType="MarketDto">
+        insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
+        mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl)
+        VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
+        #{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl})
+    </insert>
+
+
+
+
+
+    <!-- 게시글 수정 -->
+    <update id="mk_boardUpdate" parameterType="MarketDto">
+        update board_market
+        set
+        <if test='boardMkTitle!=null'>
+            board_mk_title = #{boardMkTitle},
+        </if>
+        <if test='boardMkContent!=null'>
+            board_mk_content = #{boardMkContent},
+        </if>
+        <if test='mkTicketPlace!=null'>
+            mk_ticket_place = #{mkTicketPlace},
+        </if>
+        <if test='mkTicketDate!=null'>
+            mk_ticket_date = #{mkTicketDate},
+        </if>
+        <if test='mkTicketSeat!=null'>
+            mk_ticket_seat = #{mkTicketSeat},
+        </if>
+        <if test='mkTicketCount!=null'>
+            mk_ticket_count = #{mkTicketCount},
+        </if>
+        <if test='mkTicketPrice!=null'>
+            mk_ticket_price = #{mkTicketPrice},
+        </if>
+        <if test='boardMkFilename!=null'>
+            board_mk_filename = #{boardMkFilename},
+        </if>
+        <if test='boardMkFileurl!=null'>
+            board_mk_fileurl = #{boardMkFileurl},
+        </if>
         <if test='boardMkDate == null'>
-      board_mk_date = CURDATE()
-    </if>
-=======
-     board_mk_filename = #{boardMkFilename}
-     </if>
-     <if test='boardMkFileurl!=null'>
-     board_mk_fileurl = #{boardMkFileurl}
-     </if>
-     board_mk_date = CURDATE()
->>>>>>> Stashed changes
-     WHERE board_mk_no = #{boardMkNo} 
-</update>
+            board_mk_date = CURDATE()
+        </if>
+        WHERE board_mk_no = #{boardMkNo}
+    </update>
 
 
 
 
 
-<!-- 게시글 삭제 -->
-<delete id="mk_boardDelete" parameterType="MarketDto">
-delete from board_market
-<where>
-<if test='boardMkNo!=null and boardMkNo>0'>
-board_mk_no = #{boardMkNo}
-</if>
-</where>
-</delete>
+    <!-- 게시글 삭제 -->
+    <delete id="mk_boardDelete" parameterType="MarketDto">
+        delete from board_market
+        <where>
+            <if test='boardMkNo!=null and boardMkNo>0'>
+                board_mk_no = #{boardMkNo}
+            </if>
+        </where>
+    </delete>
 
 
 
 
 
-<!-- 게시글 상세보기 -->
-<select id="mk_boardDetail" parameterType="MarketDto" resultType="MarketDto">
-select * from board_market 
-<where>
-  <if test='boardMkNo!=null'> <!-- setNull(1,1111)에러 타입, 부적합한 열 유형 Integer.parseInt() -->
-    board_mk_no = #{boardMkNo}
-    </if>
-     </where>
-</select>
+    <!-- 게시글 상세보기 -->
+    <select id="mk_boardDetail" parameterType="MarketDto" resultType="MarketDto">
+        select * from board_market
+        <where>
+            <if test='boardMkNo!=null'> <!-- setNull(1,1111)에러 타입, 부적합한 열 유형 Integer.parseInt() -->
+                board_mk_no = #{boardMkNo}
+            </if>
+        </where>
+    </select>
 
 
 
 
 
 
-<!-- 조회수 증가  -->	
-	<update id="mk_boardHit" parameterType="MarketDto">
-	<choose>
-	<when test='boardMkNo!=null'>
-	 UPDATE board_market SET board_mk_hit = board_mk_hit+1
-	  WHERE board_mk_no = #{boardMkNo}
-	</when>
-	</choose>
-	</update>
+    <!-- 조회수 증가  -->
+    <update id="mk_boardHit" parameterType="MarketDto">
+        <choose>
+            <when test='boardMkNo!=null'>
+                UPDATE board_market SET board_mk_hit = board_mk_hit+1
+                WHERE board_mk_no = #{boardMkNo}
+            </when>
+        </choose>
+    </update>
 
 
 

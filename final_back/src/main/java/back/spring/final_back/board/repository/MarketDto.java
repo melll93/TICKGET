@@ -25,21 +25,13 @@ public class MarketDto {
 	private LocalDateTime mkTicketDate;
 	private String mkTicketSeat;
 	private int mkTicketPrice;
-	private int mkTicketCount;
+	private String mkTicketCount;
 	private String mkTicketPlace;
 	private String memName;
 	private String boardMkFilename;
 	private String boardMkFileurl;
-<<<<<<< Updated upstream
-	private int boardMkStatus;
-	private int memNo;
 	private String content;
 	private String condition;
-=======
-	private String content;
-	private String condition;
-	
->>>>>>> Stashed changes
 
 
 }
