@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="back.spring.final_back.board.repository.MarketDao">
-
-
-
-
-
     <!-- 게시글 조회 및 조건검색 -->
     <select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
         select * from board_market
@@ -56,11 +50,6 @@
      </if>
      order by board_mk_date DESC
    </select>-->
-
-
-
-
-
     <!-- 게시글 입력 -->
     <insert id="mk_boardInsert" parameterType="MarketDto">
         insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
@@ -68,11 +57,6 @@
         VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
         #{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl})
     </insert>
-
-
-
-
-
     <!-- 게시글 수정 -->
     <update id="mk_boardUpdate" parameterType="MarketDto">
         update board_market
@@ -109,11 +93,6 @@
         </if>
         WHERE board_mk_no = #{boardMkNo}
     </update>
-
-
-
-
-
     <!-- 게시글 삭제 -->
     <delete id="mk_boardDelete" parameterType="MarketDto">
         delete from board_market
@@ -123,11 +102,6 @@
             </if>
         </where>
     </delete>
-
-
-
-
-
     <!-- 게시글 상세보기 -->
     <select id="mk_boardDetail" parameterType="MarketDto" resultType="MarketDto">
         select * from board_market
@@ -137,12 +111,6 @@
             </if>
         </where>
     </select>
-
-
-
-
-
-
     <!-- 조회수 증가  -->
     <update id="mk_boardHit" parameterType="MarketDto">
         <choose>
@@ -152,7 +120,4 @@
             </when>
         </choose>
     </update>
-
-
-
 </mapper>
