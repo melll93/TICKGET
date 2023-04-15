@@ -6,8 +6,6 @@
 
 
 
-
-<<<<<<< Updated upstream
 <!-- 게시글 조회 및 조건검색 -->
 <select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
   select *
@@ -42,25 +40,6 @@
     </where>
   </if>
   order by board_mk_date ASC
-=======
-<!-- 게시글 조회 -->
-<select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
-select * from board_market
-<if test='content != null'>
-  <choose>
-    <when test='condition != null and condition.equals("제목")'>
-      WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
-    </when>
-    <when test='condition != null and condition.equals("장소")'>
-      WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%')
-    </when>
-    <when test='condition != null and condition.equals("작성자")'>
-      WHERE mem_name LIKE CONCAT('%', #{content}, '%')
-    </when>
-  </choose>
-</if>
-ORDER BY `board_mk_date` DESC
->>>>>>> Stashed changes
 </select>
 <!-- 판매여부가 0인 (판매처리되지 않은) 게시글만 조회되게하기, board_mk_status -->
 
@@ -74,15 +53,11 @@ ORDER BY `board_mk_date` DESC
 <!-- 게시글 입력 -->
 <insert id="mk_boardInsert" parameterType="MarketDto">
 insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
-<<<<<<< Updated upstream
+
 mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl,<!-- mem_no -->)
 VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
 #{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl},<!-- #{mem_no} -->)
-=======
-mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl)
-VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
-#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl})
->>>>>>> Stashed changes
+
 </insert>
 
 
@@ -115,23 +90,12 @@ VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
      mk_ticket_price = #{mkTicketPrice},
      </if>
      <if test='boardMkFilename!=null'>
-<<<<<<< Updated upstream
      board_mk_filename = #{boardMkFilename},
      </if>
      <if test='boardMkFileurl!=null'>
      board_mk_fileurl = #{boardMkFileurl},
      </if>
-        <if test='boardMkDate == null'>
-      board_mk_date = CURDATE()
-    </if>
-=======
-     board_mk_filename = #{boardMkFilename}
-     </if>
-     <if test='boardMkFileurl!=null'>
-     board_mk_fileurl = #{boardMkFileurl}
-     </if>
      board_mk_date = CURDATE()
->>>>>>> Stashed changes
      WHERE board_mk_no = #{boardMkNo} 
 </update>
 

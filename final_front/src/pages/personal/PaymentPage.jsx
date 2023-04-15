@@ -15,6 +15,15 @@ const PaymentPage = ({orderDetail, paymentData}) => {
   console.log(paymentData)
    const navigate = useNavigate()
 
+
+
+const handleToss = async() => {
+  const res = await handlePayment(paymentData)
+  console.log(res.data);
+
+}
+
+
   return (
    <div className="center">
    {/* ----------------------------------결제페이지---------------------------------- */}
@@ -94,7 +103,7 @@ const PaymentPage = ({orderDetail, paymentData}) => {
  </Card.Body>
 </Card>
 <div>
-<Button style={{width:'400px'}} onClick={handlePayment(paymentData)}>토스 결제하기</Button>
+<Button style={{width:'400px'}} onClick={handleToss}>토스 결제하기</Button>
 {/* <PaymentComponent /> */}
 {/* <Button className="researvebtn" onClick={MarketPaymentComponent}>토스페이 결제하기</Button> */}
 <Button style={{width:'400px'}} onClick={() => navigate(-1)}>취소/이전으로</Button>
