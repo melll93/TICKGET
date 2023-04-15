@@ -2,13 +2,37 @@ import React, { useEffect, useState } from 'react'
 import { Pagination } from 'react-bootstrap';
 import '../styles/pagination.css'; 
 
-// import { Pagination } from '@mui/material'
 
-const PaginationPrac= ({currentFest, pagination, perPage, totalFest}
+/* 
+쓸 곳에서 프롭스 options로 넘기기
+  const [festivals, setFestivals] = useState([]); //짜를 아이템
+  const [page, setPage] = useState(1);   
+  const [perPage] = useState(20);  // 보여주고 싶은 갯수
+
+
+  const indexOfLastPost = page * perPage;
+  const indexOfFirstPost = indexOfLastPost - perPage;
+
+  const currentFest = (festivals) => {
+    let currentFest = 0;
+    currentFest = festivals.slice(indexOfFirstPost, indexOfLastPost);
+    return currentFest;
+  };
+
+  맵돌릴때 currentFest(boardList).map 으로 돌리기
+
+
+<Pagination pagination={setPage} perPage={perPage} totalItems={festivals.length}/>
+위처럼 넘기면 됨.
+*/ 
+
+
+const CommonPagination= ({pagination, perPage, totalItems}
  ) => {
 const pageNum=[];
 
-const endPage=Math.ceil(totalFest/perPage)
+
+const endPage=Math.ceil(totalItems/perPage)
 console.log(endPage)
 
 for(let i = 1; i<=endPage; i++){
@@ -61,6 +85,6 @@ return (
 );
 };
 
-export default PaginationPrac
+export default CommonPagination
 
 

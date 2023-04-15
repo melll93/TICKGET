@@ -19,10 +19,13 @@ import {
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import "../../styles/festivaldetails.css";
+import "../../styles/Calendar.css";
+
 import TicketCancleInfo from "../../components/mypage/TicketCancleInfo";
 import {
   BButton, BlackBtn
 } from "../../styles/formStyle";
+import DropdownButton from "../../components/DropdownButton";
 
 const FestivalsDetail = () => {
   const navigate = useNavigate();
@@ -33,6 +36,13 @@ const FestivalsDetail = () => {
   const [festEnd, setFestMEnd] = useState("");
   const [festLoc, setFestMLoc] = useState("");
   const [festImg, setFestMImg] = useState("");
+  const options = [
+    { label: '1매', value: '1' },
+    { label: '2매', value: '2' },
+    { label: '3매', value: '3' },
+    { label: '4매', value: '4' },
+    { label: '5매', value: '5' },
+  ];
 
   const [festival, setFestival] = useState({
     festMId: "",
@@ -72,11 +82,11 @@ const FestivalsDetail = () => {
     asyncDB();
     return () => {};
   }, []);
-  console.log(festival)
+  /* console.log(festival)
   console.log(festival.festMId);
   console.log(festival.festPsUrl);
   console.log(festival.festTcPrice);
-
+ */
 
   const [lgShow, setLgShow] = useState(false); //리뷰수정모달
   const reduxUser = useSelector((state) => state.userStatus.user);
@@ -350,16 +360,25 @@ const FestivalsDetail = () => {
               <span className="products_calendar">
                 <Calendar />
               </span>
-              <span className="calendarands1">내용물1</span>
-              <span className="calendarands2">
+              <div className="calendarands1">내용물1
+              <p style={{border: '1px solid gray', borderRadius: '10px'}}>
+              일반석 / 시간 
+              </p>
+              
+              </div>
+              
+              
+              <div className="calendarands2">
                 잔여좌석<br></br>
+                <DropdownButton options={options} ></DropdownButton>
+                
                 <BlackBtn
                   width="250px"
                   onClick={() => navigate("/payment/" + festMId)}
                 >
                   예매하기
                 </BlackBtn>
-              </span>
+              </div>
             </div>
           </section>
           {/* ////////////////////////////////////// 바텀 섹션///////////////////////////////////////////////////////////////////// */}
