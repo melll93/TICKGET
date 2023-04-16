@@ -8,7 +8,7 @@ import { loadTossPayments } from "@tosspayments/payment-sdk";
   no,
 };  */
 
-export const handlePayment = async (paymentData, no) => {
+export const handlePayment = async (paymentData) => {
   const tossPayments = await loadTossPayments(
     // process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY
     "test_ck_aBX7zk2yd8yjXw0pyNE3x9POLqKQ" //clientKey
@@ -20,8 +20,8 @@ export const handlePayment = async (paymentData, no) => {
       orderId: paymentData.orderId,
       orderName: paymentData.orderName,
       customerName: paymentData.customerName,
-      successUrl: `${window.location.origin}/paymentsucess/:${no}`,
-      failUrl: `${window.location.origin}/paymentfailed/:${no}`,
+      successUrl: `${window.location.origin}/paymentsucess/:${paymentData.no}`,
+      failUrl: `${window.location.origin}/paymentfailed/:${paymentData.no}`,
       flowMode: "DEFAULT",
       easyPay: "토스페이",
     })
