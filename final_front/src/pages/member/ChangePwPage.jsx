@@ -22,14 +22,19 @@ const changeMemInfo = (e) => {
     setMemInfo({ ...memInfo, pwConfirm: value });
   }
 }
+const [comment, setComment] = useState({
+  pw: "",
+  pwConfirm: "",
+});
 // 비밀번호 변경 입력 시 출력될 validate
 const validate = (key, e) => {
   let result;
   if (key === 'pw') {
     result = validatePassword(e);
   } else if (key === 'pwConfirm') {
-    result = checkPassword(e);
-  } 
+    result = checkPassword(memInfo.pw, e);
+  }
+  setComment({ ...comment, [key]: result });
 }
 
 const handleFormSubmit = async(e) => {
