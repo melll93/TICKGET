@@ -153,6 +153,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
      /*  memNo:'mem_no' // 쿠키에서 회원번호 가져오기 */
       boardMkFilename: files.fileName,
       boardMkFileurl: files.fileUrl,
+      boardMkStatus : 0
     };
     const res = await mk_boardInsertDB(board);
     console.log(res.data);

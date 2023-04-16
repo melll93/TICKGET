@@ -29,9 +29,14 @@ public interface MarketDao {
 	//마켓 게시판 게시글 조회수 증가
 	public void mk_boardHit(MarketDto marketDto);
 
+	//마켓 게시판 게시글 판매처리
+	public int mk_boardSell(MarketDto marketDto);
+
+	
 	
 	//파일 등록
 	public int fileInsert(Map<String, Object> pMap);
+
 
 	
 }

@@ -11,32 +11,33 @@
   <if test='condition!=null and condition.equals("전체")'>
     <choose>
       <when test='content=null and condition.equals("전체")'>
-        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
+        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
       </when>
       <when test='content!=null and condition.equals("제목")'>
-        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')
+        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0 
       </when>
       <when test='content!=null and condition.equals("장소")'>
-        WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+        WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
       </when>
       <when test='content!=null and condition.equals("작성자")'>
-        WHERE mem_name LIKE CONCAT('%', #{content}, '%')
+        WHERE mem_name LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
       </when>
     </choose>
   </if>
   <if test='condition!=null and !condition.equals("전체")'>
     <where>
       <if test='content!=null and condition.equals("제목")'>
-        AND board_mk_title LIKE CONCAT('%', #{content}, '%')
+        AND board_mk_title LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
       </if>
       <if test='content!=null and condition.equals("장소")'>
-        AND mk_ticket_place LIKE CONCAT('%', #{content}, '%')
+        AND mk_ticket_place LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
       </if>
       <if test='content!=null and condition.equals("작성자")'>
-        AND mem_name LIKE CONCAT('%', #{content}, '%')
+        AND mem_name LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
       </if>
     </where>
   </if>
+  WHERE board_mk_status = 0
   order by board_mk_date ASC
 </select>
 <!-- 판매여부가 0인 (판매처리되지 않은) 게시글만 조회되게하기, board_mk_status -->
@@ -52,9 +53,9 @@
 <insert id="mk_boardInsert" parameterType="MarketDto">
 insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
 
-mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl,<!-- mem_no -->)
+mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl,board_mk_status<!-- mem_no -->)
 VALUES (#{boardMkTitle},#{boardMkContent},CURDATE(),#{boardMkHit},
-#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl},<!-- #{mem_no} -->)
+#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl},#{boardMkStatus}<!-- #{mem_no} -->)
 
 </insert>
 
@@ -139,5 +140,17 @@ select * from board_market
 	</when>
 	</choose>
 	</update>
+	
+	
+	<!-- 판매완료 처리 -->
+<update id="mk_boardSell" parameterType="MarketDto">
+<choose>
+<when test='boardMkNo!=null'>
+UPDATE board_market SET board_mk_status = board_mk_status + 1
+ WHERE board_mk_no= #{boardMkNo}
+</when>
+</choose>
+</update>
+
 
 </mapper>
