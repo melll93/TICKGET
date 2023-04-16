@@ -22,43 +22,38 @@ const changeMemInfo = (e) => {
     setMemInfo({ ...memInfo, pwConfirm: value });
   }
 }
-const [comment, setComment] = useState({
-  pw: "",
-  pwConfirm: "",
-});
 // 비밀번호 변경 입력 시 출력될 validate
 const validate = (key, e) => {
   let result;
   if (key === 'pw') {
     result = validatePassword(e);
   } else if (key === 'pwConfirm') {
-    result = checkPassword(memInfo.pw, e);
-  }
-  setComment({ ...comment, [key]: result });
+    result = checkPassword(e);
+  } 
 }
-
+// 비밀번호가 변경되려면 사용자의 id 값을 들고 있고 새로운 비밀번호를 받아 updeate 해야 하는 것 같음
+// 어떻게 ?
 const handleFormSubmit = async(e) => {
 e.preventDefault();
-  if (memInfo.pw === memInfo.pwConfirm) {
-    console.log("비밀번호가 일치합니다."); 
-    alert("비밀번호가 일치합니다."); 
-  } else {
-    console.log("비밀번호가 일치하지 않습니다."); 
-    alert("비밀번호가 일치하지 않습니다."); 
-  }
+if (memInfo.pw === memInfo.pwConfirm) {
+  console.log("비밀번호가 일치합니다.");
+  alert("비밀번호가 일치합니다.");
   try {
     const member = {
       mem_id: memInfo.id,
       mem_pw: memInfo.pw
-    }
+    };
     const res = await memberUpdateDB(member);
     console.log(res.data);
-  
     alert("비밀번호가 성공적으로 변경되었습니다");
     // window.location.href = '/login';
   } catch (error) {
     console.error(error);
     alert("비밀번호 변경에 실패하였습니다");
+  }
+  } else {
+  console.log("비밀번호가 일치하지 않습니다.");
+  alert("비밀번호가 일치하지 않습니다.");
   }
 }
 

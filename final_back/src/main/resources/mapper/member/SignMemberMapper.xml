@@ -2,11 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="back.spring.final_back.member.repository.SignUpDao">
+<mapper
+	namespace="back.spring.final_back.member.repository.SignUpDao">
 	<insert id="memberInsert" parameterType="map">
 		INSERT INTO member(
-<!-- 		member_no, -->
-<!-- 		member_domain, -->
+		<!-- member_no, -->
+		<!-- member_domain, -->
 		member_id,
 		member_password,
 		member_name,
@@ -16,18 +17,14 @@
 		member_gender,
 		member_mobile,
 		member_nickname,
- 		<!-- member_profile_image, -->
- 		member_register_date,
+		<!-- member_profile_image, -->
+		member_register_date,
 		member_zipcode,
 		member_address,
 		member_addr_detail)
 		VALUES(
-<!-- 		<if test="memberNo!= null">
-			#{memberNo}
-		</if> -->
-<!-- 		<if test="memberDomain!= null">
-			#{memberDomain}
-		</if> -->
+		<!-- <if test="memberNo!= null"> #{memberNo} </if> -->
+		<!-- <if test="memberDomain!= null"> #{memberDomain} </if> -->
 		<if test="memberId!= null">
 			#{memberId}
 		</if>
@@ -37,9 +34,7 @@
 		<if test="memberName!= null">
 			,#{memberName}
 		</if>
-<!-- 		<if test="memberAge!= null">
-			,#{memberAge}
-		</if> -->
+		<!-- <if test="memberAge!= null"> ,#{memberAge} </if> -->
 		<if test="memberBirth!= null">
 			,#{memberBirth}
 		</if>
@@ -55,10 +50,8 @@
 		<if test="memberNickname!= null">
 			,#{memberNickname}
 		</if>
-<!--  		<if test="memberProfileImage!= null">
-			,#{memberProfileImage}
-		</if> -->
-  		<if test="memberRegisterDate == null">
+		<!-- <if test="memberProfileImage!= null"> ,#{memberProfileImage} </if> -->
+		<if test="memberRegisterDate == null">
 			,CURDATE()
 		</if>
 		<if test="memberZipcode!= null">
@@ -73,40 +66,41 @@
 		)
 	</insert>
 
-	<select id="memberList" parameterType="java.util.HashMap" resultType="map">
-    select
-           member_no,
-           member_domain,
-           member_id,
-           member_password,
-           member_name,
-           member_age,
-           member_birth,
-           member_email,
-           member_gender,
-           member_mobile,
-           member_nickname,
-           member_profile_image,
-           member_register_date,
-           member_zipcode,
-           member_address,
-           member_addr_detail
-      from member
-      <where>
-<!-- 		<if test='memberId!=null and memberId.length()>0'>
-			AND member_id = #{memberId}
-		</if> -->
-	    <if test='memberName!=null and memberName.length()>0'>
-	      AND member_name = #{memberName}
-	    </if>
-	    <if test='memberMobile!=null and memberMobile.length()>0'>
-	      AND member_mobile = #{memberMobile}
-	    </if>
-	  </where>
-</select >
+	<select id="memberList" parameterType="java.util.HashMap"
+		resultType="map">
+		SELECT
+		member_no,
+		member_domain,
+		member_id,
+		member_password,
+		member_name,
+		member_age,
+		member_birth,
+		member_email,
+		member_gender,
+		member_mobile,
+		member_nickname,
+		member_profile_image,
+		member_register_date,
+		member_zipcode,
+		member_address,
+		member_addr_detail
+		FROM member
+		<where>
+			<if test='memberId!=null and memberId.length()>0'>
+				AND member_id = #{memberId}
+			</if>
+			<if test='memberName!=null and memberName.length()>0'>
+				AND member_name = #{memberName}
+			</if>
+			<if test='memberMobile!=null and memberMobile.length()>0'>
+				AND member_mobile = #{memberMobile}
+			</if>
+		</where>
+	</select>
 
-  <update id="memberUpdate" parameterType="java.util.HashMap">
-    UPDATE member
-    SET member_password = #{memberPassword}
-  </update>
+	<update id="memberUpdate" parameterType="java.util.HashMap">
+		UPDATE member
+		SET member_password = #{memberPassword}
+	</update>
 </mapper>

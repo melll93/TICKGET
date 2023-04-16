@@ -26,11 +26,11 @@ const ResetPwPage = () => {
 
   const send = async (event) => {
     event.preventDefault();
-    console.log('비밀번호 찾기');
+    
     const member = {
+      mem_id: memInfo.id,
       mem_name: memInfo.name,
-      mem_tel: memInfo.mobile,
-      mem_email: memInfo.id,
+      mem_mobile: memInfo.mobile,
       type: 'overlap',
     };
     console.log(member);
@@ -39,23 +39,45 @@ const ResetPwPage = () => {
     const temp = JSON.stringify(res.data);
     const jsonDoc = JSON.parse(temp);
     console.log(jsonDoc[0]);
-  
+
+    // memberList를 타고는 있으나 값을 비교하지 못하고 있는 오류 발생 우짤램...
     if (!jsonDoc[0]) {
-      console.log('일치하는 아이디가 없습니다');
+      console.log('회원 정보 없음');
       dispatch(setToastMsg('일치하는 사용자 정보가 없습니다'));
-    } else {
-      console.log('일치하는 아이디가 있습니다.');
+      alert('회원가입되지 않은 아이디입니다');
+    } else if (jsonDoc[0].mem_id === memInfo.id && jsonDoc[0].mem_name === memInfo.name && jsonDoc[0].mem_tel === memInfo.mobile) {
+      console.log('비밀번호 변경 성공');
       window.location.href = '/changePw';
+    } else if (jsonDoc[0].mem_id === memInfo.id && jsonDoc[0].mem_name !== memInfo.name && jsonDoc[0].mem_tel !== memInfo.mobile) {
+      console.log('아이디 일치, 이름, 전화번호 불일치');
+      alert('회원 님의 이름과 전화번호를 다시 확인해 주세요.');
+    } else if (jsonDoc[0].mem_id === memInfo.id && jsonDoc[0].mem_name !== memInfo.name) {
+      console.log('아이디 일치, 이름 불일치');
+      alert('회원 님의 이름을 다시 확인해 주세요.');
+    } else if (jsonDoc[0].mem_id === memInfo.id && jsonDoc[0].mem_tel !== memInfo.mobile) {
+      console.log('아이디 일치, 전화번호 불일치');
+      alert('회원 님의 전화번호를 다시 확인해 주세요.');
+    } else {
+      console.log('사용자 정보 확인 실패');
+      alert('회원 님의 사용자 정보를 다시 확인해 주세요.');
     }
+/*     if (!jsonDoc[0]) {
+      console.log('회원 정보 없음');
+      dispatch(setToastMsg('일치하는 사용자 정보가 없습니다'));
+      alert('회원가입되지 않은 아이디입니다');
+    } else if (
+      jsonDoc[0].mem_name === memInfo.name &&
+      jsonDoc[0].mem_tel === memInfo.mobile
+    ) {
+      console.log('비밀번호 변경 성공');
+      window.location.href = '/changePw';
+    } else {
+      console.log('사용자 정보 확인 실패');
+      alert('회원 님의 사용자 정보를 다시 확인해 주세요.');
+    } */
   }
 
   return (
-    /* 
-      아이디를 통해 DB에서 이름과 전화번호값을 찾고 사용자가 입력한 이름과 전화번호가 일치하는 지 비교
-      일치하면 비밀번호 변경 페이지로 이동
-      불일치하면 alert -> 사용자와 일치하는 정보를 입력해 주세요
-      아이디 자체가 없는 경우 alert -> 사용자의 정보가 없습니다
-     */
     <LoginForm onSubmit={send}>
       <MyH1>비밀번호 변경</MyH1>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',Content: 'center', marginTop: '20px', width:"100%"}}>
