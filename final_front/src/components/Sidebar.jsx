@@ -6,14 +6,14 @@ import SearchBar from "./header/SearchBar";
 import "../styles/sidebar.css";
 
 const Sidebar = () => {
-  const [sidebar, setSidebar] = useState(240);
+  const [sidebar, setSidebar] = useState(225);
   const [isVisible, setIsVisible] = useState();
   const [buttonIcon, setButtonIcon] = useState("bi bi-caret-right-fill");
   const path = window.location.pathname;
 
   const setDefault = () => {
     if (path === "/") {
-      setSidebar(240)
+      setSidebar(225)
       setIsVisible(true)
     } else {
       setSidebar(0)
@@ -23,14 +23,14 @@ const Sidebar = () => {
 
   const handleSidebar = (boolean) => {
     if (isVisible) {
-      setSidebar(240)
+      setSidebar(225)
     } else {
 
     }
   }
 
   const openSidebar = () => {
-    setSidebar(240);
+    setSidebar(225);
     // setIsVisible(0);
   };
   const closeSidebar = () => {
@@ -44,7 +44,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="sidebar container" style={{ width: sidebar + 40 }}>
+      <div className="sidebar container" style={{ width: sidebar + 25 }}>
         <div className="sidebar items" style={{ width: sidebar }}>
           <img
             src="../logos/XBTN.png"
@@ -58,8 +58,8 @@ const Sidebar = () => {
           <MenuList />
           <SearchBar />
         </div>
-        <div className="sidebar button" style={{ width: 40, left: sidebar }}>
-          <i className={buttonIcon} style={{ fontSize: 30 }} onClick={openSidebar}></i>
+        <div className="sidebar button" style={{ width: 25, left: sidebar }}>
+          <i className={buttonIcon} style={{ fontSize: 20, color: "white" }} onClick={openSidebar}></i>
         </div>
       </div >
     </>
