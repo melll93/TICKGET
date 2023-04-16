@@ -93,6 +93,9 @@
            member_addr_detail
       from member
       <where>
+<!-- 		<if test='memberId!=null and memberId.length()>0'>
+			AND member_id = #{memberId}
+		</if> -->
 	    <if test='memberName!=null and memberName.length()>0'>
 	      AND member_name = #{memberName}
 	    </if>
@@ -105,8 +108,5 @@
   <update id="memberUpdate" parameterType="java.util.HashMap">
     UPDATE member
     SET member_password = #{memberPassword}
-    WHERE member_id = #{memberId}
-      AND member_name = #{memberName}
-      AND member_mobile = #{memberMobile}
   </update>
 </mapper>

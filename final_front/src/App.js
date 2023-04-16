@@ -27,7 +27,7 @@ import ChatPage from "./pages/menu/ChatPage";
 import MyPage from "./pages/personal/MyPage";
 import PayFailPage from "./pages/payment/PayFailPage";
 import PaySucPage from "./pages/payment/PaySucPage";
-import PaymentPage from "./pages/payment/PaymentPage";
+import FestivalPaymentPage from "./pages/festival/FestivalPaymentPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
 import TogetherBoardDetail from "./pages/board/together/TogetherBoardDetail";
@@ -39,6 +39,9 @@ import CarpoolUpdate from "./pages/board/carpool/CarpoolUpdate";
 import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import ChangePwPage from "./pages/member/ChangePwPage";
+import PaymentPage from "./pages/personal/PaymentPage";
+
+
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -96,6 +99,8 @@ function App({ mkImageUploader }) {
         <Route path="/productsDetail/:festMId" element={<FestivalsDetail />} />
         <Route path="/paymentsucess/:festMId" element={<PaySucPage />} />
         <Route path="/paymentfailed/:festMId" element={<PayFailPage />} />
+        <Route path="/payment2/:festMId" element={<FestivalPaymentPage />} />
+
 
         <Route path="/paymentsssss/:festMId" element={<PaymentPage />} />
 

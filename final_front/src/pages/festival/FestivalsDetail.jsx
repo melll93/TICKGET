@@ -1,38 +1,42 @@
-import { useCallback, useEffect, useState } from "react";
-import {
-  Button,
-  Modal,
-  Tab,
-  Tabs
-} from "react-bootstrap";
+import {useCallback, useEffect, useState} from "react";
+import {Modal, Tab, Tabs} from "react-bootstrap";
 import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  DeleteFestReviewDB,
-  DeleteFestivalDB,
-  FestReviewInsertDB,
-  FestivalReviewDB,
-  FetivalDetailDB,
-  UpdateFestReviewDB,
-} from "../../axios/festival/festival";
+import { DeleteFestReviewDB, DeleteFestivalDB, FestReviewInsertDB, FestivalReviewDB, FetivalDetailDB,
+  UpdateFestReviewDB } from "../../axios/festival/festival";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import "../../styles/festivaldetails.css";
+import "../../styles/Calendar.css";
 import TicketCancleInfo from "../../components/mypage/TicketCancleInfo";
-import {
-  BButton, BlackBtn
-} from "../../styles/formStyle";
+import {BButton, BlackBtn} from "../../styles/formStyle";
+import DropdownButton from "../../components/DropdownButton";
+import Cookies from 'js-cookie';
+
 
 const FestivalsDetail = () => {
   const navigate = useNavigate();
+  const [reviewToBeRevised, setReviewToBeRevised] = useState(null);
+
   let { festMId } = useParams();
 
-  const [festName, setFestMName] = useState("");
-  const [festStart, setFestMStart] = useState("");
-  const [festEnd, setFestMEnd] = useState("");
-  const [festLoc, setFestMLoc] = useState("");
-  const [festImg, setFestMImg] = useState("");
+  const options = [
+    { label: '1매', value: '1' },
+    { label: '2매', value: '2' },
+    { label: '3매', value: '3' },
+    { label: '4매', value: '4' },
+    { label: '5매', value: '5' },
+  ];
+  const [date, setDate] = useState(new Date());
+
+  const handleDateChange = (date) => {
+    console.log(date);
+    setDate(date);
+    Cookies.set('date', date.toISOString());
+  };
+
+
 
   const [festival, setFestival] = useState({
     festMId: "",
@@ -72,11 +76,11 @@ const FestivalsDetail = () => {
     asyncDB();
     return () => {};
   }, []);
-  console.log(festival)
+  /* console.log(festival)
   console.log(festival.festMId);
   console.log(festival.festPsUrl);
   console.log(festival.festTcPrice);
-
+ */
 
   const [lgShow, setLgShow] = useState(false); //리뷰수정모달
   const reduxUser = useSelector((state) => state.userStatus.user);
@@ -91,21 +95,6 @@ const FestivalsDetail = () => {
     document.querySelector("#product_detail_review_textarea").value = null;
   };
 
-  /* 수정중 */
-  /* const [Data, setData] = useState({});
-   */
-  // useEffect(() => {
-  //   axios.get(`/festival/festivalList?festMId=${festMId}&type=single`).then((response) => {
-  //     if (response.data.success) {
-  //       console.log(response.data);
-  //       setData(response.data.data[0]);
-  //       console.log(response.data.data[0])
-  //     } else {
-  //       alert("상세 정보 가져오기를 실패했습니다.");
-  //     }
-  //   });
-  // }, []);
-  /* 수정중 */
 
   /* 리뷰  관련*/
   const inputReviewContent = useCallback((e) => {
@@ -153,9 +142,7 @@ const FestivalsDetail = () => {
     useEffect(() => {
       FestivalReviewDB().then(setFreviews);
     }, []);
-    const click = () => {
-      setLgShow(true);
-    };
+   
     return (
       <>
         {freviews &&
@@ -174,14 +161,20 @@ const FestivalsDetail = () => {
                   <h3>{review.reviewContent}</h3>
                   id: {review.reviewMemid} 등록일시: {review.reviewRegdate}
                   리뷰번호: {review.reviewNo}
-                  {/* test_ reviewNo: {review.reviewNo} */}
+                  test_ reviewNo: {review.reviewNo}
                   {
                     //로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람과 작성자 일치 시 수정, 삭제 버튼 보이기
                     // sessionStorage.getItem('Member_name')==='Member_name(작성자)'&&
                     <div>
                       <BButton
                         style={{ width: "80px", height: "38px" }}
-                        onClick={click}
+                        onClick={()=>{ 
+                          console.log(review.reviewNo);
+                          setLgShow(true);
+                          setReviewToBeRevised(review); 
+                          console.log(review.reviewNo);
+
+                        }}
                       >
                         수정
                       </BButton>
@@ -209,16 +202,17 @@ const FestivalsDetail = () => {
                               placeholder="Leave a comment here"
                               id="product_detail_review_revised_textarea"
                               style={{
-                                height: "300px",
+                                height: "150px",
                                 margin: "10px",
-                                maxWidth: "1200px",
+                                width: "97%",
                               }}
                             ></textarea>
-                            <button
+                            <BlackBtn
                               className="reviseBtn"
                               onClick={async () => {
+                                setLgShow(true);
                                 const freview = {
-                                  reviewNo: review.reviewNo,
+                                  reviewNo: reviewToBeRevised.reviewNo,
                                   reviewContent: reviewRevisedContent,
                                 };
                                 const res = await UpdateFestReviewDB(freview);
@@ -229,13 +223,13 @@ const FestivalsDetail = () => {
                                 console.log(
                                   "수정완료" +
                                     reviewRevisedContent +
-                                    review.reviewNo
+                                    freview.reviewNo
                                 );
-                                console.log("리뷰번호" + review.reviewNo);
+                                console.log("리뷰번호" + freview.reviewNo);
                               }}
                             >
-                              ddddd{" "}
-                            </button>
+                              수정완료
+                            </BlackBtn>
                           </div>
                           <br />
                         </Modal.Body>
@@ -348,18 +342,27 @@ const FestivalsDetail = () => {
           <section>
             <div className="midContainerCalendarAndRestSeats">
               <span className="products_calendar">
-                <Calendar />
+                <Calendar value={date} onChange={handleDateChange}/>
               </span>
-              <span className="calendarands1">내용물1</span>
-              <span className="calendarands2">
+              <div className="calendarands1">내용물1
+              <p style={{border: '1px solid gray', borderRadius: '10px'}}>
+              일반석 / 시간 
+              </p>
+              
+              </div>
+              
+              
+              <div className="calendarands2">
                 잔여좌석<br></br>
+                <DropdownButton options={options} ></DropdownButton>
+                
                 <BlackBtn
                   width="250px"
-                  onClick={() => navigate("/payment/" + festMId)}
+                  onClick={() => navigate("/payment2/" + festMId)}
                 >
                   예매하기
                 </BlackBtn>
-              </span>
+              </div>
             </div>
           </section>
           {/* ////////////////////////////////////// 바텀 섹션///////////////////////////////////////////////////////////////////// */}
@@ -373,7 +376,6 @@ const FestivalsDetail = () => {
                 justify
               >
                 <Tab eventKey="product_detail_description" title="상세정보">
-                  상품상세정보 - img src 예정
                   <div
                     className="product_detail_description"
                     style={{

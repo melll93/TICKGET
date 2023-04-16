@@ -8,7 +8,7 @@ import {
   KyeongkiFestivalListDB,
   SeoulFestivalListDB,
 } from "../../axios/festival/festival";
-import PaginationPrac from "../../components/PaginationPrac";
+import CommonPagination from "../../components/CommonPagination";
 import FestivalNavbar from "../festival/FestivalNavbar";
 import HeaderSearchBar from "../../components/header/HeaderSearchBar";
 
@@ -157,13 +157,12 @@ const FestivalsTest = () => {
   const [page, setPage] = useState(1);
   const [perPage] = useState(20);
   const [test, setTest] = useState(0);
-  // console.log('랭스:'+festivals.length)
-  // console.log('perPage: ' + perPage)
-  useEffect(() => {
-    FetivalListDB().then(setFestivals);
-  }, []);
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
+  // console.log('랭스:'+festivals.length)
+  // console.log('perPage: ' + perPage)
+
+  
 
   const currentFest = (festivals) => {
     let currentFest = 0;
@@ -211,11 +210,11 @@ const FestivalsTest = () => {
           })}
       </div>
       <div style={{ textAlign: "center" }}>
-        <PaginationPrac
+        <CommonPagination
           currentFest={currentFest(festivals)}
           pagination={setPage}
           perPage={perPage}
-          totalFest={festivals.length}
+          totalItems={festivals.length}
         />
       </div>
     </>

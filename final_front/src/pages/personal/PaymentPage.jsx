@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Card } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 import { handlePayment } from '../../components/handlePayment'
 
@@ -11,9 +11,35 @@ const Cimg = styled.img`
 `;
 
 
-const PaymentPage = ({orderDetail, paymentData}) => {
-  console.log(paymentData)
+/* 
+To.성훈  
+쓰는 페이먼트 페이지에  orderDetail 요렇게 넘기면 안터질거얌....
+const orderDetail={
+  url:board_mk_fileurl,
+  title:board_mk_title,
+  seat : mk_ticket_seat,
+  date:mk_ticket_date,
+  place:mk_ticket_place,
+  amount:mk_ticket_count,
+  price:mk_ticket_price
+}
+ */
+
+
+const PaymentPage = ({orderDetail}) => {
+/*   console.log(paymentData)
+  console.log(orderDetail); */
    const navigate = useNavigate()
+   let totalPrice = orderDetail.amount*orderDetail.price
+let {no}=useParams()
+
+const paymentData={
+  amount:orderDetail.amount,
+  orderId:'assdasdadsad',
+  orderName:orderDetail.title,
+  customerName:"mem_id예정",
+  no,
+}
 
   return (
    <div className="center">
@@ -31,15 +57,15 @@ const PaymentPage = ({orderDetail, paymentData}) => {
 <section>
 <Card style={{width:'800px' , height:'200px' , border:'2px solid' , borderColor:'' }}>
    <Card.Body style={{ display: 'flex', alignItems: 'center' , marginLeft:'100px' }}>
-      <Cimg src={orderDetail.board_mk_fileurl}/>
+      <Cimg src={orderDetail.url}/>
       <div style={{ marginLeft: '50px' , textAlign:'center' }}>
      <div style={{ display: 'inline-block' , marginTop:'30px' }}>
-       <Card.Title style={{  fontSize: '24px'}}>{/* 상품명 */}{orderDetail.board_mk_title}</Card.Title>
+       <Card.Title style={{  fontSize: '24px'}}>{/* 상품명 */}{orderDetail.title}</Card.Title>
      </div>
      <div>
        <Card.Text style={{ fontSize: '20px'  }}>
          {/* 좌석정보 | 공연일 | 공연장소 */}
-        {orderDetail.mk_ticket_seat}  |  {orderDetail.mk_ticket_date}  |  {orderDetail.mk_ticket_place}
+        좌석정보(수정예정){orderDetail.seat}  |  {orderDetail.date}  |  {orderDetail.place}
        </Card.Text>
      </div>
      <hr style={{ opacity: '0.0' }} />
@@ -82,20 +108,19 @@ const PaymentPage = ({orderDetail, paymentData}) => {
       <div style={{ marginLeft: '20px' }}>
      <div style={{ display: 'inline-block' , marginTop:'10px' }}>
        <Card.Text style={{  fontSize: '22px'}}>
-         수량 <span style={{marginLeft:'400px'}}>{orderDetail.mk_ticket_count}장</span></Card.Text>
+         수량 <span style={{marginLeft:'400px', color:'black'}}>{orderDetail.amount}장</span></Card.Text>
      </div>
      <hr/>
      <div>
        <Card.Title style={{ fontSize: '24px' , fontWeight:'bold' , opacity:'0.9'}}>
-         결제 금액 <span style={{marginLeft:'320px', color:'red'}}>{orderDetail.mk_ticket_price} 원</span></Card.Title>
+         결제 금액 <span style={{marginLeft:'320px', color:'red'}}>{totalPrice} 원</span></Card.Title>
      </div>
      <hr style={{ opacity: '0.0' }} />
    </div>
  </Card.Body>
 </Card>
 <div>
-<Button style={{width:'400px'}} onClick={handlePayment(paymentData)}>토스 결제하기</Button>
-{/* <PaymentComponent /> */}
+<Button style={{width:'400px'}} onClick={()=>{handlePayment(paymentData)}}>토스 결제하기</Button>
 {/* <Button className="researvebtn" onClick={MarketPaymentComponent}>토스페이 결제하기</Button> */}
 <Button style={{width:'400px'}} onClick={() => navigate(-1)}>취소/이전으로</Button>
 </div>
