@@ -6,37 +6,40 @@ import SearchBar from "./header/SearchBar";
 import "../styles/sidebar.css";
 
 const Sidebar = () => {
-  const [sidebar, setSidebar] = useState(225);
-  const [isVisible, setIsVisible] = useState();
-  const [buttonIcon, setButtonIcon] = useState("bi bi-caret-right-fill");
+  const [sidebar, setSidebar] = useState();
+  const [buttonIcon, setButtonIcon] = useState();
+  const [isVisible, setIsVisible] = useState(true);
   const path = window.location.pathname;
 
   const setDefault = () => {
     if (path === "/") {
-      setSidebar(225)
       setIsVisible(true)
     } else {
-      setSidebar(0)
       setIsVisible(false)
     }
   }
 
-  const handleSidebar = (boolean) => {
-    if (isVisible) {
+  const handleSidebar = () => {
+    if (isVisible) { // 보여줄 때
       setSidebar(225)
-    } else {
-
+      setButtonIcon("bi bi-caret-left-fill")
+    } else { // 숨길 때
+      setSidebar(0)
+      setButtonIcon("bi bi-caret-right-fill")
     }
   }
 
-  const openSidebar = () => {
-    setSidebar(225);
-    // setIsVisible(0);
-  };
-  const closeSidebar = () => {
-    setSidebar(0);
-    // setIsVisible(40);
-  };
+  const handleClick = () => {
+    if (isVisible) {
+      setIsVisible(false)
+    } else {
+      setIsVisible(true)
+    }
+  }
+
+  useEffect(() => {
+    handleSidebar()
+  }, [isVisible])
 
   useEffect(() => {
     setDefault()
@@ -46,20 +49,15 @@ const Sidebar = () => {
     <>
       <div className="sidebar container" style={{ width: sidebar + 25 }}>
         <div className="sidebar items" style={{ width: sidebar }}>
-          <img
-            src="../logos/XBTN.png"
-            className="closebtn"
-            onClick={closeSidebar}
-            alt="x버튼"
-            style={{ width: "40px" }}
-          />
           <Profile />
           <PersonalTabs />
           <MenuList />
           <SearchBar />
         </div>
         <div className="sidebar button" style={{ width: 25, left: sidebar }}>
-          <i className={buttonIcon} style={{ fontSize: 20, color: "white" }} onClick={openSidebar}></i>
+          <div style={{ transform: "translate(0, 50%)" }}>
+            <i className={buttonIcon} style={{ fontSize: 20, color: "white" }} onClick={handleClick}></i>
+          </div>
         </div>
       </div >
     </>

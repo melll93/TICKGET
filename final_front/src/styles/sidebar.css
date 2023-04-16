@@ -10,7 +10,6 @@ div .sidebar.container {
   background-color: rgba(255, 255, 255, 0);
   overflow-x: hidden;
   transition: 0.5s;
-  width: 300px;
   height: 100%;
   top: 8vh;
   left: 0;
@@ -19,6 +18,8 @@ div .sidebar.container {
 div .ProfileBox {
   display: flex;
   justify-content: center;
+  height: 100px;
+  align-items: center;
 }
 
 div .sidebar.items {
@@ -44,6 +45,8 @@ div .sidebar.button {
   top: 5.5vh;
   overflow-x: hidden;
   transition: 0.5s;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
 }
 
 .icon {
