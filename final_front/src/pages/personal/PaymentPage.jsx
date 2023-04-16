@@ -27,18 +27,18 @@ const orderDetail={
 
 
 const PaymentPage = ({orderDetail}) => {
-/*   console.log(paymentData)
-  console.log(orderDetail); */
+/*   console.log(paymentData) */
+  console.log(orderDetail); 
    const navigate = useNavigate()
    let totalPrice = orderDetail.amount*orderDetail.price
 let {no}=useParams()
 
 const paymentData={
-  amount:orderDetail.amount,
-  orderId:'assdasdadsad',
-  orderName:orderDetail.title,
-  customerName:"mem_id예정",
-  no,
+  amount:totalPrice, //가격
+  orderId:'assdasdadsad',    //주문번호
+  orderName:orderDetail.title,  //주문명
+  customerName:"mem_id예정",     //구매자 이름
+  no, 
 }
 
 

@@ -1,5 +1,5 @@
 package back.spring.final_back.board.service;
-
+ 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -66,6 +66,14 @@ public class MarketServiceImpl implements MarketService {
 		int result = 0;
 		result = marketDao.mk_boardDelete(marketDto);
 		return result;
+	}
+
+	// 마켓 게시판 게시글 판매처리
+	@Override
+	public int mk_boardSell(MarketDto marketDto) {
+        int result = 0;
+        result = marketDao.mk_boardSell(marketDto);
+		return 0;
 	}
 
 }

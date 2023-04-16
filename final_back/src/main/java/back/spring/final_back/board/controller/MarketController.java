@@ -94,5 +94,13 @@ public class MarketController {
 		return result;
 	}
 	
+	//마켓 게시판 판매처리
+	@GetMapping("/mk_boardSell")
+	public int mk_boardSell(MarketDto marketDto) {
+		logger.info("MarketController : mk_boardSell 호출");
+		int result = 0;
+		result = marketService.mk_boardSell(marketDto);
+		return result;
+	}
 		
 	}

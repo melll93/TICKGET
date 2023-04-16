@@ -32,6 +32,9 @@ public class MarketDto {
 	private String boardMkFileurl;
 	private int boardMkStatus;
 	private int memNo;
+	
+	
+	//조건검색 시 필요
 	private String content;
 	private String condition;
 
