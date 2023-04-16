@@ -35,7 +35,7 @@ and payment_Id = #{paymentId} <!-- 회원고유번호로 수정?  -->
 <insert id="paymentInsert" parameterType="PaymentDto">
 insert into payment (payment_order_id,payment_order_name,payment_count,payment_price,payment_date,
                      payment_payer,payment_seller,board_mk_no)
-VALUES (#{paymentOrderId},#{paymentOrderName,#{paymentCount},#{paymentPrice},#{paymentDate},
+VALUES (#{paymentOrderId},#{paymentOrderName},#{paymentCount},#{paymentPrice},#{paymentDate},
        #{paymentPayer},#{paymentSeller},#{boardMkNo}
        <!-- 토스 페이먼츠 api에서 결제 성공 시 결제완료 URL로 이동된다. URL페이지가 호출됐을 때 결제정보가 insert되어야 한다.   -->
 </insert>

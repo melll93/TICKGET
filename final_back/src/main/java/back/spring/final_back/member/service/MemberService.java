@@ -8,4 +8,7 @@ public interface MemberService {
     public Object localMemberLogin(MemberDto memberDto);
     public MemberDto searchById();
 
+    public boolean checkIdExist();
+    public boolean checkNicknameExist();
+    public boolean checkEmailExist();
 }
