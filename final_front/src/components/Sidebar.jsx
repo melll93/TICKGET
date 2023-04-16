@@ -6,7 +6,7 @@ import SearchBar from "./header/SearchBar";
 import "../styles/sidebar.css";
 
 const Sidebar = () => {
-  const [sidebar, setSidebar] = useState();
+  const [sidebar, setSidebar] = useState("");
   const [buttonIcon, setButtonIcon] = useState();
   const [isVisible, setIsVisible] = useState(true);
   const path = window.location.pathname;
@@ -52,7 +52,6 @@ const Sidebar = () => {
           <Profile />
           <PersonalTabs />
           <MenuList />
-          <SearchBar />
         </div>
         <div className="sidebar button" style={{ width: 25, left: sidebar }}>
           <div style={{ transform: "translate(0, 50%)" }}>

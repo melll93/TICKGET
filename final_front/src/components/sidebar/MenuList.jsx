@@ -5,11 +5,11 @@ import SearchBar from "../header/SearchBar";
 const MenuList = () => {
   const [items, setItems] = useState([
     "FESTIVAL",
-    "CONCERT",
+    // "CONCERT",
     "TOGETHER",
     "CARPOOL",
     "MARKET",
-    "CALENDAR",
+    // "CALENDAR",
     "CHAT",
   ]);
 

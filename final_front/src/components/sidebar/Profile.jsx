@@ -10,9 +10,8 @@ const cookies = new Cookies();
 
 const Profile = () => {
   const _userData = cookies.get("_userData");
-  const dispatch = useDispatch();
-  const loginStatus = useSelector((state) => state.userStatus.isLogin);
-  const reduxUser = useSelector((state) => state.userStatus.user);
+  const access_token = window.localStorage.getItem("access_token");
+  console.log(access_token);
   const navigate = useNavigate();
   const logout = () => {
     window.localStorage.clear();
@@ -26,7 +25,7 @@ const Profile = () => {
   }
 
   const getProfile = () => {
-    if (!_userData) {
+    if (!_userData && access_token === null) {
       return (
         <div className="ProfileButton">
           <Link to="/login" className="link">
@@ -49,7 +48,9 @@ const Profile = () => {
                 <img
                   id="profile"
                   className="icon image40"
-                  src={_userData.profile_img ?? "../logos/PROFILE.png"}
+                  style={{ borderRadius: "50%" }}
+                  src="https://phinf.pstatic.net/contact/20230416_257/1681630347916iq32w_PNG/avatar_profile.png?type=s160"
+                // src={_userData.profile_img ?? "../logos/PROFILE.png"}
                 />
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown items">
