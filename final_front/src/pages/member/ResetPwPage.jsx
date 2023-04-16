@@ -18,6 +18,7 @@ const ResetPwPage = () => {
   const changeMemInfo = (e) => {
     const id = e.currentTarget.id;
     const value = e.target.value;
+    console.log(`${id}: ${value}`);
     setMemInfo({ ...memInfo, [id]: value });
   }
 
