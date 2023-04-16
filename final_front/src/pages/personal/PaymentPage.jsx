@@ -19,7 +19,6 @@ const PaymentPage = ({orderDetail, paymentData}) => {
 
 const handleToss = async() => {
   const res = await handlePayment(paymentData)
-  console.log(res.data);
 
 }
 

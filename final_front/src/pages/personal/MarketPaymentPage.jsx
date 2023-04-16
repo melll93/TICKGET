@@ -79,7 +79,7 @@ useEffect(() => {
 const paymentData = {
   amount : mkpDetail.ticketPrice,
   orderId : 'KjnHngSBVHXivyFnT4bMd',
-  orderName : mkpDetail.boadr_mk_title,
+  orderName : mkpDetail.board_mk_title,
   customerName: 'member_name',
   no : loc,
 }
