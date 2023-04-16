@@ -12,7 +12,7 @@ public interface FestivalService {
 
   List<FestivalDto> festivalList();
 
-  List<FestivalDto> areaFestivalList();
+  List<FestivalDto> areaFestivalList(String area);
 
   int festivalInsert(FestivalDto festivalDto);
 

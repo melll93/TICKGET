@@ -51,13 +51,11 @@ public class FestivalController {
 	}
 
 	@GetMapping("areaFestivalList")
-	public List<FestivalDto> areaFestivalList() {
+	public List<FestivalDto> areaFestivalList(@RequestParam String fest_m_area) {
 		List<FestivalDto> festival = null;
-		festival = festivalService.areaFestivalList();
+		festival =festivalService.areaFestivalList(fest_m_area); 
 		return festival;
 	}
-
-	
 
     @GetMapping("/festivalDetail")
     public FestivalDto festivalDetail(FestivalDto festivalDto) {

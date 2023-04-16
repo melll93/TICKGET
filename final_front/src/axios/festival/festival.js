@@ -1,6 +1,7 @@
 import { async } from "@firebase/util";
 import axios from "axios";
 
+/* 메인페이지 캐로쉘 상품*/
 export const festivalListByDate = async (date) => {
   const result = await axios({
     method: "GET",
@@ -14,6 +15,9 @@ export const festivalListByDate = async (date) => {
   return result;
 };
 
+
+
+/* 페스티발 페이지*/
 export const FestivalInsertDB = (festival) => {
   return new Promise((resolve, reject) => {
     try {
@@ -38,14 +42,6 @@ export const FetivalListDB = async (festival) => {
   return result;
 };
 
-export const DeleteFestReviewDB = async (freview) => {
-  const result = await axios({
-    method: "get",
-    url: "http://localhost:8888/review/reviewDelete",
-    params: freview,
-  }).then((res) => res.data);
-  return result;
-};
 
 export const DeleteFestivalDB = async (festival) => {
   const result = await axios({
@@ -56,35 +52,31 @@ export const DeleteFestivalDB = async (festival) => {
   return result;
 };
 
-export const SeoulFestivalListDB = (festival) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const response = axios({
-        method: "get",
-        url: "http://localhost:8888/festival/seoulFestivalList",
-        params: festival,
-      });
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
-  });
+
+/* 지역별 */
+export const areaFestivalListDB = async(festMArea) => {
+  const result = await axios({
+    method: "get",
+    url: `http://localhost:8888/festival/areaFestivalList?fest_m_area=${festMArea}`,
+    params: {festMArea},
+  }).then((res) => res.data);
+  return result;
 };
 
-export const KyeongkiFestivalListDB = (festival) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const response = axios({
-        method: "get",
-        url: "http://localhost:8888/festival/kyeongkiFestivalList",
-        params: festival,
-      });
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
-  });
+
+
+/* 
+페스티발 상세페이지 하단 - 리뷰
+*/
+export const DeleteFestReviewDB = async (freview) => {
+  const result = await axios({
+    method: "get",
+    url: "http://localhost:8888/review/reviewDelete",
+    params: freview,
+  }).then((res) => res.data);
+  return result;
 };
+
 
 export const FestivalReviewDB = async (freview) => {
   const result = await axios({
@@ -119,6 +111,11 @@ export const UpdateFestReviewDB = async (freview) => {
   return result;
 };
 
+
+
+/* 
+페스티발 상세페이지 
+*/
 export const FetivalDetailDB2 = async (festival) => {
   const result = await axios({
     method: "get",

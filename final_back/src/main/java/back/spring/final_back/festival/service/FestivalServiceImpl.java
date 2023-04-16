@@ -45,9 +45,9 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     @Override
-    public List<FestivalDto> areaFestivalList() {
+    public List<FestivalDto> areaFestivalList(String area) {
         List<FestivalDto> festival = null;
-        festival = festivalDao.areaFestivalList();
+        festival = festivalDao.areaFestivalList(area);
         return festival;
     }
 
