@@ -50,18 +50,16 @@ const MarketSearchBar = () => {
         search
           .replace(
             `&${search.split("&").filter((item) => {
-              return item.match("page");
-            })}&${search.split("&").filter((item) => {
               return item.match("content");
             })}`,
             `&condition=${tTitle}&content=${content}`
           )
-          .replace(
+           .replace(
             `&${search.split("&").filter((item) => {
               return item.match("page");
             })}`,
             "&page=1&"
-          );
+          ); 
     } else {
       path =
         location.pathname + search + `?condition=${tTitle}&content=${content}`;
