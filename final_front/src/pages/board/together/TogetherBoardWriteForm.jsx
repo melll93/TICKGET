@@ -4,11 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { insertTogetherDB } from "../../../axios/board/together/TogetherLogic";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
-import {
-  BButton,
-  ContainerDiv,
-  FormDiv,
-} from "../../../styles/formStyle";
+import { BButton, ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Sidebar from "../../../components/Sidebar";
 
 const TogetherBoardWriteForm = ({ board_together }) => {

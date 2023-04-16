@@ -38,15 +38,16 @@ public class TogetherReplyServiceImpl implements TogetherReplyService {
     @Override
     public int updateTogetherReply(TogetherReplyDto togetherReplyDto) {
         logger.info("TogetherReplyServiceImpl : updateTogetherReply");
-        int result = togetherReplyDao.insertTogetherReply(togetherReplyDto);
-        return result;
+        logger.error("update boardDto2 = {}", togetherReplyDto);
+        int result = togetherReplyDao.updateTogetherReply(togetherReplyDto);
+        return result; 
     }
 
     // 게시판 삭제(Delete)
     @Override
     public int deleteTogetherReply(TogetherReplyDto togetherReplyDto) {
         logger.info("TogetherReplyServiceImpl : deleteTogetherReply");
-        int result = togetherReplyDao.insertTogetherReply(togetherReplyDto);
+        int result = togetherReplyDao.deleteTogetherReply(togetherReplyDto);
         return result;
     }
 }

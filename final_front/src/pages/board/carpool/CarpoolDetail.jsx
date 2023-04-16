@@ -116,8 +116,8 @@ const CarpoolDetail = () => {
         <div style={{ height: "100px" }}></div>
         <br />
         <FormDiv style={{ width: "98%", margin: "10px" }}>
-        <h2>카풀 상세보기</h2>
-        <br/>
+          <h2>카풀 상세보기</h2>
+          <br />
           <div>
             <form method="post">
               <input type="hidden" name="boardCpNo" value="" />

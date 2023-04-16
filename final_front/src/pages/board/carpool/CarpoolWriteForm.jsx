@@ -25,7 +25,6 @@ const CarpoolWriteForm = ({ carpool }) => {
     setContent(value);
   }, []);
 
-
   const handleTitle = useCallback((e) => {
     setTitle(e);
   }, []);
@@ -59,12 +58,12 @@ const CarpoolWriteForm = ({ carpool }) => {
       boardCpMemId: sessionStorage.getItem("id"),
       boardCpDate: date,
     };
-    console.log(carpool)
+    console.log(carpool);
     // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
     // inser here
     try {
       const res = await insertCarpoolDB(carpool);
-      console.log("insertCarpoolDB : ",res.data);
+      console.log("insertCarpoolDB : ", res.data);
       // 성공시에 페이지 이동처리하기
       window.location.replace("/carpool");
     } catch (error) {
@@ -99,8 +98,7 @@ const CarpoolWriteForm = ({ carpool }) => {
                     alignItems: "center",
                     borderRadius: "10px",
                   }}
-                >
-                </div>
+                ></div>
                 <BButton
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}

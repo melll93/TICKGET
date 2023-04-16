@@ -114,7 +114,7 @@ const TogetherBoardUpdate = () => {
         <div style={{ height: "100px" }}></div>
         <FormDiv style={{ width: "98%", margin: "10px" }}>
           <h2>게시글 수정하기</h2>
-          <br/>
+          <br />
           <div>
             <form method="post">
               <div>

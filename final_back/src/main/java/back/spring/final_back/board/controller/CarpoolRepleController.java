@@ -27,7 +27,7 @@ public class CarpoolRepleController {
 	Logger logger = LoggerFactory.getLogger(CarpoolRepleController.class);
 	private final CarpoolReplyService carpoolReplyService;
 
-	// 게시판 조회(SelectAll)
+	// 댓글 조회(SelectAll)
 	@GetMapping("/selectCarpoolReplyList")
 	public List<CarpoolReplyDto> selectCarpoolReplyList(CarpoolReplyDto carpoolReplyDto) {
 		logger.info("CarpoolRepleController : selectCarpoolReplyList 호출");
@@ -36,7 +36,7 @@ public class CarpoolRepleController {
 		return mList;
 	}
 
-	// 게시판 등록(Insert)
+	// 댓글 등록(Insert)
 	@GetMapping("/insertCarpoolReply")
 	public int insertCarpoolReplyList(CarpoolReplyDto carpoolReplyDto) {
 		logger.info("CarpoolRepleController : insertCarpoolReplyList 호출");
@@ -44,7 +44,7 @@ public class CarpoolRepleController {
 		return result;
 	}
 
-	// 게시판 수정(Update)
+	// 댓글 수정(Update)
 	@PostMapping("/updateCarpoolReply")
 	public int updateCarpoolReplySubmit(@RequestBody CarpoolReplyDto carpoolReplyDto) {
 		logger.info("CarpoolRepleController : updateCarpoolReplySubmit 호출");
@@ -54,7 +54,7 @@ public class CarpoolRepleController {
 		return result;
 	}
 
-	// 게시판 삭제(Delete)
+	// 댓글 삭제(Delete)
 	@PostMapping("/deleteCarpoolReply")
 	public int deleteCarpoolReply(CarpoolReplyDto carpoolReplyDto) {
 		logger.info("CarpoolRepleController : deleteCarpoolReply 호출");

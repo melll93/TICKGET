@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+/* import React, { useState } from "react";
 import MapContainer from "./MapContainer";
 
 function LandingPage() {
@@ -53,3 +53,6 @@ function LandingPage() {
 }
 
 export default LandingPage;
+ */
+
+

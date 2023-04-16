@@ -112,11 +112,11 @@ const CarpoolUpdate = () => {
       <Header />
       <Sidebar />
       <ContainerDiv>
-      <div style={{ height: "100px" }}></div>
+        <div style={{ height: "100px" }}></div>
         <br />
         <FormDiv style={{ width: "98%", margin: "10px" }}>
-        <h2>카풀 게시판 수정하기</h2>
-        <br/>
+          <h2>카풀 게시판 수정하기</h2>
+          <br />
           <div>
             <form method="post">
               <div>

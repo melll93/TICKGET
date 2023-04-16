@@ -40,6 +40,7 @@ import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import PaymentPage from "./pages/personal/PaymentPage";
+// import LandingPage from "./pages/board/carpool/Practice/LandingPage.tsx";
 
 
 
@@ -106,37 +107,19 @@ function App({ mkImageUploader }) {
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<TogetherBoardWriteForm />} />
-        <Route
-          path="together/boardDetail/:boardTgNo"
-          element={<TogetherBoardDetail board={board} />}
-        />
+        <Route path="together/boardDetail/:boardTgNo" element={<TogetherBoardDetail board={board} />}/>
         <Route path="together/boardDetail/" element={<TogetherBoardDetail />} />
-        <Route
-          path="together/boardUpdate/:boardTgNo"
-          element={<TogetherBoardUpdate />}
-        />
+        <Route path="together/boardUpdate/:boardTgNo" element={<TogetherBoardUpdate />} />
 
         {/* CarpoolPage Routes */}
         <Route path="carpool/write/*" element={<CarpoolWrietForm />} />
-        <Route
-          path="carpool/carpoolDetail/:boardCpNo"
-          element={<CarpoolDetail carpool={carpool} />}
-        />
+        <Route path="carpool/carpoolDetail/:boardCpNo" element={<CarpoolDetail carpool={carpool} />}/>
         <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
-        <Route
-          path="carpool/carpoolUpdate/:boardCpNo"
-          element={<CarpoolUpdate />}
-        />
-
-        <Route
-          path="carpool/carpoolDetail/:carpoolNo"
-          element={<CarpoolDetail carpool={carpool} />}
-        />
+        <Route path="carpool/carpoolUpdate/:boardCpNo" element={<CarpoolUpdate />} />
+        <Route path="carpool/carpoolDetail/:carpoolNo" element={<CarpoolDetail carpool={carpool} />}/>
         <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
-        <Route
-          path="carpool/carpoolUpdate/:carpoolNo"
-          element={<CarpoolUpdate />}
-        />
+        <Route path="carpool/carpoolUpdate/:carpoolNo" element={<CarpoolUpdate />}/>
+        {/* <Route path="carpool/test" element={<LandingPage />}/> */}
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route

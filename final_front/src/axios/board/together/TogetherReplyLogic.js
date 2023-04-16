@@ -18,6 +18,7 @@ import axios from "axios";
 
   /* 등록하기 */
 export const insertTogetherReplyDB = (boardReply) => {
+  console.log("insertTogetherReplyDB ", boardReply)
     return new Promise((resolve, reject) => {
       try {
         const response = axios({
@@ -31,3 +32,37 @@ export const insertTogetherReplyDB = (boardReply) => {
       }
     });
   };
+
+  /* 삭제 */
+export const deleteTogetherReplyDB = (boardReply) => {
+  console.log("deleteTogetherReplyDB의 boardReply = ",boardReply)
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/board/deleteTogetherReply",
+        data: boardReply,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+  /* 수정 */
+export const updateTogetherReplyDB = (boardReply) => {
+  console.log("updateTogetherReplyDB boardReply = ",boardReply)
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/board/updateTogetherReply",
+        data: boardReply,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

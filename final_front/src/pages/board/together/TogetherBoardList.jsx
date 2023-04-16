@@ -13,11 +13,10 @@ const TogetherBoardList = (board) => {
   console.log("BoardList");
   const navigate = useNavigate();
   const [boardList, setBoardList] = useState([]);
-  
+
   const [page, setPage] = useState(1);
   const [perPage] = useState(15);
 
-  
   useEffect(() => {
     selectBoardList();
   }, []);
@@ -25,12 +24,11 @@ const TogetherBoardList = (board) => {
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
 
-
   const currentFest = (boardList) => {
-  let currentFest = 0;
-  currentFest = boardList.slice(indexOfFirstPost, indexOfLastPost);
-  return currentFest;
-};
+    let currentFest = 0;
+    currentFest = boardList.slice(indexOfFirstPost, indexOfLastPost);
+    return currentFest;
+  };
 
   const selectBoardList = async () => {
     const res = await selectTogetherDB();
@@ -96,10 +94,12 @@ const TogetherBoardList = (board) => {
               ))}
             </tbody>
           </Table>
-         
         </div>
-        <CommonPagination pagination={setPage}
-                  perPage={perPage} totalItems={boardList.length}></CommonPagination>
+        <CommonPagination
+          pagination={setPage}
+          perPage={perPage}
+          totalItems={boardList.length}
+        ></CommonPagination>
         <div
           style={{
             display: "flex",
@@ -107,8 +107,6 @@ const TogetherBoardList = (board) => {
             marginTop: "20px",
           }}
         >
-
-
           <Button
             variant="warning"
             style={{
