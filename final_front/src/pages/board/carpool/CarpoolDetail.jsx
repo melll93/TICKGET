@@ -268,13 +268,18 @@ const CarpoolDetail = () => {
               rows="3"
               className="form-control"
             />
-            <button
-              style={{ margin: "30px", width: "80px" }}
+          </div>
+
+            <Button
+              style={{
+                marginLeft: "10px",
+                backgroundColor: "black",
+                textAlign: "center",
+              }}
               onClick={submitComment}
             >
               댓글 등록
-            </button>
-          </div>
+            </Button>
 
           <div
             style={{
@@ -297,11 +302,10 @@ const CarpoolDetail = () => {
               }}
             >
               회원아이디 : {boardReply.boardReplyCpMemId} 아이디없음{" "}
-              <div style={{ fontSize: "12px" }}>
+              <div style={{ fontSize: "8px" }}>
                 작성 시간 : ({boardReply.boardReplyCpDate})
               </div>
               <h3>
-                &nbsp;
                 <div className="replyContent">
                   <span style={{ color: "red" }}> → </span>
                   <span className="replyContentVal" style={{ color: "black" }}>
