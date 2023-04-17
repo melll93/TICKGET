@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Switch } from "react-router-dom";
 import "./App.css";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
@@ -40,7 +40,7 @@ import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import PaymentPage from "./pages/personal/PaymentPage";
-// import LandingPage from "./pages/board/carpool/Practice/LandingPage.tsx";
+import LandingPage from "./pages/board/carpool/Practice/LandingPage.tsx";
 
 
 
@@ -119,7 +119,11 @@ function App({ mkImageUploader }) {
         <Route path="carpool/carpoolDetail/:carpoolNo" element={<CarpoolDetail carpool={carpool} />}/>
         <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
         <Route path="carpool/carpoolUpdate/:carpoolNo" element={<CarpoolUpdate />}/>
-        {/* <Route path="carpool/test" element={<LandingPage />}/> */}
+
+    {/*<Switch>
+        <Route path="carpool/test" component={LandingPage}/>
+        </Switch> */}
+
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route

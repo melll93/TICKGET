@@ -17,7 +17,7 @@ public class CarpoolReplyServiceImpl implements CarpoolReplyService {
     Logger logger = LoggerFactory.getLogger(TogetherReplyServiceImpl.class);
     private final CarpoolReplyDao carpoolReplyDao;
 
-    // 댓글 조회(SelectAll)
+    // Carpool 댓글 조회(SelectAll)
     @Override
     public List<CarpoolReplyDto> selectCarpoolReplyList(CarpoolReplyDto carpoolReplyDto) {
         logger.info("CarpoolReplyServiceImpl : selectCarpoolReplyList");
@@ -26,7 +26,7 @@ public class CarpoolReplyServiceImpl implements CarpoolReplyService {
         return mList;
     }
 
-    // 댓글 등록(Insert)
+    // Carpool 댓글 등록(Insert)
     @Override
     public int insertCarpoolReply(CarpoolReplyDto carpoolReplyDto) {
         logger.info("CarpoolReplyServiceImpl : insertCarpoolReply");
@@ -34,7 +34,7 @@ public class CarpoolReplyServiceImpl implements CarpoolReplyService {
         return result;
     }
 
-    // 댓글 수정(Update)
+    // Carpool 댓글 수정(Update)
     @Override
     public int updateCarpoolReply(CarpoolReplyDto carpoolReplyDto) {
         logger.info("CarpoolReplyServiceImpl : updateCarpoolReply");
@@ -42,7 +42,7 @@ public class CarpoolReplyServiceImpl implements CarpoolReplyService {
         return result;
     }
 
-    // 댓글 삭제(Delete)
+    // Carpool 댓글 삭제(Delete)
     @Override
     public int deleteCarpoolReply(CarpoolReplyDto carpoolReplyDto) {
         logger.info("CarpoolReplyServiceImpl : deleteCarpoolReply");

@@ -1,18 +1,15 @@
 package back.spring.final_back.board.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import back.spring.final_back.board.repository.TogetherReplyDto;
@@ -28,7 +25,7 @@ public class TogetherRepleController {
 	Logger logger = LoggerFactory.getLogger(TogetherRepleController.class);
 	private final TogetherReplyService togetherReplyService;
 
-	// 게시판 조회(SelectAll)
+	// 게시판 댓글 조회(SelectAll)
 	@GetMapping("/selectTogetherReplyList")
 	public List<TogetherReplyDto> selectTogetherReplyList(TogetherReplyDto togetherReplyDto) {
 		logger.info("TogetherRepleController : selectTogetherReplyList 호출");
@@ -37,7 +34,7 @@ public class TogetherRepleController {
 		return mList;
 	}
 
-	// 게시판 등록(Insert)
+	// 게시판 댓글 등록(Insert)
 	@GetMapping("/insertTogetherReply")
 	public int insertTogetherReplyList(TogetherReplyDto togetherReplyDto) {
 		logger.info("TogetherRepleController : insertTogetherReply");
@@ -45,7 +42,7 @@ public class TogetherRepleController {
 		return result;
 	}
 
-	// 게시판 수정(Update)
+	// 게시판 댓글 수정(Update)
 	@PostMapping("/updateTogetherReply")
 	public int updateTogetherReplySubmit(@RequestBody TogetherReplyDto togetherReplyDto) {
 		logger.info("TogetherRepleController : updateTogetherReplySubmit");
@@ -55,7 +52,7 @@ public class TogetherRepleController {
 		return result;
 	}
 
-	// 게시판 삭제(Delete)
+	// 게시판 댓글 삭제(Delete)
 	@PostMapping("/deleteTogetherReply")
 	public int deleteTogetherReply(@RequestBody TogetherReplyDto togetherReplyDto) {
 		logger.info("TogetherRepleController : deleteTogetherReply 호출");

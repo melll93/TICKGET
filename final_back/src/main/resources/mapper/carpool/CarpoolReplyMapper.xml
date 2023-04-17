@@ -29,16 +29,14 @@
 
     <!-- 댓글 삭제 -->
     <delete id="deleteCarpoolReply" parameterType="CarpoolReplyDto">
-        delete from board_reply_carpool where board_reply_cp_no=#{boardReplyCpNo}
-    </delete>
+        delete from board_reply_carpool where board_cp_no = #{boardCpNo} and board_reply_cp_no = #{boardReplyCpNo}
+	</delete>
 
     <!-- 댓글 수정 -->
     <update id="updateCarpoolReply" parameterType="CarpoolReplyDto">
         update board_reply_carpool set
-            board_reply_cp_title = #{boardReplyCpTitle} ,
-            board_reply_cp_content = #{boardReplyCpContent},
-            board_reply_cp_date = #{boardReplyCpDate}
-        where board_reply_cp_no = #{boardReplyCpNo}
+            board_reply_cp_content = #{boardReplyCpContent}
+        where board_cp_no = #{boardCpNo} and board_reply_cp_no = #{boardReplyCpNo}
     </update>
     
 </mapper>

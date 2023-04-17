@@ -129,7 +129,7 @@ const TogetherBoardDetail = () => {
     try {
       const res = await insertTogetherReplyDB(boardReply);
       // 성공시에 페이지 이동처리하기
-      navigate("/together/BoardDetail/" + boardTgNo);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -144,7 +144,7 @@ const TogetherBoardDetail = () => {
       <Sidebar />
       <ContainerDiv>
         <div style={{ height: "100px" }}></div>
-        <FormDiv style={{ width: "98%", margin: "10px" }}>
+        <div style={{ width: "98%", margin: "10px" }}>
           <h2>게시글 상세보기</h2>
           <div>
             <form method="post">
@@ -258,9 +258,12 @@ const TogetherBoardDetail = () => {
                 />
                 <button
                   style={{ margin: "30px", width: "80px" }}
-                  onClick={submitComment}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    submitComment();
+                  }}
                 >
-                  등록
+                  댓글 등록
                 </button>
               </div>
 
@@ -272,6 +275,7 @@ const TogetherBoardDetail = () => {
                 }}
               />
               <br />
+
               <label>댓글리스트</label>
               {boardReplyList.map((boardReply) => (
                 <div
@@ -408,7 +412,7 @@ const TogetherBoardDetail = () => {
               ))}
             </form>
           </div>
-        </FormDiv>
+        </div>
       </ContainerDiv>
     </div>
   );

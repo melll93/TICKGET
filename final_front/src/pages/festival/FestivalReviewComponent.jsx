@@ -51,7 +51,6 @@ const FestivalReviewComponent = () => {
   useEffect(() => {
     FestivalReviewDB().then(setFreviews);
   }, []);
-  
   const click = () => {
     setLgShow(true);
   };

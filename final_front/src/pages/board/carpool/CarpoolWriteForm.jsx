@@ -1,11 +1,10 @@
-import React, { useCallback, useRef, useState } from "react";
-import { Form } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { BButton, ContainerDiv, FormDiv } from "../../../styles/formStyle";
+import { Button } from "react-bootstrap";
 import Footer from "../../../components/Footer";
 import LandingPage from "./Map/LandingPage";
 
