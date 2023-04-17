@@ -165,6 +165,20 @@ export const BButton = styled.button`
   }
 `;
 
+//마켓게시판용 버튼
+export const MButton = styled.button`
+  border-radius: 7px;
+  border: 1px solid white;
+  background-color: rgb(80, 50, 200);
+  color: white;
+  width: 100px;
+  height: 35px;
+  font-weight: bold;
+  &:hover {
+    background-color: rgb(50, 50, 120);
+  }
+`;
+
 export const ContainerDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -185,6 +199,7 @@ export const FormDiv = styled.div`
   justify-content: space-between;
 `;
 
+//마켓게시판용
 export const MkFormDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -198,8 +213,9 @@ export const MkFormDiv = styled.div`
 export const HeaderDiv = styled.div`
   display: flex;
   width: 90%;
-  max-width: 1200px;
+  max-width: 2000px;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
 `;
 

@@ -180,7 +180,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
         <ContainerDiv>
           <HeaderDiv>
             <div className="form-floating mb-3">
-              <h3 style={{ marginLeft: "450px" }}>티켓 중고판매 글 작성</h3>
+              <h3 style={{ marginLeft: "700px" }}>티켓 중고판매 글 작성</h3>
             </div>
           </HeaderDiv>
 
@@ -324,7 +324,14 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
               {/*   <MarketFileInsert files={files} /> */}
               <hr style={{ opacity: "0%" }} />
-              <Button onClick={handleSubmit}
+              <Button style={
+                {backgroundColor:"rgb(80,50,200)" 
+                , border:'1px solid white'
+                , fontWeight:'bold'
+                , transition:'background-color 0.3s ease',
+              }}
+              onClick={handleSubmit}
+
               /*     onClick={() => {
                     boardInsert();
                   }} */
