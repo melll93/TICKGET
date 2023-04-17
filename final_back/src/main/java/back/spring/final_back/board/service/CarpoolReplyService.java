@@ -1,7 +1,6 @@
 package back.spring.final_back.board.service;
 
 import java.util.List;
-import java.util.Map;
 
 import back.spring.final_back.board.repository.CarpoolReplyDto;
 

@@ -1,14 +1,13 @@
 package back.spring.final_back.board.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import back.spring.final_back.board.repository.TogetherReplyDto;
 import back.spring.final_back.board.repository.TogetherReplyDao;
+import back.spring.final_back.board.repository.TogetherReplyDto;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -40,7 +39,7 @@ public class TogetherReplyServiceImpl implements TogetherReplyService {
         logger.info("TogetherReplyServiceImpl : updateTogetherReply");
         logger.error("update boardDto2 = {}", togetherReplyDto);
         int result = togetherReplyDao.updateTogetherReply(togetherReplyDto);
-        return result; 
+        return result;
     }
 
     // Together 게시판 댓글 삭제(Delete)

@@ -61,7 +61,7 @@ public class CarpoolController {
         return result;
     }
 
-    // 게시글 수정(Update)
+    // Carpool 게시글 수정(Update)
     @GetMapping("/updateCarpool")
     public CarpoolDto updateCarpool(CarpoolDto carpoolDto) {
         logger.info("CarpoolController : updateCarpool select");

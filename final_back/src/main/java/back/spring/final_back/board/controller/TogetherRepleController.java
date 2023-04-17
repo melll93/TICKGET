@@ -25,7 +25,7 @@ public class TogetherRepleController {
 	Logger logger = LoggerFactory.getLogger(TogetherRepleController.class);
 	private final TogetherReplyService togetherReplyService;
 
-	// 게시판 댓글 조회(SelectAll)
+	// Together 게시판 댓글 조회(SelectAll)
 	@GetMapping("/selectTogetherReplyList")
 	public List<TogetherReplyDto> selectTogetherReplyList(TogetherReplyDto togetherReplyDto) {
 		logger.info("TogetherRepleController : selectTogetherReplyList 호출");
@@ -34,7 +34,7 @@ public class TogetherRepleController {
 		return mList;
 	}
 
-	// 게시판 댓글 등록(Insert)
+	// Together 게시판 댓글 등록(Insert)
 	@GetMapping("/insertTogetherReply")
 	public int insertTogetherReplyList(TogetherReplyDto togetherReplyDto) {
 		logger.info("TogetherRepleController : insertTogetherReply");
@@ -42,7 +42,7 @@ public class TogetherRepleController {
 		return result;
 	}
 
-	// 게시판 댓글 수정(Update)
+	// Together 게시판 댓글 수정(Update)
 	@PostMapping("/updateTogetherReply")
 	public int updateTogetherReplySubmit(@RequestBody TogetherReplyDto togetherReplyDto) {
 		logger.info("TogetherRepleController : updateTogetherReplySubmit");
@@ -52,7 +52,7 @@ public class TogetherRepleController {
 		return result;
 	}
 
-	// 게시판 댓글 삭제(Delete)
+	// Together 게시판 댓글 삭제(Delete)
 	@PostMapping("/deleteTogetherReply")
 	public int deleteTogetherReply(@RequestBody TogetherReplyDto togetherReplyDto) {
 		logger.info("TogetherRepleController : deleteTogetherReply 호출");

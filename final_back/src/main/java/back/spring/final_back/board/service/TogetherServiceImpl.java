@@ -1,6 +1,5 @@
 package back.spring.final_back.board.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ public class TogetherServiceImpl implements TogetherService {
     Logger logger = LoggerFactory.getLogger(TogetherServiceImpl.class);
     private final TogetherDao togetherDao;
 
-    // 게시판 조회(SelectAll)
+    // Together 게시판 조회(SelectAll)
     @Override
     public List<TogetherDto> selectBoardList() {
         logger.info("TogetherServiceImpl : selectBoardList");
@@ -28,7 +27,7 @@ public class TogetherServiceImpl implements TogetherService {
         return mList;
     }
 
-    // 게시글 상세보기(SelectOne)
+    // Together 게시글 상세보기(SelectOne)
     @Override
     public TogetherDto selectBoardDetail(TogetherDto togetherDto) {
         logger.info("TogetherServiceImpl : selectBoardDetail");
@@ -36,7 +35,7 @@ public class TogetherServiceImpl implements TogetherService {
         return mList;
     }
 
-    // 게시판 등록(Insert)
+    // Together 게시판 등록(Insert)
     @Override
     public int insertBoardList(TogetherDto togetherDto) {
         logger.info("TogetherServiceImpl : insertBoardList");
@@ -44,7 +43,7 @@ public class TogetherServiceImpl implements TogetherService {
         return result;
     }
 
-    // 게시판 수정(Update)
+    // Together 게시판 수정(Update)
     @Override
     public int updateBoardList(TogetherDto togetherDto) {
         logger.info("TogetherServiceImpl : updateBoardList");
@@ -52,7 +51,7 @@ public class TogetherServiceImpl implements TogetherService {
         return result;
     }
 
-    // 게시판 삭제(Delete)
+    // Together 게시판 삭제(Delete)
     @Override
     public int deleteBoardList(TogetherDto togetherDto) {
         logger.info("TogetherServiceImpl : deleteBoardList");
@@ -60,7 +59,7 @@ public class TogetherServiceImpl implements TogetherService {
         return result;
     }
 
-    //조회수 증가
+    //Together 게시판 조회수 증가
     @Override
     public void viewUp(@RequestParam Map<String, Object> pMap) {
         logger.info("TogetherServiceImpl : viewUp");
