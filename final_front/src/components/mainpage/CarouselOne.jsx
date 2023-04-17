@@ -6,7 +6,7 @@ const CarouselOne = ({ festival }) => {
 
   return (
     <>
-      <a href={"/productsDetail/" + festival.festId}>
+      <a href={"/productsDetail/" + festival.festMId}>
         <img className="compo_carouselone_img" src={festival.festMImg} />
       </a>
     </>

@@ -21,7 +21,7 @@ const FestivalPaymentPage = () => {
       festMLoc: "",
       festMImg: "",
       festPsUrl:"",
-      festTcPrice:0,
+      festTcPrice:"",
       festDtRuntime:"",
       festDtAge:"",
     });

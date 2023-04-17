@@ -52,7 +52,7 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     @Override
-    public int festivalDelete(Integer fest_m_id) {
+    public int festivalDelete(String fest_m_id) {
         log.info("fest 서비스임플 삭제");
         int result = 0;
         result = festivalDao.festivalDelete(fest_m_id);

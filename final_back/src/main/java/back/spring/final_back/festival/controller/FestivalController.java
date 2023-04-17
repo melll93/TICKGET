@@ -59,7 +59,11 @@ public class FestivalController {
 
     @GetMapping("/festivalDetail")
     public FestivalDto festivalDetail(FestivalDto festivalDto) {
-    	FestivalDto festival = festivalService.festivalDetail(festivalDto);
+        FestivalDto festival = festivalService.festivalDetail(festivalDto);
+		/*
+		 * int ticketPrice = festivalDto.getFestTcPrice() null ? 0 :
+		 * festival.getFestTcPrice(); festival.setFestTcPrice(ticketPrice);
+		 */
         return festival;
     }
 
@@ -71,7 +75,7 @@ public class FestivalController {
 	}
 
 	@GetMapping("festivalDelete")
-	public String festivalDelete(Integer fest_m_id) {
+	public String festivalDelete(@RequestParam String fest_m_id) {
 		logger.info("컨트롤러 페스티발삭제 id넘버 " + fest_m_id);
 		int result = 0;
 		result = festivalService.festivalDelete(fest_m_id);

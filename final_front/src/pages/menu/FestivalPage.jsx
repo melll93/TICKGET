@@ -8,8 +8,6 @@ import {
   areaFestivalListDB,
 } from "../../axios/festival/festival";
 import CommonPagination from "../../components/CommonPagination";
-import FestivalNavbar from "../festival/FestivalNavbar";
-import HeaderSearchBar from "../../components/header/HeaderSearchBar";
 
 ///////////////////////////////      페스티발 지역별   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const FestivalAreaList = ({selectedNavbarValue}) => {
@@ -53,8 +51,8 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
                   style={{ textDecoration: "none", color: "black" }}
                   href={"/productsDetail/" + festival.festMId}
                 >
-                  <img src={festival.festMImg} width="100%" alt="사진1" />
-                  <div className="card-body">
+                  <img src={festival.festMImg} style={{width:"100%", overflow:'hidden', height:'400px'}} alt="사진1" />
+                  <div className="card-body"  style={{overflow:'hidden', height:'220px'}}>
                     <h5 className="card-title">제목 : {festival.festMName}</h5>
                     <p className="card-text">로케 : {festival.festMLoc}</p>
                     <p className="card-text">
@@ -153,9 +151,9 @@ const FestivalsTest = () => {
             return (
               <div
                 key={festival.festMId}
-                className="card"
+                className="card "
                 style={{
-                  width: "18rem",
+                 width: "18rem", 
                   display: "inline-block",
                   margin: "50px 0px 0px 50px",
                 }}
@@ -164,18 +162,16 @@ const FestivalsTest = () => {
                   style={{ textDecoration: "none", color: "black" }}
                   href={"/productsDetail/" + festival.festMId}
                 >
-                  <img src={festival.festMImg} width="100%" alt="사진1" />
-                  <div className="card-body">
+                  <img src={festival.festMImg} style={{width:"100%", overflow:'hidden', height:'400px'}} alt="사진1" />
+                  <div className="card-body" style={{overflow:'hidden', height:'220px'}} >
                     <h5 className="card-title">제목 : {festival.festMName}</h5>
                     <p className="card-text">로케 : {festival.festMLoc}</p>
                     <p className="card-text">
-                      {" "}
-                      {festival.festMStart} ~ {festival.festMEnd}{" "}
+                      {festival.festMStart} ~ {festival.festMEnd}
                     </p>
-                    <p className="card-text"> festId: {festival.festMId} </p>
+                {/*     <p className="card-text"> festId: {festival.festMId} </p> */}
                     <p className="card-text">
-                      {" "}
-                      festCategory: {festival.festMGenre}{" "}
+                      festCategory: {festival.festMGenre}
                     </p>
                   </div>
                 </a>

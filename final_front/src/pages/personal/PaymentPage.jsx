@@ -3,6 +3,7 @@ import { Button, Card } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 import { handlePayment } from '../../components/handlePayment'
+import { BlackBtn } from '../../styles/formStyle';
 
 const Cimg = styled.img`
   width: 150px;
@@ -27,25 +28,31 @@ const orderDetail={
 
 
 const PaymentPage = ({orderDetail}) => {
-/*   console.log(paymentData) */
+  /*   console.log(paymentData) */
   console.log(orderDetail); 
-   const navigate = useNavigate()
-   let totalPrice = orderDetail.amount*orderDetail.price
-let {no}=useParams()
+  const navigate = useNavigate()
+  let totalPrice = orderDetail.amount*orderDetail.price
+  let {no}=useParams()
+/*   const date = orderDetail.date.split("T")[0]
+  const time = orderDetail.date.split("T")[1].split(":")[0]
+  console.log(time)
+console.log(date) */
+
+
+
 
 const paymentData={
   amount:totalPrice, //가격
   orderId:'assdasdadsad',    //주문번호
   orderName:orderDetail.title,  //주문명
   customerName:"mem_id예정",     //구매자 이름
-  no, 
+  no,      
 }
 
 
 
 const handleToss = async() => {
   const res = await handlePayment(paymentData)
-
 }
 
 
@@ -73,7 +80,7 @@ const handleToss = async() => {
      <div>
        <Card.Text style={{ fontSize: '20px'  }}>
          {/* 좌석정보 | 공연일 | 공연장소 */}
-        좌석정보(수정예정){orderDetail.seat}  |  {orderDetail.date}  |  {orderDetail.place}
+        좌석정보(수정예정){orderDetail.seat}  |  {orderDetail.date} |  {orderDetail.place}
        </Card.Text>
      </div>
      <hr style={{ opacity: '0.0' }} />
@@ -128,10 +135,11 @@ const handleToss = async() => {
  </Card.Body>
 </Card>
 <div>
-<Button style={{width:'400px'}} onClick={handleToss}>토스 결제하기</Button>
+  <br/>
+<BlackBtn width='400px' onClick={()=>{handleToss(paymentData)}}>토스 결제하기</BlackBtn>
 {/* <PaymentComponent /> */}
 {/* <Button className="researvebtn" onClick={MarketPaymentComponent}>토스페이 결제하기</Button> */}
-<Button style={{width:'400px'}} onClick={() => navigate(-1)}>취소/이전으로</Button>
+<BlackBtn width='400px' onClick={() => navigate(-1)}>취소/이전으로</BlackBtn>
 </div>
 </section>
    </div>
@@ -142,3 +150,5 @@ const handleToss = async() => {
 }
 
 export default PaymentPage
+
+

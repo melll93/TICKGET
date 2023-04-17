@@ -70,6 +70,7 @@ const FestivalsDetail = () => {
       });
       if (res.data) {
         setFestival(res.data);
+        
       } else {
         console.log("조회 실패");
       }
@@ -77,11 +78,7 @@ const FestivalsDetail = () => {
     asyncDB();
     return () => {};
   }, []);
-  /* console.log(festival)
-  console.log(festival.festMId);
-  console.log(festival.festPsUrl);
-  console.log(festival.festTcPrice);
- */
+
 
   const [lgShow, setLgShow] = useState(false); //리뷰수정모달
   const reduxUser = useSelector((state) => state.userStatus.user);
@@ -119,17 +116,32 @@ const FestivalsDetail = () => {
 
   /* 상품삭제 */
   const deleteProducts = async () => {
+    console.log(festMId);
     const festival = {
       fest_m_id: festMId,
     };
     const res = await DeleteFestivalDB(festival);
-    console.log(festival);
     if (!res.data) {
     } else {
     }
-    navigate(-1);
-    console.log(festMId);
+    navigate('/festival');
   };
+
+
+  /* 상품수정 */
+  const updateProducts = async () => {
+ console.log('수정버튼 클릭드');
+  /*      const festival = {
+      fest_m_id: festMId,
+    };
+    const res = await DeleteFestivalDB(festival);
+    if (!res.data) {
+    } else {
+    }
+    navigate(-1); */
+  };
+
+
 
   //리뷰컴포
   const ReviewList = () => {
@@ -273,7 +285,8 @@ const FestivalsDetail = () => {
    {sessionStorage.getItem('Auth')===''관리자"'&&       
    */}
         <div>
-          <BlackBtn onClick={deleteProducts}>상품삭제(누르지마세요.)</BlackBtn>
+          <BlackBtn onClick={deleteProducts} width='300px'>상품삭제(누르지마세요. 누를거면 하나 만들고 그거 삭제하기..)</BlackBtn>
+          <BlackBtn onClick={updateProducts} width='300px'>상품 수정</BlackBtn>
         </div>
         <div className="totalcontainer">
           {/* //////////////////////////////////////탑 섹션///////////////////////////////////////////////////////////////////// */}
@@ -318,7 +331,7 @@ const FestivalsDetail = () => {
                     <div className="product_info_desc">
                       <ul className="product_info_sublist">
                         <li className="product_info_subitem">
-                          일반석<em className="text_emphasis"> {festival.festTcPrice===null? <p>0</p>: <p>{festival.festTcPrice}</p>}</em>
+                          일반석<em className="text_emphasis"> {festival.festTcPrice===null? <p>미제공</p>: <p>{festival.festTcPrice}</p>}</em>
                           원
                         </li>
                       </ul>
