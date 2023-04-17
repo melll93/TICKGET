@@ -38,7 +38,7 @@
     </where>
   </if>
   WHERE board_mk_status = 0
-  order by board_mk_date ASC
+  order by board_mk_date DESC
 </select>
 <!-- 판매여부가 0인 (판매처리되지 않은) 게시글만 조회되게하기, board_mk_status -->
 

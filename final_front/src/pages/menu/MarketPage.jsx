@@ -7,6 +7,7 @@ import { FormDiv, HeaderDiv, MkFormDiv } from "../../styles/formStyle";
 import MarketList from "../board/market/MarketList";
 import MarketSearchBar from "../board/market/MarketSearchBar";
 import { Cookies } from "react-cookie";
+import Footer from "../../components/Footer";
 const cookies = new Cookies();
 
 
@@ -39,23 +40,17 @@ const MarketPage = () => {
     <>
         <Header />
       <Sidebar />
-      <div className="center">
-        <HeaderDiv>
-          <div style={{display: "flex" , alignItems: "center"}}>
-          <h3 style={{marginRight:"auto"}}>마켓 게시판
-          </h3>
-          <MarketSearchBar />
-          </div>
-          {/*          <Button variant="primary" style={{marginLeft:'700px'}}>
-                  전체조회
-          </Button>
-          <Button variant="primary" onClick={()=>navigate('/market/write')}  style={{marginRight:'80px'}}>
-                  글쓰기
-            </Button> */}
+        <HeaderDiv style={{marginLeft:'600px'}}>
         </HeaderDiv>
+
+
+        <div style={{marginTop:'100px' , textAlign: 'center'}}>
+          <h3 style={{display:'inline-block' , fontFamily:"Nanum Gothic", fontWeight:"bold"}}>마켓 게시판</h3>
+          <MarketSearchBar style={{display: 'inline-block'}}/>
+        </div>
+
+
         <MkFormDiv style={{ marginLeft: "200px" }}>
-          <div>
-          </div>
           <div className="book-list">
          {/*    <Table striped bordered hover style={{ minWidth: "1000px" }}>
               <thead>
@@ -84,12 +79,9 @@ const MarketPage = () => {
 
 
             <MarketList />
-            <div className="booklist-footer">
-            
-            </div>
           </div>
+          
         </MkFormDiv>
-      </div>
     </>
   );
 };
