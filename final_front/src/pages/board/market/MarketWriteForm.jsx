@@ -11,6 +11,7 @@ import Header from "../../../components/Header";
 import MarketFileInsert from "./MarketFileInsert";
 import styled from "styled-components";
 import { Cookies } from "react-cookie";
+import moment from 'moment/moment'
 
 
 /* CSS */
@@ -41,6 +42,11 @@ const MarketWriteForm = ({ mkImageUploader }) => {
   const navigate = useNavigate();
   const no = window.sessionStorage.getItem("no"); //세션에 저장된 회원번호값
 
+  
+ // 현재 시간을 구한다.
+ const now = new Date();
+ // 현재 시간 이후의 최소 날짜를 구한다.
+ const minDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
 
 
@@ -232,6 +238,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                       type="datetime-local"
                       className="form-control"
                       style={{ width: "475px", height: "50px" }}
+                      min={minDate}
                       onChange={(e) => {
                         handleTicketDate(e.target.value);
                       }}
