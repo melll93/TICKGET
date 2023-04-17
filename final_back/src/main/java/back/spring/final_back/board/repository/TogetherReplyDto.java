@@ -1,7 +1,5 @@
 package back.spring.final_back.board.repository;
 
-import java.sql.Date;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

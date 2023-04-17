@@ -1,7 +1,6 @@
 package back.spring.final_back.board.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import back.spring.final_back.board.repository.CarpoolReplyDto;
@@ -27,7 +25,7 @@ public class CarpoolRepleController {
 	Logger logger = LoggerFactory.getLogger(CarpoolRepleController.class);
 	private final CarpoolReplyService carpoolReplyService;
 
-	// 댓글 조회(SelectAll)
+	// CapoolBoard 조회(SelectAll)
 	@GetMapping("/selectCarpoolReplyList")
 	public List<CarpoolReplyDto> selectCarpoolReplyList(CarpoolReplyDto carpoolReplyDto) {
 		logger.info("CarpoolRepleController : selectCarpoolReplyList 호출");
@@ -36,7 +34,7 @@ public class CarpoolRepleController {
 		return mList;
 	}
 
-	// 댓글 등록(Insert)
+	// CapoolBoard 등록(Insert)
 	@GetMapping("/insertCarpoolReply")
 	public int insertCarpoolReplyList(CarpoolReplyDto carpoolReplyDto) {
 		logger.info("CarpoolRepleController : insertCarpoolReplyList 호출");
@@ -44,7 +42,7 @@ public class CarpoolRepleController {
 		return result;
 	}
 
-	// 댓글 수정(Update)
+	// CapoolBoard 수정(Update)
 	@PostMapping("/updateCarpoolReply")
 	public int updateCarpoolReplySubmit(@RequestBody CarpoolReplyDto carpoolReplyDto) {
 		logger.info("CarpoolRepleController : updateCarpoolReplySubmit 호출");
@@ -54,10 +52,11 @@ public class CarpoolRepleController {
 		return result;
 	}
 
-	// 댓글 삭제(Delete)
+	// CapoolBoard 삭제(Delete)
 	@PostMapping("/deleteCarpoolReply")
-	public int deleteCarpoolReply(CarpoolReplyDto carpoolReplyDto) {
+	public int deleteCarpoolReply(@RequestBody CarpoolReplyDto carpoolReplyDto) {
 		logger.info("CarpoolRepleController : deleteCarpoolReply 호출");
+		logger.error("delete boardDto = {}", carpoolReplyDto);
 		int result = 0;
 		result = carpoolReplyService.deleteCarpoolReply(carpoolReplyDto);
 		return result;

@@ -9,11 +9,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-// @Data
 @ToString
-// @RequiredArgsConstructor    //selectBoardList 얘는 null뜸
-// @AllArgsConstructor //selectBoardList 얘 만됌
-@NoArgsConstructor  //selectBoardList 얘는 null뜸
+@NoArgsConstructor
 public class TogetherDto {
     private int boardTgNo;
     private String boardTgMemId;

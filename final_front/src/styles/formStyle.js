@@ -185,6 +185,16 @@ export const FormDiv = styled.div`
   justify-content: space-between;
 `;
 
+export const MkFormDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  border-radius: 20px;
+  padding: 10px;
+  max-width: 2000px;
+  justify-content: space-between;
+`;
+
 export const HeaderDiv = styled.div`
   display: flex;
   width: 90%;

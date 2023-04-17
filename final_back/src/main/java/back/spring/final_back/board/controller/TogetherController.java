@@ -27,7 +27,7 @@ public class TogetherController {
 	Logger logger = LoggerFactory.getLogger(TogetherController.class);
 	private final TogetherService togetherService;
 
-	// 게시판 조회(SelectAll)
+	// Together 게시판 조회(SelectAll)
 	@GetMapping("/selectBoardList")
 	public List<TogetherDto> selectBoardList() {
 		logger.info("TogetherController : selectBoardList 호출");
@@ -36,7 +36,7 @@ public class TogetherController {
 		return mList;
 	}
 
-	// 게시글 상세보기(SelectOne)
+	// Together 게시글 상세보기(SelectOne)
 	@GetMapping("/selectBoardDetail")
 	public TogetherDto selectBoardDetail(TogetherDto togetherDto) {
 		logger.info("TogetherController : selectBoardDetail 호출");
@@ -44,7 +44,7 @@ public class TogetherController {
 		return mList;
 	}
 
-	// 게시판 등록(Insert)
+	// Together 게시판 등록(Insert)
 	@GetMapping("/insertBoardList")
 	public int insertBoardList(TogetherDto togetherDto) {
 		logger.info("TogetherController : inserBoard호출");
@@ -52,7 +52,7 @@ public class TogetherController {
 		return result;
 	}
 
-	// 게시글 수정(Update)
+	// Together 게시글 수정(Update)
 	@GetMapping("/updateBoardList")
 	public TogetherDto updateBoardList(TogetherDto togetherDto) {
 		logger.info("TogetherController : memberUpdate select");
@@ -60,7 +60,7 @@ public class TogetherController {
 		return mList;
 	}
 
-	// 게시판 수정(Update)
+	// Together 게시판 수정(Update)
 	@PostMapping("/updateBoardList")
 	public int updateBoardListSubmit(@RequestBody TogetherDto togetherDto) {
 		logger.info("TogetherController : updateBoardList Submit");
@@ -70,7 +70,7 @@ public class TogetherController {
 		return result;
 	}
 
-	// 게시판 삭제(Delete)
+	// Together 게시판 삭제(Delete)
 	@GetMapping("/deleteBoardList")
 	public int deleteBoardList(TogetherDto togetherDto) {
 		logger.info("TogetherController : memberDelete 호출");
@@ -79,7 +79,7 @@ public class TogetherController {
 		return result;
 	}
 
-	// 조회수 증가시켜줘
+	// Together 조회수 증가시켜줘
 	@GetMapping("/togetherViewUp")
 	public void viewUp(@RequestParam Map<String, Object> pMap) {
 		logger.info("BoardController : viewUp 호출");

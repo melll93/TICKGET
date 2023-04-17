@@ -7,14 +7,29 @@ import {
   carpoolViewUpDB,
   selectCarpoolDB,
 } from "../../../axios/board/carpool/CarpoolLogic";
+import CommonPagination from "../../../components/CommonPagination";
 
 const CarpoolBoardList = () => {
   console.log("CarpoolBoardList");
   const navigate = useNavigate();
   const [carpoolList, setCarpoolList] = useState([]);
+  
+  const [page, setPage] = useState(1);
+  const [perPage] = useState(15);
+
   useEffect(() => {
     selectCarpoolList();
   }, []);
+
+  const indexOfLastPost = page * perPage;
+  const indexOfFirstPost = indexOfLastPost - perPage;
+
+  const currentFest = (boardList) => {
+    let currentFest = 0;
+    currentFest = boardList.slice(indexOfFirstPost, indexOfLastPost);
+    return currentFest;
+  };
+
 
   // 전체 게시글 조회
   const selectCarpoolList = async () => {
@@ -51,7 +66,7 @@ const CarpoolBoardList = () => {
               </tr>
             </thead>
             <tbody>
-              {carpoolList.map((carpool) => (
+              {currentFest(carpoolList).map((carpool) => (
                 <tr key={carpool.boardCpNo}>
                   <td style={{ textAlign: "center" }}>{carpool.boardCpNo}</td>
                   <td>
@@ -85,6 +100,11 @@ const CarpoolBoardList = () => {
               ))}
             </tbody>
           </Table>
+          <CommonPagination
+            pagination={setPage}
+            perPage={perPage}
+            totalItems={carpoolList.length}
+          ></CommonPagination>
         </div>
       </div>
       <div
