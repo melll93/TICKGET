@@ -12,7 +12,7 @@ import "../../styles/Calendar.css";
 import TicketCancleInfo from "../../components/mypage/TicketCancleInfo";
 import {BButton, BlackBtn} from "../../styles/formStyle";
 import DropdownButton from "../../components/DropdownButton";
-import Cookies from 'js-cookie';
+import { Cookies } from "react-cookie";
 
 
 const FestivalsDetail = () => {
@@ -33,7 +33,8 @@ const FestivalsDetail = () => {
   const handleDateChange = (date) => {
     console.log(date);
     setDate(date);
-    Cookies.set('date', date.toISOString());
+    const cookie = new Cookies();
+    cookie.set('date', date.toISOString());
   };
 
 

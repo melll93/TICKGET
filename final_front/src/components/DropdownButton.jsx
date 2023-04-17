@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Cookies } from 'react-cookie';
 import { FiChevronDown } from 'react-icons/fi';
 import { CSSTransition } from 'react-transition-group';
 import '../styles/festivaldetails.css';
@@ -22,7 +23,9 @@ function DropdownButton({ options }) {
 
 
   const handleOptionClick = (option) => {
+    const cookie = new Cookies();
     setSelectedOption(option);
+    cookie.set('tk_amount', option.value);
     setIsOpen(false);
   };
 
