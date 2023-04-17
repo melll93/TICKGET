@@ -197,3 +197,8 @@ div .Menu {
   width: 50px;
   object-fit: cover;
 }
+
+@font-face {
+  font-family: "LeferiBaseBold";
+  src: url("./fonts/LeferiBaseBold.ttf") format("truetype");
+}
