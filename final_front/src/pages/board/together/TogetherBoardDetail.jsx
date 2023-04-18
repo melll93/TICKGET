@@ -15,7 +15,6 @@ import {
 import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import $ from "jquery";
 import { Modal } from "react-bootstrap";
 
 /* function test(event) {

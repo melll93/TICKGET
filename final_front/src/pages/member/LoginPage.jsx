@@ -16,10 +16,8 @@ import { loginGoogle, loginH } from "../../util/authLogic";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxLogin } from "../../redux/userAuth/action";
-import { Cookies, useCookies } from "react-cookie";
+import { Cookies } from "react-cookie";
 import Header from "../../components/Header";
-
-const cookies = new Cookies();
 
 const LoginPage = ({ user, setUser, authLogic }) => {
   const dispatch = useDispatch();
@@ -50,7 +48,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
     const result = await axios({
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       url:
         // process.env.BACKEND_URL + "/login",
@@ -62,9 +60,9 @@ const LoginPage = ({ user, setUser, authLogic }) => {
         if (res.status >= 200 && res.status < 400) {
           window.alert("로그인 성공");
 
-          const token = res.data
+          const token = res.data;
           console.log(token);
-          window.localStorage.setItem("access_token", token)
+          window.localStorage.setItem("access_token", token);
 
           navigate("/");
         } else if (res.status >= 400 && res.status < 600) {
@@ -76,14 +74,14 @@ const LoginPage = ({ user, setUser, authLogic }) => {
 
   const handleLogin = () => {
     if (userId === null || userId === "" || userId === undefined) {
-      window.alert("아이디를 입력해주세요.")
+      window.alert("아이디를 입력해주세요.");
     } else if (userPw === null || userPw === "" || userPw === undefined) {
-      window.alert("비밀번호를 입력해주세요.")
+      window.alert("비밀번호를 입력해주세요.");
     } else {
       console.log(userPw);
-      login(member)
+      login(member);
     }
-  }
+  };
 
   /************************************comment************************************
    * 조장 생각 : 변수와 메소드가 많아지며 명칭이 많아져 코드가 많아질수록 혼동할 가능성이 높아짐.

@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies } from "react-cookie";
 import { Dropdown } from "react-bootstrap";
-
 const cookies = new Cookies();
 
 const Profile = () => {
@@ -31,19 +30,18 @@ const Profile = () => {
       //   access_token: window.localStorage.getItem("access_token")
       // },
       data: {
-        memberId: memberId
-      }
+        memberId: memberId,
+      },
     }).then((res) => {
       const _userData = res.data;
       cookies.set("_userData", _userData);
-    })
-    return result
-  }
-
+    });
+    return result;
+  };
 
   const handleChatFromProfile = () => {
-    navigate("/chat")
-  }
+    navigate("/chat");
+  };
 
   const getProfile = () => {
     if (!_userData && naver_token === null) {
@@ -65,17 +63,23 @@ const Profile = () => {
           {/* 프로필 버튼 시작 */}
           <div className="userImage">
             <Dropdown>
-              <Dropdown.Toggle variant="none" id="profile-dropdown" style={{ border: "none" }}>
+              <Dropdown.Toggle
+                variant="none"
+                id="profile-dropdown"
+                style={{ border: "none" }}
+              >
                 <img
                   id="profile"
                   className="icon image40"
                   style={{ borderRadius: "50%" }}
                   src="https://phinf.pstatic.net/contact/20230416_257/1681630347916iq32w_PNG/avatar_profile.png?type=s160"
-                // src={_userData.profile_img ?? "../logos/PROFILE.png"}
+                  // src={_userData.profile_img ?? "../logos/PROFILE.png"}
                 />
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown items">
-                <Dropdown.Item onClick={handleChatFromProfile}>1:1 채팅</Dropdown.Item>
+                <Dropdown.Item onClick={handleChatFromProfile}>
+                  1:1 채팅
+                </Dropdown.Item>
                 <Dropdown.Item>프로필</Dropdown.Item>
                 {/* <Dropdown.Item href="#/action-3"></Dropdown.Item> */}
               </Dropdown.Menu>
@@ -98,16 +102,13 @@ const Profile = () => {
     }
   };
 
-
   useEffect(() => {
-    getUserData("admin").then(console.log)
-  })
+    getUserData("admin").then(console.log);
+  });
 
   return (
     <>
-      <div className="ProfileBox">
-        {getProfile()}
-      </div>
+      <div className="ProfileBox">{getProfile()}</div>
     </>
   );
 };
