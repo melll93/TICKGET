@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import back.spring.final_back.board.controller.MarketController;
 import back.spring.final_back.payment.repository.PaymentDto;
-import back.spring.final_back.service.PaymentService;
+import back.spring.final_back.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
