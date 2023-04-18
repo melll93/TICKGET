@@ -83,6 +83,7 @@ public class CarpoolController {
 	@GetMapping("/carpoolViewUp")
 	public void viewUp(@RequestParam Map<String, Object> pMap) {
 		logger.info("CarpoolController : viewUp 호출");
+        logger.error("pMap = {}", pMap);
 		carpoolService.viewUp(pMap);
 	}
 }
