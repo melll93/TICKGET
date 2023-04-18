@@ -33,13 +33,11 @@ import CartPage from "./pages/personal/CartPage";
 import MyPage from "./pages/personal/MyPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-
 import CarpoolDetail from "./pages/board/carpool/CarpoolDetail";
 import CarpoolUpdate from "./pages/board/carpool/CarpoolUpdate";
 import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
-import PaymentPage from "./pages/personal/PaymentPage";
 
 
 
@@ -95,14 +93,13 @@ function App({ mkImageUploader }) {
 
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
-        <Route path="/addProducts" exact={true} element={<AddProductsPage />} />
+        <Route path="/addProducts/:festMId" element={<AddProductsPage />} />
         <Route path="/productsDetail/:festMId" element={<FestivalsDetail />} />
         <Route path="/paymentsucess/:festMId" element={<PaySucPage />} />
         <Route path="/paymentfailed/:festMId" element={<PayFailPage />} />
         <Route path="/payment2/:festMId" element={<FestivalPaymentPage />} />
 
 
-        <Route path="/paymentsssss/:festMId" element={<PaymentPage />} />
 
         {/* TogetherPage Routes*/}
         <Route path="together/write/*" element={<TogetherBoardWriteForm />} />
@@ -121,20 +118,9 @@ function App({ mkImageUploader }) {
 
 
         {/* MarketPage Routes - 성훈 작업중 */}
-        <Route
-          path="/market/write"
-          exact={true}
-          element={<MarketWriteForm mkImageUploader={mkImageUploader} />}
-        />
-        <Route
-          path="/market/update/:no"
-          exact={true}
-          element={<MarketUpdatePage mkImageUploader={mkImageUploader} />}
-        />
-        <Route
-          path="/market/mk_boardDetail/*"
-          element={<MarketDetail mkImageUploader={mkImageUploader} />}
-        />
+        <Route path="/market/write" exact={true} element={<MarketWriteForm mkImageUploader={mkImageUploader} />} />
+        <Route path="/market/update/:no" exact={true} element={<MarketUpdatePage mkImageUploader={mkImageUploader} />} />
+        <Route path="/market/mk_boardDetail/*" element={<MarketDetail mkImageUploader={mkImageUploader} />} />
         <Route path="/payment/:no" element={<MarketPaymentPage />} />
       </Routes>
     </>

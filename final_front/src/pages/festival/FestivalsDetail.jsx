@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from "react";
 import {Modal, Tab, Tabs} from "react-bootstrap";
 import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { DeleteFestReviewDB, DeleteFestivalDB, FestReviewInsertDB, FestivalReviewDB, FetivalDetailDB,
   UpdateFestReviewDB } from "../../axios/festival/festival";
 import Header from "../../components/Header";
@@ -80,19 +80,18 @@ const FestivalsDetail = () => {
   }, []);
 
 
-  const [lgShow, setLgShow] = useState(false); //리뷰수정모달
   const reduxUser = useSelector((state) => state.userStatus.user);
   console.log(reduxUser);
-
+  
   /* 리뷰 */
   const [reviewContent, setReviewContent] = useState("");
+  const [lgShow, setLgShow] = useState(false); //리뷰수정모달
 
   /* 리뷰 작성 textarea clear */
   const resetReviewField = () => {
     setReviewContent("");
     document.querySelector("#product_detail_review_textarea").value = null;
   };
-
 
   /* 리뷰  관련*/
   const inputReviewContent = useCallback((e) => {
@@ -130,6 +129,7 @@ const FestivalsDetail = () => {
 
   /* 상품수정 */
   const updateProducts = async () => {
+    
  console.log('수정버튼 클릭드');
   /*      const festival = {
       fest_m_id: festMId,
@@ -172,9 +172,7 @@ const FestivalsDetail = () => {
                   }}
                 >
                   <h3>{review.reviewContent}</h3>
-                  id: {review.reviewMemid} 등록일시: {review.reviewRegdate}
-                  리뷰번호: {review.reviewNo}
-                  test_ reviewNo: {review.reviewNo}
+                  id: {review.reviewMemid} 등록일: {review.reviewRegdate}
                   {
                     //로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람과 작성자 일치 시 수정, 삭제 버튼 보이기
                     // sessionStorage.getItem('Member_name')==='Member_name(작성자)'&&
@@ -286,7 +284,19 @@ const FestivalsDetail = () => {
    */}
         <div>
           <BlackBtn onClick={deleteProducts} width='300px'>상품삭제(누르지마세요. 누를거면 하나 만들고 그거 삭제하기..)</BlackBtn>
-          <BlackBtn onClick={updateProducts} width='300px'>상품 수정</BlackBtn>
+          <Link
+          to={`/addProducts/${festMId}`}
+          style={{
+            fontSize: "40px",
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: "10px",
+            textDecoration: "none",
+          }}
+        >
+          상품 수정
+        </Link>
+       
         </div>
         <div className="totalcontainer">
           {/* //////////////////////////////////////탑 섹션///////////////////////////////////////////////////////////////////// */}
@@ -331,7 +341,7 @@ const FestivalsDetail = () => {
                     <div className="product_info_desc">
                       <ul className="product_info_sublist">
                         <li className="product_info_subitem">
-                          일반석<em className="text_emphasis"> {festival.festTcPrice===null? <p>미제공</p>: <p>{festival.festTcPrice}</p>}</em>
+                          일반석<em className="text_emphasis"> {festival.festTcPrice===null? <p>미정</p>: <p>{festival.festTcPrice}</p>}</em>
                           원
                         </li>
                       </ul>

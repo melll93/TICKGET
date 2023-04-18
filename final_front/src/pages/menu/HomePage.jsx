@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import CalendarPage from "../menu/CalendarPage";
 import { festivalListByDate } from "../../axios/festival/festival";
 import { festivalHitListDB } from "../../axios/festival/festival";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   /******************************
@@ -60,24 +61,24 @@ const HomePage = () => {
         <div style={{ margin: "100px 0px 20px 0px", width: "1900px" }}>
           <CarouselList festivalToday={festivalToday} />
         </div>
-<section className="home_bottom_section" style={{border:'1px dotted gray', padding:'50px'}}>
+
+<section className="home_bottom_section" style={{
+/*   border:'1px dotted gray',  */
+  padding:'50px'}}>
 <div style={{textAlign:'center', alignItems:'center'}}>
 <h1><strong>
   what's hot
 </strong>
   </h1>
-
   {festivalHitList.slice(0, 5).map((festival) => (
-    <Card.Img key={festival.festMId} src={festival.festMImg} style={{width:'150px', height:'200px', marginRight:'20px'}} alt="Card image" />
-        ))}
-
-
+<Link to={`/productsDetail/${festival.festMId}`}>
+<Card.Img key={festival.festMId} src={festival.festMImg} style={{width:'150px', height:'200px', marginRight:'20px'}} alt="Card image" />
+</Link>
+      ))}
 </div>
 </section>
 
         <section className="home_total_sec" style={{paddingLeft: "150px", backgroundColor:"lightgray"}}>
-          
-          
           <div className="total_section" style={{ display: "flex" }}>
 
 {/* 위클리랭킹 */}

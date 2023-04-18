@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  festivalHitListDB,
+  festivalHitListDB, thumbsupFestivalDB,
 } from "../../axios/festival/festival";
 import CommonPagination from "../../components/CommonPagination";
 import { Card } from "react-bootstrap";
@@ -31,7 +31,9 @@ const FestivalRankingList = () => {
     };
     
     
-    
+    const hitPlusOne=async (festMId)=>{
+      await thumbsupFestivalDB(festMId);
+    } 
     
     
     
@@ -68,6 +70,10 @@ const FestivalRankingList = () => {
          </p>
        </div>
      </a>
+     <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'right', marginLeft:'83%', paddingRight:'7px', cursor:'pointer'}}>
+                <i className="bi bi-hand-thumbs-up fs-4"></i>
+                {festival.festMHit===null ? 0: festival.festMHit}
+                </div>
    </div>
     ))}
  

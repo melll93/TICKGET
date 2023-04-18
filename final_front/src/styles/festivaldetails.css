@@ -240,3 +240,8 @@ ol, ul {
   .btn-save {
     background-color: #0a0a0a;
   }
+
+/* 카드 안 떰즈업 */
+  .thumbs-up:hover{
+background-color: rgb(248, 212, 212);
+  }
