@@ -1,4 +1,4 @@
-package back.spring.final_back.service;
+package back.spring.final_back.payment.service;
 
 import java.util.List;
 
