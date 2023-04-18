@@ -13,7 +13,6 @@ const CarpoolBoardList = () => {
   console.log("CarpoolBoardList");
   const navigate = useNavigate();
   const [carpoolList, setCarpoolList] = useState([]);
-  
   const [page, setPage] = useState(1);
   const [perPage] = useState(15);
 
