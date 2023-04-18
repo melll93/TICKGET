@@ -15,6 +15,15 @@ export const festivalListByDate = async (date) => {
   return result;
 };
 
+/* 메인페이지 what's hot 상품 */
+export const festivalHitListDB = async (festMHit) => {
+  const result = await axios({
+    method: "get",
+    url: "http://localhost:8888/festival/festivalHitList",
+    params: {festMHit},
+  }).then((res) => res.data);
+  return result;
+};
 
 
 /* 페스티발 페이지*/

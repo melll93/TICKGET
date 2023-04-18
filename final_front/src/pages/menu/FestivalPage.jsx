@@ -6,8 +6,11 @@ import Header from "../../components/Header";
 import {
   FetivalListDB,
   areaFestivalListDB,
+  festivalHitListDB,
 } from "../../axios/festival/festival";
 import CommonPagination from "../../components/CommonPagination";
+import { Card } from "react-bootstrap";
+import FestivalRankingList from "../festival/FeativalRankingList";
 
 ///////////////////////////////      페스티발 지역별   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const FestivalAreaList = ({selectedNavbarValue}) => {
@@ -83,26 +86,6 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
 }; //SeoulFestivalList끝
 
 
-const FestivalRankingList = () => {
-  return (
-    <div
-      className="card"
-      style={{
-        width: "18rem",
-        display: "inline-block",
-        margin: "50px 0px 0px 50px",
-      }}
-    >
-      랭킹별 분류 상품
-      <div className="card-body">
-        <h5 className="card-title">제목 :</h5>
-        <p className="card-text">설명 : </p>
-        <p className="card-text"> festId: </p>
-        <p className="card-text"> festCategory: </p>
-      </div>
-    </div>
-  );
-};
 const FestivalExtraList = () => {
   return (
     <div
@@ -190,6 +173,10 @@ const FestivalsTest = () => {
   );
 }; ///////////////////////////////////// FestivalsTest 끝////////////////////////////////////////
 
+
+
+
+
 const FestivalPage = () => {
   
   let [totalFest, setTotalFest] = useState(1); //0이면 닫힘, 1이면 열림.
@@ -236,7 +223,12 @@ const FestivalPage = () => {
     setModal4(0);
   };
 
-
+  const rankingModalopen = () => {
+    setTotalFest(0);
+    setModal2(0);
+    setModal3(1);
+    setModal4(0);
+  };
 
   const modal4open = () => {
     setTotalFest(0);
@@ -299,7 +291,7 @@ const FestivalPage = () => {
 
 {/* 인기순 */}
             <ul className="nav-item">
-              <li className="nav-link" style={{ marginLeft: "150px" }} onClick={modal4open}> 인기순/랭킹 </li>
+              <li className="nav-link" style={{ marginLeft: "150px" }} onClick={rankingModalopen}> 인기순/랭킹 </li>
             </ul>
 
 {/* 기타 */}
