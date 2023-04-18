@@ -40,6 +40,7 @@ import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import PaymentPage from "./pages/personal/PaymentPage";
+import GoogleLogin from "./api/login/GoogleLogin";
 
 
 
@@ -75,6 +76,10 @@ function App({ mkImageUploader }) {
           path="/oauth/login/kakao/callback"
           element={<KakaoLogin user={user} setUser={setUser} />}
         />
+{/*         <Route
+          path="/oauth/login/google/callback"
+          element={<GoogleLogin user={user} setUser={setUser} />}
+        /> */}
 
         {/* PersonalTabs Routes */}
         <Route path="/mypage" exact={true} element={<MyPage />} />
