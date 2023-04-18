@@ -1,14 +1,17 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { loginGoogle } from '../../util/authLogic';
-import { GoogleLoginButton } from 'react-google-login';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { loginGoogle } from "../../util/authLogic";
+import { GoogleLoginButton } from "react-google-login";
 
 const GoogleLogin = ({ authLogic }) => {
   const navigate = useNavigate();
-  
+
   const responseGoogle = async (res) => {
     try {
-      const result = await loginGoogle(authLogic.getUserAuth(), authLogic.getGoogleAuthProvider());
+      const result = await loginGoogle(
+        authLogic.getUserAuth(),
+        authLogic.getGoogleAuthProvider()
+      );
       const { uid, name, email } = result;
       const member = {
         memberId: uid,
@@ -19,7 +22,7 @@ const GoogleLogin = ({ authLogic }) => {
       console.log(member);
       // navigate("/");
     } catch (error) {
-      console.log('로그인 오류입니다');
+      console.log("로그인 오류입니다");
     }
   };
 
@@ -34,4 +37,4 @@ const GoogleLogin = ({ authLogic }) => {
   );
 };
 
-export default GoogleLogin
+export default GoogleLogin;
