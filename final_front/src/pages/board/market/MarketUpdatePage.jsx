@@ -197,7 +197,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
                    required
                     id="board_mk_title"
                     type="text"
-                    placeholder="제목을 입력하세요."
+                   /*  placeholder="제목을 입력하세요." */
                     style={{ width: "970px", height: "50px" }}
                     onChange={(e) => {
                       handleTitle(e.target.value);
@@ -216,12 +216,12 @@ const MarketUpdatePage = ({mkImageUploader}) => {
             <div>
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridPlace">
-                  <h3>장소</h3>
+                  <h3>공연 장소</h3>
                   <Form.Control
                    required
                     id="mk_ticket_place"
                     type="text"
-                    placeholder="공연 장소를 입력하세요."
+             /*        placeholder="공연 장소를 입력하세요." */
                     style={{ width: "475px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketPlace(e.target.value);
@@ -260,7 +260,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
                    required
                     id="mk_ticket_seat"
                     type="text"
-                    placeholder="좌석 정보를 입력하세요."
+                    /* placeholder="좌석 정보를 입력하세요." */
                     style={{ width: "250px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketSeat(e.target.value);
@@ -273,7 +273,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
 
         <Form.Group as={Col} controlId="formGridTicketCount">
           <h3>판매수량</h3>
-          <Form.Control required id="mk_ticket_count" type="number" min="1" placeholder="티켓의 수량을 입력하세요." style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
+          <Form.Control required id="mk_ticket_count" type="number" min="1" /* placeholder="티켓의 수량을 선택하세요." */ style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
           <Form.Control.Feedback type="invalid">
             판매할 티켓의 수량을 선택해주세요.
           </Form.Control.Feedback>
@@ -282,7 +282,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
         <Form.Group as={Col} controlId="formGridPrice" style={{marginLeft:'auto' }} >
           <h3>판매등록가</h3>
           <InputGroup>
-          <Form.Control required id="mk_ticket_price" type="text" placeholder="판매 가격(숫자만) 입력하세요." style={{width:'250px' , height:'50px'}}
+          <Form.Control required id="mk_ticket_price" type="text" /* placeholder="판매 가격(숫자만) 입력하세요." */ style={{width:'250px' , height:'50px'}}
          value={mk_ticket_price}  handleTicketPrice={handleTicketPrice} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
           <InputGroup.Text>원</InputGroup.Text>
           <Form.Control.Feedback type="invalid">
