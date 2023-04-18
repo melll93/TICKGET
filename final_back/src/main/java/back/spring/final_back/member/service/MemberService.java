@@ -2,13 +2,20 @@ package back.spring.final_back.member.service;
 
 import back.spring.final_back.member.repository.MemberDto;
 
+import java.lang.reflect.Member;
+import java.util.List;
 import java.util.Map;
 
 public interface MemberService {
-    public Object localMemberLogin(MemberDto memberDto);
-    public MemberDto searchById();
+    Object localMemberLogin(MemberDto memberDto);
 
-    public boolean checkIdExist();
-    public boolean checkNicknameExist();
-    public boolean checkEmailExist();
+    Object loginSuccess();
+
+    boolean checkIdExist();
+
+    boolean checkNicknameExist();
+
+    boolean checkEmailExist();
+
+    MemberDto getMemberData(String memberId);
 }

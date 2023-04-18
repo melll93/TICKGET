@@ -31,13 +31,6 @@ public class TokenProvider {
    private static final long TOKEN_VALIDITY_IN_MILLISECONDS = 30 * 60 * 1000;
    private Key key;
 
-//   public TokenProvider(
-//      @Value("${jwt.secret}") String secret,
-//      @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
-//      this.secret = secret;
-//      this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
-//   }
-
    public TokenProvider(@Value("${jwt.secret}") String secret) {
       byte[] keyBytes = Decoders.BASE64.decode(secret);
       this.key = Keys.hmacShaKeyFor(keyBytes);
