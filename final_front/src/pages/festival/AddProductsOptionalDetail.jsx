@@ -19,8 +19,6 @@ const AddProductsOptionalDetail = () => {
   const[festPsUrl, setFestPsUrl] = useState()
   const imgRef = useRef()
 
-  const[festTicketSeat, setFestTicketSeat] = useState(0)
-  const[festTicketPrice, setFestTicketPrice] = useState(0)
 
 
   /* fest_detail 추가정보 입력 */
@@ -37,7 +35,7 @@ const AddProductsOptionalDetail = () => {
     setFestDetailAge (e)
   },[])
   
-  /* fest_detain INSERT */
+  /* fest_detail INSERT */
   const saveFestDetail=async()=>{
     const festival = {
       festMId,
@@ -104,13 +102,6 @@ if (!res.data) {
 
 
 
-
-  const inputSeat= useCallback((e) => {
-    setFestTicketSeat (e)
-  },[])
-  const inputPrice= useCallback((e) => {
-    setFestTicketPrice (e)
-  },[])
 
 
 

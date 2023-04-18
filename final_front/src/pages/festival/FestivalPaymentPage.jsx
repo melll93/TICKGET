@@ -4,12 +4,13 @@ import { FetivalDetailDB } from '../../axios/festival/festival'
 import PaymentPage from '../personal/PaymentPage'
 import Sidebar from '../../components/Sidebar'
 import Header from '../../components/Header'
-import Cookies from 'js-cookie'
+import { Cookies } from 'react-cookie'
 
 const FestivalPaymentPage = () => {
+  const cookie = new Cookies();
   const navigate = useNavigate()
-  const festSelectedDate = Cookies.get('date');
-  const festSelectedTkamt = Cookies.get('tk_amount');
+  const festSelectedDate = cookie.get('date');
+  const festSelectedTkamt = cookie.get('tk_amount');
 
     let {festMId} = useParams()
     console.log(festMId);

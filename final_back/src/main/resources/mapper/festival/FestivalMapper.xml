@@ -80,5 +80,18 @@ SELECT * FROM fest_main
   #{festPsUrl} 
 )
       </insert>
+      <insert id="festTicketInsert" parameterType="Map">
+      INSERT INTO fest_ticket (
+  fest_tc_id,
+  fest_tc_type, 
+  fest_tc_price,
+  fest_tc_time,
+) VALUES (
+  (SELECT fest_m_id FROM fest_main WHERE fest_m_id = #{festMId}), 
+  #{festTcType},
+  #{festTcPrice},
+  #{festTcTime},   
+)
+      </insert>
       
 </mapper>

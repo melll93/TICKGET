@@ -86,6 +86,12 @@ public class FestivalServiceImpl implements FestivalService {
 	}
 	
 	@Override
+	public int festTicketInsert(FestivalDto festivalDto) {
+        int result = festivalDao.festTicketInsert(festivalDto);
+        return result;
+	}
+	
+	@Override
 	public int festPosterInsert(FestivalDto festivalDto) {
         int result = festivalDao.festPosterInsert(festivalDto);
         log.info("여기까지");

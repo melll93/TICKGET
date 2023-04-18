@@ -29,5 +29,7 @@ int festDetailInsert(FestivalDto festivalDto);
 
 int festPosterInsert(FestivalDto festivalDto);
 
+int festTicketInsert(FestivalDto festivalDto);
+
 
 }

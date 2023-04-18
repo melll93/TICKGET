@@ -74,8 +74,6 @@ const originDetail=async()=>{
   }
   const res = await FetivalDetailDB(festival);
   const temp = JSON.stringify(res.data)  //문자열 전환
-  console.log(festival)
-  console.log(temp)
   const jsonDoc=JSON.parse(temp)  //배열로 접근처리
   setFesttitle(jsonDoc.festMName)
   setFeststart(jsonDoc.festMStart )

@@ -30,4 +30,7 @@ public interface FestivalDao {
 
 
 	public int festPosterInsert(FestivalDto festivalDto);
+
+
+	public int festTicketInsert(FestivalDto festivalDto);
 }

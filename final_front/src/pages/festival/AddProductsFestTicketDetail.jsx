@@ -1,24 +1,46 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import { festTicketInsertDB } from '../../axios/festival/festival';
 
 const AddProductsFestTicketDetail = () => {
-    const [seatType, setSeatsType] = useState([]);
+  const {festMId}=useParams();
+  const [no, setNo]=useState([]);
+const [seatType, setSeatsType] = useState([]);
 const [price, setPrice] = useState([]);
 const [seats, setSeats] = useState([]);
+const [festTcTime, setFestTcTime] = useState([]);
 
-function handleSeatChange(e, index) {
-  const newSeatType = [...seatType];
-  newSeatType[index] = e.target.value;
-  setSeatsType(newSeatType);
-}
 
-function handlePriceChange(e) {
-  setPrice(e.target.value);
-}
 
-function handleSubmit(e) {
-  e.preventDefault();
-  alert({seatType, price });
+/* fest_tc */
+const inputTcPrice = useCallback((e) => {
+  setPrice (e)
+},[])
+const inputTcSeatType = useCallback((e) => {
+  setSeatsType (e)
+},[])
+const inputTcTime = useCallback((e) => {
+  setFestTcTime (e)
+},[])
+
+const festTicketInsert=async()=>{
+  const ticket = {
+    festMId,
+    festTcType: seatType,
+    festTcPrice: price,
+    festTcTime: festTcTime,
+};
+const res = await festTicketInsertDB(ticket);
+console.log(ticket);
+if (!res.data) {
+} else {
 }
+};
+
+
+
+
+
 
 function saveBtn(e) {
   e.preventDefault();
@@ -26,15 +48,16 @@ function saveBtn(e) {
 }
 
 
-function addSeatType() {
-  setSeatsType([...seatType, '']);
+function addLineNo() {
+  setNo([...no, '']);
 }
 
 function removeSeat(index) {
-  const newSeatType = [...seatType];
-  newSeatType.splice(index, 1);
-  setSeatsType(newSeatType);
+  const newNo = [...no];
+  newNo.splice(index, 1);
+  setNo(newNo);
 }
+
   return (
     <div>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
@@ -45,23 +68,24 @@ fest_ticket 추가 정보 입력
           <input
             type="number"
             className="form-control"
-            value={seatType.length}
+            value={no.length}
             disabled
             style={{ width: '100%' }}
           />
           <label htmlFor="floatingInput">좌석정보</label>
         </div>
 
-        <button type="button" className="btn-add-seat" onClick={addSeatType}>
+        <button type="button" className="btn-add-seat" onClick={addLineNo}>
           좌석 추가
         </button>
-        <button type="submit" className="btn-save" onClick={saveBtn}>
+        <button type="submit" className="btn-save" onClick={festTicketInsert}>
           저장
         </button>
       </div>
       <table className="table-seats">
         <thead>
           <tr>
+          <th>no</th>   
             <th>시간</th>    {/* fest_schedule  (fest_sc_time) */}
             <th>좌석정보</th>  {/* fest_ticket   (fest_tc_type) */}
             <th>티켓가격</th>  {/* fest_ticket   (fest_tc_price) */}
@@ -70,27 +94,31 @@ fest_ticket 추가 정보 입력
           </tr>
         </thead>
         <tbody>
-          {seatType.map((seat, index) => (
+          {no.map((line, index) => (
             <tr key={index}>
+               <td>
+                  {index+1}
+              </td>
               <td>
               <input
                   type="time"
+
                   className="form-control"
+                  onChange={(e) => inputTcTime (e.target.value)}
                 />
               </td>
               <td>
                 <input
                   type="text"
                   className="form-control"
-                  value={seat}
-                  onChange={(e) => handleSeatChange(e, index)}
+                  onChange={(e) => inputTcSeatType(e, index)}
                 />
               </td>
               <td>
                 <input
                   type="number"
                   className="form-control"
-                  onChange={handlePriceChange}
+                  onChange={(e) => inputTcPrice (e.target.value)}
                 style={{display:'inline-block', width:'80%'}}
                 />원
               </td>
@@ -98,7 +126,6 @@ fest_ticket 추가 정보 입력
               <input
                   type="number"
                   className="form-control"
-                  onChange={handlePriceChange}
                 style={{display:'inline-block', width:'75%'}}
                 />석
               </td>

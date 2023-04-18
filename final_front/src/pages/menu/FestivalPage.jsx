@@ -123,6 +123,7 @@ const FestivalExtraList = () => {
 ///////// 페스티벌 전체 ////////// 
  */
 const FestivalsTest = () => {
+const [hit, setHit]= useState();
   const [festivals, setFestivals] = useState([]);
   const [page, setPage] = useState(1);
   const [perPage] = useState(20);
@@ -142,7 +143,8 @@ const FestivalsTest = () => {
 
   
   const hitPlusOne=async (festMId)=>{
-    await thumbsupFestivalDB(festMId);
+    await thumbsupFestivalDB(festMId)
+    ;
   } 
 
   return (
@@ -202,8 +204,7 @@ const FestivalsTest = () => {
 
 
 const FestivalPage = () => {
-
-  let [totalFest, setTotalFest] = useState(1); //0이면 닫힘, 1이면 열림.
+  const [totalFest, setTotalFest] = useState(1); //0이면 닫힘, 1이면 열림.
   const [modal2, setModal2] = useState(0); //지역별
   const [modal3, setModal3] = useState(0); //인기순/랭킹
   const [modal4, setModal4] = useState(0);

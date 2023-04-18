@@ -191,3 +191,18 @@ export const saveFestPsUrlDB = (festival) => {
     }
   });
 };
+
+export const festTicketInsertDB = (ticket) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/festival/festTicketInsert",
+        data: ticket,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
