@@ -24,12 +24,13 @@ const Profile = () => {
    * 로그인 시 발급된 jwt를 가지고 BE에 요청
    ********************************************/
   const getUserData = async (memberId) => {
+    const token = window.localStorage.getItem("access_token");
     const result = await axios({
       method: "POST",
       url: "http://localhost:8888" + "/member/getMemberData",
-      // headers: {
-      //   access_token: window.localStorage.getItem("access_token")
-      // },
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       data: {
         memberId: memberId
       }

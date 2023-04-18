@@ -5,6 +5,8 @@ import back.spring.final_back.member.service.MemberService;
 import back.spring.final_back.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +31,8 @@ public class MemberController {
     @PostMapping("/login/success")
     public Object loginSuccess() {
         log.info("success 호출");
+
+        log.info(SecurityContextHolder.getContext().getAuthentication().toString());
         return memberService.loginSuccess();
     }
 

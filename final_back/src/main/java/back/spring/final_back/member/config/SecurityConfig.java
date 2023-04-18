@@ -51,7 +51,8 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/**").permitAll()
+                .requestMatchers("/**").permitAll()
+                .requestMatchers("/festival/**").hasAuthority("ROLE_USER")
                 .anyRequest().authenticated()
 
                 /*********************************
@@ -64,7 +65,7 @@ public class SecurityConfig {
                 .formLogin()
                 .loginProcessingUrl("/login")
                 .successForwardUrl("/member/login/success")
-//                .failureForwardUrl("member/login/failed")
+//                .failureForwardUrl("/member/login/failed")
                 .usernameParameter("memberId")
                 .passwordParameter("memberPassword")
 
