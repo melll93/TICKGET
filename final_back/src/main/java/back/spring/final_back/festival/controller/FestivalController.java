@@ -42,6 +42,15 @@ public class FestivalController {
 		return result;
 	}
 
+	@GetMapping("festivalHitList")
+	public List<FestivalDto> festivalHitList() {
+		List<FestivalDto> festival = null;
+		festival =festivalService.festivalHitList(); 
+		return festival;
+	}
+
+
+
 	@GetMapping("festivalList")
 	public List<FestivalDto> festivalList() {
 		List<FestivalDto> festival = null;

@@ -20,5 +20,7 @@ public interface FestivalService {
 
 FestivalDto festivalDetail(FestivalDto festivalDto);
 
+List<FestivalDto> festivalHitList();
+
 
 }

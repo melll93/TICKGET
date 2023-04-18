@@ -15,6 +15,9 @@
 	<select id="areaFestivalList" resultType="FestivalDto">
 SELECT * FROM fest_main where fest_m_area=#{festMArea}
 </select>
+<select id="festivalHitList" resultType="FestivalDto">
+  SELECT * FROM fest_main ORDER BY fest_m_hit DESC
+</select>
 	<select id="festivalListByDate" resultType="FestivalDto">
 			SELECT *
         FROM fest_main

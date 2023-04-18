@@ -19,4 +19,6 @@ public interface FestivalDao {
     int festivalInsert(FestivalDto festival);
 
     public int festivalDelete(String fest_m_id);
+
+    public List<FestivalDto> festivalHitList();
 }

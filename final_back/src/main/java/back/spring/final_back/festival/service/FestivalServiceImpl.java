@@ -64,6 +64,13 @@ public class FestivalServiceImpl implements FestivalService {
 		FestivalDto festival = festivalDao.festivalDetail(festivalDto);
 		 return festival;
 		    }
+
+    @Override
+    public List<FestivalDto> festivalHitList() {
+        List<FestivalDto> festival = null;
+        festival = festivalDao.festivalHitList();
+        return festival;
+    }
 	
 
 }

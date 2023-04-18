@@ -27,6 +27,7 @@ public class FestivalDto {
 	private Integer festTcPrice;
 	private String festDtRuntime;
 	private String festDtAge;
+	private Integer festMHit;
 
 }
 
