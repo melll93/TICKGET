@@ -18,8 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies, useCookies } from "react-cookie";
 import Header from "../../components/Header";
-/* import { EyeFill, EyeSlashFill } from 'react-icons/io5';
- */
+
 const cookies = new Cookies();
 
 const LoginPage = ({ user, setUser, authLogic }) => {
@@ -44,36 +43,47 @@ const LoginPage = ({ user, setUser, authLogic }) => {
     memberPassword: userPw,
   };
 
+  /***************************************
+   * @param { memberId, memberPassword }
+   ***************************************/
   const login = async (paramMember) => {
     const result = await axios({
       method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
       url:
-        // process.env.BACKEND_URL + "member/login/local",
-        "http://localhost:8888/member/login/local",
+        // process.env.BACKEND_URL + "/login",
+        "http://localhost:8888/login",
       data: paramMember,
     })
       .then((res) => {
         console.log(res);
-        if (res.data.code === 0) {
-          // 팝업창 구현
-          window.alert(res.data.msg);
-        } else if (res.data.code === 1) {
-          const userResponse = res.data.user;
-          const user = {
-            id: userResponse.memberId,
-            email: userResponse.memberEmail,
-            name: userResponse.memberName,
-            nickname: userResponse.memberNickname,
-            profile_img: userResponse.memberProfileImage,
-          };
-          cookies.set("_userData", user);
-          dispatch(reduxLogin(user));
+        if (res.status >= 200 && res.status < 400) {
           window.alert("로그인 성공");
+
+          const token = res.data
+          console.log(token);
+          window.localStorage.setItem("access_token", token)
+
           navigate("/");
+        } else if (res.status >= 400 && res.status < 600) {
+          window.alert("로그인 실패");
         }
       })
       .catch(console.log);
   };
+
+  const handleLogin = () => {
+    if (userId === null || userId === "" || userId === undefined) {
+      window.alert("아이디를 입력해주세요.")
+    } else if (userPw === null || userPw === "" || userPw === undefined) {
+      window.alert("비밀번호를 입력해주세요.")
+    } else {
+      console.log(userPw);
+      login(member)
+    }
+  }
 
   /************************************comment************************************
    * 조장 생각 : 변수와 메소드가 많아지며 명칭이 많아져 코드가 많아질수록 혼동할 가능성이 높아짐.
@@ -97,23 +107,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   console.log("id : " + userId);
   console.log("pw : " + userPw);
 
-  // 자체 로그인
-  // DB 타는 것까지는 구현 성공(전체 memberList) -> login mapper 수정 필요
-  // axios 구현
-  const loginLocal = async () => {
-    try {
-      const result = await loginH(member);
-      console.log(result);
-      console.log(result.user.id);
-      // 세션 스토리지에 아이디값 저장
-      // 로컬 스토리지에 아이디값 저장
-      window.localStorage.setItem("userId", result.user.id);
-      navigate("/");
-    } catch (error) {
-      console.log(error + ": 로그인 에러입니다");
-    }
-  };
-
   // 구글 로그인
   const loginG = async () => {
     try {
@@ -128,6 +121,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
       console.log("로그인 오류입니다");
     }
   };
+
   return (
     <>
       <Header />
@@ -188,7 +182,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 type="login"
                 onClick={(e) => {
                   e.preventDefault();
-                  login(member);
+                  handleLogin(member);
                 }}
               >
                 로그인

@@ -10,7 +10,7 @@ const cookies = new Cookies();
 
 const Profile = () => {
   const _userData = cookies.get("_userData");
-  const access_token = window.localStorage.getItem("access_token");
+  const access_token = window.localStorage.getItem("com.naver.nid.access_token");
   console.log(access_token);
   const navigate = useNavigate();
   const logout = () => {
@@ -19,6 +19,13 @@ const Profile = () => {
     // navigate("/"); // cookie가 갱신이 안됨
     window.location.href = "/";
   };
+
+  /********************************************
+   * 
+   ********************************************/
+  const getUserData = () => {
+
+  }
 
   const handleChatFromProfile = () => {
     navigate("/chat")
