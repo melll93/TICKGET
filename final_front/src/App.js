@@ -38,8 +38,10 @@ import CarpoolUpdate from "./pages/board/carpool/CarpoolUpdate";
 import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
-import GoogleLogin from "./api/login/GoogleLogin";
+import PaymentPage from "./pages/personal/PaymentPage";
 import FireTest from "./pages/board/carpool/FireTest";
+
+
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -73,10 +75,6 @@ function App({ mkImageUploader }) {
           path="/oauth/login/kakao/callback"
           element={<KakaoLogin user={user} setUser={setUser} />}
         />
-        {/*         <Route
-          path="/oauth/login/google/callback"
-          element={<GoogleLogin user={user} setUser={setUser} />}
-        /> */}
 
         {/* PersonalTabs Routes */}
         <Route path="/mypage" exact={true} element={<MyPage />} />

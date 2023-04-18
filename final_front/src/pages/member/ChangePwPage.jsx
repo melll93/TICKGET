@@ -1,80 +1,71 @@
-import React, {useState} from 'react'
+import React from 'react'
+import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
+import { createAction } from '@reduxjs/toolkit';
+import { useState, useEffect } from 'react';
 import { BButton, LoginForm, MyH1, MyInput, MyLabel, PwEye  } from '../../styles/formStyle';
 import { memberUpdateDB } from '../../axios/member/memberLogic';
-import { checkPassword, validatePassword } from '../../util/validateLogic';
+
+const setUserId = createAction('user/setUserId');
 
 const ChangePwPage = () => {
-const [memInfo, setMemInfo] = useState({
-  pw: "",
-  pwConfirm: ""
-});
+  const dispatch = useDispatch();
+  // changePw에서 member_id 은경아 메롱 
+  const memberId = useSelector(state => state.user && state.user.memberId);
+  const [memInfo, setMemInfo] = useState({
+    pw: '',
+    pwConfirm: '',
+  });
 
-// pw와 pwConfirm 값 콘솔창에서 확인
-const changeMemInfo = (e) => {
-  const id = e.currentTarget.id;
-  const value = e.target.value;
-  if (id === "pw") {
-    console.log("pw: " + value); 
-    setMemInfo({ ...memInfo, pw: value });
-  } else if (id === "pwConfirm") {
-    console.log("pwconfirm: " + value); 
-    setMemInfo({ ...memInfo, pwConfirm: value });
-  }
-}
-// 비밀번호 변경 입력 시 출력될 validate
-const validate = (key, e) => {
-  let result;
-  if (key === 'pw') {
-    result = validatePassword(e);
-  } else if (key === 'pwConfirm') {
-    result = checkPassword(e);
-  } 
-}
-// 사용자의 아이디값을 쥐고 새로운 비밀번호를 입력받아 update
-/* 
-	<update id="memberUpdate" parameterType="java.util.HashMap">
-		UPDATE member
-		SET member_password = #{memberPassword}
-    WHERE member_Id = #{memberId}
-	</update>
-*/
-const handleFormSubmit = async(e) => {
-e.preventDefault();
-if (memInfo.pw === memInfo.pwConfirm) {
-  console.log("비밀번호가 일치합니다.");
-  alert("비밀번호가 일치합니다.");
-  try {
-    const member = {
-      mem_id: memInfo.id,
-      mem_pw: memInfo.pw
-    };
-    const res = await memberUpdateDB(member);
-    console.log(res.data);
-    alert("비밀번호가 성공적으로 변경되었습니다");
-    // window.location.href = '/login';
-  } catch (error) {
-    console.error(error);
-    alert("비밀번호 변경에 실패하였습니다");
-  }
-  } else {
-  console.log("비밀번호 불일치");
-  alert("비밀번호가 일치하지 않습니다.");
-  }
-}
+  const changeMemInfo = (e) => {
+    const id = e.currentTarget.id;
+    const value = e.target.value;
+    if (id === 'pw') {
+      console.log('pw: ' + value);
+      setMemInfo({ ...memInfo, pw: value });
+    } else if (id === 'pwConfirm') {
+      console.log('pwconfirm: ' + value);
+      setMemInfo({ ...memInfo, pwConfirm: value });
+    }
+  };
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    if (memInfo.pw === memInfo.pwConfirm) {
+      console.log('비밀번호가 일치합니다.');
+      alert('비밀번호가 일치합니다.');
+      try {
+        const member = {
+          memberId: memberId,
+          memberPassword: memInfo.pw,
+        };
+        const res = await memberUpdateDB(member);
+        console.log(res.data);
+        alert('비밀번호가 성공적으로 변경되었습니다');
+        // 
+        dispatch(setUserId(memberId));
+      } catch (error) {
+        console.error(error);
+        alert('비밀번호 변경에 실패하였습니다');
+      }
+    } else {
+      console.log('비밀번호 불일치');
+      alert('비밀번호가 일치하지 않습니다.');
+    }
+  };
 
   return (
-<>
+    <>
       <LoginForm>
         <MyH1></MyH1>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', Content: 'center', marginTop: '20px', width: "100%" }}>
           <MyLabel> 비밀번호
             <MyInput type="password" id="pw" placeholder="변경하실 새로운 비밀번호를 입력해 주세요"
-              onChange={(e) => { changeMemInfo(e); validate('pw', e); }} />
+              onChange={(e) => { changeMemInfo(e); }} />
           </MyLabel>
           <MyLabel> 비밀번호 재입력
             <MyInput type="password" id="pwConfirm" placeholder="비밀번호를 한 번 더 입력해 주세요"
-              onChange={(e) => { changeMemInfo(e); validate('pwConfirm', e.target.value); }} />
+              onChange={(e) => { changeMemInfo(e);  }} />
           </MyLabel>
           <BButton type="submit" onClick={handleFormSubmit}>변경</BButton>
         </div>
