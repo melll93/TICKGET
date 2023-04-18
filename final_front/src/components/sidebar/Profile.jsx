@@ -10,8 +10,8 @@ const cookies = new Cookies();
 
 const Profile = () => {
   const _userData = cookies.get("_userData");
-  const access_token = window.localStorage.getItem("com.naver.nid.access_token");
-  console.log(access_token);
+  const naver_token = window.localStorage.getItem("com.naver.nid.access_token");
+  console.log(naver_token);
   const navigate = useNavigate();
   const logout = () => {
     window.localStorage.clear();
@@ -21,18 +21,32 @@ const Profile = () => {
   };
 
   /********************************************
-   * 
+   * 로그인 시 발급된 jwt를 가지고 BE에 요청
    ********************************************/
-  const getUserData = () => {
-
+  const getUserData = async (memberId) => {
+    const result = await axios({
+      method: "POST",
+      url: "http://localhost:8888" + "/member/getMemberData",
+      // headers: {
+      //   access_token: window.localStorage.getItem("access_token")
+      // },
+      data: {
+        memberId: memberId
+      }
+    }).then((res) => {
+      const _userData = res.data;
+      cookies.set("_userData", _userData);
+    })
+    return result
   }
+
 
   const handleChatFromProfile = () => {
     navigate("/chat")
   }
 
   const getProfile = () => {
-    if (!_userData && access_token === null) {
+    if (!_userData && naver_token === null) {
       return (
         <div className="ProfileButton">
           <Link to="/login" className="link">
@@ -83,6 +97,11 @@ const Profile = () => {
       );
     }
   };
+
+
+  useEffect(() => {
+    getUserData("admin").then(console.log)
+  })
 
   return (
     <>
