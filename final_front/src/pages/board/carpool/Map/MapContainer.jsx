@@ -6,7 +6,7 @@ const MapContainer = ({ searchPlace }) => {
   const [Places, setPlaces] = useState([]);
 
   useEffect(() => {
-    var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+    var infowindow = new kakao.maps.InfoWindow({ zIndex: 0 });
     var markers = [];
     const container = document.getElementById("myMap");
     const options = {
@@ -109,12 +109,15 @@ const MapContainer = ({ searchPlace }) => {
             alignItems: "center",
           }}
         >
-          <div id="result-list" style={{margin:"0px 0px 0px 50px", /* textAlign:"center" */}}>
+          <div
+            id="result-list"
+            style={{ margin: "0px 0px 0px 50px" /* textAlign:"center" */ }}
+          >
             {Places.map((item, i) => (
               <div key={i} style={{ marginTop: "5px" }}>
                 <span>{i + 1}</span>
                 <div>
-                  <h5>{item.place_name}</h5>
+                  <h5 style={{ color: "black" }}>{item.place_name}</h5>
                   {item.road_address_name ? (
                     <div>
                       <span>{item.road_address_name}</span>
@@ -123,13 +126,17 @@ const MapContainer = ({ searchPlace }) => {
                   ) : (
                     <span>{item.address_name}</span>
                   )}
+
                   <span>{item.phone}</span>
                 </div>
               </div>
             ))}
           </div>
 
-          <div style={{ fontSize: "30px", margin:"30px 0px 0px 50px" }} id="pagination"></div>
+          <div
+            style={{ fontSize: "30px", margin: "30px 0px 0px 50px" }}
+            id="pagination"
+          ></div>
         </div>
       </div>
     </>

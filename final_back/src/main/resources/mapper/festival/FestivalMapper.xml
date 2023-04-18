@@ -15,6 +15,9 @@
 	<select id="areaFestivalList" resultType="FestivalDto">
 SELECT * FROM fest_main where fest_m_area=#{festMArea}
 </select>
+<select id="festivalHitList" resultType="FestivalDto">
+  SELECT * FROM fest_main ORDER BY fest_m_hit DESC
+</select>
 	<select id="festivalListByDate" resultType="FestivalDto">
 			SELECT *
         FROM fest_main
@@ -46,12 +49,6 @@ SELECT * FROM fest_main
 	#{festMArea})
 	</insert>
 		<delete id="festivalDelete" parameterType="String">
-		delete from fest_main
-				<where>
-			<if test='fest_m_id!=null'>
-				and fest_m_id=#{festMId}
-			</if>
-		</where>
-
+  delete from fest_main where fest_m_id =#{festMId};
 	</delete>
 </mapper>

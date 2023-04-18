@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Cookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-import { BButton } from "../../../styles/formStyle";
+import { BButton, MButton } from "../../../styles/formStyle";
 import MyFilter from "./MyFilter";
 
 const cookies = new Cookies();
@@ -91,20 +91,20 @@ const MarketSearchBar = () => {
           setContent(e.target.value);
         }}
       />
-      <BButton
+      <MButton
         style={{ width: "70px", height: "40px", marginRight: "10px" }}
         onClick={() => {
           navigate(setPath());
         }}
       >
         검색
-      </BButton>
-      <BButton
+      </MButton>
+      <MButton
         style={{ width: "70px", height: "40px", marginRight: "10px" }}
         onClick={() => navigate("/market/write")}
       >
         글쓰기
-      </BButton>
+      </MButton>
 {/*       { _userData.no > 0 &&
   <BButton
     style={{ width: "70px", height: "40px", marginRight: "10px" }}

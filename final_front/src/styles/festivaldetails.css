@@ -195,3 +195,48 @@ ol, ul {
     background-color: gray;
     color: white;
   }
+
+
+
+
+
+
+  /* 
+  fsetival > AddProductsFestTicketDetail.jsx
+  */
+  .input-group {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .table-seats {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-seats th,
+  .table-seats td {
+    padding: 10px;
+    border: 1px solid #6f6e6e;
+  }
+  
+  .table-seats th {
+    font-weight: bold;
+    background-color: #3f3d3d;
+    color: #fff;
+
+  }
+  
+  .btn-add-seat,
+  .btn-save {
+    margin-left: 10px;
+    padding: 10px;
+    border: none;
+    background-color: #625d5d;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .btn-save {
+    background-color: #0a0a0a;
+  }

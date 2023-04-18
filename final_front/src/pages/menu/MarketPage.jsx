@@ -3,10 +3,11 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { FormDiv, HeaderDiv } from "../../styles/formStyle";
+import { FormDiv, HeaderDiv, MkFormDiv } from "../../styles/formStyle";
 import MarketList from "../board/market/MarketList";
 import MarketSearchBar from "../board/market/MarketSearchBar";
 import { Cookies } from "react-cookie";
+import Footer from "../../components/Footer";
 const cookies = new Cookies();
 
 
@@ -34,39 +35,38 @@ const MarketPage = () => {
               };
              */
 
-  const reactSearch = () => {};
 
   return (
     <>
         <Header />
       <Sidebar />
-      <div className="center">
-        <HeaderDiv>
-          <h3 style={{ marginLeft: "100px" }}>마켓 게시판</h3>
-          {/*          <Button variant="primary" style={{marginLeft:'700px'}}>
-                  전체조회
-          </Button>
-          <Button variant="primary" onClick={()=>navigate('/market/write')}  style={{marginRight:'80px'}}>
-                  글쓰기
-            </Button> */}
+        <HeaderDiv style={{marginLeft:'600px'}}>
         </HeaderDiv>
-        <FormDiv style={{ marginLeft: "50px" }}>
+
+
+        <div style={{marginTop:'100px' , textAlign: 'center'}}>
+          <h3 style={{display:'inline-block' , fontFamily:"Nanum Gothic", fontWeight:"bold"}}>마켓 게시판</h3>
+          <MarketSearchBar style={{display: 'inline-block'}}/>
+        </div>
+
+
+        <MkFormDiv style={{ marginLeft: "200px" }}>
           <div className="book-list">
-            <Table striped bordered hover style={{ minWidth: "1000px" }}>
+         {/*    <Table striped bordered hover style={{ minWidth: "1000px" }}>
               <thead>
                 <tr>
                   <th style={{ width: "500px", textAlign: "center" }}>
                     상품정보
                   </th>
-                  <th style={{ width: "100px", textAlign: "center" }}>수량</th>
-                  <th style={{ width: "200px", textAlign: "center" }}>가격</th>
+                  <th style={{ width: "50px", textAlign: "center" }}>수량</th>
+                  <th style={{ width: "150px", textAlign: "center" }}>가격</th>
                   <th style={{ width: "150px", textAlign: "center" }}>
                     등록일
                   </th>
-                  <th style={{ width: "200px", textAlign: "center" }}>
+                  <th style={{ width: "150px", textAlign: "center" }}>
                     작성자
                   </th>
-                  <th style={{ width: "100px", textAlign: "center" }}>
+                  <th style={{ width: "80px", textAlign: "center" }}>
                     조회수
                   </th>
                 </tr>
@@ -75,13 +75,13 @@ const MarketPage = () => {
                 <MarketList />
               </tbody>
             </Table>
-            <hr />
-            <div className="booklist-footer">
-              <MarketSearchBar />
-            </div>
+            <hr /> */}
+
+
+            <MarketList />
           </div>
-        </FormDiv>
-      </div>
+          
+        </MkFormDiv>
     </>
   );
 };

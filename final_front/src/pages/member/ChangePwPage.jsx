@@ -8,7 +8,6 @@ const [memInfo, setMemInfo] = useState({
   pw: "",
   pwConfirm: ""
 });
-const [passwordMatch, setPasswordMatch] = useState(true); 
 
 // pw와 pwConfirm 값 콘솔창에서 확인
 const changeMemInfo = (e) => {
@@ -31,8 +30,14 @@ const validate = (key, e) => {
     result = checkPassword(e);
   } 
 }
-// 비밀번호가 변경되려면 사용자의 id 값을 들고 있고 새로운 비밀번호를 받아 updeate 해야 하는 것 같음
-// 어떻게 ?
+// 사용자의 아이디값을 쥐고 새로운 비밀번호를 입력받아 update
+/* 
+	<update id="memberUpdate" parameterType="java.util.HashMap">
+		UPDATE member
+		SET member_password = #{memberPassword}
+    WHERE member_Id = #{memberId}
+	</update>
+*/
 const handleFormSubmit = async(e) => {
 e.preventDefault();
 if (memInfo.pw === memInfo.pwConfirm) {
@@ -52,7 +57,7 @@ if (memInfo.pw === memInfo.pwConfirm) {
     alert("비밀번호 변경에 실패하였습니다");
   }
   } else {
-  console.log("비밀번호가 일치하지 않습니다.");
+  console.log("비밀번호 불일치");
   alert("비밀번호가 일치하지 않습니다.");
   }
 }

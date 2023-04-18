@@ -6,20 +6,21 @@ import java.util.Map;
 import back.spring.final_back.board.repository.CarpoolDto;
 
 public interface CarpoolService {
-    // 카풀 게시판 조회
+    // Carpool 게시판 조회
     public List<CarpoolDto> selectCarpool();
 
-    // 카풀 게시글 상세보기
+    // Carpool 게시글 상세보기
     public CarpoolDto CarpoolDetail(CarpoolDto carpoolDto);
 
-    // 카풀 게시글 작성
+    // Carpool 게시글 작성
     public int insertCarpool(CarpoolDto carpoolDto);
 
-    // 카풀 게시글 삭제
+    // Carpool 게시글 삭제
     public int deleteCarpool(CarpoolDto carpoolDto);
 
-     // 게시판 수정(Update)
+     // Carpool 수정(Update)
      int updateCarpool(CarpoolDto carpoolDto);
 
+     //Carpool 게시판 조회수 증가
     public void viewUp(Map<String, Object> pMap);
 }

@@ -20,7 +20,7 @@ public class MarketDto {
 	private int boardMkNo;
 	private String boardMkTitle;
 	private String boardMkContent;
-	private Date boardMkDate;
+	private LocalDateTime boardMkDate;
 	private int boardMkHit;
 	private LocalDateTime mkTicketDate;
 	private String mkTicketSeat;

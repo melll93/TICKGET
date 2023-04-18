@@ -95,11 +95,13 @@ const TogetherBoardList = (board) => {
             </tbody>
           </Table>
         </div>
+
         <CommonPagination
           pagination={setPage}
           perPage={perPage}
           totalItems={boardList.length}
         ></CommonPagination>
+        
         <div
           style={{
             display: "flex",

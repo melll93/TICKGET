@@ -24,12 +24,14 @@ public class FestivalDto {
 	private String festMGenre;
 	private String festMArea;
 	private String festPsUrl;
-	private String festTcPrice;
+	private Integer festTcPrice;
 	private String festDtRuntime;
 	private String festDtAge;
-	
+	private Integer festMHit;
+
 }
 
+ 
 //private int festId;
 //private String festTitle;
 //private String festLocation;

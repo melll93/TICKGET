@@ -3,44 +3,44 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import KakaoLogin from "./api/login/KakaoLogin";
 import NaverLogin from "./api/login/NaverLogin";
+import MarketDetail from "./pages/board/market/MarketDetail";
+import MarketUpdatePage from "./pages/board/market/MarketUpdatePage";
+import MarketWriteForm from "./pages/board/market/MarketWriteForm";
+import TogetherBoardDetail from "./pages/board/together/TogetherBoardDetail";
+import TogetherBoardUpdate from "./pages/board/together/TogetherBoardUpdate";
+import TogetherBoardWriteForm from "./pages/board/together/TogetherBoardWriteForm";
+import FestivalPaymentPage from "./pages/festival/FestivalPaymentPage";
 import FestivalsDetail from "./pages/festival/FestivalsDetail";
+import FindIdPage from "./pages/member/FindIdpage";
+import LoginPage from "./pages/member/LoginPage";
+import RegisterPage from "./pages/member/RegisterPage";
+import ResetPwPage from "./pages/member/ResetPwPage";
+import SocialRegisterPage from "./pages/member/SocialRegisterPage";
 import AddProductsPage from "./pages/menu/AddProductsPage";
+import CalendarPage from "./pages/menu/CalendarPage";
 import CarpoolPage from "./pages/menu/CarpoolPage";
+import ChatPage from "./pages/menu/ChatPage";
 import ConcertPage from "./pages/menu/ConcertPage";
 import FestivalPage from "./pages/menu/FestivalPage";
 import HomePage from "./pages/menu/HomePage";
 import MarketPage from "./pages/menu/MarketPage";
 import SearchResultPage from "./pages/menu/SearchResultPage";
 import TogetherPage from "./pages/menu/TogetherPage";
-import MarketDetail from "./pages/board/market/MarketDetail";
-import MarketUpdatePage from "./pages/board/market/MarketUpdatePage";
-import MarketWriteForm from "./pages/board/market/MarketWriteForm";
-import FindIdPage from "./pages/member/FindIdpage";
-import LoginPage from "./pages/member/LoginPage";
-import RegisterPage from "./pages/member/RegisterPage";
-import ResetPwPage from "./pages/member/ResetPwPage";
-import SocialRegisterPage from "./pages/member/SocialRegisterPage";
-import BookmarkPage from "./pages/personal/BookmarkPage";
-import CalendarPage from "./pages/menu/CalendarPage";
-import CartPage from "./pages/personal/CartPage";
-import ChatPage from "./pages/menu/ChatPage";
-import MyPage from "./pages/personal/MyPage";
 import PayFailPage from "./pages/payment/PayFailPage";
 import PaySucPage from "./pages/payment/PaySucPage";
-import FestivalPaymentPage from "./pages/festival/FestivalPaymentPage";
+import BookmarkPage from "./pages/personal/BookmarkPage";
+import CartPage from "./pages/personal/CartPage";
+import MyPage from "./pages/personal/MyPage";
 import SettingPage from "./pages/personal/SettingPage";
 import TicketPage from "./pages/personal/TicketPage";
-import TogetherBoardDetail from "./pages/board/together/TogetherBoardDetail";
-import TogetherBoardUpdate from "./pages/board/together/TogetherBoardUpdate";
-import TogetherBoardWriteForm from "./pages/board/together/TogetherBoardWriteForm";
 
 import CarpoolDetail from "./pages/board/carpool/CarpoolDetail";
 import CarpoolUpdate from "./pages/board/carpool/CarpoolUpdate";
 import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
-import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import ChangePwPage from "./pages/member/ChangePwPage";
+import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import PaymentPage from "./pages/personal/PaymentPage";
-// import LandingPage from "./pages/board/carpool/Practice/LandingPage.tsx";
+import GoogleLogin from "./api/login/GoogleLogin";
 
 
 
@@ -76,6 +76,10 @@ function App({ mkImageUploader }) {
           path="/oauth/login/kakao/callback"
           element={<KakaoLogin user={user} setUser={setUser} />}
         />
+{/*         <Route
+          path="/oauth/login/google/callback"
+          element={<GoogleLogin user={user} setUser={setUser} />}
+        /> */}
 
         {/* PersonalTabs Routes */}
         <Route path="/mypage" exact={true} element={<MyPage />} />
@@ -119,7 +123,7 @@ function App({ mkImageUploader }) {
         <Route path="carpool/carpoolDetail/:carpoolNo" element={<CarpoolDetail carpool={carpool} />}/>
         <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
         <Route path="carpool/carpoolUpdate/:carpoolNo" element={<CarpoolUpdate />}/>
-        {/* <Route path="carpool/test" element={<LandingPage />}/> */}
+
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route

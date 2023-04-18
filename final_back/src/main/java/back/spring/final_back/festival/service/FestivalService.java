@@ -16,9 +16,11 @@ public interface FestivalService {
 
   int festivalInsert(FestivalDto festivalDto);
 
-  int festivalDelete(Integer fest_m_id);
+  int festivalDelete(String fest_m_id);
 
 FestivalDto festivalDetail(FestivalDto festivalDto);
+
+List<FestivalDto> festivalHitList();
 
 
 }

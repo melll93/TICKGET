@@ -6,10 +6,11 @@ import Header from "../../components/Header";
 import {
   FetivalListDB,
   areaFestivalListDB,
+  festivalHitListDB,
 } from "../../axios/festival/festival";
 import CommonPagination from "../../components/CommonPagination";
-import FestivalNavbar from "../festival/FestivalNavbar";
-import HeaderSearchBar from "../../components/header/HeaderSearchBar";
+import { Card } from "react-bootstrap";
+import FestivalRankingList from "../festival/FeativalRankingList";
 
 ///////////////////////////////      페스티발 지역별   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const FestivalAreaList = ({selectedNavbarValue}) => {
@@ -53,8 +54,8 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
                   style={{ textDecoration: "none", color: "black" }}
                   href={"/productsDetail/" + festival.festMId}
                 >
-                  <img src={festival.festMImg} width="100%" alt="사진1" />
-                  <div className="card-body">
+                  <img src={festival.festMImg} style={{width:"100%", overflow:'hidden', height:'400px'}} alt="사진1" />
+                  <div className="card-body"  style={{overflow:'hidden', height:'220px'}}>
                     <h5 className="card-title">제목 : {festival.festMName}</h5>
                     <p className="card-text">로케 : {festival.festMLoc}</p>
                     <p className="card-text">
@@ -85,26 +86,6 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
 }; //SeoulFestivalList끝
 
 
-const FestivalRankingList = () => {
-  return (
-    <div
-      className="card"
-      style={{
-        width: "18rem",
-        display: "inline-block",
-        margin: "50px 0px 0px 50px",
-      }}
-    >
-      랭킹별 분류 상품
-      <div className="card-body">
-        <h5 className="card-title">제목 :</h5>
-        <p className="card-text">설명 : </p>
-        <p className="card-text"> festId: </p>
-        <p className="card-text"> festCategory: </p>
-      </div>
-    </div>
-  );
-};
 const FestivalExtraList = () => {
   return (
     <div
@@ -153,9 +134,9 @@ const FestivalsTest = () => {
             return (
               <div
                 key={festival.festMId}
-                className="card"
+                className="card "
                 style={{
-                  width: "18rem",
+                 width: "18rem", 
                   display: "inline-block",
                   margin: "50px 0px 0px 50px",
                 }}
@@ -164,18 +145,16 @@ const FestivalsTest = () => {
                   style={{ textDecoration: "none", color: "black" }}
                   href={"/productsDetail/" + festival.festMId}
                 >
-                  <img src={festival.festMImg} width="100%" alt="사진1" />
-                  <div className="card-body">
+                  <img src={festival.festMImg} style={{width:"100%", overflow:'hidden', height:'400px'}} alt="사진1" />
+                  <div className="card-body" style={{overflow:'hidden', height:'220px'}} >
                     <h5 className="card-title">제목 : {festival.festMName}</h5>
                     <p className="card-text">로케 : {festival.festMLoc}</p>
                     <p className="card-text">
-                      {" "}
-                      {festival.festMStart} ~ {festival.festMEnd}{" "}
+                      {festival.festMStart} ~ {festival.festMEnd}
                     </p>
-                    <p className="card-text"> festId: {festival.festMId} </p>
+                {/*     <p className="card-text"> festId: {festival.festMId} </p> */}
                     <p className="card-text">
-                      {" "}
-                      festCategory: {festival.festMGenre}{" "}
+                      festCategory: {festival.festMGenre}
                     </p>
                   </div>
                 </a>
@@ -193,6 +172,10 @@ const FestivalsTest = () => {
     </>
   );
 }; ///////////////////////////////////// FestivalsTest 끝////////////////////////////////////////
+
+
+
+
 
 const FestivalPage = () => {
   
@@ -240,7 +223,12 @@ const FestivalPage = () => {
     setModal4(0);
   };
 
-
+  const rankingModalopen = () => {
+    setTotalFest(0);
+    setModal2(0);
+    setModal3(1);
+    setModal4(0);
+  };
 
   const modal4open = () => {
     setTotalFest(0);
@@ -303,7 +291,7 @@ const FestivalPage = () => {
 
 {/* 인기순 */}
             <ul className="nav-item">
-              <li className="nav-link" style={{ marginLeft: "150px" }} onClick={modal4open}> 인기순/랭킹 </li>
+              <li className="nav-link" style={{ marginLeft: "150px" }} onClick={rankingModalopen}> 인기순/랭킹 </li>
             </ul>
 
 {/* 기타 */}
