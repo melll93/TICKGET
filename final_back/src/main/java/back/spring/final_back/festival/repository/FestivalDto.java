@@ -23,8 +23,15 @@ public class FestivalDto {
 	private String festMImg;
 	private String festMGenre;
 	private String festMArea;
+	private String festPsUrl;
+	private Integer festTcPrice;
+	private String festDtRuntime;
+	private String festDtAge;
+	private Integer festMHit;
+
 }
 
+ 
 //private int festId;
 //private String festTitle;
 //private String festLocation;

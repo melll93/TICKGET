@@ -10,6 +10,7 @@ import Sidebar from "../../../components/Sidebar";
 import { MyInput, MyLabel, MyLabelAb } from "../../../styles/formStyle";
 import PaymentComponent from "../../payment/PaymentComponent";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
+import { Cookies } from "react-cookie";
 
 const Cimg = styled.img`
   width: 150px;
@@ -17,7 +18,16 @@ const Cimg = styled.img`
   object-fit: cover;
 `;
 
+
+const cookies = new Cookies();
+
 const MarketPaymentPage = () => {
+
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData)
+  
+
+
   const href = window.location.href; //url 주소 전체 가져옴
   console.log(href);
   const loc = useLocation().pathname.split("/").pop();
@@ -61,6 +71,28 @@ const MarketPaymentPage = () => {
     boardDetail();
   }, []);
 
+
+
+
+    //연월일 날짜 시간 표기방법으로 변경코드
+    console.log(mkpDetail.mk_ticket_date) //2023-04-14T00:00:00
+    const date = new Date(mkpDetail.mk_ticket_date);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    
+    const formattedDate = `${year}-${month}-${day} ${hours}시 ${minutes}분`;
+    console.log(formattedDate); // "2023-04-14 00:00"
+  
+  
+
+
+
+
+
+   //토스페이먼츠 호출
   const handleClick = async () => {
     const tossPayments = await loadTossPayments(
       // process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY
@@ -132,7 +164,7 @@ const MarketPaymentPage = () => {
                     <div>
                       <Card.Text style={{ fontSize: "20px" }}>
                         {/* 좌석정보 | 공연일 | 공연장소 */}
-                        {mkpDetail.mk_ticket_seat} | {mkpDetail.mk_ticket_date}{" "}
+                        {mkpDetail.mk_ticket_seat} | {formattedDate}{" "}
                         | {mkpDetail.mk_ticket_place}
                       </Card.Text>
                     </div>
@@ -193,13 +225,13 @@ const MarketPaymentPage = () => {
               >
                 <Card.Body style={{ display: "flex", alignItems: "center" }}>
                   <div style={{ marginLeft: "20px" }}>
-                    <div style={{ display: "inline-block", marginTop: "10px" }}>
-                      <Card.Text style={{ fontSize: "22px" }}>
+                    <div style={{ display: "inline-block", color: "black", marginTop: "10px" }}>
+                      <Card.Title style={{ fontSize: "22px" }}>
                         수량{" "}
-                        <span style={{ marginLeft: "400px" }}>
+                        <span style={{ marginLeft: "400px", color:"black" }}>
                           {mkpDetail.mk_ticket_count}장
                         </span>
-                      </Card.Text>
+                      </Card.Title>
                     </div>
                     <hr />
                     <div>

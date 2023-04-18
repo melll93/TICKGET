@@ -2,21 +2,24 @@ span {
   color: white;
 }
 
-/* div .sidebar.container {
+div .sidebar.container {
   height: 100%;
   display: inline-block;
   position: fixed;
   z-index: 1;
-  background-color: rgba(47, 47, 47, 0.9);
+  background-color: rgba(255, 255, 255, 0);
   overflow-x: hidden;
   transition: 0.5s;
-  width: 300px;
   height: 100%;
-} */
+  top: 8vh;
+  left: 0;
+}
 
 div .ProfileBox {
   display: flex;
   justify-content: center;
+  height: 100px;
+  align-items: center;
 }
 
 div .sidebar.items {
@@ -24,21 +27,26 @@ div .sidebar.items {
   display: inline-block;
   position: fixed;
   z-index: 1;
-  background-color: rgba(47, 47, 47, 0.9); /*까만색(0,0,0) 80% 불투명도*/
+  background-color: rgba(47, 47, 47, 0.9);
   overflow-x: hidden;
   transition: 0.5s;
-
   top: 8vh;
   left: 0;
-  border-right: 1px solid black;
+  /* border-right: 1px solid black; */
 }
 
 div .sidebar.button {
+  background-color: rgba(47, 47, 47, 0.9);
+  align-items: center;
+  height: 60px;
   display: inline-block;
-  position: fixed;
+  position: absolute;
   z-index: 1;
-  top: 8vh;
-  height: 100%;
+  top: 5.5vh;
+  overflow-x: hidden;
+  transition: 0.5s;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
 }
 
 .icon {

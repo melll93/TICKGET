@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.board.service.CarpoolService;
-import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -28,7 +27,7 @@ public class CarpoolController {
     Logger logger = LoggerFactory.getLogger(TogetherController.class);
     private final CarpoolService carpoolService;
 
-    // carpool 게시판 조회(SelectAll)
+    // Carpool 게시판 조회(SelectAll)
     @GetMapping("/selectCarpool")
     public List<CarpoolDto> selectCarpool() {
         logger.info("CarpoolController : selectCarpool 호출");
@@ -37,7 +36,7 @@ public class CarpoolController {
         return mList;
     }
 
-    // 게시글 상세보기(SelectOne)
+    // Carpool 게시글 상세보기(SelectOne)
     @GetMapping("/carpoolDetail")
     public CarpoolDto CarpoolDetail(CarpoolDto carpoolDto) {
         logger.info("CarpoolController : CarpoolDetail 호출");
@@ -45,7 +44,7 @@ public class CarpoolController {
         return mList;
     }
 
-    // 게시판 등록(Insert)
+    // Carpool 게시판 등록(Insert)
     @GetMapping("/insertCarpool")
     public int insertCarpool(CarpoolDto carpoolDto) {
         logger.info("CarpoolController : insertCarpool 호출");
@@ -53,7 +52,7 @@ public class CarpoolController {
         return result;
     }
 
-    // 게시판 삭제(Delete)
+    // Carpool 게시판 삭제(Delete)
     @GetMapping("/deleteCarpool")
     public int deleteCarpool(CarpoolDto carpoolDto) {
         logger.info("CarpoolController : deleteCarpool 호출");
@@ -62,7 +61,7 @@ public class CarpoolController {
         return result;
     }
 
-    // 게시글 수정(Update)
+    // Carpool 게시글 수정(Update)
     @GetMapping("/updateCarpool")
     public CarpoolDto updateCarpool(CarpoolDto carpoolDto) {
         logger.info("CarpoolController : updateCarpool select");
@@ -70,7 +69,7 @@ public class CarpoolController {
         return mList;
     }
 
-    // 게시판 수정(Update)
+    // Carpool 게시판 수정(Update)
     @PostMapping("/updateCarpool")
     public int updateCarpoolSubmit(@RequestBody CarpoolDto carpoolDto) {
         logger.info("CarpoolController : updateCarpoolSubmit submit");
@@ -80,10 +79,11 @@ public class CarpoolController {
         return result;
     }
 
-	// 조회수 증가시켜줘
+	// Carpool 조회수 증가시켜줘
 	@GetMapping("/carpoolViewUp")
 	public void viewUp(@RequestParam Map<String, Object> pMap) {
 		logger.info("CarpoolController : viewUp 호출");
+        logger.error("pMap = {}", pMap);
 		carpoolService.viewUp(pMap);
 	}
 }

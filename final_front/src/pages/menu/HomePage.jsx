@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tab, Tabs } from "react-bootstrap";
+import { Card, Tab, Tabs } from "react-bootstrap";
 import BasicTable from "../../components/mainpage/BasicTable";
 import Header from "../../components/Header";
 import CarouselList from "../../components/mainpage/CarouselList";
@@ -7,6 +7,7 @@ import Sidebar from "../../components/Sidebar";
 import { useSelector } from "react-redux";
 import CalendarPage from "../menu/CalendarPage";
 import { festivalListByDate } from "../../axios/festival/festival";
+import { festivalHitListDB } from "../../axios/festival/festival";
 
 const HomePage = () => {
   /******************************
@@ -18,11 +19,13 @@ const HomePage = () => {
   const reduxUser = useSelector((state) => state.userStatus.user);
 
   const [festivalToday, setFestivalToday] = useState([]);
+  const [festivalHitList, setFestivalHitList] = useState([]);
+
 
   const getTodayList = () => {
     const getDate = new Date();
     const year = getDate.getFullYear();
-    const month = getDate.getMonth() + 1;
+    const month = getDate.getMonth() - 2;
     const date = getDate.getDate();
     const fullDate = year + "-" + month + "-" + date;
     console.log(fullDate);
@@ -35,6 +38,20 @@ const HomePage = () => {
     getTodayList();
   }, []);
 
+
+
+  useEffect(() => {
+    const festivalHitList = async () => {
+      const festMHit = true; // festHit 변수에 true 값을 할당하여 HIT가 높은 순으로 데이터를 가져옴
+      const result = await festivalHitListDB(festMHit); // FestivalHitListDB 함수를 호출하여 데이터를 가져옴
+      setFestivalHitList(result); // 가져온 데이터를 상태값에 할당
+    };
+    festivalHitList(); // 데이터 가져오기
+    console.log(festivalHitList);
+  }, []);
+
+
+
   return (
     <>
       <Header />
@@ -43,48 +60,31 @@ const HomePage = () => {
         <div style={{ margin: "100px 0px 20px 0px", width: "1900px" }}>
           <CarouselList festivalToday={festivalToday} />
         </div>
+<section className="home_bottom_section" style={{border:'1px dotted gray', padding:'50px'}}>
+<div style={{textAlign:'center', alignItems:'center'}}>
+<h1><strong>
+  what's hot
+</strong>
+  </h1>
 
-        <section className="home_total_sec" style={{ paddingLeft: "150px" }}>
-          <section className="total_section" style={{ display: "flex" }}>
-            <div
-              className="top_sec_div"
-              style={{ margin: "50px", textAlign: "center", flex: "1" }}
-            >
-              <div className="card">
-                <p>이 주의 공연</p>
-                <img src="./images_key/WOONGS.jpg" width="100%" alt="사진1" />
-                서울 상품
-                <div className="card-body">
-                  <h5 className="card-title">제목 </h5>
-                  <p className="card-text">로케 </p>
-                </div>
-              </div>
+  {festivalHitList.slice(0, 5).map((festival) => (
+    <Card.Img key={festival.festMId} src={festival.festMImg} style={{width:'150px', height:'200px', marginRight:'20px'}} alt="Card image" />
+        ))}
 
-              <div className="card">
-                <img src="./images_key/WOONGS.jpg" width="100%" alt="사진1" />
-                서울 상품
-                <div className="card-body">
-                  <h5 className="card-title">제목 </h5>
-                  <p className="card-text">로케 </p>
-                </div>
-              </div>
 
-              <div className="card">
-                <img src="./images_key/WOONGS.jpg" width="100%" alt="사진1" />
-                서울 상품
-                <div className="card-body">
-                  <h5 className="card-title">제목 </h5>
-                  <p className="card-text">로케 </p>
-                </div>
-              </div>
-            </div>
+</div>
+</section>
 
+        <section className="home_total_sec" style={{paddingLeft: "150px", backgroundColor:"lightgray"}}>
+          
+          
+          <div className="total_section" style={{ display: "flex" }}>
+
+{/* 위클리랭킹 */}
             <div
               className="mainpage div div2"
-              style={{ flex: "0.3", margin: "50px" }}
+              style={{ flex: "1", margin: "50px" }}
             >
-              {/* <MainCalendar/>
-               */}
               <div className="mainpage box">
                 <div className="mainpage div div1">
                   <Tabs
@@ -101,27 +101,46 @@ const HomePage = () => {
                     <Tab eventKey="market" title="Market">
                       <BasicTable />
                     </Tab>
-                    <Tab eventKey="calendar" title="Calendar">
-                      <CalendarPage />
-                    </Tab>
                   </Tabs>
                 </div>{" "}
-                {/* mainpage div div1 */}
               </div>{" "}
-              {/* mainpage box*/}
+            </div>
+{/* 위클리랭킹 */}
+
+
+            {/* 지역별 추천 */}
+            <div
+              className="top_sec_div"
+              style={{ margin: "50px", textAlign: "center", flex: "1" }}
+            >
+              <div className="card" style={{display:'inline-block'}}>
+                <p>지역별 추천</p>
+                <img src="./images_key/WOONGS.jpg" style={{width:'150px', margin:'15px'}}alt="사진1" />
+                <img src="./images_key/WOONGS.jpg" style={{width:'150px', margin:'15px'}}alt="사진1" />
+                <img src="./images_key/WOONGS.jpg" style={{width:'150px', margin:'15px'}}alt="사진1" />
+                <br/>
+                제목
+                <div className="card-body">
+                  <h5 className="card-title">설명 </h5>
+                  <p className="card-text">설명2 </p>
+                </div>
+              </div>
             </div>
 
-            {/* <div className="mainpage box">
-          <div className="mainpage div div3">
-            <BasicTable />
+{/* 지역별 추천 여기까지 */}
+   
+
+
           </div>
-          <div className="mainpage div div4">
-            <BasicTable />
-          </div>
-        </div> */}
-          </section>
         </section>
-      </div>
+
+
+
+
+
+
+
+      </div>{/* center */}
     </>
   );
 };

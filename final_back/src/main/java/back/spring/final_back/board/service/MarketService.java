@@ -28,6 +28,9 @@ public interface MarketService {
 	//마켓 게시글 삭제
 	int mk_boardDelete(MarketDto marketDto);
 
+	
+	//마켓 게시글 판매완료 처리
+	int mk_boardSell(MarketDto marketDto);
 
 
     

@@ -165,6 +165,20 @@ export const BButton = styled.button`
   }
 `;
 
+//마켓게시판용 버튼
+export const MButton = styled.button`
+  border-radius: 7px;
+  border: 1px solid white;
+  background-color: rgb(80, 50, 200);
+  color: white;
+  width: 80px;
+  height: 35px;
+  font-weight: bold;
+  &:hover {
+    background-color: rgb(50, 50, 120);
+  }
+`;
+
 export const ContainerDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -185,11 +199,23 @@ export const FormDiv = styled.div`
   justify-content: space-between;
 `;
 
+//마켓게시판용
+export const MkFormDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  border-radius: 20px;
+  padding: 10px;
+  max-width: 2000px;
+  justify-content: space-between;
+`;
+
 export const HeaderDiv = styled.div`
   display: flex;
   width: 90%;
-  max-width: 1200px;
+  max-width: 2000px;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
 `;
 
@@ -223,19 +249,18 @@ export const SpanA = styled.span`
   }
 `;
 
-
 /* ▽▽▽▽은영 사용중 ▽▽▽▽ */
 export let BlackBtn = styled.button`
-width:${props => props.width};
-height:${props => props.height};
-margin:${props => props.margin};
-background: black;
-color: white;
-padding: 10px;
-border:2px solid rgb(72, 71, 71);
-border-radius:10px;
-&:hover {
-  background:rgb(72, 71, 71);
-}
-`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  margin: ${(props) => props.margin};
+  background: black;
+  color: white;
+  padding: 10px;
+  border: 2px solid rgb(72, 71, 71);
+  border-radius: 10px;
+  &:hover {
+    background: rgb(72, 71, 71);
+  }
+`;
 /* ▲▲▲▲은영사용중 ▲▲▲▲ */

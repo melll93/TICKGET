@@ -1,4 +1,8 @@
 import React, { useCallback, useState } from 'react'
+import "../../styles/festivaldetails.css";
+import AddProductsFestTicketDetail from './AddProductsFestTicketDetail';
+
+
 
 const AddProductsOptionalDetail = () => {
 
@@ -9,7 +13,10 @@ const AddProductsOptionalDetail = () => {
   const[festTicketSeat, setFestTicketSeat] = useState(0)
   const[festTicketPrice, setFestTicketPrice] = useState(0)
 
+/////연습////
 
+
+  /////연습////
   const inputCasting = useCallback((e) => {
     setFestDetailCasting (e)
   },[])
@@ -34,7 +41,7 @@ const AddProductsOptionalDetail = () => {
 
   return (
     <>
-      
+      {/* fest_detail  */}
 <div>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
 fest_detail 추가 정보 입력 
@@ -56,27 +63,26 @@ fest_detail 추가 정보 입력
   <h3>세 이상</h3>
 
 </div><br />
-
-<h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
-fest_ticket 추가 정보 입력 
-    </h1>
-<div className="hiroo" style={{display:'flex'}}><h5>총</h5>  
-
-<span  className="form-floating" style={{flex:'1'}} >
-<input type="number" className="form-control" id="festDetailRuntime" onChange={(e)=>{inputSeat (e.target.value)}} style={{width:'150px'}}/>
-  <label htmlFor="floatingInput">좌석정보</label><h5>석</h5>
-</span>
-
-  <div className="form-floating" style={{flex:'1'}}>
-  <input type="number" className="form-control" id="festDetailCrew"onChange={(e)=>{inputPrice (e.target.value)}} style={{width:'150px'}}  />
-  <label htmlFor="floatingInput">티켓가격</label>원
-  </div>
-
-</div><br />
-
 </div>
 
+{/* fest_poster */}
 
+<h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
+fest_poster 추가 정보 입력 
+    </h1>
+    파일 상세이미지 업로드
+            <input
+          className="form-control"
+          type="file"
+          accept="image/*"
+          id="festivalsImg"
+        />
+
+
+
+
+{/* fest_ticket */}
+<AddProductsFestTicketDetail></AddProductsFestTicketDetail>
 
 
     </>

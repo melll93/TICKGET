@@ -31,3 +31,37 @@ export const insertCarpoolReplyDB = (boardReply) => {
     }
   });
 };
+
+/* 삭제 */
+export const deleteCarpoolReplyDB = (boardReply) => {
+  console.log("deleteCarpoolReplyDB의 boardReply = ", boardReply);
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/carpool/deleteCarpoolReply",
+        data: boardReply,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* 수정 */
+export const updateCarpoolReplyDB = (boardReply) => {
+  console.log("updateCarpoolReplyDB의 boardReply = ", boardReply);
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/carpool/updateCarpoolReply",
+        data: boardReply,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

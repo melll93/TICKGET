@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Firebase EXAMPLE</h1><br />
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: process.env.FIREBASE_API_KEY,
+            authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+            databaseURL: process.env.FIREBASE_DATABASE_URL,
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+            messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+            appId: process.env.FIREBASE_APP_ID,
+            measurementId: process.env.FIREBASE_MEASUREMENT_ID
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // 데이터베이스 변수
+        const database = firebase.database();
+        // HTML에서 input 태그에 입력된 값을 Firebase에 저장하는 함수
+        function saveData() {
+            const name = document.getElementById("name").value;
+            const max = document.getElementById("max").value;
+            const now = document.getElementById("now").value;
+            const stop = document.getElementById("stop").value;
+            const count = 1; // 버튼 클릭시마다 1 증가
+            database.ref(name).update({ // update 메소드를 사용하여 값을 변경
+                "max": max,
+                "now": now,
+                "stop": stop,
+                "count": firebase.database.ServerValue.increment(count) // 서버에서 1 증가시키도록 함
+            });
+            console.log("저장 성공");
+        }
+        // Firebase에서 데이터베이스에 데이터가 추가되거나 변경되는 이벤트 감지
+        database.ref().on("value", (snapshot) => {
+            const data = snapshot.val();
+            let result = "";
+            for (const key in data) {
+                const item = data[key];
+                result += `<div class="data">Carname=${key} :  최대 인원=${item.max} , 현재 인원=${item.now}, 마감인원=${item.stop}, 함께하기=${item.count}</div>`;
+            }
+            document.getElementById("result").innerHTML = result;
+        });
+    </script>
+    <!-- input 태그를 사용하여 값을 입력하고 저장하는 버튼을 추가 -->
+    <input type="text" id="name" placeholder="차종을 입력하세요"><br>
+    <input type="text" id="max" placeholder="최대인원을 입력하세요"><br>
+    <input type="text" id="now" placeholder="현재인원"><br>
+    <input type="text" id="stop" placeholder="마감?"><br>
+    <button onclick="saveData()">Save Data</button>
+    <br><br>
+    <!-- Firebase에서 가져온 데이터를 span 태그에 출력 -->
+    <span id="result"></span>
+</body>
+
+</html>

@@ -5,10 +5,18 @@
 <mapper
 	namespace="back.spring.final_back.festival.repository.FestivalDao">
 	<select id="festivalDetail" resultType="FestivalDto">
-        select * from fest_main where fest_m_id=#{festMId}
+	 	  SELECT fm.*, fp.fest_ps_url, fd.fest_dt_runtime , fd.fest_dt_age , ft.fest_tc_price
+  FROM   fest_main fm 
+  LEFT OUTER JOIN fest_poster fp ON fm.fest_m_id  = fp.fest_ps_id
+  LEFT OUTER JOIN fest_detail fd ON fm.fest_m_id = fd.fest_dt_id 
+  LEFT OUTER JOIN fest_ticket ft ON fm.fest_m_id = ft.fest_tc_id
+ where fest_m_id=#{festMId}
     </select>
 	<select id="areaFestivalList" resultType="FestivalDto">
 SELECT * FROM fest_main where fest_m_area=#{festMArea}
+</select>
+<select id="festivalHitList" resultType="FestivalDto">
+  SELECT * FROM fest_main ORDER BY fest_m_hit DESC
 </select>
 	<select id="festivalListByDate" resultType="FestivalDto">
 			SELECT *
@@ -41,12 +49,6 @@ SELECT * FROM fest_main
 	#{festMArea})
 	</insert>
 		<delete id="festivalDelete" parameterType="String">
-		delete from fest_main
-				<where>
-			<if test='fest_m_id!=null'>
-				and fest_m_id=#{festMId}
-			</if>
-		</where>
-
+  delete from fest_main where fest_m_id =#{festMId};
 	</delete>
 </mapper>

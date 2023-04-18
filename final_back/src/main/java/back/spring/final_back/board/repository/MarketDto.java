@@ -20,7 +20,7 @@ public class MarketDto {
 	private int boardMkNo;
 	private String boardMkTitle;
 	private String boardMkContent;
-	private Date boardMkDate;
+	private LocalDateTime boardMkDate;
 	private int boardMkHit;
 	private LocalDateTime mkTicketDate;
 	private String mkTicketSeat;
@@ -30,6 +30,11 @@ public class MarketDto {
 	private String memName;
 	private String boardMkFilename;
 	private String boardMkFileurl;
+	private int boardMkStatus;
+	private int memNo;
+	
+	
+	//조건검색 시 필요
 	private String content;
 	private String condition;
 

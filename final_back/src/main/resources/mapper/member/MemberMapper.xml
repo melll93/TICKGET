@@ -10,4 +10,16 @@
            and member_password = #{memberPassword}
     </select>
 
+    <select id="login" parameterType="map" resultType="MemberDto">
+        select *
+        from member
+        where member_id = #{memberId}
+    </select>
+
+    <select id="getMemberData" parameterType="String" resultType="MemberDto">
+        select *
+        from member
+        where member_id = #{memberId}
+    </select>
+
 </mapper>

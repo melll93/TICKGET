@@ -42,6 +42,15 @@ public class FestivalController {
 		return result;
 	}
 
+	@GetMapping("festivalHitList")
+	public List<FestivalDto> festivalHitList() {
+		List<FestivalDto> festival = null;
+		festival =festivalService.festivalHitList(); 
+		return festival;
+	}
+
+
+
 	@GetMapping("festivalList")
 	public List<FestivalDto> festivalList() {
 		List<FestivalDto> festival = null;
@@ -51,17 +60,19 @@ public class FestivalController {
 	}
 
 	@GetMapping("areaFestivalList")
-	public List<FestivalDto> areaFestivalList() {
+	public List<FestivalDto> areaFestivalList(@RequestParam String fest_m_area) {
 		List<FestivalDto> festival = null;
-		festival = festivalService.areaFestivalList();
+		festival =festivalService.areaFestivalList(fest_m_area); 
 		return festival;
 	}
 
-	
-
     @GetMapping("/festivalDetail")
     public FestivalDto festivalDetail(FestivalDto festivalDto) {
-    	FestivalDto festival = festivalService.festivalDetail(festivalDto);
+        FestivalDto festival = festivalService.festivalDetail(festivalDto);
+		/*
+		 * int ticketPrice = festivalDto.getFestTcPrice() null ? 0 :
+		 * festival.getFestTcPrice(); festival.setFestTcPrice(ticketPrice);
+		 */
         return festival;
     }
 
@@ -73,7 +84,7 @@ public class FestivalController {
 	}
 
 	@GetMapping("festivalDelete")
-	public String festivalDelete(Integer fest_m_id) {
+	public String festivalDelete(@RequestParam String fest_m_id) {
 		logger.info("컨트롤러 페스티발삭제 id넘버 " + fest_m_id);
 		int result = 0;
 		result = festivalService.festivalDelete(fest_m_id);

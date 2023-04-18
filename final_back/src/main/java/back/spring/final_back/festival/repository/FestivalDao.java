@@ -14,9 +14,11 @@ public interface FestivalDao {
 
     public List<FestivalDto> festivalList();
 
-    public List<FestivalDto> areaFestivalList();
+    public List<FestivalDto> areaFestivalList(String area);
 
     int festivalInsert(FestivalDto festival);
 
-    public int festivalDelete(Integer fest_m_id);
+    public int festivalDelete(String fest_m_id);
+
+    public List<FestivalDto> festivalHitList();
 }

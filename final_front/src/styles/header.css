@@ -1,12 +1,12 @@
 div .header {
   position: fixed;
   z-index: 1;
-  background-color: black;
-  margin-top: 15px;
+  background-color: rgb(44, 44, 44);
   width: 100vw;
   height: 8vh;
   border-bottom: 0.5px solid black;
-  margin: 0 auto;
+  align-items: center;
+  padding-top: 1vh;
 }
 
 div .HomeButton {
@@ -14,18 +14,17 @@ div .HomeButton {
   z-index: 1;
   width: 240px;
   text-align: center;
-  margin-top: 1.5vh;
 }
 
 div .SearchBarDiv {
   display: inline-block;
-  width: 80%;
+  width: 70%;
   margin-left: 5%;
 }
 
 div .SearchBar {
   color: white;
-  width: 80%;
+  width: 90%;
   height: 2em;
   margin: 0px 5px 0px 5px; /* 위 오 밑 왼 */
   padding-left: 20px;

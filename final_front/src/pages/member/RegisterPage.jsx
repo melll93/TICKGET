@@ -4,12 +4,11 @@ import { Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Sidebar';
+import Header from "../../components/Header";
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword, validateId } from '../../util/validateLogic';
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
 import { memberInsertDB, memberListDB } from '../../axios/member/memberLogic';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
 const RegisterPage = ({ authLogic }) => {
   // const auth = authLogic.getUserAuth();
@@ -145,48 +144,49 @@ const RegisterPage = ({ authLogic }) => {
     setMemInfo({ ...memInfo, [id]: value });
   }
 
-  //닉네임 중복확인 
+  //닉네임 중복확인
+  // 모든 값이 중복된다고 뜸 왜...
   const overlap = async (key) => {
     console.log('중복확인 : ' + key);
     let params;
     if (key === 'id') {
-      params = { MEMBER_ID: memInfo[key], type: 'overlap' };
+        params = { MEMBER_ID: memInfo[key], type: 'overlap' };
     }
     else if (key === 'email') {
-      params = { MEMBER_EMAIL: memInfo[key], type: 'overlap' };
+        params = { MEMBER_EMAIL: memInfo[key], type: 'overlap' };
     }
     else if (key === 'nickname') {
-      params = { MEMBER_NICKNAME: memInfo[key], type: 'overlap' };
+        params = { MEMBER_NICKNAME: memInfo[key], type: 'overlap' };
     }
     else {
-      console.log('유효하지 않은 키 값입니다.');
-      return; // 유효하지 않은 키 값이면 함수 종료
+        console.log('유효하지 않은 키 값입니다.');
+        return; // 유효하지 않을 시 함수 종료
     }
-    
+
     console.log(params);
-    
     let response = { data: 0 };
     response = await memberListDB(params);
     console.log('DB : ' + response.data);
-    
+
     const data = JSON.stringify(response.data);
     const jsonDoc = JSON.parse(data);
-    
+
     if (jsonDoc && jsonDoc.length > 0) {
-      console.log('중복되는 값이 있습니다');
-      console.log(jsonDoc[0].MEMBER_NAME); // 중복된 값의 이름 출력
+        console.log('중복되는 값이 있습니다');
+        if (key === 'id') {
+            console.log('중복된 아이디가 존재합니다. 다른 아이디를 입력해주세요.');
+        }
+        else if (key === 'email') {
+            console.log('중복된 이메일이 존재합니다. 다른 이메일을 입력해주세요.');
+        }
+        else if (key === 'nickname') {
+            console.log('중복된 닉네임이 존재합니다. 다른 닉네임을 입력해주세요.');
+        }
     }
     else {
-      console.log('중복되는 값이 없습니다');
+        console.log('중복되는 값이 없습니다');
     }
-    
-    // 중복된 값이 있을 시
-    if (response.data && jsonDoc && jsonDoc.length > 0) {
-    }
-    // 중복된 값이 없을 시
-    else {
-    }
-  }
+}
 
   const validate = (key, e) => {
     let result;
@@ -285,6 +285,7 @@ const RegisterPage = ({ authLogic }) => {
 
   return (
     <div>
+      <Header />
       <Sidebar />
       <div className='center'>
         <SignupForm suggested={false}>

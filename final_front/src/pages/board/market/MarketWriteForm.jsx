@@ -10,6 +10,8 @@ import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
 import MarketFileInsert from "./MarketFileInsert";
 import styled from "styled-components";
+import { Cookies } from "react-cookie";
+import moment from 'moment/moment'
 
 
 /* CSS */
@@ -27,16 +29,24 @@ const Img = styled.img`
  object-fit:cover;
 `
 
-
+const cookies = new Cookies();
 
 
 const MarketWriteForm = ({ mkImageUploader }) => {
 
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData)
+ /*  mem_no : sessionStorage.getItem('no'), _userData에서 꺼낸 회원번호값 담기*/ 
 
   console.log("글쓰기 페이지 호출");
   const navigate = useNavigate();
   const no = window.sessionStorage.getItem("no"); //세션에 저장된 회원번호값
 
+  
+ // 현재 시간을 구한다.
+ const now = new Date();
+ // 현재 시간 이후의 최소 날짜를 구한다.
+ const minDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
 
 
@@ -145,9 +155,11 @@ const MarketWriteForm = ({ mkImageUploader }) => {
       mkTicketSeat: mk_ticket_seat,
       mkTicketCount: mk_ticket_count,
       mkTicketPrice: mk_ticket_price,
-      memName: "테스트 작성자1", // 임시 - 세션스토리지로 받아올것
+      memName: "테스트 작성자1", // 임시 - 쿠키값으로 받아올것
+     /*  memNo:'mem_no' // 쿠키에서 회원번호 가져오기 */
       boardMkFilename: files.fileName,
       boardMkFileurl: files.fileUrl,
+      boardMkStatus : 0
     };
     const res = await mk_boardInsertDB(board);
     console.log(res.data);
@@ -155,28 +167,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
   };
 
 
-
-
-
-  /* const handleChange = async (event) => {
-    console.log('첨부파일 선택'+event.target.value);
-    //console.log(fileRef.current.value);
-    //fileRef에서 가져온 값중 파일명만 담기
-    const str = fileRef.current.value.split('/').pop().split('\\').pop()
-    setFilename(str)
-    console.log(str);
-    //선택한 파일을 url로 바꾸기 위해 서버로 전달할 폼데이터 만들기
-    const formData = new FormData()
-    const file = document.querySelector("#file-input").files[0]
-    formData.append("file_name", file)
-    const res = await uploadFileDB(formData)
-    console.log(res.data)
-    const fileinfo = res.data.split(',')
-    console.log(fileinfo)
-    setFilename(fileinfo[0])
-    setFilesize(fileinfo[1])
-  }
-  */
 
 
 
@@ -190,7 +180,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
         <ContainerDiv>
           <HeaderDiv>
             <div className="form-floating mb-3">
-              <h3 style={{ marginLeft: "450px" }}>티켓 중고판매 글 작성</h3>
+              <h3 style={{ marginLeft: "700px" }}>티켓 중고판매 글 작성</h3>
             </div>
           </HeaderDiv>
 
@@ -248,6 +238,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                       type="datetime-local"
                       className="form-control"
                       style={{ width: "475px", height: "50px" }}
+                      min={minDate}
                       onChange={(e) => {
                         handleTicketDate(e.target.value);
                       }}
@@ -285,7 +276,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                     <h3>판매수량</h3>
                     <Form.Control required id="mk_ticket_count" type="number" min="1" placeholder="티켓의 수량을 입력하세요." style={{ width: '270px', height: '50px' }} onChange={(e) => { handleTicketCount(e.target.value) }} />
                     <Form.Control.Feedback type="invalid">
-                      판매할 티켓의 수량을 입력해주세요.
+                      판매할 티켓의 수량을 선택해주세요.
                     </Form.Control.Feedback>
                   </Form.Group>
 
@@ -333,7 +324,14 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
               {/*   <MarketFileInsert files={files} /> */}
               <hr style={{ opacity: "0%" }} />
-              <Button onClick={handleSubmit}
+              <Button style={
+                {backgroundColor:"rgb(80,50,200)" 
+                , border:'1px solid white'
+                , fontWeight:'bold'
+                , transition:'background-color 0.3s ease',
+              }}
+              onClick={handleSubmit}
+
               /*     onClick={() => {
                     boardInsert();
                   }} */

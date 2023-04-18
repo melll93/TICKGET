@@ -4,11 +4,11 @@ import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { FormDiv } from "../../../styles/formStyle";
 import {
   selectTogetherDetailDB,
   updateTogetherDB,
 } from "../../../axios/board/together/TogetherLogic";
+import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 
 const TogetherBoardUpdate = () => {
   const navigate = useNavigate();
@@ -108,12 +108,13 @@ const TogetherBoardUpdate = () => {
 
   return (
     <div>
+      <Header />
       <Sidebar />
-      <div className="center">
-        <Header />
-        <br />
-        <h2>게시글 훔쳐봐야지? 가야지?</h2>
+      <ContainerDiv>
+        <div style={{ height: "100px" }}></div>
         <FormDiv style={{ width: "98%", margin: "10px" }}>
+          <h2>게시글 수정하기</h2>
+          <br />
           <div>
             <form method="post">
               <div>
@@ -223,7 +224,7 @@ const TogetherBoardUpdate = () => {
             </form>
           </div>
         </FormDiv>
-      </div>
+      </ContainerDiv>
     </div>
   );
 };

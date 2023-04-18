@@ -12,13 +12,15 @@ public interface FestivalService {
 
   List<FestivalDto> festivalList();
 
-  List<FestivalDto> areaFestivalList();
+  List<FestivalDto> areaFestivalList(String area);
 
   int festivalInsert(FestivalDto festivalDto);
 
-  int festivalDelete(Integer fest_m_id);
+  int festivalDelete(String fest_m_id);
 
 FestivalDto festivalDetail(FestivalDto festivalDto);
+
+List<FestivalDto> festivalHitList();
 
 
 }

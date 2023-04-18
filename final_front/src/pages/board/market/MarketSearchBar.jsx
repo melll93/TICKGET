@@ -1,9 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Cookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-import { BButton } from "../../../styles/formStyle";
+import { BButton, MButton } from "../../../styles/formStyle";
 import MyFilter from "./MyFilter";
 
+const cookies = new Cookies();
+
 const MarketSearchBar = () => {
+
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData)
+
   //사용자가 입력한 문자열 담기
   const [content, setContent] = useState("");
   const [types] = useState(["전체", "제목", "장소", "작성자"]);
@@ -43,18 +50,16 @@ const MarketSearchBar = () => {
         search
           .replace(
             `&${search.split("&").filter((item) => {
-              return item.match("page");
-            })}&${search.split("&").filter((item) => {
               return item.match("content");
             })}`,
             `&condition=${tTitle}&content=${content}`
           )
-          .replace(
+           .replace(
             `&${search.split("&").filter((item) => {
               return item.match("page");
             })}`,
             "&page=1&"
-          );
+          ); 
     } else {
       path =
         location.pathname + search + `?condition=${tTitle}&content=${content}`;
@@ -86,21 +91,28 @@ const MarketSearchBar = () => {
           setContent(e.target.value);
         }}
       />
-      <BButton
+      <MButton
         style={{ width: "70px", height: "40px", marginRight: "10px" }}
         onClick={() => {
           navigate(setPath());
         }}
       >
         검색
-      </BButton>
-      <BButton
+      </MButton>
+      <MButton
         style={{ width: "70px", height: "40px", marginRight: "10px" }}
         onClick={() => navigate("/market/write")}
       >
         글쓰기
-      </BButton>
-      {/* <BButton style={{width: "70px", height:'40px'}} onClick={()=>{navigate(`/qna/list?page=1`); setContent('');}}>초기화</BButton> */}
+      </MButton>
+{/*       { _userData.no > 0 &&
+  <BButton
+    style={{ width: "70px", height: "40px", marginRight: "10px" }}
+    onClick={() => navigate("/market/write")}
+  >
+    글쓰기
+  </BButton>
+}  회원번호가 0이상 즉 가입된 회원일때만 글쓰기버튼 활성화되게 처리*/}
     </div>
   );
 };

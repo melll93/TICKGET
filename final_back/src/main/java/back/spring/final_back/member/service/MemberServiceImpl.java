@@ -1,9 +1,14 @@
 package back.spring.final_back.member.service;
 
+import back.spring.final_back.member.jwt.TokenProvider;
 import back.spring.final_back.member.repository.MemberDao;
 import back.spring.final_back.member.repository.MemberDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,7 +21,8 @@ import java.util.Map;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberDao memberDao;
-
+    private final PasswordEncoder passwordEncoder;
+    private final TokenProvider tokenProvider;
     @Override
     public Object localMemberLogin(MemberDto memberDto) {
         Map<String, Object> result = new HashMap<>();
@@ -45,7 +51,33 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDto searchById() {
-        return null;
+    public Object loginSuccess() {
+        Authentication data = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) data.getPrincipal();
+        log.info(userDetails.getUsername());
+        return tokenProvider.createToken(data);
     }
+
+    @Override
+    public MemberDto getMemberData(String memberId) {
+        return memberDao.getMemberData(memberId);
+    }
+
+    @Override
+    public boolean checkIdExist() {
+        return false;
+    }
+
+    @Override
+    public boolean checkNicknameExist() {
+        return false;
+    }
+
+    @Override
+    public boolean checkEmailExist() {
+        return false;
+    }
+
+
+
 }

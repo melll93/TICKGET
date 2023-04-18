@@ -8,21 +8,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Mapper
 public interface TogetherDao {
-    // 게시판 조회(SelectAll)
+    // Together 게시판 조회(SelectAll)
     public List<TogetherDto> selectBoardList();
 
-    // 게시글 상세보기(SelectOne)
+    // Together게시글 상세보기(SelectOne)
     public TogetherDto selectBoardDetail(TogetherDto togetherDto);
 
-    // 게시판 등록(Insert)
+    // Together게시판 등록(Insert)
     public int insertBoardList(TogetherDto togetherDto);
 
-    // 게시판 수정(Update)
+    // Together게시판 수정(Update)
     public int updateBoardList(TogetherDto togetherDto);
 
-    // 게시판 삭제(Delete)
+    // Together게시판 삭제(Delete)
     public int deleteBoardList(TogetherDto togetherDto);
 
-    // 조회수 증가
+    // Together 게시판 조회수 증가
     void viewUp(@RequestParam Map<String, Object> pMap);
 }

@@ -7,20 +7,44 @@ import {
   selectTogetherDetailDB,
 } from "../../../axios/board/together/TogetherLogic";
 import {
+  deleteTogetherReplyDB,
   insertTogetherReplyDB,
   selectTogetherReplyDB,
+  updateTogetherReplyDB,
 } from "../../../axios/board/together/TogetherReplyLogic";
+import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { FormDiv } from "../../../styles/formStyle";
+import $ from "jquery";
+import { Modal } from "react-bootstrap";
+
+/* function test(event) {
+  const target = event.currentTarget;
+  const replyContentVal = $(target).closest(".product_detail_review_comment").find(".replyContentVal").text();
+ 
+  console.log("3 = ",  replyContentVal);
+  let html = "<span>";
+  html += `<input className="val" type="text" value="`+replyContentVal+`"/>`;
+  html += '<Button  style={{ marginLeft: "10px", backgroundColor: "black", onClick }}>수정하자</Button>';
+  html += `<button className="cancel" style={{ marginLeft: "10px", backgroundColor: "black" }}>취소</button>`;
+  html += "</span>";
+  $(target).closest("div").find(".replyContent").append(html);
+}; */
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
   const { boardTgNo } = useParams();
-  const { boardReplyTgMemId } = useState();
-  const [boardReplyTgContent, setBoardReplyTgContent] = useState(""); //제목
-
+  const [boardReplyTgNo, setBoardReplyTgNo] = useState("");
+  const [boardReplyTgMemId, setBoardReplyTgMemId] = useState("");
+  const [boardReplyTgContent, setBoardReplyTgContent] = useState("");
+  const [boardReplyTgContent2, setBoardReplyTgContent2] = useState("");
   const [boardReplyList, setBoardReplyList] = useState([]);
+  const [lgShow, setLgShow] = useState(false);
+
+  const inputModifiedReply = useCallback((e) => {
+    console.log("inputModifiedReply : ", e);
+    setBoardReplyTgContent2(e);
+  }, []);
 
   useEffect(() => {
     selectBoardReplyList();
@@ -38,6 +62,10 @@ const TogetherBoardDetail = () => {
       console.log("부서목록 조회 실패");
     }
   };
+
+  const handleBoardReplyTgNo = useCallback((e) => {
+    setBoardReplyTgNo(e);
+  }, []);
 
   const handleBoardReplyTgContent = useCallback((e) => {
     setBoardReplyTgContent(e);
@@ -101,20 +129,23 @@ const TogetherBoardDetail = () => {
     try {
       const res = await insertTogetherReplyDB(boardReply);
       // 성공시에 페이지 이동처리하기
-      alert("http://localhost:3333/together/BoardDetail/" + boardTgNo);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
   };
 
+  const click = () => {
+    setLgShow(true);
+  };
   return (
     <div>
+      <Header />
       <Sidebar />
-      <div className="center">
-        <Header />
-        <br />
-        <h2>게시글 상세보기</h2>
-        <FormDiv style={{ width: "98%", margin: "10px" }}>
+      <ContainerDiv>
+        <div style={{ height: "100px" }}></div>
+        <div style={{ width: "98%", margin: "10px" }}>
+          <h2>게시글 상세보기</h2>
           <div>
             <form method="post">
               <input type="hidden" name="boardTgNo" value="" />
@@ -179,6 +210,7 @@ const TogetherBoardDetail = () => {
                   {board.boardTgContent}
                 </span>
               </div>
+
               <div style={{ textAlign: "center" }}>
                 <Button
                   style={{ margin: "10px", backgroundColor: "black" }}
@@ -222,12 +254,16 @@ const TogetherBoardDetail = () => {
                   required
                   rows="3"
                   className="form-control"
+                  maxLength="50"
                 />
                 <button
                   style={{ margin: "30px", width: "80px" }}
-                  onClick={submitComment}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    submitComment();
+                  }}
                 >
-                  등록
+                  댓글 등록
                 </button>
               </div>
 
@@ -239,6 +275,7 @@ const TogetherBoardDetail = () => {
                 }}
               />
               <br />
+
               <label>댓글리스트</label>
               {boardReplyList.map((boardReply) => (
                 <div
@@ -255,39 +292,128 @@ const TogetherBoardDetail = () => {
                     작성 시간 : ({boardReply.boardReplyTgDate})
                   </div>
                   <h3>
-                    &nbsp; <span style={{ color: "red" }}>→</span>
-                    {boardReply.boardReplyTgContent}
+                    &nbsp;
+                    <div className="replyContent">
+                      {/* Jquery부분 */}
+                      <span style={{ color: "red" }}> → </span>
+                      <span
+                        className="replyContentVal"
+                        style={{ color: "black" }}
+                      >
+                        {boardReply.boardReplyTgContent}
+                      </span>
+                    </div>
+                    {/* Jquery부분 */}
+                    {/* <input type="hidden" className="ss" value={boardReply.boardReplyTgContent}/> */}
                   </h3>
                   <Button
                     style={{ marginLeft: "10px", backgroundColor: "black" }}
-                    onClick={() =>
-                      navigate({
-                        pathname: "/together/BoardUpdate/" + board.boardTgNo,
-                        state: { board },
-                      })
-                    }
                   >
-                    <span style={{ fontWeight: "bold" }}>수정</span>
+                    <span
+                      style={{ fontWeight: "bold" }}
+                      /* JQuery */
+                      /* onClick={(event) => test(event)} */
+                      // onClick={click}
+                      onClick={async () => {
+                        click();
+                        handleBoardReplyTgNo(boardReply.boardReplyTgNo);
+                      }}
+                    >
+                      댓글 수정
+                    </span>
                   </Button>
+                  <Modal
+                    size="lg"
+                    show={lgShow}
+                    onHide={() => setLgShow(false)}
+                    aria-labelledby="example-modal-sizes-title-lg"
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title id="example-modal-sizes-title-lg">
+                        댓글 수정 detail
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div
+                        className="form-floating mb-3"
+                        style={{ position: "relative" }}
+                      >
+                        <div>
+                          <input
+                            onChange={(e) => {
+                              inputModifiedReply(e.target.value);
+                            }}
+                            className="form-control2"
+                            placeholder="수정할 댓글 내용을 입력하세요"
+                            id="together_board_detail_reply_textarea"
+                            // value={boardReplyTgContent}
+                            style={{
+                              position: "relative",
+                              height: "300px",
+                              width: "98%",
+                              maxWidth: "1200px",
+                            }}
+                            maxLength="50"
+                          ></input>
+                        </div>
+                        <br />
+                        <br />
+                        <button
+                          style={{
+                            position: "absolute",
+                            bottom: "0",
+                            right: "0",
+                            margin: "0px 15px 0px 0px ",
+                          }}
+                          className="replyBtn"
+                          onClick={async () => {
+                            const reply = {
+                              boardTgNo: boardTgNo,
+                              boardReplyTgNo: boardReplyTgNo,
+                              boardReplyTgContent: boardReplyTgContent2,
+                            };
+                            const res = await updateTogetherReplyDB(reply);
+                            console.log("updateTogetherReplyDB : ", res.data);
+                            setLgShow(false);
+                            console.log(
+                              "수정완료" +
+                                boardReply.boardReplyTgContent +
+                                boardReply.boardReplyTgNo
+                            );
+                            window.location.reload();
+                            console.log("리뷰번호" + boardReply.boardReplyTgNo);
+                          }}
+                        >
+                          Reply Button
+                        </button>
+                      </div>
+                      <br />
+                    </Modal.Body>
+                  </Modal>
                   <Button
                     style={{ marginLeft: "10px", backgroundColor: "black" }}
-                    onClick={() =>
-                      navigate({
-                        pathname: "/together/BoardUpdate/" + board.boardTgNo,
-                        state: { board },
-                      })
-                    }
+                    onClick={async () => {
+                      const reply = {
+                        boardTgNo: boardTgNo,
+                        boardReplyTgNo: boardReply.boardReplyTgNo,
+                      };
+                      const res = await deleteTogetherReplyDB(reply);
+                      console.log("deleteTogetherReplyDB ", res.data);
+                      // navigate("/together/BoardDetail/" + board.boardTgNo);
+                      window.location.reload();
+                      alert("댓글 삭제 완료");
+                    }}
                   >
                     <span style={{ color: "white", fontWeight: "bold" }}>
-                      삭제
+                      댓글 삭제
                     </span>
                   </Button>
                 </div>
               ))}
             </form>
           </div>
-        </FormDiv>
-      </div>
+        </div>
+      </ContainerDiv>
     </div>
   );
 };

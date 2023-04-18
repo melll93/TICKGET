@@ -2,6 +2,7 @@ package back.spring.final_back.member.controller;
 
 import back.spring.final_back.member.repository.MemberDto;
 import back.spring.final_back.member.service.MemberService;
+import back.spring.final_back.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,30 @@ import java.util.Map;
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/login/local")
-    public Object LocalMemberLogin(@RequestBody MemberDto memberDto) {
-        Object result = null;
-        log.info(memberDto.toString());
-        result = memberService.localMemberLogin(memberDto);
-        log.info(result.toString());
-        return result;
+    /************************************
+     * Spring security login
+     * :8888/login 에서 스프링이 로그인 처리,
+     * 성공 시 => /member/login/success
+     * 실패 시 => /member/login/failed
+     * @return json web token 값
+     ************************************/
+    @PostMapping("/login/success")
+    public Object loginSuccess() {
+        log.info("success 호출");
+        return memberService.loginSuccess();
     }
+
+    @PostMapping("/login/failed")
+    public Object loginFailed() {
+        return null;
+    }
+
+    @PostMapping("/getMemberData")
+    public MemberDto getMemberData(@RequestBody MemberDto memberDto) {
+        log.info("getMemberData 호출");
+        String memberId = memberDto.getMemberId();
+        log.info(memberDto.toString());
+        return memberService.getMemberData(memberId);
+    }
+
 }

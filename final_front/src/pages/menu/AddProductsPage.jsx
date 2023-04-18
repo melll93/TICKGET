@@ -9,22 +9,23 @@ import ImageUploader from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
+import HeaderSearchBar from "../../components/header/HeaderSearchBar";
 
 /* ========================= 상품 자체 등록 ============================ */
 
 const AddProducts = () => {
   const navigate = useNavigate();
-  const [festTitle, setFesttitle] = useState("");
-  const [festLocation, setFestloc] = useState("");
-  const [festCategory, setFestcate] = useState("");
-  const [festStartday, setFeststart] = useState("");
-  const [festEndday, setFestend] = useState("");
-  const [festDetail, setFestdetail] = useState("");
-  const [festPrice, setFestprice] = useState("");
-  const [festDesc, setFestdesc] = useState("");
-  const [festArea, setFestArea] = useState("");
-  const [festImages, setFestImages] = useState("");
-  const [festImageUrl, setFestImageUrl] = useState("");
+  const [festTitle, setFesttitle] = useState();
+  const [festLocation, setFestloc] = useState();
+  const [festCategory, setFestcate] = useState();
+  const [festStartday, setFeststart] = useState();
+  const [festEndday, setFestend] = useState();
+  const [festDetail, setFestdetail] = useState();
+  const [festPrice, setFestprice] = useState();
+  const [festDesc, setFestdesc] = useState();
+  const [festArea, setFestArea] = useState();
+  const [festImages, setFestImages] = useState();
+  const [festImageUrl, setFestImageUrl] = useState();
   const imgRef = useRef();
 
   const [optionModal, setOptionModal] = useState(0);
@@ -129,7 +130,7 @@ const AddProducts = () => {
     <>
       <div
         className="addproductstotalDiv"
-        style={{ textAlign: "center", width: "600px", marginLeft: "25%" }}
+        style={{ textAlign: "center", width: "900px", marginLeft: "25%" }}
       >
         <br /> {/* //등록 div 시작 */}
         <select
@@ -154,6 +155,7 @@ const AddProducts = () => {
           <img
             id="festivalImgChange"
             className="thumbNail"
+            style={{width:'60%'}}
             src={
               festImages
                 ? festImages
@@ -184,7 +186,7 @@ const AddProducts = () => {
           />
           <label htmlFor="floatingInput"> festTitle </label>
         </div>
-        <div className="form-floating mb-3">
+{/*         <div className="form-floating mb-3">
           <input
             type="text"
             className="form-control"
@@ -194,7 +196,7 @@ const AddProducts = () => {
             }}
           />
           <label htmlFor="floatingInput"> desc </label>
-        </div>
+        </div> */}
         <select
           defaultValue=""
           className="form-select"
@@ -229,7 +231,7 @@ const AddProducts = () => {
           <label htmlFor="floatingInput">location</label>
         </div>
         <br />
-        <div className="form-floating">
+{/*         <div className="form-floating">
           <input
             type="number"
             className="form-control"
@@ -241,7 +243,7 @@ const AddProducts = () => {
           />
           <label htmlFor="floatingInput">price</label>
         </div>
-        <br />
+        <br /> */}
         <div className="form-floating mb-3">
           <input
             type="date"
@@ -266,7 +268,7 @@ const AddProducts = () => {
           />
           <label htmlFor="floatingInput"> 행사종료일</label>
         </div>
-        <div className="form-floating">
+       {/*  <div className="form-floating">
           <textarea
             className="form-control"
             placeholder="Leave a comment here"
@@ -277,7 +279,10 @@ const AddProducts = () => {
             }}
           ></textarea>
           <label htmlFor="floatingTextarea2">상세내용</label>
-        </div>
+        </div> 
+          <br />
+        */}
+
         <br />
         {/* 추가 정보 입력 */}
         <BlackBtn onClick={optionModalOpen}>
@@ -307,9 +312,9 @@ const AddProducts = () => {
 const AddProductsPage = () => {
   return (
     <>
+        <Header />
       <Sidebar />
       <div className="center">
-        <Header />
         <AddProducts />
       </div>
     </>

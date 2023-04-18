@@ -4,12 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { insertTogetherDB } from "../../../axios/board/together/TogetherLogic";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
-import {
-  BButton,
-  ContainerDiv,
-  FormDiv,
-  HeaderDiv,
-} from "../../../styles/formStyle";
+import { BButton, ContainerDiv, FormDiv } from "../../../styles/formStyle";
+import Sidebar from "../../../components/Sidebar";
 
 const TogetherBoardWriteForm = ({ board_together }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
@@ -76,11 +72,12 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   return (
     <>
       <Header />
+      <Sidebar />
       <ContainerDiv>
-        <HeaderDiv>
-          <h3>QNA 글작성</h3>
-        </HeaderDiv>
+        <div style={{ height: "100px" }}></div>
         <FormDiv>
+          <h3>Together 글작성</h3>
+          <br />
           <div style={{ width: "100%", maxWidth: "2000px" }}>
             <div
               style={{
@@ -102,7 +99,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                 ></div>
                 <BButton
                   variant="success"
-                  style={{ marginLeft: "10px" }}
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
                   onClick={() => {
                     insertBoardList();
                   }}
@@ -183,9 +180,14 @@ const TogetherBoardWriteForm = ({ board_together }) => {
           <br />
           <div style={{ textAlign: "center" }}>
             <div style={{ marginBottom: "20px" }}>
-              <Button onClick={() => window.history.back()}>뒤로가기</Button>
               <Button
-                style={{ marginLeft: "10px" }}
+                style={{ backgroundColor: "black" }}
+                onClick={() => window.history.back()}
+              >
+                뒤로가기
+              </Button>
+              <Button
+                style={{ marginLeft: "10px", backgroundColor: "black" }}
                 onClick={() => navigate("/together")}
               >
                 목록으로

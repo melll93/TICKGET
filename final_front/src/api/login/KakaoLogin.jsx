@@ -49,12 +49,6 @@ const KakaoLogin = () => {
       let data = await window.Kakao.API.request({
         url: "/v2/user/me",
       });
-      // setUserId(data.id);
-      // window.localStorage.setItem("userId", userId);
-      // setUserNickname(data.properties.nickname);
-      // window.localStorage.setItem("userNickname", userNickname);
-      // setUserImage(data.properties.profile_image);
-      // window.localStorage.setItem("userImage", userImage);
       console.log(data);
     } catch (error) {
       console.log(error);

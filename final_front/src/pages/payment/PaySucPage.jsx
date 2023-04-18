@@ -1,12 +1,40 @@
 /* 은영 결제창 테스트중 */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useParams, useSearchParams } from "react-router-dom"
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
+import { mk_boardSellDB } from '../../axios/board/market/marketLogic'
 
 const PaySucPage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     let {param} = useParams()
+
+
+
+/*  마켓 게시판 게시글 판매완료 처리  
+     useEffect (() => {
+    const boardSell = async() =>{
+      const board = {
+        board_mk_no : no //url 끝 번호
+      }
+      const res = await mk_boardSellDB(board)
+      console.log(res.data);
+    }
+    boardSell()
+  },[]) */
+
+
+/*  결제성공 시 결제정보가 insert되어야함!
+  useEffect (() => {
+    const pInsert = async() =>
+    const res = await paymentInsert(pData)
+    console.log(res.data)
+  }
+  pInsert()  
+  },[])
+ */
+
+
   return (
     <>
             <Sidebar />

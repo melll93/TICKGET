@@ -45,14 +45,14 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     @Override
-    public List<FestivalDto> areaFestivalList() {
+    public List<FestivalDto> areaFestivalList(String area) {
         List<FestivalDto> festival = null;
-        festival = festivalDao.areaFestivalList();
+        festival = festivalDao.areaFestivalList(area);
         return festival;
     }
 
     @Override
-    public int festivalDelete(Integer fest_m_id) {
+    public int festivalDelete(String fest_m_id) {
         log.info("fest 서비스임플 삭제");
         int result = 0;
         result = festivalDao.festivalDelete(fest_m_id);
@@ -64,6 +64,13 @@ public class FestivalServiceImpl implements FestivalService {
 		FestivalDto festival = festivalDao.festivalDetail(festivalDto);
 		 return festival;
 		    }
+
+    @Override
+    public List<FestivalDto> festivalHitList() {
+        List<FestivalDto> festival = null;
+        festival = festivalDao.festivalHitList();
+        return festival;
+    }
 	
 
 }

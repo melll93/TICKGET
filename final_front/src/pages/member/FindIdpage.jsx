@@ -4,8 +4,10 @@ import { BButton, LoginForm, MyH1, MyInput, MyLabel, SubmitButton } from '../../
 import { useNavigate } from 'react-router-dom';
 import { memberListDB } from '../../axios/member/memberLogic';
 import { setToastMsg } from '../../redux/toastStatus/action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FindIdPage = () => {
+
   const [memInfo, setMemInfo] = useState({
     name: "",
     mobile: "",

@@ -10,8 +10,7 @@ import axios from "axios";
   return result;
 }; */
 
-
- export const mk_boardListDB = (board) => {
+export const mk_boardListDB = (board) => {
   console.log(board);
   return new Promise((resolve, reject) => {
     try {
@@ -25,7 +24,7 @@ import axios from "axios";
       reject(error);
     }
   });
-}; 
+};
 
 //마켓 게시판 상세보기 로직
 export const mk_boardDetailDB = (board) => {
@@ -94,6 +93,26 @@ export const mk_boardDeleteDB = (board) => {
     }
   });
 };
+
+
+//마켓 게시판 판매완료 처리 로직
+export const mk_boardSellDB = (board) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: "http://localhost:8888/market/mk_boardSell",
+        params: board,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+
+
 
 // 이미지 구현
 export const uploadImageDB = (file) => {
