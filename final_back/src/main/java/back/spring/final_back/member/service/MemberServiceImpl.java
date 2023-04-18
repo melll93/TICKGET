@@ -23,6 +23,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberDao memberDao;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+
     @Override
     public Object localMemberLogin(MemberDto memberDto) {
         Map<String, Object> result = new HashMap<>();
@@ -52,15 +53,17 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Object loginSuccess() {
-        Authentication data = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) data.getPrincipal();
+        Authentication userData = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) userData.getPrincipal();
         log.info(userDetails.getUsername());
-        return tokenProvider.createToken(data);
+        return tokenProvider.createToken(userData);
     }
 
     @Override
-    public MemberDto getMemberData(String memberId) {
-        return memberDao.getMemberData(memberId);
+    public Object getMemberData() {
+        Object userData = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.info(userData.toString());
+        return userData;
     }
 
     @Override
@@ -77,7 +80,5 @@ public class MemberServiceImpl implements MemberService {
     public boolean checkEmailExist() {
         return false;
     }
-
-
 
 }

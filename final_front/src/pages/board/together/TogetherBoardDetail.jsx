@@ -15,21 +15,8 @@ import {
 import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import $ from "jquery";
 import { Modal } from "react-bootstrap";
 
-/* function test(event) {
-  const target = event.currentTarget;
-  const replyContentVal = $(target).closest(".product_detail_review_comment").find(".replyContentVal").text();
- 
-  console.log("3 = ",  replyContentVal);
-  let html = "<span>";
-  html += `<input className="val" type="text" value="`+replyContentVal+`"/>`;
-  html += '<Button  style={{ marginLeft: "10px", backgroundColor: "black", onClick }}>수정하자</Button>';
-  html += `<button className="cancel" style={{ marginLeft: "10px", backgroundColor: "black" }}>취소</button>`;
-  html += "</span>";
-  $(target).closest("div").find(".replyContent").append(html);
-}; */
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
@@ -294,7 +281,6 @@ const TogetherBoardDetail = () => {
                   <h3>
                     &nbsp;
                     <div className="replyContent">
-                      {/* Jquery부분 */}
                       <span style={{ color: "red" }}> → </span>
                       <span
                         className="replyContentVal"
@@ -303,17 +289,12 @@ const TogetherBoardDetail = () => {
                         {boardReply.boardReplyTgContent}
                       </span>
                     </div>
-                    {/* Jquery부분 */}
-                    {/* <input type="hidden" className="ss" value={boardReply.boardReplyTgContent}/> */}
                   </h3>
                   <Button
                     style={{ marginLeft: "10px", backgroundColor: "black" }}
                   >
                     <span
                       style={{ fontWeight: "bold" }}
-                      /* JQuery */
-                      /* onClick={(event) => test(event)} */
-                      // onClick={click}
                       onClick={async () => {
                         click();
                         handleBoardReplyTgNo(boardReply.boardReplyTgNo);

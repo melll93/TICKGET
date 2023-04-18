@@ -22,6 +22,7 @@ public class SignUpServiceImpl implements SignUpService {
 		log.info("memberList 확인");
 		List<Map<String, Object>> mList = null;
 		mList = signUpDao.memberList(pMap);
+		log.info(mList.toString());
 		return mList;
 	}
 	

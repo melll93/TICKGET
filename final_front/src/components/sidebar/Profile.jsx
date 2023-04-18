@@ -5,14 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies } from "react-cookie";
 import { Dropdown } from "react-bootstrap";
-
 const cookies = new Cookies();
 
 const Profile = () => {
+  const reduxUser = useSelector((state) => state.userStatus.user);
   const _userData = cookies.get("_userData");
   const naver_token = window.localStorage.getItem("com.naver.nid.access_token");
-  console.log(naver_token);
+  const access_token = window.localStorage.getItem("access_token");
+
   const navigate = useNavigate();
+
   const logout = () => {
     window.localStorage.clear();
     cookies.remove("_userData");
@@ -23,30 +25,28 @@ const Profile = () => {
   /********************************************
    * 로그인 시 발급된 jwt를 가지고 BE에 요청
    ********************************************/
-  const getUserData = async (memberId) => {
+  const getUserData = async () => {
+    const token = window.localStorage.getItem("access_token");
     const result = await axios({
       method: "POST",
       url: "http://localhost:8888" + "/member/getMemberData",
-      // headers: {
-      //   access_token: window.localStorage.getItem("access_token")
-      // },
-      data: {
-        memberId: memberId
-      }
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }).then((res) => {
       const _userData = res.data;
       cookies.set("_userData", _userData);
-    })
-    return result
-  }
-
+    });
+    return result;
+  };
 
   const handleChatFromProfile = () => {
-    navigate("/chat")
-  }
+    navigate("/chat");
+  };
 
   const getProfile = () => {
-    if (!_userData && naver_token === null) {
+    // if (!_userData && naver_token === null) {
+    if (access_token === null && naver_token === null) {
       return (
         <div className="ProfileButton">
           <Link to="/login" className="link">
@@ -65,17 +65,23 @@ const Profile = () => {
           {/* 프로필 버튼 시작 */}
           <div className="userImage">
             <Dropdown>
-              <Dropdown.Toggle variant="none" id="profile-dropdown" style={{ border: "none" }}>
+              <Dropdown.Toggle
+                variant="none"
+                id="profile-dropdown"
+                style={{ border: "none" }}
+              >
                 <img
                   id="profile"
                   className="icon image40"
                   style={{ borderRadius: "50%" }}
                   src="https://phinf.pstatic.net/contact/20230416_257/1681630347916iq32w_PNG/avatar_profile.png?type=s160"
-                // src={_userData.profile_img ?? "../logos/PROFILE.png"}
+                  // src={_userData.profile_img ?? "../logos/PROFILE.png"}
                 />
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown items">
-                <Dropdown.Item onClick={handleChatFromProfile}>1:1 채팅</Dropdown.Item>
+                <Dropdown.Item onClick={handleChatFromProfile}>
+                  1:1 채팅
+                </Dropdown.Item>
                 <Dropdown.Item>프로필</Dropdown.Item>
                 {/* <Dropdown.Item href="#/action-3"></Dropdown.Item> */}
               </Dropdown.Menu>
@@ -98,16 +104,16 @@ const Profile = () => {
     }
   };
 
-
   useEffect(() => {
-    getUserData("admin").then(console.log)
-  })
+    if (reduxUser !== null || reduxUser !== undefined || reduxUser !== {}) {
+      getUserData().then(console.log);
+      console.log(reduxUser);
+    }
+  }, []);
 
   return (
     <>
-      <div className="ProfileBox">
-        {getProfile()}
-      </div>
+      <div className="ProfileBox">{getProfile()}</div>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "./action";
+import { LOGIN, LOGOUT, SETUSER } from "./action";
 import { userInfo } from "./state";
 export default function userStatus(state = userInfo, action) {
   switch (action.type) {
@@ -14,6 +14,12 @@ export default function userStatus(state = userInfo, action) {
         ...state,
         user: action.user,
         isLogin: action.isLogin,
+      };
+
+      case SETUSER:
+      return {
+        ...state,
+        user: action.user,
       };
     default:
       return { ...state };

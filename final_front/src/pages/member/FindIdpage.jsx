@@ -12,7 +12,6 @@ const FindIdPage = () => {
     name: "",
     mobile: "",
   });
-  const [toastMsg, setToastMsg] = useState(""); // 알림 메시지 상태 관리
   const navigate = useNavigate();
 
   const handleChangeMemInfo = (event) => { // 입력 값 변경 시 상태 업데이트
@@ -34,7 +33,8 @@ const FindIdPage = () => {
       const res = await memberListDB(member);
       console.log(res);
       if (res.data.length === 0) {
-        setToastMsg("존재하지 않는 회원입니다.");
+        console.log("회원 정보 없음");
+        alert("존재하지 않는 회원입니다.");
       } else {
         let msg = '회원님의 아이디입니다.\n';
         res.data.forEach((memberData) => {
@@ -45,11 +45,11 @@ const FindIdPage = () => {
         if (msg === '회원님의 아이디입니다.\n') {
           msg = '일치하는 회원이 없습니다.';
         }
-        setToastMsg(msg);
+        alert(msg);
         console.log(msg);
       }
     } catch (error) {
-      setToastMsg("DB 오류입니다.");
+      alert("DB 오류입니다.");
     }
   }
 
@@ -69,7 +69,7 @@ const FindIdPage = () => {
           <BButton type="onSubmit">찾기</BButton>
         </div>
       </LoginForm>
-      {toastMsg && <toastMsg>{toastMsg}</toastMsg>}
+      {/* {toastMsg && <toastMsg>{toastMsg}</toastMsg>} */}
     </>
   )
 }
