@@ -8,10 +8,13 @@ import { Dropdown } from "react-bootstrap";
 const cookies = new Cookies();
 
 const Profile = () => {
+  const reduxUser = useSelector((state) => state.userStatus.user);
   const _userData = cookies.get("_userData");
   const naver_token = window.localStorage.getItem("com.naver.nid.access_token");
-  console.log(naver_token);
+  const access_token = window.localStorage.getItem("access_token");
+
   const navigate = useNavigate();
+
   const logout = () => {
     window.localStorage.clear();
     cookies.remove("_userData");
@@ -22,16 +25,13 @@ const Profile = () => {
   /********************************************
    * 로그인 시 발급된 jwt를 가지고 BE에 요청
    ********************************************/
-  const getUserData = async (memberId) => {
+  const getUserData = async () => {
     const token = window.localStorage.getItem("access_token");
     const result = await axios({
       method: "POST",
       url: "http://localhost:8888" + "/member/getMemberData",
       headers: {
-        Authorization: `Bearer ${token}`
-      },
-      data: {
-        memberId: memberId,
+        Authorization: `Bearer ${token}`,
       },
     }).then((res) => {
       const _userData = res.data;
@@ -45,7 +45,8 @@ const Profile = () => {
   };
 
   const getProfile = () => {
-    if (!_userData && naver_token === null) {
+    // if (!_userData && naver_token === null) {
+    if (access_token === null && naver_token === null) {
       return (
         <div className="ProfileButton">
           <Link to="/login" className="link">
@@ -104,8 +105,11 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getUserData("admin").then(console.log);
-  });
+    if (reduxUser !== null || reduxUser !== undefined || reduxUser !== {}) {
+      getUserData().then(console.log);
+      console.log(reduxUser);
+    }
+  }, []);
 
   return (
     <>

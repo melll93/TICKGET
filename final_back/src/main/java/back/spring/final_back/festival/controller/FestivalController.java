@@ -39,18 +39,16 @@ public class FestivalController {
 	public List<FestivalDto> festivalListByDate(@RequestParam Date date) {
 		List<FestivalDto> result = null;
 		result = festivalService.festivalListByDate(date);
-		log.info(result.toString());
+		// log.info(result.toString());
 		return result;
 	}
 
 	@GetMapping("festivalHitList")
 	public List<FestivalDto> festivalHitList() {
 		List<FestivalDto> festival = null;
-		festival =festivalService.festivalHitList(); 
+		festival = festivalService.festivalHitList();
 		return festival;
 	}
-
-
 
 	@GetMapping("festivalList")
 	public List<FestivalDto> festivalList() {
@@ -63,19 +61,19 @@ public class FestivalController {
 	@GetMapping("areaFestivalList")
 	public List<FestivalDto> areaFestivalList(@RequestParam String fest_m_area) {
 		List<FestivalDto> festival = null;
-		festival =festivalService.areaFestivalList(fest_m_area); 
+		festival = festivalService.areaFestivalList(fest_m_area);
 		return festival;
 	}
 
-    @GetMapping("/festivalDetail")
-    public FestivalDto festivalDetail(FestivalDto festivalDto) {
-        FestivalDto festival = festivalService.festivalDetail(festivalDto);
+	@GetMapping("/festivalDetail")
+	public FestivalDto festivalDetail(FestivalDto festivalDto) {
+		FestivalDto festival = festivalService.festivalDetail(festivalDto);
 		/*
 		 * int ticketPrice = festivalDto.getFestTcPrice() null ? 0 :
 		 * festival.getFestTcPrice(); festival.setFestTcPrice(ticketPrice);
 		 */
-        return festival;
-    }
+		return festival;
+	}
 
 	@PostMapping("festivalInsert")
 	public int festivalInsert(@RequestBody FestivalDto festivalDto) {
@@ -83,20 +81,20 @@ public class FestivalController {
 		log.info(festivalDto.toString());
 		return result;
 	}
-	
+
 	@PostMapping("festDetailInsert")
 	public int festDetailInsert(@RequestBody FestivalDto festivalDto) {
 		int result = festivalService.festDetailInsert(festivalDto);
 		log.info(festivalDto.toString());
 		return result;
 	}
+
 	@PostMapping("festPosterInsert")
 	public int festPosterInsert(@RequestBody FestivalDto festivalDto) {
 		int result = festivalService.festPosterInsert(festivalDto);
 		log.info(festivalDto.toString());
 		return result;
 	}
-	
 
 	@GetMapping("festivalDelete")
 	public String festivalDelete(@RequestParam String fest_m_id) {
@@ -105,6 +103,7 @@ public class FestivalController {
 		result = festivalService.festivalDelete(fest_m_id);
 		return String.valueOf(result);
 	}
+
 	@GetMapping("/festivalThumpsUp")
 	public void festivalThumpsUp(@RequestParam Map<String, Object> pMap) {
 		festivalService.festivalThumpsUp(pMap);

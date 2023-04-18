@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Map;
 
 @Data
-//@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class MemberDetails implements UserDetails {
 
     private MemberDto memberDto;
@@ -38,13 +38,29 @@ public class MemberDetails implements UserDetails {
     }
 
     @Override
+    public String getUsername() {
+        return memberDto.getMemberId();
+    }
+
+    @Override
     public String getPassword() {
         return memberDto.getMemberPassword();
     }
 
-    @Override
-    public String getUsername() {
-        return memberDto.getMemberId();
+    public String getEmail() {
+        return memberDto.getMemberEmail();
+    }
+
+    public String getProfileImg() {
+        return memberDto.getMemberProfileImage();
+    }
+
+    public String getRealname() {
+        return memberDto.getMemberName();
+    }
+
+    public String getNickname() {
+        return memberDto.getMemberNickname();
     }
 
     @Override
