@@ -2,6 +2,7 @@ package back.spring.final_back.festival.controller;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,9 +80,23 @@ public class FestivalController {
 	@PostMapping("festivalInsert")
 	public int festivalInsert(@RequestBody FestivalDto festivalDto) {
 		int result = festivalService.festivalInsert(festivalDto);
-		logger.info(festivalDto.toString());
+		log.info(festivalDto.toString());
 		return result;
 	}
+	
+	@PostMapping("festDetailInsert")
+	public int festDetailInsert(@RequestBody FestivalDto festivalDto) {
+		int result = festivalService.festDetailInsert(festivalDto);
+		log.info(festivalDto.toString());
+		return result;
+	}
+	@PostMapping("festPosterInsert")
+	public int festPosterInsert(@RequestBody FestivalDto festivalDto) {
+		int result = festivalService.festPosterInsert(festivalDto);
+		log.info(festivalDto.toString());
+		return result;
+	}
+	
 
 	@GetMapping("festivalDelete")
 	public String festivalDelete(@RequestParam String fest_m_id) {
@@ -89,5 +104,9 @@ public class FestivalController {
 		int result = 0;
 		result = festivalService.festivalDelete(fest_m_id);
 		return String.valueOf(result);
+	}
+	@GetMapping("/festivalThumpsUp")
+	public void festivalThumpsUp(@RequestParam Map<String, Object> pMap) {
+		festivalService.festivalThumpsUp(pMap);
 	}
 }

@@ -4,6 +4,7 @@ import toastStatus from "./toastStatus/reducer";
 
 const rootReducer = combineReducers({
   userStatus,
+  toastStatus,
 });
 
 export default rootReducer;

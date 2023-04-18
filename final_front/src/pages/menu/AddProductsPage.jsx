@@ -3,8 +3,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { useNavigate } from "react-router";
-import { FestivalInsertDB } from "../../axios/festival/festival";
+import { useNavigate, useParams } from "react-router";
+import { FestivalInsertDB, FetivalDetailDB } from "../../axios/festival/festival";
 import ImageUploader from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
@@ -15,6 +15,9 @@ import HeaderSearchBar from "../../components/header/HeaderSearchBar";
 
 const AddProducts = () => {
   const navigate = useNavigate();
+  const {festMId}=useParams();
+
+  console.log(festMId)
   const [festTitle, setFesttitle] = useState();
   const [festLocation, setFestloc] = useState();
   const [festCategory, setFestcate] = useState();
@@ -28,6 +31,8 @@ const AddProducts = () => {
   const [festImageUrl, setFestImageUrl] = useState();
   const imgRef = useRef();
 
+
+  /* 추가정보입력 띄우기 */
   const [optionModal, setOptionModal] = useState(0);
   const optionModalOpen = () => {
     if (optionModal === 0) {
@@ -37,6 +42,7 @@ const AddProducts = () => {
     }
   };
 
+  /* 상품등록 insert */
   const festivalInsert = async () => {
     const festival = {
       festMName: festTitle,
@@ -57,6 +63,56 @@ const AddProducts = () => {
       navigate("/festival");
     }
   };
+
+
+
+/* 입력되어있던 정보 가져오기 */
+useEffect(() => {
+const originDetail=async()=>{
+  const festival={
+    festMId,
+  }
+  const res = await FetivalDetailDB(festival);
+  const temp = JSON.stringify(res.data)  //문자열 전환
+  console.log(festival)
+  console.log(temp)
+  const jsonDoc=JSON.parse(temp)  //배열로 접근처리
+  setFesttitle(jsonDoc.festMName)
+  setFeststart(jsonDoc.festMStart )
+setFestend(jsonDoc.festMEnd)
+setFestloc(jsonDoc.festMLoc)
+setFestdetail(jsonDoc.festDetail)   //아직 사용 안하는중
+setFestprice(jsonDoc.festPrice)       //아직 사용 안하는중
+setFestArea(jsonDoc.festMArea)
+setFestImageUrl(jsonDoc.festMImg)
+/* if(jsonDoc[0].MEM_NO!==sessionStorage.getItem("no")){  //글의 회원번호와 로그인한 no가 달라?  네 -> 다른 사람 글
+return console.log('작성자가 아닙니다.')
+} */
+}
+originDetail()
+},[festMId]);
+
+
+  const festivalUpdate=()=>{
+
+/*     const boardUpdate = async() => {
+      if(title.trim()==="||content.trim()===") return console.log('게시글이 수정되지 않았다')
+      const danmksldnal={
+        qna_bno:bno,
+        qna_title:title,  //useState 훅이다.
+        qna_content:content,
+        qna_secret: (secret? 'true':'false'),
+        qna_type:tTitle,
+      }
+      const res = await qnaUpdateDB(danmksldnal)
+      if(!res.data) return console.log('게시판 수정에 실패하였습니다.')
+      navigate("/qna/list")
+      
+      } */
+
+
+    alert('상품수정완료')
+  }
 
   const inuptTitle = useCallback((e) => {
     setFesttitle(e);
@@ -171,6 +227,7 @@ const AddProducts = () => {
           type="file"
           accept="image/*"
           id="festivalsImg"
+          
           onChange={FestImageUpload}
           ref={imgRef}
         />{" "}
@@ -180,6 +237,7 @@ const AddProducts = () => {
             type="text"
             className="form-control"
             id="festTitle"
+          defaultValue={festTitle}
             onChange={(e) => {
               inuptTitle(e.target.value);
             }}
@@ -208,7 +266,7 @@ const AddProducts = () => {
           }}
         >
           <option disabled value="">
-            지역{" "}
+            지역
           </option>
           <option value="서울">서울</option>
           <option value="경기/인천">경기/인천</option>
@@ -224,6 +282,7 @@ const AddProducts = () => {
             type="text"
             className="form-control"
             id="festLocation"
+            defaultValue={festLocation}
             onChange={(e) => {
               inputLocation(e.target.value);
             }}
@@ -250,18 +309,22 @@ const AddProducts = () => {
             className="form-control"
             id="festStartday"
             name="startDay"
+            defaultValue={festStartday}
             onChange={(e) => {
               inputStartday(e.target.value);
             }}
           />
           <label htmlFor="floatingInput"> 행사시작일</label>
         </div>
+
+
         <div className="form-floating mb-3">
           <input
             type="date"
             className="form-control"
             id="festEndday"
             name="startDay"
+            defaultValue={festEndday}
             onChange={(e) => {
               inputEndday(e.target.value);
             }}
@@ -301,8 +364,8 @@ const AddProducts = () => {
           취소
         </BlackBtn>
         &nbsp;
-        <BlackBtn onClick={festivalInsert}>상품등록하기</BlackBtn>
-      </div>{" "}
+        {festMId==='new'? <BlackBtn onClick={festivalInsert}>상품등록하기</BlackBtn> : <BlackBtn onClick={festivalUpdate}>상품수정완료</BlackBtn>}
+      </div>
       {/* //등록 div 끝 */}
     </>
   );

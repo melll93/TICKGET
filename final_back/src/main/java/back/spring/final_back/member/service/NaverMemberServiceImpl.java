@@ -3,8 +3,13 @@ package back.spring.final_back.member.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import back.spring.final_back.member.jwt.TokenProvider;
+import back.spring.final_back.member.repository.MemberDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import back.spring.final_back.member.repository.NaverMemberDao;
@@ -16,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class NaverMemberServiceImpl implements NaverMemberService {
     Logger logger = LoggerFactory.getLogger(NaverMemberServiceImpl.class);
     private final NaverMemberDao naverMemberDao;
+
 
     /************************************************************
      * 전송받은 Naver ID가 회원가입 되어있는지 안되어있는지 확인
@@ -55,5 +61,4 @@ public class NaverMemberServiceImpl implements NaverMemberService {
         }
         return result;
     }
-
 }

@@ -4,6 +4,7 @@ import back.spring.final_back.member.jwt.JwtFilter;
 import back.spring.final_back.member.jwt.TokenProvider;
 import back.spring.final_back.member.repository.MemberDto;
 import back.spring.final_back.member.repository.TokenDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/member")
-@CrossOrigin("http://localhost:3333")
+@RequestMapping("/auth")
+@Slf4j
 public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -30,7 +31,7 @@ public class AuthController {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(memberDto.getMemberId(), memberDto.getMemberPassword());
-
+        log.info(authenticationToken.toString());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

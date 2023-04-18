@@ -8,6 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TokenDto {
-    private String autority;
     private String token;
 }
