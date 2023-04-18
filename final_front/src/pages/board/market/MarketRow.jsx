@@ -122,16 +122,16 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
 </div>
 </div>
    
-      <hr style={{marginTop:'-22px'}}/>
+      <hr style={{marginTop:'-25px'}}/>
 
-      <p className="card-text" style={{color:'black'}} >
-      <div className="mb-2" style={{display: 'flex', justifyContent: 'center'}}>
+      <p className="card-text" style={{color:'black' }} >
+      <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'20px'}}>
   <span className="mr-4" style={{color:'black', marginRight:'0px'}}>
-    <i class="bi bi-heart"/>{" "}찜 5
+    <i class="bi bi-heart" />{" "}찜 5
   </span>
 </div>
        </p>
-       <hr style={{marginTop:'-20px' , opacity:'0'}}/>
+       <hr style={{marginTop:'-25px' , opacity:'0'}}/>
 </div>
 
 

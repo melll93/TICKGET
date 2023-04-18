@@ -58,9 +58,9 @@ const MarketBoardHeader = ({ detail, no }) => {
     >
     </div>
     <div style={{ display: "flex", justifyContent: "flex-end" }}>
-      <div style={{  marginRight: "100px", fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.8rem" }}>{detail.mk_ticket_price} 원</div>
+      <div style={{  marginRight: "140px", fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "2.0rem" }}>{detail.mk_ticket_price} 원</div>
       {
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginTop:'10px' }}>
           <MButton
             style={{ margin: "0px 10px 0px 10px" }}
             onClick={() => {

@@ -62,9 +62,8 @@ const HomePage = () => {
         </div>
 <section className="home_bottom_section" style={{border:'1px dotted gray', padding:'50px'}}>
 <div style={{textAlign:'center', alignItems:'center'}}>
-<h1><strong>
-  what's hot
-</strong>
+<h1 style={{fontFamily:"Nanum Gothic", fontWeight:"bold"}}>
+  WHAT'S HOT
   </h1>
 
   {festivalHitList.slice(0, 5).map((festival) => (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ListGroup } from 'react-bootstrap';
+import { Button, ListGroup, Tab, Tabs } from 'react-bootstrap';
 import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,6 +10,8 @@ import Sidebar from '../../../components/Sidebar';
 import { ContainerDiv, FormDiv, HeaderDiv, QnACommentArea } from '../../../styles/formStyle';
 import MarketBoardFileDetail from './MarketBoardFileDetail';
 import MarketBoardHeader from './MarketBoardHeader';
+import '../../../App.css'
+import MarketPaymentGuide from './MarketPaymentGuide';
 
 const cookies = new Cookies();
  
@@ -160,52 +162,66 @@ const MarketDetail = () => {
       <HeaderDiv>
       </HeaderDiv>
 
-      <div className="mktopcontainer" style={{ display: "flex", justifyContent: "center", width: "80%" , marginRight:'400px' , margin:'0' , maxWidth:'1200px' }}>
-        <div className="imgdiv" style={{ width: "80%" ,  marginLeft:"200px"}}>
+      <div className="mktopcontainer" style={{ display: "flex", justifyContent: "center", width: "80%" , marginRight:'200px' , margin:'0' , maxWidth:'1200px' }}>
+        <div className="imgdiv" style={{ width: "80%" ,  marginLeft:"100px"}}>
           <img className="product_detail_img" src={detail.board_mk_fileurl} alt="상품사진" style={{ objectFit: 'cover', width: '80%' }} />
         </div>
         <div style={{ width: "100%" }}>
           <MarketBoardHeader detail={detail} no={no} />
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px", fontSize: "16px" }}>
-          <div >작성자프로필이미지 | 작성자명</div>
-            <div> ∙ 찜  5 <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span> ∙ 조회수 {detail.board_mk_hit} <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span>   ∙ 작성일 {boardDateTime}</div>
-          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", fontSize: "16px" }}>
+  <div>작성자프로필이미지 | 작성자명</div>
+  <div style={{marginRight:'45px'}}>
+    <span style={{ marginRight: "5px" , color:'black'}}>
+      <i class="bi bi-heart-fill"></i> 5 <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span>
+    </span>
+    <span style={{ marginRight: "5px" , color:'black'}}>
+      <i class="bi bi-eye-fill"></i> {detail.board_mk_hit} <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span>
+    </span>
+    <span style={{ marginRight: "5px" , color:'black'}}>
+      <i class="bi bi-clock-fill"></i> {boardDateTime}
+    </span>
+  </div>
+</div>
           
           
           <hr style={{opacity:'0%', marginBottom:'40px'}}/>
           <div style={{fontSize:'1.1rem'}}>
-  <p style={{textAlign:'left', paddingRight:'10px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px'  ,marginTop:'25px'}}>
     <span style={{display:'inline-block', width:'5rem' ,marginRight:'10px', color:'black'}}>∙ 공연일</span>
-    {formattedTicketDate}
+    {" "}{formattedTicketDate}
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px'}}>
-    <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 좌석정보</span>
-    {detail.mk_ticket_seat}
-  </p>
-  <p style={{textAlign:'left', paddingRight:'10px'}}>
-    <span style={{display:'inline-block', width:'5rem',marginRight:'10px' ,color:'black'}}>∙ 수량</span>
-    {detail.mk_ticket_count}
-  </p>
-  <p style={{textAlign:'left', paddingRight:'10px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 공연장소</span>
-    {detail.mk_ticket_place}
+    {" "}{detail.mk_ticket_place}
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+    <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 좌석정보</span>
+    {" "}{detail.mk_ticket_seat}
+  </p>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+    <span style={{display:'inline-block', width:'5rem',marginRight:'10px' ,color:'black'}}>∙ 수량</span>
+    {" "}{detail.mk_ticket_count}장
+  </p>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 거래방식</span>
-    {detail.mk_ticket_type}
+    {" "}PIN거래 <span style={{color:'black' , opacity:'50%' , fontSize:'0.8rem'}}>구매자에게 PIN번호 전달</span>
+    <br/>
+    <span style={{ display: 'inline-block', marginLeft: '5.9rem', color: 'black' ,marginTop:'5px'}}>직거래
+    <span style={{color:'black' , opacity:'50%' , fontSize:'0.8rem' , marginLeft: '1rem'}}>채팅 문의</span>
+    </span>
   </p>
 </div>
 
 
 
 <div className="mb-2" style={{display: 'flex', justifyContent: 'space-between', marginTop:'50px',}}>
-        <Button variant="outline-dark" size="lg" style={{width:'170px'}}>
+        <Button variant="outline-dark" size="lg" style={{width:'180px'}}>
         <i class="bi bi-heart"></i>{" "}찜하기
         </Button>{' '}
-        <Button variant="outline-danger" size="lg" style={{width:'170px'}}>
+        <Button variant="outline-danger" size="lg" style={{width:'180px'}}>
           <i class="bi bi-chat-left-dots"></i>{" "}채팅하기
         </Button>{' '}
-        <Button variant="outline-primary" size="lg" style={{width:'170px'}}>
+        <Button variant="outline-primary" size="lg" style={{width:'180px'}} onClick={linkToPayment}>
         <i class="bi bi-wallet2" ></i>{" "}구매하기
         </Button>
       </div>
@@ -213,11 +229,36 @@ const MarketDetail = () => {
       </div>
 
 
-      <div style={{ display: "flex", marginBottom: "10px" }}>
-        <h3>상세 내용&nbsp;</h3>
-      </div>
-      <div dangerouslySetInnerHTML={{ __html: detail.board_mk_content }} style={{ height: '250px' }}></div>
     </ContainerDiv>
+
+
+    <section style={{maxWidth:'1400px' ,marginLeft:'300px' }}>
+    <Tabs
+      id="fill-tab-example"
+      fill 
+      style={{ fontFamily:"Nanum Gothic", fontWeight:"bold"  }}
+      className="gray-tabs"
+    >
+      <Tab eventKey="content" title="상품 상세정보" >
+        <div style={{marginTop:'30px' , marginLeft:'30px'}}>
+            {detail.board_mk_content}
+          </div>  
+      </Tab>
+      <Tab eventKey="place" title="위치 찾기"  unselected={true}>
+      <div style={{marginTop:'30px'}}>
+            위치 정보를 여기에 추가하세요.
+            </div>
+      </Tab>
+      <Tab eventKey="payinfo" title="상품 결제/수령 안내"  unselected={true}>
+      <div style={{marginTop:'30px'}}>
+        <MarketPaymentGuide/>
+        </div>
+
+      </Tab>
+    </Tabs>
+</section>
+
+  
   </div>
 </>
   );
@@ -226,31 +267,3 @@ const MarketDetail = () => {
 export default MarketDetail
 
 
-/* 
-<div className="product_detail_info" style={{ marginLeft: '120px' }}>
-<div className="product_detail">
-  <h3 className="product_title">상품 정보</h3>
-</div>
-<ListGroup variant="flush" style={{ width: '300px' }}>
-  <ListGroup.Item style={{ textAlign: 'center' }}>{detail.board_mk_title}</ListGroup.Item>
-  <ListGroup.Item style={{ textAlign: 'center' }}>{detail.mk_ticket_place}</ListGroup.Item>
-  <ListGroup.Item style={{ textAlign: 'center' }}>{formattedDate}</ListGroup.Item>
-  <ListGroup.Item style={{ textAlign: 'center' }}>{detail.mk_ticket_seat}</ListGroup.Item>
-  <ListGroup.Item style={{ textAlign: 'center' }}></ListGroup.Item>
-</ListGroup>
-<hr style={{ opacity: '0%' }} />
-<div className="product_detail_payments">
-  <h3 className="product_title">구매</h3>
-</div>
-<ListGroup variant="flush" style={{ width: '300px' }}>
-  <h4 style={{ textAlign: 'center' }}>{detail.mk_ticket_count}장</h4>
-  <ListGroup.Item></ListGroup.Item>
-  <h2 style={{ textAlign: 'center', marginTop: '15px' }}>{detail.mk_ticket_price} 원</h2>
-  <ListGroup.Item></ListGroup.Item>
-  <hr style={{ opacity: '0' }} />
-  <span><Button style={{ width: '145px' }}>채팅하기</Button>  <Button style={{ width: '145px' }} onClick={linkToPayment}>구매하기</Button></span>
-  <ListGroup.Item></ListGroup.Item>
-</ListGroup>
-<div>
-</div>
-</div> */

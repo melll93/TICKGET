@@ -135,6 +135,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
       event.stopPropagation();
     } else {
       setValidated(true);
+      //토스트 삽입?
       if (validated) {
         boardInsert();
       }
@@ -215,7 +216,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
               <div>
                 <Row className="mb-4">
                   <Form.Group as={Col} controlId="formGridPlace">
-                    <h3>장소</h3>
+                    <h3>공연 장소</h3>
                     <Form.Control
                       required
                       id="mk_ticket_place"
