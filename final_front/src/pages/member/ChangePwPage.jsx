@@ -6,12 +6,9 @@ import { useState, useEffect } from 'react';
 import { BButton, LoginForm, MyH1, MyInput, MyLabel, PwEye  } from '../../styles/formStyle';
 import { memberUpdateDB } from '../../axios/member/memberLogic';
 
-const setUserId = createAction('user/setUserId');
 
 const ChangePwPage = () => {
-  const dispatch = useDispatch();
-  // changePw에서 member_id 은경아 메롱 
-  const memberId = useSelector(state => state.user && state.user.memberId);
+  const memberId = useSelector(state => state.userStatus.user);
   const [memInfo, setMemInfo] = useState({
     pw: '',
     pwConfirm: '',
@@ -21,6 +18,8 @@ const ChangePwPage = () => {
     const id = e.currentTarget.id;
     const value = e.target.value;
     if (id === 'pw') {
+      console.log(memberId);
+
       console.log('pw: ' + value);
       setMemInfo({ ...memInfo, pw: value });
     } else if (id === 'pwConfirm') {
@@ -43,7 +42,6 @@ const ChangePwPage = () => {
         console.log(res.data);
         alert('비밀번호가 성공적으로 변경되었습니다');
         // 
-        dispatch(setUserId(memberId));
       } catch (error) {
         console.error(error);
         alert('비밀번호 변경에 실패하였습니다');
