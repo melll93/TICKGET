@@ -52,6 +52,7 @@ const CarpoolBoardList = () => {
     return <div>데이터를 불러오는 중입니다...</div>;
   }
   return (
+    <>
     <div>
       <div style={{ width: "1500px", marginLeft: "auto", marginRight: "auto" }}>
         <div className="row" style={{ marginTop: "40px" }}>
@@ -59,8 +60,9 @@ const CarpoolBoardList = () => {
             <thead>
               <tr>
                 <th style={{ textAlign: "center" }}>번호</th>
-                <th width="40%">제목</th>
+                <th width="15%">제목</th>
                 <th style={{ textAlign: "center" }}>작성자</th>
+                <th style={{ textAlign: "center" }}>카풀 인원</th>
                 <th style={{ textAlign: "center" }}>작성일</th>
                 <th style={{ textAlign: "center" }}>조회수</th>
               </tr>
@@ -68,8 +70,8 @@ const CarpoolBoardList = () => {
             <tbody>
               {currentFest(carpoolList).map((carpool) => (
                 <tr key={carpool.boardCpNo}>
-                  <td style={{ textAlign: "center" }}>{carpool.boardCpNo}</td>
-                  <td>
+                  <td style={{ textAlign: "center", width:"100px" }}>{carpool.boardCpNo}</td>
+                  <td style={{ width:"300px" }}>
                     <button
                       style={{
                         border: "none",
@@ -89,11 +91,12 @@ const CarpoolBoardList = () => {
                       {carpool.boardCpTitle}
                     </button>
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center", width:"200px" }}>
                     {carpool.boardCpMemId}
                   </td>
-                  <td style={{ textAlign: "center" }}>{carpool.boardCpDate}</td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center", width:"100px" }}>수정중</td>
+                  <td style={{ textAlign: "center", width:"200px" }}>{carpool.boardCpDate}</td>
+                  <td style={{ textAlign: "center", width:"100px" }}>
                     {carpool.boardCpViews}
                   </td>
                 </tr>
@@ -124,7 +127,7 @@ const CarpoolBoardList = () => {
         &nbsp;
         <Button
           variant="success"
-          style={{ backgroundColor: "black" }}
+          style={{ backgroundColor: "black"}}
           onClick={() => navigate("/carpool/write")}
         >
           글 작성하기
@@ -132,6 +135,7 @@ const CarpoolBoardList = () => {
         &nbsp;
       </div>
     </div>
+    </>
   );
 };
 

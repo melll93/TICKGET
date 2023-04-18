@@ -24,6 +24,6 @@ public interface TogetherService {
     int deleteBoardList(TogetherDto togetherDto);
 
     // Together 게시판 조회수 확인하자
-    void viewUp(@RequestParam Map<String, Object> pMap);
+    public void viewUp( Map<String, Object> pMap);
 
 }

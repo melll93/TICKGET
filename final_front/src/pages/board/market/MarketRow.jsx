@@ -1,13 +1,21 @@
-  import React, { useEffect } from 'react'
+  import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
   const MarketRow = ({boards}) => {
     console.log(boards); // 마켓 게시판 조회 데이터
     const navigate = useNavigate()
 
+    //카드태그 호버 처리
+    const [hovered, setHovered] = useState(false)
+
     //가격 쉼표 처리
     const price = boards.mkTicketPrice.toLocaleString()
     console.log(price)
+
+
+
+
+
 
 
     //현재 시간 - 게시글 작성 시간
@@ -77,20 +85,53 @@ import { Link, useNavigate } from 'react-router-dom';
         display:"inline-block",
         margin: "50px 0px 0px 50px",
         borderRadius: "10px",
-}}>
+        cursor: "pointer",
+        transition: "transform 0.3s", // 애니메이션 속도 조절
+        transform: hovered ? "scale(1.05)" : "scale(1)",
+}}
+>
 <img src={boards.boardMkFileurl} style={{width:"100%", overflow:'hidden', height: '250px', objectFit: 'cover' , 
-borderTopLeftRadius:'10px',borderTopRightRadius:'10px',borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}} alt="사진1" onClick={linkToDetail}/>
-<div className="card-body" style={{overflow:"hidden", height:'120px'}} onClick={linkToDetail}>
-<h5 className="card-title"  onClick={linkToDetail}>{boards.boardMkTitle}</h5>
+borderTopLeftRadius:'10px',borderTopRightRadius:'10px',borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}} 
+onClick={linkToDetail}
+onMouseEnter={() => { // 마우스를 요소 위로 올리면
+  setHovered(true); // 상태값 변경
+}}
+onMouseLeave={() => { // 마우스를 요소에서 떠나면
+  setHovered(false); // 상태값 변경
+}}
+alt="사진1"/>
+<div className="card-body" style={{overflow:"hidden", height:'120px'}}>
+<h5 className="card-title" 
+onClick={linkToDetail}
+onMouseEnter={() => { // 마우스를 요소 위로 올리면
+  setHovered(true); // 상태값 변경
+}}
+onMouseLeave={() => { // 마우스를 요소에서 떠나면
+  setHovered(false); // 상태값 변경
+}}>{boards.boardMkTitle}</h5>
 <div style={{ display: "flex", justifyContent: "space-between" , }}> 
-<p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.5rem" }}>{price}원</p>
+<p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.5rem" }}
+onClick={linkToDetail}
+onMouseEnter={() => { // 마우스를 요소 위로 올리면
+  setHovered(true); // 상태값 변경
+}}
+onMouseLeave={() => { // 마우스를 요소에서 떠나면
+  setHovered(false); // 상태값 변경
+}}>{price}원</p>
 <p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,  fontSize: "0.85rem" ,marginTop: "10px" , opacity:'60%'}}>{boardDateTime}</p>
 </div>
 </div>
    
       <hr style={{marginTop:'-22px'}}/>
-      <p className="card-text" style={{marginLeft:'5px' , fontSize:'0.8rem'}} ><i class="bi bi-geo-alt-fill"></i> {boards.mkTicketPlace}</p>
-       <hr style={{marginTop:'-18px' , opacity:'0'}}/>
+
+      <p className="card-text" style={{color:'black'}} >
+      <div className="mb-2" style={{display: 'flex', justifyContent: 'center'}}>
+  <span className="mr-4" style={{color:'black', marginRight:'0px'}}>
+    <i class="bi bi-heart"/>{" "}찜 5
+  </span>
+</div>
+       </p>
+       <hr style={{marginTop:'-20px' , opacity:'0'}}/>
 </div>
 
 

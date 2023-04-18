@@ -25,4 +25,5 @@ public class MemberDto {
     private String memberNickname;
     private String memberProfileImage;
     private Date memberRegisterDate;
+    private String memberAuthority;
 }

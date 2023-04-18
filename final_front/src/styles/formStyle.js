@@ -171,7 +171,7 @@ export const MButton = styled.button`
   border: 1px solid white;
   background-color: rgb(80, 50, 200);
   color: white;
-  width: 100px;
+  width: 80px;
   height: 35px;
   font-weight: bold;
   &:hover {

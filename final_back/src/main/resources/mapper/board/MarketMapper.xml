@@ -27,17 +27,19 @@
   <if test='condition!=null and !condition.equals("전체")'>
     <where>
       <if test='content!=null and condition.equals("제목")'>
-        AND board_mk_title LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
+        board_mk_title LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
       </if>
       <if test='content!=null and condition.equals("장소")'>
-        AND mk_ticket_place LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
+        mk_ticket_place LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
       </if>
       <if test='content!=null and condition.equals("작성자")'>
-        AND mem_name LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
+        mem_name LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
       </if>
     </where>
   </if>
-  WHERE board_mk_status = 0
+  <if test='condition!=null and !condition.equals("전체")'>
+    AND board_mk_status = 0
+  </if>
   order by board_mk_date DESC
 </select>
 <!-- 판매여부가 0인 (판매처리되지 않은) 게시글만 조회되게하기, board_mk_status -->
