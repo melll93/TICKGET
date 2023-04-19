@@ -12,6 +12,9 @@ import MarketBoardFileDetail from './MarketBoardFileDetail';
 import MarketBoardHeader from './MarketBoardHeader';
 import '../../../App.css'
 import MarketPaymentGuide from './MarketPaymentGuide';
+import MapContainer from './Map/MapContainer';
+
+
 
 const cookies = new Cookies();
  
@@ -170,7 +173,7 @@ const MarketDetail = () => {
           <MarketBoardHeader detail={detail} no={no} />
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", fontSize: "16px" }}>
   <div>작성자프로필이미지 | 작성자명</div>
-  <div style={{marginRight:'45px'}}>
+  <div style={{marginRight:'45px', opacity:'90%'}}>
     <span style={{ marginRight: "5px" , color:'black'}}>
       <i class="bi bi-heart-fill"></i> 5 <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span>
     </span>
@@ -186,23 +189,23 @@ const MarketDetail = () => {
           
           <hr style={{opacity:'0%', marginBottom:'40px'}}/>
           <div style={{fontSize:'1.1rem'}}>
-  <p style={{textAlign:'left', paddingRight:'10px'  ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px'  ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem' ,marginRight:'10px', color:'black'}}>∙ 공연일</span>
     {" "}{formattedTicketDate}
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 공연장소</span>
     {" "}{detail.mk_ticket_place}
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 좌석정보</span>
     {" "}{detail.mk_ticket_seat}
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px' ,color:'black'}}>∙ 수량</span>
     {" "}{detail.mk_ticket_count}장
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 거래방식</span>
     {" "}PIN거래 <span style={{color:'black' , opacity:'50%' , fontSize:'0.8rem'}}>구매자에게 PIN번호 전달</span>
     <br/>
@@ -232,7 +235,7 @@ const MarketDetail = () => {
     </ContainerDiv>
 
 
-    <section style={{maxWidth:'1400px' ,marginLeft:'300px' }}>
+    <section style={{maxWidth:'1400px', minHeight:'800px' ,marginLeft:'300px' }}>
     <Tabs
       id="fill-tab-example"
       fill 
@@ -245,12 +248,12 @@ const MarketDetail = () => {
           </div>  
       </Tab>
       <Tab eventKey="place" title="위치 찾기"  unselected={true}>
-      <div style={{marginTop:'30px'}}>
-            위치 정보를 여기에 추가하세요.
+      <div style={{marginTop:'30px' , marginLeft:'30px' }}>
+        <MapContainer place={detail.mk_ticket_place}/>
             </div>
       </Tab>
       <Tab eventKey="payinfo" title="상품 결제/수령 안내"  unselected={true}>
-      <div style={{marginTop:'30px'}}>
+      <div style={{marginTop:'30px' , marginLeft:'30px'}}>
         <MarketPaymentGuide/>
         </div>
 

@@ -139,15 +139,18 @@ const MarketUpdatePage = ({mkImageUploader}) => {
   
   
 
+  //필수입력 확인 함수 호출
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-    setValidated(true);
-      boardUpdate();
+      setValidated(true);
+      setTimeout(() => {
+        boardUpdate();
+      }, 2000); // 2초 대기 후 boardInsert() 호출
     }
-   }
+  };
 
 
   
@@ -155,6 +158,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
    const board = {
     boardMkNo : no,
     boardMkTitle : board_mk_title,
+    boardMkDate : new Date(),
     boardMkContent: board_mk_content,
     mkTicketPlace: mk_ticket_place,
     mkTicketDate: mk_ticket_date,

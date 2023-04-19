@@ -95,16 +95,12 @@ public class FestivalController {
 		log.info(festivalDto.toString());
 		return result;
 	}
-<<<<<<< HEAD
 	@PostMapping("festTicketInsert")
 	public int festTicketInsert(@RequestBody FestivalDto festivalDto) {
 		int result = festivalService.festTicketInsert(festivalDto);
 		log.info(festivalDto.toString());
 		return result;
 	}
-	
-=======
->>>>>>> 995ad0bc8e30c634a0920beb82f7e69189ee5c3a
 
 	@GetMapping("festivalDelete")
 	public String festivalDelete(@RequestParam String fest_m_id) {

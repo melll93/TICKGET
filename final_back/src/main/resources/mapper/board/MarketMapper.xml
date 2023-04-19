@@ -55,7 +55,7 @@
 insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
 
 mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl,board_mk_status<!-- mem_no -->)
-VALUES (#{boardMkTitle},#{boardMkContent},DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),#{boardMkHit},
+VALUES (#{boardMkTitle},#{boardMkContent},#{boardMkDate},#{boardMkHit},
 #{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl},#{boardMkStatus}<!-- #{mem_no} -->)
 
 </insert>
@@ -73,6 +73,9 @@ VALUES (#{boardMkTitle},#{boardMkContent},DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'
      </if>
      <if test='boardMkContent!=null'>
      board_mk_content = #{boardMkContent},
+     </if>
+     <if test='boardMkDate!=null'>
+     board_mk_date = #{boardMkDate},
      </if>
       <if test='mkTicketPlace!=null'>
      mk_ticket_place = #{mkTicketPlace},
@@ -95,7 +98,6 @@ VALUES (#{boardMkTitle},#{boardMkContent},DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'
      <if test='boardMkFileurl!=null'>
      board_mk_fileurl = #{boardMkFileurl},
      </if>
-     board_mk_date = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')
      WHERE board_mk_no = #{boardMkNo} 
 </update>
 

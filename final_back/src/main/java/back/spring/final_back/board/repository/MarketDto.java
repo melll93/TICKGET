@@ -1,6 +1,7 @@
 package back.spring.final_back.board.repository;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class MarketDto {
 	private int boardMkNo;
 	private String boardMkTitle;
 	private String boardMkContent;
-	private LocalDateTime boardMkDate;
+	private Timestamp boardMkDate;
 	private int boardMkHit;
 	private LocalDateTime mkTicketDate;
 	private String mkTicketSeat;

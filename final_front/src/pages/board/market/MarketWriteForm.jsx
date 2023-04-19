@@ -34,6 +34,7 @@ const cookies = new Cookies();
 
 const MarketWriteForm = ({ mkImageUploader }) => {
 
+   console.log(new Date())
   const _userData = cookies.get("_userData"); //유저 정보
   console.log(_userData)
  /*  mem_no : sessionStorage.getItem('no'), _userData에서 꺼낸 회원번호값 담기*/ 
@@ -135,13 +136,11 @@ const MarketWriteForm = ({ mkImageUploader }) => {
       event.stopPropagation();
     } else {
       setValidated(true);
-      //토스트 삽입?
-      if (validated) {
+      setTimeout(() => {
         boardInsert();
-      }
+      }, 2000); // 2초 대기 후 boardInsert() 호출
     }
   };
-
 
 
   //글쓰기 버튼 클릭시 등록
@@ -150,6 +149,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
       boardMkNo: 0, // 자동채번 시퀀스 사용
       boardMkTitle: board_mk_title,
       boardMkContent: board_mk_content,
+      boardMkDate : new Date(),
       boardMkHit: 0,
       mkTicketPlace: mk_ticket_place,
       mkTicketDate: mk_ticket_date,
