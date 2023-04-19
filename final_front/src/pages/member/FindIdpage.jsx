@@ -2,9 +2,11 @@ import React from 'react'
 import { useState } from 'react';
 import { BButton, LoginForm, MyH1, MyInput, MyLabel, SubmitButton } from '../../styles/formStyle';
 import { useNavigate } from 'react-router-dom';
-import { memberListDB } from '../../axios/member/memberLogic';
+import { memberListDB } from '../../axios/member/memberCrud';
 import { setToastMsg } from '../../redux/toastStatus/action';
 import { useDispatch, useSelector } from 'react-redux';
+import Header from '../../components/Header';
+import Sidebar from '../../components/Sidebar';
 
 const FindIdPage = () => {
 
@@ -34,27 +36,32 @@ const FindIdPage = () => {
       console.log(res);
       if (res.data.length === 0) {
         console.log("회원 정보 없음");
-        alert("존재하지 않는 회원입니다.");
+        alert("회원 정보가 없습니다");
       } else {
-        let msg = '회원님의 아이디입니다.\n';
+        let msg = '회원 님의 아이디입니다\n';
+        let found = false;
         res.data.forEach((memberData) => {
           if (memberData.member_name === memInfo.name && memberData.member_mobile === memInfo.mobile) {
+            found = true;
             msg += `[ ${memberData.member_id} ]\n`;
           }
         });
-        if (msg === '회원님의 아이디입니다.\n') {
-          msg = '일치하는 회원이 없습니다.';
+        if (!found) {
+          msg = '일치하는 회원 정보가 없습니다';
         }
         alert(msg);
         console.log(msg);
       }
     } catch (error) {
-      alert("DB 오류입니다.");
+      alert("DB 오류입니다");
     }
   }
 
   return (
-    <>
+    <div>
+      <Header />
+      <Sidebar />
+      <div className='center'>
       <LoginForm onSubmit={handleFindId}>
         <MyH1>아이디 찾기</MyH1>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', Content: 'center', marginTop: '20px', width: "100%" }}>
@@ -69,8 +76,8 @@ const FindIdPage = () => {
           <BButton type="onSubmit">찾기</BButton>
         </div>
       </LoginForm>
-      {/* {toastMsg && <toastMsg>{toastMsg}</toastMsg>} */}
-    </>
+      </div>
+    </div>
   )
 }
 

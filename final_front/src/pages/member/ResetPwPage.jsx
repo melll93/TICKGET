@@ -1,15 +1,11 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { memberListDB } from "../../axios/member/memberLogic";
-import { setUserId } from "../../redux/userAuth/action";
-import {
-  BButton,
-  LoginForm,
-  MyH1,
-  MyInput,
-  MyLabel,
-} from "../../styles/formStyle";
+import { useNavigate } from 'react-router-dom';
+import { BButton, LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { memberListDB } from '../../axios/member/memberCrud';
+import { setUserId } from "../../redux/userAuth/action"
+import Header from '../../components/Header';
+import Sidebar from '../../components/Sidebar';
 
 const ResetPwPage = () => {
   const navigate = useNavigate();
@@ -28,8 +24,6 @@ const ResetPwPage = () => {
     setMemInfo({ ...memInfo, [id]: value });
   };
 
-  // const setUserId = createAction('user/setUserId');
-
   const handleResetPw = async (event) => {
     event.preventDefault();
     const member = {
@@ -41,9 +35,9 @@ const ResetPwPage = () => {
     console.log(member);
     const res = await memberListDB(member);
     console.log(res.data);
-    if (res.data.length === 0) {
-      console.log("회원 정보 없음");
-      alert("회원가입되지 않은 아이디입니다");
+    if (!res.data || res.data.length === 0 || !res.data.some((data) => data.member_id === memInfo.id)) {
+      console.log('회원 정보 없음');
+      alert('회원가입되지 않은 아이디입니다');
     } else {
       const memberData = res.data[0];
       if (
@@ -59,10 +53,15 @@ const ResetPwPage = () => {
         alert("회원 님의 사용자 정보를 다시 확인해 주세요.");
       }
     }
-  };
+  }
+  
 
   return (
-    <LoginForm>
+    <div>
+    <Header />
+    <Sidebar />
+    <div className='center'>
+    <LoginForm >
       <MyH1>비밀번호 변경</MyH1>
       <div
         style={{
@@ -113,6 +112,8 @@ const ResetPwPage = () => {
         <BButton onClick={handleResetPw}>비밀번호 변경</BButton>
       </div>
     </LoginForm>
+    </div>
+    </div>
   );
 };
 

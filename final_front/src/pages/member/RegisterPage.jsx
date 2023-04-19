@@ -8,7 +8,7 @@ import Header from "../../components/Header";
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword, validateId } from '../../util/validateLogic';
 import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
-import { memberInsertDB, memberListDB } from '../../axios/member/memberLogic';
+import { memberInsertDB, memberListDB } from '../../axios/member/memberCrud';
 
 const RegisterPage = ({ authLogic }) => {
   // const auth = authLogic.getUserAuth();
@@ -24,17 +24,19 @@ const RegisterPage = ({ authLogic }) => {
   });
   const toggleHover = () => {
     if (submitBtn.hover) {
-      setSubmitBtn({ ...submitBtn, hover: false, bgColor: 'rgb(105, 175, 245)' });
+      setSubmitBtn({ ...submitBtn, hover: false, bgColor: 'rgb(220, 220, 220)' });
     } else {
-      setSubmitBtn({ ...submitBtn, hover: true, bgColor: 'rgb(72, 145, 218)' });
+      setSubmitBtn({ ...submitBtn, hover: true, bgColor: 'rgb(192, 192, 192)' });
     }
   }
+
   // 주소 번지
   const[post, setPost] = useState({
     zipcode: "",
     address: "",
     addrDetail: ""
   })
+
   // 회원가입 입력 정보
   const [memInfo, setMemInfo] = useState({
     id: "",
@@ -48,7 +50,7 @@ const RegisterPage = ({ authLogic }) => {
     gender: "없음",
     zipcode: ""
   });
-  // 입력 정보 유효성 체크
+
   const [comment, setComment] = useState({
     id: "",
     email: "",
@@ -82,38 +84,6 @@ const RegisterPage = ({ authLogic }) => {
       visible: false
     }
   ]);
-  // 구글 로그인 구현 시 필요
-/*   const [googleEmail, setGoogleEmail] = useState('');
-  useEffect(() => {
-    const onAuth = async () => {
-      const user = await onAuthChange(userAuth.auth);
-      if (user) {
-        setGoogleEmail(user.email);
-        setStar({
-          id: "",
-          email: "",
-          password: "*",
-          password2: "*",
-          name: "*",
-          mobile: "*",
-          nickname: "*",
-          birthday: "*"
-        });
-        setMemInfo({
-          id: "",
-          email: user.email,
-          password: "",
-          password2: "",
-          name: "",
-          mobile: "",
-          nickname: "",
-          birthday: "",
-          gender: "없음"
-        });
-      }
-    };
-    onAuth();
-  }, [setGoogleEmail, setStar, setMemInfo, userAuth.auth]); */
 
   const handleSignup = (event) => {
     signup()
@@ -144,7 +114,7 @@ const RegisterPage = ({ authLogic }) => {
     setMemInfo({ ...memInfo, [id]: value });
   }
 
-  //닉네임 중복확인
+  // 가입 시 아이디, 이메일, 닉네임 중복 확인 검사
   const overlap = async (key) => {
     console.log('중복 확인 : ' + key);
     let params;
@@ -187,7 +157,7 @@ const RegisterPage = ({ authLogic }) => {
         console.log('중복되는 값이 없습니다');
     }
 }
-
+// 회원 가입 유효성 검사
   const validate = (key, e) => {
     let result;
     if (key === 'email') {
@@ -289,15 +259,17 @@ const RegisterPage = ({ authLogic }) => {
       <Sidebar />
       <div className='center'>
         <SignupForm suggested={false}>
+        <div style={{ padding: '30px 30px 0px 30px' }}>
+
           {/* 아이디 */}
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <div style={{display: 'flex'}}>
             <MyLabel> 아이디 <span style={{ color: "red" }}>{star.id}</span>
               <MyInput type="text" id="id" placeholder="아이디를 입력해 주세요" 
                 onChange={(e) => { changeMemInfo(e); validate('id', e); }} />
               <MyLabelAb>{comment.id}</MyLabelAb>
             </MyLabel>
-            <MyButton type="button" onClick={() => { overlap('id'); }}>중복확인</MyButton>
-          </div>
+            <MyButton type="button" onClick={() => { overlap('id'); }}>중복 확인</MyButton>
+            </div>
           {/* 비밀번호 */}
           <MyLabel> 비밀번호 <span style={{ color: "red" }}>{star.password}</span>
             <MyInput type={passwordType[0].type} id="password" autoComplete="off" placeholder="비밀번호를 입력해 주세요"
@@ -319,26 +291,29 @@ const RegisterPage = ({ authLogic }) => {
           </MyLabel>
 
           {/* 이름 */}
-          <div style={{ padding: '30px 30px 0px 30px' }}>
             <MyLabel> 이름 <span style={{ color: "red" }}>{star.name}</span>
               <MyInput type="text" id="name" defaultValue={memInfo.name} placeholder="이름을 입력해 주세요"
                 onChange={(e) => { changeMemInfo(e); validate('name', e); }} />
               <MyLabelAb>{comment.name}</MyLabelAb>
             </MyLabel>
             {/* 닉네임 */}
+            <div style={{display: 'flex'}}>
             <MyLabel> 닉네임 <span style={{ color: "red" }}>{star.nickname}</span>
               <MyInput type="text" id="nickname" defaultValue={memInfo.nickname} placeholder="닉네임을 입력해주세요"
                 onChange={(e) => { changeMemInfo(e); validate('nickname', e); }} />
               <MyLabelAb>{comment.nickname}</MyLabelAb>
-              <MyButton type="button" onClick={() => { overlap('nickname') }}>중복확인</MyButton>
             </MyLabel>
+              <MyButton type="button" onClick={() => { overlap('nickname') }}>중복 확인</MyButton>
+            </div>
             {/* 이메일 */}
+            <div style={{display: 'flex'}}>
             <MyLabel> 이메일 <span style={{ color: "red" }}>{star.email}</span>
               <MyInput type="email" id="email" placeholder="이메일를 입력해주세요"
                 onChange={(e) => { changeMemInfo(e); validate('email', e); }} />
               <MyLabelAb>{comment.email}</MyLabelAb>
-              <MyButton type="button" onClick={() => { overlap('email'); }}>중복확인</MyButton>
             </MyLabel>
+              <MyButton type="button" onClick={() => { overlap('email'); }}>중복 확인</MyButton>
+            </div>
             {/* 전화번호 */}
             <MyLabel> 전화번호 <span style={{ color: "red" }}>{star.mobile}</span>
               <MyInput type="text" id="mobile" defaultValue={memInfo.mobile} placeholder="전화 번호를 입력해 주세요"
@@ -356,7 +331,7 @@ const RegisterPage = ({ authLogic }) => {
                 <MyLabel> 주소
                   <MyInput type="text" id="address" defaultValue={post.address} readOnly placeholder="주소검색을 해주세요."/>
                 </MyLabel>
-                <MyButton type="button" onClick={()=>{searchAddress()}}>주소검색</MyButton>
+                <MyButton type="button" onClick={()=>{searchAddress()}}>검색</MyButton>
               </div>
               <MyLabel> 상세주소
                 <MyInput type="text" id="addrDetail" defaultValue={post.addrDetail} readOnly={post.address?false:true}
@@ -375,7 +350,6 @@ const RegisterPage = ({ authLogic }) => {
                 onChange={(e) => { changeMemInfo(e); validate('birthday', e); }} />
               <MyLabelAb>{comment.birthday}</MyLabelAb>
             </MyLabel>
-
 
             {/* 회원가입 버튼 */}
             <SubmitButton type="button" style={{ backgroundColor: submitBtn.bgColor }}
