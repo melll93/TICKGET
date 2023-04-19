@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { memberListDB } from '../../axios/member/memberLogic';
 import { createAction } from '@reduxjs/toolkit';
+import { setUserId } from "../../redux/userAuth/action"
 
 const ResetPwPage = () => {
   const navigate = useNavigate()
@@ -22,7 +23,7 @@ const ResetPwPage = () => {
     setMemInfo({ ...memInfo, [id]: value });
   }
 
-  const setUserId = createAction('user/setUserId');
+  // const setUserId = createAction('user/setUserId');
   const handleResetPw = async (event) => {
     event.preventDefault();
     const member = {
