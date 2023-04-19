@@ -28,6 +28,10 @@ export const MyH1 = styled.h1`
   margin-bottom: 60px;
   font-weight: 20px;
   text-align: center;
+  span {
+    margin-right: 5px; /* 오른쪽에 10px의 공백 추가 */
+    margin-left: 5px; 
+  }
 `;
 
 /* 3번의 하위태그에 대한 설정 */

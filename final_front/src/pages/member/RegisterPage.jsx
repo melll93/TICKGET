@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Sidebar';
 import Header from "../../components/Header";
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword, validateId } from '../../util/validateLogic';
-import { MyButton, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
+import { MyButton, MyH1, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
 import { memberInsertDB, memberListDB } from '../../axios/member/memberCrud';
 
@@ -259,8 +259,15 @@ const RegisterPage = ({ authLogic }) => {
       <Sidebar />
       <div className='center'>
         <SignupForm suggested={false}>
+        <MyH1>
+          <img
+            src="../logos/tickget.png"
+            style={{ width: "100px" }}
+          />
+          <span/>
+          회원가입
+        </MyH1>
         <div style={{ padding: '30px 30px 0px 30px' }}>
-
           {/* 아이디 */}
           <div style={{display: 'flex'}}>
             <MyLabel> 아이디 <span style={{ color: "red" }}>{star.id}</span>
