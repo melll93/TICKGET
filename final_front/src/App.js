@@ -39,7 +39,6 @@ import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import PaymentPage from "./pages/personal/PaymentPage";
-import FireTest from "./pages/board/carpool/FireTest";
 
 
 
@@ -130,8 +129,6 @@ function App({ mkImageUploader }) {
         />
         <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
         <Route path="carpool/carpoolUpdate/:carpoolNo" element={<CarpoolUpdate />}/>
-        {/* ------------------- */}
-        <Route path="firebase" element={<FireTest />}/>
 
 
         {/* MarketPage Routes - 성훈 작업중 */}
