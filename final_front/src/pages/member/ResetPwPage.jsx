@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,15 +10,6 @@ import {
   MyInput,
   MyLabel,
 } from "../../styles/formStyle";
-=======
-import { useNavigate } from 'react-router-dom';
-import { BButton, LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { memberListDB } from '../../axios/member/memberLogic';
-import { createAction } from '@reduxjs/toolkit';
-import { setUserId } from "../../redux/userAuth/action"
->>>>>>> b217fcf86139ea5c5c978385dd4be757c579ab1c
 
 const ResetPwPage = () => {
   const navigate = useNavigate();
@@ -40,10 +30,6 @@ const ResetPwPage = () => {
 
   // const setUserId = createAction('user/setUserId');
 
-<<<<<<< HEAD
-=======
-  // const setUserId = createAction('user/setUserId');
->>>>>>> b217fcf86139ea5c5c978385dd4be757c579ab1c
   const handleResetPw = async (event) => {
     event.preventDefault();
     const member = {

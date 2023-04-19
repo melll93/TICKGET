@@ -13,7 +13,7 @@ import "firebase/analytics";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-
+/************* firebase 처리 중 *************/
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -25,8 +25,7 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
-
-
+/************* firebase 처리 중 *************/
 
 const CarpoolBoardList = () => {
   console.log("CarpoolBoardList");
@@ -35,6 +34,7 @@ const CarpoolBoardList = () => {
   const [page, setPage] = useState(1);
   const [perPage] = useState(15);
 
+  /************* firebase 처리 중 *************/
   const [data, setData] = useState({});
   const [carpool, setCarpool] = useState({
     boardCpNo: "",
@@ -68,15 +68,27 @@ const CarpoolBoardList = () => {
 
     setCarpool({
       ...carpool,
+      boardCpNo: target.dataset.boardCpNo,
       [name]: value,
     });
   };
 
-  const handleSaveData = () => {
+  const handleSaveData = (boardCpNo) => {
     const count = 1;
+    setCarpoolList((prevCarpoolList) =>
+      prevCarpoolList.map((carpool) => {
+        if (carpool.boardCpNo === boardCpNo) {
+          return {
+            ...carpool,
+            count: carpool.count + count,
+          };
+        }
+        return carpool;
+      })
+    );
     firebase
       .database()
-      .ref(carpool.name)
+      .ref(`${boardCpNo}`)
       .update({
         max: carpool.max,
         now: carpool.now,
@@ -84,8 +96,7 @@ const CarpoolBoardList = () => {
       });
     console.log("저장 성공");
   };
-
-
+  /************* firebase 처리 중 *************/
 
   useEffect(() => {
     selectCarpoolList();
@@ -142,6 +153,7 @@ const CarpoolBoardList = () => {
                   <th style={{ textAlign: "center" }}>조회수</th>
                 </tr>
               </thead>
+
               <tbody>
                 {currentFest(carpoolList).map((carpool) => (
                   <tr key={carpool.boardCpNo}>
@@ -171,9 +183,17 @@ const CarpoolBoardList = () => {
                     <td style={{ textAlign: "center", width: "200px" }}>
                       {carpool.boardCpMemId}
                     </td>
+
+                    {/* 파이어 베이스에서 받아온 값 호출하자 */}
                     <td style={{ textAlign: "center", width: "100px" }}>
-                      수정중
+                      {carpool.boardCpNo} 글번호 일치 시+1
+                      <br />
+                      <button onClick={() => handleSaveData(carpool.boardCpNo)}>
+                        Save Data
+                      </button>
                     </td>
+                    {/* 파이어 베이스에서 받아온 값 호출하자 */}
+
                     <td style={{ textAlign: "center", width: "200px" }}>
                       {carpool.boardCpDate}
                     </td>
@@ -203,6 +223,7 @@ const CarpoolBoardList = () => {
             style={{ backgroundColor: "black", color: "white" }}
             onClick={selectCarpoolList}
           >
+            {" "}
             전체조회
           </Button>
           &nbsp;
@@ -216,27 +237,49 @@ const CarpoolBoardList = () => {
           &nbsp;
         </div>
       </div>
-       <div>
-      <h1>Firebase EXAMPLE</h1>
-      <input type="text" id="name" name="name" placeholder="글번호"
-        onChange={handleInputChange}/>
-      <br />
-      <input type="text" id="max" name="max" placeholder="최대인원"
-        onChange={handleInputChange}/>
-      <br />
-      <input type="text" id="now" name="now" placeholder="현재인원"
-        onChange={handleInputChange}/>
-      <br />
-      <button onClick={handleSaveData}>Save Data</button>
-      {Object.keys(data).map((key) => {
-        const item = data[key];
-        return (
-          <div className="data" key={key}>
-            글번호={key} : 최대 인원={item.max}, 현재 인원={item.now}, save누르면 증가={item.count}
-          </div>
-        );
-      })}
-    </div>
+
+      {/********** 파이어베이스 test**********/}
+      <div>
+        <h1>Firebase EXAMPLE</h1>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="글번호"
+          onChange={handleInputChange}
+        />
+        <br />
+        <input
+          type="text"
+          id="max"
+          name="max"
+          placeholder="최대인원"
+          onChange={handleInputChange}
+        />
+        <br />
+        <input
+          type="text"
+          id="now"
+          name="now"
+          placeholder="현재인원"
+          onChange={handleInputChange}
+        />
+        <br />
+
+        <button onClick={handleSaveData}>Save Data</button>
+
+        {Object.keys(data).map((key) => {
+          const item = data[key];
+          return (
+            <div className="data" key={key}>
+              글번호={key} : 최대 인원={item.max}, 현재 인원={item.now},
+              save누르면 증가={item.count}
+            </div>
+          );
+        })}
+      </div>
+      {/********** 파이어베이스 test**********/}
+      
     </>
   );
 };
