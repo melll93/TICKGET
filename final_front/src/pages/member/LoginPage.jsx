@@ -97,7 +97,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   const handleChange = (event) => {
     const type = event.target.type;
     const targetId = event.target.id;
-    console.log(type);
+    // console.log(type);
 
     if (targetId == "id") {
       setUserId(event.target.value);
@@ -105,8 +105,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
       setUserPw(event.target.value);
     }
   };
-  console.log("id : " + userId);
-  console.log("pw : " + userPw);
+  // console.log("id : " + userId);
+  // console.log("pw : " + userPw);
 
   // 구글 로그인
   const loginG = async () => {

@@ -58,7 +58,7 @@ const Profile = () => {
         </div>
       );
     } else {
-      console.log(_userData);
+      // console.log(_userData); // 페이지 이동 시 마다 3번 요청됨****************
       return (
         <>
           <div

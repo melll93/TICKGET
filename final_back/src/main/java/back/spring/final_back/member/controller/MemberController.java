@@ -51,4 +51,9 @@ public class MemberController {
         return memberService.getMemberData();
     }
 
+    @GetMapping("/searchById")
+    public MemberDto searchById(@RequestParam String memberId) {
+        return memberService.searchById(memberId);
+    }
+
 }

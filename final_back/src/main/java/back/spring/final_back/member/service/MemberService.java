@@ -18,4 +18,6 @@ public interface MemberService {
     boolean checkEmailExist();
 
     Object getMemberData();
+
+    MemberDto searchById(String id);
 }
