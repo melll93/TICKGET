@@ -145,31 +145,31 @@ const RegisterPage = ({ authLogic }) => {
   }
 
   //닉네임 중복확인
-  // 모든 값이 중복된다고 뜸 왜...
   const overlap = async (key) => {
-    console.log('중복확인 : ' + key);
+    console.log('중복 확인 : ' + key);
     let params;
     if (key === 'id') {
-        params = { MEMBER_ID: memInfo[key], type: 'overlap' };
+        params = { memberId: memInfo[key] };
     }
     else if (key === 'email') {
-        params = { MEMBER_EMAIL: memInfo[key], type: 'overlap' };
+        params = { memberEmail: memInfo[key] };
     }
     else if (key === 'nickname') {
-        params = { MEMBER_NICKNAME: memInfo[key], type: 'overlap' };
+        params = { memberNickname: memInfo[key] };
     }
     else {
-        console.log('유효하지 않은 키 값입니다.');
+        console.log('유효하지 않은 키 값입니다');
         return; // 유효하지 않을 시 함수 종료
     }
 
     console.log(params);
+
     let response = { data: 0 };
     response = await memberListDB(params);
-    console.log('DB : ' + response.data);
 
     const data = JSON.stringify(response.data);
     const jsonDoc = JSON.parse(data);
+    console.log('DB : ' + data);
 
     if (jsonDoc && jsonDoc.length > 0) {
         console.log('중복되는 값이 있습니다');

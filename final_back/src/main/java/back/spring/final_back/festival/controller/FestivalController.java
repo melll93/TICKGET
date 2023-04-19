@@ -101,7 +101,6 @@ public class FestivalController {
 		log.info(festivalDto.toString());
 		return result;
 	}
-	
 
 	@GetMapping("festivalDelete")
 	public String festivalDelete(@RequestParam String fest_m_id) {
