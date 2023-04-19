@@ -40,8 +40,6 @@ import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import PaymentPage from "./pages/personal/PaymentPage";
 
-
-
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
   const [carpool, setCarpool] = useState();
@@ -51,6 +49,9 @@ function App({ mkImageUploader }) {
   return (
     <>
       <Routes>
+        {/* HomePage */}
+        <Route path="/" exact={true} element={<HomePage />} />
+
         {/* LoginMenu Routes */}
         <Route path="/register" exact={true} element={<RegisterPage />} />
         <Route
@@ -83,7 +84,6 @@ function App({ mkImageUploader }) {
         <Route path="/setting" exact={true} element={<SettingPage />} />
 
         {/* MenuBar Routes */}
-        <Route path="/" exact={true} element={<HomePage />} />
         <Route path="/search" exact={true} element={<SearchResultPage />} />
         <Route path="/concert" exact={true} element={<ConcertPage />} />
         <Route path="/together" exact={true} element={<TogetherPage />} />
@@ -128,8 +128,10 @@ function App({ mkImageUploader }) {
           element={<CarpoolDetail carpool={carpool} />}
         />
         <Route path="carpool/carpoolDetail/" element={<CarpoolDetail />} />
-        <Route path="carpool/carpoolUpdate/:carpoolNo" element={<CarpoolUpdate />}/>
-
+        <Route
+          path="carpool/carpoolUpdate/:carpoolNo"
+          element={<CarpoolUpdate />}
+        />
 
         {/* MarketPage Routes - 성훈 작업중 */}
         <Route

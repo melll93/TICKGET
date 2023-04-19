@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { reduxLogin } from "../../redux/userAuth/action";
@@ -87,11 +87,11 @@ const Profile = () => {
         </>
       );
     }
-  };
+  }; //end of getProfile
 
   useEffect(() => {
     access_token && getUserData().then(console.log);
-  }, []);
+  }, [access_token]);
 
   return getProfile();
 };

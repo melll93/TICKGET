@@ -9,6 +9,8 @@ import CalendarPage from "../menu/CalendarPage";
 import { festivalListByDate } from "../../axios/festival/festival";
 import { festivalHitListDB } from "../../axios/festival/festival";
 import { Link } from "react-router-dom";
+import { searchById } from "../../axios/member/member";
+import UserProfile from "../../components/UserProfile";
 
 const HomePage = () => {
   /******************************
@@ -36,16 +38,13 @@ const HomePage = () => {
 
   useEffect(() => {
     getTodayList();
-  }, []);
 
-  useEffect(() => {
     const festivalHitList = async () => {
       const festMHit = true; // festHit 변수에 true 값을 할당하여 HIT가 높은 순으로 데이터를 가져옴
       const result = await festivalHitListDB(festMHit); // FestivalHitListDB 함수를 호출하여 데이터를 가져옴
       setFestivalHitList(result); // 가져온 데이터를 상태값에 할당
     };
     festivalHitList(); // 데이터 가져오기
-    console.log(festivalHitList);
   }, []);
 
   return (
