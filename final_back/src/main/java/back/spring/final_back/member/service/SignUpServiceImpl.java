@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SignUpServiceImpl implements SignUpService {
 	private final SignUpDao signUpDao;
-    private final PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
 	// 전체 조회
 	@Override
@@ -28,29 +28,29 @@ public class SignUpServiceImpl implements SignUpService {
 		log.info(mList.toString());
 		return mList;
 	}
-	
+
 	// Insert
 	@Override
 	public int memberInsert(Map<String, Object> pMap) {
-	    log.info("memberInsert 확인");
-	    int result = 0;
-	    String memberPassword = (String) pMap.get("memberPassword");
-	    String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
-	    pMap.put("memberPassword", memberPasswordEncoded);
-	    result = signUpDao.memberInsert(pMap);
-	    return result;
+		log.info("memberInsert 확인");
+		int result = 0;
+		String memberPassword = (String) pMap.get("memberPassword");
+		String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
+		pMap.put("memberPassword", memberPasswordEncoded);
+		result = signUpDao.memberInsert(pMap);
+		return result;
 	}
 
 	// Update
 	@Override
 	public int memberUpdate(Map<String, Object> pMap) {
-	    log.info("memberUpdate 확인");
-	    int result = 0;
-	    String memberPassword = (String) pMap.get("memberPassword");
-	    String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
-	    pMap.put("memberPassword", memberPasswordEncoded); // key값 수정
-	    result = signUpDao.memberUpdate(pMap);
-	    return result;
+		log.info("memberUpdate 확인");
+		int result = 0;
+		String memberPassword = (String) pMap.get("memberPassword");
+		String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
+		pMap.put("memberPassword", memberPasswordEncoded); // key값 수정
+		result = signUpDao.memberUpdate(pMap);
+		return result;
 	}
 
 	// Delete

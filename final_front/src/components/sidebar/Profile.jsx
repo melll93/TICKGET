@@ -48,14 +48,16 @@ const Profile = () => {
     // if (!_userData && naver_token === null) {
     if (access_token === null && naver_token === null) {
       return (
-        <div className="ProfileButton">
-          <Link to="/login" className="link">
-            <span>로그인</span>
-          </Link>
-          <br />
-          <Link to="/register" className="link">
-            <span>회원가입</span>
-          </Link>
+        <div className="ProfileBox">
+          <div className="ProfileButton">
+            <Link to="/login" className="link">
+              <span>로그인</span>
+            </Link>
+            <br />
+            <Link to="/register" className="link">
+              <span>회원가입</span>
+            </Link>
+          </div>
         </div>
       );
     } else {
@@ -63,41 +65,52 @@ const Profile = () => {
       return (
         <>
           {/* 프로필 버튼 시작 */}
-          <div className="userImage">
-            <Dropdown>
-              <Dropdown.Toggle
-                variant="none"
-                id="profile-dropdown"
-                style={{ border: "none" }}
-              >
-                <img
-                  id="profile"
-                  className="icon image40"
-                  style={{ borderRadius: "50%" }}
-                  src="https://phinf.pstatic.net/contact/20230416_257/1681630347916iq32w_PNG/avatar_profile.png?type=s160"
-                  // src={_userData.profile_img ?? "../logos/PROFILE.png"}
-                />
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="dropdown items">
-                <Dropdown.Item onClick={handleChatFromProfile}>
-                  1:1 채팅
-                </Dropdown.Item>
-                <Dropdown.Item>프로필</Dropdown.Item>
-                {/* <Dropdown.Item href="#/action-3"></Dropdown.Item> */}
-              </Dropdown.Menu>
-            </Dropdown>
+          <div
+            className="profile msg"
+            style={{ textAlign: "center", padding: "0 auto" }}
+          >
+            <span>{_userData && _userData.memberNickname}님 환영합니다.</span>
           </div>
-          {/* 프로필 버튼 끝 */}
+          <div className="ProfileBox">
+            <div className="userImage">
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="none"
+                  id="profile-dropdown"
+                  style={{ border: "none" }}
+                >
+                  <img
+                    id="profile"
+                    className="icon image40"
+                    style={{ borderRadius: "50%" }}
+                    // src="https://phinf.pstatic.net/contact/20230416_257/1681630347916iq32w_PNG/avatar_profile.png?type=s160"
+                    src={
+                      _userData &&
+                      (_userData.memberProfileImage ?? "../logos/PROFILE.png")
+                    }
+                  />
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="dropdown items">
+                  <Dropdown.Item onClick={handleChatFromProfile}>
+                    1:1 채팅
+                  </Dropdown.Item>
+                  <Dropdown.Item>프로필</Dropdown.Item>
+                  {/* <Dropdown.Item href="#/action-3"></Dropdown.Item> */}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+            {/* 프로필 버튼 끝 */}
 
-          <br />
-          <div className="ProfileButton">
-            <Link to="/" className="link" onClick={logout}>
-              <span>로그아웃</span>
-            </Link>
             <br />
-            <Link to="/mypage" className="link">
-              <span>마이페이지</span>
-            </Link>
+            <div className="ProfileButton">
+              <Link to="/" className="link" onClick={logout}>
+                <span>로그아웃</span>
+              </Link>
+              <br />
+              <Link to="/mypage" className="link">
+                <span>마이페이지</span>
+              </Link>
+            </div>
           </div>
         </>
       );
@@ -105,17 +118,10 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    if (reduxUser !== null || reduxUser !== undefined || reduxUser !== {}) {
-      getUserData().then(console.log);
-      console.log(reduxUser);
-    }
+    access_token && getUserData().then(console.log);
   }, []);
 
-  return (
-    <>
-      <div className="ProfileBox">{getProfile()}</div>
-    </>
-  );
+  return getProfile();
 };
 
 export default Profile;

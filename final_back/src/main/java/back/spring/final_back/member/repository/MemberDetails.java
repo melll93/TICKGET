@@ -47,22 +47,6 @@ public class MemberDetails implements UserDetails {
         return memberDto.getMemberPassword();
     }
 
-    public String getEmail() {
-        return memberDto.getMemberEmail();
-    }
-
-    public String getProfileImg() {
-        return memberDto.getMemberProfileImage();
-    }
-
-    public String getRealname() {
-        return memberDto.getMemberName();
-    }
-
-    public String getNickname() {
-        return memberDto.getMemberNickname();
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
