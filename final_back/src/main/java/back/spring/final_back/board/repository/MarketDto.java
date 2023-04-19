@@ -28,11 +28,11 @@ public class MarketDto {
 	private int mkTicketPrice;
 	private String mkTicketCount;
 	private String mkTicketPlace;
-	private String memName;
 	private String boardMkFilename;
 	private String boardMkFileurl;
+	private String memberNickname;
+	private int memberNo;
 	private int boardMkStatus;
-	private int memNo;
 	
 	
 	//조건검색 시 필요

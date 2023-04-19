@@ -22,7 +22,7 @@ import { Link, useNavigate } from 'react-router-dom';
     const now = new Date();
     const boardMkDateTime = new Date(boards.boardMkDate)
     const diffInMs = now - boardMkDateTime;
-    console.log(diffInMs)
+   /*  console.log(diffInMs) */
        
    
 
@@ -30,31 +30,25 @@ import { Link, useNavigate } from 'react-router-dom';
       const formatTimeDiff = (diffInMs) =>{
         const seconds = Math.floor(diffInMs / 1000)
         if (seconds < 60) {
-          console.log(`${seconds}초 전`);
           return `${seconds}초 전`;
         } else {
           const minutes = Math.floor(seconds / 60);
           if (minutes < 60) {
-            console.log(`${minutes}분 전`);
             return `${minutes}분 전`;
           } else {
             const hours = Math.floor(minutes / 60);
             if (hours < 24) {
-              console.log(`${hours}시간 전`);
               return `${hours}시간 전`;
             } else {
               const days = Math.floor(hours / 24);
               if (days < 30) {
-                console.log(`${days}일 전`);
                 return `${days}일 전`;
               } else {
                 const months = Math.floor(days / 30);
                 if (months < 12) {
-                  console.log(`${months}개월 전`);
                   return `${months}개월 전`;
                 } else {
                   const years = Math.floor(months / 12);
-                  console.log(`${years}년 전`);
                   return `${years}년 전`;
                 }
               }
@@ -63,8 +57,8 @@ import { Link, useNavigate } from 'react-router-dom';
         }
       } 
 
-     console.log(Date.now())
-     console.log(new Date(boards.boardMkDate).getTime())
+     /* console.log(Date.now())
+     console.log(new Date(boards.boardMkDate).getTime()) */
     const boardDateTime = formatTimeDiff(Date.now() - new Date(boards.boardMkDate).getTime())
 
 

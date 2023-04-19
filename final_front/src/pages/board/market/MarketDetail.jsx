@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ListGroup, Tab, Tabs } from 'react-bootstrap';
+import { Button, Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
 import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -30,13 +30,25 @@ const MarketDetail = () => {
   const no = search.split('&').filter((item) => { return item.match('no') })[0]?.split('=')[1];
   console.log(no);
 
-
+  const [boards, setBoards] = useState([])
   const [detail, setDetail] = useState({});
   const [files, setFiles] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+
+  //추천상품 목록 불러오기
+  useEffect(() => {
+  const recommendList = async() => {
+    const res = await mk_boardListDB()
+    setBoards(res.data);
+  }
+  recommendList()
+  console.log(boards)
+  },[])
 
 
+  //상세보기 데이터 가져오기
   useEffect(() => {
     const boardDetail = async () => {
       const board = {
@@ -235,30 +247,53 @@ const MarketDetail = () => {
     </ContainerDiv>
 
 
-    <section style={{maxWidth:'1400px', minHeight:'800px' ,marginLeft:'300px' }}>
-    <Tabs
-      id="fill-tab-example"
-      fill 
-      style={{ fontFamily:"Nanum Gothic", fontWeight:"bold"  }}
-      className="gray-tabs"
-    >
-      <Tab eventKey="content" title="상품 상세정보" >
-        <div style={{marginTop:'30px' , marginLeft:'30px'}}>
-            {detail.board_mk_content}
-          </div>  
-      </Tab>
-      <Tab eventKey="place" title="위치 찾기"  unselected={true}>
-      <div style={{marginTop:'30px' , marginLeft:'30px' }}>
-        <MapContainer place={detail.mk_ticket_place}/>
-            </div>
-      </Tab>
-      <Tab eventKey="payinfo" title="상품 결제/수령 안내"  unselected={true}>
-      <div style={{marginTop:'30px' , marginLeft:'30px'}}>
-        <MarketPaymentGuide/>
-        </div>
 
-      </Tab>
-    </Tabs>
+{/* 연관상품 탭 작업 */}
+{/* <section style={{marginTop:'50px'}}>
+<div> 연관상품 </div>
+<div className='row'>
+<div>
+{boards.slice(0, 5).map((boards) => (
+  <div key={boards.boardMkNo} src={boards.boardMkFileurl} style={{width:'150px', height:'150px', marginRight:'20px'}} alt="Card image" />
+  ))}
+  </div>
+  </div>
+
+</section>
+ */}
+
+{/* 상세정보 탭 */}
+    <section style={{maxWidth:'1400px', minHeight:'1000px' ,marginLeft:'300px' , marginTop:'100px'}}>
+  <Tabs
+    id="fill-tab-example"
+    fill 
+    style={{ fontFamily:"Nanum Gothic", fontWeight:"bold"  }}
+    className="gray-tabs"
+  >
+    <Tab eventKey="content" title="상품 상세정보" >
+      <div style={{marginTop:'30px' , marginLeft:'30px'}}>
+        {detail.board_mk_content}
+      </div>  
+    </Tab>
+    <Tab eventKey="place" title="공연장소 찾아가는길" unselected={true}>
+  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px" }}>
+    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginRight:'40px' }}>
+      <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.3rem", marginBottom: "20px" }}>
+        <i class="bi bi-geo-alt-fill"></i>
+        {" "}
+        {detail.mk_ticket_place}
+      </p>
+      <div style={{ width: "40%", borderTop: "1px solid black", marginBottom: "10px", opacity: "15%" }} />
+    </div>
+    <MapContainer place={detail.mk_ticket_place} />
+  </div>
+</Tab>
+    <Tab eventKey="payinfo" title="상품 결제/수령 안내"  unselected={true}>
+      <div style={{marginTop:'80px'}}>
+        <MarketPaymentGuide/>
+      </div>
+    </Tab>
+  </Tabs>
 </section>
 
   

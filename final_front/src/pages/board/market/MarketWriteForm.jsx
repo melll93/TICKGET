@@ -29,19 +29,23 @@ const Img = styled.img`
  object-fit:cover;
 `
 
+
 const cookies = new Cookies();
 
-
 const MarketWriteForm = ({ mkImageUploader }) => {
-
-   console.log(new Date())
+  
   const _userData = cookies.get("_userData"); //유저 정보
   console.log(_userData)
- /*  mem_no : sessionStorage.getItem('no'), _userData에서 꺼낸 회원번호값 담기*/ 
+
+  //회원 정보 꺼내오기
+  const member_no = _userData.memberNo;
+  const member_Nickname = _userData.memberNickname;
+  console.log(member_no)
+  console.log(member_Nickname)
+
 
   console.log("글쓰기 페이지 호출");
   const navigate = useNavigate();
-  const no = window.sessionStorage.getItem("no"); //세션에 저장된 회원번호값
 
   
  // 현재 시간을 구한다.
@@ -156,10 +160,10 @@ const MarketWriteForm = ({ mkImageUploader }) => {
       mkTicketSeat: mk_ticket_seat,
       mkTicketCount: mk_ticket_count,
       mkTicketPrice: mk_ticket_price,
-      memName: "테스트 작성자1", // 임시 - 쿠키값으로 받아올것
-     /*  memNo:'mem_no' // 쿠키에서 회원번호 가져오기 */
       boardMkFilename: files.fileName,
       boardMkFileurl: files.fileUrl,
+      memberNickname: member_Nickname,
+      memberNo : member_no,
       boardMkStatus : 0
     };
     const res = await mk_boardInsertDB(board);
