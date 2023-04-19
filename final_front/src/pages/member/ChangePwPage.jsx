@@ -1,21 +1,49 @@
 import React from 'react'
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux';
-//import { createAction } from '@reduxjs/toolkit';
-import { useState, useEffect } from 'react';
-import { BButton, LoginForm, MyH1, MyInput, MyLabel, PwEye  } from '../../styles/formStyle';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { BButton, LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
 import { memberUpdateDB } from '../../axios/member/memberCrud';
 import { useNavigate } from 'react-router-dom';
+import { checkPassword, validatePassword } from '../../util/validateLogic';
 
 
 const ChangePwPage = () => {
   const navigate = useNavigate()
   const memberId = useSelector(state => state.userStatus.user);
+
   const [memInfo, setMemInfo] = useState({
     pw: '',
     pwConfirm: '',
   });
+  const [comment, setComment] = useState({
+    pw: "",
+    pwConfirm: ""
+  });
+  const [star, setStar] = useState({
+    pw: "*",
+    pwConfirm: "*"
+  })
 
+// 유효성 검사
+  const validate = (key, e) => {
+    let result;
+    if (key === 'pw') {
+      result = validatePassword(e);
+    } else if (key === 'pwConfirm') {
+      result = checkPassword(memInfo.pw, e);
+    }
+    setComment({ ...comment, [key]: result });
+    if (result) {
+      if (result === ' ') {
+        setStar({ ...star, [key]: "" });
+      } else {
+        setStar({ ...star, [key]: "*" });
+      }
+    } else {
+      setStar({ ...star, [key]: "" });
+    }
+  }
   const changeMemInfo = (e) => {
     const id = e.currentTarget.id;
     const value = e.target.value;
@@ -59,13 +87,16 @@ const ChangePwPage = () => {
       <LoginForm>
         <MyH1></MyH1>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', Content: 'center', marginTop: '20px', width: "100%" }}>
-          <MyLabel> 비밀번호
+          <MyLabel> 비밀번호 <span style={{ color: "red" }}>{star.pw}</span>
             <MyInput type="password" id="pw" placeholder="변경하실 새로운 비밀번호를 입력해 주세요"
-              onChange={(e) => { changeMemInfo(e); }} />
+              onKeyUp={(e) => { setComment({ ...comment, pwConfirm: checkPassword(e.target.value, memInfo.pwConfirm) }); }}
+              onChange={(e) => { changeMemInfo(e); validate('pw', e); }} />
+              {comment.pw}
           </MyLabel>
-          <MyLabel> 비밀번호 재입력
+          <MyLabel> 비밀번호 재입력 <span style={{ color: "red" }}>{star.pwConfirm}</span>
             <MyInput type="password" id="pwConfirm" placeholder="비밀번호를 한 번 더 입력해 주세요"
-              onChange={(e) => { changeMemInfo(e);  }} />
+              onChange={(e) => { changeMemInfo(e); validate('pwConfirm', e.target.value); }} />
+              {comment.pwConfirm}
           </MyLabel>
           <BButton type="submit" onClick={handleFormSubmit}>변경</BButton>
         </div>
