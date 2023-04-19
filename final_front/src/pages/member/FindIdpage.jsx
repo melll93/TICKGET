@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { BButton, LoginForm, MyH1, MyInput, MyLabel, SubmitButton } from '../../styles/formStyle';
 import { useNavigate } from 'react-router-dom';
 import { memberListDB } from '../../axios/member/memberCrud';
-import { setToastMsg } from '../../redux/toastStatus/action';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
@@ -45,6 +44,7 @@ const FindIdPage = () => {
             found = true;
             msg += `[ ${memberData.member_id} ]\n`;
           }
+          navigate('/login')
         });
         if (!found) {
           msg = '일치하는 회원 정보가 없습니다';
