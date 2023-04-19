@@ -1,5 +1,5 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, EmailAuthProvider, sendPasswordResetEmail } from "firebase/auth";
-import { memberListDB } from "../axios/member/memberLogic";
+import { memberListDB } from "../axios/member/memberCrud";
 
 class AuthLogic {
   constructor() {

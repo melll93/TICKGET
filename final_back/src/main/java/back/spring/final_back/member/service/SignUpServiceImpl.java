@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SignUpServiceImpl implements SignUpService {
 	private final SignUpDao signUpDao;
+	// 비밀번호 시큐리티 작업
     private final PasswordEncoder passwordEncoder;
 
 	// 전체 조회

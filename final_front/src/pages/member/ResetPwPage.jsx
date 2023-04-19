@@ -2,9 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { BButton, LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { memberListDB } from '../../axios/member/memberLogic';
-import { createAction } from '@reduxjs/toolkit';
+import { memberListDB } from '../../axios/member/memberCrud';
 import { setUserId } from "../../redux/userAuth/action"
+import Header from '../../components/Header';
+import Sidebar from '../../components/Sidebar';
 
 const ResetPwPage = () => {
   const navigate = useNavigate()
@@ -23,7 +24,6 @@ const ResetPwPage = () => {
     setMemInfo({ ...memInfo, [id]: value });
   }
 
-  // const setUserId = createAction('user/setUserId');
   const handleResetPw = async (event) => {
     event.preventDefault();
     const member = {
@@ -35,7 +35,7 @@ const ResetPwPage = () => {
     console.log(member);
     const res = await memberListDB(member);
     console.log(res.data);
-    if (res.data.length === 0) {
+    if (!res.data || res.data.length === 0 || !res.data.some((data) => data.member_id === memInfo.id)) {
       console.log('회원 정보 없음');
       alert('회원가입되지 않은 아이디입니다');
     } else {
@@ -50,8 +50,13 @@ const ResetPwPage = () => {
       }
     }
   }
+  
 
   return (
+    <div>
+    <Header />
+    <Sidebar />
+    <div className='center'>
     <LoginForm >
       <MyH1>비밀번호 변경</MyH1>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',Content: 'center', marginTop: '20px', width:"100%"}}>
@@ -70,6 +75,8 @@ const ResetPwPage = () => {
         <BButton onClick={handleResetPw}>비밀번호 변경</BButton>
       </div>
     </LoginForm>
+    </div>
+    </div>
   );
 };
 

@@ -4,10 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createAction } from '@reduxjs/toolkit';
 import { useState, useEffect } from 'react';
 import { BButton, LoginForm, MyH1, MyInput, MyLabel, PwEye  } from '../../styles/formStyle';
-import { memberUpdateDB } from '../../axios/member/memberLogic';
+import { memberUpdateDB } from '../../axios/member/memberCrud';
+import { useNavigate } from 'react-router-dom';
 
 
 const ChangePwPage = () => {
+  const navigate = useNavigate()
   const memberId = useSelector(state => state.userStatus.user);
   const [memInfo, setMemInfo] = useState({
     pw: '',
@@ -41,7 +43,7 @@ const ChangePwPage = () => {
         const res = await memberUpdateDB(member);
         console.log(res.data);
         alert('비밀번호가 성공적으로 변경되었습니다');
-        // 
+        navigate('/login')
       } catch (error) {
         console.error(error);
         alert('비밀번호 변경에 실패하였습니다');
