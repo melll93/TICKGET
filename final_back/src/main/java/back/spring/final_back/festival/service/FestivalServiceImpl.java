@@ -97,4 +97,11 @@ public class FestivalServiceImpl implements FestivalService {
         log.info("여기까지");
         return result;
 	}
+
+
+    @Override
+    public int festivalUpdate(FestivalDto festivalDto) {
+        int result = festivalDao.festivalUpdate(festivalDto);
+        return result;
+    }
 }

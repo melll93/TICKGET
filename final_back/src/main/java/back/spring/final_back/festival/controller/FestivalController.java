@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.festival.repository.FestivalDto;
 import back.spring.final_back.festival.service.FestivalService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @ResponseBody
 @RequiredArgsConstructor
-
 @CrossOrigin("http://localhost:3333/")
 @RestController
 @RequestMapping("/festival/*")
@@ -95,12 +95,14 @@ public class FestivalController {
 		log.info(festivalDto.toString());
 		return result;
 	}
+
 	@PostMapping("festTicketInsert")
 	public int festTicketInsert(@RequestBody FestivalDto festivalDto) {
 		int result = festivalService.festTicketInsert(festivalDto);
 		log.info(festivalDto.toString());
 		return result;
 	}
+
 
 	@GetMapping("festivalDelete")
 	public String festivalDelete(@RequestParam String fest_m_id) {
@@ -113,5 +115,12 @@ public class FestivalController {
 	@GetMapping("/festivalThumpsUp")
 	public void festivalThumpsUp(@RequestParam Map<String, Object> pMap) {
 		festivalService.festivalThumpsUp(pMap);
+	}
+
+	@PostMapping("/festivalUpdate")
+	public int festivalUpdate(@RequestBody FestivalDto festivalDto) {
+		int result = 0;
+		result = festivalService.festivalUpdate(festivalDto);
+		return result;
 	}
 }

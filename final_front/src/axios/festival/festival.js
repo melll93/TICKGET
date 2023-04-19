@@ -206,3 +206,20 @@ export const festTicketInsertDB = (ticket) => {
     }
   });
 };
+
+
+/* 수정 */
+export const festivalUpdateDB = (festival) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/festival/festivalUpdate",
+        data: festival,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

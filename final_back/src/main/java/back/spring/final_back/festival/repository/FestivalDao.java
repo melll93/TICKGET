@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface FestivalDao {
 	public FestivalDto festivalDetail(FestivalDto festivalDto);
 	
-	
     public List<FestivalDto> festivalListByDate(Date date);
 
     public List<FestivalDto> festivalList();
@@ -28,9 +27,11 @@ public interface FestivalDao {
 
 	public int festDetailInsert(FestivalDto festivalDto);
 
-
 	public int festPosterInsert(FestivalDto festivalDto);
 
 
 	public int festTicketInsert(FestivalDto festivalDto);
+
+
+  public int festivalUpdate(FestivalDto festivalDto);
 }

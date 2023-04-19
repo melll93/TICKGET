@@ -93,5 +93,15 @@ SELECT * FROM fest_main
   #{festTcTime},   
 )
       </insert>
-      
+        <update id="festivalUpdate" parameterType="FestivalDto">
+        update fest_main set
+            fest_m_name = #{festMName} ,
+            fest_m_start = #{festMStart},
+            fest_m_end = #{festMEnd},
+            fest_m_loc = #{festMLoc},
+            fest_m_img = #{festMImg},
+            fest_m_area = #{festMArea},
+            fest_m_genre = #{festMGenre}
+        where fest_m_id = #{festMId}
+    </update>
 </mapper>

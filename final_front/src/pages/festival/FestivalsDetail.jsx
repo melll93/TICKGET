@@ -405,7 +405,6 @@ const FestivalsDetail = () => {
                     style={{
                       maxWidth: "1250px",
                       height: "1000px",
-                      border: "1px solid red",
                     }}
                   >
                     {festival.festPsUrl===null? <div><h1>상품 상세보기 정보가 없습니다.</h1> <TicketCancleInfo/>  </div>: <img src={festival.festPsUrl} alt="상품상세정보이미지"></img>}
@@ -419,7 +418,6 @@ const FestivalsDetail = () => {
                     style={{
                       maxWidth: "1250px",
                       height: "1000px",
-                      border: "1px solid red",
                     }}
                   >
                     <div
