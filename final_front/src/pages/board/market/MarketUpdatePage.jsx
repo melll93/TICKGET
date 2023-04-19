@@ -65,8 +65,9 @@ const MarketUpdatePage = ({mkImageUploader}) => {
     setTicketDate(jsonDoc[0].mkTicketDate)
     setTicketSeat(jsonDoc[0].mkTicketSeat)
     setTicketCount(jsonDoc[0].mkTicketCount)
-    setTicketPlace(jsonDoc[0].mkTicketPlace)
+    setTicketPrice(jsonDoc[0].mkTicketPrice)
     setContent(jsonDoc[0].boardMkContent)
+    setFiles({ fileName: jsonDoc[0].boardMkFilename, fileUrl: jsonDoc[0].boardMkFileurl })
 
     //작성자가 아니면 수정 불가능함. 회원가입 DB 처리되면 board_market에 임시로 작성한 memName -> memNo 수정해야함 230406
    /* if(jsonDoc[0].memNo !== sessionStorage.getItem('no')){ //회원번호로 작성자가 맞는지 판단함 (맞으면 수정 가능)
@@ -86,24 +87,24 @@ const MarketUpdatePage = ({mkImageUploader}) => {
    }, []);
  
  
-   const handleTicketPlace = useCallback((e) => {
-     setTicketPlace(e);
+   const handleTicketPlace = useCallback((value) => {
+     setTicketPlace(value);
    }, []);
  
-   const handleTicketDate = useCallback((e) => {
-     setTicketDate(e);
+   const handleTicketDate = useCallback((value) => {
+     setTicketDate(value);
    }, []);
  
-   const handleTicketSeat = useCallback((e) => {
-     setTicketSeat(e);
+   const handleTicketSeat = useCallback((value) => {
+     setTicketSeat(value);
    }, []);
  
-   const handleTicketCount = useCallback((e) => {
-     setTicketCount(e);
+   const handleTicketCount = useCallback((value) => {
+     setTicketCount(value);
    }, []);
  
-   const handleTicketPrice = useCallback((e) => {
-     setTicketPrice(e);
+   const handleTicketPrice = useCallback((value) => {
+     setTicketPrice(value);
    }, []);
  
    const handleContent = useCallback((value) => {
@@ -139,15 +140,18 @@ const MarketUpdatePage = ({mkImageUploader}) => {
   
   
 
+  //필수입력 확인 함수 호출
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-    setValidated(true);
-      boardUpdate();
+      setValidated(true);
+      setTimeout(() => {
+        boardUpdate();
+      }, 2000); // 2초 대기 후 boardInsert() 호출
     }
-   }
+  };
 
 
   
@@ -155,6 +159,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
    const board = {
     boardMkNo : no,
     boardMkTitle : board_mk_title,
+    boardMkDate : new Date(),
     boardMkContent: board_mk_content,
     mkTicketPlace: mk_ticket_place,
     mkTicketDate: mk_ticket_date,
@@ -197,7 +202,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
                    required
                     id="board_mk_title"
                     type="text"
-                   /*  placeholder="제목을 입력하세요." */
+                    value={board_mk_title}
                     style={{ width: "970px", height: "50px" }}
                     onChange={(e) => {
                       handleTitle(e.target.value);
@@ -221,7 +226,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
                    required
                     id="mk_ticket_place"
                     type="text"
-             /*        placeholder="공연 장소를 입력하세요." */
+                    value={mk_ticket_place}
                     style={{ width: "475px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketPlace(e.target.value);
@@ -260,7 +265,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
                    required
                     id="mk_ticket_seat"
                     type="text"
-                    /* placeholder="좌석 정보를 입력하세요." */
+                    value={mk_ticket_seat}
                     style={{ width: "250px", height: "50px" }}
                     onChange={(e) => {
                       handleTicketSeat(e.target.value);
@@ -273,7 +278,7 @@ const MarketUpdatePage = ({mkImageUploader}) => {
 
         <Form.Group as={Col} controlId="formGridTicketCount">
           <h3>판매수량</h3>
-          <Form.Control required id="mk_ticket_count" type="number" min="1" /* placeholder="티켓의 수량을 선택하세요." */ style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
+          <Form.Control required id="mk_ticket_count" type="number" min="1" value={mk_ticket_count}  style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
           <Form.Control.Feedback type="invalid">
             판매할 티켓의 수량을 선택해주세요.
           </Form.Control.Feedback>
@@ -282,8 +287,8 @@ const MarketUpdatePage = ({mkImageUploader}) => {
         <Form.Group as={Col} controlId="formGridPrice" style={{marginLeft:'auto' }} >
           <h3>판매등록가</h3>
           <InputGroup>
-          <Form.Control required id="mk_ticket_price" type="text" /* placeholder="판매 가격(숫자만) 입력하세요." */ style={{width:'250px' , height:'50px'}}
-         value={mk_ticket_price}  handleTicketPrice={handleTicketPrice} onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
+          <Form.Control required id="mk_ticket_price" type="text" value={mk_ticket_price} style={{width:'250px' , height:'50px'}}
+         onChange={(e)=>{handleTicketPrice(e.target.value)}}/>
           <InputGroup.Text>원</InputGroup.Text>
           <Form.Control.Feedback type="invalid">
             티켓의 판매가를 입력해주세요.

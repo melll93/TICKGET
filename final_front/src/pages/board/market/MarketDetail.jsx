@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ListGroup, Tab, Tabs } from 'react-bootstrap';
+import { Button, Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
 import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -12,6 +12,9 @@ import MarketBoardFileDetail from './MarketBoardFileDetail';
 import MarketBoardHeader from './MarketBoardHeader';
 import '../../../App.css'
 import MarketPaymentGuide from './MarketPaymentGuide';
+import MapContainer from './Map/MapContainer';
+
+
 
 const cookies = new Cookies();
  
@@ -27,13 +30,25 @@ const MarketDetail = () => {
   const no = search.split('&').filter((item) => { return item.match('no') })[0]?.split('=')[1];
   console.log(no);
 
-
+  const [boards, setBoards] = useState([])
   const [detail, setDetail] = useState({});
   const [files, setFiles] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+
+  //추천상품 목록 불러오기
+  useEffect(() => {
+  const recommendList = async() => {
+    const res = await mk_boardListDB()
+    setBoards(res.data);
+  }
+  recommendList()
+  console.log(boards)
+  },[])
 
 
+  //상세보기 데이터 가져오기
   useEffect(() => {
     const boardDetail = async () => {
       const board = {
@@ -170,7 +185,7 @@ const MarketDetail = () => {
           <MarketBoardHeader detail={detail} no={no} />
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", fontSize: "16px" }}>
   <div>작성자프로필이미지 | 작성자명</div>
-  <div style={{marginRight:'45px'}}>
+  <div style={{marginRight:'45px', opacity:'90%'}}>
     <span style={{ marginRight: "5px" , color:'black'}}>
       <i class="bi bi-heart-fill"></i> 5 <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span>
     </span>
@@ -186,23 +201,23 @@ const MarketDetail = () => {
           
           <hr style={{opacity:'0%', marginBottom:'40px'}}/>
           <div style={{fontSize:'1.1rem'}}>
-  <p style={{textAlign:'left', paddingRight:'10px'  ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px'  ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem' ,marginRight:'10px', color:'black'}}>∙ 공연일</span>
     {" "}{formattedTicketDate}
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 공연장소</span>
     {" "}{detail.mk_ticket_place}
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 좌석정보</span>
     {" "}{detail.mk_ticket_seat}
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px' ,color:'black'}}>∙ 수량</span>
     {" "}{detail.mk_ticket_count}장
   </p>
-  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px'}}>
+  <p style={{textAlign:'left', paddingRight:'10px' ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem',marginRight:'10px', color:'black'}}>∙ 거래방식</span>
     {" "}PIN거래 <span style={{color:'black' , opacity:'50%' , fontSize:'0.8rem'}}>구매자에게 PIN번호 전달</span>
     <br/>
@@ -232,30 +247,53 @@ const MarketDetail = () => {
     </ContainerDiv>
 
 
-    <section style={{maxWidth:'1400px' ,marginLeft:'300px' }}>
-    <Tabs
-      id="fill-tab-example"
-      fill 
-      style={{ fontFamily:"Nanum Gothic", fontWeight:"bold"  }}
-      className="gray-tabs"
-    >
-      <Tab eventKey="content" title="상품 상세정보" >
-        <div style={{marginTop:'30px' , marginLeft:'30px'}}>
-            {detail.board_mk_content}
-          </div>  
-      </Tab>
-      <Tab eventKey="place" title="위치 찾기"  unselected={true}>
-      <div style={{marginTop:'30px'}}>
-            위치 정보를 여기에 추가하세요.
-            </div>
-      </Tab>
-      <Tab eventKey="payinfo" title="상품 결제/수령 안내"  unselected={true}>
-      <div style={{marginTop:'30px'}}>
-        <MarketPaymentGuide/>
-        </div>
 
-      </Tab>
-    </Tabs>
+{/* 연관상품 탭 작업 */}
+{/* <section style={{marginTop:'50px'}}>
+<div> 연관상품 </div>
+<div className='row'>
+<div>
+{boards.slice(0, 5).map((boards) => (
+  <div key={boards.boardMkNo} src={boards.boardMkFileurl} style={{width:'150px', height:'150px', marginRight:'20px'}} alt="Card image" />
+  ))}
+  </div>
+  </div>
+
+</section>
+ */}
+
+{/* 상세정보 탭 */}
+    <section style={{maxWidth:'1400px', minHeight:'1000px' ,marginLeft:'300px' , marginTop:'100px'}}>
+  <Tabs
+    id="fill-tab-example"
+    fill 
+    style={{ fontFamily:"Nanum Gothic", fontWeight:"bold"  }}
+    className="gray-tabs"
+  >
+    <Tab eventKey="content" title="상품 상세정보" >
+      <div style={{marginTop:'30px' , marginLeft:'30px'}}>
+        {detail.board_mk_content}
+      </div>  
+    </Tab>
+    <Tab eventKey="place" title="공연장소 찾아가는길" unselected={true}>
+  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px" }}>
+    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginRight:'40px' }}>
+      <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.3rem", marginBottom: "20px" }}>
+        <i class="bi bi-geo-alt-fill"></i>
+        {" "}
+        {detail.mk_ticket_place}
+      </p>
+      <div style={{ width: "40%", borderTop: "1px solid black", marginBottom: "10px", opacity: "15%" }} />
+    </div>
+    <MapContainer place={detail.mk_ticket_place} />
+  </div>
+</Tab>
+    <Tab eventKey="payinfo" title="상품 결제/수령 안내"  unselected={true}>
+      <div style={{marginTop:'80px'}}>
+        <MarketPaymentGuide/>
+      </div>
+    </Tab>
+  </Tabs>
 </section>
 
   
