@@ -87,21 +87,25 @@
 		member_addr_detail
 		FROM member
 		<where>
+		<!-- 아이디, 이메일, 닉네임 중복 확인 -->
 			<if test='memberId!=null and memberId.length()>0'>
 				AND member_id = #{memberId}
 			</if>
-			<if test='memberName!=null and memberName.length()>0'>
-				AND member_name = #{memberName}
+			<if test='memberEmail!=null and memberEmail.length()>0'>
+				AND member_email = #{memberEmail}
+				<if test='id != null'>AND member_id != #{id}</if>
 			</if>
-			<if test='memberMobile!=null and memberMobile.length()>0'>
-				AND member_mobile = #{memberMobile}
+			<if test='memberNickname!=null and memberNickname.length()>0'>
+				AND member_nickname = #{memberNickname}
+				<if test='id != null'>AND member_id != #{id}</if>
 			</if>
 		</where>
 	</select>
 
 	<update id="memberUpdate" parameterType="java.util.HashMap">
 		UPDATE member
-		SET member_password = #{memberPassword}
-    	WHERE member_Id = #{memberId}
+		SET
+		member_password = #{memberPassword}
+		WHERE member_Id = #{memberId}
 	</update>
 </mapper>
