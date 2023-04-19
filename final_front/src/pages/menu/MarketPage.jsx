@@ -8,6 +8,8 @@ import MarketList from "../board/market/MarketList";
 import MarketSearchBar from "../board/market/MarketSearchBar";
 import { Cookies } from "react-cookie";
 import Footer from "../../components/Footer";
+import CommonPagination from "../../components/CommonPagination";
+import { mk_boardListDB } from "../../axios/board/market/marketLogic";
 const cookies = new Cookies();
 
 
@@ -18,6 +20,35 @@ const MarketPage = () => {
 
   const navigate = useNavigate();
   const [boardList, setBoardList] = useState([]);
+
+
+  //페이지네이션 처리
+  const [page, setPage] = useState(1);
+  const [perPage] = useState(15);
+  
+  useEffect(() => {
+    selectBoardList();
+  }, []);
+
+  const indexOfLastPost = page * perPage;
+  const indexOfFirstPost = indexOfLastPost - perPage;
+
+  const currentMkBoard = (boardList) => {
+    let currentFest = 0;
+    currentFest = boardList.slice(indexOfFirstPost, indexOfLastPost);
+    return currentFest;
+  };
+
+  
+  const selectBoardList = async () => {
+    const res = await mk_boardListDB();
+    console.log(res.data);
+    if (res.data && Array.isArray(res.data)) {
+      setBoardList(res.data);
+    } else {
+      console.log("부서목록 조회 실패");
+    }
+  };
 
   /*   useEffect = (() => {
         don_boardListDB()
@@ -80,8 +111,14 @@ const MarketPage = () => {
 
             <MarketList />
           </div>
-          
+          <CommonPagination
+          pagination={setPage}
+          perPage={perPage}
+          totalItems={boardList.length}
+        ></CommonPagination>
         </MkFormDiv>
+   
+        
     </>
   );
 };

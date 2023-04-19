@@ -21,8 +21,8 @@ import java.util.Map;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberDao memberDao;
-    private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+
     @Override
     public Object localMemberLogin(MemberDto memberDto) {
         Map<String, Object> result = new HashMap<>();
@@ -52,14 +52,19 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Object loginSuccess() {
-        Authentication data = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) data.getPrincipal();
+        Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
         log.info(userDetails.getUsername());
-        return tokenProvider.createToken(data);
+        return tokenProvider.createToken(userAuth);
     }
 
     @Override
-    public MemberDto getMemberData(String memberId) {
+    public MemberDto getMemberData() {
+        Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
+        log.info(userDetails.getUsername());
+        String memberId = userDetails.getUsername();
+
         return memberDao.getMemberData(memberId);
     }
 
@@ -78,6 +83,9 @@ public class MemberServiceImpl implements MemberService {
         return false;
     }
 
-
+    @Override
+    public MemberDto searchById(String memberId) {
+        return memberDao.getMemberData(memberId);
+    }
 
 }

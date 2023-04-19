@@ -62,6 +62,17 @@ export const DeleteFestivalDB = async (festival) => {
 };
 
 
+/* 조회수 */
+export const thumbsupFestivalDB = async(festMId) => {
+  const result = await axios({
+    method: "get",
+    url: "http://localhost:8888/festival/festivalThumpsUp",
+        params: {festMId}
+      }).then((res) => res.data);
+      return result;
+    };
+
+
 /* 지역별 */
 export const areaFestivalListDB = async(festMArea) => {
   const result = await axios({
@@ -141,6 +152,53 @@ export const FetivalDetailDB = (festival) => {
         method: "get",
         url: "http://localhost:8888/festival/festivalDetail",
         params: festival,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* fest_detail 추가 */
+export const saveFestDetailDB = (festival) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/festival/festDetailInsert",
+        data: festival,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* fest_poster 추가 */
+export const saveFestPsUrlDB = (festival) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/festival/festPosterInsert",
+        data: festival,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const festTicketInsertDB = (ticket) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/festival/festTicketInsert",
+        data: ticket,
       });
       resolve(response);
     } catch (error) {

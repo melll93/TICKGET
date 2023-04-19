@@ -202,3 +202,9 @@ div .Menu {
   font-family: "LeferiBaseBold";
   src: url("./fonts/LeferiBaseBold.ttf") format("truetype");
 }
+
+.gray-tabs .nav-link:not(.active) {
+  color: black;
+  background-color: #c9c8c8;
+  opacity: 50%;
+}

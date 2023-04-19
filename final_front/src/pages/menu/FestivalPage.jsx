@@ -1,16 +1,17 @@
 /* 은영 수정중 */
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import {
   FetivalListDB,
   areaFestivalListDB,
-  festivalHitListDB,
+  thumbsupFestivalDB,
 } from "../../axios/festival/festival";
 import CommonPagination from "../../components/CommonPagination";
-import { Card } from "react-bootstrap";
 import FestivalRankingList from "../festival/FeativalRankingList";
+import "../../styles/festivaldetails.css";
+
 
 ///////////////////////////////      페스티발 지역별   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const FestivalAreaList = ({selectedNavbarValue}) => {
@@ -21,7 +22,7 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
 
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
-
+  
   const currentFest = (festivals) => {
     let currentFest = 0;
     currentFest = festivals.slice(indexOfFirstPost, indexOfLastPost);
@@ -36,6 +37,14 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
     }
     areaList();
   }, [festMArea, selectedNavbarValue]);
+
+  const hitPlusOne=async (festMId)=>{
+    await thumbsupFestivalDB(festMId);
+  } 
+
+
+
+
   return (
     <>
       <div>
@@ -59,17 +68,19 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
                     <h5 className="card-title">제목 : {festival.festMName}</h5>
                     <p className="card-text">로케 : {festival.festMLoc}</p>
                     <p className="card-text">
-                      {" "}
-                      {festival.festMStart} ~ {festival.festMEnd}{" "}
+                      {festival.festMStart} ~ {festival.festMEnd}
                     </p>
                     <p className="card-text"> festId: {festival.festMId} </p>
                     <p className="card-text">
-                      {" "}
-                      festCategory: {festival.festMArea}{" "}
+                      festCategory: {festival.festMArea}
                     </p>
-                  </div>
+                  </div>      {/* card-body */}
                 </a>
-              </div>
+                <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'right', marginLeft:'83%', paddingRight:'7px', cursor:'pointer'}}>
+                <i className="bi bi-hand-thumbs-up fs-4"></i>
+                {festival.festMHit===null ? 0: festival.festMHit}
+                </div>
+              </div> 
             ); //안쪽리턴
           })}{" "}
         {/*  map*/}
@@ -106,13 +117,18 @@ const FestivalExtraList = () => {
   );
 };
 
+
+
+/* 
+///////// 페스티벌 전체 ////////// 
+ */
 const FestivalsTest = () => {
+const [hit, setHit]= useState();
   const [festivals, setFestivals] = useState([]);
   const [page, setPage] = useState(1);
   const [perPage] = useState(20);
-  const [test, setTest] = useState(0);
-  // console.log('랭스:'+festivals.length)
-  // console.log('perPage: ' + perPage)
+  const[thumbsup, setThumbsup] = useState(0);
+
   useEffect(() => {
     FetivalListDB().then(setFestivals);
   }, []);
@@ -124,6 +140,12 @@ const FestivalsTest = () => {
     currentFest = festivals.slice(indexOfFirstPost, indexOfLastPost);
     return currentFest;
   };
+
+  
+  const hitPlusOne=async (festMId)=>{
+    await thumbsupFestivalDB(festMId)
+    ;
+  } 
 
   return (
     <>
@@ -158,6 +180,10 @@ const FestivalsTest = () => {
                     </p>
                   </div>
                 </a>
+                <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'right', marginLeft:'83%', paddingRight:'7px', cursor:'pointer'}}>
+                <i className="bi bi-hand-thumbs-up fs-4"></i>
+                {festival.festMHit==={thumbsup} ? 0: festival.festMHit}
+                </div>
               </div>
             );
           })}
@@ -178,14 +204,13 @@ const FestivalsTest = () => {
 
 
 const FestivalPage = () => {
-  
-  let [totalFest, setTotalFest] = useState(1); //0이면 닫힘, 1이면 열림.
+  const [totalFest, setTotalFest] = useState(1); //0이면 닫힘, 1이면 열림.
   const [modal2, setModal2] = useState(0); //지역별
   const [modal3, setModal3] = useState(0); //인기순/랭킹
   const [modal4, setModal4] = useState(0);
   const [style, setStyle ] = useState({display: 'none'})
   const [selectedNavbarValue, setSelecteNavbarValue] = useState("");  //나브바 선택 벨류
-
+  const areaOpen = () => { setTotalFest(0); setModal2(1); setModal3(0); setModal4(0);};
 
   const changeModal = () => {
     setTotalFest(1);
@@ -196,32 +221,36 @@ const FestivalPage = () => {
   };
   const seoul = () => {
     setSelecteNavbarValue("서울")
-    setTotalFest(0);
-    setModal2(1);
-    setModal3(0);
-    setModal4(0);
+    areaOpen();
   };
   const kyeongkiAndIncheon = () => {
-    setSelecteNavbarValue("경기")
-    setTotalFest(0);
-    setModal2(1);
-    setModal3(0);
-    setModal4(0);
+    setSelecteNavbarValue("경기/인천")
+    areaOpen();
   };
   const chungAndKangwon = () => {
-    setSelecteNavbarValue("충청")
-    setTotalFest(0);
-    setModal2(1);
-    setModal3(1);
-    setModal4(0);
+    setSelecteNavbarValue("충청/강원")
+    areaOpen();
   };
   const daeguAndKyungBuk = () => {
-    setSelecteNavbarValue("제주")
-    setTotalFest(0);
-    setModal2(1);
-    setModal3(0);
-    setModal4(0);
+    setSelecteNavbarValue("대구/경북")
+    areaOpen();
   };
+
+  const busanAndKyungNam = () => {
+    setSelecteNavbarValue("부산/경남")
+    areaOpen();
+  };
+
+  const kwanjuAndJunla = () => {
+    setSelecteNavbarValue("광주/전라")
+    areaOpen();
+  };
+
+  const Jeju = () => {
+    setSelecteNavbarValue("제주")
+    areaOpen();
+  };
+    
 
   const rankingModalopen = () => {
     setTotalFest(0);
@@ -265,7 +294,7 @@ const FestivalPage = () => {
               <ul className="nav-link" style={{ marginLeft: "150px" }}  onMouseEnter={e => { setStyle({display: 'block'})}} 
               onMouseLeave={e => {setStyle({display: 'none'})}} > 지역별 <ul style={style}>
                 <ul className="nav-item">
-              <li className="nav-link" onClick={seoul} value={"서울"}> 서울 </li>
+              <li className="nav-link" onClick={seoul}> 서울 </li>
             </ul>
                 <ul className="nav-item">
               <li className="nav-link" onClick={kyeongkiAndIncheon}> 경기/인천 </li>
@@ -277,13 +306,13 @@ const FestivalPage = () => {
               <li className="nav-link" onClick={daeguAndKyungBuk}> 대구/경북 </li>
             </ul>
             <ul className="nav-item">
-              <li className="nav-link" onClick={daeguAndKyungBuk}> 부산/경남 </li>
+              <li className="nav-link" onClick={busanAndKyungNam}> 부산/경남 </li>
             </ul>
             <ul className="nav-item">
-              <li className="nav-link" onClick={daeguAndKyungBuk}> 광주/전라 </li>
+              <li className="nav-link" onClick={kwanjuAndJunla}> 광주/전라 </li>
             </ul>
             <ul className="nav-item">
-              <li className="nav-link" onClick={daeguAndKyungBuk}> 제주 </li>
+              <li className="nav-link" onClick={Jeju}> 제주 </li>
             </ul>
             </ul>
               </ul>
@@ -303,7 +332,7 @@ const FestivalPage = () => {
       </nav>{/* end of navbar navbar-expand-sm bg-dark navbar-dark */}
         {/* 상품등록버튼 - 관리자 페이지로 이동..? or 기업회원 로그인시에만 보이도록 수정 예정 */}
         <Link
-          to="/addProducts"
+          to="/addProducts/new"
           style={{
             fontSize: "40px",
             backgroundColor: "black",
@@ -317,7 +346,6 @@ const FestivalPage = () => {
 
         {/* 나브바 카테고리별 클릭시 화면 전환 */}
         {totalFest === 1 ? <FestivalsTest /> : null}
-        <br />
         {modal2 === 1 ? <FestivalAreaList selectedNavbarValue={selectedNavbarValue}/> : null}
         {modal3 === 1 ? <FestivalRankingList /> : null}
         {modal4 === 1 ? <FestivalExtraList /> : null}

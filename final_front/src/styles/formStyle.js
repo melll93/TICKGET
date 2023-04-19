@@ -67,7 +67,7 @@ export const MyInput = styled.input`
   font-size: 15px;
   &:focus,
   &:hover {
-    border-bottom: 2px solid #004fff;
+    border-bottom: 2px solid rgb(112, 128, 144);
     outline: none;
   }
   &::-webkit-outer-spin-button,
@@ -88,7 +88,8 @@ export const SubmitButton = styled.button`
   font-weight: bold;
   border-radius: 24px;
   margin-bottom: 20px;
-  border: 1.5px solid rgb(105, 175, 245);
+  border: none;
+  background-color: rgb(220, 220, 220);
   color: white;
 `;
 
@@ -155,13 +156,13 @@ export const DividerSpan = styled.span`
 export const BButton = styled.button`
   border-radius: 10px;
   border: 1px solid white;
-  background-color: rgb(105, 175, 245);
+  background-color: rgb(220, 220, 220);
   color: white;
-  width: 80px;
+  width: 148px;
   height: 38px;
   font-weight: bold;
   &:hover {
-    background-color: rgb(58, 129, 200);
+    background-color: rgb(200, 200, 200);
   }
 `;
 
@@ -263,4 +264,5 @@ export let BlackBtn = styled.button`
     background: rgb(72, 71, 71);
   }
 `;
+
 /* ▲▲▲▲은영사용중 ▲▲▲▲ */

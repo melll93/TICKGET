@@ -13,4 +13,5 @@ public interface MemberDao {
     MemberDto localMemberLogin(MemberDto memberDto);
 
     MemberDto getMemberData(String memberId);
+
 }

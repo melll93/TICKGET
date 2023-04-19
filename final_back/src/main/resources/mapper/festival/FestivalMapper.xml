@@ -51,4 +51,47 @@ SELECT * FROM fest_main
 		<delete id="festivalDelete" parameterType="String">
   delete from fest_main where fest_m_id =#{festMId};
 	</delete>
+	    <update id="festivalThumpsUp" parameterType="map">
+        update fest_main set
+            fest_m_hit = fest_m_hit +1
+        where fest_m_id = #{festMId}
+      </update>
+      <insert id="festDetailInsert" parameterType="Map">
+      INSERT INTO fest_detail (
+  fest_dt_id, 
+  fest_dt_casting, 
+  fest_dt_crew, 
+  fest_dt_runtime, 
+  fest_dt_age
+) VALUES (
+  (SELECT fest_m_id FROM fest_main WHERE fest_m_id = #{festMId}), 
+  #{festDtCasting}, 
+  #{festDtCrew}, 
+  #{festDtRuntime}, 
+  #{festDtAge}
+)
+      </insert>
+            <insert id="festPosterInsert" parameterType="Map">
+      INSERT INTO fest_poster (
+  fest_ps_id, 
+  fest_ps_url
+) VALUES (
+  (SELECT fest_m_id FROM fest_main WHERE fest_m_id = #{festMId}), 
+  #{festPsUrl} 
+)
+      </insert>
+      <insert id="festTicketInsert" parameterType="Map">
+      INSERT INTO fest_ticket (
+  fest_tc_id,
+  fest_tc_type, 
+  fest_tc_price,
+  fest_tc_time,
+) VALUES (
+  (SELECT fest_m_id FROM fest_main WHERE fest_m_id = #{festMId}), 
+  #{festTcType},
+  #{festTcPrice},
+  #{festTcTime},   
+)
+      </insert>
+      
 </mapper>

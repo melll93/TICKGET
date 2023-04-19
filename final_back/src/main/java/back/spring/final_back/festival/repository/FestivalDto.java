@@ -1,6 +1,7 @@
 package back.spring.final_back.festival.repository;
 
 import java.sql.Date;
+import java.sql.Time;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,11 +24,23 @@ public class FestivalDto {
 	private String festMImg;
 	private String festMGenre;
 	private String festMArea;
-	private String festPsUrl;
-	private Integer festTcPrice;
-	private String festDtRuntime;
-	private String festDtAge;
 	private Integer festMHit;
+
+	private Integer festTcPrice;
+	private String festTcType;
+	private Time festTcTime;
+	
+	
+	private String festDtAge;
+	private String festDtRuntime;
+	private String festDtId;
+	private String festDtCasting;
+	private String festDtCrew;
+	
+	private String festPsNo;
+	private String festPsId;
+	private String festPsUrl;
+	
 
 }
 

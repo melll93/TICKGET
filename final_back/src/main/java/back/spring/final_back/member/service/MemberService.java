@@ -17,5 +17,7 @@ public interface MemberService {
 
     boolean checkEmailExist();
 
-    MemberDto getMemberData(String memberId);
+    Object getMemberData();
+
+    MemberDto searchById(String id);
 }

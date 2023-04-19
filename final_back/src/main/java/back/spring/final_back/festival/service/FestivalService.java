@@ -2,6 +2,7 @@ package back.spring.final_back.festival.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import back.spring.final_back.festival.repository.FestivalDto;
 
@@ -21,6 +22,14 @@ public interface FestivalService {
 FestivalDto festivalDetail(FestivalDto festivalDto);
 
 List<FestivalDto> festivalHitList();
+
+void festivalThumpsUp(Map<String, Object> pMap);
+
+int festDetailInsert(FestivalDto festivalDto);
+
+int festPosterInsert(FestivalDto festivalDto);
+
+int festTicketInsert(FestivalDto festivalDto);
 
 
 }

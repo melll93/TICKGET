@@ -1,22 +1,27 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import { saveFestDetailDB, saveFestPsUrlDB } from '../../axios/festival/festival';
 import "../../styles/festivaldetails.css";
+import { BlackBtn } from '../../styles/formStyle';
 import AddProductsFestTicketDetail from './AddProductsFestTicketDetail';
 
 
 
 const AddProductsOptionalDetail = () => {
+  const {festMId}=useParams();
+  console.log(festMId)
 
   const[festDetailCasting, setFestDetailCasting] = useState("")
   const[festDetailCrew, setFestDetailCrew] = useState("")
   const[festDetailRuntime, setFestDetailRuntime] = useState(0)
   const[festDetailAge, setFestDetailAge] = useState(0)
-  const[festTicketSeat, setFestTicketSeat] = useState(0)
-  const[festTicketPrice, setFestTicketPrice] = useState(0)
 
-/////연습////
+  const[festPsUrl, setFestPsUrl] = useState()
+  const imgRef = useRef()
 
 
-  /////연습////
+
+  /* fest_detail 추가정보 입력 */
   const inputCasting = useCallback((e) => {
     setFestDetailCasting (e)
   },[])
@@ -29,12 +34,74 @@ const AddProductsOptionalDetail = () => {
   const inputAge= useCallback((e) => {
     setFestDetailAge (e)
   },[])
-  const inputSeat= useCallback((e) => {
-    setFestTicketSeat (e)
-  },[])
-  const inputPrice= useCallback((e) => {
-    setFestTicketPrice (e)
-  },[])
+  
+  /* fest_detail INSERT */
+  const saveFestDetail=async()=>{
+    const festival = {
+      festMId,
+      festDtCasting: festDetailCasting,
+      festDtCrew: festDetailCrew,
+      festDtRuntime: festDetailRuntime,
+    festDtAge: festDetailAge,
+  };
+  const res = await saveFestDetailDB(festival);
+  console.log(festival);
+  if (!res.data) {
+  } else {
+  }
+};
+
+
+/* fest_poster */
+const saveFestPoster=async()=>{
+  const festival = {
+    festMId,
+    festPsUrl,
+};
+const res = await saveFestPsUrlDB(festival);
+console.log(festival);
+if (!res.data) {
+} else {
+}
+};
+
+
+
+  //클라우디너리에 업로드
+  const FestImageUpload = (e) => {
+    const { files } = document.querySelector("#festivalPoster");
+    const imageFile = document.querySelector("#festivalPoster");
+    const filesa = imageFile.files;
+    console.log("Image file", filesa[0]);
+    const formData = new FormData();
+    setFestPsUrl(festPsUrl);
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "dpa186u8"); // "본인 프리셋 업로드 네임"
+    const options = {
+      method: "POST",
+      body: formData,
+    };
+    return (
+      fetch("https://api.Cloudinary.com/v1_1/djxfvm2ev/image/upload", options)
+        //"https://api.Cloudinary.com/v1_1/본인 클라우드 네임/image/upload"
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.secure_url);
+          const festPsUrl = res.secure_url;
+          localStorage.setItem("imageUrl", festPsUrl);
+          console.log("페스트 이미지 유알엘 : " + festPsUrl);
+    setFestPsUrl(festPsUrl);
+
+
+        })
+        .catch((err) => console.log(err))
+    );
+  };
+
+
+
+
+
 
 
 
@@ -46,6 +113,8 @@ const AddProductsOptionalDetail = () => {
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
 fest_detail 추가 정보 입력 
     </h1>
+    <BlackBtn onClick={saveFestDetail}>임시저장</BlackBtn>
+    <BlackBtn onClick={()=>{alert('update 아직 안함')}}>수정완료</BlackBtn>
 
     <div className="form-floating">
   <input type="text" className="form-control" id="festDetailCasting"onChange={(e)=>{inputCasting (e.target.value)}} />
@@ -68,14 +137,18 @@ fest_detail 추가 정보 입력
 {/* fest_poster */}
 
 <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
-fest_poster 추가 정보 입력 
+fest_poster 추가 정보 입력
+<BlackBtn onClick={saveFestPoster}>임시저장</BlackBtn>
+
     </h1>
     파일 상세이미지 업로드
             <input
           className="form-control"
           type="file"
           accept="image/*"
-          id="festivalsImg"
+          id="festivalPoster"
+          onChange={FestImageUpload}
+          ref={imgRef}
         />
 
 
