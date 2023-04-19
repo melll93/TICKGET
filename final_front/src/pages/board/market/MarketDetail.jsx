@@ -13,22 +13,31 @@ import MarketBoardHeader from './MarketBoardHeader';
 import '../../../App.css'
 import MarketPaymentGuide from './MarketPaymentGuide';
 import MapContainer from './Map/MapContainer';
+import UserProfile from '../../../components/UserProfile';
+import { searchById } from '../../../axios/member/member';
 
 
 
 const cookies = new Cookies();
  
 const MarketDetail = () => {
-  const _userData = cookies.get("_userData"); //유저 정보
+
+  //회원 정보
+  const _userData = cookies.get("_userData"); 
   console.log(_userData)
+  const member_nickname = _userData.memberNickname;
+
+  const [userData, setUserData] = useState();
+  searchById("test").then(setUserData);
+ 
 
 
   const search = window.location.search;
-  console.log(search);
+  /* console.log(search); */
   const page = search.split('&').filter((item) => { return item.match('page') })[0]?.split('=')[1];
-  console.log(page);
+ /*  console.log(page); */
   const no = search.split('&').filter((item) => { return item.match('no') })[0]?.split('=')[1];
-  console.log(no);
+  /* console.log(no); */
 
   const [boards, setBoards] = useState([])
   const [detail, setDetail] = useState({});
@@ -37,7 +46,7 @@ const MarketDetail = () => {
   const navigate = useNavigate();
   
 
-  //추천상품 목록 불러오기
+/*   추천상품 목록 불러오기
   useEffect(() => {
   const recommendList = async() => {
     const res = await mk_boardListDB()
@@ -45,7 +54,7 @@ const MarketDetail = () => {
   }
   recommendList()
   console.log(boards)
-  },[])
+  },[]) */
 
 
   //상세보기 데이터 가져오기
@@ -94,7 +103,6 @@ const MarketDetail = () => {
 
 
   //연월일 날짜 시간 표기방법으로 변경코드
-  console.log(detail.mk_ticket_date) //2023-04-14T00:00:00
   const date = new Date(detail.mk_ticket_date);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -103,45 +111,37 @@ const MarketDetail = () => {
   const minutes = String(date.getMinutes()).padStart(2, '0');
   
   const formattedTicketDate = `${year}-${month}-${day} ${hours}시 ${minutes}분`;
-  console.log(formattedTicketDate); // "2023-04-14 00:00"
 
 
     //현재 시간 - 게시글 작성 시간
     const now = new Date();
     const boardMkDateTime = new Date(detail.board_mk_date)
     const diffInMs = now - boardMkDateTime;
-    console.log(diffInMs)
        
    
     //작성일 태그에 적용
       const formatTimeDiff = (diffInMs) =>{
         const seconds = Math.floor(diffInMs / 1000)
         if (seconds < 60) {
-          console.log(`${seconds}초 전`);
           return `${seconds}초 전`;
         } else {
           const minutes = Math.floor(seconds / 60);
           if (minutes < 60) {
-            console.log(`${minutes}분 전`);
             return `${minutes}분 전`;
           } else {
             const hours = Math.floor(minutes / 60);
             if (hours < 24) {
-              console.log(`${hours}시간 전`);
               return `${hours}시간 전`;
             } else {
               const days = Math.floor(hours / 24);
               if (days < 30) {
-                console.log(`${days}일 전`);
                 return `${days}일 전`;
               } else {
                 const months = Math.floor(days / 30);
                 if (months < 12) {
-                  console.log(`${months}개월 전`);
                   return `${months}개월 전`;
                 } else {
                   const years = Math.floor(months / 12);
-                  console.log(`${years}년 전`);
                   return `${years}년 전`;
                 }
               }
@@ -150,8 +150,8 @@ const MarketDetail = () => {
         }
       } 
 
-     console.log(Date.now())
-     console.log(new Date(detail.board_mk_date).getTime())
+    /* console.log(Date.now())
+     console.log(new Date(detail.board_mk_date).getTime()) */
     const boardDateTime = formatTimeDiff(Date.now() - new Date(detail.board_mk_date).getTime())
 
 
@@ -183,8 +183,9 @@ const MarketDetail = () => {
         </div>
         <div style={{ width: "100%" }}>
           <MarketBoardHeader detail={detail} no={no} />
+          <hr/>
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", fontSize: "16px" }}>
-  <div>작성자프로필이미지 | 작성자명</div>
+  <div  style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.0rem"}}>작성자프로필이미지 | {member_nickname}</div>
   <div style={{marginRight:'45px', opacity:'90%'}}>
     <span style={{ marginRight: "5px" , color:'black'}}>
       <i class="bi bi-heart-fill"></i> 5 <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span>
@@ -200,7 +201,7 @@ const MarketDetail = () => {
           
           
           <hr style={{opacity:'0%', marginBottom:'40px'}}/>
-          <div style={{fontSize:'1.1rem'}}>
+          <div style={{fontSize:'1.0rem'}}>
   <p style={{textAlign:'left', paddingRight:'10px'  ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem' ,marginRight:'10px', color:'black'}}>∙ 공연일</span>
     {" "}{formattedTicketDate}
@@ -229,7 +230,7 @@ const MarketDetail = () => {
 
 
 
-<div className="mb-2" style={{display: 'flex', justifyContent: 'space-between', marginTop:'50px',}}>
+<div className="mb-2" style={{display: 'flex', justifyContent: 'space-between', marginTop:'70px',}}>
         <Button variant="outline-dark" size="lg" style={{width:'180px'}}>
         <i class="bi bi-heart"></i>{" "}찜하기
         </Button>{' '}

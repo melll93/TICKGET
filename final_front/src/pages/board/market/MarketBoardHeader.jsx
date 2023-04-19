@@ -1,22 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { mk_boardDeleteDB } from "../../../axios/board/market/marketLogic";
+import { mk_boardDeleteDB, mk_boardDetailDB } from "../../../axios/board/market/marketLogic";
 import { BButton, MButton } from "../../../styles/formStyle";
 
 const cookies = new Cookies();
 
 const MarketBoardHeader = ({ detail, no }) => {
+  
+  //회원 정보
+  const _userData = cookies.get("_userData"); 
+  /* console.log(_userData) */
+  const member_no = _userData.memberNo;
+  /* console.log(member_no) */
 
-  const _userData = cookies.get("_userData"); //유저 정보
-  console.log(_userData)
 
-
-
-  console.log(detail);
-  console.log(no);
+  const [boardmemno , setBoardMemNo] = useState(3)
   const navigate = useNavigate();
 
+  
+  useEffect(()=> {
+    const boardDetail = async () => {
+      const board = {
+        boardMkNo: no
+      }
+      const res = await mk_boardDetailDB(board);
+      console.log(res.data);
+      const temp = JSON.stringify(res.data)
+      const jsonDoc = JSON.parse(temp)
+      console.log(jsonDoc[0].memberNo); //회원번호 판별
+      setBoardMemNo(jsonDoc[0].memberNo)
+    }
+    boardDetail()
+  },[])
+
+
+  //삭제 기능
   const boardDelete = async () => {
     const board = {
       boardMkNo: no,
@@ -27,66 +46,51 @@ const MarketBoardHeader = ({ detail, no }) => {
     navigate("/market");
   };
 
+  //게시판 목록 이동
   const boardList = () => {
     navigate("/market");
   };
 
   return (
-
-<div>
-  <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-    <div style={{ overflow: "auto" }}>
-      <span
-        style={{
-          marginLeft: "10px",
-          marginBottom: "12px",
-          fontSize: "30px",
-          display: "block",
-          color: "black",
-        }}
-      >
-        {detail.board_mk_title}
-      </span>
-    </div>
-    
-    <div
+<div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+  <div style={{ overflow: "auto" }}>
+    <span
       style={{
-        display: "flex",
-        justifyContent: "space-between",
-        fontSize: "16px",
+        marginBottom: "12px",
+        fontSize: "30px",
+        display: "block",
+        color: "black",
       }}
     >
+      {detail.board_mk_title}
+    </span>
+  </div>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      fontSize: "16px",
+      alignItems: "center",
+    }}
+  >
+    <div style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "2.0rem" }}>
+      {detail.mk_ticket_price} 원
     </div>
-    <div style={{ display: "flex", justifyContent: "flex-end" }}>
-      <div style={{  marginRight: "140px", fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "2.0rem" }}>{detail.mk_ticket_price} 원</div>
-      {
-        <div style={{ display: "flex", justifyContent: "flex-end", marginTop:'10px' }}>
-          <MButton
-            style={{ margin: "0px 10px 0px 10px" }}
-            onClick={() => {
-              navigate(`/market/update/${no}`);
-            }}
-          >
+    <div style={{ display: "flex", justifyContent: "flex-start", marginTop: '10px' }}>
+      {member_no === boardmemno && (
+        <>
+          <MButton style={{ margin: "0px 10px 0px 10px" }} onClick={() => { navigate(`/market/update/${no}`); }}>
             수정
           </MButton>
-          <MButton
-            style={{ margin: "0px 10px 0px 10px" }}
-            onClick={() => {
-              boardDelete();
-            }}
-          >
+          <MButton style={{ margin: "0px 10px 0px 10px" }} onClick={boardDelete}>
             삭제
           </MButton>
-          <MButton
-            style={{ margin: "0px 10px 0px 10px" }}
-            onClick={boardList}
-          >
-            목록
-          </MButton>
-        </div>
-      }
+        </>
+      )}
+      <MButton style={{ margin: "0px 10px 0px 10px" }} onClick={boardList}>
+        목록
+      </MButton>
     </div>
-  <hr style={{ height: "2px" }} />
   </div>
 </div>
   );

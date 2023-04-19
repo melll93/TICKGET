@@ -51,9 +51,9 @@
 <insert id="mk_boardInsert" parameterType="MarketDto">
 insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
 
-mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl,member_nickname,member_no,board_mk_status)
+mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,board_mk_filename,board_mk_fileurl,member_nickname,member_no,board_mk_status)
 VALUES (#{boardMkTitle},#{boardMkContent},#{boardMkDate},#{boardMkHit},
-#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl},#{memberNickname},#{memberNo},#{boardMkStatus})
+#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{boardMkFilename},#{boardMkFileurl},#{memberNickname},#{memberNo},#{boardMkStatus})
 
 </insert>
 

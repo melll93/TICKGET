@@ -39,9 +39,9 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
   //회원 정보 꺼내오기
   const member_no = _userData.memberNo;
-  const member_Nickname = _userData.memberNickname;
+  const member_nickname = _userData.memberNickname;
   console.log(member_no)
-  console.log(member_Nickname)
+  console.log(member_nickname)
 
 
   console.log("글쓰기 페이지 호출");
@@ -162,7 +162,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
       mkTicketPrice: mk_ticket_price,
       boardMkFilename: files.fileName,
       boardMkFileurl: files.fileUrl,
-      memberNickname: member_Nickname,
+      memberNickname: member_nickname,
       memberNo : member_no,
       boardMkStatus : 0
     };

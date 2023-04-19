@@ -8,6 +8,7 @@ import Sidebar from '../../../components/Sidebar'
 import { ContainerDiv, FormDiv, HeaderDiv } from '../../../styles/formStyle'
 import MarketFileInsert from './MarketFileInsert'
 import QuillEditor from './QuillEditor'
+import { Cookies } from 'react-cookie'
 
 
 /* CSS */
@@ -26,9 +27,16 @@ const Img = styled.img`
 `
 
 
+const cookies = new Cookies();
+
 const MarketUpdatePage = ({mkImageUploader}) => {
    const navigate = useNavigate()
    
+//회원 정보
+   const _userData = cookies.get("_userData"); 
+   console.log(_userData)
+
+
    const {no} = useParams() //보드헤더에서 해시값 가져옴
    console.log(no)
 
