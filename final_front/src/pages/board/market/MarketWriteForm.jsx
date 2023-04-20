@@ -11,7 +11,7 @@ import Header from "../../../components/Header";
 import MarketFileInsert from "./MarketFileInsert";
 import styled from "styled-components";
 import { Cookies } from "react-cookie";
-import moment from 'moment/moment'
+import Swal from "sweetalert2";
 
 
 /* CSS */
@@ -141,8 +141,22 @@ const MarketWriteForm = ({ mkImageUploader }) => {
     } else {
       setValidated(true);
       setTimeout(() => {
-        boardInsert();
-      }, 2000); // 2초 대기 후 boardInsert() 호출
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '게시글 등록 성공',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          onBeforeOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        });
+        setTimeout(() => {
+          boardInsert();
+        }, 2000); // 2초 대기 후 boardUpdate() 호출
+      }, 1000); // 2초 대기 후 Swal.fire() 호출
     }
   };
 
@@ -183,9 +197,9 @@ const MarketWriteForm = ({ mkImageUploader }) => {
       <Sidebar />
       <div className="center">
         <ContainerDiv>
-          <HeaderDiv>
+          <HeaderDiv style={{ display: "flex", justifyContent: "center" }}>
             <div className="form-floating mb-3">
-              <h3 style={{ marginLeft: "700px" }}>티켓 중고판매 글 작성</h3>
+              <h3 style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.8rem"}}>티켓 중고판매 게시글 등록</h3>
             </div>
           </HeaderDiv>
 
@@ -302,16 +316,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
               <h3>상세내용</h3>
               <hr style={{ margin: "10px 0px 10px 0px" }} />
-              {/*          <QuillEditor
-              value={board_mk_content}
-              handleContent={handleContent}
-              quillRef={quillRef}
-              files={files}
-              handleFiles={handleFiles}
-              onChange={(e) => {
-                handleContent(e.target.value);
-              }}
-            /> */}
               <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
                 <Form.Control id="board_mk_content" type="text" rows={3} style={{ height: '150px' }}
                   onChange={(e) => {
@@ -327,7 +331,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
               </DivUploadImg>
 
 
-              {/*   <MarketFileInsert files={files} /> */}
               <hr style={{ opacity: "0%" }} />
               <Button style={
                 {backgroundColor:"rgb(80,50,200)" 
@@ -336,10 +339,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                 , transition:'background-color 0.3s ease',
               }}
               onClick={handleSubmit}
-
-              /*     onClick={() => {
-                    boardInsert();
-                  }} */
               >
                 글 등록하기
               </Button>

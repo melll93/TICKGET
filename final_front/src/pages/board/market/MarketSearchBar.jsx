@@ -3,13 +3,21 @@ import { Cookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BButton, MButton } from "../../../styles/formStyle";
 import MyFilter from "./MyFilter";
+import Swal from "sweetalert2";
 
 const cookies = new Cookies();
 
 const MarketSearchBar = () => {
 
-  const _userData = cookies.get("_userData"); //유저 정보
+  //회원 정보
+  const _userData = cookies.get("_userData"); 
   console.log(_userData)
+  let member_no = 0;
+  if(_userData){
+    member_no = _userData.memberNo
+  }
+
+
 
   //사용자가 입력한 문자열 담기
   const [content, setContent] = useState("");
@@ -68,6 +76,27 @@ const MarketSearchBar = () => {
     return path;
   };
 
+
+
+  const linkToWrite = () => {
+    if(member_no > 0){
+      navigate("/market/write")
+    }else{
+      Swal.fire({
+        title: "로그인 후 이용하실 수 있습니다.",
+        icon: 'warning',
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login');
+        }
+      });
+
+    }
+
+  }
+
+
   return (
     <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
       <MyFilter
@@ -101,18 +130,10 @@ const MarketSearchBar = () => {
       </MButton>
       <MButton
         style={{ width: "70px", height: "40px", marginRight: "10px" }}
-        onClick={() => navigate("/market/write")}
+        onClick={linkToWrite}
       >
         글쓰기
       </MButton>
-{/*       { _userData.no > 0 &&
-  <BButton
-    style={{ width: "70px", height: "40px", marginRight: "10px" }}
-    onClick={() => navigate("/market/write")}
-  >
-    글쓰기
-  </BButton>
-}  회원번호가 0이상 즉 가입된 회원일때만 글쓰기버튼 활성화되게 처리*/}
     </div>
   );
 };
