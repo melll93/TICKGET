@@ -31,7 +31,6 @@ const CarpoolUpdate = () => {
       const res = await CarpoolDetailDB({ boardCpNo });
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
-      console.log("asda = ", jsonDoc);
       setCarpool({
         boardCpNo: jsonDoc.boardCpNo,
         boardCpMemId: jsonDoc.boardCpMemId,
@@ -215,18 +214,6 @@ const CarpoolUpdate = () => {
                 }}
               >
                 <LandingPage />
-              </div>
-
-              <div>
-                <label class="form-block">첨부파일</label>
-                <input
-                  style={{ width: "98%", margin: "10px" }}
-                  type="file"
-                  name="attach"
-                  accept="image/*"
-                  multiple="multiple"
-                  class="form-control"
-                />
               </div>
 
               <div style={{ textAlign: "center" }}>

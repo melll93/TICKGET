@@ -13,6 +13,8 @@ import "firebase/analytics";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { Container } from "react-bootstrap";
+
 /************* firebase 처리 중 *************/
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -36,11 +38,11 @@ const CarpoolBoardList = () => {
 
   /************* firebase 처리 중 *************/
   const [data, setData] = useState({});
-  const [carpool, setCarpool] = useState({
+  /* const [carpool, setCarpool] = useState({
     boardCpNo: "",
     max: "",
     now: "",
-  });
+  }); */
 
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -50,7 +52,6 @@ const CarpoolBoardList = () => {
   useEffect(() => {
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
-
     database.ref().on("value", (snapshot) => {
       const data = snapshot.val();
       setData(data);
@@ -61,41 +62,44 @@ const CarpoolBoardList = () => {
     };
   }, []);
 
-  const handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-
-    setCarpool({
-      ...carpool,
-      boardCpNo: target.dataset.boardCpNo,
-      [name]: value,
-    });
-  };
-
   const handleSaveData = (boardCpNo) => {
     const count = 1;
-    setCarpoolList((prevCarpoolList) =>
-      prevCarpoolList.map((carpool) => {
-        if (carpool.boardCpNo === boardCpNo) {
-          return {
-            ...carpool,
-            count: carpool.count + count,
-          };
-        }
-        return carpool;
-      })
-    );
     firebase
       .database()
       .ref(`${boardCpNo}`)
       .update({
-        max: carpool.max,
-        now: carpool.now,
+        max: 4,
+        now: firebase.database.ServerValue.increment(count),
         count: firebase.database.ServerValue.increment(count),
       });
-    console.log("저장 성공");
   };
+  // const handleSaveData = (boardCpNo) => {
+  //   const count = 1;
+  //   setCarpoolList((prevCarpoolList) =>
+  //     prevCarpoolList.map((carpool) => {
+  //       if (
+  //         carpool.boardCpNo === boardCpNo /*  && carpool.count < carpool.max */
+  //       ) {
+  //         return {
+  //           ...carpool,
+  //           count: carpool.count + count,
+  //           now: carpool.now + count,
+  //           max: 4,
+  //         };
+  //       }
+  //       return carpool;
+  //     })
+  //   );
+  //   firebase
+  //     .database()
+  //     .ref(`${boardCpNo}`)
+  //     .update({
+  //       max: 4,
+  //       now: firebase.database.ServerValue.increment(count),
+  //       count: firebase.database.ServerValue.increment(count),
+  //     });
+  // };
+
   /************* firebase 처리 중 *************/
 
   useEffect(() => {
@@ -139,16 +143,17 @@ const CarpoolBoardList = () => {
     <>
       <div>
         <div
-          style={{ width: "1500px", marginLeft: "auto", marginRight: "auto" }}
+          style={{ width: "1200px", marginLeft: "auto", marginRight: "auto" }}
         >
           <div className="row" style={{ marginTop: "40px" }}>
             <Table className="table table-hover">
               <thead>
                 <tr>
                   <th style={{ textAlign: "center" }}>번호</th>
-                  <th width="15%">제목</th>
+                  <th>제목</th>
                   <th style={{ textAlign: "center" }}>작성자</th>
-                  <th style={{ textAlign: "center" }}>카풀 인원</th>
+                  <th style={{ textAlign: "center" }}>카풀 현황</th>
+                  <th style={{ textAlign: "center" }}></th>
                   <th style={{ textAlign: "center" }}>작성일</th>
                   <th style={{ textAlign: "center" }}>조회수</th>
                 </tr>
@@ -157,7 +162,7 @@ const CarpoolBoardList = () => {
               <tbody>
                 {currentFest(carpoolList).map((carpool) => (
                   <tr key={carpool.boardCpNo}>
-                    <td style={{ textAlign: "center", width: "100px" }}>
+                    <td style={{ textAlign: "center", width: "50px" }}>
                       {carpool.boardCpNo}
                     </td>
                     <td style={{ width: "300px" }}>
@@ -180,24 +185,42 @@ const CarpoolBoardList = () => {
                         {carpool.boardCpTitle}
                       </button>
                     </td>
-                    <td style={{ textAlign: "center", width: "200px" }}>
+                    <td style={{ textAlign: "center", width: "100px" }}>
                       {carpool.boardCpMemId}
                     </td>
 
                     {/* 파이어 베이스에서 받아온 값 호출하자 */}
-                    <td style={{ textAlign: "center", width: "100px" }}>
-                      {carpool.boardCpNo} 글번호 일치 시+1
-                      <br />
-                      <button onClick={() => handleSaveData(carpool.boardCpNo)}>
-                        Save Data
-                      </button>
+                    <td style={{ textAlign: "center", width: "200px" }}>
+                      {Object.keys(data).map((key) => {
+                        if (Number(key) === carpool.boardCpNo) {
+                          const item = { boardCpNo: key, ...data[key] };
+                          return (
+                            <div className="data" key={carpool.boardCpNo}>
+                              {/* 글번호={carpool.boardCpNo}<br/> */}
+                              {/*  현재인원={item.now},  */}
+                              최대인원 = {item.max}, 참가하기 = {item.count}/
+                              {item.max}
+                              <br />
+                            </div>
+                          );
+                        }
+                        return null;
+                      })}
                     </td>
                     {/* 파이어 베이스에서 받아온 값 호출하자 */}
 
-                    <td style={{ textAlign: "center", width: "200px" }}>
-                      {carpool.boardCpDate}
+                    <td style={{ textAlign: "center", width: "80px" }}>
+                      <Button
+                        style={{ backgroundColor: "black" }}
+                        onClick={() => handleSaveData(carpool.boardCpNo)}
+                      >
+                        함께하기
+                      </Button>
                     </td>
                     <td style={{ textAlign: "center", width: "100px" }}>
+                      {carpool.boardCpDate}
+                    </td>
+                    <td style={{ textAlign: "center", width: "50px" }}>
                       {carpool.boardCpViews}
                     </td>
                   </tr>
@@ -223,7 +246,6 @@ const CarpoolBoardList = () => {
             style={{ backgroundColor: "black", color: "white" }}
             onClick={selectCarpoolList}
           >
-            {" "}
             전체조회
           </Button>
           &nbsp;
@@ -237,49 +259,6 @@ const CarpoolBoardList = () => {
           &nbsp;
         </div>
       </div>
-
-      {/********** 파이어베이스 test**********/}
-      <div>
-        <h1>Firebase EXAMPLE</h1>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="글번호"
-          onChange={handleInputChange}
-        />
-        <br />
-        <input
-          type="text"
-          id="max"
-          name="max"
-          placeholder="최대인원"
-          onChange={handleInputChange}
-        />
-        <br />
-        <input
-          type="text"
-          id="now"
-          name="now"
-          placeholder="현재인원"
-          onChange={handleInputChange}
-        />
-        <br />
-
-        <button onClick={handleSaveData}>Save Data</button>
-
-        {Object.keys(data).map((key) => {
-          const item = data[key];
-          return (
-            <div className="data" key={key}>
-              글번호={key} : 최대 인원={item.max}, 현재 인원={item.now},
-              save누르면 증가={item.count}
-            </div>
-          );
-        })}
-      </div>
-      {/********** 파이어베이스 test**********/}
-      
     </>
   );
 };
