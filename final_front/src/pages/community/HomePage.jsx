@@ -65,12 +65,12 @@ const HomePage = () => {
         >
           <div style={{ textAlign: "center", alignItems: "center" }}>
             <h1>
-              <strong>what's hot</strong>
+              <strong> WHAT'S HOT</strong>
             </h1>
-            {festivalHitList.slice(0, 5).map((festival) => (
+            {festivalHitList.slice(0, 5).map((festival, i) => (
               <Link to={`/productsDetail/${festival.festMId}`}>
                 <Card.Img
-                  key={festival.festMId}
+                  key={i}
                   src={festival.festMImg}
                   style={{
                     width: "150px",

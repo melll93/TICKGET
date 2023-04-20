@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CarouselOne from "./CarouselOne";
 import "../../styles/mainhomepage.css";
+
 
 const responsive = {
   superLargeDesktop: {
@@ -26,12 +27,35 @@ const responsive = {
 
 const MainCarousel = ({ festivalToday }) => {
   // console.log(festivalToday);
+const [movingImg, setMovingImg] = useState(2);
+
+
 
   return (
     <div className="carouselDiv">
-      <Carousel responsive={responsive}>
+      <Carousel 
+      responsive={responsive}
+      infinite 
+      autoPlay
+      autoPlaySpeed={3000}
+      sliderClass=""
+      beforeChange={() => setMovingImg((prevSlide) => (prevSlide + 1) % festivalToday.length)}
+      customTransition="transform 500ms ease-in-out"
+      centerMode
+/*       centerSlidePercentage={100 / (responsive.desktop.items + 1)} */
+     draggable={false}
+      swipeable={false}
+/*       focusOnSelect={false} */
+/*       removeArrowOnDeviceType={["tablet", "mobile"]} */
+      arrows={false}
+      slidesToSlide={1}
+/*       containerClass="carousel-container" */
+/*       itemClass="carousel-item" */
+      >
+
         {festivalToday.map((festival, index) => (
-          <CarouselOne key={index} festival={festival} />
+          <CarouselOne key={index} festival={festival} 
+          isActive={index === movingImg}/>
         ))}
       </Carousel>
     </div>

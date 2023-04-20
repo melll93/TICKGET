@@ -39,7 +39,7 @@ const FestivalsDetail = () => {
 
 
 
-  const [festival, setFestival] = useState({
+  const [festival, setFestival] = useState([{
     festMId: "",
     festMName: "",
     festMStart: "",
@@ -50,24 +50,26 @@ const FestivalsDetail = () => {
     festTcPrice:"",
     festDtRuntime:"",
     festDtAge:"",
-  });
+  }]);
+
   useEffect(() => {
     const asyncDB = async () => {
       const res = await FetivalDetailDB({ festMId });
+      console.log(res.data)
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
-      setFestival({
-        festMName: jsonDoc.festMName,
-        festMStart: jsonDoc.festMStart,
-        festMEnd: jsonDoc.festMEnd,
-        festMLoc: jsonDoc.festMLoc,
-        festMImg: jsonDoc.festMImg,
-        festPsUrl:jsonDoc.festPsUrl,
-        festTcPrice:jsonDoc.festTcPrice,
-        festDtRuntime:jsonDoc.festDtRuntime,
-        festDtAge:jsonDoc.festDtAge,
+      setFestival([{
+        festMName: jsonDoc[0].festMName,
+        festMStart: jsonDoc[0].festMStart,
+        festMEnd: jsonDoc[0].festMEnd,
+        festMLoc: jsonDoc[0].festMLoc,
+        festMImg: jsonDoc[0].festMImg,
+        festPsUrl:jsonDoc[0].festPsUrl,
+        festTcPrice:jsonDoc[0].festTcPrice,
+        festDtRuntime:jsonDoc[0].festDtRuntime,
+        festDtAge:jsonDoc[0].festDtAge,
         
-      });
+      }]);
       if (res.data) {
         setFestival(res.data);
         
@@ -126,20 +128,6 @@ const FestivalsDetail = () => {
     navigate('/festival');
   };
 
-
-  /* 상품수정 */
-  const updateProducts = async () => {
-    
- console.log('수정버튼 클릭드');
-  /*      const festival = {
-      fest_m_id: festMId,
-    };
-    const res = await DeleteFestivalDB(festival);
-    if (!res.data) {
-    } else {
-    }
-    navigate(-1); */
-  };
 
 
 
@@ -305,45 +293,53 @@ const FestivalsDetail = () => {
               <div className="product_detail_imgdiv">
                 <img
                   className="product_detail_img"
-                  src={festival.festMImg}
+                  src={festival[0].festMImg}
                   alt="상품사진"
                 />
               </div>
               <div className="product_detail_info">
                 <div className="product_detail_head">
-                  <h3 className="product_title">{festival.festMName}</h3>
+                  <h3 className="product_title">{festival[0].festMName}</h3>
                   <p className="product_sub_title">subtitle</p>
                 </div>
                 <div className="product_info"></div>
                 <ul className="product_lnfo_list_col2">
                   <li className="product_info_list">
                     <span className="product_info_title">장소</span>
-                    <div className="product_info_desc">{festival.festMLoc}</div>
+                    <div className="product_info_desc">{festival[0].festMLoc}</div>
                   </li>
                   <li className="product_info_list">
                     <span className="product_info_title">관람시간</span>
-                    <div className="product_info_desc">{festival.festDtRuntime===null? <p>미제공</p>: <p>{festival.festDtRuntime}</p>}</div>
+                    <div className="product_info_desc">{festival[0].festDtRuntime===null? <p>미제공</p>: <p>{festival[0].festDtRuntime}</p>}</div>
                   </li>
                   <li className="product_info_list">
                     <span className="product_info_title">기간</span>
                     <div className="product_info_desc">
-                      {festival.festMStart}~{festival.festMEnd}
+                      {festival.festMStart}~{festival[0].festMEnd}
                     </div>
                   </li>
                   <li className="product_info_list">
                     <span className="product_info_title">관람등급</span>
-                    <div className="product_info_desc">{festival.festDtAge===null? <p>미제공</p>: <p>{festival.festDtAge}</p>}</div>
+                    <div className="product_info_desc">{festival[0].festDtAge===null? <p>미제공</p>: <p>{festival[0].festDtAge}</p>}</div>
                   </li>
                 </ul>
+
+
+
                 <ul className="product_lnfo_list_col2">
                   <li className="product_info_list">
                     <span className="product_info_title">가격</span>
                     <div className="product_info_desc">
                       <ul className="product_info_sublist">
-                        <li className="product_info_subitem">
-                          일반석<em className="text_emphasis"> {festival.festTcPrice===null? <p>미정</p>: <p>{festival.festTcPrice}</p>}</em>
+
+                      {festival.map((fest, i) => (
+                        <li className="product_info_subitem" >
+                         { fest.festTcType===null? <p style={{display:'inline'}}>좌석(미정)  : </p>: <p style={{display:'inline'}}>{fest.festTcType}  : </p>}  
+                         { fest.festTcPrice===null? <p style={{display:'inline'}}>가격미정</p>: <p style={{display:'inline'}}>{fest.festTcPrice}</p>}
                           원
                         </li>
+                      ))}
+
                       </ul>
                     </div>
                   </li>
@@ -400,6 +396,7 @@ const FestivalsDetail = () => {
                 justify
               >
                 <Tab eventKey="product_detail_description" title="상세정보">
+                  {festival.map((fest, i) => (
                   <div
                     className="product_detail_description"
                     style={{
@@ -407,9 +404,9 @@ const FestivalsDetail = () => {
                       height: "1000px",
                     }}
                   >
-                    {festival.festPsUrl===null? <div><h1>상품 상세보기 정보가 없습니다.</h1> <TicketCancleInfo/>  </div>: <img src={festival.festPsUrl} alt="상품상세정보이미지"></img>}
-
+        {fest.festPsUrl===null? <div><h1>상품 상세보기 정보가 없습니다.</h1> <TicketCancleInfo/>  </div>: <img src={fest.festPsUrl} alt="상품상세정보이미지"></img>}
              </div>
+))}
                 </Tab>
                 <Tab eventKey="product_detail_review" title="상품리뷰">
                   리뷰리뷰

@@ -19,7 +19,7 @@ public interface FestivalService {
 
   int festivalDelete(String fest_m_id);
 
-FestivalDto festivalDetail(FestivalDto festivalDto);
+  List<FestivalDto> festivalDetail(FestivalDto festivalDto);
 
 List<FestivalDto> festivalHitList();
 

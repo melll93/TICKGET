@@ -1,14 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../../styles/mainhomepage.css";
 
-const CarouselOne = ({ festival }) => {
+const CarouselOne = ({ festival, isActive }) => {
   // console.log(festival);
 
   return (
     <>
-      <a href={"/productsDetail/" + festival.festMId}>
-        <img className="compo_carouselone_img" src={festival.festMImg} />
-      </a>
+    <div className={`carouseloneDiv${isActive ? "active" : ""}`}>
+    <Link to={`/productsDetail/${festival.festMId}`}>
+    <img className="compo_carouselone_img"  src={festival.festMImg} /> 
+       </Link>
+    </div>
     </>
   );
 };

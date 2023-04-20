@@ -4,51 +4,90 @@ import { festTicketInsertDB } from '../../axios/festival/festival';
 
 const AddProductsFestTicketDetail = () => {
   const {festMId}=useParams();
-  const [no, setNo]=useState([]);
+
+  const [tickets, setTickets] = useState([]);
+  const addTicket = () => {
+    const newTicket = {
+      no: '', // 좌석 정보의 개수
+      seatType: '', // 티켓의 좌석 유형
+      price: '', // 티켓의 가격
+      festTcTime: '' // 티켓의 시간 정보
+    };
+    setTickets(prevTickets => [...prevTickets, newTicket]);
+  }
+  const removeTicket = (index) => {
+    setTickets(prevTickets => prevTickets.filter((_, i) => i !== index));
+  }
+
+
+/*   const [no, setNo]=useState([]);
 const [seatType, setSeatsType] = useState([]);
 const [price, setPrice] = useState([]);
 const [seats, setSeats] = useState([]);
 const [festTcTime, setFestTcTime] = useState([]);
-
+ */
 
 
 /* fest_tc */
-const inputTcPrice = useCallback((e) => {
-  setPrice (e)
-},[])
-const inputTcSeatType = useCallback((e) => {
-  setSeatsType (e)
-},[])
-const inputTcTime = useCallback((e) => {
-  setFestTcTime (e)
-},[])
-
-const festTicketInsert=async()=>{
-  const ticket = {
-    festMId,
-    festTcType: seatType,
-    festTcPrice: price,
-    festTcTime: festTcTime,
-};
-const res = await festTicketInsertDB(ticket);
-console.log(ticket);
-if (!res.data) {
-} else {
-}
-};
-
-
-
-
-
-
-function saveBtn(e) {
-  e.preventDefault();
-  alert({seatType, price, seats });
+const inputTcPrice = (index, price) => {
+  setTickets(prevTickets => {
+    const updatedTickets = [...prevTickets];
+    updatedTickets[index].price = price;
+    return updatedTickets;
+  });
 }
 
 
-function addLineNo() {
+const inputTcSeatType = (index, seatType) => {
+  setTickets(prevTickets => {
+    const updatedTickets = [...prevTickets];
+    updatedTickets[index].seatType = seatType;
+    return updatedTickets;
+  });
+}
+
+const inputTcTime = (index, festTcTime) => {
+  setTickets(prevTickets => {
+    const updatedTickets = [...prevTickets];
+    updatedTickets[index].festTcTime = festTcTime;
+    return updatedTickets;
+  });
+}
+
+const festTicketInsert = async () => {
+  for (const ticket of tickets) {
+    let festTcTimeParsed;
+    try {
+    } catch (error) {
+    }
+
+    const res = await festTicketInsertDB({
+      festMId,
+      festTcType: ticket.seatType,
+      festTcPrice: ticket.price,
+      festTcTime: ticket.festTcTime,
+    });
+    console.log(ticket);
+    if (!res.data) {
+      // handle error
+    } else {
+      // handle success
+    }
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+/* function addLineNo() {
   setNo([...no, '']);
 }
 
@@ -57,7 +96,7 @@ function removeSeat(index) {
   newNo.splice(index, 1);
   setNo(newNo);
 }
-
+ */
   return (
     <div>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
@@ -68,14 +107,14 @@ fest_ticket 추가 정보 입력
           <input
             type="number"
             className="form-control"
-            value={no.length}
+            value={tickets.no}
             disabled
             style={{ width: '100%' }}
           />
           <label htmlFor="floatingInput">좌석정보</label>
         </div>
 
-        <button type="button" className="btn-add-seat" onClick={addLineNo}>
+        <button type="button" className="btn-add-seat" onClick={addTicket}>
           좌석 추가
         </button>
         <button type="submit" className="btn-save" onClick={festTicketInsert}>
@@ -94,31 +133,30 @@ fest_ticket 추가 정보 입력
           </tr>
         </thead>
         <tbody>
-          {no.map((line, index) => (
+        {tickets.map((ticket, index) => (
             <tr key={index}>
                <td>
                   {index+1}
               </td>
               <td>
               <input
-                  type="time"
-
+                  type="text"
                   className="form-control"
-                  onChange={(e) => inputTcTime (e.target.value)}
+                  onChange={(e) => inputTcTime (index, e.target.value)}
                 />
               </td>
               <td>
                 <input
                   type="text"
                   className="form-control"
-                  onChange={(e) => inputTcSeatType(e, index)}
+                  onChange={(e) => inputTcSeatType(index, e.target.value)}
                 />
               </td>
               <td>
                 <input
                   type="number"
                   className="form-control"
-                  onChange={(e) => inputTcPrice (e.target.value)}
+                  onChange={(e) => inputTcPrice (index, e.target.value)}
                 style={{display:'inline-block', width:'80%'}}
                 />원
               </td>
@@ -130,7 +168,7 @@ fest_ticket 추가 정보 입력
                 />석
               </td>
               <td>
-                <button type="button" className="btn-delete" onClick={() => removeSeat(index)}>
+                <button type="button" className="btn-delete" onClick={() => removeTicket(index)}>
                   삭제
                 </button>
               </td>

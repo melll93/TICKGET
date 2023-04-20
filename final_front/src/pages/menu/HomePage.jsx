@@ -75,8 +75,6 @@ const HomePage = () => {
 </section>
 
         <section className="home_total_sec" style={{paddingLeft: "150px", backgroundColor:"lightgray"}}>
-          
-          
           <div className="total_section" style={{ display: "flex" }}>
 
 {/* 위클리랭킹 */}

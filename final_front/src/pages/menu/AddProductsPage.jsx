@@ -70,15 +70,15 @@ const originDetail=async()=>{
   const res = await FetivalDetailDB(festival);
   const temp = JSON.stringify(res.data)  //문자열 전환
   const jsonDoc=JSON.parse(temp)  //배열로 접근처리
-  setFesttitle(jsonDoc.festMName)
-  setFeststart(jsonDoc.festMStart )
-setFestend(jsonDoc.festMEnd)
-setFestloc(jsonDoc.festMLoc)
-setFestcate(jsonDoc.festMGenre)
-setFestdetail(jsonDoc.festDetail)   //아직 사용 안하는중
-setFestprice(jsonDoc.festPrice)       //아직 사용 안하는중
-setFestArea(jsonDoc.festMArea)
-setFestImageUrl(jsonDoc.festMImg)
+  setFesttitle(jsonDoc[0].festMName)
+  setFeststart(jsonDoc[0].festMStart )
+setFestend(jsonDoc[0].festMEnd)
+setFestloc(jsonDoc[0].festMLoc)
+setFestcate(jsonDoc[0].festMGenre)
+setFestdetail(jsonDoc[0].festDetail)   //아직 사용 안하는중
+setFestprice(jsonDoc[0].festPrice)       //아직 사용 안하는중
+setFestArea(jsonDoc[0].festMArea)
+setFestImageUrl(jsonDoc[0].festMImg)
 /* if(jsonDoc[0].MEM_NO!==sessionStorage.getItem("no")){  //글의 회원번호와 로그인한 no가 달라?  네 -> 다른 사람 글
 return console.log('작성자가 아닙니다.')
 } */

@@ -44,11 +44,15 @@ const AddProductsOptionalDetail = () => {
       festDtRuntime: festDetailRuntime,
     festDtAge: festDetailAge,
   };
+  try {
   const res = await saveFestDetailDB(festival);
   console.log(festival);
   if (!res.data) {
   } else {
   }
+} catch (error) {
+  alert('이미 등록된 정보가 있어 수정만 가능합니다.');
+}
 };
 
 
