@@ -1,66 +1,86 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 const { kakao } = window;
 
-const MapContainer = ({place}) => {
-  
+const MapContainer = ({ place }) => {
+  const [map, setMap] = useState(null);
+  const markers = useRef([]);
+
   useEffect(() => {
-    console.log(place)
-      let infowindow = new kakao.maps.InfoWindow({ zIndex: 0 });
-      let markers = [];
-      const container = document.getElementById("myMap");
-      const options = {
-        center: new kakao.maps.LatLng(37.51205818145604, 127.07327785410678),
-        level: 4,
-      };
-      const map = new kakao.maps.Map(container, options);
+    // 맵 초기화
+    let container = document.getElementById("myMap");
+    let options = {
+      center: new kakao.maps.LatLng(0, 0),
+      level: 3,
+    };
+    let map = new kakao.maps.Map(container, options);
+    setMap(map);
+  }, []);
 
-      const ps = new kakao.maps.services.Places();
+  useEffect(() => {
+    // 장소 검색
+    if (place && map) {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src =
+        "//dapi.kakao.com/v2/maps/sdk.js?appkey=7054cfa7b874f6b9ff1d967de8b8b88f&libraries=services,clusterer,drawing&autoload=false";
+      document.head.appendChild(script);
 
-      ps.keywordSearch(place, placesSearchCB); 
-
-
-      function placesSearchCB(data, status) {
-        if (status === kakao.maps.services.Status.OK) {
+      script.onload = () => {
+        kakao.maps.load(() => {
+          const infowindow = new kakao.maps.InfoWindow({ zIndex: 0 });
+          const ps = new kakao.maps.services.Places();
           let bounds = new kakao.maps.LatLngBounds();
 
-          for (let i = 0; i < data.length; i++) {
-            displayMarker(data[i]);
-            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          markers.current.forEach((marker) => marker.setMap(null));
+          markers.current = [];
+
+          ps.keywordSearch(place, placesSearchCB);
+
+          function placesSearchCB(data, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              for (let i = 0; i < data.length; i++) {
+                displayMarker(data[i]);
+                bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+              }
+              map.setBounds(bounds);
+            }
           }
 
-          map.setBounds(bounds);
-        }
-      }
+          function displayMarker(place) {
+            let marker = new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(place.y, place.x),
+            });
 
-      function displayMarker(place) {
-        let marker = new kakao.maps.Marker({
-          map: map,
-          position: new kakao.maps.LatLng(place.y, place.x),
-        });
+            markers.current.push(marker);
 
-        kakao.maps.event.addListener(marker, "click", function () {
-          infowindow.setContent(
-            '<div style="padding:5px;font-size:12px;">' +
-              place.place_name +
-              "</div>"
-          );
-          infowindow.open(map, marker);
+            kakao.maps.event.addListener(marker, "click", function () {
+              infowindow.setContent(
+                '<div style="padding:5px;font-size:12px;">' +
+                  place.place_name +
+                  "</div>"
+              );
+              infowindow.open(map, marker);
+            });
+          }
         });
-      }
-  }, [place]);
+      };
+    }
+  }, [place, map]);
+
+
 
   return (
     <>
       <div
         id="myMap"
         style={{
-          width: "800px",
+          width: "850px",
           height: "550px",
-          marginTop:"15px",
+          marginTop: "15px",
           marginRight: "40px",
         }}
       ></div>
-
       <div
         style={{
           display: "flex",
@@ -69,7 +89,7 @@ const MapContainer = ({place}) => {
           alignItems: "center",
         }}
       ></div>
-  </>
+    </>
   );
 };
 

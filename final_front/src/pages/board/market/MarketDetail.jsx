@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react'
+import { Alert, Button, Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
 import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,7 +15,7 @@ import MarketPaymentGuide from './MarketPaymentGuide';
 import MapContainer from './Map/MapContainer';
 import UserProfile from '../../../components/UserProfile';
 import { searchById } from '../../../axios/member/member';
-
+import Swal from "sweetalert2";
 
 
 const cookies = new Cookies();
@@ -24,8 +24,15 @@ const MarketDetail = () => {
 
   //회원 정보
   const _userData = cookies.get("_userData"); 
-  console.log(_userData)
-  const member_nickname = _userData.memberNickname;
+ /*  console.log(_userData) */
+
+  let member_nickname = '';
+  let member_no = 0
+  if (_userData) {
+    member_nickname = _userData.memberNickname;
+    member_no = _userData.memberNo;
+  }
+
 
   const [userData, setUserData] = useState();
   searchById("test").then(setUserData);
@@ -46,16 +53,6 @@ const MarketDetail = () => {
   const navigate = useNavigate();
   
 
-/*   추천상품 목록 불러오기
-  useEffect(() => {
-  const recommendList = async() => {
-    const res = await mk_boardListDB()
-    setBoards(res.data);
-  }
-  recommendList()
-  console.log(boards)
-  },[]) */
-
 
   //상세보기 데이터 가져오기
   useEffect(() => {
@@ -69,7 +66,7 @@ const MarketDetail = () => {
       console.log(res.data);//빈배열만 출력됨
       const temp = JSON.stringify(res.data)
       const jsonDoc = JSON.parse(temp)
-      console.log(jsonDoc[0].memName);
+      console.log(jsonDoc[0].memberNickname);
       /* console.log(jsonDoc[0].memNo); */
       console.log(jsonDoc[0].boardMkTitle);
       console.log(jsonDoc[0].boardMkDate);
@@ -86,8 +83,8 @@ const MarketDetail = () => {
         board_mk_content: jsonDoc[0].boardMkContent,
         board_mk_date: jsonDoc[0].boardMkDate,
         board_mk_hit: jsonDoc[0].boardMkHit,
-        mem_name: jsonDoc[0].memName,
-      /*   mem_no: jsonDoc[0].memNo, */
+        member_name: jsonDoc[0].memberNickname,
+        member_no: jsonDoc[0].memberNo, 
         mk_ticket_place: jsonDoc[0].mkTicketPlace,
         mk_ticket_date: jsonDoc[0].mkTicketDate,   
         mk_ticket_count: jsonDoc[0].mkTicketCount,
@@ -96,7 +93,7 @@ const MarketDetail = () => {
         board_mk_filename: jsonDoc[0].boardMkFilename,
         board_mk_fileurl: jsonDoc[0].boardMkFileurl,
       })
-
+      
     }
     boardDetail()
   }, [setDetail, no, dispatch, navigate])
@@ -157,15 +154,86 @@ const MarketDetail = () => {
 
 
 
+ //찜하기 기능
+ const addWishlist = () => {
+  if(member_no > 0) {
+   /* 구현중.. */
 
 
 
+  }else if(member_no == detail.member_no){ 
+    Swal.fire({
+      title: "내 게시글에서 이용할 수 없습니다.",
+      icon: 'error'
+    });
 
-
-
-  const linkToPayment = () => {
-    navigate(`/payment/${no}`)
+  }else{
+    Swal.fire({
+      title: "로그인 후 이용하실 수 있습니다.",
+      icon: 'warning',
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login');
+      }
+    });
   }
+ }
+
+ //채팅으로 연결
+const linkToChat = () => {
+ if(member_no > 0) {
+  /* 유저와 판매자 채팅으로 연결해주기 */
+
+
+}else if(member_no === detail.member_no){
+  Swal.fire({
+    title: "내 게시글에서 이용할 수 없습니다.",
+    icon: 'error',
+  })
+
+ }else{
+  Swal.fire({
+    title: "로그인 후 이용하실 수 있습니다.",
+    icon: 'warning',
+    showCancelButton: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      navigate('/login');
+    }
+  });
+ }
+}
+
+    //구매 페이지 이동
+  const linkToPayment = () => {
+    if(member_no > 0 && member_no != detail.member_no){
+      navigate(`/payment/${no}`)
+
+
+    }else if(member_no === detail.member_no){
+  Swal.fire({
+      title: "내 게시글에서 이용할 수 없습니다.",
+      icon: 'error',
+    })
+
+    }else{
+      Swal.fire({
+        title: "로그인 후 이용하실 수 있습니다.",
+        icon: 'warning',
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login');
+        }
+      });
+    }
+  }
+
+
+
+
+
 
 
   return (
@@ -231,16 +299,17 @@ const MarketDetail = () => {
 
 
 <div className="mb-2" style={{display: 'flex', justifyContent: 'space-between', marginTop:'70px',}}>
-        <Button variant="outline-dark" size="lg" style={{width:'180px'}}>
+        <Button variant="outline-dark" size="lg" style={{width:'180px'}} onClick={addWishlist}>
         <i class="bi bi-heart"></i>{" "}찜하기
         </Button>{' '}
-        <Button variant="outline-danger" size="lg" style={{width:'180px'}}>
+        <Button variant="outline-danger" size="lg" style={{width:'180px'}} onClick={linkToChat}>
           <i class="bi bi-chat-left-dots"></i>{" "}채팅하기
         </Button>{' '}
         <Button variant="outline-primary" size="lg" style={{width:'180px'}} onClick={linkToPayment}>
         <i class="bi bi-wallet2" ></i>{" "}구매하기
         </Button>
       </div>
+
         </div>
       </div>
 
@@ -249,19 +318,7 @@ const MarketDetail = () => {
 
 
 
-{/* 연관상품 탭 작업 */}
-{/* <section style={{marginTop:'50px'}}>
-<div> 연관상품 </div>
-<div className='row'>
-<div>
-{boards.slice(0, 5).map((boards) => (
-  <div key={boards.boardMkNo} src={boards.boardMkFileurl} style={{width:'150px', height:'150px', marginRight:'20px'}} alt="Card image" />
-  ))}
-  </div>
-  </div>
 
-</section>
- */}
 
 {/* 상세정보 탭 */}
     <section style={{maxWidth:'1400px', minHeight:'1000px' ,marginLeft:'300px' , marginTop:'100px'}}>
@@ -276,7 +333,7 @@ const MarketDetail = () => {
         {detail.board_mk_content}
       </div>  
     </Tab>
-    <Tab eventKey="place" title="공연장소 찾아가는길" unselected={true}>
+    <Tab eventKey="place" title="공연장소 찾아가는길" unselected={true} mountOnEnter={true}>
   <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px" }}>
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginRight:'40px' }}>
       <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.3rem", marginBottom: "20px" }}>
@@ -286,7 +343,9 @@ const MarketDetail = () => {
       </p>
       <div style={{ width: "40%", borderTop: "1px solid black", marginBottom: "10px", opacity: "15%" }} />
     </div>
-    <MapContainer place={detail.mk_ticket_place} />
+   
+ <MapContainer place={detail.mk_ticket_place}/>
+
   </div>
 </Tab>
     <Tab eventKey="payinfo" title="상품 결제/수령 안내"  unselected={true}>

@@ -3,6 +3,8 @@ import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { mk_boardDeleteDB, mk_boardDetailDB } from "../../../axios/board/market/marketLogic";
 import { BButton, MButton } from "../../../styles/formStyle";
+import Swal from "sweetalert2";
+
 
 const cookies = new Cookies();
 
@@ -11,11 +13,15 @@ const MarketBoardHeader = ({ detail, no }) => {
   //회원 정보
   const _userData = cookies.get("_userData"); 
   /* console.log(_userData) */
-  const member_no = _userData.memberNo;
-  /* console.log(member_no) */
+
+  let member_no = 0;
+  if (_userData) {
+    member_no = _userData.memberNo;
+  }
 
 
-  const [boardmemno , setBoardMemNo] = useState(3)
+
+  const [boardmemno , setBoardMemNo] = useState()
   const navigate = useNavigate();
 
   
@@ -42,8 +48,16 @@ const MarketBoardHeader = ({ detail, no }) => {
     };
     const res = await mk_boardDeleteDB(board);
     console.log(res.data);
-    alert("게시글 삭제 완료");
-    navigate("/market");
+    Swal.fire({
+      title: '게시글을 삭제하시겠습니까?',
+      icon: 'warning',
+     showCancelButton: true,
+   }).then((result) => {
+     if (result.isConfirmed) {
+       Swal.fire('삭제가 완료되었습니다!','','success')
+       navigate("/market");
+     }
+   });
   };
 
   //게시판 목록 이동
