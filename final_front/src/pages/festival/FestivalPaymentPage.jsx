@@ -14,7 +14,7 @@ const FestivalPaymentPage = () => {
 
   let { festMId } = useParams();
   console.log(festMId);
-  const [festival, setFestival] = useState({
+  const [festival, setFestival] = useState([{
     festMId: "",
     festMName: "",
     festMStart: "",
@@ -25,23 +25,26 @@ const FestivalPaymentPage = () => {
     festTcPrice: "",
     festDtRuntime: "",
     festDtAge: "",
-  });
+  }]);
   useEffect(() => {
     const asyncDB = async () => {
       const res = await FetivalDetailDB({ festMId });
       const result = JSON.stringify(res.data);
       console.log(res.data)
       const jsonDoc = JSON.parse(result);
+      console.log('리저트'+result)
+      console.log(jsonDoc[0].festMName)
       setFestival({
-        festMName: jsonDoc[0].festMName,
-        festMStart: jsonDoc[0].festMStart,
-        festMEnd: jsonDoc[0].festMEnd,
-        festMLoc: jsonDoc[0].festMLoc,
-        festMImg: jsonDoc[0].festMImg,
-        festPsUrl: jsonDoc[0].festPsUrl,
-        festTcPrice: jsonDoc[0].festTcPrice,
-        festDtRuntime: jsonDoc[0].festDtRuntime,
-        festDtAge: jsonDoc[0].festDtAge,
+        festMId,
+        festMName: jsonDoc.festMName,
+        festMStart: jsonDoc.festMStart,
+        festMEnd: jsonDoc.festMEnd,
+        festMLoc: jsonDoc.festMLoc,
+        festMImg: jsonDoc.festMImg,
+        festPsUrl: jsonDoc.festPsUrl,
+        festTcPrice: jsonDoc.festTcPrice,
+        festDtRuntime: jsonDoc.festDtRuntime,
+        festDtAge: jsonDoc.festDtAge,
       });
       if (res.data) {
         setFestival(res.data);
@@ -52,13 +55,11 @@ const FestivalPaymentPage = () => {
     asyncDB();
     return () => {};
   }, []);
-
-
  
 
 
   const orderDetail = {
-    url: festival[0].festMImg,
+    url: festival[0].festPsUrl,
     title: festival[0].festMName,
     seat: festival[0].festMName,
     date: festSelectedDate,
