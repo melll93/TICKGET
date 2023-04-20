@@ -15,14 +15,10 @@ const ChangePwPage = () => {
   const [memInfo, setMemInfo] = useState({
     pw: '',
     pwConfirm: '',
-  });
+  })
   const [comment, setComment] = useState({
     pw: "",
     pwConfirm: ""
-  });
-  const [star, setStar] = useState({
-    pw: "*",
-    pwConfirm: "*"
   })
 
 // 유효성 검사
@@ -34,7 +30,7 @@ const ChangePwPage = () => {
       result = checkPassword(memInfo.pw, e);
     }
     setComment({ ...comment, [key]: result });
-    if (result) {
+/*     if (result) {
       if (result === ' ') {
         setStar({ ...star, [key]: "" });
       } else {
@@ -42,7 +38,7 @@ const ChangePwPage = () => {
       }
     } else {
       setStar({ ...star, [key]: "" });
-    }
+    } */
   }
   const changeMemInfo = (e) => {
     const id = e.currentTarget.id;
@@ -107,13 +103,13 @@ const ChangePwPage = () => {
       <LoginForm>
         <MyH1></MyH1>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', Content: 'center', marginTop: '20px', width: "100%" }}>
-          <MyLabel> 비밀번호 <span style={{ color: "red" }}>{star.pw}</span>
+          <MyLabel> 비밀번호
             <MyInput type="password" id="pw" placeholder="변경하실 새로운 비밀번호를 입력해 주세요"
               onKeyUp={(e) => { setComment({ ...comment, pwConfirm: checkPassword(e.target.value, memInfo.pwConfirm) }); }}
               onChange={(e) => { changeMemInfo(e); validate('pw', e); }} />
               {comment.pw}
           </MyLabel>
-          <MyLabel> 비밀번호 재입력 <span style={{ color: "red" }}>{star.pwConfirm}</span>
+          <MyLabel> 비밀번호 재입력
             <MyInput type="password" id="pwConfirm" placeholder="비밀번호를 한 번 더 입력해 주세요"
               onChange={(e) => { changeMemInfo(e); validate('pwConfirm', e.target.value); }} />
               {comment.pwConfirm}
