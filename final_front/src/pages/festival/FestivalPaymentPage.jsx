@@ -30,17 +30,18 @@ const FestivalPaymentPage = () => {
     const asyncDB = async () => {
       const res = await FetivalDetailDB({ festMId });
       const result = JSON.stringify(res.data);
+      console.log(res.data)
       const jsonDoc = JSON.parse(result);
       setFestival({
-        festMName: jsonDoc.festMName,
-        festMStart: jsonDoc.festMStart,
-        festMEnd: jsonDoc.festMEnd,
-        festMLoc: jsonDoc.festMLoc,
-        festMImg: jsonDoc.festMImg,
-        festPsUrl: jsonDoc.festPsUrl,
-        festTcPrice: jsonDoc.festTcPrice,
-        festDtRuntime: jsonDoc.festDtRuntime,
-        festDtAge: jsonDoc.festDtAge,
+        festMName: jsonDoc[0].festMName,
+        festMStart: jsonDoc[0].festMStart,
+        festMEnd: jsonDoc[0].festMEnd,
+        festMLoc: jsonDoc[0].festMLoc,
+        festMImg: jsonDoc[0].festMImg,
+        festPsUrl: jsonDoc[0].festPsUrl,
+        festTcPrice: jsonDoc[0].festTcPrice,
+        festDtRuntime: jsonDoc[0].festDtRuntime,
+        festDtAge: jsonDoc[0].festDtAge,
       });
       if (res.data) {
         setFestival(res.data);
@@ -52,14 +53,18 @@ const FestivalPaymentPage = () => {
     return () => {};
   }, []);
 
+
+ 
+
+
   const orderDetail = {
-    url: festival.festMImg,
-    title: festival.festMName,
-    seat: festival.festMName,
+    url: festival[0].festMImg,
+    title: festival[0].festMName,
+    seat: festival[0].festMName,
     date: festSelectedDate,
-    place: festival.festMLoc,
+    place: festival[0].festMLoc,
     amount: festSelectedTkamt,
-    price: festival.festTcPrice,
+    price: festival[0].festTcPrice,
   };
 
   return (
