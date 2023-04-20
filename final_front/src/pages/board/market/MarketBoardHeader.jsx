@@ -14,7 +14,7 @@ const MarketBoardHeader = ({ detail, no }) => {
   const _userData = cookies.get("_userData"); 
   /* console.log(_userData) */
 
-  let member_no = 0;
+  let member_no;
   if (_userData) {
     member_no = _userData.memberNo;
   }
@@ -71,7 +71,7 @@ const MarketBoardHeader = ({ detail, no }) => {
     <span
       style={{
         marginBottom: "12px",
-        fontSize: "30px",
+        fontSize: "1.5rem",
         display: "block",
         color: "black",
       }}

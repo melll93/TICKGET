@@ -27,7 +27,7 @@ const MarketDetail = () => {
  /*  console.log(_userData) */
 
   let member_nickname = '';
-  let member_no = 0
+  let member_no;
   if (_userData) {
     member_nickname = _userData.memberNickname;
     member_no = _userData.memberNo;
@@ -83,7 +83,7 @@ const MarketDetail = () => {
         board_mk_content: jsonDoc[0].boardMkContent,
         board_mk_date: jsonDoc[0].boardMkDate,
         board_mk_hit: jsonDoc[0].boardMkHit,
-        member_name: jsonDoc[0].memberNickname,
+        member_nickname: jsonDoc[0].memberNickname,
         member_no: jsonDoc[0].memberNo, 
         mk_ticket_place: jsonDoc[0].mkTicketPlace,
         mk_ticket_date: jsonDoc[0].mkTicketDate,   
@@ -252,8 +252,8 @@ const linkToChat = () => {
         <div style={{ width: "100%" }}>
           <MarketBoardHeader detail={detail} no={no} />
           <hr/>
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", fontSize: "16px" }}>
-  <div  style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.0rem"}}>작성자프로필이미지 | {member_nickname}</div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", fontSize: "17.5px" }}>
+  <div  style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.1rem"}}>프사 | {detail.member_nickname}</div>
   <div style={{marginRight:'45px', opacity:'90%'}}>
     <span style={{ marginRight: "5px" , color:'black'}}>
       <i class="bi bi-heart-fill"></i> 5 <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span>
@@ -269,7 +269,7 @@ const linkToChat = () => {
           
           
           <hr style={{opacity:'0%', marginBottom:'40px'}}/>
-          <div style={{fontSize:'1.0rem'}}>
+          <div style={{fontSize:'1.1rem'}}>
   <p style={{textAlign:'left', paddingRight:'10px'  ,marginTop:'25px' , opacity:'90%'}}>
     <span style={{display:'inline-block', width:'5rem' ,marginRight:'10px', color:'black'}}>∙ 공연일</span>
     {" "}{formattedTicketDate}
@@ -329,14 +329,14 @@ const linkToChat = () => {
     className="gray-tabs"
   >
     <Tab eventKey="content" title="상품 상세정보" >
-      <div style={{marginTop:'30px' , marginLeft:'30px'}}>
+      <div style={{marginTop:'50px' , marginLeft:'30px' , fontSize:'1.2rem'}}>
         {detail.board_mk_content}
       </div>  
     </Tab>
     <Tab eventKey="place" title="공연장소 찾아가는길" unselected={true} mountOnEnter={true}>
   <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px" }}>
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginRight:'40px' }}>
-      <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.3rem", marginBottom: "20px" }}>
+      <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
         <i class="bi bi-geo-alt-fill"></i>
         {" "}
         {detail.mk_ticket_place}

@@ -6,6 +6,8 @@ import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import { BButton, ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Sidebar from "../../../components/Sidebar";
+import Swal from "sweetalert2";
+
 
 const TogetherBoardWriteForm = ({ board_together }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
@@ -37,15 +39,27 @@ const TogetherBoardWriteForm = ({ board_together }) => {
 
   const insertBoardList = async () => {
     if (!title) {
-      alert("제목을 입력해주세요.");
+     /*  alert("제목을 입력해주세요."); */
+      Swal.fire({
+        title:'제목을 입력해주세요.',
+        icon:'warning'
+        })
       return;
     }
     if (!date) {
-      alert("날짜를 입력해주세요.");
+      /* alert("날짜를 입력해주세요."); */
+      Swal.fire({
+        title:'제목을 입력해주세요.',
+        icon:'warning'
+        })
       return;
     }
     if (!content) {
-      alert("내용을 입력해주세요.");
+      /* alert("내용을 입력해주세요."); */
+      Swal.fire({
+        title:'제목을 입력해주세요.',
+        icon:'warning'
+        })
       return;
     }
     console.log("insertBoardList");

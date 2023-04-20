@@ -77,10 +77,6 @@
       setContent(jsonDoc[0].boardMkContent)
       setFiles({ fileName: jsonDoc[0].boardMkFilename, fileUrl: jsonDoc[0].boardMkFileurl })
 
-      //작성자가 아니면 수정 불가능함. 회원가입 DB 처리되면 board_market에 임시로 작성한 memName -> memNo 수정해야함 230406
-    /* if(jsonDoc[0].memNo !== sessionStorage.getItem('no')){ //회원번호로 작성자가 맞는지 판단함 (맞으면 수정 가능)
-        alert("수정 권한이 없습니다. [작성자 불일치]")
-      } */
     }
     boardDetail()
     },[no])

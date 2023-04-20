@@ -117,7 +117,7 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
   setHovered(false); // 상태값 변경
 }}>{price}원</p>
 
-<p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,  fontSize: "0.9rem" ,marginTop: "10px" , opacity:'60%'}}>{boardDateTime}</p>
+<p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,  fontSize: "1rem" ,marginTop: "10px" , opacity:'50%'}}>{boardDateTime}</p>
 </div>
 </div>
    

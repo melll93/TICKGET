@@ -12,7 +12,7 @@ const MarketSearchBar = () => {
   //회원 정보
   const _userData = cookies.get("_userData"); 
   console.log(_userData)
-  let member_no = 0;
+  let member_no;
   if(_userData){
     member_no = _userData.memberNo
   }

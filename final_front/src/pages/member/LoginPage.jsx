@@ -18,6 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies } from "react-cookie";
 import Header from "../../components/Header";
+import Swal from "sweetalert2";
+
+
+
 
 const LoginPage = ({ user, setUser, authLogic }) => {
   const dispatch = useDispatch();
@@ -58,7 +62,13 @@ const LoginPage = ({ user, setUser, authLogic }) => {
       .then((res) => {
         console.log(res);
         if (res.status >= 200 && res.status < 400) {
-          window.alert("로그인 성공");
+          /* window.alert("로그인 성공"); */
+          Swal.fire({
+            title: "로그인 성공",
+            icon: 'success',
+          }
+
+          )
           // 로그인 ID redux에 저장
           dispatch(reduxLogin(paramMember.memberId));
 
@@ -68,7 +78,10 @@ const LoginPage = ({ user, setUser, authLogic }) => {
 
           navigate("/");
         } else if (res.status >= 400 && res.status < 600) {
-          window.alert("로그인 실패");
+          Swal.fire({
+            title: "로그인 실패",
+            icon: 'error'
+          })
         }
       })
       .catch(console.log);
@@ -76,9 +89,15 @@ const LoginPage = ({ user, setUser, authLogic }) => {
 
   const handleLogin = () => {
     if (userId === null || userId === "" || userId === undefined) {
-      window.alert("아이디를 입력해주세요.");
+      Swal.fire({
+        title:'아이디를 입력해주세요',
+        icon :'warning'
+      })
     } else if (userPw === null || userPw === "" || userPw === undefined) {
-      window.alert("비밀번호를 입력해주세요.");
+      Swal.fire({
+        title:'비밀번호를 입력해주세요',
+        icon :'warning'
+      })
     } else {
       // 아이디 비밀번호 정상 입력
       console.log(userPw);

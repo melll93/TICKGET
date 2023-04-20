@@ -6,7 +6,7 @@ import { BButton, LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formSt
 import { memberUpdateDB } from '../../axios/member/memberCrud';
 import { useNavigate } from 'react-router-dom';
 import { checkPassword, validatePassword } from '../../util/validateLogic';
-
+import Swal from "sweetalert2";
 
 const ChangePwPage = () => {
   const navigate = useNavigate()
@@ -62,7 +62,12 @@ const ChangePwPage = () => {
     e.preventDefault();
     if (memInfo.pw === memInfo.pwConfirm) {
       console.log('비밀번호가 일치합니다.');
-      alert('비밀번호가 일치합니다.');
+  /*     alert('비밀번호가 일치합니다.'); */
+      Swal.fire({
+        title:'비밀번호가 일치합니다.',
+        icon:'success'
+        })
+        
       try {
         const member = {
           memberId: memberId,
@@ -70,15 +75,30 @@ const ChangePwPage = () => {
         };
         const res = await memberUpdateDB(member);
         console.log(res.data);
-        alert('비밀번호가 성공적으로 변경되었습니다');
+       /*  alert('비밀번호가 성공적으로 변경되었습니다'); */
+        Swal.fire({
+          title:'비밀번호가 성공적으로 변경되었습니다.',
+          icon:'success'
+          })
+          
         navigate('/login')
       } catch (error) {
         console.error(error);
-        alert('비밀번호 변경에 실패하였습니다');
+        /* alert('비밀번호 변경에 실패하였습니다'); */
+        Swal.fire({
+          title:'비밀번호 변경에 실패하였습니다.',
+          icon:'error'
+          })
+          
       }
     } else {
       console.log('비밀번호 불일치');
-      alert('비밀번호가 일치하지 않습니다.');
+      /* alert('비밀번호가 일치하지 않습니다.'); */
+      Swal.fire({
+        title:'비밀번호가 일치하지 않습니다.',
+        icon:'error'
+        })
+        
     }
   };
 
