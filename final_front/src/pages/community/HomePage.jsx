@@ -176,10 +176,13 @@ const HomePage = () => {
               <div className="mainpage box">
                 <div className="mainpage div div1">
                   <Tabs
-                    defaultActiveKey="together"
+                    defaultActiveKey="market"
                     id="uncontrolled-tab-example"
                     className="margin0 mb-3"
                   >
+                                        <Tab eventKey="market" title="Market">
+               <BasicTable items={mkboardsProps}/> 
+                    </Tab>
                     <Tab eventKey="together" title="Together">
                       
                       <BasicTable items={boardListProps}/>
@@ -188,9 +191,7 @@ const HomePage = () => {
                     <Tab eventKey="carpool" title="Carpool">
                    <BasicTable items={carpoolListProps}/> 
                     </Tab>
-                    <Tab eventKey="market" title="Market">
-               <BasicTable items={mkboardsProps}/> 
-                    </Tab>
+
                   </Tabs>
                 </div>{" "}
               </div>{" "}

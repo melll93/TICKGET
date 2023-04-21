@@ -250,7 +250,7 @@ const _userData = cookies.get("_userData"); //유저 정보
 
 
             <li className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4open}> 
-            {_userData.memberAuthority==="ROLE_ADMIN" ? <Link
+            {_userData&&_userData.memberAuthority==="ROLE_ADMIN" ? <Link
           to="/addProducts/new"
           style={{
             fontSize: "20px",
