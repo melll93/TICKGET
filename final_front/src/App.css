@@ -204,13 +204,13 @@ div .Menu {
   object-fit: cover;
 }
 
-@font-face {
-  font-family: "LeferiBaseBold";
-  src: url("./fonts/LeferiBaseBold.ttf") format("truetype");
-}
-
 .gray-tabs .nav-link:not(.active) {
   color: black;
   background-color: #c9c8c8;
   opacity: 50%;
+}
+
+@font-face {
+  font-family: "LeferiBaseBold";
+  src: url("./Fonts/LeferiBaseBold.ttf");
 }

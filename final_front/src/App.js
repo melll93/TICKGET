@@ -41,7 +41,6 @@ import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import PaymentPage from "./pages/personal/PaymentPage";
 import UnRegiesterPage from "./pages/personal/UnRegiesterPage";
 
-
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
   const [carpool, setCarpool] = useState();
@@ -99,7 +98,7 @@ function App({ mkImageUploader }) {
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts/:festMId" element={<AddProductsPage />} />
         <Route path="/productsDetail/:festMId" element={<FestivalsDetail />} />
-        <Route path="/paymentsucess/:festMId" element={<PaySucPage />} />
+        <Route path="/paymentsuccess/:festMId" element={<PaySucPage />} />
         <Route path="/paymentfailed/:festMId" element={<PayFailPage />} />
         <Route path="/payment2/:festMId" element={<FestivalPaymentPage />} />
 

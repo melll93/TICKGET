@@ -60,6 +60,7 @@ const MarketBoardHeader = ({ detail, no }) => {
       style={{
         marginBottom: "12px",
         fontSize: "1.5rem",
+        fontWeight: "bold",
         display: "block",
         color: "black",
       }}

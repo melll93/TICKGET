@@ -234,9 +234,8 @@ const linkToChat = () => {
 
 
  //게시글 작성자(판매자) 프로필 가져오기
- const [userData, setUserData] = useState();
+const [_userdata, setUserData] = useState();
  searchById(detail.member_id).then(setUserData);
-
 
   return (
 <>
@@ -256,7 +255,7 @@ const linkToChat = () => {
           <hr/>
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", fontSize: "17.5px" }}>
   <div  style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.1rem"}}>
-  <UserProfile _userData={userData}/> {detail.member_nickname}</div>
+  <UserProfile _userData={_userdata}/> {detail.member_nickname}</div>
   <div style={{marginRight:'20px', opacity:'80%', marginTop:'15px'}}>
     <span style={{ marginRight: "5px" , color:'black'}}>
       <i class="bi bi-heart-fill"></i> 5 <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span>
