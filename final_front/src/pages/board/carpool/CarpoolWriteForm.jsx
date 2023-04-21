@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from "react";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
+import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { BButton, ContainerDiv, FormDiv } from "../../../styles/formStyle";
-import { Button } from "react-bootstrap";
-import Footer from "../../../components/Footer";
+import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import LandingPage from "./Map/LandingPage";
-import Swal from "sweetalert2";
 
 const CarpoolWriteForm = ({ carpool }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
@@ -20,8 +20,6 @@ const CarpoolWriteForm = ({ carpool }) => {
   const [content, setContent] = useState(""); //내용작성
   const [types] = useState(["일반", "결제", "양도", "회원", "수업"]); //qna_type의 라벨값
 
-  const [max, setMax] = useState("");
-
   const handleContent = useCallback((value) => {
     console.log(value);
     setContent(value);
@@ -30,10 +28,6 @@ const CarpoolWriteForm = ({ carpool }) => {
   const handleTitle = useCallback((e) => {
     setTitle(e);
   }, []);
-
-  const handleCarpool = (value) => {
-    setMax(value);
-  };
 
   // mem_id 받아온 후
   // const handleWriter = useCallback((e) => {
@@ -181,20 +175,6 @@ const CarpoolWriteForm = ({ carpool }) => {
                 handleDate(e.target.value);
               }}
             />
-            <label htmlFor="floatingInput" />
-
-            <h3>인원수 설정</h3>
-            <input
-              style={{ width: "100%" }}
-              type="int"
-              className="form-control"
-              id="festStartday"
-              name="startDay"
-              onChange={(e) => {
-                handleCarpool(e.target.value);
-              }}
-            />
-            <label htmlFor="floatingInput" />
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h3>상세내용</h3>

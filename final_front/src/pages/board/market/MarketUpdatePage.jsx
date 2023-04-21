@@ -1,3 +1,4 @@
+  /* global daum */
   import React, { useCallback, useEffect, useRef, useState } from 'react'
   import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
   import { useNavigate, useParams } from 'react-router-dom'
@@ -146,34 +147,22 @@
 
     //필수입력 확인 함수 호출
     const handleSubmit = (event) => {
+      event.preventDefault();
       const form = event.currentTarget;
       if (form.checkValidity() === false) {
         event.stopPropagation();
+        Swal.fire({
+        title: "필수 항목을 모두 입력해야합니다.",
+        icon: 'warning',
+        showCancelButton: true,
+      })
       } else {
         setValidated(true);
-  
-        setTimeout(() => {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '게시글 수정 성공',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            onBeforeOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-          });
-          setTimeout(() => {
-            boardUpdate();
-          }, 1500); // 1초 대기 후 boardUpdate() 호출
-        }, 1500); // 1초 대기 후 Swal.fire() 호출
+        boardUpdate()
       }
-    };
-
-
-    
+    }
+  
+   //수정하기 버튼 클릭시    
     const boardUpdate = async() => {
     const board = {
       boardMkNo : no,
@@ -189,10 +178,45 @@
       boardMkFileurl : files.fileUrl
     }
     const res = await mk_boardUpdateDB(board)
-    navigate(`/market/mk_boardDetail?no=${no}`)
+    setTimeout(()=>{
+       Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '게시글 수정 성공',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        onBeforeOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      });
+      navigate(`/market/mk_boardDetail?no=${no}`)
+    },1000)
     if(!res.data) return console.log('게시글 수정 실패')
 
     }
+
+
+// 다음 주소 찾기
+  const searchAddress = () => {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        let address = ''; 
+        let buildingName = '';
+        if (data.userSelectedType === 'R') { 
+          address = data.roadAddress + " " + data.buildingName;//도로명
+        } else { 
+          address = data.jibunAddress;//지번
+        }
+        console.log(data);
+        console.log(address);
+        setTicketPlace(address) 
+        document.getElementById("mk_ticket_place").value = address;
+      }
+    }).open();
+  }
+
 
 
     
@@ -250,11 +274,14 @@
                       onChange={(e) => {
                         handleTicketPlace(e.target.value);
                       }}
+                      onClick={()=>{searchAddress()}}
                     />
                     <Form.Control.Feedback type="invalid">
               공연 장소를 입력해주세요.
             </Form.Control.Feedback>
                   </Form.Group>
+
+                  
                   <Form.Group as={Col} controlId="formGridDate">
                     <h3>공연일</h3>
                     <Form.Control
@@ -262,14 +289,15 @@
                       id="mk_ticket_date"
                       type="datetime-local"
                       className="form-control"
+                      value={mk_ticket_date}
                       style={{ width: "475px", height: "50px" }}
                       onChange={(e) => {
                         handleTicketDate(e.target.value);
                       }}
                     />
-                    <Form.Control.Feedback type="invalid">
+  {/*                   <Form.Control.Feedback type="invalid">
               공연 날짜와 시간을 입력해주세요.
-            </Form.Control.Feedback>
+            </Form.Control.Feedback> */}
                   </Form.Group>
     </Row>
   </div>
@@ -320,6 +348,13 @@
 
               <h3>상세내용</h3>
               <hr style={{ margin: "10px 0px 10px 0px" }} />
+  <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
+                <Form.Control id="board_mk_content" as="textarea" type="text" value={board_mk_content} rows={3} style={{ height: '150px' }}
+                  onChange={(e) => {
+                    handleContent(e.target.value);
+                  }} />
+              </Form.Group>
+
 
         <Form.Group controlId="formFileMultiple" className="mb-3">
     <input className="form-control" type="file" accept='image/*' id="dimg" name="dimg" onChange={imageChange}/>

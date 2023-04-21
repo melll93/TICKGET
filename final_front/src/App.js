@@ -39,6 +39,7 @@ import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import PaymentPage from "./pages/personal/PaymentPage";
+import UnRegiesterPage from "./pages/personal/UnRegiesterPage";
 
 
 function App({ mkImageUploader }) {
@@ -83,6 +84,7 @@ function App({ mkImageUploader }) {
         <Route path="/ticket" exact={true} element={<TicketPage />} />
         <Route path="/bookmark" exact={true} element={<BookmarkPage />} />
         <Route path="/setting" exact={true} element={<SettingPage />} />
+        <Route path="/unregiester" exact={true} element={<UnRegiesterPage />} />
 
         {/* MenuBar Routes */}
         <Route path="/search" exact={true} element={<SearchResultPage />} />

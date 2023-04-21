@@ -60,20 +60,20 @@ const CarpoolBoardList = () => {
     };
   }, []);
 
-  const handleSaveData = (boardCpNo) => {
+  const handleSaveData = (boardCpNo, max) => {
     const count = 1;
     firebase
       .database()
       .ref(`${boardCpNo}`)
       .once("value")
       .then((snapshot) => {
-        const max = snapshot.val().max;
+        const maxVal = snapshot.val().max;
         const now = snapshot.val().now;
         const currentCount = snapshot.val().count;
-        if (now < max && currentCount < max) {
+        if (now < maxVal && currentCount < maxVal) {
           const newNow = now + count;
           const newCount = currentCount + count;
-          if (newNow <= max && newCount <= max) {
+          if (newNow <= maxVal && newCount <= maxVal) {
             firebase
               .database()
               .ref(`${boardCpNo}`)
