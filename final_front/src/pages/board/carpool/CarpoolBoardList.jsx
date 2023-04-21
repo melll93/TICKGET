@@ -1,4 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "firebase/analytics";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import "firebase/database";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
@@ -7,13 +13,6 @@ import {
   selectCarpoolDB,
 } from "../../../axios/board/carpool/CarpoolLogic";
 import CommonPagination from "../../../components/CommonPagination";
-import React, { useEffect, useState } from "react";
-import "firebase/database";
-import "firebase/analytics";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
-import { Container } from "react-bootstrap";
 
 /************* firebase 처리 중 *************/
 const firebaseConfig = {
@@ -30,7 +29,6 @@ const firebaseConfig = {
 /************* firebase 처리 중 *************/
 
 const CarpoolBoardList = () => {
-  console.log("CarpoolBoardList");
   const navigate = useNavigate();
   const [carpoolList, setCarpoolList] = useState([]);
   const [page, setPage] = useState(1);
@@ -67,39 +65,28 @@ const CarpoolBoardList = () => {
     firebase
       .database()
       .ref(`${boardCpNo}`)
-      .update({
-        max: 4,
-        now: firebase.database.ServerValue.increment(count),
-        count: firebase.database.ServerValue.increment(count),
+      .once("value")
+      .then((snapshot) => {
+        const max = snapshot.val().max;
+        const now = snapshot.val().now;
+        const currentCount = snapshot.val().count;
+        if (now < max && currentCount < max) {
+          const newNow = now + count;
+          const newCount = currentCount + count;
+          if (newNow <= max && newCount <= max) {
+            firebase
+              .database()
+              .ref(`${boardCpNo}`)
+              .update({
+                now: firebase.database.ServerValue.increment(count),
+                count: firebase.database.ServerValue.increment(count),
+              });
+          }
+        } else {
+          alert("인원이 다 찼습니다.");
+        }
       });
   };
-  // const handleSaveData = (boardCpNo) => {
-  //   const count = 1;
-  //   setCarpoolList((prevCarpoolList) =>
-  //     prevCarpoolList.map((carpool) => {
-  //       if (
-  //         carpool.boardCpNo === boardCpNo /*  && carpool.count < carpool.max */
-  //       ) {
-  //         return {
-  //           ...carpool,
-  //           count: carpool.count + count,
-  //           now: carpool.now + count,
-  //           max: 4,
-  //         };
-  //       }
-  //       return carpool;
-  //     })
-  //   );
-  //   firebase
-  //     .database()
-  //     .ref(`${boardCpNo}`)
-  //     .update({
-  //       max: 4,
-  //       now: firebase.database.ServerValue.increment(count),
-  //       count: firebase.database.ServerValue.increment(count),
-  //     });
-  // };
-
   /************* firebase 처리 중 *************/
 
   useEffect(() => {
@@ -120,7 +107,6 @@ const CarpoolBoardList = () => {
   // 전체 게시글 조회
   const selectCarpoolList = async () => {
     const res = await selectCarpoolDB();
-    console.log(res.data);
     if (res.data && Array.isArray(res.data)) {
       setCarpoolList(res.data);
     } else {
@@ -145,7 +131,7 @@ const CarpoolBoardList = () => {
         <div
           style={{ width: "1200px", marginLeft: "auto", marginRight: "auto" }}
         >
-          <div className="row" style={{ marginTop: "40px" }}>
+          <div className="row" style={{ marginTop: "0px" }}>
             <Table className="table table-hover">
               <thead>
                 <tr>

@@ -9,8 +9,6 @@ import Footer from "../../../components/Footer";
 import LandingPage from "./Map/LandingPage";
 import Swal from "sweetalert2";
 
-
-
 const CarpoolWriteForm = ({ carpool }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
 
@@ -22,6 +20,8 @@ const CarpoolWriteForm = ({ carpool }) => {
   const [content, setContent] = useState(""); //내용작성
   const [types] = useState(["일반", "결제", "양도", "회원", "수업"]); //qna_type의 라벨값
 
+  const [max, setMax] = useState("");
+
   const handleContent = useCallback((value) => {
     console.log(value);
     setContent(value);
@@ -30,6 +30,10 @@ const CarpoolWriteForm = ({ carpool }) => {
   const handleTitle = useCallback((e) => {
     setTitle(e);
   }, []);
+
+  const handleCarpool = (value) => {
+    setMax(value);
+  };
 
   // mem_id 받아온 후
   // const handleWriter = useCallback((e) => {
@@ -44,25 +48,25 @@ const CarpoolWriteForm = ({ carpool }) => {
     if (!title) {
       /* alert("제목을 입력해주세요."); */
       Swal.fire({
-        title:'제목을 입력해주세요',
-        icon:'warning'
-        })
+        title: "제목을 입력해주세요",
+        icon: "warning",
+      });
       return;
     }
     if (!date) {
-    /*   alert("날짜를 입력해주세요."); */
+      /*   alert("날짜를 입력해주세요."); */
       Swal.fire({
-        title:'날짜를 입력해주세요',
-        icon:'warning'
-        })
+        title: "날짜를 입력해주세요",
+        icon: "warning",
+      });
       return;
     }
     if (!content) {
-     /*  alert("내용을 입력해주세요."); */
+      /*  alert("내용을 입력해주세요."); */
       Swal.fire({
-        title:'내용을 입력해주세요',
-        icon:'warning'
-        })
+        title: "내용을 입력해주세요",
+        icon: "warning",
+      });
       return;
     }
     console.log("insertCarpool");
@@ -113,7 +117,7 @@ const CarpoolWriteForm = ({ carpool }) => {
                     borderRadius: "10px",
                   }}
                 ></div>
-                <BButton
+                <Button
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
                   onClick={() => {
@@ -121,7 +125,28 @@ const CarpoolWriteForm = ({ carpool }) => {
                   }}
                 >
                   글쓰기
-                </BButton>
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (window.confirm("정말로 뒤로 가시겠습니까?")) {
+                      window.history.back();
+                    }
+                  }}
+                  variant="success"
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
+                >
+                  뒤로가기
+                </Button>
+                <Button
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
+                  onClick={() => {
+                    if (window.confirm("정말 목록으로 가시겠습니까?")) {
+                      navigate("/carpool");
+                    }
+                  }}
+                >
+                  목록으로
+                </Button>
               </div>
             </div>
 
@@ -154,6 +179,19 @@ const CarpoolWriteForm = ({ carpool }) => {
               name="startDay"
               onChange={(e) => {
                 handleDate(e.target.value);
+              }}
+            />
+            <label htmlFor="floatingInput" />
+
+            <h3>인원수 설정</h3>
+            <input
+              style={{ width: "100%" }}
+              type="int"
+              className="form-control"
+              id="festStartday"
+              name="startDay"
+              onChange={(e) => {
+                handleCarpool(e.target.value);
               }}
             />
             <label htmlFor="floatingInput" />
@@ -195,23 +233,6 @@ const CarpoolWriteForm = ({ carpool }) => {
           </div>
           {<LandingPage />}
           <br />
-
-          <div style={{ textAlign: "center" }}>
-            <div style={{ marginBottom: "20px" }}>
-              <Button
-                onClick={() => window.history.back()}
-                style={{ backgroundColor: "black" }}
-              >
-                뒤로가기
-              </Button>
-              <Button
-                style={{ marginLeft: "10px", backgroundColor: "black" }}
-                onClick={() => navigate("/carpool")}
-              >
-                목록으로
-              </Button>
-            </div>
-          </div>
         </FormDiv>
       </ContainerDiv>
       <Footer />

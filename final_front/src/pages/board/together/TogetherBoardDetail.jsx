@@ -99,9 +99,9 @@ const TogetherBoardDetail = () => {
     console.log(res.data);
     /* alert("게시글 삭제 완료"); */
     Swal.fire({
-      title:'게시글 삭제 완료',
-      icon:'success'
-      })
+      title: "게시글 삭제 완료",
+      icon: "success",
+    });
     navigate("/together");
   };
 
@@ -116,10 +116,9 @@ const TogetherBoardDetail = () => {
     if (!boardReplyTgContent) {
       /* alert("내용을 입력해주세요."); */
       Swal.fire({
-        title:'내용을 입력해주세요.',
-        icon:'warning'
-        })
-
+        title: "내용을 입력해주세요.",
+        icon: "warning",
+      });
     }
     try {
       const res = await insertTogetherReplyDB(boardReply);
@@ -251,15 +250,19 @@ const TogetherBoardDetail = () => {
                   className="form-control"
                   maxLength="50"
                 />
-                <button
-                  style={{ margin: "30px", width: "80px" }}
+                <Button
+                  style={{
+                    margin: "30px",
+                    width: "100px",
+                    backgroundColor: "black",
+                  }}
                   onClick={(e) => {
                     e.preventDefault();
                     submitComment();
                   }}
                 >
                   댓글 등록
-                </button>
+                </Button>
               </div>
 
               <div
@@ -392,9 +395,9 @@ const TogetherBoardDetail = () => {
                       window.location.reload();
                       /* alert("댓글 삭제 완료"); */
                       Swal.fire({
-                        title:'댓글 삭제 완료',
-                        icon:'success'
-                        })
+                        title: "댓글 삭제 완료",
+                        icon: "success",
+                      });
                     }}
                   >
                     <span style={{ color: "white", fontWeight: "bold" }}>

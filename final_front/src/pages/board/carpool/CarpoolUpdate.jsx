@@ -147,7 +147,7 @@ const CarpoolUpdate = () => {
                   id="board_cp_title"
                   type="text"
                   maxLength="50"
-                  value={boardCpTitle}
+                  defaultValue={carpool.boardCpTitle}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -183,7 +183,7 @@ const CarpoolUpdate = () => {
                   id="board_cp_date"
                   type="date"
                   maxLength="50"
-                  value={boardCpDate}
+                  defaultValue={carpool.boardCpDate}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -208,7 +208,7 @@ const CarpoolUpdate = () => {
                   id="board_cp_date"
                   type="text"
                   maxLength="50"
-                  value={boardCpContent}
+                  defaultValue={carpool.boardCpContent}
                   style={{
                     width: "98%",
                     margin: "10px",

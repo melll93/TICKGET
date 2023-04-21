@@ -71,7 +71,6 @@ export const insertTogetherDB = (board) => {
 /* 수정 */
 // export const updateBoardListDB = (board) => {
 export const updateTogetherDB = (board) => {
-  console.log("board?? ?SD S, ", board);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({

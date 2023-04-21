@@ -8,7 +8,6 @@ import { BButton, ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Sidebar from "../../../components/Sidebar";
 import Swal from "sweetalert2";
 
-
 const TogetherBoardWriteForm = ({ board_together }) => {
   //props를 넘어온 값 즉시 구조분해 할당하기
 
@@ -18,7 +17,8 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   //const[writer, setWriter]= useState(''); //작성자
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
-  const [writer, setWriter] = useState(""); //내용작성
+  const [writer, setWriter] = useState(""); //작성자?
+  const [_userData, setUserData] = useState();
   const [types] = useState(["일반", "결제", "양도", "회원", "수업"]); //qna_type의 라벨값
 
   const handleContent = useCallback((value) => {
@@ -39,27 +39,27 @@ const TogetherBoardWriteForm = ({ board_together }) => {
 
   const insertBoardList = async () => {
     if (!title) {
-     /*  alert("제목을 입력해주세요."); */
+      /*  alert("제목을 입력해주세요."); */
       Swal.fire({
-        title:'제목을 입력해주세요.',
-        icon:'warning'
-        })
+        title: "제목을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
     if (!date) {
       /* alert("날짜를 입력해주세요."); */
       Swal.fire({
-        title:'제목을 입력해주세요.',
-        icon:'warning'
-        })
+        title: "날짜을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
     if (!content) {
       /* alert("내용을 입력해주세요."); */
       Swal.fire({
-        title:'제목을 입력해주세요.',
-        icon:'warning'
-        })
+        title: "내용을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
     console.log("insertBoardList");
@@ -111,7 +111,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                     borderRadius: "10px",
                   }}
                 ></div>
-                <BButton
+                <Button
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
                   onClick={() => {
@@ -119,7 +119,28 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                   }}
                 >
                   글쓰기
-                </BButton>
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (window.confirm("정말로 뒤로 가시겠습니까?")) {
+                      window.history.back();
+                    }
+                  }}
+                  variant="success"
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
+                >
+                  뒤로가기
+                </Button>
+                <Button
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
+                  onClick={() => {
+                    if (window.confirm("정말 목록으로 가시겠습니까?")) {
+                      navigate("/together");
+                    }
+                  }}
+                >
+                  목록으로
+                </Button>
               </div>
             </div>
 
@@ -192,22 +213,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             ></input>
           </div>
           <br />
-          <div style={{ textAlign: "center" }}>
-            <div style={{ marginBottom: "20px" }}>
-              <Button
-                style={{ backgroundColor: "black" }}
-                onClick={() => window.history.back()}
-              >
-                뒤로가기
-              </Button>
-              <Button
-                style={{ marginLeft: "10px", backgroundColor: "black" }}
-                onClick={() => navigate("/together")}
-              >
-                목록으로
-              </Button>
-            </div>
-          </div>
         </FormDiv>
       </ContainerDiv>
       <Footer />
