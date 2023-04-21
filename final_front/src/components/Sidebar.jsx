@@ -4,6 +4,7 @@ import PersonalTabs from "./sidebar/PersonalTabs";
 import Profile from "./sidebar/Profile";
 import SearchBar from "./header/SearchBar";
 import "../styles/sidebar.css";
+import HomeButton from "./sidebar/HomeButton";
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState({
@@ -53,6 +54,9 @@ const Sidebar = () => {
     <>
       <div className="sidebar container" style={{ width: sidebar.size + 25 }}>
         <div className="sidebar items" style={{ width: sidebar.size }}>
+          <div style={{ display: "flex", borderBottom: "1px lightgray solid", height: "8vh", alignItems: "center" }}>
+            <HomeButton icon="icon" />
+          </div>
           <Profile />
           <PersonalTabs />
           <MenuList />
