@@ -75,7 +75,7 @@ const UnRegiesterPage = () => {
                 checked={isChecked1}
                 onChange={handleCheckboxChange}
               />
-              
+
               본인은 모든 미결 금융 거래로 인해 발생하는 청구 금액에 대해 전적으로
               책임이 있음을 인지하며,<br />
               특정한 상황에서는 수익금을 지급받을 수 없다는 사실을 이해합니다.
@@ -93,11 +93,11 @@ const UnRegiesterPage = () => {
             <br />
             <label>
               <Input
-                  type="password"
-                  placeholder="탈퇴를 위해 비밀번호를 한 번 더 입력해 주세요"
-                  value={passwordInput}
-                  onChange={(e) => setPasswordInput(e.target.value)}
-                />
+                type="password"
+                placeholder="탈퇴를 위해 비밀번호를 한 번 더 입력해 주세요"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+              />
             </label>
             <br />
 
@@ -105,8 +105,8 @@ const UnRegiesterPage = () => {
               탈퇴하기
             </BButton>
           </div>
-        {/* 탈퇴 체크 박스 */}
-      </div>
+          {/* 탈퇴 체크 박스 */}
+        </div>
       </div>
     </>
   )

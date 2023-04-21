@@ -52,8 +52,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
-                .requestMatchers("/festival/**").hasAuthority("ROLE_USER")
-                .anyRequest().authenticated()
+//                .requestMatchers("/festival/**").hasAuthority("ROLE_USER")
+//                .anyRequest().authenticated()
 
                 /*********************************
                  * 자체 로그인
