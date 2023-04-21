@@ -8,6 +8,8 @@ import { Card } from "react-bootstrap";
 ///////////////////////////////      페스티발 지역별   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const FestivalRankingList = () => {
   const [festivalHitList, setFestivalHitList] = useState([]);
+  
+  /* 페이지네이션 */
   const [page, setPage] = useState(1);
   const [perPage] = useState(20);
   const indexOfLastPost = page * perPage;
@@ -15,26 +17,30 @@ const FestivalRankingList = () => {
     useEffect(() => {
       const festivalHitList = async () => {
         const festMHit = true; // festHit 변수에 true 값을 할당하여 HIT가 높은 순으로 데이터를 가져옴
-        const result = await festivalHitListDB(festMHit); // FestivalHitListDB 함수를 호출하여 데이터를 가져옴
-        setFestivalHitList(result); // 가져온 데이터를 상태값에 할당
+        const result = await festivalHitListDB(festMHit); 
+        setFestivalHitList(result);
       };
       festivalHitList(); // 데이터 가져오기
       console.log(festivalHitList);
     }, []);
-    
-    
-  
+      
     const currentFest = (festivalHitList) => {
       let currentFest = 0;
       currentFest = festivalHitList.slice(indexOfFirstPost, indexOfLastPost);
       return currentFest;
     };
+    /* 페이지네이션 */
     
-    
-    const hitPlusOne=async (festMId)=>{
-      await thumbsupFestivalDB(festMId);
-    } 
-    
+
+    /* 좋아요  */
+    const hitPlusOne = async (hit) => {
+      await thumbsupFestivalDB(hit);
+      console.log("이전 festivalHitList: ", festivalHitList);
+      setFestivalHitList([...currentFest]); 
+      console.log("이후 ", festivalHitList);
+
+    };
+
     
     
     
@@ -70,7 +76,7 @@ const FestivalRankingList = () => {
          </p>
        </div>
      </a>
-     <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'right', marginLeft:'83%', paddingRight:'7px', cursor:'pointer'}}>
+     <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMHit)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'right', marginLeft:'83%', paddingRight:'7px', cursor:'pointer'}}>
                 <i className="bi bi-hand-thumbs-up fs-4"></i>
                 {festival.festMHit===null ? 0: festival.festMHit}
                 </div>

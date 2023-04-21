@@ -62,10 +62,14 @@ const saveFestPoster=async()=>{
     festMId,
     festPsUrl,
 };
+try {
 const res = await saveFestPsUrlDB(festival);
 console.log(festival);
+alert('임시저장완료')
 if (!res.data) {
 } else {
+}
+} catch (error) {
 }
 };
 

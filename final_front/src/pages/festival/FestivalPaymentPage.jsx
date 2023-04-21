@@ -30,10 +30,10 @@ const FestivalPaymentPage = () => {
     const asyncDB = async () => {
       const res = await FetivalDetailDB({ festMId });
       const result = JSON.stringify(res.data);
-      console.log(res.data)
+/*       console.log(res.data) */
       const jsonDoc = JSON.parse(result);
-      console.log('리저트'+result)
-      console.log(jsonDoc[0].festMName)
+/*       console.log('리저트'+result)
+      console.log(jsonDoc[0].festMName) */
       setFestival({
         festMId,
         festMName: jsonDoc.festMName,
@@ -59,7 +59,7 @@ const FestivalPaymentPage = () => {
 
 
   const orderDetail = {
-    url: festival[0].festPsUrl,
+    url: festival[0].festMImg,
     title: festival[0].festMName,
     seat: festival[0].festMName,
     date: festSelectedDate,

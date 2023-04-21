@@ -17,7 +17,7 @@ const AddProducts = () => {
   const navigate = useNavigate();
   const {festMId}=useParams();
 
-  console.log(festMId)
+ /*  console.log(festMId) */
   const [festTitle, setFesttitle] = useState();
   const [festLocation, setFestloc] = useState();
   const [festCategory, setFestcate] = useState();
@@ -52,7 +52,7 @@ const AddProducts = () => {
       festMImg: festImageUrl,
     };
     const res = await FestivalInsertDB(festival);
-    console.log(festival);
+/*     console.log(festival); */
     if (!res.data) {
     } else {
       navigate("/festival");
@@ -61,7 +61,7 @@ const AddProducts = () => {
 
 
 
-/* 입력되어있던 정보 가져오기 */
+/* 입력되어있던 정보 가져오기 */  
 useEffect(() => {
 const originDetail=async()=>{
   const festival={
@@ -100,7 +100,7 @@ originDetail()
       }   
       try {
       const res = await festivalUpdateDB(festival)
-        console.log(res.data);
+/*         console.log(res.data); */
         navigate("/festival")
         alert('상품수정완료')
       } catch (error) {
@@ -166,10 +166,10 @@ originDetail()
         //"https://api.Cloudinary.com/v1_1/본인 클라우드 네임/image/upload"
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.secure_url);
+   /*        console.log(res.secure_url); */
           const festImageUrl = res.secure_url;
           localStorage.setItem("imageUrl", festImageUrl);
-          console.log("페스트 이미지 유알엘 : " + festImageUrl);
+/*           console.log("페스트 이미지 유알엘 : " + festImageUrl); */
           setFestImageUrl(festImageUrl);
         })
         .catch((err) => console.log(err))
