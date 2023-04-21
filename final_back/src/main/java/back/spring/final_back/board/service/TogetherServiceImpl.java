@@ -59,10 +59,11 @@ public class TogetherServiceImpl implements TogetherService {
         return result;
     }
 
-    //Together 게시판 조회수 증가
+    // Together 게시판 조회수 증가
     @Override
     public void viewUp(@RequestParam Map<String, Object> pMap) {
         logger.info("TogetherServiceImpl : viewUp");
+        logger.error("TogetherServiceImpl의 pMap = {}", pMap);
         togetherDao.viewUp(pMap);
     }
 

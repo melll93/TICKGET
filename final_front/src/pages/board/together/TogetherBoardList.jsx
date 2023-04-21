@@ -43,6 +43,7 @@ const TogetherBoardList = (board) => {
   const updateViews = async (boardTgNo) => {
     console.log("boardTgNo넌 누구야? " + boardTgNo);
     await togetherViewUpDB(boardTgNo);
+    console.log("updateViews의 boardTgNo : ", boardTgNo);
     await selectBoardList();
   };
 
@@ -52,13 +53,13 @@ const TogetherBoardList = (board) => {
 
   return (
     <>
-      <div style={{ width: "1500px", marginLeft: "auto", marginRight: "auto" }}>
+      <div style={{ width: "1200px", marginLeft: "auto", marginRight: "auto" }}>
         <div className="row" style={{ marginTop: "40px" }}>
           <Table className="table table-hover">
             <thead>
               <tr>
                 <th style={{ textAlign: "center" }}>번호</th>
-                <th width="40%">제목</th>
+                <th>제목</th>
                 <th style={{ textAlign: "center" }}>작성자</th>
                 <th style={{ textAlign: "center" }}>작성일</th>
                 <th style={{ textAlign: "center" }}>조회수</th>
@@ -101,7 +102,7 @@ const TogetherBoardList = (board) => {
           perPage={perPage}
           totalItems={boardList.length}
         ></CommonPagination>
-        
+
         <div
           style={{
             display: "flex",

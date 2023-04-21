@@ -20,9 +20,6 @@ import { ContainerDiv } from "../../../styles/formStyle";
 import LandingPage from "./Map/LandingPage";
 import Swal from "sweetalert2";
 
-
-
-
 const CarpoolDetail = () => {
   const navigate = useNavigate();
   const { boardCpNo } = useParams();
@@ -104,9 +101,9 @@ const CarpoolDetail = () => {
     const res = await deleteCarpoolDB(carpool);
     console.log(res.data);
     Swal.fire({
-      title:'게시글 삭제 완료',
-      icon:'success'
-      })
+      title: "게시글 삭제 완료",
+      icon: "success",
+    });
     navigate("/carpool");
   };
 
@@ -330,7 +327,6 @@ const CarpoolDetail = () => {
                     style={{ marginLeft: "10px", backgroundColor: "black" }}
                   >
                     <span
-                      style={{ fontWeight: "bold" }}
                       onClick={async () => {
                         click();
                         handleBoardReplyCpNo(boardReply.boardReplyCpNo);
@@ -392,11 +388,10 @@ const CarpoolDetail = () => {
                             const res = await updateCarpoolReplyDB(reply);
                             console.log("updateTogetherReplyDB : ", res.data);
                             setLgShow(false);
-                            console.log(
-                              "수정완료" +
-                                boardReply.boardReplyCpContent +
-                                boardReply.boardReplyCpNo
-                            );
+                            Swal.fire({
+                              title: "댓글 수정 완료",
+                              icon: "success",
+                            });
                             window.location.reload();
                             console.log("리뷰번호" + boardReply.boardReplyCpNo);
                           }}
@@ -414,21 +409,17 @@ const CarpoolDetail = () => {
                         boardCpNo: boardCpNo,
                         boardReplyCpNo: boardReply.boardReplyCpNo,
                       };
-                      console.log("너누구야 reply", reply);
                       const res = await deleteCarpoolReplyDB(reply);
-                      console.log("deleteCarpoolReplyDB ", res.data);
                       // navigate("/together/BoardDetail/" + board.boardTgNo);
                       window.location.reload();
                       /* alert("댓글 삭제 완료"); */
                       Swal.fire({
-                        title:'댓글 삭제 완료',
-                        icon:'success'
-                        })
+                        title: "댓글 삭제 완료",
+                        icon: "success",
+                      });
                     }}
                   >
-                    <span style={{ color: "white", fontWeight: "bold" }}>
-                      댓글 삭제
-                    </span>
+                    <span>댓글 삭제</span>
                   </Button>
                 </div>
               ))}

@@ -83,9 +83,7 @@ public class TogetherController {
 	@GetMapping("/togetherViewUp")
 	public void viewUp(@RequestParam Map<String, Object> pMap) {
 		logger.info("BoardController : viewUp 호출");
-		logger.error("pMap = {}", pMap);
+		logger.error("BoardController pMap = {}", pMap);
 		togetherService.viewUp(pMap);
 	}
-
-	/* ====================================== */
 }

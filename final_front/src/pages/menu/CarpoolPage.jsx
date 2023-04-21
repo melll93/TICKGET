@@ -17,7 +17,19 @@ const CarpoolPage = () => {
       <Header />
       <Sidebar />
       <div className="center">
-        <h3 style={{ marginLeft: "100px" }}>Carpool 게시판</h3>
+        <div style={{ marginTop: "50px", textAlign: "center" }}>
+          <h3
+            style={{
+              display: "inline-block",
+              fontFamily: "Nanum Gothic",
+              fontWeight: "bold",
+              marginTop: "10px",
+              marginBottom: "30px",
+            }}
+          >
+            Carpool 게시판
+          </h3>
+        </div>
         {<CarpoolBoardList />}
       </div>
     </>
