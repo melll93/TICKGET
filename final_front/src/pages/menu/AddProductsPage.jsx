@@ -9,7 +9,6 @@ import ImageUploader from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
-import HeaderSearchBar from "../../components/header/HeaderSearchBar";
 import Swal from "sweetalert2";
 
 
