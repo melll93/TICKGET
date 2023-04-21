@@ -87,7 +87,7 @@ export const updateTogetherDB = (board) => {
 };
 
 /* 조회수 */
-export const togetherViewUpDB = async(boardTgNo) => {
+export const togetherViewUpDB = async (boardTgNo) => {
   /* 오케이 여기까진 진출했어 */
   console.log("viewUpDB boardTgNo ", boardTgNo);
   return new Promise((resolve, reject) => {
@@ -95,8 +95,9 @@ export const togetherViewUpDB = async(boardTgNo) => {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/board/togetherViewUp",
-        params: {boardTgNo :boardTgNo }
+        params: { boardTgNo: boardTgNo },
       });
+      console.log("@@@@@@@@@@@@@@", boardTgNo);
       resolve(response);
     } catch (error) {
       reject(error);

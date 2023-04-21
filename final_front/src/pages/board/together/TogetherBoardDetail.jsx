@@ -17,7 +17,6 @@ import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { Modal } from "react-bootstrap";
 
-
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
   const { boardTgNo } = useParams();
@@ -42,7 +41,6 @@ const TogetherBoardDetail = () => {
       boardTgNo: boardTgNo,
     };
     const res = await selectTogetherReplyDB(boardReply);
-    console.log("asdas d", res.data);
     if (res.data && Array.isArray(res.data)) {
       setBoardReplyList(res.data);
     } else {

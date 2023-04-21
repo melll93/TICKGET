@@ -86,6 +86,4 @@ public class TogetherController {
 		logger.error("pMap = {}", pMap);
 		togetherService.viewUp(pMap);
 	}
-
-	/* ====================================== */
 }

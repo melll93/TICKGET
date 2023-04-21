@@ -24,5 +24,5 @@ public interface TogetherDao {
     public int deleteBoardList(TogetherDto togetherDto);
 
     // Together 게시판 조회수 증가
-    void viewUp(@RequestParam Map<String, Object> pMap);
+    public void viewUp(Map<String, Object> pMap);
 }
