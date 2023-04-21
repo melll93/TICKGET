@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Card } from 'react-bootstrap'
+import { Cookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 import { handlePayment } from '../../components/handlePayment'
@@ -28,7 +29,10 @@ const orderDetail={
 
 
 const PaymentPage = ({orderDetail}) => {
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData"); //유저 정보
   /*   console.log(paymentData) */
+  console.log(_userData)
   console.log(orderDetail); 
   const navigate = useNavigate()
   let totalPrice = orderDetail.amount*orderDetail.price
@@ -45,7 +49,7 @@ const paymentData={
   amount:totalPrice, //가격
   orderId:'assdasdadsad',    //주문번호
   orderName:orderDetail.title,  //주문명
-  customerName:"mem_id예정",     //구매자 이름
+  customerName:_userData.memberName,     //구매자 이름
   no,      
 }
 
@@ -99,11 +103,11 @@ const handleToss = async() => {
 <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
 <div style={{ marginLeft: '20px' }}>
      <div style={{ display: 'inline-block' , marginTop:'20px' }}>
-       <Card.Text style={{  fontSize: '20px'}}>회원 이름</Card.Text>
+       <Card.Text style={{  fontSize: '20px'}}>구매자명 : {_userData.memberName}</Card.Text>
      </div>
      <div>
        <Card.Text style={{ fontSize: '20px',marginTop:'10px'  }}>
-         회원 이메일
+         email : {_userData.memberEmail}
        </Card.Text>
      </div>
      <hr style={{ opacity: '0.0' }} />

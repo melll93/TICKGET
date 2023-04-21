@@ -11,6 +11,7 @@ import CommonPagination from "../../components/CommonPagination";
 import FestivalRankingList from "../festival/FeativalRankingList";
 import "../../styles/festivaldetails.css";
 import FestivalAreaList from "../festival/FestivalAreaList";
+import { Cookies } from "react-cookie";
 
 
 
@@ -41,6 +42,7 @@ const FestivalExtraList = () => {
 ///////// 페스티벌 전체 ////////// 
  */
 const FestivalsTest = () => {
+  
   const [festivals, setFestivals] = useState([]);
   const [page, setPage] = useState(1);
   const [perPage] = useState(20);
@@ -61,7 +63,6 @@ const FestivalsTest = () => {
   
   const hitPlusOne=async (festMId)=>{
     await thumbsupFestivalDB(festMId);
-    
   } 
 
   return (
@@ -121,7 +122,8 @@ const FestivalsTest = () => {
 
 
 const FestivalPage = () => {
-const [hit, setHit]= useState();
+const cookies = new Cookies();
+const _userData = cookies.get("_userData"); //유저 정보
   const [totalFest, setTotalFest] = useState(1); //0이면 닫힘, 1이면 열림.
   const [modal2, setModal2] = useState(0); //지역별
   const [modal3, setModal3] = useState(0); //인기순/랭킹
@@ -186,8 +188,10 @@ const [hit, setHit]= useState();
 
   return (
     <>
+
           <Header />
       <Sidebar />
+      
       <div className="center">
  {/*        <FestivalNavbar
           changeModal={changeModal}
@@ -245,14 +249,13 @@ const [hit, setHit]= useState();
             <ul className="nav-item">
               <li className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4open}> 기타 </li>
             </ul> {/* end of 기타*/}
-          </ul>{/* end of navbar-nav  */}
-        </div>{/* end of container-fluid */}
-      </nav>{/* end of navbar navbar-expand-sm bg-dark navbar-dark */}
-        {/* 상품등록버튼 - 관리자 페이지로 이동..? or 기업회원 로그인시에만 보이도록 수정 예정 */}
-        <Link
+
+
+            <li className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4open}> 
+            {_userData.memberAuthority==="ROLE_ADMIN" ? <Link
           to="/addProducts/new"
           style={{
-            fontSize: "40px",
+            fontSize: "20px",
             backgroundColor: "black",
             color: "white",
             borderRadius: "10px",
@@ -260,8 +263,14 @@ const [hit, setHit]= useState();
           }}
         >
           상품등록버튼
-        </Link>
+        </Link>:null}
+        </li>
 
+          </ul>{/* end of navbar-nav  */}
+        </div>{/* end of container-fluid */}
+      </nav>{/* end of navbar navbar-expand-sm bg-dark navbar-dark */}
+
+ 
         {/* 나브바 카테고리별 클릭시 화면 전환 */}
         {totalFest === 1 ? <FestivalsTest /> : null}
         {modal2 === 1 ? <FestivalAreaList selectedNavbarValue={selectedNavbarValue}/> : null}
