@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const HeaderSearchBar = () => {
+const SearchBar = () => {
   const [keyword, setKeyword] = useState();
   const navigate = useNavigate();
 
@@ -16,17 +16,21 @@ const HeaderSearchBar = () => {
   };
 
   return (
-    <div className="SearchBarDiv_header">
+    <div className="SearchBarDiv">
       <input
         id="SearchBar"
         className="SearchBar"
         type="text"
-        placeholder="  검색어를 입력해주세요."
+        placeholder="검색어를 입력해주세요."
         onChange={onChange}
       />
-      <img className="icon image20" src="../logos/SEARCH.png" onClick={search} />
+      <img
+        className="icon image20"
+        src="../logos/SEARCH.png"
+        onClick={search}
+      />
     </div>
   );
 };
 
-export default HeaderSearchBar;
+export default SearchBar;

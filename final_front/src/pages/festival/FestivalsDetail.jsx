@@ -19,6 +19,10 @@ const FestivalsDetail = () => {
   const navigate = useNavigate();
   const [reviewToBeRevised, setReviewToBeRevised] = useState(null);
 
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData)
+
   let { festMId } = useParams();
 
   const options = [
@@ -270,22 +274,15 @@ const FestivalsDetail = () => {
         {/* 로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람이 관리자일경우 삭제 버튼 보이기 
    {sessionStorage.getItem('Auth')===''관리자"'&&       
    */}
+          {_userData.memberAuthority==="ROLE_ADMIN" ? 
         <div>
-          <BlackBtn onClick={deleteProducts} width='300px'>상품삭제(누르지마세요. 누를거면 하나 만들고 그거 삭제하기..)</BlackBtn>
-          <Link
-          to={`/addProducts/${festMId}`}
-          style={{
-            fontSize: "40px",
-            backgroundColor: "black",
-            color: "white",
-            borderRadius: "10px",
-            textDecoration: "none",
-          }}
-        >
-          상품 수정
+          <BlackBtn onClick={deleteProducts} width='100px'>상품삭제</BlackBtn>
+          <Link to={`/addProducts/${festMId}`}>
+          <BlackBtn width='100px'>상품수정</BlackBtn>
         </Link>
+       </div>
+       :null}
        
-        </div>
         <div className="totalcontainer">
           {/* //////////////////////////////////////탑 섹션///////////////////////////////////////////////////////////////////// */}
           <section>

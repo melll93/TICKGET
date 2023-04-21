@@ -1,4 +1,4 @@
-span {
+.menuLIst{
   color: white;
 }
 
@@ -30,9 +30,9 @@ div .sidebar.items {
   background-color: rgba(47, 47, 47, 0.9);
   overflow-x: hidden;
   transition: 0.5s;
-  top: 8vh;
+  top: 2.6vh;
   left: 0;
-  /* border-right: 1px solid black; */
+  color:white
 }
 
 div .sidebar.button {
