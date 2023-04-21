@@ -1,4 +1,5 @@
-import React, { useCallback, useRef, useState } from "react";
+/* global daum */
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BButton, ContainerDiv, FormDiv, HeaderDiv, MyButton, MyH1, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton,
@@ -12,6 +13,7 @@ import MarketFileInsert from "./MarketFileInsert";
 import styled from "styled-components";
 import { Cookies } from "react-cookie";
 import Swal from "sweetalert2";
+
 
 
 /* CSS */
@@ -40,8 +42,10 @@ const MarketWriteForm = ({ mkImageUploader }) => {
   //회원 정보 꺼내오기
   const member_no = _userData.memberNo;
   const member_nickname = _userData.memberNickname;
+  const member_id = _userData.memberId;
   console.log(member_no)
   console.log(member_nickname)
+  console.log(member_id)
 
 
   console.log("글쓰기 페이지 호출");
@@ -56,7 +60,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
 
   const [board_mk_title, setTitle] = useState(""); //사용자가 입력한 제목 담기
-  const [mk_ticket_place, setTicketPlace] = useState(""); //판매할 티켓의 공연장소
+ const [mk_ticket_place, setTicketPlace] = useState(""); //판매할 티켓의 공연장소 
   const [mk_ticket_date, setTicketDate] = useState(""); //판매할 티켓의 공연일
   const [mk_ticket_seat, setTicketSeat] = useState(""); //판매할 티켓의 좌석정보
   const [mk_ticket_count, setTicketCount] = useState(""); //판매할 티켓의 수량
@@ -80,9 +84,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
   }, []);
 
 
-  const handleTicketPlace = useCallback((e) => {
-    setTicketPlace(e);
-  }, []);
 
   const handleTicketDate = useCallback((e) => {
     setTicketDate(e);
@@ -135,31 +136,20 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
   //필수입력 확인 함수 호출
   const handleSubmit = (event) => {
+    event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
+      Swal.fire({
+        title: "필수 항목을 모두 입력해야합니다.",
+        icon: 'warning',
+        showCancelButton: true,
+      })
     } else {
       setValidated(true);
-      setTimeout(() => {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '게시글 등록 성공',
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          onBeforeOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        });
-        setTimeout(() => {
-          boardInsert();
-        }, 2000); // 2초 대기 후 boardUpdate() 호출
-      }, 1000); // 2초 대기 후 Swal.fire() 호출
+      boardInsert();
     }
   };
-
 
   //글쓰기 버튼 클릭시 등록
   const boardInsert = async () => {
@@ -177,17 +167,55 @@ const MarketWriteForm = ({ mkImageUploader }) => {
       boardMkFilename: files.fileName,
       boardMkFileurl: files.fileUrl,
       memberNickname: member_nickname,
+      memberId : member_id,
       memberNo : member_no,
       boardMkStatus : 0
     };
     const res = await mk_boardInsertDB(board);
     console.log(res.data);
+    setTimeout(() => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '게시글 등록 성공',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        onBeforeOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      });
     navigate("/market");
+    },1500)
   };
 
 
+ 
+
+  // 다음 주소 찾기
+  const searchAddress = () => {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        let address = ''; 
+        let buildingName = '';
+        if (data.userSelectedType === 'R') { 
+          address = data.roadAddress + " " + data.buildingName;//도로명
+        } else { 
+          address = data.jibunAddress;//지번
+        }
+        console.log(data);
+        console.log(address);
+        setTicketPlace(address) 
+        document.getElementById("mk_ticket_place").value = address;
+      }
+    }).open();
+  }
 
 
+
+
+  
 
 
 
@@ -202,6 +230,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
               <h3 style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.8rem"}}>티켓 중고판매 게시글 등록</h3>
             </div>
           </HeaderDiv>
+
 
           <Form noValidate validated={validated}>
             <FormDiv style={{ width: "1000px" }}>
@@ -219,6 +248,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                       onChange={(e) => {
                         handleTitle(e.target.value);
                       }}
+                      
                     />
 
                     <Form.Control.Feedback type="invalid">
@@ -233,22 +263,21 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
               <div>
                 <Row className="mb-4">
-                  <Form.Group as={Col} controlId="formGridPlace">
-                    <h3>공연 장소</h3>
-                    <Form.Control
-                      required
-                      id="mk_ticket_place"
-                      type="text"
-                      placeholder="공연 장소를 입력하세요."
-                      style={{ width: "475px", height: "50px" }}
-                      onChange={(e) => {
-                        handleTicketPlace(e.target.value);
-                      }}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      공연 장소를 입력해주세요.
-                    </Form.Control.Feedback>
-                  </Form.Group>
+                <Form.Group as={Col} controlId="formGridPlace">
+        <h3>공연 장소</h3>
+        <Form.Control
+          required
+          id="mk_ticket_place"
+          type="text"
+          placeholder="공연 장소를 입력하세요."
+          style={{ width: "475px", height: "50px" }}
+          onClick={()=>{searchAddress()}}
+        />
+        <Form.Control.Feedback type="invalid">
+          공연 장소를 입력해주세요.
+        </Form.Control.Feedback>
+      </Form.Group>
+ 
                   <Form.Group as={Col} controlId="formGridDate">
                     <h3>공연일</h3>
                     <Form.Control
@@ -258,13 +287,15 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                       className="form-control"
                       style={{ width: "475px", height: "50px" }}
                       min={minDate}
+                      /* value={minDate} */
                       onChange={(e) => {
-                        handleTicketDate(e.target.value);
-                      }}
-                    />
-                    <Form.Control.Feedback type="invalid">
+                        const value = e.target.value;
+                        const ticketDate = value ? value : null;
+                        handleTicketDate(ticketDate);
+                      }}></Form.Control>
+      {/*               <Form.Control.Feedback type="invalid">
                       공연 날짜와 시간을 입력해주세요.
-                    </Form.Control.Feedback>
+                    </Form.Control.Feedback> */}
                   </Form.Group>
                 </Row>
               </div>
@@ -317,7 +348,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
               <h3>상세내용</h3>
               <hr style={{ margin: "10px 0px 10px 0px" }} />
               <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
-                <Form.Control id="board_mk_content" type="text" rows={3} style={{ height: '150px' }}
+                <Form.Control id="board_mk_content" as="textarea"  type="text" rows={3} style={{ height: '150px' }}
                   onChange={(e) => {
                     handleContent(e.target.value);
                   }} />

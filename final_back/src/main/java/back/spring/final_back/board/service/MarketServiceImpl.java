@@ -43,6 +43,7 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return mList;
 	}
+	
 
 	// 마켓 게시판 게시글 등록
 	@Override
@@ -75,5 +76,6 @@ public class MarketServiceImpl implements MarketService {
         result = marketDao.mk_boardSell(marketDto);
 		return 0;
 	}
+
 
 }

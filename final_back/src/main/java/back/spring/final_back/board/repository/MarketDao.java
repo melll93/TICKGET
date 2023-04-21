@@ -14,7 +14,6 @@ public interface MarketDao {
 	//마켓 게시판 게시글 상세보기
 	public List<MarketDto> mk_boardDetail(MarketDto marketDto);
 
-	
 	//마켓 게시판 게시글 등록
 	public int mk_boardInsert(MarketDto marketDto);
 
@@ -37,6 +36,7 @@ public interface MarketDao {
 	//파일 등록
 	public int fileInsert(Map<String, Object> pMap);
 
+	
 
 	
 }

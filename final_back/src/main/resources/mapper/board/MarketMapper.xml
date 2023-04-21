@@ -19,7 +19,7 @@
         WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%') 
       </when>
       <when test='content!=null and condition.equals("작성자")'>
-        WHERE mem_name LIKE CONCAT('%', #{content}, '%') 
+        WHERE member_nickname LIKE CONCAT('%', #{content}, '%') 
       </when>
     </choose>
   </if>
@@ -32,7 +32,7 @@
         mk_ticket_place LIKE CONCAT('%', #{content}, '%') 
       </if>
       <if test='content!=null and condition.equals("작성자")'>
-        mem_name LIKE CONCAT('%', #{content}, '%') 
+        member_nickname LIKE CONCAT('%', #{content}, '%') 
       </if>
     </where>
   </if>
@@ -51,9 +51,9 @@
 <insert id="mk_boardInsert" parameterType="MarketDto">
 insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
 
-mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,board_mk_filename,board_mk_fileurl,member_nickname,member_no,board_mk_status)
+mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,board_mk_filename,board_mk_fileurl,member_nickname,member_id,member_no,board_mk_status)
 VALUES (#{boardMkTitle},#{boardMkContent},#{boardMkDate},#{boardMkHit},
-#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{boardMkFilename},#{boardMkFileurl},#{memberNickname},#{memberNo},#{boardMkStatus})
+#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{boardMkFilename},#{boardMkFileurl},#{memberNickname},#{memberId},#{memberNo},#{boardMkStatus})
 
 </insert>
 
@@ -125,8 +125,6 @@ select * from board_market
     </if>
      </where>
 </select>
-
-
 
 
 

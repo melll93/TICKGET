@@ -66,15 +66,15 @@ const handleToss = async() => {
    
    
 
-   <div className="paymentDiv" style={{display:"center", margin:"80px 150px 150px 150px", }}>
-   <div style={{display:"flex" , marginBottom:'30px'}}>
-<h2>결제하기</h2>
+   <div className="paymentDiv" style={{textAlign: "center", margin:"80px 150px 100px 150px" , marginTop:'20px'}}>
+   <div style={{display:"flex" , marginBottom:'30px' ,margin: '0 auto'}}>
+<h2 style={{margin: '0 auto', marginBottom:'50px'}}>결제하기</h2>
 </div>
 <div style={{marginTop:'5px'}}>
 {/*  상품 정보 섹션  */}
    <h3 style={{ fontWeight: 'bold' }}>◽상품 정보</h3>
 <section>
-<Card style={{width:'800px' , height:'200px' , border:'2px solid' , borderColor:'' }}>
+<Card style={{width:'800px', height:'200px', border:'2px solid', borderColor:'', margin: '0 auto'}}>
    <Card.Body style={{ display: 'flex', alignItems: 'center' , marginLeft:'100px' }}>
       <Cimg src={orderDetail.url}/>
       <div style={{ marginLeft: '50px' , textAlign:'center' }}>
@@ -99,7 +99,7 @@ const handleToss = async() => {
 {/*  구매자 정보 섹션  */}
 <h3 style={{ fontWeight: 'bold', marginTop:'40px' }}>◽구매자 정보</h3>
 <section>
-<Card style={{width:'800px' , height:'150px' , border:'2px solid', borderColor:'', alignItems: 'center' }}>
+<Card style={{width:'800px', height:'200px', border:'2px solid', borderColor:'', margin: '0 auto'}}>
 <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
 <div style={{ marginLeft: '20px' }}>
      <div style={{ display: 'inline-block' , marginTop:'20px' }}>
@@ -122,7 +122,7 @@ const handleToss = async() => {
 <h3 style={{ fontWeight: 'bold', marginTop:'80px' }}>◽결제 정보</h3>
 <section style={{  justifyContent: 'space-between'}}>
 <Card style={{width:'800px' , height:'150px' , border:'2px solid' , borderColor:'' 
-,display: 'flex' ,  alignItems:'center'}}>
+, margin: '0 auto',display: 'flex' ,  alignItems:'center'}}>
    <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
       <div style={{ marginLeft: '20px' }}>
      <div style={{ display: 'inline-block' , marginTop:'10px' }}>

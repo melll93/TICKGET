@@ -114,7 +114,7 @@ const MarketSearchBar = () => {
           height: "40px",
           margin: "0px 10px 0px 10px",
           border: "1px solid lightgray",
-          borderRadius: "10px",
+          borderRadius: "5px",
         }}
         onChange={(e) => {
           setContent(e.target.value);
