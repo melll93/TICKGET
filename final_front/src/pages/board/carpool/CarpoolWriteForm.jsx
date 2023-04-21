@@ -8,8 +8,12 @@ import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import LandingPage from "./Map/LandingPage";
+import { Cookies } from "react-cookie";
 
 const CarpoolWriteForm = ({ carpool }) => {
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData);
   //props를 넘어온 값 즉시 구조분해 할당하기
 
   const navigate = useNavigate();
@@ -37,10 +41,10 @@ const CarpoolWriteForm = ({ carpool }) => {
   const handleDate = useCallback((e) => {
     setDate(e);
   }, []);
+  const handleWriter = useCallback((e) => {}, []);
 
   const insertCarpool = async () => {
     if (!title) {
-      /* alert("제목을 입력해주세요."); */
       Swal.fire({
         title: "제목을 입력해주세요",
         icon: "warning",
@@ -48,7 +52,6 @@ const CarpoolWriteForm = ({ carpool }) => {
       return;
     }
     if (!date) {
-      /*   alert("날짜를 입력해주세요."); */
       Swal.fire({
         title: "날짜를 입력해주세요",
         icon: "warning",
@@ -56,7 +59,6 @@ const CarpoolWriteForm = ({ carpool }) => {
       return;
     }
     if (!content) {
-      /*  alert("내용을 입력해주세요."); */
       Swal.fire({
         title: "내용을 입력해주세요",
         icon: "warning",
@@ -67,16 +69,13 @@ const CarpoolWriteForm = ({ carpool }) => {
     const carpool = {
       boardCpTitle: title, // 제목 추가
       boardCpContent: content, // 내용 추가
-      boardCpMemId: sessionStorage.getItem("id"),
+      boardCpMemId: _userData.memberId,
       boardCpDate: date,
     };
     console.log(carpool);
-    // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
-    // inser here
     try {
       const res = await insertCarpoolDB(carpool);
       console.log("insertCarpoolDB : ", res.data);
-      // 성공시에 페이지 이동처리하기
       window.location.replace("/carpool");
     } catch (error) {
       console.log(error);
@@ -159,9 +158,33 @@ const CarpoolWriteForm = ({ carpool }) => {
               }}
             />
 
-            {/* mem_id를 받아오자 */}
-            {/* <input id="board_writer" type="text" maxLength="50" placeholder="작성자?"
-            style={{width:"100%",height:'40px' , border:'1px solid lightGray'}} onChange={(e)=>{handleWriter(e.target.value)}}/> */}
+            {/* <h3>작성자</h3>
+            <span
+              id="board_writer"
+              type="text"
+              maxLength="50"
+              value={_userData.memberId}
+              style={{
+                width: "100%",
+                height: "40px",
+                border: "1px solid lightGray",
+              }}
+              // onChange={(e) => {
+              //   handleWriter(e.target.value);
+              // }}
+              {..._userData.memberId}
+            /> */}
+            <h3>작성자</h3>
+            <span
+              id="board_writer"
+              style={{
+                width: "100%",
+                height: "40px",
+                border: "1px solid lightGray",
+              }}
+            >
+              {_userData.memberId}
+            </span>
             <hr style={{ margin: "10px 0px 10px 0px" }} />
 
             <h3>날짜</h3>

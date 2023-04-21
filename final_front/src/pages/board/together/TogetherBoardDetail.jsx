@@ -17,6 +17,7 @@ import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { Cookies } from "react-cookie";
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
@@ -27,6 +28,10 @@ const TogetherBoardDetail = () => {
   const [boardReplyTgContent2, setBoardReplyTgContent2] = useState("");
   const [boardReplyList, setBoardReplyList] = useState([]);
   const [lgShow, setLgShow] = useState(false);
+
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log("_userData : ", _userData);
 
   const inputModifiedReply = useCallback((e) => {
     console.log("inputModifiedReply : ", e);
@@ -67,6 +72,7 @@ const TogetherBoardDetail = () => {
 
   const asyncDB = async () => {
     const res = await selectTogetherDetailDB({ boardTgNo });
+    console.log("res", res);
     const result = JSON.stringify(res.data);
     const jsonDoc = JSON.parse(result);
     setBoard({
@@ -109,7 +115,7 @@ const TogetherBoardDetail = () => {
     console.log("submitComment");
     const boardReply = {
       boardTgNo: boardTgNo,
-      boardReplyTgMemId: sessionStorage.getItem("id"),
+      boardReplyTgMemId: _userData.memberId,
       boardReplyTgContent: boardReplyTgContent,
     };
 
@@ -213,23 +219,27 @@ const TogetherBoardDetail = () => {
                   목록으로
                 </Button>
                 &nbsp;
-                <Button
-                  style={{ margin: "10px", backgroundColor: "black" }}
-                  onClick={deleteBoardList}
-                >
-                  삭제하자
-                </Button>
-                <Button
-                  style={{ marginLeft: "10px", backgroundColor: "black" }}
-                  onClick={() =>
-                    navigate({
-                      pathname: "/together/BoardUpdate/" + board.boardTgNo,
-                      state: { board },
-                    })
-                  }
-                >
-                  수정하자
-                </Button>
+                {_userData.memberAuthority === "ROLE_ADMIN" ? (
+                  <div>
+                    <Button
+                      style={{ margin: "10px", backgroundColor: "black" }}
+                      onClick={deleteBoardList}
+                    >
+                      삭제하자
+                    </Button>
+                    <Button
+                      style={{ marginLeft: "10px", backgroundColor: "black" }}
+                      onClick={() =>
+                        navigate({
+                          pathname: "/together/BoardUpdate/" + board.boardTgNo,
+                          state: { board },
+                        })
+                      }
+                    >
+                      수정하자
+                    </Button>
+                  </div>
+                ) : null}
               </div>
 
               <label>댓글</label>
@@ -285,7 +295,7 @@ const TogetherBoardDetail = () => {
                     margin: "50px",
                   }}
                 >
-                  회원아이디 : {boardReply.boardReplyTgMemId} 아이디없음{" "}
+                  회원아이디 : {boardReply.boardReplyTgMemId}
                   <div style={{ fontSize: "12px" }}>
                     작성 시간 : ({boardReply.boardReplyTgDate})
                   </div>
