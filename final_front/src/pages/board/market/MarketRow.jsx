@@ -75,7 +75,7 @@ import { Link, useNavigate } from 'react-router-dom';
       <>
       <div className="card"
        style={{
-        width:"15rem",
+        width:"16rem",
         display:"inline-block",
         margin: "50px 0px 0px 50px",
         borderRadius: "10px",
@@ -95,7 +95,9 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
 }}
 alt="사진1"/>
 <div className="card-body" style={{overflow:"hidden", height:'120px'}}>
-<h5 className="card-title" 
+
+<div style={{minHeight:'50px' , marginTop:'5px'}}>
+<h5 className="card-title" style={{fontSize:'1.1rem'}}
 onClick={linkToDetail}
 onMouseEnter={() => { // 마우스를 요소 위로 올리면
   setHovered(true); // 상태값 변경
@@ -103,7 +105,9 @@ onMouseEnter={() => { // 마우스를 요소 위로 올리면
 onMouseLeave={() => { // 마우스를 요소에서 떠나면
   setHovered(false); // 상태값 변경
 }}>{boards.boardMkTitle}</h5>
+</div>
 <div style={{ display: "flex", justifyContent: "space-between" , }}> 
+
 <p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.5rem" }}
 onClick={linkToDetail}
 onMouseEnter={() => { // 마우스를 요소 위로 올리면
@@ -112,14 +116,15 @@ onMouseEnter={() => { // 마우스를 요소 위로 올리면
 onMouseLeave={() => { // 마우스를 요소에서 떠나면
   setHovered(false); // 상태값 변경
 }}>{price}원</p>
-<p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,  fontSize: "0.85rem" ,marginTop: "10px" , opacity:'60%'}}>{boardDateTime}</p>
+
+<p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,  fontSize: "1rem" ,marginTop: "10px" , opacity:'50%'}}>{boardDateTime}</p>
 </div>
 </div>
    
-      <hr style={{marginTop:'-25px'}}/>
+      <hr style={{marginTop:'-5px'}}/>
 
       <p className="card-text" style={{color:'black' }} >
-      <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'20px'}}>
+      <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}}>
   <span className="mr-4" style={{color:'black', marginRight:'0px'}}>
     <i class="bi bi-heart" />{" "}찜 5
   </span>

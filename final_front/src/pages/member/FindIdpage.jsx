@@ -6,6 +6,8 @@ import { memberListDB } from '../../axios/member/memberCrud';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
+import Swal from "sweetalert2";
+
 
 const FindIdPage = () => {
 
@@ -35,7 +37,13 @@ const FindIdPage = () => {
       console.log(res);
       if (res.data.length === 0) {
         console.log("회원 정보 없음");
-        alert("회원 정보가 없습니다");
+        /* alert("회원 정보가 없습니다"); */
+        
+       Swal.fire({
+        title:'회원 정보가 없습니다.',
+        icon:'warning'
+       })
+  
       } else {
         let msg = '회원 님의 아이디입니다\n';
         let found = false;
@@ -49,11 +57,23 @@ const FindIdPage = () => {
         if (!found) {
           msg = '일치하는 회원 정보가 없습니다';
         }
-        alert(msg);
+        /* alert(msg); */
+        
+Swal.fire({
+  title:msg,
+  icon:'warning'
+  })
+  
         console.log(msg);
       }
     } catch (error) {
-      alert("DB 오류입니다");
+      /* alert("DB 오류입니다"); */
+      
+Swal.fire({
+  title:'DB 오류입니다.',
+  icon:'error'
+  })
+  
     }
   }
 

@@ -18,6 +18,10 @@ import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv } from "../../../styles/formStyle";
 import LandingPage from "./Map/LandingPage";
+import Swal from "sweetalert2";
+
+
+
 
 const CarpoolDetail = () => {
   const navigate = useNavigate();
@@ -99,7 +103,10 @@ const CarpoolDetail = () => {
     };
     const res = await deleteCarpoolDB(carpool);
     console.log(res.data);
-    alert("게시글 삭제 완료");
+    Swal.fire({
+      title:'게시글 삭제 완료',
+      icon:'success'
+      })
     navigate("/carpool");
   };
 
@@ -412,7 +419,11 @@ const CarpoolDetail = () => {
                       console.log("deleteCarpoolReplyDB ", res.data);
                       // navigate("/together/BoardDetail/" + board.boardTgNo);
                       window.location.reload();
-                      alert("댓글 삭제 완료");
+                      /* alert("댓글 삭제 완료"); */
+                      Swal.fire({
+                        title:'댓글 삭제 완료',
+                        icon:'success'
+                        })
                     }}
                   >
                     <span style={{ color: "white", fontWeight: "bold" }}>

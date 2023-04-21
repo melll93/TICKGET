@@ -16,6 +16,7 @@ import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { Modal } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
@@ -96,7 +97,11 @@ const TogetherBoardDetail = () => {
     };
     const res = await deleteTogetherDB(board);
     console.log(res.data);
-    alert("게시글 삭제 완료");
+    /* alert("게시글 삭제 완료"); */
+    Swal.fire({
+      title:'게시글 삭제 완료',
+      icon:'success'
+      })
     navigate("/together");
   };
 
@@ -109,7 +114,12 @@ const TogetherBoardDetail = () => {
     };
 
     if (!boardReplyTgContent) {
-      alert("내용을 입력해주세요.");
+      /* alert("내용을 입력해주세요."); */
+      Swal.fire({
+        title:'내용을 입력해주세요.',
+        icon:'warning'
+        })
+
     }
     try {
       const res = await insertTogetherReplyDB(boardReply);
@@ -380,7 +390,11 @@ const TogetherBoardDetail = () => {
                       console.log("deleteTogetherReplyDB ", res.data);
                       // navigate("/together/BoardDetail/" + board.boardTgNo);
                       window.location.reload();
-                      alert("댓글 삭제 완료");
+                      /* alert("댓글 삭제 완료"); */
+                      Swal.fire({
+                        title:'댓글 삭제 완료',
+                        icon:'success'
+                        })
                     }}
                   >
                     <span style={{ color: "white", fontWeight: "bold" }}>
