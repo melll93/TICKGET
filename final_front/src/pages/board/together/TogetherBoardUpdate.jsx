@@ -64,7 +64,7 @@ const TogetherBoardUpdate = () => {
     if (!boardTgDate) {
       /* alert("날짜를 입력해 주세요."); */
       Swal.fire({
-        title: "날짜를 수정해주세요.",
+        title: "날짜를 입력해주세요.",
         icon: "warning",
       });
       return;
@@ -73,7 +73,7 @@ const TogetherBoardUpdate = () => {
     if (!boardTgContent) {
       /* alert("내용을 입력해주세요."); */
       Swal.fire({
-        title: "내용을 수정해주세요.",
+        title: "내용을 입력해주세요.",
         icon: "warning",
       });
       return;

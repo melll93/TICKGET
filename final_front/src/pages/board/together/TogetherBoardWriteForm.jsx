@@ -7,8 +7,12 @@ import Header from "../../../components/Header";
 import { BButton, ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Sidebar from "../../../components/Sidebar";
 import Swal from "sweetalert2";
+import { Cookies } from "react-cookie";
 
 const TogetherBoardWriteForm = ({ board_together }) => {
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData);
   //props를 넘어온 값 즉시 구조분해 할당하기
 
   const navigate = useNavigate();
@@ -18,8 +22,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
   const [writer, setWriter] = useState(""); //작성자?
-  const [_userData, setUserData] = useState();
-  const [types] = useState(["일반", "결제", "양도", "회원", "수업"]); //qna_type의 라벨값
 
   const handleContent = useCallback((value) => {
     console.log(value);
@@ -68,7 +70,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
     const board = {
       boardTgTitle: title, // 제목 추가
       boardTgContent: content, // 내용 추가
-      boardTgMemId: sessionStorage.getItem("id"),
+      boardTgMemId: _userData.memberId,
       boardTgDate: date,
     };
     // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
@@ -164,19 +166,14 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             {/* mem_id를 받아오자 */}
             <span
               id="board_writer"
-              type="text"
-              maxLength="50"
-              placeholder="작성자?"
               style={{
                 width: "100%",
                 height: "40px",
                 border: "1px solid lightGray",
               }}
-              value={sessionStorage.getItem("id")}
-              onChange={(e) => {
-                handleWriter(e.target.value);
-              }}
-            />
+            >
+              {_userData.memberId}
+            </span>
             <hr style={{ margin: "10px 0px 10px 0px" }} />
 
             <h3>날짜</h3>
