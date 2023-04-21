@@ -35,7 +35,7 @@ const HomePage = () => {
     const fullDate = year + "-" + month + "-" + date;
 /*     console.log(fullDate); */
     // paramete : YYYY-MM-DD
-    festivalListByDate(fullDate).then(console.log);
+ /*    festivalListByDate(fullDate).then(console.log); */
     festivalListByDate(fullDate).then(setFestivalToday);
   };
 
@@ -59,7 +59,7 @@ const HomePage = () => {
   const [boardList, setBoardList] = useState([]);
   const selectBoardList = async () => {
     const res = await selectTogetherDB();
-    console.log(res.data);
+   /*  console.log(res.data); */
     if (res.data && Array.isArray(res.data)) {
       setBoardList(res.data);} else {console.log("부서목록 조회 실패");}};
   useEffect(() => {selectBoardList();}, []);
@@ -80,7 +80,6 @@ const HomePage = () => {
    const [carpoolList, setCarpoolList] = useState([]);
    const selectCarpoolList = async () => {
     const res = await selectCarpoolDB();
-    console.log(res.data);
     if (res.data && Array.isArray(res.data)) {
       setCarpoolList(res.data);
     } else {
@@ -105,7 +104,6 @@ const HomePage = () => {
   const [mkboards, setMkboards] = useState([]);
    const selectMkBoardList = async () => {
     const res = await mk_boardListDB();
-    console.log(res.data);
     if (res.data && Array.isArray(res.data)) {
       setMkboards(res.data);
     } else {
@@ -145,7 +143,7 @@ const HomePage = () => {
               <strong> WHAT'S HOT</strong>
             </h1>
             {festivalHitList.slice(0, 5).map((festival, i) => (
-              <Link to={`/productsDetail/${festival.festMId}`} >
+              <Link to={`/productsDetail/${festival.festMId}`} key={i}  >
                 <Card.Img
                   key={i}
                   src={festival.festMImg}

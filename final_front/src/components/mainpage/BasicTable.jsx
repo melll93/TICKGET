@@ -15,23 +15,16 @@ const BasicTable = ({ items }) => {
   // console.log('베이직테이직'+items)
   return (
     <Table hover>
-      <tbody>
+<tbody>
         {items.slice(0, 5).map((item, index) => (
-          <tr key={index}> {/* 각 행에 고유한 key prop을 지정해주는 것이 좋습니다. */}
+          <tr key={index}> 
             <td>
               {item.url === "" ? <img src="./images_key/WOONGS.jpg" style={{ width: "40px", height: "40px", borderRadius: "50%" }}
               ></img> : <img src={item.url} style={{ width: "40px", height: "40px", borderRadius: "50%" }}
               ></img>
-
               }
-
-            </td>
-            <div>
-              <Link to={`${item.link}${item.no}`} style={{ textDecoration: 'none', color: 'black' }}>
-                <td colSpan={2}>{item.title}</td>
-              </Link>
-            </div>
-            <td>{item.detail}</td>
+            </td><td colSpan={2}><Link to={`${item.link}${item.no}`} style={{textDecoration:'none', color:'black'}}>{item.title}</Link></td><td>
+                  {item.detail}</td>
           </tr>
         ))}
       </tbody>
