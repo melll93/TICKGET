@@ -10,7 +10,7 @@ div .header {
 div .HomeButton {
   display: inline-block;
   z-index: 1;
-  width: 240px;
+  width: 225px;
   text-align: center;
 }
 
@@ -33,68 +33,68 @@ div .SearchBar {
   width: 50px;
 }
 
-.main_haeder{
+.main_haeder {
   background-color: white;
-  border-bottom:1px solid lightgray;
-  height:8vh;
+  border-bottom: 1px solid lightgray;
+  height: 8vh;
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: space-between;
 }
 
-.top_header{
-  background-color: rgb(44, 44, 44); 
-  color:rgb(130, 126, 126);
+.top_header {
+  background-color: rgb(44, 44, 44);
+  color: rgb(130, 126, 126);
   text-align: right;
   padding-right: 2%;
-  height:24px;
+  height: 24px;
   font-size: 10px;
-padding-top: 5px;
+  padding-top: 5px;
 }
 
-div .topList{
+div .topList {
   width: 1400px;
-padding-left:34%;
-font-size: 23px;
+  padding-left: 34%;
+  font-size: 23px;
 }
 
-.headerlink{
+.headerlink {
   text-decoration: none;
-  color:rgb(73, 69, 69);
+  color: rgb(73, 69, 69);
   margin-right: 15px;
   margin-left: 15px;
-  position: relative; 
+  position: relative;
 }
-.headerlink:hover{
+.headerlink:hover {
   text-decoration: none;
-color:black
+  color: black;
 }
 
 .headerlink:hover::after {
   text-decoration: none;
   content: "";
   position: absolute;
-  left: 0; 
-  bottom: -2px; 
+  left: 0;
+  bottom: -2px;
   width: 100%;
   height: 2px;
-  background-color: rgb(144, 34, 233); 
-  opacity: 0; 
-  transition: opacity 10s ease; 
+  background-color: rgb(144, 34, 233);
+  opacity: 0;
+  transition: opacity 10s ease;
 }
 .headerlink:hover::after {
-  opacity: 1; 
+  opacity: 1;
 }
 
-.headerlink2{
+.headerlink2 {
   text-decoration: none;
-  color:rgb(130, 126, 126);
+  color: rgb(130, 126, 126);
   margin-right: 15px;
   margin-left: 15px;
   font-size: 10px;
 }
 
-.headerlink2:hover{
-  color:rgb(229, 178, 244);
-  text-decoration:underline
+.headerlink2:hover {
+  color: rgb(229, 178, 244);
+  text-decoration: underline;
 }

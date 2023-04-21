@@ -21,11 +21,11 @@ const Header = () => {
 <Link to="/festival" className="headerlink"><strong>페스티벌</strong></Link>|<Link to="/together" className="headerlink" ><strong>함께가요</strong></Link>|<Link to="/market" className="headerlink"><strong>당근티켓</strong></Link>  
 </div>
 
-      <SearchBar />
-    
-</div>
-    
-    </div>
+          <SearchBar />
+
+        </div>
+
+      </div>
 
     </>
   );
