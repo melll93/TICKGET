@@ -24,7 +24,7 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
       setFestivals(data);
     }
     areaList();
-  }, [festMArea, selectedNavbarValue]);
+  }, [festMArea, selectedNavbarValue, festivals]);
 
   const hitPlusOne=async (festMId)=>{
     await thumbsupFestivalDB(festMId);
@@ -51,20 +51,18 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
                   style={{ textDecoration: "none", color: "black" }}
                   href={"/productsDetail/" + festival.festMId}
                 >
-                  <img src={festival.festMImg} style={{width:"100%", overflow:'hidden', height:'400px'}} alt="사진1" />
-                  <div className="card-body"  style={{overflow:'hidden', height:'220px'}}>
-                    <h5 className="card-title">제목 : {festival.festMName}</h5>
-                    <p className="card-text">로케 : {festival.festMLoc}</p>
+                         <img src={festival.festMImg} style={{width:"100%", overflow:'hidden', height:'380px'}} alt="사진1" />
+                  <div className="card-body" style={{overflow:'hidden', height:'150px'}} >
+                   <div style={{height:'30px', overflow:'hidden', padding:'5px', marginBottom:'15px'}}>
+                    <h5 className="card-title"><strong>{festival.festMName}</strong></h5>
+                    </div>
+                    <p className="card-text">장소 : {festival.festMLoc}</p>
                     <p className="card-text">
-                      {festival.festMStart} ~ {festival.festMEnd}
+                     기간: {festival.festMStart} ~ {festival.festMEnd}
                     </p>
-                    <p className="card-text"> festId: {festival.festMId} </p>
-                    <p className="card-text">
-                      festCategory: {festival.festMArea}
-                    </p>
-                  </div>      {/* card-body */}
+                  </div>
                 </a>
-                <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'right', marginLeft:'83%', paddingRight:'7px', cursor:'pointer'}}>
+                <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'center', marginLeft:'0%', paddingRight:'7px', cursor:'pointer'}}>
                 <i className="bi bi-hand-thumbs-up fs-4"></i>
                 {festival.festMHit===null ? 0: festival.festMHit}
                 </div>
