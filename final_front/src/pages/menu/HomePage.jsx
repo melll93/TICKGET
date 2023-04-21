@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import CalendarPage from "../menu/CalendarPage";
 import { festivalListByDate } from "../../axios/festival/festival";
 import { festivalHitListDB } from "../../axios/festival/festival";
+import { selectTogetherDB } from "../../axios/board/together/TogetherLogic";
 
 const HomePage = () => {
   /******************************
@@ -20,6 +21,8 @@ const HomePage = () => {
 
   const [festivalToday, setFestivalToday] = useState([]);
   const [festivalHitList, setFestivalHitList] = useState([]);
+  const [boardList, setBoardList] = useState([]);
+
 
 
   const getTodayList = () => {
@@ -28,7 +31,7 @@ const HomePage = () => {
     const month = getDate.getMonth() - 2;
     const date = getDate.getDate();
     const fullDate = year + "-" + month + "-" + date;
-    console.log(fullDate);
+/*     console.log(fullDate); */
     // paramete : YYYY-MM-DD
     festivalListByDate(fullDate).then(console.log);
     festivalListByDate(fullDate).then(setFestivalToday);
@@ -36,19 +39,31 @@ const HomePage = () => {
 
   useEffect(() => {
     getTodayList();
+    selectBoardList();
   }, []);
 
 
 
   useEffect(() => {
     const festivalHitList = async () => {
-      const festMHit = true; // festHit 변수에 true 값을 할당하여 HIT가 높은 순으로 데이터를 가져옴
-      const result = await festivalHitListDB(festMHit); // FestivalHitListDB 함수를 호출하여 데이터를 가져옴
-      setFestivalHitList(result); // 가져온 데이터를 상태값에 할당
+      const festMHit = true; 
+      const result = await festivalHitListDB(festMHit); 
+      setFestivalHitList(result); 
     };
-    festivalHitList(); // 데이터 가져오기
+    festivalHitList(); 
     console.log(festivalHitList);
   }, []);
+
+
+  const selectBoardList = async () => {
+    const res = await selectTogetherDB();
+    console.log(res.data);
+    if (res.data && Array.isArray(res.data)) {
+      setBoardList(res.data);
+    } else {
+      console.log("부서목록 조회 실패");
+    }
+  };
 
 
 
@@ -65,12 +80,9 @@ const HomePage = () => {
 <h1 style={{fontFamily:"Nanum Gothic", fontWeight:"bold"}}>
   WHAT'S HOT
   </h1>
-
   {festivalHitList.slice(0, 5).map((festival) => (
     <Card.Img key={festival.festMId} src={festival.festMImg} style={{width:'150px', height:'200px', marginRight:'20px'}} alt="Card image" />
         ))}
-
-
 </div>
 </section>
 
@@ -85,18 +97,27 @@ const HomePage = () => {
               <div className="mainpage box">
                 <div className="mainpage div div1">
                   <Tabs
-                    defaultActiveKey="festival"
+                    defaultActiveKey="together"
                     id="uncontrolled-tab-example"
                     className="margin0 mb-3"
                   >
-                    <Tab eventKey="festival" title="Festival">
-                      <BasicTable />
-                    </Tab>
                     <Tab eventKey="together" title="Together">
+
+  <BasicTable items={boardList} />
+
+
+                    </Tab>
+                    <Tab eventKey="carpool" title="Carpool">
+
+
                       <BasicTable />
+
                     </Tab>
                     <Tab eventKey="market" title="Market">
+
                       <BasicTable />
+
+
                     </Tab>
                   </Tabs>
                 </div>{" "}
