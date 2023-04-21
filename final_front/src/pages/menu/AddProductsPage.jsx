@@ -10,6 +10,8 @@ import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
 import HeaderSearchBar from "../../components/header/HeaderSearchBar";
+import Swal from "sweetalert2";
+
 
 /* ========================= 상품 자체 등록 ============================ */
 
@@ -102,7 +104,12 @@ originDetail()
       const res = await festivalUpdateDB(festival)
 /*         console.log(res.data); */
         navigate("/festival")
-        alert('상품수정완료')
+        /* alert('상품수정완료') */
+        Swal.fire({
+          title:'상품 수정 완료',
+          icon:'success'
+          })
+          
       } catch (error) {
         console.log(error);
       }

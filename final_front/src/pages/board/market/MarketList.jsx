@@ -98,7 +98,7 @@ const MarketList = () => {
         <MarketRow key={boards.boardMkNo} boards={boards} />
       ))}
  
- <CommonPagination
+ <CommonPagination 
           pagination={setPage}
           perPage={perPage}
           totalItems={boards.length}

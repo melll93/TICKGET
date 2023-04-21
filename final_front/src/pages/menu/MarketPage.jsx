@@ -46,41 +46,14 @@ const MarketPage = () => {
         <HeaderDiv style={{marginLeft:'600px'}}>
         </HeaderDiv>
 
-
         <div style={{marginTop:'100px' , textAlign: 'center'}}>
-          <h3 style={{display:'inline-block' , fontFamily:"Nanum Gothic", fontWeight:"bold"}}>마켓 게시판</h3>
+          <h3 style={{display:'inline-block' , fontFamily:"Nanum Gothic", fontWeight:"bold", marginTop:'10px', marginBottom:'30px'}}>마켓 게시판</h3>
           <MarketSearchBar style={{display: 'inline-block'}}/>
         </div>
 
 
-        <MkFormDiv style={{ marginLeft: "200px" }}>
+        <MkFormDiv style={{ marginLeft: "160px" }}>
           <div className="book-list">
-         {/*    <Table striped bordered hover style={{ minWidth: "1000px" }}>
-              <thead>
-                <tr>
-                  <th style={{ width: "500px", textAlign: "center" }}>
-                    상품정보
-                  </th>
-                  <th style={{ width: "50px", textAlign: "center" }}>수량</th>
-                  <th style={{ width: "150px", textAlign: "center" }}>가격</th>
-                  <th style={{ width: "150px", textAlign: "center" }}>
-                    등록일
-                  </th>
-                  <th style={{ width: "150px", textAlign: "center" }}>
-                    작성자
-                  </th>
-                  <th style={{ width: "80px", textAlign: "center" }}>
-                    조회수
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <MarketList />
-              </tbody>
-            </Table>
-            <hr /> */}
-
-
             <MarketList />
           </div>
         </MkFormDiv>

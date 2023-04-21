@@ -93,7 +93,7 @@ VALUES (#{boardMkTitle},#{boardMkContent},#{boardMkDate},#{boardMkHit},
      board_mk_filename = #{boardMkFilename},
      </if>
      <if test='boardMkFileurl!=null'>
-     board_mk_fileurl = #{boardMkFileurl},
+     board_mk_fileurl = #{boardMkFileurl}
      </if>
      WHERE board_mk_no = #{boardMkNo} 
 </update>
