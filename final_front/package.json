@@ -24,6 +24,7 @@
     "react-cookie": "^4.1.1",
     "react-datepicker": "^4.11.0",
     "react-datetime": "^3.2.0",
+    "react-daum-postcode": "^3.1.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-multi-carousel": "^2.8.2",

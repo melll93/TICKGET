@@ -31,6 +31,7 @@ public class MarketDto {
 	private String boardMkFilename;
 	private String boardMkFileurl;
 	private String memberNickname;
+	private String memberId;
 	private int memberNo;
 	private int boardMkStatus;
 	

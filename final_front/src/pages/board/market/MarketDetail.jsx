@@ -27,22 +27,20 @@ const MarketDetail = () => {
  /*  console.log(_userData) */
 
   let member_nickname = '';
+  let member_id ='';
   let member_no;
   if (_userData) {
     member_nickname = _userData.memberNickname;
+    member_id = _userData.memberId;
     member_no = _userData.memberNo;
+  
   }
 
 
-  const [userData, setUserData] = useState();
-  searchById("test").then(setUserData);
- 
 
 
   const search = window.location.search;
   /* console.log(search); */
-  const page = search.split('&').filter((item) => { return item.match('page') })[0]?.split('=')[1];
- /*  console.log(page); */
   const no = search.split('&').filter((item) => { return item.match('no') })[0]?.split('=')[1];
   /* console.log(no); */
 
@@ -67,7 +65,8 @@ const MarketDetail = () => {
       const temp = JSON.stringify(res.data)
       const jsonDoc = JSON.parse(temp)
       console.log(jsonDoc[0].memberNickname);
-      /* console.log(jsonDoc[0].memNo); */
+      console.log(jsonDoc[0].memberId);
+      console.log(jsonDoc[0].memberNo);
       console.log(jsonDoc[0].boardMkTitle);
       console.log(jsonDoc[0].boardMkDate);
       console.log(jsonDoc[0].mkTicketPlace);
@@ -84,6 +83,7 @@ const MarketDetail = () => {
         board_mk_date: jsonDoc[0].boardMkDate,
         board_mk_hit: jsonDoc[0].boardMkHit,
         member_nickname: jsonDoc[0].memberNickname,
+        member_id: jsonDoc[0].memberId,
         member_no: jsonDoc[0].memberNo, 
         mk_ticket_place: jsonDoc[0].mkTicketPlace,
         mk_ticket_date: jsonDoc[0].mkTicketDate,   
@@ -233,7 +233,9 @@ const linkToChat = () => {
 
 
 
-
+ //게시글 작성자(판매자) 프로필 가져오기
+ const [userData, setUserData] = useState();
+ searchById(detail.member_id).then(setUserData);
 
 
   return (
@@ -253,8 +255,9 @@ const linkToChat = () => {
           <MarketBoardHeader detail={detail} no={no} />
           <hr/>
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", fontSize: "17.5px" }}>
-  <div  style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.1rem"}}>프사 | {detail.member_nickname}</div>
-  <div style={{marginRight:'45px', opacity:'90%'}}>
+  <div  style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.1rem"}}>
+  <UserProfile _userData={userData}/> {detail.member_nickname}</div>
+  <div style={{marginRight:'20px', opacity:'80%', marginTop:'15px'}}>
     <span style={{ marginRight: "5px" , color:'black'}}>
       <i class="bi bi-heart-fill"></i> 5 <span style={{color:'black' , opacity:'30%' , margin:'3px'}}> | </span>
     </span>
