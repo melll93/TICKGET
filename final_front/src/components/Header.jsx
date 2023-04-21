@@ -13,7 +13,7 @@ const Header = () => {
     <>
     <div className="header">
 <div className="top_header">
-  {_userData==null ? <> <Link to="/" className="header2link">로그인</Link> |  <Link to="/" className="headerlink2">회원가입</Link>(일단대충박아놓음) </>: <> <Link to="/" className="headerlink2">로그아웃</Link> |  <Link to="/" className="headerlink2">마이페이지</Link>(일단대충박아놓음) </>}
+  {_userData==null ? <> <Link to="/" className="headerlink2">로그인</Link> |  <Link to="/" className="headerlink2">회원가입</Link>(일단대충박아놓음) </>: <> <Link to="/" className="headerlink2">로그아웃</Link> |  <Link to="/" className="headerlink2">마이페이지</Link>(일단대충박아놓음) </>}
 </div>
 <div className="main_haeder">
     <HomeButton />

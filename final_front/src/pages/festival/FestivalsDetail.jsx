@@ -21,7 +21,6 @@ const FestivalsDetail = () => {
 
   const cookies = new Cookies();
   const _userData = cookies.get("_userData"); //유저 정보
-  console.log(_userData)
 
   let { festMId } = useParams();
 
@@ -54,12 +53,14 @@ const FestivalsDetail = () => {
     festTcPrice:"",
     festDtRuntime:"",
     festDtAge:"",
+    festDtCrew:"",
+    festDtCasting:""
   }]);
 
   useEffect(() => {
     const asyncDB = async () => {
       const res = await FetivalDetailDB({ festMId });
-      console.log(res.data)
+    /*   console.log(res.data) */
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
       setFestival([{
@@ -72,6 +73,8 @@ const FestivalsDetail = () => {
         festTcPrice:jsonDoc[0].festTcPrice,
         festDtRuntime:jsonDoc[0].festDtRuntime,
         festDtAge:jsonDoc[0].festDtAge,
+        festDtCrew:jsonDoc[0].festDtCrew,
+      festDtCasting:jsonDoc[0].festDtCasting
         
       }]);
       if (res.data) {
@@ -87,7 +90,6 @@ const FestivalsDetail = () => {
 
 
   const reduxUser = useSelector((state) => state.userStatus.user);
-  console.log(reduxUser);
   
   /* 리뷰 */
   const [reviewContent, setReviewContent] = useState("");
@@ -132,6 +134,18 @@ const FestivalsDetail = () => {
     navigate('/festival');
   };
 
+
+/* 클릭한 좌석 담기 */
+ const [selectedFestTcType, setSelectedFestTcType] = useState("일반석");
+ const [selectedFestTcPrice, setSelectedFestTcPrice] = useState(0);
+
+  const festivalTcClicked = (festTcPrice, festTcType) => {
+    setSelectedFestTcType(festTcType) 
+    setSelectedFestTcPrice(festTcPrice);
+    // 선택한 값 쿠키에 담는 로직 추가
+    document.cookie = `selectedFestTcPrice=${JSON.stringify(festTcPrice)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+    document.cookie = `selectedFestTcType=${JSON.stringify(festTcType)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+  };
 
 
 
@@ -312,7 +326,7 @@ const FestivalsDetail = () => {
                   <li className="product_info_list">
                     <span className="product_info_title">기간</span>
                     <div className="product_info_desc">
-                      {festival.festMStart}~{festival[0].festMEnd}
+                      {festival[0].festMStart}~{festival[0].festMEnd}
                     </div>
                   </li>
                   <li className="product_info_list">
@@ -325,27 +339,23 @@ const FestivalsDetail = () => {
 
                 <ul className="product_lnfo_list_col2">
                   <li className="product_info_list">
-                    <span className="product_info_title">가격</span>
+                    <span className="product_info_title">출연진</span>
                     <div className="product_info_desc">
                       <ul className="product_info_sublist">
 
-                      {festival.map((fest, i) => (
                         <li className="product_info_subitem" >
-                         { fest.festTcType===null? <p style={{display:'inline'}}>좌석(미정)  : </p>: <p style={{display:'inline'}}>{fest.festTcType}  : </p>}  
-                         { fest.festTcPrice===null? <p style={{display:'inline'}}>가격미정</p>: <p style={{display:'inline'}}>{fest.festTcPrice}</p>}
-                          원
+                         { festival[0].festDtCasting===null? <p style={{display:'inline'}}>출연진(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}  : </p>}  
                         </li>
-                      ))}
 
                       </ul>
                     </div>
                   </li>
                   <li className="product_info_list">
-                    <span className="product_info_title">할인</span>
+                    <span className="product_info_title">제작진</span>
                     <div className="product_info_desc">
                       <ul className="product_info_sublist">
                         <li className="product_info_subitem">
-                          신한카드<em className="text_emphasis"> %%%% </em>할인
+                         { festival[0].festDtCrew===null? <p style={{display:'inline'}}>제작진(미공개)</p>: <p style={{display:'inline'}}>{festival[0].festDtCrew}</p>}
                         </li>
                       </ul>
                     </div>
@@ -361,17 +371,35 @@ const FestivalsDetail = () => {
               <span className="products_calendar">
                 <Calendar value={date} onChange={handleDateChange}/>
               </span>
-              <div className="calendarands1">내용물1
-              <p style={{border: '1px solid gray', borderRadius: '10px'}}>
-              일반석 / 시간 
-              </p>
-              
+              <div className="calendarands1" style={{borderLeft:'1px dotted gray', borderRight:'1px dotted gray' , padding:'20px'}}>
+          <strong>
+            <p style={{color:'red'}}>[좌석 선택]</p>
+            </strong>
+            
+
+              {festival.map((fest, i) => (
+                        <p key={i} className={`product_info_subitem${selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType)} style={{border: '1px solid gray', borderRadius: '10px'}}>
+                         { fest.festTcType===null? <p style={{display:'inline'}}>좌석(미정)  : </p>: <p style={{display:'inline'}}>{fest.festTcType}  : </p>}  
+                         { fest.festTcPrice===null? <p style={{display:'inline'}}>가격미정</p>: <p style={{display:'inline'}}>{fest.festTcPrice}</p>}
+                          원
+                          </p>
+                      ))}
+
+
+
+
               </div>
               
               
               <div className="calendarands2">
-                잔여좌석<br></br>
-                <DropdownButton options={options} ></DropdownButton>
+                <div style={{border:'1px solid red', margin: '10px', alignItems:'center'}}>
+                <h4 style={{color:'red', textDecoration:'underline'}}>[선택 좌석]</h4> {selectedFestTcType}  -   {selectedFestTcPrice}  원
+                </div>
+
+                <div style={{border:'1px solid red', margin: '10px', alignItems:'center'}}>
+                <h4 style={{color:'red', textDecoration:'underline'}}>[잔여좌석]</h4> 확인중... 석
+                </div>
+                구매 수량 : <DropdownButton options={options} ></DropdownButton>
                 
                 <BlackBtn
                   width="250px"
@@ -395,6 +423,7 @@ const FestivalsDetail = () => {
                 <Tab eventKey="product_detail_description" title="상세정보">
                   {festival.map((fest, i) => (
                   <div
+                  key={i}
                     className="product_detail_description"
                     style={{
                       maxWidth: "1250px",

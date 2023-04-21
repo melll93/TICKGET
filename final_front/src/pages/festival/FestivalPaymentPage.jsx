@@ -11,6 +11,8 @@ const FestivalPaymentPage = () => {
   const navigate = useNavigate()
   const festSelectedDate = cookie.get('date');
   const festSelectedTkamt = cookie.get('tk_amount');
+  const selectedFestTcType = cookie.get('selectedFestTcType');
+  const selectedFestTcPrice = cookie.get('selectedFestTcPrice');
 
   let { festMId } = useParams();
   console.log(festMId);
@@ -61,11 +63,11 @@ const FestivalPaymentPage = () => {
   const orderDetail = {
     url: festival[0].festMImg,
     title: festival[0].festMName,
-    seat: festival[0].festMName,
+    seat: selectedFestTcType,
     date: festSelectedDate,
     place: festival[0].festMLoc,
     amount: festSelectedTkamt,
-    price: festival[0].festTcPrice,
+    price: selectedFestTcPrice,
   };
 
   return (
