@@ -274,7 +274,7 @@ const FestivalsDetail = () => {
         {/* 로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람이 관리자일경우 삭제 버튼 보이기 
    {sessionStorage.getItem('Auth')===''관리자"'&&       
    */}
-          {_userData.memberAuthority==="ROLE_ADMIN" ? 
+          {_userData && _userData.memberAuthority==="ROLE_ADMIN" ? 
         <div>
           <BlackBtn onClick={deleteProducts} width='100px'>상품삭제</BlackBtn>
           <Link to={`/addProducts/${festMId}`}>
