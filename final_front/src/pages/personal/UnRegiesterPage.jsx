@@ -1,8 +1,12 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import { BButton } from '../../styles/formStyle';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { memberDeleteDB, memberListDB } from '../../axios/member/memberCrud';
+import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom';
 
 export const Input = styled.input`
   width: 250px;
@@ -27,11 +31,27 @@ export const Input = styled.input`
 `;
 
 const UnRegiesterPage = () => {
+  const navigate = useNavigate()
+  // 로그인을 하고 나면 리덕스에 이 값이 담겨 있어야 함
+  const memberId = useSelector(state => state.userStatus.user);
+  //console.log(memberId);
+  // const [memberId, setMemberId] = useState();
+  // 상수로 처리 test 
+/*   useEffect(()=>{
+    setMemberId('yeg123') 
+  },[]) */ // UnRegiesterPage화면이 열릴 때 최초 딱 한번만 실행됨
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
+  const [memInfo, setMemInfo] = useState('');
+
   const [passwordInput, setPasswordInput] = useState("");
+
+  const changeMemInfo = (e) => {
+    setPasswordInput(e.target.value);
+    console.log("password : " + e.target.value);
+  };
 
   const handleCheckboxChange = useCallback((e) => {
     const id = e.target.id;
@@ -46,8 +66,28 @@ const UnRegiesterPage = () => {
     setIsSubmitEnabled(isChecked1 && isChecked2);
   }, [isChecked1, isChecked2]);
 
-  const handleDelete = () => {
+  const handleDelete = async (e) => {
+    console.log(memberId);//yeg123
+    e.preventDefault();
+    // 비밀번호가 사용자의 비밀번호와 일치하는지 확인합니다
+    // 리덕스에 사용자 비밀번호도 필요
+    const member = memberListDB.find(member => member.member_id === memberId);
+    if (memInfo.password !== member.member_password) {
+      console.log('비밀번호 불일치')
+      Swal.fire({
+        title:'비밀번호를 다시 확인해 주세요.',
+        icon:'error'
+        })
+      return;
+    }
 
+    // 사용자의 테이블을 삭제하고 성공 메시지를 표시합니다
+    await memberDeleteDB(memberId);
+    Swal.fire({
+      title:'회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.',
+      icon:'success'
+      })
+      //navigate('/')
   }
   return (
     <>
@@ -92,11 +132,11 @@ const UnRegiesterPage = () => {
             </label>
             <br />
             <label>
-              <Input
+            <Input
                 type="password"
-                placeholder="탈퇴를 위해 비밀번호를 한 번 더 입력해 주세요"
+                placeholder="탈퇴를 위해 비밀번호를 한 번 더 입력해 주세요."
                 value={passwordInput}
-                onChange={(e) => setPasswordInput(e.target.value)}
+                onChange={changeMemInfo}
               />
             </label>
             <br />
