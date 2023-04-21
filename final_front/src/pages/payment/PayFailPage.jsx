@@ -12,19 +12,18 @@ const PayFailPage = () => {
 
   return (
     <>
+        <Header />
             <Sidebar />
       <div className="center">
-        <Header />
 
-        <div className="payment_center_div" style={{margin:'200px', textAlign:'center'}}>
-
-      <h1>결제가 취소 되었습니다. </h1><br/><br/>
-      <span>결제 승인 번호 : {` ${searchParams.get("orderId")}`}</span><br/>
+        <div className="payment_center_div" style={{margin:'100px', textAlign:'center', fontWeight:'bold'}}>
+        <i class="bi bi-x-circle" style={{fontSize:"10rem"}}></i>
+      <h1 style={{fontWeight:'bold' , color:'rgb(237,0,0)'}}>결제가 취소되었습니다. </h1><br/><br/>
+{/*       <span>결제 승인 번호 : {` ${searchParams.get("orderId")}`}</span><br/> */}
       <div>결제 금액 : {` ${Number(searchParams.get("amount")).toLocaleString()}원`}</div><br/>
-      
         <p> 상품 {param}의 구매에 실패하였습니다. </p>
         <Link to = "/">
-          <button className="homebtn" style={{backgroundColor:'black', color:'white', borderRadius:'50px', width:'450px', height:'60px'}}> 메인으로 </button>
+          <button className="homebtn" style={{backgroundColor:'black', color:'white', borderRadius:'50px', width:'450px', height:'60px',marginTop:'30px'}}> 메인으로 </button>
           </Link>
         </div>
 

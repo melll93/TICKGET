@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "LeferiBaseBold";
+  src: url("./LeferiBaseBold.ttf");
+}
+
+@font-face {
+  font-family: "LeferiBaseRegular";
+  src: url("./LeferiBaseRegular.ttf");
+}
+
+@font-face {
+  font-family: "LeferiPointBlack";
+  src: url("./LeferiPointBlack.ttf");
+}

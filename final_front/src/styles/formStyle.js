@@ -30,7 +30,7 @@ export const MyH1 = styled.h1`
   text-align: center;
   span {
     margin-right: 5px; /* 오른쪽에 10px의 공백 추가 */
-    margin-left: 5px; 
+    margin-left: 5px;
   }
 `;
 
@@ -268,7 +268,5 @@ export let BlackBtn = styled.button`
     background: rgb(72, 71, 71);
   }
 `;
-
-
 
 /* ▲▲▲▲은영사용중 ▲▲▲▲ */
