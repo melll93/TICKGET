@@ -1,4 +1,4 @@
-.menuLIst{
+.menuLIst {
   color: white;
 }
 
@@ -32,7 +32,7 @@ div .sidebar.items {
   transition: 0.5s;
   top: 2.6vh;
   left: 0;
-  color:white
+  color: white;
 }
 
 div .sidebar.button {
@@ -50,7 +50,7 @@ div .sidebar.button {
 }
 
 .icon {
-  filter: invert(100%);
+  /* filter: invert(100%); */
   display: inline-block;
 }
 

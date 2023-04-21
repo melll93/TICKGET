@@ -4,13 +4,13 @@ import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 const cookies = new Cookies();
 
-const UserProfile = (_userData) => {
+const UserProfile = ({ _userData }) => {
   const navigate = useNavigate();
   const _myData = cookies.get("_userData");
 
   const myId = _myData && _myData.memberId;
-  const friendId = _userData.memberId;
-
+  const friendId = _userData && _userData.memberId;
+  console.log(_userData);
   const handleChatFromProfile = (myId, friendId) => {
     console.log(myId);
     console.log(friendId);
