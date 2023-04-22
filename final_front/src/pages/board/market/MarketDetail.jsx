@@ -76,21 +76,10 @@ const MarketDetail = () => {
         mk_ticket_price: jsonDoc[0].mkTicketPrice.toLocaleString(),
         board_mk_filename: jsonDoc[0].boardMkFilename,
         board_mk_fileurl: jsonDoc[0].boardMkFileurl,
+        board_mk_wlcount : jsonDoc[0].boardMkWlcount
       })
 
       searchById(jsonDoc[0].memberId).then(setUserData);
-
-      console.log(res.data);//빈배열만 출력됨
-      // console.log(jsonDoc[0].memberNickname);
-      // console.log(jsonDoc[0].memberId);
-      // console.log(jsonDoc[0].memberNo);
-      // console.log(jsonDoc[0].boardMkTitle);
-      // console.log(jsonDoc[0].boardMkDate);
-      // console.log(jsonDoc[0].mkTicketPlace);
-      // console.log(jsonDoc[0].mkTicketSeat);
-      // console.log(jsonDoc[0].mKTicketCount);
-      // console.log(jsonDoc[0].boardMkFilename);
-      // console.log(jsonDoc[0].boardMkFileurl);
     });
   }
 
@@ -156,7 +145,16 @@ const MarketDetail = () => {
   const addWishlist = () => {
     if (member_no > 0) {
       /* 구현중.. */
-
+     const addtoWishlist = async() =>{
+      const wData = {
+        wishlistTitle : detail.board_mk_title,
+        wishlistCategory : 'board_market',
+        memberNo : member_no,
+        boardMkNo : detail.board_mk_no
+      }
+      const res = await wishlistAddDB(wData)
+      console.log(res.data)
+     }
 
 
     } else if (member_no == detail.member_no) {
@@ -261,7 +259,7 @@ const MarketDetail = () => {
                   <UserProfile _userData={_userdata} /> {detail.member_nickname}</div>
                 <div style={{ marginRight: '20px', opacity: '80%', marginTop: '15px' }}>
                   <span style={{ marginRight: "5px", color: 'black' }}>
-                    <i class="bi bi-heart-fill"></i> 5 <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
+                    <i class="bi bi-heart-fill"></i> {detail.board_mk_wlcount} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
                   </span>
                   <span style={{ marginRight: "5px", color: 'black' }}>
                     <i class="bi bi-eye-fill"></i> {detail.board_mk_hit} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
