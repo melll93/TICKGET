@@ -16,6 +16,7 @@ import MapContainer from './Map/MapContainer';
 import UserProfile from '../../../components/UserProfile';
 import { searchById } from '../../../axios/member/member';
 import Swal from "sweetalert2";
+import { wishlistAddDB } from '../../../axios/payment/wishlistLogic';
 
 
 const cookies = new Cookies();
@@ -36,7 +37,16 @@ const MarketDetail = () => {
 
   }
 
+  const [_userdata, setUserData] = useState();
 
+  //상세보기 데이터 가져오기
+  useEffect(() => {
+    boardDetail()
+    // .then((res) => {
+    // searchById(detail.member_id).then(setUserData);
+    // })
+    console.log(_userData);
+  }, [])
 
 
   const search = window.location.search;
@@ -76,21 +86,10 @@ const MarketDetail = () => {
         mk_ticket_price: jsonDoc[0].mkTicketPrice.toLocaleString(),
         board_mk_filename: jsonDoc[0].boardMkFilename,
         board_mk_fileurl: jsonDoc[0].boardMkFileurl,
+        board_mk_wlcount : jsonDoc[0].boardMkWlcount
       })
 
       searchById(jsonDoc[0].memberId).then(setUserData);
-
-      console.log(res.data);//빈배열만 출력됨
-      // console.log(jsonDoc[0].memberNickname);
-      // console.log(jsonDoc[0].memberId);
-      // console.log(jsonDoc[0].memberNo);
-      // console.log(jsonDoc[0].boardMkTitle);
-      // console.log(jsonDoc[0].boardMkDate);
-      // console.log(jsonDoc[0].mkTicketPlace);
-      // console.log(jsonDoc[0].mkTicketSeat);
-      // console.log(jsonDoc[0].mKTicketCount);
-      // console.log(jsonDoc[0].boardMkFilename);
-      // console.log(jsonDoc[0].boardMkFileurl);
     });
   }
 
@@ -154,12 +153,23 @@ const MarketDetail = () => {
 
   //찜하기 기능
   const addWishlist = () => {
-    if (member_no > 0) {
+    if (member_no > 0 && member_no != detail.member_no) {
       /* 구현중.. */
+     const addtoWishlist = async() =>{
+      const wData = {
+        wishlistId : 0,
+        wishlistTitle : detail.board_mk_title,
+        wishlistPrice : detail.mk_ticket_price,
+        wishlistCategory : "market",
+        boardMkNo : detail.board_mk_no,
+        memberNo : member_no,
+      }
+      const res = await wishlistAddDB(wData)
+      console.log(res.data)
+     }
+     addtoWishlist()
 
-
-
-    } else if (member_no == detail.member_no) {
+    } else if (member_no === detail.member_no) {
       Swal.fire({
         title: "내 게시글에서 이용할 수 없습니다.",
         icon: 'error'
@@ -180,7 +190,7 @@ const MarketDetail = () => {
 
   //채팅으로 연결
   const linkToChat = () => {
-    if (member_no > 0) {
+    if (member_no > 0 && member_no != detail.member_no) {
       /* 유저와 판매자 채팅으로 연결해주기 */
 
 
@@ -227,16 +237,7 @@ const MarketDetail = () => {
       });
     }
   }
-  const [_userdata, setUserData] = useState();
-
-  //상세보기 데이터 가져오기
-  useEffect(() => {
-    boardDetail()
-    // .then((res) => {
-    // searchById(detail.member_id).then(setUserData);
-    // })
-    console.log(_userData);
-  }, [])
+ 
 
   //게시글 작성자(판매자) 프로필 가져오기
 
@@ -261,7 +262,7 @@ const MarketDetail = () => {
                   <UserProfile _userData={_userdata} /> {detail.member_nickname}</div>
                 <div style={{ marginRight: '20px', opacity: '80%', marginTop: '15px' }}>
                   <span style={{ marginRight: "5px", color: 'black' }}>
-                    <i class="bi bi-heart-fill"></i> 5 <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
+                    <i class="bi bi-heart-fill"></i> {detail.board_mk_wlcount} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
                   </span>
                   <span style={{ marginRight: "5px", color: 'black' }}>
                     <i class="bi bi-eye-fill"></i> {detail.board_mk_hit} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>

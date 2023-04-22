@@ -12,7 +12,7 @@ const cookies = new Cookies();
  
    let member_no;
    if (_userData) {
-     member_no = _userData.memberNo;
+     member_no = _userData.memberNo; //쿠키에서 가져온 회원번호 (내정보)
    }
  
 
@@ -27,11 +27,6 @@ const cookies = new Cookies();
     //가격 쉼표 처리
     const price = boards.mkTicketPrice.toLocaleString()
     console.log(price)
-
-
-
-
-
 
 
     //현재 시간 - 게시글 작성 시간
@@ -143,7 +138,7 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
    
       <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}}>
   {member_no === boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.1rem", color:'rgb(80, 50, 200)'}}>내 게시글</span>}
-  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px'}}><i class="bi bi-heart" />{" "}찜 5</span>}
+  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px'}}><i class="bi bi-heart" />{" "}찜 {boards.boardMkWlcount}</span>}
 </div>
        </p>
        <hr style={{marginTop:'-25px' , opacity:'0'}}/>
