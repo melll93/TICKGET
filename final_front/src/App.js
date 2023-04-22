@@ -40,6 +40,7 @@ import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import PaymentPage from "./pages/personal/PaymentPage";
 import UnRegiesterPage from "./pages/personal/UnRegiesterPage";
+import MemberUpdPage from "./pages/personal/MemberUpdPage";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -84,6 +85,7 @@ function App({ mkImageUploader }) {
         <Route path="/bookmark" exact={true} element={<BookmarkPage />} />
         <Route path="/setting" exact={true} element={<SettingPage />} />
         <Route path="/unregiester" exact={true} element={<UnRegiesterPage />} />
+        <Route path="/update" exact={true} element={<MemberUpdPage />} />
 
         {/* MenuBar Routes */}
         <Route path="/search" exact={true} element={<SearchResultPage />} />
