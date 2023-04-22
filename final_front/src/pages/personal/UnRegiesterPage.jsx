@@ -76,7 +76,6 @@ const UnRegiesterPage = () => {
       console.log('비밀번호 불일치')
       Swal.fire({
         title:'비밀번호를 다시 확인해 주세요.',
-        icon:'error'
         })
       return;
     }
@@ -85,7 +84,6 @@ const UnRegiesterPage = () => {
     await memberDeleteDB(memberId);
     Swal.fire({
       title:'회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.',
-      icon:'success'
       })
       //navigate('/')
   }
