@@ -12,12 +12,18 @@ img {
   margin: 0;
 }
 
-span {
+/* span {
   color: black;
-}
+} */
 
 .link {
   text-decoration: none;
+  color: white;
+}
+
+.link:hover {
+  text-decoration: none;
+  color: white;
 }
 
 div .socialLogin {
@@ -54,7 +60,7 @@ div .center {
   position: absolute;
   height: 100vh;
   width: 100vw;
-  top: 8vh;
+  top: 10vh;
 }
 
 div .carouselDiv {
@@ -198,13 +204,13 @@ div .Menu {
   object-fit: cover;
 }
 
-@font-face {
-  font-family: "LeferiBaseBold";
-  src: url("./fonts/LeferiBaseBold.ttf") format("truetype");
-}
-
 .gray-tabs .nav-link:not(.active) {
   color: black;
   background-color: #c9c8c8;
   opacity: 50%;
 }
+
+/* @font-face {
+  font-family: "LeferiBaseBold";
+  src: url("./Fonts/LeferiBaseBold.ttf");
+} */

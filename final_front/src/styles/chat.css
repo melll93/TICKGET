@@ -1,3 +1,7 @@
+.black {
+  color: black;
+}
+
 div .center {
   margin: 0;
   padding: 0;
@@ -13,11 +17,12 @@ div .chat {
 }
 
 div .chat.container {
+  border: none;
   display: flex;
   flex-direction: column;
 
-  height: 80vh;
-  width: 80vw;
+  height: 80%;
+  width: 80%;
   margin-top: 5vh;
   margin-left: 15vw;
 }
@@ -26,6 +31,12 @@ div .chat.bar {
   display: flex;
   height: 10%;
   width: 100%;
+  align-items: center;
+}
+
+div .chat.box {
+  display: flex;
+  height: 90%;
 }
 
 div .chat.bar.dm {
@@ -36,14 +47,24 @@ div .chat.bar.group {
   height: 100%;
 }
 
-div .chat.box {
-  display: flex;
-  height: 90%;
-}
-
 div .chat.chatList {
   height: 100%;
   width: 30%;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+div .chatOne {
+  border: 1px solid gray;
+  height: 10%;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+  align-items: center;
 }
 
 div .chat.chatDisplay {
@@ -54,9 +75,8 @@ div .chat.chatDisplay {
 }
 
 div .chat.outputBox {
-  /* display: flex;
-  flex-direction: row; */
   width: 100%;
+  overflow: scroll;
 }
 
 div .chat.inputBox {

@@ -245,3 +245,15 @@ ol, ul {
   .thumbs-up:hover{
 background-color: rgb(248, 212, 212);
   }
+
+
+  /* 디테일 - 일반석/좌석 */
+  .product_info_subitem:hover{
+    background-color: rgb(195, 190, 190);
+
+  }
+
+  .product_info_subitemactive{
+background-color: rgb(42, 40, 42);
+color:white
+  }

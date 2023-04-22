@@ -1,6 +1,7 @@
 package back.spring.final_back.board.repository;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -20,18 +21,19 @@ public class MarketDto {
 	private int boardMkNo;
 	private String boardMkTitle;
 	private String boardMkContent;
-	private LocalDateTime boardMkDate;
+	private Timestamp boardMkDate;
 	private int boardMkHit;
 	private LocalDateTime mkTicketDate;
 	private String mkTicketSeat;
 	private int mkTicketPrice;
 	private String mkTicketCount;
 	private String mkTicketPlace;
-	private String memName;
 	private String boardMkFilename;
 	private String boardMkFileurl;
+	private String memberNickname;
+	private String memberId;
+	private int memberNo;
 	private int boardMkStatus;
-	private int memNo;
 	
 	
 	//조건검색 시 필요

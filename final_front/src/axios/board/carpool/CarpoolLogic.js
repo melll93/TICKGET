@@ -84,7 +84,7 @@ export const updateCarpoolDB = (carpool) => {
 /* 조회수 */
 export const carpoolViewUpDB = async(boardCpNo) => {
   /* 오케이 여기까진 진출했어 */
-  console.log("viewUpDB boardTgNo ", boardCpNo);
+  console.log("viewUpDB boardCpNo ", boardCpNo);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({

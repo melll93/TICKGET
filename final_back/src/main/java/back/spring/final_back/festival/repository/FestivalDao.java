@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 @Mapper
 public interface FestivalDao {
-	public FestivalDto festivalDetail(FestivalDto festivalDto);
-	
+	public List<FestivalDto> festivalDetail(FestivalDto festivalDto);
 	
     public List<FestivalDto> festivalListByDate(Date date);
 
@@ -28,9 +28,11 @@ public interface FestivalDao {
 
 	public int festDetailInsert(FestivalDto festivalDto);
 
-
 	public int festPosterInsert(FestivalDto festivalDto);
 
 
 	public int festTicketInsert(FestivalDto festivalDto);
+
+
+  public int festivalUpdate(FestivalDto festivalDto);
 }

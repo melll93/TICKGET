@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Mapper
 public interface TogetherDao {
@@ -24,5 +23,5 @@ public interface TogetherDao {
     public int deleteBoardList(TogetherDto togetherDto);
 
     // Together 게시판 조회수 증가
-    void viewUp(@RequestParam Map<String, Object> pMap);
+    public void viewUp(Map<String, Object> pMap);
 }

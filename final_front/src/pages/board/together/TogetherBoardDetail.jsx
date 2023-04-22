@@ -16,7 +16,8 @@ import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { Modal } from "react-bootstrap";
-
+import Swal from "sweetalert2";
+import { Cookies } from "react-cookie";
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
@@ -27,6 +28,10 @@ const TogetherBoardDetail = () => {
   const [boardReplyTgContent2, setBoardReplyTgContent2] = useState("");
   const [boardReplyList, setBoardReplyList] = useState([]);
   const [lgShow, setLgShow] = useState(false);
+
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log("_userData : ", _userData);
 
   const inputModifiedReply = useCallback((e) => {
     console.log("inputModifiedReply : ", e);
@@ -42,7 +47,6 @@ const TogetherBoardDetail = () => {
       boardTgNo: boardTgNo,
     };
     const res = await selectTogetherReplyDB(boardReply);
-    console.log("asdas d", res.data);
     if (res.data && Array.isArray(res.data)) {
       setBoardReplyList(res.data);
     } else {
@@ -68,6 +72,7 @@ const TogetherBoardDetail = () => {
 
   const asyncDB = async () => {
     const res = await selectTogetherDetailDB({ boardTgNo });
+    console.log("res", res);
     const result = JSON.stringify(res.data);
     const jsonDoc = JSON.parse(result);
     setBoard({
@@ -98,7 +103,11 @@ const TogetherBoardDetail = () => {
     };
     const res = await deleteTogetherDB(board);
     console.log(res.data);
-    alert("게시글 삭제 완료");
+    /* alert("게시글 삭제 완료"); */
+    Swal.fire({
+      title: "게시글 삭제 완료",
+      icon: "success",
+    });
     navigate("/together");
   };
 
@@ -106,12 +115,16 @@ const TogetherBoardDetail = () => {
     console.log("submitComment");
     const boardReply = {
       boardTgNo: boardTgNo,
-      boardReplyTgMemId: sessionStorage.getItem("id"),
+      boardReplyTgMemId: _userData.memberId,
       boardReplyTgContent: boardReplyTgContent,
     };
 
     if (!boardReplyTgContent) {
-      alert("내용을 입력해주세요.");
+      /* alert("내용을 입력해주세요."); */
+      Swal.fire({
+        title: "내용을 입력해주세요.",
+        icon: "warning",
+      });
     }
     try {
       const res = await insertTogetherReplyDB(boardReply);
@@ -206,23 +219,27 @@ const TogetherBoardDetail = () => {
                   목록으로
                 </Button>
                 &nbsp;
-                <Button
-                  style={{ margin: "10px", backgroundColor: "black" }}
-                  onClick={deleteBoardList}
-                >
-                  삭제하자
-                </Button>
-                <Button
-                  style={{ marginLeft: "10px", backgroundColor: "black" }}
-                  onClick={() =>
-                    navigate({
-                      pathname: "/together/BoardUpdate/" + board.boardTgNo,
-                      state: { board },
-                    })
-                  }
-                >
-                  수정하자
-                </Button>
+                {_userData.memberAuthority === "ROLE_ADMIN" ? (
+                  <div>
+                    <Button
+                      style={{ margin: "10px", backgroundColor: "black" }}
+                      onClick={deleteBoardList}
+                    >
+                      삭제하자
+                    </Button>
+                    <Button
+                      style={{ marginLeft: "10px", backgroundColor: "black" }}
+                      onClick={() =>
+                        navigate({
+                          pathname: "/together/BoardUpdate/" + board.boardTgNo,
+                          state: { board },
+                        })
+                      }
+                    >
+                      수정하자
+                    </Button>
+                  </div>
+                ) : null}
               </div>
 
               <label>댓글</label>
@@ -243,15 +260,19 @@ const TogetherBoardDetail = () => {
                   className="form-control"
                   maxLength="50"
                 />
-                <button
-                  style={{ margin: "30px", width: "80px" }}
+                <Button
+                  style={{
+                    margin: "30px",
+                    width: "100px",
+                    backgroundColor: "black",
+                  }}
                   onClick={(e) => {
                     e.preventDefault();
                     submitComment();
                   }}
                 >
                   댓글 등록
-                </button>
+                </Button>
               </div>
 
               <div
@@ -274,7 +295,7 @@ const TogetherBoardDetail = () => {
                     margin: "50px",
                   }}
                 >
-                  회원아이디 : {boardReply.boardReplyTgMemId} 아이디없음{" "}
+                  회원아이디 : {boardReply.boardReplyTgMemId}
                   <div style={{ fontSize: "12px" }}>
                     작성 시간 : ({boardReply.boardReplyTgDate})
                   </div>
@@ -382,7 +403,11 @@ const TogetherBoardDetail = () => {
                       console.log("deleteTogetherReplyDB ", res.data);
                       // navigate("/together/BoardDetail/" + board.boardTgNo);
                       window.location.reload();
-                      alert("댓글 삭제 완료");
+                      /* alert("댓글 삭제 완료"); */
+                      Swal.fire({
+                        title: "댓글 삭제 완료",
+                        icon: "success",
+                      });
                     }}
                   >
                     <span style={{ color: "white", fontWeight: "bold" }}>

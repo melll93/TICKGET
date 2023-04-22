@@ -6,6 +6,8 @@ import { memberListDB } from '../../axios/member/memberCrud';
 import { setUserId } from "../../redux/userAuth/action"
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
+import Swal from "sweetalert2";
+
 
 const ResetPwPage = () => {
   const navigate = useNavigate();
@@ -37,7 +39,13 @@ const ResetPwPage = () => {
     console.log(res.data);
     if (!res.data || res.data.length === 0 || !res.data.some((data) => data.member_id === memInfo.id)) {
       console.log('회원 정보 없음');
-      alert('회원가입되지 않은 아이디입니다');
+      /* alert('회원가입되지 않은 아이디입니다'); */
+      
+Swal.fire({
+  title:'회원가입되지 않은 아이디입니다.',
+  icon:'warning'
+  })
+  
     } else {
       const memberData = res.data[0];
       if (
@@ -50,7 +58,12 @@ const ResetPwPage = () => {
         navigate("/changePw");
       } else {
         console.log("사용자 정보 확인 실패");
-        alert("회원 님의 사용자 정보를 다시 확인해 주세요.");
+       /*  alert("회원 님의 사용자 정보를 다시 확인해 주세요."); */
+        Swal.fire({
+          title:'회원 님의 사용자 정보를 다시 확인해 주세요.',
+          icon:'error'
+          })
+          
       }
     }
   }

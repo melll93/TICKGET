@@ -4,6 +4,8 @@ import SockJS from "sockjs-client";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import "../../styles/chat.css";
+import UserProfile from "../../components/UserProfile";
+import ChatList from "../../components/chat/ChatList";
 
 // const ws = new WebSocket("ws://localhost:8888/ws/chat");
 // const ws = new SockJS("http://localhost:8888/ws/chat", null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] })
@@ -15,7 +17,7 @@ const ws = new SockJS("http://localhost:8888/ws/chat");
  * chatBox 안에 chatText, profile, time
  ******************************************************************/
 const ChatPage = () => {
-  const userStatus = useSelector((state) => state.userStatus)
+  const userStatus = useSelector((state) => state.userStatus);
 
   const username = userStatus.user.nickname;
   const [msg, setMsg] = useState({});
@@ -29,28 +31,28 @@ const ChatPage = () => {
       id: username,
       room: 1,
       msg: msg,
-    }
-    ws.send(msg_payload)
+    };
+    ws.send(msg_payload);
     console.log(msg_payload);
 
     /*************** 채팅 박스 구현 ***************/
-    const chatBox = document.createElement('div') // 한 줄 담기 (세로 사이즈 조정)
-    const chat = document.createElement('div') // 컴포 디비전 좌우 처리
-    chat.setAttribute('class', 'chatText') // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
+    const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
+    const chat = document.createElement("div"); // 컴포 디비전 좌우 처리
+    chat.setAttribute("class", "chatText"); // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
     // for
-    // if (msg.user === 'ADMIN') { // user 이름 받아서 
-    chatBox.setAttribute('class', 'myChat')
+    // if (msg.user === 'ADMIN') { // user 이름 받아서
+    chatBox.setAttribute("class", "myChat");
     // } else {
     //   chatbox.setAttribute('className', 'otherChat')
     // }
 
-    chat.innerText = msg
-    chatBox.appendChild(chat)
-    document.querySelector('#outputBox').appendChild(chatBox)
+    chat.innerText = msg;
+    chatBox.appendChild(chat);
+    document.querySelector("#outputBox").appendChild(chatBox);
     /*************** 채팅 박스 구현 ***************/
 
     setMsg({});
-    document.querySelector('#msg').value = ""
+    document.querySelector("#msg").value = "";
   };
 
   const onOpen = (e) => {
@@ -83,10 +85,10 @@ const ChatPage = () => {
           {/******************** START chat bar ********************/}
           <div className="chat bar">
             <div className="chat bar dm">
-              <span>DM</span>
+              <span className="black">DM</span>
             </div>
             <div className="chat bar group">
-              <span>GROUP</span>
+              <span className="black">GROUP</span>
             </div>
           </div>
           {/******************** END of chat bar ********************/}
@@ -94,14 +96,26 @@ const ChatPage = () => {
           <div className="chat box">
             {/* start chat chatList */}
             <div className="chat box chatList">
-              <li>chatList</li>
+              <ChatList />
+              <ChatList />
+              <ChatList />
+              <ChatList />
+              <ChatList />
+              <ChatList />
+              <ChatList />
+              <ChatList />
+              <ChatList />
+              <ChatList />
             </div>
             {/* end of chat chatList */}
 
             {/* start chat chatDisplay */}
             <div className="chat box chatDisplay">
               {/* start chatDisplay outputBox */}
-              <div id="outputBox" className="chat box chatDisplay outputBox"></div>
+              <div
+                id="outputBox"
+                className="chat box chatDisplay outputBox"
+              ></div>
               {/* end of chatDisplay outputBox */}
               {/* start chatDisplay inputBox */}
               <div className="chat box chatDisplay inputBox">
@@ -109,6 +123,11 @@ const ChatPage = () => {
                   className="inputTextBox"
                   id="msg"
                   type="text"
+                  onKeyUp={(e) => {
+                    if (window.event.keyCode === 13) {
+                      send(msg);
+                    }
+                  }}
                   onChange={(e) => setMsg(e.target.value)}
                 />
                 <input

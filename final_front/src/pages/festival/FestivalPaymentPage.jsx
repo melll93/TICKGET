@@ -11,10 +11,12 @@ const FestivalPaymentPage = () => {
   const navigate = useNavigate()
   const festSelectedDate = cookie.get('date');
   const festSelectedTkamt = cookie.get('tk_amount');
+  const selectedFestTcType = cookie.get('selectedFestTcType');
+  const selectedFestTcPrice = cookie.get('selectedFestTcPrice');
 
   let { festMId } = useParams();
   console.log(festMId);
-  const [festival, setFestival] = useState({
+  const [festival, setFestival] = useState([{
     festMId: "",
     festMName: "",
     festMStart: "",
@@ -25,13 +27,17 @@ const FestivalPaymentPage = () => {
     festTcPrice: "",
     festDtRuntime: "",
     festDtAge: "",
-  });
+  }]);
   useEffect(() => {
     const asyncDB = async () => {
       const res = await FetivalDetailDB({ festMId });
       const result = JSON.stringify(res.data);
+/*       console.log(res.data) */
       const jsonDoc = JSON.parse(result);
+/*       console.log('리저트'+result)
+      console.log(jsonDoc[0].festMName) */
       setFestival({
+        festMId,
         festMName: jsonDoc.festMName,
         festMStart: jsonDoc.festMStart,
         festMEnd: jsonDoc.festMEnd,
@@ -51,15 +57,17 @@ const FestivalPaymentPage = () => {
     asyncDB();
     return () => {};
   }, []);
+ 
+
 
   const orderDetail = {
-    url: festival.festMImg,
-    title: festival.festMName,
-    seat: festival.festMName,
+    url: festival[0].festMImg,
+    title: festival[0].festMName,
+    seat: selectedFestTcType,
     date: festSelectedDate,
-    place: festival.festMLoc,
+    place: festival[0].festMLoc,
     amount: festSelectedTkamt,
-    price: festival.festTcPrice,
+    price: selectedFestTcPrice,
   };
 
   return (

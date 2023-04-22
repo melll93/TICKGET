@@ -4,12 +4,13 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useNavigate, useParams } from "react-router";
-import { FestivalInsertDB, FetivalDetailDB } from "../../axios/festival/festival";
+import { FestivalInsertDB, FetivalDetailDB, festivalUpdateDB } from "../../axios/festival/festival";
 import ImageUploader from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
-import HeaderSearchBar from "../../components/header/HeaderSearchBar";
+import Swal from "sweetalert2";
+
 
 /* ========================= 상품 자체 등록 ============================ */
 
@@ -17,7 +18,7 @@ const AddProducts = () => {
   const navigate = useNavigate();
   const {festMId}=useParams();
 
-  console.log(festMId)
+ /*  console.log(festMId) */
   const [festTitle, setFesttitle] = useState();
   const [festLocation, setFestloc] = useState();
   const [festCategory, setFestcate] = useState();
@@ -34,13 +35,8 @@ const AddProducts = () => {
 
   /* 추가정보입력 띄우기 */
   const [optionModal, setOptionModal] = useState(0);
-  const optionModalOpen = () => {
-    if (optionModal === 0) {
-      setOptionModal(1);
-    } else {
-      setOptionModal(0);
-    }
-  };
+  const optionModalOpen = () => {if (optionModal === 0) {setOptionModal(1);
+    } else {setOptionModal(0);}};
 
   /* 상품등록 insert */
   const festivalInsert = async () => {
@@ -57,7 +53,7 @@ const AddProducts = () => {
       festMImg: festImageUrl,
     };
     const res = await FestivalInsertDB(festival);
-    console.log(festival);
+/*     console.log(festival); */
     if (!res.data) {
     } else {
       navigate("/festival");
@@ -66,7 +62,7 @@ const AddProducts = () => {
 
 
 
-/* 입력되어있던 정보 가져오기 */
+/* 입력되어있던 정보 가져오기 */  
 useEffect(() => {
 const originDetail=async()=>{
   const festival={
@@ -75,14 +71,15 @@ const originDetail=async()=>{
   const res = await FetivalDetailDB(festival);
   const temp = JSON.stringify(res.data)  //문자열 전환
   const jsonDoc=JSON.parse(temp)  //배열로 접근처리
-  setFesttitle(jsonDoc.festMName)
-  setFeststart(jsonDoc.festMStart )
-setFestend(jsonDoc.festMEnd)
-setFestloc(jsonDoc.festMLoc)
-setFestdetail(jsonDoc.festDetail)   //아직 사용 안하는중
-setFestprice(jsonDoc.festPrice)       //아직 사용 안하는중
-setFestArea(jsonDoc.festMArea)
-setFestImageUrl(jsonDoc.festMImg)
+  setFesttitle(jsonDoc[0].festMName)
+  setFeststart(jsonDoc[0].festMStart )
+setFestend(jsonDoc[0].festMEnd)
+setFestloc(jsonDoc[0].festMLoc)
+setFestcate(jsonDoc[0].festMGenre)
+setFestdetail(jsonDoc[0].festDetail)   //아직 사용 안하는중
+setFestprice(jsonDoc[0].festPrice)       //아직 사용 안하는중
+setFestArea(jsonDoc[0].festMArea)
+setFestImageUrl(jsonDoc[0].festMImg)
 /* if(jsonDoc[0].MEM_NO!==sessionStorage.getItem("no")){  //글의 회원번호와 로그인한 no가 달라?  네 -> 다른 사람 글
 return console.log('작성자가 아닙니다.')
 } */
@@ -91,26 +88,31 @@ originDetail()
 },[festMId]);
 
 
-  const festivalUpdate=()=>{
-
-/*     const boardUpdate = async() => {
-      if(title.trim()==="||content.trim()===") return console.log('게시글이 수정되지 않았다')
-      const danmksldnal={
-        qna_bno:bno,
-        qna_title:title,  //useState 훅이다.
-        qna_content:content,
-        qna_secret: (secret? 'true':'false'),
-        qna_type:tTitle,
+    const festivalUpdate = async() => {
+      const festival={
+      festMId,
+      festMName: festTitle,
+      festMLoc: festLocation,
+      festMGenre: festCategory,
+      festMStart: festStartday,
+      festMEnd: festEndday,
+      festMArea: festArea,
+      festMImg: festImageUrl,
+      }   
+      try {
+      const res = await festivalUpdateDB(festival)
+/*         console.log(res.data); */
+        navigate("/festival")
+        /* alert('상품수정완료') */
+        Swal.fire({
+          title:'상품 수정 완료',
+          icon:'success'
+          })
+          
+      } catch (error) {
+        console.log(error);
       }
-      const res = await qnaUpdateDB(danmksldnal)
-      if(!res.data) return console.log('게시판 수정에 실패하였습니다.')
-      navigate("/qna/list")
-      
-      } */
-
-
-    alert('상품수정완료')
-  }
+  };
 
   const inuptTitle = useCallback((e) => {
     setFesttitle(e);
@@ -170,10 +172,10 @@ originDetail()
         //"https://api.Cloudinary.com/v1_1/본인 클라우드 네임/image/upload"
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.secure_url);
+   /*        console.log(res.secure_url); */
           const festImageUrl = res.secure_url;
           localStorage.setItem("imageUrl", festImageUrl);
-          console.log("페스트 이미지 유알엘 : " + festImageUrl);
+/*           console.log("페스트 이미지 유알엘 : " + festImageUrl); */
           setFestImageUrl(festImageUrl);
         })
         .catch((err) => console.log(err))
@@ -193,12 +195,13 @@ originDetail()
           id="fest_category"
           aria-label="Default select example"
           style={{ width: "150px" }}
+          value={festCategory}
           onChange={(e) => {
             inputCategory(e.target.value);
           }}
         >
           <option value="1" disabled>
-            카테고리{" "}
+            카테고리
           </option>
           <option value="FESTIVAL">FESTIVAL</option>
           <option value="CONCERT">CONCERT</option>
@@ -210,12 +213,13 @@ originDetail()
             id="festivalImgChange"
             className="thumbNail"
             style={{width:'60%'}}
-            src={
-              festImages
+              src={festImageUrl ? festImageUrl : "https://via.placeholder.com/400x300/D9D9D9/979892.png?text=image+upload"}
+              alt="Festival Image"
+   /*            festImages
                 ? festImages
-                : `https://via.placeholder.com/400x300/D9D9D9/979892.png?text=image+upload`
-            }
-            alt="미리보기"
+                : `https://via.placeholder.com/400x300/D9D9D9/979892.png?text=image+upload` */
+           /*  }
+            alt="미리보기" */
           />
           {/* - 가로x세로/배경색/글자색.확장자?text=텍스트(공백은+로) */}
         </div>
@@ -259,6 +263,7 @@ originDetail()
           id="festArea"
           aria-label="Default select example"
           style={{ width: "150px" }}
+          value={festLocation}
           onChange={(e) => {
             inputArea(e.target.value);
           }}

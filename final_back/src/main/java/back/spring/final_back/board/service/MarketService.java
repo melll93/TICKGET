@@ -15,7 +15,6 @@ public interface MarketService {
 	//마켓 게시판 상세보기
 	List<MarketDto> mk_boardDetail(MarketDto marketDto);
 
-
 	
 	//마켓 게시글 등록
 	int mk_boardInsert(MarketDto marketDto);
@@ -31,6 +30,8 @@ public interface MarketService {
 	
 	//마켓 게시글 판매완료 처리
 	int mk_boardSell(MarketDto marketDto);
+
+
 
 
     

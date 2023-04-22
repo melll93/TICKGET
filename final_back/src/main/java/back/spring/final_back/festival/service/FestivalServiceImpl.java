@@ -3,15 +3,11 @@ package back.spring.final_back.festival.service;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.naming.spi.DirStateFactory.Result;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.festival.repository.FestivalDao;
 import back.spring.final_back.festival.repository.FestivalDto;
 import lombok.RequiredArgsConstructor;
@@ -62,8 +58,8 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
 	@Override
-	public FestivalDto festivalDetail(FestivalDto festivalDto) {
-		FestivalDto festival = festivalDao.festivalDetail(festivalDto);
+	public List<FestivalDto> festivalDetail(FestivalDto festivalDto) {
+		List<FestivalDto> festival = festivalDao.festivalDetail(festivalDto);
 		 return festival;
 		    }
 
@@ -97,4 +93,11 @@ public class FestivalServiceImpl implements FestivalService {
         log.info("여기까지");
         return result;
 	}
+
+
+    @Override
+    public int festivalUpdate(FestivalDto festivalDto) {
+        int result = festivalDao.festivalUpdate(festivalDto);
+        return result;
+    }
 }

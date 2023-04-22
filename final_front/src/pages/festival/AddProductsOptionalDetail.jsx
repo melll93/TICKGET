@@ -5,7 +5,7 @@ import "../../styles/festivaldetails.css";
 import { BlackBtn } from '../../styles/formStyle';
 import AddProductsFestTicketDetail from './AddProductsFestTicketDetail';
 
-
+import Swal from "sweetalert2";
 
 const AddProductsOptionalDetail = () => {
   const {festMId}=useParams();
@@ -44,11 +44,19 @@ const AddProductsOptionalDetail = () => {
       festDtRuntime: festDetailRuntime,
     festDtAge: festDetailAge,
   };
+  try {
   const res = await saveFestDetailDB(festival);
   console.log(festival);
   if (!res.data) {
   } else {
   }
+} catch (error) {
+  /* alert('이미 등록된 정보가 있어 수정만 가능합니다.'); */
+  Swal.fire({
+    title:'이미 등록된 정보가 있어 수정만 가능합니다.',
+    icon:'warning'
+    })
+}
 };
 
 
@@ -58,10 +66,14 @@ const saveFestPoster=async()=>{
     festMId,
     festPsUrl,
 };
+try {
 const res = await saveFestPsUrlDB(festival);
 console.log(festival);
+alert('임시저장완료')
 if (!res.data) {
 } else {
+}
+} catch (error) {
 }
 };
 
@@ -114,7 +126,11 @@ if (!res.data) {
 fest_detail 추가 정보 입력 
     </h1>
     <BlackBtn onClick={saveFestDetail}>임시저장</BlackBtn>
-    <BlackBtn onClick={()=>{alert('update 아직 안함')}}>수정완료</BlackBtn>
+    <BlackBtn onClick={()=>{/* alert('update 아직 안함') */
+    Swal.fire({
+    title:'수정 완료',
+    icon:'success'
+})}}>수정완료</BlackBtn>
 
     <div className="form-floating">
   <input type="text" className="form-control" id="festDetailCasting"onChange={(e)=>{inputCasting (e.target.value)}} />

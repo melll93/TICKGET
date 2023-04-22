@@ -5,96 +5,15 @@ import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import {
   FetivalListDB,
-  areaFestivalListDB,
   thumbsupFestivalDB,
 } from "../../axios/festival/festival";
 import CommonPagination from "../../components/CommonPagination";
 import FestivalRankingList from "../festival/FeativalRankingList";
 import "../../styles/festivaldetails.css";
+import FestivalAreaList from "../festival/FestivalAreaList";
+import { Cookies } from "react-cookie";
 
 
-///////////////////////////////      페스티발 지역별   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-const FestivalAreaList = ({selectedNavbarValue}) => {
- const [festivals, setFestivals] = useState([]);
-  const [page, setPage] = useState(1);
-  const [perPage] = useState(20);
-  const [festMArea, setFestArea] = useState(selectedNavbarValue);
-
-  const indexOfLastPost = page * perPage;
-  const indexOfFirstPost = indexOfLastPost - perPage;
-  
-  const currentFest = (festivals) => {
-    let currentFest = 0;
-    currentFest = festivals.slice(indexOfFirstPost, indexOfLastPost);
-    return currentFest;
-  };
-
-  useEffect(() => {
-    async function areaList() {
-      const data = await areaFestivalListDB(festMArea);
-      setFestArea(selectedNavbarValue);
-      setFestivals(data);
-    }
-    areaList();
-  }, [festMArea, selectedNavbarValue]);
-
-  const hitPlusOne=async (festMId)=>{
-    await thumbsupFestivalDB(festMId);
-  } 
-
-
-
-
-  return (
-    <>
-      <div>
-      {currentFest(festivals).map((festival, i) => {
-        return (
-          <div
-          key={festival.festMId}
-                className="card"
-                style={{
-                  width: "18rem",
-                  display: "inline-block",
-                  margin: "50px 0px 0px 50px",
-                }}
-              >
-                <a
-                  style={{ textDecoration: "none", color: "black" }}
-                  href={"/productsDetail/" + festival.festMId}
-                >
-                  <img src={festival.festMImg} style={{width:"100%", overflow:'hidden', height:'400px'}} alt="사진1" />
-                  <div className="card-body"  style={{overflow:'hidden', height:'220px'}}>
-                    <h5 className="card-title">제목 : {festival.festMName}</h5>
-                    <p className="card-text">로케 : {festival.festMLoc}</p>
-                    <p className="card-text">
-                      {festival.festMStart} ~ {festival.festMEnd}
-                    </p>
-                    <p className="card-text"> festId: {festival.festMId} </p>
-                    <p className="card-text">
-                      festCategory: {festival.festMArea}
-                    </p>
-                  </div>      {/* card-body */}
-                </a>
-                <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'right', marginLeft:'83%', paddingRight:'7px', cursor:'pointer'}}>
-                <i className="bi bi-hand-thumbs-up fs-4"></i>
-                {festival.festMHit===null ? 0: festival.festMHit}
-                </div>
-              </div> 
-            ); //안쪽리턴
-          })}{" "}
-        {/*  map*/}
-      </div>
-    
-      <CommonPagination
-          pagination={setPage}
-          perPage={perPage}
-          totalItems={festivals.length}
-        />
-    </>
-
-  ); //리턴끝
-}; //SeoulFestivalList끝
 
 
 const FestivalExtraList = () => {
@@ -123,7 +42,7 @@ const FestivalExtraList = () => {
 ///////// 페스티벌 전체 ////////// 
  */
 const FestivalsTest = () => {
-const [hit, setHit]= useState();
+  
   const [festivals, setFestivals] = useState([]);
   const [page, setPage] = useState(1);
   const [perPage] = useState(20);
@@ -131,7 +50,7 @@ const [hit, setHit]= useState();
 
   useEffect(() => {
     FetivalListDB().then(setFestivals);
-  }, []);
+  }, [festivals]);
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
 
@@ -143,8 +62,7 @@ const [hit, setHit]= useState();
 
   
   const hitPlusOne=async (festMId)=>{
-    await thumbsupFestivalDB(festMId)
-    ;
+    await thumbsupFestivalDB(festMId);
   } 
 
   return (
@@ -167,20 +85,18 @@ const [hit, setHit]= useState();
                   style={{ textDecoration: "none", color: "black" }}
                   href={"/productsDetail/" + festival.festMId}
                 >
-                  <img src={festival.festMImg} style={{width:"100%", overflow:'hidden', height:'400px'}} alt="사진1" />
-                  <div className="card-body" style={{overflow:'hidden', height:'220px'}} >
-                    <h5 className="card-title">제목 : {festival.festMName}</h5>
-                    <p className="card-text">로케 : {festival.festMLoc}</p>
+                  <img src={festival.festMImg} style={{width:"100%", overflow:'hidden', height:'380px'}} alt="사진1" />
+                  <div className="card-body" style={{overflow:'hidden', height:'150px'}} >
+                   <div style={{height:'30px', overflow:'hidden', padding:'5px', marginBottom:'15px'}}>
+                    <h5 className="card-title"><strong>{festival.festMName}</strong></h5>
+                    </div>
+                    <p className="card-text">장소 : {festival.festMLoc}</p>
                     <p className="card-text">
-                      {festival.festMStart} ~ {festival.festMEnd}
-                    </p>
-                {/*     <p className="card-text"> festId: {festival.festMId} </p> */}
-                    <p className="card-text">
-                      festCategory: {festival.festMGenre}
+                     기간: {festival.festMStart} ~ {festival.festMEnd}
                     </p>
                   </div>
                 </a>
-                <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'right', marginLeft:'83%', paddingRight:'7px', cursor:'pointer'}}>
+                <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'center', marginLeft:'0%', paddingRight:'7px', cursor:'pointer'}}>
                 <i className="bi bi-hand-thumbs-up fs-4"></i>
                 {festival.festMHit==={thumbsup} ? 0: festival.festMHit}
                 </div>
@@ -204,6 +120,8 @@ const [hit, setHit]= useState();
 
 
 const FestivalPage = () => {
+const cookies = new Cookies();
+const _userData = cookies.get("_userData"); //유저 정보
   const [totalFest, setTotalFest] = useState(1); //0이면 닫힘, 1이면 열림.
   const [modal2, setModal2] = useState(0); //지역별
   const [modal3, setModal3] = useState(0); //인기순/랭킹
@@ -268,8 +186,10 @@ const FestivalPage = () => {
 
   return (
     <>
+
           <Header />
       <Sidebar />
+      
       <div className="center">
  {/*        <FestivalNavbar
           changeModal={changeModal}
@@ -327,14 +247,13 @@ const FestivalPage = () => {
             <ul className="nav-item">
               <li className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4open}> 기타 </li>
             </ul> {/* end of 기타*/}
-          </ul>{/* end of navbar-nav  */}
-        </div>{/* end of container-fluid */}
-      </nav>{/* end of navbar navbar-expand-sm bg-dark navbar-dark */}
-        {/* 상품등록버튼 - 관리자 페이지로 이동..? or 기업회원 로그인시에만 보이도록 수정 예정 */}
-        <Link
+
+
+            <li className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4open}> 
+            {_userData&&_userData.memberAuthority==="ROLE_ADMIN" ? <Link
           to="/addProducts/new"
           style={{
-            fontSize: "40px",
+            fontSize: "20px",
             backgroundColor: "black",
             color: "white",
             borderRadius: "10px",
@@ -342,8 +261,14 @@ const FestivalPage = () => {
           }}
         >
           상품등록버튼
-        </Link>
+        </Link>:null}
+        </li>
 
+          </ul>{/* end of navbar-nav  */}
+        </div>{/* end of container-fluid */}
+      </nav>{/* end of navbar navbar-expand-sm bg-dark navbar-dark */}
+
+ 
         {/* 나브바 카테고리별 클릭시 화면 전환 */}
         {totalFest === 1 ? <FestivalsTest /> : null}
         {modal2 === 1 ? <FestivalAreaList selectedNavbarValue={selectedNavbarValue}/> : null}

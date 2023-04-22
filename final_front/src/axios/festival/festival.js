@@ -145,13 +145,13 @@ export const FetivalDetailDB2 = async (festival) => {
   return result;
 };
 
-export const FetivalDetailDB = (festival) => {
+export const FetivalDetailDB = (festMId) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/festival/festivalDetail",
-        params: festival,
+        params: festMId,
       });
       resolve(response);
     } catch (error) {
@@ -192,13 +192,31 @@ export const saveFestPsUrlDB = (festival) => {
   });
 };
 
-export const festTicketInsertDB = (ticket) => {
+/* fest_ticekt 추가 */
+export const festTicketInsertDB = (tickets) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "post",
         url: "http://localhost:8888/festival/festTicketInsert",
-        data: ticket,
+        data: tickets,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+
+/* 수정 */
+export const festivalUpdateDB = (festival) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/festival/festivalUpdate",
+        data: festival,
       });
       resolve(response);
     } catch (error) {

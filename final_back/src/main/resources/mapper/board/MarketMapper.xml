@@ -10,34 +10,31 @@
   <if test='condition!=null and condition.equals("전체")'>
     <choose>
       <when test='content=null and condition.equals("전체")'>
-        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
+        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%') 
       </when>
       <when test='content!=null and condition.equals("제목")'>
-        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0 
+        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')  
       </when>
       <when test='content!=null and condition.equals("장소")'>
-        WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
+        WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%') 
       </when>
       <when test='content!=null and condition.equals("작성자")'>
-        WHERE mem_name LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
+        WHERE member_nickname LIKE CONCAT('%', #{content}, '%') 
       </when>
     </choose>
   </if>
   <if test='condition!=null and !condition.equals("전체")'>
     <where>
       <if test='content!=null and condition.equals("제목")'>
-        board_mk_title LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
+        board_mk_title LIKE CONCAT('%', #{content}, '%') 
       </if>
       <if test='content!=null and condition.equals("장소")'>
-        mk_ticket_place LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
+        mk_ticket_place LIKE CONCAT('%', #{content}, '%') 
       </if>
       <if test='content!=null and condition.equals("작성자")'>
-        mem_name LIKE CONCAT('%', #{content}, '%') AND board_mk_status = 0
+        member_nickname LIKE CONCAT('%', #{content}, '%') 
       </if>
     </where>
-  </if>
-  <if test='condition!=null and !condition.equals("전체")'>
-    AND board_mk_status = 0
   </if>
   order by board_mk_date DESC
 </select>
@@ -54,9 +51,9 @@
 <insert id="mk_boardInsert" parameterType="MarketDto">
 insert into board_market (board_mk_title,board_mk_content,board_mk_date,board_mk_hit,
 
-mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,mem_name,board_mk_filename,board_mk_fileurl,board_mk_status<!-- mem_no -->)
-VALUES (#{boardMkTitle},#{boardMkContent},DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),#{boardMkHit},
-#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{memName},#{boardMkFilename},#{boardMkFileurl},#{boardMkStatus}<!-- #{mem_no} -->)
+mk_ticket_place,mk_ticket_date,mk_ticket_seat,mk_ticket_count,mk_ticket_price,board_mk_filename,board_mk_fileurl,member_nickname,member_id,member_no,board_mk_status)
+VALUES (#{boardMkTitle},#{boardMkContent},#{boardMkDate},#{boardMkHit},
+#{mkTicketPlace}, #{mkTicketDate}, #{mkTicketSeat}, #{mkTicketCount}, #{mkTicketPrice},#{boardMkFilename},#{boardMkFileurl},#{memberNickname},#{memberId},#{memberNo},#{boardMkStatus})
 
 </insert>
 
@@ -73,6 +70,9 @@ VALUES (#{boardMkTitle},#{boardMkContent},DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'
      </if>
      <if test='boardMkContent!=null'>
      board_mk_content = #{boardMkContent},
+     </if>
+     <if test='boardMkDate!=null'>
+     board_mk_date = #{boardMkDate},
      </if>
       <if test='mkTicketPlace!=null'>
      mk_ticket_place = #{mkTicketPlace},
@@ -93,9 +93,8 @@ VALUES (#{boardMkTitle},#{boardMkContent},DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'
      board_mk_filename = #{boardMkFilename},
      </if>
      <if test='boardMkFileurl!=null'>
-     board_mk_fileurl = #{boardMkFileurl},
+     board_mk_fileurl = #{boardMkFileurl}
      </if>
-     board_mk_date = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')
      WHERE board_mk_no = #{boardMkNo} 
 </update>
 
@@ -126,8 +125,6 @@ select * from board_market
     </if>
      </where>
 </select>
-
-
 
 
 

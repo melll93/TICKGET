@@ -66,7 +66,6 @@ public class MarketController {
 	}
 	
 	
-	
 	// 마켓 게시판 게시글 등록
 	@PostMapping("/mk_boardInsert")
 	public int mk_boardInsert(@RequestBody MarketDto marketDto) {

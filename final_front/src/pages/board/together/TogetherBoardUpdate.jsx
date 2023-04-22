@@ -9,6 +9,7 @@ import {
   updateTogetherDB,
 } from "../../../axios/board/together/TogetherLogic";
 import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
+import Swal from "sweetalert2";
 
 const TogetherBoardUpdate = () => {
   const navigate = useNavigate();
@@ -52,17 +53,29 @@ const TogetherBoardUpdate = () => {
 
   const updateBoard = async () => {
     if (!boardTgTitle) {
-      alert("제목을 입력해주세요.");
+      /* alert("제목을 입력해주세요."); */
+      Swal.fire({
+        title: "제목을 수정해주세요.",
+        icon: "warning",
+      });
       return;
     }
 
     if (!boardTgDate) {
-      alert("날짜를 입력해 주세요.");
+      /* alert("날짜를 입력해 주세요."); */
+      Swal.fire({
+        title: "날짜를 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
 
     if (!boardTgContent) {
-      alert("내용을 입력해주세요.");
+      /* alert("내용을 입력해주세요."); */
+      Swal.fire({
+        title: "내용을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
 
@@ -80,7 +93,12 @@ const TogetherBoardUpdate = () => {
     } catch (error) {
       console.log(error);
     }
-    alert("게시글 수정 완료");
+    /* alert("게시글 수정 완료"); */
+    Swal.fire({
+      title: "게시글 수정 완료",
+      icon: "success",
+    });
+
     navigate("/together");
   };
 
@@ -92,7 +110,11 @@ const TogetherBoardUpdate = () => {
     // "YYYY-MM-DD" 형식이 아닐 경우 에러 처리
     const regex = /^\d{4}-\d{2}-\d{2}$/;
     if (!regex.test(date)) {
-      alert("날짜 형식이 올바르지 않습니다.");
+      /* alert("날짜 형식이 올바르지 않습니다."); */
+      Swal.fire({
+        title: "날짜 형식이 올바르지 않습니다.",
+        icon: "warning",
+      });
       return;
     }
     // "YYYY-MM-DD" 형식으로 변환
@@ -124,7 +146,7 @@ const TogetherBoardUpdate = () => {
                   id="board_tg_title"
                   type="text"
                   maxLength="50"
-                  value={boardTgTitle}
+                  defaultValue={board.boardTgTitle}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -132,7 +154,7 @@ const TogetherBoardUpdate = () => {
                     border: "1px solid lightGray",
                     borderRadius: "10px",
                   }}
-                  placeholder="수정할 제목을 입력해 주세요"
+                  // placeholder="수정할 제목을 입력해 주세요"
                   onChange={(e) => {
                     handleTitle(e.target.value);
                   }}
@@ -160,7 +182,7 @@ const TogetherBoardUpdate = () => {
                   id="board_tg_date"
                   type="date"
                   maxLength="50"
-                  value={boardTgDate}
+                  defaultValue={board.boardTgDate}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -181,7 +203,7 @@ const TogetherBoardUpdate = () => {
                   id="board_tg_date"
                   type="text"
                   maxLength="50"
-                  value={boardTgContent}
+                  defaultValue={board.boardTgContent}
                   style={{
                     width: "98%",
                     margin: "10px",

@@ -24,5 +24,4 @@ public interface CarpoolDao {
 
     // Carpool 조회수 증가
     public void viewUp(Map<String, Object> pMap);
-
 }

@@ -94,7 +94,6 @@ export const mk_boardDeleteDB = (board) => {
   });
 };
 
-
 //마켓 게시판 판매완료 처리 로직
 export const mk_boardSellDB = (board) => {
   return new Promise((resolve, reject) => {
@@ -110,9 +109,6 @@ export const mk_boardSellDB = (board) => {
     }
   });
 };
-
-
-
 
 // 이미지 구현
 export const uploadImageDB = (file) => {

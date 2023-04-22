@@ -11,6 +11,9 @@ import { festivalHitListDB } from "../../axios/festival/festival";
 import { Link } from "react-router-dom";
 import { searchById } from "../../axios/member/member";
 import UserProfile from "../../components/UserProfile";
+import { selectTogetherDB } from "../../axios/board/together/TogetherLogic";
+import { selectCarpoolDB } from "../../axios/board/carpool/CarpoolLogic";
+import { mk_boardListDB } from "../../axios/board/market/marketLogic";
 
 const HomePage = () => {
   /******************************
@@ -30,9 +33,9 @@ const HomePage = () => {
     const month = getDate.getMonth() - 2;
     const date = getDate.getDate();
     const fullDate = year + "-" + month + "-" + date;
-    console.log(fullDate);
+/*     console.log(fullDate); */
     // paramete : YYYY-MM-DD
-    festivalListByDate(fullDate).then(console.log);
+ /*    festivalListByDate(fullDate).then(console.log); */
     festivalListByDate(fullDate).then(setFestivalToday);
   };
 
@@ -46,6 +49,78 @@ const HomePage = () => {
     };
     festivalHitList(); // 데이터 가져오기
   }, []);
+    
+
+
+
+  /* ******************************************
+   *****메인화면 좌측 하단 테이블 (Together) *****
+   ********************************************  */
+  const [boardList, setBoardList] = useState([]);
+  const selectBoardList = async () => {
+    const res = await selectTogetherDB();
+   /*  console.log(res.data); */
+    if (res.data && Array.isArray(res.data)) {
+      setBoardList(res.data);} else {console.log("부서목록 조회 실패");}};
+  useEffect(() => {selectBoardList();}, []);
+
+  const boardListProps = boardList.map(item => {
+    return {
+      no: item.boardTgNo,
+      title: item.boardTgTitle,
+      detail: item.boardTgViews,
+      link:"/together/boardDetail/",
+      url:"",
+    };
+  });
+  
+ /* ******************************************
+   *****메인화면 좌측 하단 테이블 (Carpool) *****
+   ********************************************  */
+   const [carpoolList, setCarpoolList] = useState([]);
+   const selectCarpoolList = async () => {
+    const res = await selectCarpoolDB();
+    if (res.data && Array.isArray(res.data)) {
+      setCarpoolList(res.data);
+    } else {
+      console.log("부서목록 조회 실패");
+    }};
+   useEffect(() => {selectCarpoolList();}, []);
+   const carpoolListProps = carpoolList.map(item => {
+    return {
+      no: item.boardCpNo,
+      title: item.boardCpTitle,
+      detail: item.boardCpContent,
+      link:"/carpool/carpoolDetail/",
+      url:"",
+    };
+  });
+
+    
+ /* ******************************************
+   *****메인화면 좌측 하단 테이블 (Market) *****
+   ********************************************  */
+
+  const [mkboards, setMkboards] = useState([]);
+   const selectMkBoardList = async () => {
+    const res = await mk_boardListDB();
+    if (res.data && Array.isArray(res.data)) {
+      setMkboards(res.data);
+    } else {
+      console.log("부서목록 조회 실패");
+    }
+  };
+  useEffect(() => {selectMkBoardList();}, []);
+  const mkboardsProps = mkboards.map(item => {
+    return {
+      no: item.boardMkNo,
+      title: item.boardMkTitle,
+      detail: item.mkTicketSeat,
+      link:"market/mk_boardDetail/?no=",
+      url:item.boardMkFileurl,
+    };
+  });
+   
 
   return (
     <>
@@ -65,12 +140,12 @@ const HomePage = () => {
         >
           <div style={{ textAlign: "center", alignItems: "center" }}>
             <h1>
-              <strong>what's hot</strong>
+              <strong> WHAT'S HOT</strong>
             </h1>
-            {festivalHitList.slice(0, 5).map((festival) => (
-              <Link to={`/productsDetail/${festival.festMId}`}>
+            {festivalHitList.slice(0, 5).map((festival, i) => (
+              <Link to={`/productsDetail/${festival.festMId}`} key={i}  >
                 <Card.Img
-                  key={festival.festMId}
+                  key={i}
                   src={festival.festMImg}
                   style={{
                     width: "150px",
@@ -89,7 +164,9 @@ const HomePage = () => {
           style={{ paddingLeft: "150px", backgroundColor: "lightgray" }}
         >
           <div className="total_section" style={{ display: "flex" }}>
-            {/* 위클리랭킹 */}
+
+
+            {/* 메인하단 최신게시글 */}
             <div
               className="mainpage div div2"
               style={{ flex: "1", margin: "50px" }}
@@ -97,24 +174,30 @@ const HomePage = () => {
               <div className="mainpage box">
                 <div className="mainpage div div1">
                   <Tabs
-                    defaultActiveKey="festival"
+                    defaultActiveKey="market"
                     id="uncontrolled-tab-example"
                     className="margin0 mb-3"
                   >
-                    <Tab eventKey="festival" title="Festival">
-                      <BasicTable />
+                                        <Tab eventKey="market" title="Market">
+               <BasicTable items={mkboardsProps}/> 
                     </Tab>
                     <Tab eventKey="together" title="Together">
-                      <BasicTable />
+                      
+                      <BasicTable items={boardListProps}/>
+                   
                     </Tab>
-                    <Tab eventKey="market" title="Market">
-                      <BasicTable />
+                    <Tab eventKey="carpool" title="Carpool">
+                   <BasicTable items={carpoolListProps}/> 
                     </Tab>
+
                   </Tabs>
                 </div>{" "}
               </div>{" "}
             </div>
-            {/* 위클리랭킹 */}
+            {/* 메인하단 최신게시글 */}
+
+
+
 
             {/* 지역별 추천 */}
             <div

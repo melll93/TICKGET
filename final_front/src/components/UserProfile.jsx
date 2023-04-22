@@ -4,12 +4,13 @@ import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 const cookies = new Cookies();
 
-const UserProfile = (_userData) => {
+const UserProfile = ({ _userData }) => {
   const navigate = useNavigate();
   const _myData = cookies.get("_userData");
 
   const myId = _myData && _myData.memberId;
-  const friendId = _userData.memberId;
+  const friendId = _userData && _userData.memberId;
+  // console.log(_userData);
 
   const handleChatFromProfile = (myId, friendId) => {
     console.log(myId);
@@ -27,7 +28,7 @@ const UserProfile = (_userData) => {
         >
           <img
             id="profile"
-            className="icon image40"
+            className="icon_black image40"
             style={{ borderRadius: "50%" }}
             // src="https://phinf.pstatic.net/contact/20230416_257/1681630347916iq32w_PNG/avatar_profile.png?type=s160"
             src={

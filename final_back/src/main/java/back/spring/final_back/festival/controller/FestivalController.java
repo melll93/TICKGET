@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @ResponseBody
 @RequiredArgsConstructor
-
 @CrossOrigin("http://localhost:3333/")
 @RestController
 @RequestMapping("/festival/*")
@@ -66,12 +65,8 @@ public class FestivalController {
 	}
 
 	@GetMapping("/festivalDetail")
-	public FestivalDto festivalDetail(FestivalDto festivalDto) {
-		FestivalDto festival = festivalService.festivalDetail(festivalDto);
-		/*
-		 * int ticketPrice = festivalDto.getFestTcPrice() null ? 0 :
-		 * festival.getFestTcPrice(); festival.setFestTcPrice(ticketPrice);
-		 */
+	public List<FestivalDto> festivalDetail(FestivalDto festivalDto) {
+		List<FestivalDto> festival = festivalService.festivalDetail(festivalDto);
 		return festival;
 	}
 
@@ -95,12 +90,14 @@ public class FestivalController {
 		log.info(festivalDto.toString());
 		return result;
 	}
+
 	@PostMapping("festTicketInsert")
 	public int festTicketInsert(@RequestBody FestivalDto festivalDto) {
 		int result = festivalService.festTicketInsert(festivalDto);
 		log.info(festivalDto.toString());
 		return result;
 	}
+
 
 	@GetMapping("festivalDelete")
 	public String festivalDelete(@RequestParam String fest_m_id) {
@@ -113,5 +110,12 @@ public class FestivalController {
 	@GetMapping("/festivalThumpsUp")
 	public void festivalThumpsUp(@RequestParam Map<String, Object> pMap) {
 		festivalService.festivalThumpsUp(pMap);
+	}
+
+	@PostMapping("/festivalUpdate")
+	public int festivalUpdate(@RequestBody FestivalDto festivalDto) {
+		int result = 0;
+		result = festivalService.festivalUpdate(festivalDto);
+		return result;
 	}
 }

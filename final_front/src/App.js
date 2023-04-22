@@ -39,6 +39,7 @@ import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import PaymentPage from "./pages/personal/PaymentPage";
+import UnRegiesterPage from "./pages/personal/UnRegiesterPage";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -82,6 +83,7 @@ function App({ mkImageUploader }) {
         <Route path="/ticket" exact={true} element={<TicketPage />} />
         <Route path="/bookmark" exact={true} element={<BookmarkPage />} />
         <Route path="/setting" exact={true} element={<SettingPage />} />
+        <Route path="/unregiester" exact={true} element={<UnRegiesterPage />} />
 
         {/* MenuBar Routes */}
         <Route path="/search" exact={true} element={<SearchResultPage />} />
@@ -96,7 +98,7 @@ function App({ mkImageUploader }) {
         <Route path="/festival" exact={true} element={<FestivalPage />} />
         <Route path="/addProducts/:festMId" element={<AddProductsPage />} />
         <Route path="/productsDetail/:festMId" element={<FestivalsDetail />} />
-        <Route path="/paymentsucess/:festMId" element={<PaySucPage />} />
+        <Route path="/paymentsuccess/:festMId" element={<PaySucPage />} />
         <Route path="/paymentfailed/:festMId" element={<PayFailPage />} />
         <Route path="/payment2/:festMId" element={<FestivalPaymentPage />} />
 

@@ -18,6 +18,8 @@ import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv } from "../../../styles/formStyle";
 import LandingPage from "./Map/LandingPage";
+import Swal from "sweetalert2";
+import { Cookies } from "react-cookie";
 
 const CarpoolDetail = () => {
   const navigate = useNavigate();
@@ -28,6 +30,10 @@ const CarpoolDetail = () => {
   const [boardReplyCpContent2, setBoardReplyCpContent2] = useState(""); //수정 댓글
   const [boardReplyList, setBoardReplyList] = useState([]);
   const [lgShow, setLgShow] = useState(false);
+
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData"); //유저 정보
+  console.log(_userData);
 
   const inputModifiedReply = useCallback((e) => {
     console.log("inputModifiedReply : ", e);
@@ -99,7 +105,10 @@ const CarpoolDetail = () => {
     };
     const res = await deleteCarpoolDB(carpool);
     console.log(res.data);
-    alert("게시글 삭제 완료");
+    Swal.fire({
+      title: "게시글 삭제 완료",
+      icon: "success",
+    });
     navigate("/carpool");
   };
 
@@ -107,7 +116,7 @@ const CarpoolDetail = () => {
     console.log("submitComment");
     const boardReply = {
       boardCpNo: boardCpNo,
-      boardReplyCpMemId: sessionStorage.getItem("id"),
+      boardReplyCpMemId: _userData.memberId,
       boardReplyCpContent: boardReplyCpContent,
     };
 
@@ -136,6 +145,7 @@ const CarpoolDetail = () => {
       <div>
         <Header />
         <Sidebar />
+
         <ContainerDiv>
           <div style={{ height: "100px" }}></div>
           <br />
@@ -231,26 +241,28 @@ const CarpoolDetail = () => {
                 목록으로
               </Button>
               &nbsp;
-              <Button
-                style={{ margin: "10px", backgroundColor: "black" }}
-                onClick={deleteCarpool}
-              >
-                삭제하자
-              </Button>
-              {/* <Button style={{ margin: "10px" }} onClick={() =>navigate({
-                    pathname: "/together/BoardDetail/"+board.boardTgNo,
-                    state:{board}})}> */}
-              <Button
-                style={{ marginLeft: "10px", backgroundColor: "black" }}
-                onClick={() =>
-                  navigate({
-                    pathname: "/carpool/CarpoolUpdate/" + carpool.boardCpNo,
-                    state: { carpool },
-                  })
-                }
-              >
-                수정하자
-              </Button>
+              {_userData.memberAuthority === "ROLE_ADMIN" /* ||
+              _userData.memberAuthority === "ROLE_USER" */ ? (
+                <div>
+                  <Button
+                    style={{ margin: "10px", backgroundColor: "black" }}
+                    onClick={deleteCarpool}
+                  >
+                    삭제하자
+                  </Button>
+                  <Button
+                    style={{ marginLeft: "10px", backgroundColor: "black" }}
+                    onClick={() =>
+                      navigate({
+                        pathname: "/carpool/CarpoolUpdate/" + carpool.boardCpNo,
+                        state: { carpool },
+                      })
+                    }
+                  >
+                    수정하자
+                  </Button>
+                </div>
+              ) : null}
             </div>
 
             <label>댓글</label>
@@ -304,7 +316,7 @@ const CarpoolDetail = () => {
                     margin: "50px",
                   }}
                 >
-                  회원아이디 : {boardReply.boardReplyCpMemId} 아이디없음{" "}
+                  회원아이디 : {boardReply.boardReplyCpMemId}
                   <div style={{ fontSize: "8px" }}>
                     작성 시간 : ({boardReply.boardReplyCpDate})
                   </div>
@@ -323,7 +335,6 @@ const CarpoolDetail = () => {
                     style={{ marginLeft: "10px", backgroundColor: "black" }}
                   >
                     <span
-                      style={{ fontWeight: "bold" }}
                       onClick={async () => {
                         click();
                         handleBoardReplyCpNo(boardReply.boardReplyCpNo);
@@ -385,11 +396,10 @@ const CarpoolDetail = () => {
                             const res = await updateCarpoolReplyDB(reply);
                             console.log("updateTogetherReplyDB : ", res.data);
                             setLgShow(false);
-                            console.log(
-                              "수정완료" +
-                                boardReply.boardReplyCpContent +
-                                boardReply.boardReplyCpNo
-                            );
+                            Swal.fire({
+                              title: "댓글 수정 완료",
+                              icon: "success",
+                            });
                             window.location.reload();
                             console.log("리뷰번호" + boardReply.boardReplyCpNo);
                           }}
@@ -407,17 +417,17 @@ const CarpoolDetail = () => {
                         boardCpNo: boardCpNo,
                         boardReplyCpNo: boardReply.boardReplyCpNo,
                       };
-                      console.log("너누구야 reply", reply);
                       const res = await deleteCarpoolReplyDB(reply);
-                      console.log("deleteCarpoolReplyDB ", res.data);
                       // navigate("/together/BoardDetail/" + board.boardTgNo);
                       window.location.reload();
-                      alert("댓글 삭제 완료");
+                      /* alert("댓글 삭제 완료"); */
+                      Swal.fire({
+                        title: "댓글 삭제 완료",
+                        icon: "success",
+                      });
                     }}
                   >
-                    <span style={{ color: "white", fontWeight: "bold" }}>
-                      댓글 삭제
-                    </span>
+                    <span>댓글 삭제</span>
                   </Button>
                 </div>
               ))}
