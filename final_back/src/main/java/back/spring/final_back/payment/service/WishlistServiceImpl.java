@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import back.spring.final_back.payment.controller.WishlistController;
-import back.spring.final_back.payment.repository.PaymentDao;
 import back.spring.final_back.payment.repository.WishlistDao;
 import back.spring.final_back.payment.repository.WishlistDto;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,8 @@ public class WishlistServiceImpl implements WishlistService {
 		result = wlDao.wishlistAdd(wlDto);
 		return result;
 	}
-
+	
+	
 	@Override
 	public int wishlistDelete(WishlistDto wlDto) {
 		logger.info("WishlistController : wishlistDelete 호출");

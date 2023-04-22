@@ -11,6 +11,7 @@ public interface WishlistDao {
 
 	public int wishlistAdd(WishlistDto wlDto);
 
+	
 	public int wishlistDelete(WishlistDto wlDto);
 
 }
