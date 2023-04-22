@@ -35,4 +35,6 @@ public interface FestivalDao {
 
 
   public int festivalUpdate(FestivalDto festivalDto);
+
+  public int festivalPosterDelete(int fest_ps_no);
 }

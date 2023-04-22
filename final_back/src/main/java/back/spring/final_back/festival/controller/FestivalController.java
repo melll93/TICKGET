@@ -107,6 +107,14 @@ public class FestivalController {
 		return String.valueOf(result);
 	}
 
+
+	@GetMapping("festivalPosterDelete")
+	public String festivalPosterDelete(@RequestParam int fest_ps_no) {
+		int result = 0;
+		result = festivalService.festivalPosterDelete(fest_ps_no);
+		return String.valueOf(result);
+	}
+
 	@GetMapping("/festivalThumpsUp")
 	public void festivalThumpsUp(@RequestParam Map<String, Object> pMap) {
 		festivalService.festivalThumpsUp(pMap);

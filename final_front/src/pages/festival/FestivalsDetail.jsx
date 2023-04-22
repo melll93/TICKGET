@@ -74,8 +74,7 @@ const FestivalsDetail = () => {
         festDtRuntime:jsonDoc[0].festDtRuntime,
         festDtAge:jsonDoc[0].festDtAge,
         festDtCrew:jsonDoc[0].festDtCrew,
-      festDtCasting:jsonDoc[0].festDtCasting
-        
+        festDtCasting:jsonDoc[0].festDtCasting
       }]);
       if (res.data) {
         setFestival(res.data);
@@ -142,7 +141,6 @@ const FestivalsDetail = () => {
   const festivalTcClicked = (festTcPrice, festTcType) => {
     setSelectedFestTcType(festTcType) 
     setSelectedFestTcPrice(festTcPrice);
-    // 선택한 값 쿠키에 담는 로직 추가
     document.cookie = `selectedFestTcPrice=${JSON.stringify(festTcPrice)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
     document.cookie = `selectedFestTcType=${JSON.stringify(festTcType)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
   };
@@ -344,7 +342,8 @@ const FestivalsDetail = () => {
                       <ul className="product_info_sublist">
 
                         <li className="product_info_subitem" >
-                         { festival[0].festDtCasting===null? <p style={{display:'inline'}}>출연진(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}  : </p>}  
+                         {festival[0].festDtCasting===null? <p style={{display:'inline'}}>출연진(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}  : </p>}  
+                        하이하이{festival[0].festDtCasting}
                         </li>
 
                       </ul>

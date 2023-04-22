@@ -32,6 +32,21 @@ const AddProducts = () => {
   const [festImageUrl, setFestImageUrl] = useState();
   const imgRef = useRef();
 
+  const [festPsUrl, setFestPsUrl] = useState();
+  const [festPsNo, setFestPsNo] = useState();
+
+
+  const [festDtCrew, setFestDtCrew] = useState();
+  const [festDtCasting, setFestDtCasting] = useState();
+  const [festDtRuntime, setFestDtRuntime] = useState();
+  const [festDtAge, setFestDtAge] = useState();
+
+  const [festTcType, setFestTcType] =useState();
+  const [festTcPrice, setFestTcPrice] =useState();
+  const [festTcTime, setFestTcTime]= useState();
+
+
+
 
   /* 추가정보입력 띄우기 */
   const [optionModal, setOptionModal] = useState(0);
@@ -77,9 +92,27 @@ setFestend(jsonDoc[0].festMEnd)
 setFestloc(jsonDoc[0].festMLoc)
 setFestcate(jsonDoc[0].festMGenre)
 setFestdetail(jsonDoc[0].festDetail)   //아직 사용 안하는중
-setFestprice(jsonDoc[0].festPrice)       //아직 사용 안하는중
 setFestArea(jsonDoc[0].festMArea)
 setFestImageUrl(jsonDoc[0].festMImg)
+
+setFestDtRuntime(jsonDoc[0].festDtRuntime)
+setFestDtAge(jsonDoc[0].festDtAge)
+setFestDtCasting(jsonDoc[0].festDtCasting)
+setFestDtCrew(jsonDoc[0].festDtCrew)
+
+const festPsUrlAll = jsonDoc.map(item => item.festPsUrl);
+setFestPsUrl(festPsUrlAll);
+const festPsNoAll = jsonDoc.map(item => item.festPsNo);
+setFestPsNo(festPsNoAll);
+
+const festTcTypeAll = jsonDoc.map(item => item.festTcType);
+setFestTcType(festTcTypeAll);
+const festTcPriceAll = jsonDoc.map(item => item.festTcPrice);
+setFestTcPrice(festTcPriceAll);
+const festTcTimeAll = jsonDoc.map(item => item.festTcTime);
+setFestTcTime(festTcTimeAll);
+
+
 /* if(jsonDoc[0].MEM_NO!==sessionStorage.getItem("no")){  //글의 회원번호와 로그인한 no가 달라?  네 -> 다른 사람 글
 return console.log('작성자가 아닙니다.')
 } */
@@ -229,7 +262,6 @@ originDetail()
           type="file"
           accept="image/*"
           id="festivalsImg"
-          
           onChange={FestImageUpload}
           ref={imgRef}
         />{" "}
@@ -355,7 +387,7 @@ originDetail()
           {" "}
           판매 추가정보 입력 (추후기재가능)
         </BlackBtn>
-        {optionModal === 1 ? <AddProductsOptionalDetail /> : null}
+        {optionModal === 1 ? <AddProductsOptionalDetail setFestOriginPsUrl={setFestPsUrl} festPsNo={festPsNo} festOrginPsUrl={festPsUrl} festDtAge={festDtAge} festDtCasting={festDtCasting} festDtCrew={festDtCrew} festDtRuntime={festDtRuntime} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}/> : null}
         {/* 추가 정보 입력 */}
         <br />
         <br />
