@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -36,7 +37,7 @@ public class WishlistController {
 
 	//위시리스트 추가
 	@PostMapping("/wishlistAdd")
-	public int wishlistAdd(WishlistDto wlDto) {
+	public int wishlistAdd(@RequestBody WishlistDto wlDto) {
 		logger.info("WishlistController : wishlistAdd 호출");
 	     int result = 0;
 	     result = wlService.wishlistAdd(wlDto);

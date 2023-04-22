@@ -16,6 +16,7 @@ import MapContainer from './Map/MapContainer';
 import UserProfile from '../../../components/UserProfile';
 import { searchById } from '../../../axios/member/member';
 import Swal from "sweetalert2";
+import { wishlistAddDB } from '../../../axios/payment/wishlistLogic';
 
 
 const cookies = new Cookies();
@@ -36,7 +37,16 @@ const MarketDetail = () => {
 
   }
 
+  const [_userdata, setUserData] = useState();
 
+  //상세보기 데이터 가져오기
+  useEffect(() => {
+    boardDetail()
+    // .then((res) => {
+    // searchById(detail.member_id).then(setUserData);
+    // })
+    console.log(_userData);
+  }, [])
 
 
   const search = window.location.search;
@@ -143,21 +153,23 @@ const MarketDetail = () => {
 
   //찜하기 기능
   const addWishlist = () => {
-    if (member_no > 0) {
+    if (member_no > 0 && member_no != detail.member_no) {
       /* 구현중.. */
      const addtoWishlist = async() =>{
       const wData = {
+        wishlistId : 0,
         wishlistTitle : detail.board_mk_title,
-        wishlistCategory : 'board_market',
+        wishlistPrice : detail.mk_ticket_price,
+        wishlistCategory : "market",
+        boardMkNo : detail.board_mk_no,
         memberNo : member_no,
-        boardMkNo : detail.board_mk_no
       }
       const res = await wishlistAddDB(wData)
       console.log(res.data)
      }
+     addtoWishlist()
 
-
-    } else if (member_no == detail.member_no) {
+    } else if (member_no === detail.member_no) {
       Swal.fire({
         title: "내 게시글에서 이용할 수 없습니다.",
         icon: 'error'
@@ -178,7 +190,7 @@ const MarketDetail = () => {
 
   //채팅으로 연결
   const linkToChat = () => {
-    if (member_no > 0) {
+    if (member_no > 0 && member_no != detail.member_no) {
       /* 유저와 판매자 채팅으로 연결해주기 */
 
 
@@ -225,16 +237,7 @@ const MarketDetail = () => {
       });
     }
   }
-  const [_userdata, setUserData] = useState();
-
-  //상세보기 데이터 가져오기
-  useEffect(() => {
-    boardDetail()
-    // .then((res) => {
-    // searchById(detail.member_id).then(setUserData);
-    // })
-    console.log(_userData);
-  }, [])
+ 
 
   //게시글 작성자(판매자) 프로필 가져오기
 
