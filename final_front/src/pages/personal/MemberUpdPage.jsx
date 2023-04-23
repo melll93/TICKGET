@@ -210,7 +210,7 @@ const MemberUpdPage = () => {
 
           {/* 이름 */}
             <MyLabel> 이름 <span style={{ color: "red" }}>{star.name}</span>
-              <MyInput type="text" id="name" defaultValue={memInfo.name} placeholder="이름을 입력해 주세요"
+              <MyInput type="text" id="name" defaultValue={memInfo.name} placeholder="이름을 입력해 주세요" value={_userData.memberName}
                 onChange={(e) => { changeMemInfo(e); validate('name', e); }} />
               <MyLabelAb>{comment.name}</MyLabelAb>
             </MyLabel>
@@ -226,7 +226,7 @@ const MemberUpdPage = () => {
             {/* 이메일 */}
             <div style={{display: 'flex'}}>
             <MyLabel> 이메일 <span style={{ color: "red" }}>{star.email}</span>
-              <MyInput type="email" id="email" placeholder="이메일를 입력해주세요"
+              <MyInput type="email" id="email" placeholder="이메일를 입력해주세요" value={_userData.memberEmail}
                 onChange={(e) => { changeMemInfo(e); validate('email', e); }} />
               <MyLabelAb>{comment.email}</MyLabelAb>
             </MyLabel>
@@ -235,7 +235,7 @@ const MemberUpdPage = () => {
             
             {/* 전화번호 */}
             <MyLabel> 전화번호 <span style={{ color: "red" }}>{star.mobile}</span>
-              <MyInput type="text" id="mobile" defaultValue={memInfo.mobile} placeholder="전화 번호를 입력해 주세요"
+              <MyInput type="text" id="mobile" defaultValue={memInfo.mobile} placeholder="전화 번호를 입력해 주세요" value={_userData.memberMobile}
                 onChange={(e) => { changeMemInfo(e); validate('hp', e); }} />
               <MyLabelAb>{comment.mobile}</MyLabelAb>
             </MyLabel>
@@ -249,7 +249,7 @@ const MemberUpdPage = () => {
 
               <div style={{display: 'flex'}}>
                 <MyLabel> 주소
-                  <MyInput type="text" id="address" defaultValue={post.address} readOnly placeholder="주소검색을 해주세요."/>
+                  <MyInput type="text" id="address" defaultValue={post.address} readOnly placeholder="주소검색을 해주세요." />
                 </MyLabel>
                 <MyButton type="button" onClick={()=>{searchAddress()}}>검색</MyButton>
               </div>

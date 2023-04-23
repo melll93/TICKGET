@@ -44,16 +44,34 @@ const UnRegiesterPage = () => {
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
-
-  const [memInfo, setMemInfo] = useState('');
-
+  // 1
   const [passwordInput, setPasswordInput] = useState("");
 
+  // 2 아이디, 전화번호 비교
+  /* 
+  const [id, setId] = useState("");
+  const [mobile, setMobile] = useState("");
+  */
+
+  // 1
   const changeMemInfo = (e) => {
     setPasswordInput(e.target.value);
     console.log("password : " + e.target.value);
   };
 
+  // 2 아이디, 전화번호 비교
+  /* 
+    const changeMemInfo = (e) => {
+    const { id, value } = e.target;
+    if (id === "id") {
+      setId(value);
+    } else if (id === "mobile") {
+      setMobile(value);
+    }
+  };
+  */
+
+  // 체크 박스
   const handleCheckboxChange = useCallback((e) => {
     const id = e.target.id;
     const isChecked = e.target.checked;
@@ -67,11 +85,13 @@ const UnRegiesterPage = () => {
     setIsSubmitEnabled(isChecked1 && isChecked2);
   }, [isChecked1, isChecked2]);
 
+  // 1
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
-      // 입력한 비밀번호와 저장된 비밀번호가 일치하는지 확인
-      // 쿠키에 담긴 비밀번호 암호화되어있음 ;_;
+      // 1 입력한 비밀번호와 저장된 비밀번호가 일치하는지 확인
+      // 쿠키에 담긴 비밀번호 암호화 -> 비교 어떻게?
+      // 2 간단하게 사용자 아이디, 전화번호 입력 받고 쿠키/DB 비교하여 두 가지다 일치하는 경우 테이블 삭제
       if (_userData.memberPassword !== passwordInput) {
         console.log("비밀번호 불일치");
         Swal.fire({
@@ -79,7 +99,6 @@ const UnRegiesterPage = () => {
           })
         return;
       }
-
       const res = await memberDeleteDB(_userData);
       // 회원 삭제 성공 시 쿠키 제거 및 페이지 이동
       if (res.data.success) {
@@ -90,27 +109,50 @@ const UnRegiesterPage = () => {
         navigate('/')
       } else {
         console.log("회원 탈퇴 실패");
+        Swal.fire({
+          title:'회원 탈퇴에 실패하였습니다. 회원 님의 정보를 다시 확인해 주세요.',
+          })
       }
     } catch (error) {
       console.log("error : " + error)
     }
 
-
-/*     const member = memberListDB.find(member => member.member_id === memberId);
-    if (memInfo.password !== member.member_password) {
-      console.log('비밀번호 불일치')
-      Swal.fire({
-        title:'비밀번호를 다시 확인해 주세요.',
-        })
-      return;
+    // 2 2 아이디, 전화번호 비교
+    /* 
+      const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+      const { memberId, memberMobile } = _userData;
+      if (id === "" || mobile === "") {
+        Swal.fire({
+          title: "회원 님의 아이디와 전화번호를 모두 입력해 주세요.",
+        });
+        return;
+      }
+      if (id !== memberId || mobile !== memberMobile) {
+        Swal.fire({
+          title: "회원 님의 정보를 다시 확인해 주세요.",
+        });
+        return;
+      }
+      const res = await memberDeleteDB(_userData);
+      if (res.data.success) {
+        cookies.remove("_userData");
+        Swal.fire({
+          title: "회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.",
+        });
+        navigate("/");
+      } else {
+        console.error("회원 탈퇴 실패");
+          Swal.fire({
+          title: "회원 탈퇴에 실패하였습니다. 회원 님의 정보를 다시 확인해 주세요.",
+        });
+      }
+    } catch (error) {
+      console.error("error : " + error);
     }
-
-    // 사용자의 테이블을 삭제하고 성공 메시지를 표시합니다
-    await memberDeleteDB(memberId);
-    Swal.fire({
-      title:'회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.',
-      })
-      //navigate('/') */
+  };
+    */
   }
   return (
     <>
