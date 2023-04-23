@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   BButton, ContainerDiv, FormDiv, HeaderDiv, MyButton, MyH1, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton,
 } from "../../../styles/formStyle";
-import QuillEditor from "./QuillEditor";
-import { mk_boardInsertDB, uploadFileDB } from "../../../axios/board/market/marketLogic";
+import { mk_boardInsertDB } from "../../../axios/board/market/marketLogic";
 import { Button, Col, FloatingLabel, Form, InputGroup, Row, } from "react-bootstrap";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
@@ -103,7 +102,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
 
   const handleContent = useCallback((value) => {
-    //quilleditor에서 담김 - 태그포함된 정보
     setContent(value);
   }, []);
 

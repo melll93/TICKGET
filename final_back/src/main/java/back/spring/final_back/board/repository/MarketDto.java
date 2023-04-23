@@ -34,7 +34,7 @@ public class MarketDto {
 	private String memberId;
 	private int memberNo;
 	private int boardMkStatus;
-	private int boardMkWlcount;
+	private int boardMkLikes;
 	
 	
 	//조건검색 시 필요
