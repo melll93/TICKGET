@@ -24,6 +24,16 @@ public class WishlistServiceImpl implements WishlistService {
 		wList = wlDao.wishlistSelect(wlDto);
 		return wList;
 	}
+	
+	@Override
+	public List<WishlistDto> wishlistDetail(WishlistDto wlDto) {
+		logger.info("WishlistController : wishlistDetail 호출");
+		List<WishlistDto>wList = null;
+		wList = wlDao.wishlistDetail(wlDto);
+		return wList;
+	}
+
+	
 
 	@Override
 	public int wishlistAdd(WishlistDto wlDto) {
@@ -41,5 +51,6 @@ public class WishlistServiceImpl implements WishlistService {
 		result = wlDao.wishlistDelete(wlDto);
 		return result;
 	}
+
 
 }
