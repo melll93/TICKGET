@@ -24,6 +24,7 @@
           , #{boardCpContent}
           , #{boardCpDate}
           , #{boardCpViews}
+          , #{boardCpPlace}
       )
     </insert>
 
@@ -37,7 +38,8 @@
         update board_carpool set
             board_cp_title = #{boardCpTitle} ,
             board_cp_content = #{boardCpContent},
-            board_cp_date = #{boardCpDate}
+            board_cp_date = #{boardCpDate},
+            board_cp_place = #{boardCpPlace}
         where board_cp_no = #{boardCpNo}
     </update>
     

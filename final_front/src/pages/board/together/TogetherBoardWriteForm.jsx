@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from "react";
 import Button from "react-bootstrap/Button";
+import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { insertTogetherDB } from "../../../axios/board/together/TogetherLogic";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
-import { BButton, ContainerDiv, FormDiv } from "../../../styles/formStyle";
 import Sidebar from "../../../components/Sidebar";
-import Swal from "sweetalert2";
-import { Cookies } from "react-cookie";
+import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
 
 const TogetherBoardWriteForm = ({ board_together }) => {
   const cookies = new Cookies();
@@ -31,9 +31,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   const handleTitle = useCallback((e) => {
     setTitle(e);
   }, []);
-  const handleWriter = useCallback((e) => {
-    setWriter(e);
-  }, []);
 
   const handleDate = useCallback((e) => {
     setDate(e);
@@ -41,7 +38,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
 
   const insertBoardList = async () => {
     if (!title) {
-      /*  alert("제목을 입력해주세요."); */
       Swal.fire({
         title: "제목을 입력해주세요.",
         icon: "warning",
@@ -49,7 +45,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       return;
     }
     if (!date) {
-      /* alert("날짜를 입력해주세요."); */
       Swal.fire({
         title: "날짜을 입력해주세요.",
         icon: "warning",
@@ -57,7 +52,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       return;
     }
     if (!content) {
-      /* alert("내용을 입력해주세요."); */
       Swal.fire({
         title: "내용을 입력해주세요.",
         icon: "warning",
@@ -65,8 +59,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       return;
     }
     console.log("insertBoardList");
-    // console.log(secret); //true
-    console.log(typeof secret); //boolean타입 출력
     const board = {
       boardTgTitle: title, // 제목 추가
       boardTgContent: content, // 내용 추가
@@ -90,7 +82,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       <Header />
       <Sidebar />
       <ContainerDiv>
-        <div style={{ height: "100px" }}></div>
+        <div style={{ height: "150px" }}></div>
         <FormDiv>
           <h3>Together 글작성</h3>
           <br />
@@ -149,7 +141,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             <input
               id="board_title"
               type="text"
-              maxLength="50"
+              maxLength="100"
               placeholder="제목을 입력하세요."
               style={{
                 width: "100%",
@@ -163,7 +155,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             <br />
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h2>작성자</h2>
-            {/* mem_id를 받아오자 */}
             <span
               id="board_writer"
               style={{
@@ -178,10 +169,10 @@ const TogetherBoardWriteForm = ({ board_together }) => {
 
             <h3>날짜</h3>
             <input
-              type="date"
-              className="form-control"
-              id="festStartday"
-              name="startDay"
+              className="form-control form-control-lg"
+              id="inputLarge"
+              type="datetime-local"
+              style={{ width: "98%", margin: "10px" }}
               onChange={(e) => {
                 handleDate(e.target.value);
               }}
@@ -189,7 +180,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h3>상세내용</h3>
-            <input
+            <textarea
               style={{
                 width: "98%",
                 margin: "10px",
@@ -207,7 +198,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
               onChange={(e) => {
                 handleContent(e.target.value);
               }}
-            ></input>
+            ></textarea>
           </div>
           <br />
         </FormDiv>
