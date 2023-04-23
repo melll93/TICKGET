@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/carpool")
 @RequiredArgsConstructor
 public class CarpoolController {
-    Logger logger = LoggerFactory.getLogger(TogetherController.class);
+    Logger logger = LoggerFactory.getLogger(CarpoolController.class);
     private final CarpoolService carpoolService;
 
     // Carpool 게시판 조회(SelectAll)
