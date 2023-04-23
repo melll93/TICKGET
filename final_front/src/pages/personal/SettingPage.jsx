@@ -7,6 +7,7 @@ import Tab1Content from "../../components/mypage/Tab1Content";
 import Tab2Content from "../../components/mypage/Tab2Content";
 import Tab3Content from "../../components/mypage/Tab3Content";
 import UnRegiesterPage from "./UnRegiesterPage";
+import MemberUpdPage from "./MemberUpdPage";
 
 
 const MypageSidebarItem = () => {
@@ -51,7 +52,8 @@ const MypageSidebarItem = () => {
       {items[activeTab] === "회원정보수정" && (
         <div className="Menu">
     
-<Tab1Content></Tab1Content>
+{/* <Tab1Content></Tab1Content> */}
+<MemberUpdPage/>
 
         </div>
       )}

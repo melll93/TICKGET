@@ -176,9 +176,7 @@ const MemberUpdPage = () => {
 
   return (
     <div>
-      <Header />
-      <Sidebar/>
-      <div className='center'>
+      <div className='mypage_center' style={{paddingTop:'1050px'}}> 
         <SignupForm suggested={false}>
         <MyH1>회원 정보 수정</MyH1>
         <div style={{ padding: '30px 30px 0px 30px' }}>
