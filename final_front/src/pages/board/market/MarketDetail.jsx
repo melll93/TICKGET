@@ -94,11 +94,11 @@ const MarketDetail = () => {
     const temp = JSON.stringify(res.data)
       const jsonDoc = JSON.parse(temp)
     setWishlistDetail({
-     wishlist_title : jsonDoc[0].wishlistTitle,
-     wishlist_price : jsonDoc[0].wishlistPrice,
-     wishlist_category : jsonDoc[0].wishlistCategory,
-     wishlist_memno : jsonDoc[0].member_no,
-     wishlist_boardmkno : jsonDoc[0].board_mk_no
+     wl_title : jsonDoc[0].wishlistTitle,
+     wl_price : jsonDoc[0].wishlistPrice,
+     wl_category : jsonDoc[0].wishlistCategory,
+     wl_memno : jsonDoc[0].memberNo,
+     wl_boardmkno : jsonDoc[0].boardMkNo
     })
   }
 
@@ -166,21 +166,28 @@ const MarketDetail = () => {
 
 
 
-  //찜하기 기능
-  const [isWishlistAdded, setIsWishlistAdded] = useState(false);
-if(member_no === wishlistDetail.member_no){ //내가 이미 찜한 게시글일 경우 '찜한 상품'
-  setIsWishlistAdded(true)
-}else{
-  setIsWishlistAdded(false)
-}
+//찜하기 기능
+const [isWishlistAdded, setIsWishlistAdded] = useState(false);
 
-  const handleClick = () => {
-    if (!isWishlistAdded) {
-      addWishlist(); // addWishlist 함수가 실행
-    } else {
-      deleteWishlist(); // deleteWishlist 함수가 실행
-    }
+useEffect(() => {
+  console.log(member_no);
+  console.log(wishlistDetail.wl_memno);
+  if (member_no === wishlistDetail.wl_memno) {
+    setIsWishlistAdded(true);
+  } else {
+    setIsWishlistAdded(false);
   }
+}, [wishlistDetail.wl_memno, member_no, isWishlistAdded]);;
+
+const handleClick = () => {
+  if (!isWishlistAdded) {
+    addWishlist();
+    setIsWishlistAdded(true);
+  } else {
+    deleteWishlist();
+    setIsWishlistAdded(false);
+  }
+}
 
 
   const addWishlist = () => {
@@ -387,10 +394,23 @@ if(member_no === wishlistDetail.member_no){ //내가 이미 찜한 게시글일 
 
 
               <div className="mb-2" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '70px', }}>
-                <Button variant="outline-dark" size="lg" style={{ width: '180px' }} onClick={handleClick}>
-                {isWishlistAdded ? <><i class="bi bi-check2-square"/>{" "}찜한 상품</> : <><i class="bi bi-heart"/>{" "}찜하기</>}
-                </Button>{' '}
-                <Button variant="outline-danger" size="lg" style={{ width: '180px' }} onClick={linkToChat}>
+              <Button
+    variant="outline-dark"
+    size="lg"
+    style={{ width: '180px' }}
+    onClick={handleClick}
+  >
+    {member_no === wishlistDetail.wl_memno ? (
+      <>
+        <i class="bi bi-check2-square" /> {' '} 찜한 상품
+      </>
+    ) : (
+      <>
+        <i class="bi bi-heart" /> {' '} 찜하기
+      </>
+    )}
+  </Button>{' '}
+                              <Button variant="outline-danger" size="lg" style={{ width: '180px' }} onClick={linkToChat}>
                   <i class="bi bi-chat-left-dots"></i>{" "}채팅하기
                 </Button>{' '}
                 <Button variant="outline-primary" size="lg" style={{ width: '180px' }} onClick={linkToPayment}>
