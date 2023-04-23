@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { memberDeleteDB, memberListDB } from '../../axios/member/memberCrud';
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom';
+import { Cookies } from "react-cookie";
 
 export const Input = styled.input`
   width: 250px;
@@ -32,14 +33,14 @@ export const Input = styled.input`
 
 const UnRegiesterPage = () => {
   const navigate = useNavigate()
-  // 로그인을 하고 나면 리덕스에 이 값이 담겨 있어야 함
-  const memberId = useSelector(state => state.userStatus.user);
-  //console.log(memberId);
-  // const [memberId, setMemberId] = useState();
-  // 상수로 처리 test 
+
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData"); // 사용자 정보
+  console.log(_userData)
 /*   useEffect(()=>{
     setMemberId('yeg123') 
   },[]) */ // UnRegiesterPage화면이 열릴 때 최초 딱 한번만 실행됨
+
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
@@ -67,11 +68,35 @@ const UnRegiesterPage = () => {
   }, [isChecked1, isChecked2]);
 
   const handleDelete = async (e) => {
-    console.log(memberId);//yeg123
     e.preventDefault();
-    // 비밀번호가 사용자의 비밀번호와 일치하는지 확인합니다
-    // 리덕스에 사용자 비밀번호도 필요
-    const member = memberListDB.find(member => member.member_id === memberId);
+    try {
+      // 입력한 비밀번호와 저장된 비밀번호가 일치하는지 확인
+      // 쿠키에 담긴 비밀번호 암호화되어있음 ;_;
+      if (_userData.memberPassword !== passwordInput) {
+        console.log("비밀번호 불일치");
+        Swal.fire({
+          title:'비밀번호를 다시 확인해 주세요.',
+          })
+        return;
+      }
+
+      const res = await memberDeleteDB(_userData);
+      // 회원 삭제 성공 시 쿠키 제거 및 페이지 이동
+      if (res.data.success) {
+        cookies.remove("_userData");
+        Swal.fire({
+          title:'회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.',
+          })
+        navigate('/')
+      } else {
+        console.log("회원 탈퇴 실패");
+      }
+    } catch (error) {
+      console.log("error : " + error)
+    }
+
+
+/*     const member = memberListDB.find(member => member.member_id === memberId);
     if (memInfo.password !== member.member_password) {
       console.log('비밀번호 불일치')
       Swal.fire({
@@ -85,7 +110,7 @@ const UnRegiesterPage = () => {
     Swal.fire({
       title:'회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.',
       })
-      //navigate('/')
+      //navigate('/') */
   }
   return (
     <>
@@ -107,7 +132,7 @@ const UnRegiesterPage = () => {
               귀하에게 있습니다.
             </h5>
             <label>
-              <input
+              <input  ㅍ
                 type="checkbox"
                 id="check1"
                 checked={isChecked1}

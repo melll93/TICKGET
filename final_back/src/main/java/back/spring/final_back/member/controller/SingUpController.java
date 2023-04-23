@@ -59,13 +59,22 @@ public class SingUpController {
 		return String.valueOf(result);
 	}
 
-	// Update
+	// 회원 정보 Update
 	@PostMapping("memberUpdate")
 	public String memberUpdate(@RequestBody Map<String, Object> pMap) {
 		log.info("memberUpdate 확인");
 		log.info(pMap.toString());
 		int result = 0;
 		result = signUpService.memberUpdate(pMap);
+		return String.valueOf(result);
+	}
+	// 비밀번호 Update
+	@PostMapping("changePwUpdate")
+	public String changePwUpdate(@RequestBody Map<String, Object> pMap) {
+		log.info("changePwUpdate 확인");
+		log.info(pMap.toString());
+		int result = 0;
+		result = signUpService.changePwUpdate(pMap);
 		return String.valueOf(result);
 	}
 
