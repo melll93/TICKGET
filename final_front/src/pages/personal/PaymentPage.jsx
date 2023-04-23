@@ -90,7 +90,7 @@ const handleToss = async() => {
          <div>
             <Card.Text style={{ fontSize: '1.1rem', margin: '0 auto' }}>
                {/* 좌석정보 | 공연일 | 공연장소 */}
-               <p style={{ margin: '0 0 5px 0' }}>좌석정보(수정예정){orderDetail.seat}</p>
+               <p style={{ margin: '0 0 5px 0' }}>{orderDetail.seat}</p>
                <p style={{ margin: '0 0 5px 0' }}>{orderDetail.date}</p>
                <p style={{ margin: '0' }}>{orderDetail.place}</p>
             </Card.Text>

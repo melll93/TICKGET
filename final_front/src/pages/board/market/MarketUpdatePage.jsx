@@ -8,7 +8,6 @@
   import Sidebar from '../../../components/Sidebar'
   import { ContainerDiv, FormDiv, HeaderDiv } from '../../../styles/formStyle'
   import MarketFileInsert from './MarketFileInsert'
-  import QuillEditor from './QuillEditor'
   import { Cookies } from 'react-cookie'
   import Swal from "sweetalert2";
 

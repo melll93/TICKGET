@@ -37,7 +37,7 @@ public class FestivalDto {
 	private String festDtCasting;
 	private String festDtCrew;
 	
-	private String festPsNo;
+	private int festPsNo;
 	private String festPsId;
 	private String festPsUrl;
 	

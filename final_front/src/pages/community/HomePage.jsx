@@ -127,7 +127,7 @@ const HomePage = () => {
       <Header />
       <Sidebar />
       <div className="center">
-        <div style={{ margin: "100px 0px 20px 0px", width: "1900px" }}>
+        <div style={{ margin: "40px 0px 0px 0px", width: "1900px" }}>
           <CarouselList festivalToday={festivalToday} />
         </div>
 
@@ -135,10 +135,10 @@ const HomePage = () => {
           className="home_bottom_section"
           style={{
             /*   border:'1px dotted gray',  */
-            padding: "50px",
+            paddingBottom: "50px",
           }}
         >
-          <div style={{ textAlign: "center", alignItems: "center" }}>
+          <div style={{ textAlign: "center"}}>
             <h1>
               <strong> WHAT'S HOT</strong>
             </h1>
@@ -161,18 +161,14 @@ const HomePage = () => {
 
         <section
           className="home_total_sec"
-          style={{ paddingLeft: "150px", backgroundColor: "lightgray" }}
+          style={{ backgroundColor: "lightgray"}}
         >
           <div className="total_section" style={{ display: "flex" }}>
 
 
             {/* 메인하단 최신게시글 */}
-            <div
-              className="mainpage div div2"
-              style={{ flex: "1", margin: "50px" }}
-            >
-              <div className="mainpage box">
-                <div className="mainpage div div1">
+              <div className="mainpage box" style={{flex: "1",  padding:'50px 0px 0px 170px'}}> 
+                <div className="mainpage div div1" >
                   <Tabs
                     defaultActiveKey="market"
                     id="uncontrolled-tab-example"
@@ -192,7 +188,6 @@ const HomePage = () => {
 
                   </Tabs>
                 </div>{" "}
-              </div>{" "}
             </div>
             {/* 메인하단 최신게시글 */}
 
@@ -202,32 +197,55 @@ const HomePage = () => {
             {/* 지역별 추천 */}
             <div
               className="top_sec_div"
-              style={{ margin: "50px", textAlign: "center", flex: "1" }}
+              style={{ marginTop: "50px", 
+              marginBottom: "50px", textAlign: "center", flex: "1",
+            paddingRight:'100px', display:"inline-block"}}
             >
-              <div className="card" style={{ display: "inline-block" }}>
-                <p>지역별 추천</p>
+                <h4>연계 추천 사이트</h4>
+              <div className="card" style={{ display: "inline-block", marginRight:'5px'}}>
                 <img
-                  src="./images_key/WOONGS.jpg"
-                  style={{ width: "150px", margin: "15px" }}
+                  src="./images_key/travelgajae.jpg"
+                  style={{ width: "200px",height:'250px', margin: "15px" }}
                   alt="사진1"
-                />
-                <img
-                  src="./images_key/WOONGS.jpg"
-                  style={{ width: "150px", margin: "15px" }}
-                  alt="사진1"
-                />
-                <img
-                  src="./images_key/WOONGS.jpg"
-                  style={{ width: "150px", margin: "15px" }}
-                  alt="사진1"
-                />
-                <br />
-                제목
-                <div className="card-body">
-                  <h5 className="card-title">설명 </h5>
-                  <p className="card-text">설명2 </p>
-                </div>
+                  />
+                  <div className="card-body">
+                  <h5 className="card-title">[숙박]트래블가재</h5>
+                  <a href="#" className="card-text">http://travelgajae.com</a> 
+                  </div>
               </div>
+
+              
+
+
+                
+                <div className="card" style={{ display: "inline-block" }}>
+                <img
+                  src="./images_key/triptoday.png"
+                  style={{ width: "200px", height:'250px', margin: "15px" }}
+                  alt="사진1"
+                />
+                  <div className="card-body">
+                  <h5 className="card-title">[숙박]오늘의여행 </h5>
+                  <a href="#" className="card-text">http://triptoday.com </a>
+                </div>
+                </div>
+
+                <div className="card" style={{ display: "inline-block",  marginRight:'5px' }}>
+                <img
+                  src="./images_key/khsrcarecenter.jpg"
+                  style={{ width: "200px",height:'250px', margin: "15px" }}
+                  alt="사진1"
+                />
+                  <div className="card-body">
+                  <h5 className="card-title"> [숙박]KH요양원 </h5>
+                  <a href="#" className="card-text">http://srcarecenter.com </a>
+
+                </div>
+            </div>
+                
+
+
+              
             </div>
 
             {/* 지역별 추천 여기까지 */}

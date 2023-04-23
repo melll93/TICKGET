@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="back.spring.final_back.payment.repository.WishlistDao">
+
+<!-- 위시리스트 조회 -->
+<select id="wishlistSelect" parameterType="WishlistDto" resultType="WishlistDto">
+  select * from wishlist_data
+   where member_no = #{memberNo}
+</select>
+
+
+<!-- 위시리스트 상세정보 -->
+<select id="wishlistDetail" parameterType="WishlistDto" resultType="WishlistDto">
+ select * from wishlist_data
+  <where>  <!-- 마켓게시판글 가져오는경우 -->
+  <if test='boardMkNo!=null'> 
+    board_mk_no = #{boardMkNo}
+    </if>
+     </where>
+</select>
+
+
+
+<!-- 위시리스트 추가 -->
+<insert id="wishlistAdd" parameterType="WishlistDto">
+
+  insert into wishlist_data (wishlist_title,wishlist_price,wishlist_category,board_mk_no,member_no)
+ <choose>
+    <!-- 마켓 게시판에서 위시리스트 추가할 경우  -->
+    <when test='wishlistCategory!=null and wishlistCategory.equals("market")'>
+      values (#{wishlistTitle},#{wishlistPrice},#{wishlistCategory},#{boardMkNo},#{memberNo})
+    </when>
+    <otherwise>
+      values (#{wishlistTitle},#{wishlistPrice},#{wishlistCategory},#{boardMkNo},null)
+    </otherwise>
+  </choose>
+</insert>
+
+
+
+
+<!-- 페스티벌 페이지에서 위시리스트 추가할 경우 
+    <when test='wishlistCategory!=null and wishlistCategory.equals("fest_main")'>
+    
+    </when> -->
+
+
+
+<!-- 위시리스트 제거 *회원거 다 지워짐 조심 -->
+<delete id="wishlistDelete" parameterType="WishlistDto">
+    DELETE FROM wishlist_data
+    <where>
+  <if test='boardMkNo!=null and boardMkNo>0'>
+board_mk_no = #{boardMkNo}
+</if>
+  </where>
+</delete>
+
+
+
+
+
+</mapper>

@@ -8,9 +8,9 @@ div .header {
 }
 
 div .HomeButton {
-  display: inline-block;
   z-index: 1;
-  width: 225px;
+  width: 450px;
+  align-items: center;
   text-align: center;
 }
 
@@ -54,7 +54,7 @@ div .SearchBar {
 
 div .topList {
   width: 1400px;
-  padding-left: 34%;
+  padding-left: 30%;
   font-size: 23px;
 }
 

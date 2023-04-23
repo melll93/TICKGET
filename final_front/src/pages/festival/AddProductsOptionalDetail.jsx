@@ -1,18 +1,22 @@
-import React, { useCallback, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import { saveFestDetailDB, saveFestPsUrlDB } from '../../axios/festival/festival';
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { deleteFestPosterDB, saveFestDetailDB, saveFestPsUrlDB } from '../../axios/festival/festival';
 import "../../styles/festivaldetails.css";
 import { BlackBtn } from '../../styles/formStyle';
 import AddProductsFestTicketDetail from './AddProductsFestTicketDetail';
 
 import Swal from "sweetalert2";
 
-const AddProductsOptionalDetail = () => {
+const AddProductsOptionalDetail = ({ setFestOriginPsUrl, festPsNo, festOrginPsUrl, festDtCrew, festDtCasting, festDtAge, festDtRuntime, festTcType, festTcPrice, festTcTime}) => {
+  const navigate = useNavigate();
   const {festMId}=useParams();
-  console.log(festMId)
-
-  const[festDetailCasting, setFestDetailCasting] = useState("")
-  const[festDetailCrew, setFestDetailCrew] = useState("")
+/*    console.log(festMId)  */
+/*   console.log(festTcType); 
+console.log(festTcTime); */
+console.log(festPsNo);
+console.log(festOrginPsUrl);
+  const[festDetailCasting, setFestDetailCasting] = useState()
+  const[festDetailCrew, setFestDetailCrew] = useState()
   const[festDetailRuntime, setFestDetailRuntime] = useState(0)
   const[festDetailAge, setFestDetailAge] = useState(0)
 
@@ -42,7 +46,7 @@ const AddProductsOptionalDetail = () => {
       festDtCasting: festDetailCasting,
       festDtCrew: festDetailCrew,
       festDtRuntime: festDetailRuntime,
-    festDtAge: festDetailAge,
+      festDtAge: festDetailAge,
   };
   try {
   const res = await saveFestDetailDB(festival);
@@ -69,14 +73,32 @@ const saveFestPoster=async()=>{
 try {
 const res = await saveFestPsUrlDB(festival);
 console.log(festival);
-alert('임시저장완료')
+alert('추가완료')
+
 if (!res.data) {
 } else {
-}
+}    
 } catch (error) {
 }
 };
 
+
+
+const deleteFestPsUrl = async ({i}) => {
+  const festival = {
+    fest_ps_no: festPsNo[i],
+  };
+  const res = await deleteFestPosterDB(festival);
+  if (!res.data) {
+    const updatedFestPsUrl = festOrginPsUrl.filter((item, index) => index !== i);
+    setFestOriginPsUrl(updatedFestPsUrl);
+   } else {
+    alert("에러")
+  }
+};
+
+useEffect(() => {
+}, [festOrginPsUrl, festPsUrl]); 
 
 
   //클라우디너리에 업로드
@@ -133,31 +155,42 @@ fest_detail 추가 정보 입력
 })}}>수정완료</BlackBtn>
 
     <div className="form-floating">
-  <input type="text" className="form-control" id="festDetailCasting"onChange={(e)=>{inputCasting (e.target.value)}} />
+  <input type="text" className="form-control" 
+ defaultValue={festDtCasting} 
+  id="festDetailCasting"onChange={(e)=>{inputCasting (e.target.value)}} />
   <label htmlFor="floatingInput">캐스팅정보</label>
 </div><br />
 <div className="form-floating">
-  <input type="text" className="form-control" id="festDetailCrew"onChange={(e)=>{inputCrew (e.target.value)}} />
+  <input type="text" className="form-control" 
+ defaultValue={festDtCrew} 
+  id="festDetailCrew"onChange={(e)=>{inputCrew (e.target.value)}} />
   <label htmlFor="floatingInput">제작진정보</label>
 </div><br />
-<div className="form-floating" style={{display:'flex'}}>
-  <input type="number" className="form-control" id="festDetailRuntime" onChange={(e)=>{inputRuntime (e.target.value)}} style={{width:'150px', flex:'1'}}/>
-  <label htmlFor="floatingInput">runtime</label><h3>분</h3>&nbsp;&nbsp;&nbsp;&nbsp;<h3>만</h3>
-  <div className="form-floating"></div>
-  <input type="number" className="form-control" id="festDetailCrew"onChange={(e)=>{inputAge (e.target.value)}} style={{width:'150px', flex:'1'}} />
-  <h3>세 이상</h3>
 
-</div><br />
+
+<div style={{display: 'flex'}}>
+  <div className="form-floating" style={{flex: 1}}>
+    <input type="text" className="form-control" defaultValue={festDtRuntime} id="festDetailRuntime" onChange={(e)=>{inputRuntime (e.target.value)}} />
+    <label htmlFor="floatingInput">runtime ('~분'으로 기재해주세요.)</label>
+  </div>
+  <div className="form-floating" style={{flex: 1, paddingLeft:'5px'}}>
+    <input type="text" className="form-control" defaultValue={festDtAge} id="festDetailCrew" onChange={(e)=>{inputAge (e.target.value)}} />
+    <label htmlFor="floatingInput">관람등급 ('만 ~세 이상'으로 기재해주세요.)</label>
+  </div>
+</div>
+
 </div>
 
 {/* fest_poster */}
 
 <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
-fest_poster 추가 정보 입력
-<BlackBtn onClick={saveFestPoster}>임시저장</BlackBtn>
-
-    </h1>
+fest_poster 추가 정보 입력  </h1>
+    <p>
     파일 상세이미지 업로드
+    </p> 
+<BlackBtn onClick={saveFestPoster}>선택파일 저장</BlackBtn>
+
+
             <input
           className="form-control"
           type="file"
@@ -165,13 +198,20 @@ fest_poster 추가 정보 입력
           id="festivalPoster"
           onChange={FestImageUpload}
           ref={imgRef}
-        />
+          />
 
+          {festOrginPsUrl&&festOrginPsUrl.map((url, i)=>(
+            <div key={i} style={{display: 'inline'}}>
+           <img key={i} src={url} style={{width:'50px', height:'100px', overflow:'hidden', display: 'inline', margin:'5px'}}></img>
+          <BlackBtn onClick={() => deleteFestPsUrl({ i })} width='50px' height="10px" style={{fontSize:'5px'}}>삭제</BlackBtn>
+         </div>
+         ))}
+            
 
 
 
 {/* fest_ticket */}
-<AddProductsFestTicketDetail></AddProductsFestTicketDetail>
+<AddProductsFestTicketDetail festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}></AddProductsFestTicketDetail>
 
 
     </>

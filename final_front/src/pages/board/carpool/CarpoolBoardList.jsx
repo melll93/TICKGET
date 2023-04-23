@@ -13,8 +13,10 @@ import {
   selectCarpoolDB,
 } from "../../../axios/board/carpool/CarpoolLogic";
 import CommonPagination from "../../../components/CommonPagination";
+import Swal from "sweetalert2";
+import { Cookies } from "react-cookie";
 
-/************* firebase 처리 중 *************/
+/************* firebase Config  *************/
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -26,13 +28,13 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
-/************* firebase 처리 중 *************/
+/************* firebase Config *************/
 
 const CarpoolBoardList = () => {
   const navigate = useNavigate();
   const [carpoolList, setCarpoolList] = useState([]);
   const [page, setPage] = useState(1);
-  const [perPage] = useState(15);
+  const [perPage] = useState(10);
 
   /************* firebase 처리 중 *************/
   const [data, setData] = useState({});
@@ -60,40 +62,107 @@ const CarpoolBoardList = () => {
     };
   }, []);
 
-  const handleSaveData = (boardCpNo, max) => {
+  // const handleSaveData = (boardCpNo) => {
+  //   const count = 1;
+  //   firebase
+  //     .database()
+  //     .ref(`${boardCpNo}`)
+  //     .once("value")
+  //     .then((snapshot) => {
+  //       if (snapshot.exists()) {
+  //         const maxVal = snapshot.val().max;
+  //         const now = snapshot.val().now;
+  //         const currentCount = snapshot.val().count;
+  //         if (now < maxVal && currentCount < maxVal) {
+  //           const newNow = now + count;
+  //           const newCount = currentCount + count;
+  //           if (newNow <= maxVal && newCount <= maxVal) {
+  //             firebase
+  //               .database()
+  //               .ref(`${boardCpNo}`)
+  //               .update({
+  //                 now: firebase.database.ServerValue.increment(count),
+  //                 count: firebase.database.ServerValue.increment(count),
+  //               });
+  //           }
+  //         } else {
+  //           Swal.fire({
+  //             title: "인원이 다 찼습니다.",
+  //             icon: "success",
+  //           });
+  //         }
+  //       } else {
+  //         firebase.database().ref(`${boardCpNo}`).set({
+  //           max: 10,
+  //           now: 1,
+  //           count: 1,
+  //         });
+  //       }
+  //     });
+  // };
+  const handleSaveData = (boardCpNo) => {
     const count = 1;
+    const cookies = new Cookies();
+    const _userData = cookies.get("_userData"); //유저 정보
+    console.log("_userData : ", _userData);
+    const id = _userData.memberId // 쿠키에서 아이디 값 가져오기
+    console.log("id : ", id);
+    if (!id) {
+      alert("회원가입을 해주세요.");
+      return;
+    }
+
     firebase
       .database()
       .ref(`${boardCpNo}`)
       .once("value")
       .then((snapshot) => {
-        const maxVal = snapshot.val().max;
-        const now = snapshot.val().now;
-        const currentCount = snapshot.val().count;
-        if (now < maxVal && currentCount < maxVal) {
-          const newNow = now + count;
-          const newCount = currentCount + count;
-          if (newNow <= maxVal && newCount <= maxVal) {
-            firebase
-              .database()
-              .ref(`${boardCpNo}`)
-              .update({
-                now: firebase.database.ServerValue.increment(count),
-                count: firebase.database.ServerValue.increment(count),
-              });
+        if (snapshot.exists()) {
+          const maxVal = snapshot.val().max;
+          const now = snapshot.val().now;
+          const currentCount = snapshot.val().count;
+          if (now < maxVal && currentCount < maxVal) {
+            const newNow = now + count;
+            const newCount = currentCount + count;
+            if (newNow <= maxVal && newCount <= maxVal) {
+              firebase
+                .database()
+                .ref(`${boardCpNo}`)
+                .update({
+                  now: firebase.database.ServerValue.increment(count),
+                  count: firebase.database.ServerValue.increment(count),
+                });
+            }
+          } else {
+            Swal.fire({
+              title: "인원이 다 찼습니다.",
+              icon: "success",
+            });
           }
         } else {
-          alert("인원이 다 찼습니다.");
+          firebase.database().ref(`${boardCpNo}`).set({
+            max: 10,
+            now: 1,
+            count: 1,
+          });
         }
       });
   };
+
+  // 쿠키에서 아이디 값 가져오기
+  function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  }
+
   /************* firebase 처리 중 *************/
 
   useEffect(() => {
     selectCarpoolList();
   }, []);
 
-  /********** 페이지 네이션 처리 **********/
+  /********** 페이지 네이션 처리 시작 **********/
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
 
@@ -102,7 +171,7 @@ const CarpoolBoardList = () => {
     currentFest = boardList.slice(indexOfFirstPost, indexOfLastPost);
     return currentFest;
   };
-  /********** 페이지 네이션 처리 **********/
+  /********** 페이지 네이션 처리 종료 **********/
 
   // 전체 게시글 조회
   const selectCarpoolList = async () => {
@@ -116,7 +185,6 @@ const CarpoolBoardList = () => {
 
   //조회수 증가
   const updateViews = async (boardCpNo) => {
-    console.log("boardCpNo넌 누구야? " + boardCpNo);
     await carpoolViewUpDB(boardCpNo);
     await selectCarpoolList();
   };
@@ -196,12 +264,9 @@ const CarpoolBoardList = () => {
                     {/* 파이어 베이스에서 받아온 값 호출하자 */}
 
                     <td style={{ textAlign: "center", width: "80px" }}>
-                      <Button
-                        style={{ backgroundColor: "black" }}
-                        onClick={() => handleSaveData(carpool.boardCpNo)}
-                      >
+                      <button onClick={() => handleSaveData(carpool.boardCpNo)}>
                         함께하기
-                      </Button>
+                      </button>
                     </td>
                     <td style={{ textAlign: "center", width: "100px" }}>
                       {carpool.boardCpDate}

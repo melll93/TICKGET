@@ -15,7 +15,7 @@ const TogetherBoardList = (board) => {
   const [boardList, setBoardList] = useState([]);
 
   const [page, setPage] = useState(1);
-  const [perPage] = useState(15);
+  const [perPage] = useState(10);
 
   useEffect(() => {
     selectBoardList();
@@ -41,9 +41,7 @@ const TogetherBoardList = (board) => {
   };
 
   const updateViews = async (boardTgNo) => {
-    console.log("boardTgNo넌 누구야? " + boardTgNo);
     await togetherViewUpDB(boardTgNo);
-    console.log("updateViews의 boardTgNo : ", boardTgNo);
     await selectBoardList();
   };
 
@@ -54,7 +52,7 @@ const TogetherBoardList = (board) => {
   return (
     <>
       <div style={{ width: "1200px", marginLeft: "auto", marginRight: "auto" }}>
-        <div className="row" style={{ marginTop: "40px" }}>
+        <div className="row" style={{ marginTop: "0px" }}>
           <Table className="table table-hover">
             <thead>
               <tr>

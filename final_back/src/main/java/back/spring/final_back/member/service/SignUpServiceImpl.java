@@ -42,7 +42,7 @@ public class SignUpServiceImpl implements SignUpService {
 		return result;
 	}
 
-	// Update
+	// 회원 정보 Update
 	@Override
 	public int memberUpdate(Map<String, Object> pMap) {
 		log.info("memberUpdate 확인");
@@ -51,6 +51,18 @@ public class SignUpServiceImpl implements SignUpService {
 		String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
 		pMap.put("memberPassword", memberPasswordEncoded); // key값 수정
 		result = signUpDao.memberUpdate(pMap);
+		return result;
+	}
+	
+	// 비밀번호 Update
+	@Override
+	public int changePwUpdate(Map<String, Object> pMap) {
+		log.info("changePwUpdate 확인");
+		int result = 0;
+		String memberPassword = (String) pMap.get("changePwUpdate");
+		String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
+		pMap.put("memberPassword", memberPasswordEncoded); // key값 수정
+		result = signUpDao.changePwUpdate(pMap);
 		return result;
 	}
 

@@ -102,4 +102,25 @@ public class MarketController {
 		return result;
 	}
 		
+	
+	//게시글 찜 갯수 증가
+	@GetMapping("/mk_plusLikes")
+	public int mk_plusLikes(MarketDto marketDto) {
+		logger.info("MarketController : mk_plusLikes 호출");
+		int result = 0;
+		result = marketService.mk_plusLikes(marketDto);
+		return result;
+	}
+	
+	
+	//게시글 찜 갯수 감소
+	@GetMapping("/mk_minusLikes")
+	public int mk_minusLikes(MarketDto marketDto) {
+		logger.info("MarketController : mk_miusLikes 호출");
+		int result = 0;
+		result = marketService.mk_minusLikes(marketDto);
+		return result;
+	}
+	
+
 	}

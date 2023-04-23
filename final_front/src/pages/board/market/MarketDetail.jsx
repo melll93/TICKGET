@@ -4,7 +4,7 @@ import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { mk_boardDetailDB, mk_boardListDB } from '../../../axios/board/market/marketLogic';
+import { mk_boardDetailDB, mk_boardListDB, mk_minusLikesDB, mk_plusLikesDB } from '../../../axios/board/market/marketLogic';
 import Header from '../../../components/Header';
 import Sidebar from '../../../components/Sidebar';
 import { ContainerDiv, FormDiv, HeaderDiv, QnACommentArea } from '../../../styles/formStyle';
@@ -16,6 +16,7 @@ import MapContainer from './Map/MapContainer';
 import UserProfile from '../../../components/UserProfile';
 import { searchById } from '../../../axios/member/member';
 import Swal from "sweetalert2";
+import { wishlistAddDB, wishlistDelDB, wishlistDetailDB } from '../../../axios/payment/wishlistLogic';
 
 
 const cookies = new Cookies();
@@ -36,7 +37,11 @@ const MarketDetail = () => {
 
   }
 
+  const [_userdata, setUserData] = useState();
 
+  const[ addtoCart , setAddtoCart ] = useState("찜하기")
+
+ 
 
 
   const search = window.location.search;
@@ -44,22 +49,20 @@ const MarketDetail = () => {
   const no = search.split('&').filter((item) => { return item.match('no') })[0]?.split('=')[1];
   /* console.log(no); */
 
-  const [boards, setBoards] = useState([])
-  const [detail, setDetail] = useState({});
-  const [files, setFiles] = useState([]);
-  const dispatch = useDispatch();
+
+
+  const [detail, setDetail] = useState({}); //게시글의 상세데이터
+  const [wishlistDetail, setWishlistDetail] = useState({}) //게시글과 일치하는 위시리스트의 상세데이터
   const navigate = useNavigate();
 
   const boardDetail = async () => {
     const board = {
       boardMkNo: no
     }
-    //상세보기 페이지에서는 첨부파일이 있는 경우에 fileList 호출 해야 함
-    //boardListDB에서는 no를 결정지을 수가 없음
     const res = await mk_boardDetailDB(board).then((res) => {
+      console.log(res.data);
       const temp = JSON.stringify(res.data)
       const jsonDoc = JSON.parse(temp)
-
       setDetail({
         board_mk_no: jsonDoc[0].boardMkNo,
         board_mk_title: jsonDoc[0].boardMkTitle,
@@ -76,24 +79,36 @@ const MarketDetail = () => {
         mk_ticket_price: jsonDoc[0].mkTicketPrice.toLocaleString(),
         board_mk_filename: jsonDoc[0].boardMkFilename,
         board_mk_fileurl: jsonDoc[0].boardMkFileurl,
+        board_mk_likes : jsonDoc[0].boardMkLikes
       })
 
       searchById(jsonDoc[0].memberId).then(setUserData);
-
-      console.log(res.data);//빈배열만 출력됨
-      // console.log(jsonDoc[0].memberNickname);
-      // console.log(jsonDoc[0].memberId);
-      // console.log(jsonDoc[0].memberNo);
-      // console.log(jsonDoc[0].boardMkTitle);
-      // console.log(jsonDoc[0].boardMkDate);
-      // console.log(jsonDoc[0].mkTicketPlace);
-      // console.log(jsonDoc[0].mkTicketSeat);
-      // console.log(jsonDoc[0].mKTicketCount);
-      // console.log(jsonDoc[0].boardMkFilename);
-      // console.log(jsonDoc[0].boardMkFileurl);
     });
   }
 
+  const wlistDetail = async() => {
+    const wData = {
+      boardMkNo : no
+    }
+    const res = await wishlistDetailDB(wData)
+    console.log(res.data);
+    const temp = JSON.stringify(res.data)
+      const jsonDoc = JSON.parse(temp)
+    setWishlistDetail({
+     wishlist_title : jsonDoc[0].wishlistTitle,
+     wishlist_price : jsonDoc[0].wishlistPrice,
+     wishlist_category : jsonDoc[0].wishlistCategory,
+     wishlist_memno : jsonDoc[0].member_no,
+     wishlist_boardmkno : jsonDoc[0].board_mk_no
+    })
+  }
+
+
+ //게시글,위시리스트 상세데이터 가져오기
+ useEffect(() => {
+  boardDetail()
+  wlistDetail()
+}, [])
 
 
 
@@ -153,13 +168,85 @@ const MarketDetail = () => {
 
 
   //찜하기 기능
+  const [isWishlistAdded, setIsWishlistAdded] = useState(false);
+
+
+  const handleClick = () => {
+    if (!isWishlistAdded) {
+      addWishlist(); // addWishlist 함수가 실행
+    } else {
+      deleteWishlist(); // deleteWishlist 함수가 실행
+    }
+  }
+
+
   const addWishlist = () => {
-    if (member_no > 0) {
+    if (member_no > 0 && member_no != detail.member_no) {
+     const addtoWishlist = async() =>{
+      const wData = {
+        wishlistId : 0,
+        wishlistTitle : detail.board_mk_title,
+        wishlistPrice : detail.mk_ticket_price,
+        wishlistCategory : "market",
+        boardMkNo : detail.board_mk_no,
+        memberNo : member_no,
+      }
+      const res = await wishlistAddDB(wData)
+      console.log(res.data)
+     }
+     const mkplusLikes = async() => {  //게시글 찜 갯수 증가
+      const board={
+        boardMkNo : detail.board_mk_no,
+      }
+      const res = await mk_plusLikesDB(board)
+      console.log(res.data);
+     }
+     addtoWishlist()
+     mkplusLikes()
+     Swal.fire({
+      icon: 'success',
+      title: '상품을 찜했습니다!',
+     })
+     setIsWishlistAdded(true); // 상태를 true로 변경
+    
+    } else if (member_no === detail.member_no) {
+      Swal.fire({
+        title: "내 게시글에서 이용할 수 없습니다.",
+        icon: 'error'
+      });
+  
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용하실 수 있습니다.",
+        icon: 'warning',
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login');
+        }
+      });
+    }
+  }
+
+
+  //찜하기 취소 시
+   const deleteWishlist = () => {
+    if (member_no > 0 && member_no != detail.member_no) {
       /* 구현중.. */
-
-
-
-    } else if (member_no == detail.member_no) {
+     const mkminusLikes = async() => {  //게시글 찜 갯수 감소
+      const board={
+        boardMkNo : detail.board_mk_no,
+      }
+      const res = await mk_minusLikesDB(board)
+      console.log(res.data);
+     }
+     mkminusLikes()
+     Swal.fire({
+      icon: 'info',
+      title: '찜하기를 취소하였습니다.',
+     })
+     setIsWishlistAdded(false); // 상태를 false로 변경
+    } else if (member_no === detail.member_no) {
       Swal.fire({
         title: "내 게시글에서 이용할 수 없습니다.",
         icon: 'error'
@@ -177,10 +264,12 @@ const MarketDetail = () => {
       });
     }
   }
+   
+
 
   //채팅으로 연결
   const linkToChat = () => {
-    if (member_no > 0) {
+    if (member_no > 0 && member_no != detail.member_no) {
       /* 유저와 판매자 채팅으로 연결해주기 */
 
 
@@ -227,16 +316,7 @@ const MarketDetail = () => {
       });
     }
   }
-  const [_userdata, setUserData] = useState();
-
-  //상세보기 데이터 가져오기
-  useEffect(() => {
-    boardDetail()
-    // .then((res) => {
-    // searchById(detail.member_id).then(setUserData);
-    // })
-    console.log(_userData);
-  }, [])
+ 
 
   //게시글 작성자(판매자) 프로필 가져오기
 
@@ -261,7 +341,7 @@ const MarketDetail = () => {
                   <UserProfile _userData={_userdata} /> {detail.member_nickname}</div>
                 <div style={{ marginRight: '20px', opacity: '80%', marginTop: '15px' }}>
                   <span style={{ marginRight: "5px", color: 'black' }}>
-                    <i class="bi bi-heart-fill"></i> 5 <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
+                  <i class="bi bi-heart-fill"></i> {detail.board_mk_likes} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
                   </span>
                   <span style={{ marginRight: "5px", color: 'black' }}>
                     <i class="bi bi-eye-fill"></i> {detail.board_mk_hit} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
@@ -304,8 +384,8 @@ const MarketDetail = () => {
 
 
               <div className="mb-2" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '70px', }}>
-                <Button variant="outline-dark" size="lg" style={{ width: '180px' }} onClick={addWishlist}>
-                  <i class="bi bi-heart"></i>{" "}찜하기
+                <Button variant="outline-dark" size="lg" style={{ width: '180px' }} onClick={handleClick}>
+                {isWishlistAdded ? <><i class="bi bi-check2-square"/>{" "}찜한 상품</> : <><i class="bi bi-heart"/>{" "}찜하기</>}
                 </Button>{' '}
                 <Button variant="outline-danger" size="lg" style={{ width: '180px' }} onClick={linkToChat}>
                   <i class="bi bi-chat-left-dots"></i>{" "}채팅하기

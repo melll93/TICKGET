@@ -41,7 +41,7 @@ const TogetherBoardUpdate = () => {
       });
       if (res.data) {
         console.log(jsonDoc);
-        setBoard(res.data);
+        // setBoard(res.data);
       } else {
         console.log("게시글 조회 실패");
       }
@@ -62,7 +62,6 @@ const TogetherBoardUpdate = () => {
     }
 
     if (!boardTgDate) {
-      /* alert("날짜를 입력해 주세요."); */
       Swal.fire({
         title: "날짜를 입력해주세요.",
         icon: "warning",
@@ -71,7 +70,6 @@ const TogetherBoardUpdate = () => {
     }
 
     if (!boardTgContent) {
-      /* alert("내용을 입력해주세요."); */
       Swal.fire({
         title: "내용을 입력해주세요.",
         icon: "warning",
@@ -106,23 +104,9 @@ const TogetherBoardUpdate = () => {
     setTitle(e);
   }, []);
 
-  const handleDate = (date) => {
-    // "YYYY-MM-DD" 형식이 아닐 경우 에러 처리
-    const regex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!regex.test(date)) {
-      /* alert("날짜 형식이 올바르지 않습니다."); */
-      Swal.fire({
-        title: "날짜 형식이 올바르지 않습니다.",
-        icon: "warning",
-      });
-      return;
-    }
-    // "YYYY-MM-DD" 형식으로 변환
-    const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-    // 변환된 값을 상태 변수에 저장
-    setDate(formattedDate);
-    // setDate();
-  };
+  const handleDate = useCallback((e) => {
+    setDate(e);
+  },[]);
 
   const handleContent = useCallback((e) => {
     setContent(e);
@@ -145,7 +129,7 @@ const TogetherBoardUpdate = () => {
                 <input
                   id="board_tg_title"
                   type="text"
-                  maxLength="50"
+                  maxLength="100"
                   defaultValue={board.boardTgTitle}
                   style={{
                     width: "98%",
@@ -178,10 +162,10 @@ const TogetherBoardUpdate = () => {
               <div>
                 <label>수정된 날짜</label>
                 <br />
+
                 <input
-                  id="board_tg_date"
-                  type="date"
-                  maxLength="50"
+                  id="board_date"
+                  type="datetime-local"
                   defaultValue={board.boardTgDate}
                   style={{
                     width: "98%",
@@ -202,7 +186,7 @@ const TogetherBoardUpdate = () => {
                 <textarea
                   id="board_tg_date"
                   type="text"
-                  maxLength="50"
+                  maxLength="1000"
                   defaultValue={board.boardTgContent}
                   style={{
                     width: "98%",

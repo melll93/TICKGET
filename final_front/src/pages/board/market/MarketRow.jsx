@@ -1,6 +1,7 @@
   import React, { useEffect, useState } from 'react'
 import { Cookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom';
+import { mk_pushLikeBtnDB } from '../../../axios/board/market/marketLogic';
 
 const cookies = new Cookies();
 
@@ -12,12 +13,11 @@ const cookies = new Cookies();
  
    let member_no;
    if (_userData) {
-     member_no = _userData.memberNo;
+     member_no = _userData.memberNo; //쿠키에서 가져온 회원번호 (내정보)
    }
  
 
-
-
+ 
     console.log(boards); // 마켓 게시판 조회 데이터
     const navigate = useNavigate()
 
@@ -27,11 +27,6 @@ const cookies = new Cookies();
     //가격 쉼표 처리
     const price = boards.mkTicketPrice.toLocaleString()
     console.log(price)
-
-
-
-
-
 
 
     //현재 시간 - 게시글 작성 시간
@@ -120,7 +115,7 @@ onMouseEnter={() => { // 마우스를 요소 위로 올리면
 onMouseLeave={() => { // 마우스를 요소에서 떠나면
   setHovered(false); // 상태값 변경
 }}>
-<h5 className="card-title" style={{fontSize:'1.1rem'}}>
+<h5 className="card-title" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,fontSize:'1rem',opacity:'90%'}}>
   {boards.boardMkTitle}</h5>
 </div>
 <div style={{ display: "flex", justifyContent: "space-between" , }} onClick={linkToDetail}
@@ -141,9 +136,9 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
 
       <p className="card-text" style={{color:'black' }} >
    
-      <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}}>
+      <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}} >
   {member_no === boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.1rem", color:'rgb(80, 50, 200)'}}>내 게시글</span>}
-  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px'}}><i class="bi bi-heart" />{" "}찜 5</span>}
+  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px'}}><i class="bi bi-heart" />{" "}{boards.boardMkLikes}</span>}
 </div>
        </p>
        <hr style={{marginTop:'-25px' , opacity:'0'}}/>

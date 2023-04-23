@@ -1,7 +1,10 @@
+/* global daum */
+/* global daum */
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useCallback, useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   CarpoolDetailDB,
   updateCarpoolDB,
@@ -9,8 +12,6 @@ import {
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
-import LandingPage from "./Map/LandingPage";
-import Swal from "sweetalert2";
 
 const CarpoolUpdate = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const CarpoolUpdate = () => {
   const [boardCpTitle, setCarpoolTitle] = useState(""); //사용자가 입력한 내용 담기
   const [boardCpDate, setCarpoolDate] = useState(""); //사용자가 입력한 내용 담기
   const [boardCpContent, setCarpoolContent] = useState(""); //사용자가 입력한 내용 담기
+  const [boardCpPlace, setBoardCpPlace] = useState(""); //사용자가 입력한 내용 담기
 
   const [carpool, setCarpool] = useState({
     boardCpNo: 0,
@@ -25,6 +27,7 @@ const CarpoolUpdate = () => {
     boardCpTitle: "",
     boardCpContent: "",
     boardCpDate: "",
+    boardCpPlace: "",
   });
 
   useEffect(() => {
@@ -38,6 +41,7 @@ const CarpoolUpdate = () => {
         boardCpTitle: jsonDoc.boardCpTitle,
         boardCpContent: jsonDoc.boardCpContent,
         boardCpDate: jsonDoc.boardCpDate,
+        boardCpPlace: jsonDoc.boardCpPlace,
       });
       if (res.data) {
         console.log(jsonDoc);
@@ -53,30 +57,24 @@ const CarpoolUpdate = () => {
 
   const updateCarpool = async () => {
     if (!boardCpTitle) {
-     /*  alert("제목을 입력해주세요."); */
       Swal.fire({
-        title:'제목을 입력해주세요',
-        icon:'warning'
-        })
-        
+        title: "제목을 입력해주세요",
+        icon: "warning",
+      });
       return;
     }
-
     if (!boardCpDate) {
-     /*  alert("날짜를 입력해 주세요."); */
-     Swal.fire({
-      title:'날짜를 입력해주세요',
-      icon:'warning'
-      })
+      Swal.fire({
+        title: "날짜를 입력해주세요",
+        icon: "warning",
+      });
       return;
     }
-
     if (!boardCpContent) {
-      /* alert("내용을 입력해주세요."); */
       Swal.fire({
-        title:'내용을 입력해주세요',
-        icon:'warning'
-        })
+        title: "내용을 입력해주세요",
+        icon: "warning",
+      });
       return;
     }
 
@@ -85,6 +83,7 @@ const CarpoolUpdate = () => {
       boardCpTitle: boardCpTitle, // 제목 추가
       boardCpContent: boardCpContent, // 내용 추가
       boardCpDate: boardCpDate,
+      boardCpPlace: boardCpPlace,
     };
 
     console.log("carpool = ", JSON.stringify(carpool));
@@ -94,11 +93,10 @@ const CarpoolUpdate = () => {
     } catch (error) {
       console.log(error);
     }
-    /* alert("게시글 수정 완료"); */
     Swal.fire({
-      title:'게시글 수정 완료',
-      icon:'success'
-      })
+      title: "게시글 수정 완료",
+      icon: "success",
+    });
     navigate("/carpool");
   };
 
@@ -112,9 +110,9 @@ const CarpoolUpdate = () => {
     if (!regex.test(date)) {
       /* alert("날짜 형식이 올바르지 않습니다."); */
       Swal.fire({
-        title:'날짜 형식이 올바르지 않습니다.',
-        icon:'warning'
-        })
+        title: "날짜 형식이 올바르지 않습니다.",
+        icon: "warning",
+      });
       return;
     }
     // "YYYY-MM-DD" 형식으로 변환
@@ -126,6 +124,28 @@ const CarpoolUpdate = () => {
 
   const handleContent = useCallback((e) => {
     setCarpoolContent(e);
+  }, []);
+
+  const searchAddress = () => {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        let address = "";
+        let buildingName = "";
+        if (data.userSelectedType === "R") {
+          address = data.roadAddress + " " + data.buildingName; //도로명
+        } else {
+          address = data.jibunAddress; //지번
+        }
+        console.log(data);
+        console.log(address);
+        setBoardCpPlace(address);
+        document.getElementById("place").value = address;
+      },
+    }).open();
+  };
+
+  const handlePlace = useCallback((value) => {
+    setBoardCpPlace(value);
   }, []);
 
   return (
@@ -146,7 +166,7 @@ const CarpoolUpdate = () => {
                 <input
                   id="board_cp_title"
                   type="text"
-                  maxLength="50"
+                  maxLength="100"
                   defaultValue={carpool.boardCpTitle}
                   style={{
                     width: "98%",
@@ -207,7 +227,7 @@ const CarpoolUpdate = () => {
                 <textarea
                   id="board_cp_date"
                   type="text"
-                  maxLength="50"
+                  maxLength="1000"
                   defaultValue={carpool.boardCpContent}
                   style={{
                     width: "98%",
@@ -224,7 +244,7 @@ const CarpoolUpdate = () => {
                 />
               </div>
 
-              <div
+              {/* <div
                 style={{
                   border: "1px solid lightGray",
                   borderRadius: "10px",
@@ -235,8 +255,30 @@ const CarpoolUpdate = () => {
                   alignItems: "center",
                 }}
               >
-                <LandingPage />
-              </div>
+               <LandingPage />
+              </div> */}
+              <Row className="mb-4">
+                <Form.Group as={Col} controlId="formGridPlace">
+                  <h3>접선 장소</h3>
+                  <Form.Control
+                    required
+                    id="place"
+                    type="text"
+                    placeholder="접선 장소를 입력하세요."
+                    style={{ width: "98%", height: "50px" }}
+                    onClick={() => {
+                      searchAddress();
+                    }}
+                    onChange={(e) => {
+                      handlePlace(e.target.value);
+                    }}
+                  />
+                  {/* <MapContainer place={carpool.Place} /> */}
+                  <Form.Control.Feedback type="invalid">
+                    공연 장소를 입력해주세요.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
 
               <div style={{ textAlign: "center" }}>
                 <Button

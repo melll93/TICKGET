@@ -5,8 +5,10 @@
    
    /* 캐로쉘 전체디브 */
    .carouselDiv{
-/*      border: 1px solid blue; */
+  /*    border: 1px solid blue; */
     height: 550px;
+  align-items: center;
+
    } 
 
    /* 캐로쉘 각각 디브 */
@@ -15,8 +17,8 @@
   width:300px; 
   max-width: 1200px;
   max-height:1200px;
-/*   border: 1px solid red;  */
-  margin:30px
+  /* border: 1px solid red;  */
+  margin:30px;
 }
 
 .carouseloneDiv:hover{

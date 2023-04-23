@@ -8,6 +8,7 @@ import Header from "../../components/Header";
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword, validateId } from '../../util/validateLogic';
 import { MyButton, MyH1, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
+import Swal from "sweetalert2";
 import { memberInsertDB, memberListDB } from '../../axios/member/memberCrud';
 
 const RegisterPage = ({ authLogic }) => {
@@ -144,13 +145,22 @@ const RegisterPage = ({ authLogic }) => {
     if (jsonDoc && jsonDoc.length > 0) {
         console.log('중복되는 값이 있습니다');
         if (key === 'id') {
-            console.log('중복된 아이디가 존재합니다. 다른 아이디를 입력해주세요.');
+            console.log('중복 아이디 존재');
+            Swal.fire({
+              title:'중복된 아이디가 존재합니다. 다른 아이디를 입력해주세요.',
+              })
         }
         else if (key === 'email') {
-            console.log('중복된 이메일이 존재합니다. 다른 이메일을 입력해주세요.');
+            console.log('중복 이메일 존재');
+            Swal.fire({
+              title:'중복된 이메일이 존재합니다. 다른 이메일을 입력해주세요.',
+              })
         }
         else if (key === 'nickname') {
-            console.log('중복된 닉네임이 존재합니다. 다른 닉네임을 입력해주세요.');
+            console.log('중복 닉네임 존재');
+            Swal.fire({
+              title:'중복된 닉네임이 존재합니다. 다른 닉네임을 입력해주세요.',
+              })
         }
     }
     else {

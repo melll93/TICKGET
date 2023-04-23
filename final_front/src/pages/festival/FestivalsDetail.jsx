@@ -74,8 +74,7 @@ const FestivalsDetail = () => {
         festDtRuntime:jsonDoc[0].festDtRuntime,
         festDtAge:jsonDoc[0].festDtAge,
         festDtCrew:jsonDoc[0].festDtCrew,
-      festDtCasting:jsonDoc[0].festDtCasting
-        
+        festDtCasting:jsonDoc[0].festDtCasting
       }]);
       if (res.data) {
         setFestival(res.data);
@@ -142,7 +141,6 @@ const FestivalsDetail = () => {
   const festivalTcClicked = (festTcPrice, festTcType) => {
     setSelectedFestTcType(festTcType) 
     setSelectedFestTcPrice(festTcPrice);
-    // 선택한 값 쿠키에 담는 로직 추가
     document.cookie = `selectedFestTcPrice=${JSON.stringify(festTcPrice)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
     document.cookie = `selectedFestTcType=${JSON.stringify(festTcType)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
   };
@@ -341,10 +339,10 @@ const FestivalsDetail = () => {
                   <li className="product_info_list">
                     <span className="product_info_title">출연진</span>
                     <div className="product_info_desc">
-                      <ul className="product_info_sublist">
+                      <ul className="product_info_sublist" style={{paddingLeft:'0px', paddingRight:'20px'}}>
 
                         <li className="product_info_subitem" >
-                         { festival[0].festDtCasting===null? <p style={{display:'inline'}}>출연진(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}  : </p>}  
+                         {festival[0].festDtCasting===null? <p style={{display:'inline'}}>(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}</p>}  
                         </li>
 
                       </ul>
@@ -378,11 +376,11 @@ const FestivalsDetail = () => {
             
 
               {festival.map((fest, i) => (
-                        <p key={i} className={`product_info_subitem${selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType)} style={{border: '1px solid gray', borderRadius: '10px'}}>
-                         { fest.festTcType===null? <p style={{display:'inline'}}>좌석(미정)  : </p>: <p style={{display:'inline'}}>{fest.festTcType}  : </p>}  
-                         { fest.festTcPrice===null? <p style={{display:'inline'}}>가격미정</p>: <p style={{display:'inline'}}>{fest.festTcPrice}</p>}
-                          원
-                          </p>
+                        <div key={i} className={`product_info_subitem${selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType)} style={{border: '1px solid gray', borderRadius: '10px', marginTop:'5px'}}>
+                         { fest.festTcTime===null? null: <p style={{display:'inline'}}>{fest.festTcTime} - </p>}
+                         { fest.festTcType===null? null: <p style={{display:'inline'}}>{fest.festTcType} - </p>}  
+                         { fest.festTcPrice===null? null: <p style={{display:'inline'}}>{fest.festTcPrice}원</p>}
+                          </div>
                       ))}
 
 
@@ -403,6 +401,7 @@ const FestivalsDetail = () => {
                 
                 <BlackBtn
                   width="250px"
+                  style={{marginTop:'120px'}}
                   onClick={() => navigate("/payment2/" + festMId)}
                 >
                   예매하기
@@ -421,18 +420,39 @@ const FestivalsDetail = () => {
                 justify
               >
                 <Tab eventKey="product_detail_description" title="상세정보">
-                  {festival.map((fest, i) => (
-                  <div
-                  key={i}
-                    className="product_detail_description"
-                    style={{
-                      maxWidth: "1250px",
-                      height: "1000px",
-                    }}
-                  >
-        {fest.festPsUrl===null? <div><h1>상품 상세보기 정보가 없습니다.</h1> <TicketCancleInfo/>  </div>: <img src={fest.festPsUrl} alt="상품상세정보이미지"></img>}
-             </div>
+                  
+                  
+                  
+                {festival.map((fest, i) => (
+  <div
+    key={i}
+    className="product_detail_description"
+    style={{
+      maxWidth: "1250px",
+      height: "1000px",
+    }}
+  >
+    {i === 0 && fest.festPsUrl === null ? (
+      <div style={{ margin: '50px' }}>
+        <h1 style={{ margin: '50px' }}>상품 상세보기 이미지 정보가 없습니다.</h1>
+        <TicketCancleInfo />
+      </div>
+    ) :  (
+      fest.festPsUrl !== null && (
+        <img src={fest.festPsUrl} alt="상품상세정보이미지" />
+      )
+    )}
+  </div>
 ))}
+
+
+
+
+
+
+
+
+
                 </Tab>
                 <Tab eventKey="product_detail_review" title="상품리뷰">
                   리뷰리뷰
