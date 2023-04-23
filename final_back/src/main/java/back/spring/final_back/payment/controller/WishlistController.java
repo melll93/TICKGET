@@ -34,6 +34,16 @@ public class WishlistController {
 		wList = wlService.wishlistSelect(wlDto);
 		return wList;
 	}
+	
+	//위시리스트 상세정보
+	@GetMapping("/wishlistDetail")
+	public List<WishlistDto> wishlistDetail(WishlistDto wlDto) {
+		logger.info("WishlistController : wishlistDetail 호출");
+		List<WishlistDto>wList = null;
+		wList = wlService.wishlistDetail(wlDto);
+		return wList;
+	}
+	
 
 	//위시리스트 추가
 	@PostMapping("/wishlistAdd")

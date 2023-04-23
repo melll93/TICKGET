@@ -74,8 +74,27 @@ public class MarketServiceImpl implements MarketService {
 	public int mk_boardSell(MarketDto marketDto) {
         int result = 0;
         result = marketDao.mk_boardSell(marketDto);
-		return 0;
+		return result;
+	}
+
+	//게시글 찜 갯수 증가처리
+	@Override
+	public int mk_plusLikes(MarketDto marketDto) {
+        int result = 0;
+        result = marketDao.mk_plusLikes(marketDto);
+		return result;
 	}
 
 
+
+	//게시글 찜 갯수 감소처리 (찜한 상품 데이터까지 삭제)
+	@Override
+	public int mk_minusLikes(MarketDto marketDto) {
+		int result = 0;
+		result = marketDao.mk_minusLikes(marketDto);
+		if(result > 0) {
+		  marketDao.mk_wishlistDelete(marketDto);
+		}
+		return result;
+	}
 }

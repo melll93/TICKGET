@@ -110,20 +110,14 @@ export const mk_boardSellDB = (board) => {
   });
 };
 
-// 이미지 구현
-export const uploadImageDB = (file) => {
-  console.log(file);
+//찜하기 버튼 누를시
+export const mk_plusLikesDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
-        method: "post",
-        url: "http://localhost:8888/market/imageUpload",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        processData: false,
-        contentType: false,
-        data: file,
+        method: "get",
+        url: "http://localhost:8888/market/mk_plusLikes",
+        params: board,
       });
       resolve(response);
     } catch (error) {
@@ -132,20 +126,15 @@ export const uploadImageDB = (file) => {
   });
 };
 
-//첨부파일 로직
-export const uploadFileDB = (file) => {
-  console.log(file);
+
+//찜하기 취소시
+export const mk_minusLikesDB = (board) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
-        method: "post",
-        url: "http://localhost:8888/market/fileUpload",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        processData: false,
-        contentType: false,
-        data: file,
+        method: "get",
+        url: "http://localhost:8888/market/mk_minusLikes",
+        params: board,
       });
       resolve(response);
     } catch (error) {

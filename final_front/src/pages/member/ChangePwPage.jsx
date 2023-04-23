@@ -45,7 +45,7 @@ const ChangePwPage = () => {
     }
   };
 
-  const handleFormSubmit = async (e) => {
+  const handlePwUpdate = async (e) => {
     e.preventDefault();
     if (memInfo.pw === memInfo.pwConfirm) {
       console.log('비밀번호가 일치합니다.');
@@ -101,7 +101,7 @@ const ChangePwPage = () => {
               onChange={(e) => { changeMemInfo(e); validate('pwConfirm', e.target.value); }} />
               {comment.pwConfirm}
           </MyLabel>
-          <BButton type="submit" onClick={handleFormSubmit}>변경</BButton>
+          <BButton type="submit" onClick={handlePwUpdate}>변경</BButton>
         </div>
       </LoginForm>
     </>

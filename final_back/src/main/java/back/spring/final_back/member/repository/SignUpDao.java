@@ -15,11 +15,15 @@ public interface SignUpDao {
 	// Insert
 	public int memberInsert(Map<String, Object> pMap);
 
-	// Update
+	// 회원 정보 Update
 	public int memberUpdate(Map<String, Object> pMap);
 
+	// 비밀번호 Update
+	public int changePwUpdate(Map<String, Object> pMap);
+	
 	// Delete
 	public int memberDelete(Map<String, Object> pMap);
+
 }
 
 // public class SignUpDao {

@@ -9,9 +9,13 @@ public interface WishlistDao {
 
 	public List<WishlistDto> wishlistSelect(WishlistDto wlDto);
 
+	public List<WishlistDto> wishlistDetail(WishlistDto wlDto);
+
+	
 	public int wishlistAdd(WishlistDto wlDto);
 
 	
 	public int wishlistDelete(WishlistDto wlDto);
+
 
 }

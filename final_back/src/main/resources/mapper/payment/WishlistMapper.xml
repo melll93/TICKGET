@@ -9,6 +9,18 @@
 </select>
 
 
+<!-- 위시리스트 상세정보 -->
+<select id="wishlistDetail" parameterType="WishlistDto" resultType="WishlistDto">
+ select * from wishlist_data
+  <where>  <!-- 마켓게시판글 가져오는경우 -->
+  <if test='boardMkNo!=null'> 
+    board_mk_no = #{boardMkNo}
+    </if>
+     </where>
+</select>
+
+
+
 <!-- 위시리스트 추가 -->
 <insert id="wishlistAdd" parameterType="WishlistDto">
 
@@ -27,31 +39,21 @@
 
 
 
-
 <!-- 페스티벌 페이지에서 위시리스트 추가할 경우 
     <when test='wishlistCategory!=null and wishlistCategory.equals("fest_main")'>
+    
     </when> -->
 
 
 
-<!-- 위시리스트 제거 -->
+<!-- 위시리스트 제거 *회원거 다 지워짐 조심 -->
 <delete id="wishlistDelete" parameterType="WishlistDto">
     DELETE FROM wishlist_data
     <where>
-        <choose>
-        <!-- 제거할 상품의 카테고리가 마켓게시판인 경우 -->
-            <when test="wishlistCategory == 'board_market' and boardMkNo != null and boardMkNo > 0">
-                AND board_mk_no = #{boardMkNo}
-            </when>
-            <!-- 페스티벌 페이지인 경우  -->
-            <when test="wishlistCategory == 'fest_main'">
-                AND fest_main_no IS NOT NULL
-            </when>
-            <otherwise>
-                AND 1=2 <!-- 두 가지 경우가 모두 아니면 삭제X  -->
-            </otherwise>
-        </choose>
-    </where>
+  <if test='boardMkNo!=null and boardMkNo>0'>
+board_mk_no = #{boardMkNo}
+</if>
+  </where>
 </delete>
 
 

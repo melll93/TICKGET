@@ -77,26 +77,33 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           window.localStorage.setItem("access_token", token);
 
           navigate("/");
-        } else if (res.status >= 400 && res.status < 600) {
-          Swal.fire({
-            title: "로그인 실패",
-            icon: 'error'
-          })
         }
+        // else if (res.response.status >= 400 && res.response.status < 600) {
+        //   console.log(res.response);
+        //   Swal.fire({
+        //     title: "로그인 실패",
+        //     icon: 'error'
+        //   })
+        // }
       })
-      .catch(console.log);
+      .catch((error) => {
+        Swal.fire({
+          title: "로그인 실패\n" + error,
+          icon: "error"
+        })
+      });
   };
 
   const handleLogin = () => {
     if (userId === null || userId === "" || userId === undefined) {
       Swal.fire({
-        title:'아이디를 입력해주세요',
-        icon :'warning'
+        title: '아이디를 입력해주세요',
+        icon: 'warning'
       })
     } else if (userPw === null || userPw === "" || userPw === undefined) {
       Swal.fire({
-        title:'비밀번호를 입력해주세요',
-        icon :'warning'
+        title: '비밀번호를 입력해주세요',
+        icon: 'warning'
       })
     } else {
       // 아이디 비밀번호 정상 입력

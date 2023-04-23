@@ -101,8 +101,23 @@
 			</if>
 		</where>
 	</select>
-
+	
+	<!-- 회원 정보 update -->
 	<update id="memberUpdate" parameterType="java.util.HashMap">
+		  UPDATE member
+		  SET 
+		    member_password = #{memberPassword},
+		    member_name = #{memberName},
+		    member_email = #{memberEmail},
+		    member_mobile = #{memberMobile},
+		    member_zipcode = #{memberZipcode},
+		    member_address = #{memberAddress},
+		    member_addr_detail = #{memberAddrDetail}
+		  WHERE member_Id = #{memberId}
+	</update>
+	
+	<!-- 비밀번호 update -->
+	<update id="changePwUpdate" parameterType="java.util.HashMap">
 		UPDATE member
 		SET
 		member_password = #{memberPassword}

@@ -151,7 +151,7 @@ const TogetherBoardDetail = () => {
       <Sidebar />
       <ContainerDiv>
         <div style={{ height: "150px" }}></div>
-        <br/>
+        <br />
         <div
           style={{
             display: "flex",
@@ -243,7 +243,8 @@ const TogetherBoardDetail = () => {
                     목록으로
                   </Button>
                   &nbsp;
-                  {_userData.memberAuthority === "ROLE_ADMIN" ? (
+                  
+                  {board.boardTgMemId === _userData?.memberId && (
                     <div>
                       <Button
                         style={{ margin: "10px", backgroundColor: "black" }}
@@ -264,7 +265,7 @@ const TogetherBoardDetail = () => {
                         수정하자
                       </Button>
                     </div>
-                  ) : null}
+                  )}
                 </div>
 
                 <label>댓글</label>
@@ -285,11 +286,13 @@ const TogetherBoardDetail = () => {
                     className="form-control"
                     maxLength="1000"
                   />
+                  </div>
+                  <div>
                   <Button
                     style={{
-                      margin: "30px",
-                      width: "100px",
+                      marginLeft: "10px",
                       backgroundColor: "black",
+                      textAlign: "center",
                     }}
                     onClick={(e) => {
                       e.preventDefault();
@@ -336,6 +339,9 @@ const TogetherBoardDetail = () => {
                         </span>
                       </div>
                     </h3>
+
+
+                    {boardReply.boardReplyTgMemId === _userData?.memberId && (
                     <Button
                       style={{ marginLeft: "10px", backgroundColor: "black" }}
                     >
@@ -349,6 +355,7 @@ const TogetherBoardDetail = () => {
                         댓글 수정
                       </span>
                     </Button>
+                    )}
                     <Modal
                       size="lg"
                       show={lgShow}
@@ -418,6 +425,9 @@ const TogetherBoardDetail = () => {
                         <br />
                       </Modal.Body>
                     </Modal>
+
+
+                    {boardReply.boardReplyTgMemId === _userData?.memberId && (
                     <Button
                       style={{ marginLeft: "10px", backgroundColor: "black" }}
                       onClick={async () => {
@@ -440,6 +450,7 @@ const TogetherBoardDetail = () => {
                         댓글 삭제
                       </span>
                     </Button>
+                    )}
                   </div>
                 ))}
               </form>

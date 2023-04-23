@@ -120,12 +120,11 @@ board_mk_no = #{boardMkNo}
 <select id="mk_boardDetail" parameterType="MarketDto" resultType="MarketDto">
 select * from board_market 
 <where>
-  <if test='boardMkNo!=null'> <!-- setNull(1,1111)에러 타입, 부적합한 열 유형 Integer.parseInt() -->
+  <if test='boardMkNo!=null'> 
     board_mk_no = #{boardMkNo}
     </if>
      </where>
 </select>
-
 
 
 
@@ -138,6 +137,38 @@ select * from board_market
 	</when>
 	</choose>
 	</update>
+	
+	
+<!-- 찜하기 버튼 -->
+<update id="mk_plusLikes" parameterType="MarketDto">
+<choose>
+<when test='boardMkNo!=null'>
+UPDATE board_market SET board_mk_likes = board_mk_likes+1
+ WHERE board_mk_no = #{boardMkNo}
+</when>
+</choose>
+</update>	
+	
+<!-- 찜하기 취소시 -->	
+<update id="mk_minusLikes" parameterType="MarketDto">
+<choose>
+<when test='boardMkNo!=null'>
+UPDATE board_market SET board_mk_likes = board_mk_likes-1
+ WHERE board_mk_no = #{boardMkNo}
+</when>
+</choose>
+</update>	
+
+
+<!-- 찜하기 취소 -> 위시리스트 삭제 -->
+<delete id="mk_wishlistDelete" parameterType="MarketDto">
+delete from wishlist_data
+<where>
+<if test='boardMkNo!=null and boardMkNo>0'>
+board_mk_no = #{boardMkNo}
+</if>
+</where>
+</delete>	
 	
 	
 	<!-- 판매완료 처리 -->
