@@ -11,6 +11,9 @@ public interface SignUpService {
 	int memberInsert(Map<String, Object> pMap);
 
 	int memberUpdate(Map<String, Object> pMap);
+	
+	int changePwUpdate(Map<String, Object> pMap);
 
 	int memberDelete(Map<String, Object> pMap);
+
 }

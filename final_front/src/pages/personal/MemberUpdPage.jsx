@@ -6,17 +6,16 @@ import Sidebar from '../../components/Sidebar';
 import { checkPassword, validateEmail, validateHp, validateName, validatePassword } from '../../util/validateLogic';
 import Swal from "sweetalert2";
 import { memberListDB } from '../../axios/member/memberCrud';
-import { useSelector } from 'react-redux';
+import { Cookies } from "react-cookie";
 
 /* 
 회원 정보 수정 페이지 접속 시 사용자 ID -> 고정값
 input 태그에 사용자 정보를 뿌려줄 수 있으면 뿌려주고 아니면 바꾸고 싶은 정보들만 입력하면 그 값들만 입력 받아서 DB 데이터값 변경
 */
-
 const MemberUpdPage = () => {
-  // 리덕스 값이 필요해
-  const memberId = useSelector(state => state.userStatus.user);
-  console.log(memberId);
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData"); // 사용자 정보
+  console.log(_userData)
 
   const toggleHover = () => {
   }
@@ -184,13 +183,10 @@ const MemberUpdPage = () => {
         <MyH1>회원 정보 수정</MyH1>
         <div style={{ padding: '30px 30px 0px 30px' }}>
 
-          {/* 
-          아이디 변경 불가
-          사용자 아이디 박아두고 input 입력되지 않게 설정
-          */}
+          {/* 아이디 변경 불가*/}
             <div style={{display: 'flex'}}>
               <MyLabel> 아이디
-                <MyInput type="text" id="id" style={{ backgroundColor: "rgb(112, 128, 144, 0.3)" }} readOnly/>
+                <MyInput type="text" id="id" style={{ backgroundColor: "rgb(112, 128, 144, 0.3)" }} readOnly value={_userData.memberId}/>
               </MyLabel>
             </div>
 
@@ -224,7 +220,7 @@ const MemberUpdPage = () => {
             {/* 닉네임 변경 불가 */}
             <div style={{display: 'flex'}}>
               <MyLabel> 닉네임
-                <MyInput type="text" id="nickname" defaultValue={memInfo.nickname} readOnly
+                <MyInput type="text" id="nickname" defaultValue={memInfo.nickname} readOnly value={_userData.memberNickname}
                   style={{ backgroundColor: "rgb(112, 128, 144, 0.3)" }} />
               </MyLabel>
             </div>
@@ -266,7 +262,7 @@ const MemberUpdPage = () => {
 
             {/* 생년월일 변경 불가 */}
             <MyLabel> 생년월일
-              <MyInput type="text" id="birthday" defaultValue={memInfo.birthday} readOnly 
+              <MyInput type="text" id="birthday" defaultValue={memInfo.birthday} readOnly value={_userData.memberBirth}
                 style={{ backgroundColor: "rgba(112, 128, 144, 0.3)" }} />
             </MyLabel>
 
