@@ -24,6 +24,7 @@
           , #{boardCpContent}
           , #{boardCpDate}
           , #{boardCpViews}
+          , #{boardCpPlace}
       )
     </insert>
 

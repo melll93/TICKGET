@@ -1,14 +1,43 @@
+/* global daum */
 import React, { useCallback, useState } from "react";
-import { Button } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  FloatingLabel,
+  Form,
+  InputGroup,
+  Row,
+} from "react-bootstrap";
+import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
-import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
+
+import "firebase/analytics";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/database";
+import "firebase/compat/firestore";
+import "firebase/database";
+import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
+import Footer from "../../../components/Footer";
 import LandingPage from "./Map/LandingPage";
-import { Cookies } from "react-cookie";
+
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: (process.env.FIREBASE_DATABASE_URL =
+    "https://finalproject-85e01-default-rtdb.asia-southeast1.firebasedatabase.app"),
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+};
+
+firebase.initializeApp(firebaseConfig);
 
 const CarpoolWriteForm = ({ carpool }) => {
   const cookies = new Cookies();
@@ -22,7 +51,10 @@ const CarpoolWriteForm = ({ carpool }) => {
   //const[writer, setWriter]= useState(''); //작성자
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
-  const [types] = useState(["일반", "결제", "양도", "회원", "수업"]); //qna_type의 라벨값
+  const [place, setPlace] = useState(""); //판매할 티켓의 공연장소
+
+  const [boardCpNo, setBoardCpNo] = useState();
+  const [max, setMax] = useState(0);
 
   const handleContent = useCallback((value) => {
     console.log(value);
@@ -33,15 +65,13 @@ const CarpoolWriteForm = ({ carpool }) => {
     setTitle(e);
   }, []);
 
-  // mem_id 받아온 후
-  // const handleWriter = useCallback((e) => {
-  //   setWriter(e);
-  // },[]);
-
   const handleDate = useCallback((e) => {
     setDate(e);
   }, []);
-  const handleWriter = useCallback((e) => {}, []);
+
+  const handlePlace = useCallback((e) => {
+    setPlace(e);
+  }, []);
 
   const insertCarpool = async () => {
     if (!title) {
@@ -71,6 +101,8 @@ const CarpoolWriteForm = ({ carpool }) => {
       boardCpContent: content, // 내용 추가
       boardCpMemId: _userData.memberId,
       boardCpDate: date,
+      boardCpNo: boardCpNo,
+      // boardCpPlace: place,
     };
     console.log(carpool);
     try {
@@ -82,12 +114,32 @@ const CarpoolWriteForm = ({ carpool }) => {
     }
   };
 
+  /***************** 위치찾기 *****************/
+  // const searchAddress = () => {
+  //   new daum.Postcode({
+  //     oncomplete: function (data) {
+  //       let address = "";
+  //       let buildingName = "";
+  //       if (data.userSelectedType === "R") {
+  //         address = data.roadAddress + " " + data.buildingName; //도로명
+  //       } else {
+  //         address = data.jibunAddress; //지번
+  //       }
+  //       console.log(data);
+  //       console.log(address);
+  //       setPlace(address);
+  //       document.getElementById("place").value = address;
+  //     },
+  //   }).open();
+  // };
+  /***************** 위치찾기 *****************/
+
   return (
     <>
       <Header />
       <Sidebar />
       <ContainerDiv>
-        <div style={{ height: "100px" }}></div>
+        <div style={{ height: "150px" }}></div>
         <FormDiv>
           <h3>Carpool 글작성 하기</h3>
           <br />
@@ -158,22 +210,6 @@ const CarpoolWriteForm = ({ carpool }) => {
               }}
             />
 
-            {/* <h3>작성자</h3>
-            <span
-              id="board_writer"
-              type="text"
-              maxLength="50"
-              value={_userData.memberId}
-              style={{
-                width: "100%",
-                height: "40px",
-                border: "1px solid lightGray",
-              }}
-              // onChange={(e) => {
-              //   handleWriter(e.target.value);
-              // }}
-              {..._userData.memberId}
-            /> */}
             <h3>작성자</h3>
             <span
               id="board_writer"
@@ -201,7 +237,7 @@ const CarpoolWriteForm = ({ carpool }) => {
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
             <h3>상세내용</h3>
-            <input
+            <textarea
               style={{
                 width: "98%",
                 margin: "10px",
@@ -219,9 +255,20 @@ const CarpoolWriteForm = ({ carpool }) => {
               onChange={(e) => {
                 handleContent(e.target.value);
               }}
-            ></input>
+            ></textarea>
 
             <div
+              style={{
+                border: "1px solid lightGray",
+                borderRadius: "10px",
+                width: "auto",
+                margin: "0 auto",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            ></div>
+             <div
               style={{
                 border: "1px solid lightGray",
                 borderRadius: "10px",
@@ -236,6 +283,30 @@ const CarpoolWriteForm = ({ carpool }) => {
           </div>
           {<LandingPage />}
           <br />
+            {/* <div>
+              <Row className="mb-4">
+                <Form.Group as={Col} controlId="formGridPlace">
+                  <h3>공연 장소</h3>
+                  <Form.Control
+                    required
+                    id="  place"
+                    type="text"
+                    placeholder="공연 장소를 입력하세요."
+                    style={{ width: "98%", height: "50px" }}
+                    onClick={() => {
+                      searchAddress();
+                    }}
+                    onChange={(e) => {
+                      handlePlace(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    공연 장소를 입력해주세요.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row> 
+            </div> */}
+            <br />
         </FormDiv>
       </ContainerDiv>
       <Footer />

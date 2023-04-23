@@ -18,4 +18,5 @@ public class CarpoolDto {
     private String boardCpContent;
     private Date boardCpDate;
     private int boardCpViews;
+    private int boardCpPlace;
 }

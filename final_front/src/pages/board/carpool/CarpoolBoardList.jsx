@@ -32,7 +32,7 @@ const CarpoolBoardList = () => {
   const navigate = useNavigate();
   const [carpoolList, setCarpoolList] = useState([]);
   const [page, setPage] = useState(1);
-  const [perPage] = useState(15);
+  const [perPage] = useState(10);
 
   /************* firebase 처리 중 *************/
   const [data, setData] = useState({});
@@ -60,40 +60,49 @@ const CarpoolBoardList = () => {
     };
   }, []);
 
-  const handleSaveData = (boardCpNo, max) => {
+  const handleSaveData = (boardCpNo) => {
     const count = 1;
     firebase
       .database()
       .ref(`${boardCpNo}`)
       .once("value")
       .then((snapshot) => {
-        const maxVal = snapshot.val().max;
-        const now = snapshot.val().now;
-        const currentCount = snapshot.val().count;
-        if (now < maxVal && currentCount < maxVal) {
-          const newNow = now + count;
-          const newCount = currentCount + count;
-          if (newNow <= maxVal && newCount <= maxVal) {
-            firebase
-              .database()
-              .ref(`${boardCpNo}`)
-              .update({
-                now: firebase.database.ServerValue.increment(count),
-                count: firebase.database.ServerValue.increment(count),
-              });
+        if (snapshot.exists()) {
+          const maxVal = snapshot.val().max;
+          const now = snapshot.val().now;
+          const currentCount = snapshot.val().count;
+          if (now < maxVal && currentCount < maxVal) {
+            const newNow = now + count;
+            const newCount = currentCount + count;
+            if (newNow <= maxVal && newCount <= maxVal) {
+              firebase
+                .database()
+                .ref(`${boardCpNo}`)
+                .update({
+                  now: firebase.database.ServerValue.increment(count),
+                  count: firebase.database.ServerValue.increment(count),
+                });
+            }
+          } else {
+            alert("인원이 다 찼습니다.");
           }
         } else {
-          alert("인원이 다 찼습니다.");
+          firebase.database().ref(`${boardCpNo}`).set({
+            max: 10,
+            now: 1,
+            count: 1,
+          });
         }
       });
   };
+
   /************* firebase 처리 중 *************/
 
   useEffect(() => {
     selectCarpoolList();
   }, []);
 
-  /********** 페이지 네이션 처리 **********/
+  /********** 페이지 네이션 처리 시작 **********/
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
 
@@ -102,7 +111,7 @@ const CarpoolBoardList = () => {
     currentFest = boardList.slice(indexOfFirstPost, indexOfLastPost);
     return currentFest;
   };
-  /********** 페이지 네이션 처리 **********/
+  /********** 페이지 네이션 처리 종료 **********/
 
   // 전체 게시글 조회
   const selectCarpoolList = async () => {
@@ -196,12 +205,9 @@ const CarpoolBoardList = () => {
                     {/* 파이어 베이스에서 받아온 값 호출하자 */}
 
                     <td style={{ textAlign: "center", width: "80px" }}>
-                      <Button
-                        style={{ backgroundColor: "black" }}
-                        onClick={() => handleSaveData(carpool.boardCpNo)}
-                      >
+                      <button onClick={() => handleSaveData(carpool.boardCpNo)}>
                         함께하기
-                      </Button>
+                      </button>
                     </td>
                     <td style={{ textAlign: "center", width: "100px" }}>
                       {carpool.boardCpDate}
