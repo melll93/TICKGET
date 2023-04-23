@@ -1,4 +1,5 @@
 import React from 'react'
+import TicketCancleInfo from '../../components/mypage/TicketCancleInfo'
 
 const ReservationPage = () => {
     return (

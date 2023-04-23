@@ -2,6 +2,7 @@ import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { createChatRoom } from "../axios/chat/Chat";
 const cookies = new Cookies();
 
 const UserProfile = ({ _userData }) => {
@@ -15,6 +16,7 @@ const UserProfile = ({ _userData }) => {
   const handleChatFromProfile = (myId, friendId) => {
     console.log(myId);
     console.log(friendId);
+    createChatRoom(myId, friendId)
     navigate("/chat");
   };
 
