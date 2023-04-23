@@ -287,8 +287,7 @@ const CarpoolDetail = ({ match }) => {
                   목록으로
                 </Button>
                 &nbsp;
-                {_userData.memberAuthority === "ROLE_ADMIN" /* ||
-              _userData.memberAuthority === "ROLE_USER" */ ? (
+                {carpool.boardCpMemId === _userData?.memberId && (
                   <div>
                     <Button
                       style={{ margin: "10px", backgroundColor: "black" }}
@@ -301,7 +300,7 @@ const CarpoolDetail = ({ match }) => {
                       onClick={() =>
                         navigate({
                           pathname:
-                            "/carpool/CarpoolUpdate/" + carpool.boardCpNo,
+                            "/together/BoardUpdate/" + carpool.boardTgNo,
                           state: { carpool },
                         })
                       }
@@ -309,7 +308,7 @@ const CarpoolDetail = ({ match }) => {
                       수정하자
                     </Button>
                   </div>
-                ) : null}
+                )}
               </div>
 
               <label>댓글</label>
@@ -355,7 +354,7 @@ const CarpoolDetail = ({ match }) => {
               <div style={{ border: "1px solid lightgray", width: "98%" }}>
                 {boardReplyList.map((boardReply) => (
                   <div
-                    key={boardReply.boardReplCpNo}
+                    key={boardReply.boardReplyCpNo}
                     className="product_detail_review_comment"
                     style={{
                       borderBottom: "1px solid lightgray",
@@ -378,18 +377,20 @@ const CarpoolDetail = ({ match }) => {
                         </span>
                       </div>
                     </h3>
-                    <Button
-                      style={{ marginLeft: "10px", backgroundColor: "black" }}
-                    >
-                      <span
-                        onClick={async () => {
-                          click();
-                          handleBoardReplyCpNo(boardReply.boardReplyCpNo);
-                        }}
+                    {boardReply.boardReplyCpMemId === _userData?.memberId && (
+                      <Button
+                        style={{ marginLeft: "10px", backgroundColor: "black" }}
                       >
-                        댓글 수정
-                      </span>
-                    </Button>
+                        <span
+                          onClick={async () => {
+                            click();
+                            handleBoardReplyCpNo(boardReply.boardReplyCpNo);
+                          }}
+                        >
+                          댓글 수정
+                        </span>
+                      </Button>
+                    )}
                     <Modal
                       size="lg"
                       show={lgShow}
@@ -421,7 +422,7 @@ const CarpoolDetail = ({ match }) => {
                                 width: "98%",
                                 maxWidth: "1200px",
                               }}
-                              maxLength="1000"
+                              maxLength=""
                             ></input>
                           </div>
                           <br />
@@ -459,25 +460,28 @@ const CarpoolDetail = ({ match }) => {
                         <br />
                       </Modal.Body>
                     </Modal>
-                    <Button
-                      style={{ marginLeft: "10px", backgroundColor: "black" }}
-                      onClick={async () => {
-                        const reply = {
-                          boardCpNo: boardCpNo,
-                          boardReplyCpNo: boardReply.boardReplyCpNo,
-                        };
-                        const res = await deleteCarpoolReplyDB(reply);
-                        // navigate("/together/BoardDetail/" + board.boardTgNo);
-                        window.location.reload();
-                        /* alert("댓글 삭제 완료"); */
-                        Swal.fire({
-                          title: "댓글 삭제 완료",
-                          icon: "success",
-                        });
-                      }}
-                    >
-                      <span>댓글 삭제</span>
-                    </Button>
+                    
+                    {boardReply.boardReplyCpMemId === _userData?.memberId && (
+                      <Button
+                        style={{ marginLeft: "10px", backgroundColor: "black" }}
+                        onClick={async () => {
+                          const reply = {
+                            boardCpNo: boardCpNo,
+                            boardReplyCpNo: boardReply.boardReplyCpNo,
+                          };
+                          const res = await deleteCarpoolReplyDB(reply);
+                          // navigate("/together/BoardDetail/" + board.boardTgNo);
+                          window.location.reload();
+                          /* alert("댓글 삭제 완료"); */
+                          Swal.fire({
+                            title: "댓글 삭제 완료",
+                            icon: "success",
+                          });
+                        }}
+                      >
+                        <span>댓글 삭제</span>
+                      </Button>
+                    )}
                   </div>
                 ))}
               </div>

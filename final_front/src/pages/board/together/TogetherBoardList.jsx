@@ -41,9 +41,7 @@ const TogetherBoardList = (board) => {
   };
 
   const updateViews = async (boardTgNo) => {
-    console.log("boardTgNo넌 누구야? " + boardTgNo);
     await togetherViewUpDB(boardTgNo);
-    console.log("updateViews의 boardTgNo : ", boardTgNo);
     await selectBoardList();
   };
 
