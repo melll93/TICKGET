@@ -39,7 +39,6 @@ const MarketDetail = () => {
 
   const [_userdata, setUserData] = useState();
 
-  const[ addtoCart , setAddtoCart ] = useState("찜하기")
 
  
 
@@ -169,7 +168,11 @@ const MarketDetail = () => {
 
   //찜하기 기능
   const [isWishlistAdded, setIsWishlistAdded] = useState(false);
-
+if(member_no === wishlistDetail.member_no){
+  setIsWishlistAdded(true)
+}else{
+  setIsWishlistAdded(false)
+}
 
   const handleClick = () => {
     if (!isWishlistAdded) {
