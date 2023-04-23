@@ -129,7 +129,7 @@ const TogetherBoardUpdate = () => {
                 <input
                   id="board_tg_title"
                   type="text"
-                  maxLength="50"
+                  maxLength="100"
                   defaultValue={board.boardTgTitle}
                   style={{
                     width: "98%",
@@ -186,7 +186,7 @@ const TogetherBoardUpdate = () => {
                 <textarea
                   id="board_tg_date"
                   type="text"
-                  maxLength="50"
+                  maxLength="1000"
                   defaultValue={board.boardTgContent}
                   style={{
                     width: "98%",

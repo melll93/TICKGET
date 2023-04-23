@@ -141,7 +141,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             <input
               id="board_title"
               type="text"
-              maxLength="50"
+              maxLength="100"
               placeholder="제목을 입력하세요."
               style={{
                 width: "100%",

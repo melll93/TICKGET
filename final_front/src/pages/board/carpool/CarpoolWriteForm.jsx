@@ -3,10 +3,8 @@ import React, { useCallback, useState } from "react";
 import {
   Button,
   Col,
-  FloatingLabel,
   Form,
-  InputGroup,
-  Row,
+  Row
 } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +21,6 @@ import "firebase/compat/firestore";
 import "firebase/database";
 import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
 import Footer from "../../../components/Footer";
-import LandingPage from "./Map/LandingPage";
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -102,7 +99,7 @@ const CarpoolWriteForm = ({ carpool }) => {
       boardCpMemId: _userData.memberId,
       boardCpDate: date,
       boardCpNo: boardCpNo,
-      // boardCpPlace: place,
+      boardCpPlace: place,
     };
     console.log(carpool);
     try {
@@ -115,23 +112,23 @@ const CarpoolWriteForm = ({ carpool }) => {
   };
 
   /***************** 위치찾기 *****************/
-  // const searchAddress = () => {
-  //   new daum.Postcode({
-  //     oncomplete: function (data) {
-  //       let address = "";
-  //       let buildingName = "";
-  //       if (data.userSelectedType === "R") {
-  //         address = data.roadAddress + " " + data.buildingName; //도로명
-  //       } else {
-  //         address = data.jibunAddress; //지번
-  //       }
-  //       console.log(data);
-  //       console.log(address);
-  //       setPlace(address);
-  //       document.getElementById("place").value = address;
-  //     },
-  //   }).open();
-  // };
+  const searchAddress = () => {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        let address = "";
+        let buildingName = "";
+        if (data.userSelectedType === "R") {
+          address = data.roadAddress + " " + data.buildingName; //도로명
+        } else {
+          address = data.jibunAddress; //지번
+        }
+        console.log(data);
+        console.log(address);
+        setPlace(address);
+        document.getElementById("place").value = address;
+      },
+    }).open();
+  };
   /***************** 위치찾기 *****************/
 
   return (
@@ -198,7 +195,7 @@ const CarpoolWriteForm = ({ carpool }) => {
             <input
               id="carpool_title"
               type="text"
-              maxLength="50"
+              maxLength="100"
               placeholder="제목을 입력하세요."
               style={{
                 width: "100%",
@@ -281,17 +278,17 @@ const CarpoolWriteForm = ({ carpool }) => {
             ></div>
             <br />
           </div>
-          {<LandingPage />}
+          {/* {<LandingPage />} */}
           <br />
-            {/* <div>
+            <div>
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridPlace">
-                  <h3>공연 장소</h3>
+                  <h3>접선 장소</h3>
                   <Form.Control
                     required
-                    id="  place"
+                    id="place"
                     type="text"
-                    placeholder="공연 장소를 입력하세요."
+                    placeholder="접선 장소를 입력하세요."
                     style={{ width: "98%", height: "50px" }}
                     onClick={() => {
                       searchAddress();
@@ -300,12 +297,13 @@ const CarpoolWriteForm = ({ carpool }) => {
                       handlePlace(e.target.value);
                     }}
                   />
+                  {/* <MapContainer place={carpool.Place} /> */}
                   <Form.Control.Feedback type="invalid">
                     공연 장소를 입력해주세요.
                   </Form.Control.Feedback>
                 </Form.Group>
               </Row> 
-            </div> */}
+            </div> 
             <br />
         </FormDiv>
       </ContainerDiv>

@@ -22,7 +22,7 @@ import Swal from "sweetalert2";
 import { Cookies } from "react-cookie";
 import MapContainer from "../market/Map/MapContainer";
 
-const CarpoolDetail = () => {
+const CarpoolDetail = ({ match }) => {
   const navigate = useNavigate();
   const { boardCpNo } = useParams();
   const [boardReplyCpNo, setBoardReplyCpNo] = useState("");
@@ -30,6 +30,8 @@ const CarpoolDetail = () => {
   const [boardReplyCpContent2, setBoardReplyCpContent2] = useState(""); //수정 댓글
   const [boardReplyList, setBoardReplyList] = useState([]);
   const [lgShow, setLgShow] = useState(false);
+
+  const [place, setPlace] = useState("");
 
   const cookies = new Cookies();
   const _userData = cookies.get("_userData"); //유저 정보
@@ -68,8 +70,9 @@ const CarpoolDetail = () => {
     boardCpTitle: "",
     boardCpContent: "",
     boardCpDate: "",
-    // boardCpPlace: "",
+    boardCpPlace: "",
   });
+
   useEffect(() => {
     const asyncDB = async () => {
       const res = await CarpoolDetailDB({ boardCpNo });
@@ -82,10 +85,11 @@ const CarpoolDetail = () => {
         boardCpTitle: jsonDoc.boardCpTitle,
         boardCpContent: jsonDoc.boardCpContent,
         boardCpDate: jsonDoc.boardCpDate,
-        // boardCpPlace: jsonDoc.boardCpPlace,
+        boardCpPlace: jsonDoc.boardCpPlace,
       });
       if (res.data) {
         setCarpool(res.data);
+        setPlace(jsonDoc.boardCpPlace);
       } else {
         console.log("카풀 게시글 조회 실패");
       }
@@ -239,7 +243,7 @@ const CarpoolDetail = () => {
                     />
                   </div>
 
-                  <label>지도</label>
+                  <label>만남의 장소</label>
                   <div
                     style={{
                       border: "1px solid lightGray",
@@ -251,8 +255,27 @@ const CarpoolDetail = () => {
                       alignItems: "center",
                     }}
                   >
-                    <LandingPage />
-                    {/* <MapContainer place={setCarpool.boardCpPlace} /> */}
+                    <p
+                      style={{
+                        textAlign: "left",
+                        paddingRight: "10px",
+                        marginTop: "25px",
+                        opacity: "90%",
+                      }}
+                    >
+                      <span
+                        style={{
+                          display: "inline-block",
+                          width: "7rem",
+                          marginRight: "5px",
+                          color: "black",
+                        }}
+                      >
+                        ∙ 만남의 장소:
+                      </span>
+                      {place}
+                    </p>
+                    <MapContainer place={place} />
                   </div>
                 </form>
               </div>
@@ -398,7 +421,7 @@ const CarpoolDetail = () => {
                                 width: "98%",
                                 maxWidth: "1200px",
                               }}
-                              maxLength="50"
+                              maxLength="1000"
                             ></input>
                           </div>
                           <br />

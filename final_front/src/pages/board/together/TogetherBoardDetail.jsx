@@ -283,7 +283,7 @@ const TogetherBoardDetail = () => {
                     required
                     rows="3"
                     className="form-control"
-                    maxLength="50"
+                    maxLength="1000"
                   />
                   <Button
                     style={{
@@ -380,7 +380,7 @@ const TogetherBoardDetail = () => {
                                 width: "98%",
                                 maxWidth: "1200px",
                               }}
-                              maxLength="50"
+                              maxLength="100"
                             ></input>
                           </div>
                           <br />
