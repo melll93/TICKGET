@@ -168,7 +168,7 @@ const MarketDetail = () => {
 
   //찜하기 기능
   const [isWishlistAdded, setIsWishlistAdded] = useState(false);
-if(member_no === wishlistDetail.member_no){
+if(member_no === wishlistDetail.member_no){ //내가 이미 찜한 게시글일 경우 '찜한 상품'
   setIsWishlistAdded(true)
 }else{
   setIsWishlistAdded(false)
