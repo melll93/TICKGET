@@ -114,9 +114,7 @@ const UnRegiesterPage = () => {
   }
   return (
     <>
-      <Header />
-      <Sidebar />
-      <div className="center">
+      <div className="mypage_center">
         <div
           style={{
             textAlign: "center",

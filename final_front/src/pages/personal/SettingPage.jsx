@@ -1,87 +1,105 @@
-import React from "react";
-import { useNavigate } from "react-router";
+import React, { useState } from "react";
+import Menu from "../../components/sidebar/Menu";
+import "../../styles/mypage.css";
 import Header from "../../components/Header";
-import MypageSidebar from "../../components/mypage/MypageSidebar";
 import Sidebar from "../../components/Sidebar";
+import Tab1Content from "../../components/mypage/Tab1Content";
+import Tab2Content from "../../components/mypage/Tab2Content";
+import Tab3Content from "../../components/mypage/Tab3Content";
+import UnRegiesterPage from "./UnRegiesterPage";
 
-const SettingPage = () => {
-  const navigate = useNavigate();
-  const before = () => {
-    navigate(-1);
+
+const MypageSidebarItem = () => {
+  const [activeTab, setActiveTab] = useState(0);
+  const [items, setItems] = useState([
+    "회원정보수정",
+    "비밀번호변경",
+    "배송지관리",
+    "SNS연결설정",
+    "로그인관리",
+    "회원탈퇴",
+  ]);
+
+  const handleTabClick = (index) => {
+    setActiveTab(index);
   };
 
   return (
     <>
-      <Header />
-      <Sidebar />
-      <div className="center">
-        <section>
-          <div
-            style={{
-              display: "flex",
-              textAlign: "center",
-              alignItems: "center",
-              padding: "50px",
-            }}
-          >
-            <MypageSidebar />
-            <div className="setting_center_div" style={{ margin: "180px" }}>
-              <h1>정보를 안전하게 보호하기 위해 </h1>
-              <h1>
-                {" "}
-                <span style={{ color: "red" }}> 비밀번호를 다시 한번 확인</span>
-                합니다.{" "}
-              </h1>
-              <br />
-              <h4>비밀번호가 타인에게 노출되지 않도록 항상 주의해주세요.</h4>
-              <br />
-              <br />
-              <p> ID : member_id </p>
-              <div style={{ display: "flex" }}>
-                <p style={{ marginLeft: "150px" }}> 비밀번호 :</p>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  style={{ width: "300px", marginBottom: "100px" }}
-                />
-              </div>
-              <button
-                onClick={before}
-                className="homebtn"
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: "50px",
-                  width: "250px",
-                  height: "60px",
-                  marginRight: "5px",
-                }}
-              >
-                {" "}
-                취소{" "}
-              </button>
-              {/*  <Link to = "#"> */}
-              <button
-                className="homebtn"
-                style={{
-                  backgroundColor: "black",
-                  color: "white",
-                  borderRadius: "50px",
-                  width: "250px",
-                  height: "60px",
-                }}
-              >
-                {" "}
-                확인{" "}
-              </button>
-              {/*  </Link> */}
-            </div>
-          </div>
-        </section>
-      </div>{" "}
-      {/* center div  끝 */}
-    </>
-  );
-};
+    <Header />
+    <Sidebar />
+    <div className="center">
 
-export default SettingPage;
+    <div className="MypageTabList">
+    <div className="TabList">
+      {items.map((item, index) => (
+        <div
+          key={index}
+          className={activeTab === index ? "TabItem active" : "TabItem"}
+          onClick={() => handleTabClick(index)}
+        >
+            <img
+              className="mypage_tab_icon"
+              src={"../logos/" +item+ ".png"}
+              alt={item}
+            />{item}
+        </div>
+      ))}
+    </div>
+    <div className="TabContent">
+      {/* 각 탭별 내용을 추가하세요 */}
+      {items[activeTab] === "회원정보수정" && (
+        <div className="Menu">
+    
+<Tab1Content></Tab1Content>
+
+        </div>
+      )}
+      {items[activeTab] === "비밀번호변경" && (
+        <div className="TabContent">
+
+{/*여기  */}
+비밀번호변경
+<Tab2Content></Tab2Content>
+        </div>
+      )}
+
+{items[activeTab] === "배송지관리" && (
+        <div className="TabContent">
+
+{/*여기  */}
+배송지관리
+<Tab3Content></Tab3Content>
+        </div>
+      )}
+
+{items[activeTab] === "SNS연결설정" && (
+        <div className="TabContent">
+
+{/*여기  */}
+sns연결설정
+        </div>
+      )}
+
+{items[activeTab] === "로그인관리" && (
+        <div className="TabContent">
+
+{/*여기  */}
+로그인관리
+        </div>
+      )}
+{items[activeTab] === "회원탈퇴" && (
+        <div className="Menu">
+
+{/*여기  */}
+회원탈퇴
+<UnRegiesterPage></UnRegiesterPage>
+        </div>
+      )}
+    </div>
+  </div>
+  </div>
+  </>
+);
+};
+export default MypageSidebarItem;
