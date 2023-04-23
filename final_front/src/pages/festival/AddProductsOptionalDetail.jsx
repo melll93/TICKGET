@@ -201,10 +201,10 @@ fest_poster 추가 정보 입력  </h1>
           />
 
           {festOrginPsUrl&&festOrginPsUrl.map((url, i)=>(
-            <>
+            <div key={i} style={{display: 'inline'}}>
            <img key={i} src={url} style={{width:'50px', height:'100px', overflow:'hidden', display: 'inline', margin:'5px'}}></img>
           <BlackBtn onClick={() => deleteFestPsUrl({ i })} width='50px' height="10px" style={{fontSize:'5px'}}>삭제</BlackBtn>
-         </>
+         </div>
          ))}
             
 

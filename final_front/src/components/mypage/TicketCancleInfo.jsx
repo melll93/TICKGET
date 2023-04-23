@@ -15,7 +15,7 @@ const TicketCancleInfo = () => {
      <div>
 <h2>티켓 취소 안내</h2><br/>
      {items.map((item, i) => (
-<p>
+<p key={i}>
              <li>{item}</li>
         </p>
         ))}

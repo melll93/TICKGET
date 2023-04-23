@@ -290,12 +290,11 @@ originDetail()
           <label htmlFor="floatingInput"> desc </label>
         </div> */}
         <select
-          defaultValue=""
           className="form-select"
           id="festArea"
           aria-label="Default select example"
           style={{ width: "150px" }}
-          value={festLocation}
+          defaultValue={festLocation}
           onChange={(e) => {
             inputArea(e.target.value);
           }}

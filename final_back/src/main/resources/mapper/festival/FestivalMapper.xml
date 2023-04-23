@@ -5,12 +5,17 @@
 <mapper
 	namespace="back.spring.final_back.festival.repository.FestivalDao">
 <select id="festivalDetail" resultType="FestivalDto">
-  SELECT fm.*, fp.fest_ps_url, fp.fest_ps_no, fd.*, ft.fest_tc_price, ft.fest_tc_type, ft.fest_tc_time
-  FROM fest_main fm 
-  LEFT OUTER JOIN fest_poster fp ON fm.fest_m_id = fp.fest_ps_id
-  LEFT OUTER JOIN fest_detail fd ON fm.fest_m_id = fd.fest_dt_id 
-  LEFT OUTER JOIN fest_ticket ft ON fm.fest_m_id = ft.fest_tc_id
-  WHERE fm.fest_m_id = #{festMId}
+SELECT fm.*, fd.*, ft.fest_tc_price, ft.fest_tc_type, ft.fest_tc_time
+FROM fest_main fm 
+LEFT OUTER JOIN fest_detail fd ON fm.fest_m_id = fd.fest_dt_id 
+LEFT OUTER JOIN fest_ticket ft ON fm.fest_m_id = ft.fest_tc_id
+WHERE fm.fest_m_id = #{festMId}
+</select>
+<select id="festivalDetail2" resultType="FestivalDto">
+SELECT fm.*, fp.fest_ps_url, fp.fest_ps_no
+FROM fest_main fm 
+LEFT OUTER JOIN fest_poster fp ON fm.fest_m_id = fp.fest_ps_id
+WHERE fm.fest_m_id = #{festMId}
 </select>
 	<select id="areaFestivalList" resultType="FestivalDto">
 SELECT * FROM fest_main where fest_m_area=#{festMArea}

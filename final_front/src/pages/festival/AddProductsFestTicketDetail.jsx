@@ -18,7 +18,7 @@ const AddProductsFestTicketDetail = ({festTcType, festTcPrice, festTcTime}) => {
   );
  */
   const [tickets, setTickets] = useState(
-    festTcType.map(() => ({
+    festTcType&&festTcType.map(() => ({
       no: '', // 좌석 정보의 개수
       seatType: '', // 티켓의 좌석 유형
       price: '', // 티켓의 가격
@@ -102,7 +102,7 @@ fest_ticket 추가 정보 입력
             type="number"
             className="form-control"
             disabled
-            defaultValue={festTcType.length}
+            defaultValue={festTcType&&festTcType.length}
             style={{ width: '100%' }}
           />
           <label htmlFor="floatingInput">좌석정보</label>
@@ -114,40 +114,34 @@ fest_ticket 추가 정보 입력
           저장
         </button>
       </div>
-      <table className="table-seats">
-        <thead>
+      <table className="table-seats"><thead>
           <tr>
-          <th>no</th>   
-            <th>시간</th>    {/* fest_schedule  (fest_sc_time) */}
-            <th>좌석정보</th>  {/* fest_ticket   (fest_tc_type) */}
-            <th>티켓가격</th>  {/* fest_ticket   (fest_tc_price) */}
-            <th style={{width:'120px'}}>총좌석수</th>   {/* 리얼타임dv 예정 fest_seats   (fest_tc_total) */}
-            <th style={{width:'60px'}}>삭제</th>
+          <th>no</th><th>시간    {/* fest_schedule  (fest_sc_time) */}
+          </th><th>좌석정보  {/* fest_ticket   (fest_tc_type) */}
+          </th><th>티켓가격  {/* fest_ticket   (fest_tc_price) */}
+          </th><th style={{width:'120px'}}>총좌석수   {/* 리얼타임dv 예정 fest_seats   (fest_tc_total) */}
+          </th><th style={{width:'60px'}}>삭제</th>
           </tr>
         </thead>
         <tbody>
-        {tickets.map((ticket, index) => (
-            <tr key={index}>
-               <td>
+        {tickets&&tickets.map((ticket, index) => (
+            <tr key={index}><td>
                   {index+1}
-              </td>
-              <td>
+              </td><td>
               <input
                   type="text"
                   className="form-control"
             value={festTcTime[index]}
                   onChange={(e) => inputTcTime (index, e.target.value)}
                 />
-              </td>
-              <td>
+              </td><td>
                 <input
                   type="text"
                   className="form-control"
                   value={festTcType[index]}
                   onChange={(e) => inputTcSeatType(index, e.target.value)}
                 />
-              </td>
-              <td>
+              </td><td>
                 <input
                   type="number"
                   className="form-control"
@@ -155,20 +149,17 @@ fest_ticket 추가 정보 입력
                   onChange={(e) => inputTcPrice (index, e.target.value)}
                 style={{display:'inline-block', width:'80%'}}
                 />원
-              </td>
-              <td>
+              </td><td>
               <input
                   type="number"
                   className="form-control"
                 style={{display:'inline-block', width:'75%'}}
                 />석
-              </td>
-              <td>
+              </td><td>
                 <button type="button" className="btn-delete" onClick={() => removeTicket(index)}>
                   삭제
                 </button>
-              </td>
-            </tr>
+              </td></tr>
           ))}
         </tbody>
       </table>
