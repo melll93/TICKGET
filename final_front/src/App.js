@@ -41,6 +41,7 @@ import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
 import PaymentPage from "./pages/personal/PaymentPage";
 import UnRegiesterPage from "./pages/personal/UnRegiesterPage";
 import MemberUpdPage from "./pages/personal/MemberUpdPage";
+import FireTest from "./pages/board/carpool/FireTest";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -117,6 +118,11 @@ function App({ mkImageUploader }) {
         />
 
         {/* CarpoolPage Routes */}
+        
+        {/* ******************************************* */}
+        <Route path="firebase" element={<FireTest />} />
+        {/* ******************************************* */}
+
         <Route path="carpool/write/*" element={<CarpoolWrietForm />} />
         <Route
           path="carpool/carpoolDetail/:boardCpNo"

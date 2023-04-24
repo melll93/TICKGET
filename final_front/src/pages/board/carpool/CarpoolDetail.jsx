@@ -3,7 +3,9 @@ import "firebase/compat/database";
 import { useCallback, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { Cookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   CarpoolDetailDB,
   deleteCarpoolDB,
@@ -17,9 +19,6 @@ import {
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv } from "../../../styles/formStyle";
-import LandingPage from "./Map/LandingPage";
-import Swal from "sweetalert2";
-import { Cookies } from "react-cookie";
 import MapContainer from "../market/Map/MapContainer";
 
 const CarpoolDetail = ({ match }) => {
@@ -132,13 +131,14 @@ const CarpoolDetail = ({ match }) => {
     try {
       const res = await insertCarpoolReplyDB(boardReply);
       console.log(res);
-      // 성공시에 페이지 이동처리하기
-      window.location.replace(
-        "http://localhost:3333/carpool/carpoolDetail/" + boardCpNo
-      );
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
+    Swal.fire({
+      title: "댓글 등록 완료",
+      icon: "success",
+    });
   };
 
   const click = () => {
@@ -362,7 +362,7 @@ const CarpoolDetail = ({ match }) => {
                   >
                     회원아이디 : {boardReply.boardReplyCpMemId}
                     <div style={{ fontSize: "8px" }}>
-                      작성 시간 : ({boardReply.boardReplyCpDate})
+                      2 작성 시간 : ({boardReply.boardReplyCpDate})
                     </div>
                     <h3>
                       <div className="replyContent">
@@ -458,7 +458,6 @@ const CarpoolDetail = ({ match }) => {
                         <br />
                       </Modal.Body>
                     </Modal>
-                    
                     {boardReply.boardReplyCpMemId === _userData?.memberId && (
                       <Button
                         style={{ marginLeft: "10px", backgroundColor: "black" }}

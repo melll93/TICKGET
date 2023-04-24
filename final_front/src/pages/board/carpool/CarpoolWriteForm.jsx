@@ -1,5 +1,5 @@
 /* global daum */
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
@@ -17,21 +17,7 @@ import "firebase/database";
 import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
 import Footer from "../../../components/Footer";
 
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  databaseURL: (process.env.FIREBASE_DATABASE_URL =
-    "https://finalproject-85e01-default-rtdb.asia-southeast1.firebasedatabase.app"),
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const CarpoolWriteForm = ({ carpool }) => {
+const CarpoolWriteForm = (/* { carpool } */) => {
   const cookies = new Cookies();
   const _userData = cookies.get("_userData"); //유저 정보
   console.log(_userData);
@@ -46,7 +32,6 @@ const CarpoolWriteForm = ({ carpool }) => {
   const [place, setPlace] = useState(""); //판매할 티켓의 공연장소
 
   const [boardCpNo, setBoardCpNo] = useState();
-  const [max, setMax] = useState(0);
 
   const handleContent = useCallback((value) => {
     console.log(value);
@@ -100,6 +85,7 @@ const CarpoolWriteForm = ({ carpool }) => {
     try {
       const res = await insertCarpoolDB(carpool);
       console.log("insertCarpoolDB : ", res.data);
+      handleSaveData();
       window.location.replace("/carpool");
     } catch (error) {
       console.log(error);
@@ -126,6 +112,89 @@ const CarpoolWriteForm = ({ carpool }) => {
   };
   /***************** 위치찾기 *****************/
 
+  /*************** fireBase ***************/
+  const firebaseConfig = {
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: (process.env.FIREBASE_DATABASE_URL =
+      "https://finalproject-85e01-default-rtdb.asia-southeast1.firebasedatabase.app"),
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+  };
+
+  const [data, setData] = useState({});
+  const [carpool, setCarpool] = useState({
+    boardCpNo: "",
+    max: "",
+    now: "",
+  });
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  } else {
+    firebase.app();
+  }
+
+  useEffect(() => {
+    const database = firebase.database();
+    database.ref().on("value", (snapshot) => {
+      const data = snapshot.val();
+      setData(data);
+    });
+    return () => {
+      database.ref().off();
+    };
+  }, []);
+
+  function handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+    setCarpool({
+      ...carpool,
+      [name]: value,
+    });
+  }
+
+  function handleSaveData() {
+    const count = 1;
+    const maxVal = parseInt(carpool.max);
+    firebase
+      .database()
+      .ref(carpool.name)
+      .once("value")
+      .then((snapshot) => {
+        Swal.fire({
+          title: "Carpool이 등록되었습니다.",
+          icon: "success",
+        });
+        if (snapshot.exists()) {
+          const now = snapshot.val().now;
+          const currentCount = snapshot.val().count;
+          if (now < maxVal && currentCount < maxVal) {
+            const newNow = now + count;
+            const newCount = currentCount + count;
+            if (newNow <= maxVal && newCount <= maxVal) {
+              firebase.database().ref(carpool.name).update({
+                max: maxVal,
+                // now: firebase.database.ServerValue.increment(count),
+                // count: firebase.database.ServerValue.increment(count),
+              });
+            }
+          }
+        } else {
+          firebase.database().ref(carpool.name).set({
+            max: maxVal,
+            now: 1,
+            count: 1,
+          });
+        }
+      });
+  }
+  /*************** fireBase ***************/
   return (
     <>
       <Header />
@@ -154,6 +223,7 @@ const CarpoolWriteForm = ({ carpool }) => {
                     borderRadius: "10px",
                   }}
                 ></div>
+
                 <Button
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
@@ -190,10 +260,11 @@ const CarpoolWriteForm = ({ carpool }) => {
             <input
               id="carpool_title"
               type="text"
-              maxLength="100"
+              maxLength="50"
               placeholder="제목을 입력하세요."
               style={{
-                width: "100%",
+                marginLeft: "10px",
+                width: "98%",
                 height: "40px",
                 border: "1px solid lightGray",
               }}
@@ -201,30 +272,37 @@ const CarpoolWriteForm = ({ carpool }) => {
                 handleTitle(e.target.value);
               }}
             />
-
+            <br />
+            <br />
             <h3>작성자</h3>
-            <span
-              id="board_writer"
-              style={{
-                width: "100%",
-                height: "40px",
-                border: "1px solid lightGray",
-              }}
-            >
-              {_userData?.memberId ||
-                (() => {
-                  Swal.fire({
-                    title: "로그인 후 이용해주세요.",
-                    icon: "warning",
-                  });
-                  window.location.href = "/login";
-                })()}
-            </span>
+            {(() => {
+              if (_userData?.memberId) {
+                return (
+                  <span
+                    style={{
+                      width: "100%",
+                      height: "40px",
+                      fontSize: "25px",
+                      marginLeft: "20px",
+                    }}
+                  >
+                    {_userData.memberId}
+                  </span>
+                );
+              } else {
+                Swal.fire({
+                  title: "로그인 후 이용해주세요.",
+                  icon: "warning",
+                });
+                window.location.href = "/login"; // 로그인 페이지로 이동
+                return null;
+              }
+            })()}
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-
+            <br />
             <h3>날짜</h3>
             <input
-              style={{ width: "100%" }}
+              style={{ width: "98%", marginLeft: "10px" }}
               type="date"
               className="form-control"
               id="festStartday"
@@ -233,8 +311,66 @@ const CarpoolWriteForm = ({ carpool }) => {
                 handleDate(e.target.value);
               }}
             />
+            <hr style={{ margin: "10px 0px 10px 0px" }} />
+
+            <br />
+
+            <h3>Carpool 최대 인원</h3>
+            <input
+              style={{ width: "98%", marginLeft: "10px" }}
+              className="form-control"
+              type="text"
+              id="name"
+              name="name"
+              placeholder="글번호"
+              onChange={handleInputChange}
+            />
+
+            <input
+              style={{ width: "98%", marginLeft: "10px" }}
+              className="form-control"
+              type="text"
+              id="max"
+              name="max"
+              placeholder="최대인원"
+              onChange={handleInputChange}
+            />
+            <br />
+            <button
+              style={{ width: "98%", marginLeft: "10px" }}
+              className="form-control"
+              type="text"
+              onClick={handleSaveData}
+            >
+              카풀 등록
+            </button>
+
+            <div>
+              <Row className="mb-4">
+                <Form.Group as={Col} controlId="formGridPlace">
+                  <br />
+                  <h3>접선 장소</h3>
+                  <Form.Control
+                    required
+                    id="place"
+                    type="text"
+                    placeholder="접선 장소를 입력하세요."
+                    style={{ width: "98%", height: "50px", marginLeft: "10px" }}
+                    onClick={() => {
+                      searchAddress();
+                    }}
+                    onChange={(e) => {
+                      handlePlace(e.target.value);
+                    }}
+                  />
+                  {/* <MapContainer place={carpool.Place} /> */}
+                </Form.Group>
+              </Row>
+            </div>
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
+            <br />
+            <br />
             <h3>상세내용</h3>
             <textarea
               style={{
@@ -255,58 +391,7 @@ const CarpoolWriteForm = ({ carpool }) => {
                 handleContent(e.target.value);
               }}
             ></textarea>
-
-            <div
-              style={{
-                border: "1px solid lightGray",
-                borderRadius: "10px",
-                width: "auto",
-                margin: "0 auto",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            ></div>
-            <div
-              style={{
-                border: "1px solid lightGray",
-                borderRadius: "10px",
-                width: "auto",
-                margin: "0 auto",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            ></div>
-            <br />
           </div>
-          {/* {<LandingPage />} */}
-          <br />
-          <div>
-            <Row className="mb-4">
-              <Form.Group as={Col} controlId="formGridPlace">
-                <h3>접선 장소</h3>
-                <Form.Control
-                  required
-                  id="place"
-                  type="text"
-                  placeholder="접선 장소를 입력하세요."
-                  style={{ width: "98%", height: "50px" }}
-                  onClick={() => {
-                    searchAddress();
-                  }}
-                  onChange={(e) => {
-                    handlePlace(e.target.value);
-                  }}
-                />
-                {/* <MapContainer place={carpool.Place} /> */}
-                <Form.Control.Feedback type="invalid">
-                  공연 장소를 입력해주세요.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-          </div>
-          <br />
         </FormDiv>
       </ContainerDiv>
       <Footer />

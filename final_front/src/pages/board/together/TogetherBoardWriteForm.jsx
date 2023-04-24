@@ -21,7 +21,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   //const[writer, setWriter]= useState(''); //작성자
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
-  const [writer, setWriter] = useState(""); //작성자?
 
   const handleContent = useCallback((value) => {
     console.log(value);
@@ -105,6 +104,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                     borderRadius: "10px",
                   }}
                 ></div>
+
                 <Button
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
@@ -154,45 +154,38 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             />
             <br />
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-            <h2>작성자</h2>
-            <span
-              id="board_writer"
-              style={{
-                width: "100%",
-                height: "40px",
-                border: "1px solid lightGray",
-              }}
-            >
-              {(() => {
-                if (_userData?.memberId) {
-                  return (
-                    <span
-                      id="board_writer"
-                      style={{
-                        width: "100%",
-                        height: "40px",
-                        border: "1px solid lightGray",
-                      }}
-                    >
-                      {_userData.memberId}
-                    </span>
-                  );
-                } else {
-                  Swal.fire({
-                    title: "로그인 후 이용해주세요.",
-                    icon: "warning",
-                  });
-                  window.location.href = "/login"; // 로그인 페이지로 이동
-                  return null;
-                }
-              })()}
-            </span>
+            <h3>작성자</h3>
+            {(() => {
+              if (_userData?.memberId) {
+                return (
+                  <span
+                    style={{
+                      width: "100%",
+                      height: "40px",
+                      fontSize: "25px",
+                      marginLeft: "20px",
+                    }}
+                  >
+                    {_userData.memberId}
+                  </span>
+                );
+              } else {
+                Swal.fire({
+                  title: "로그인 후 이용해주세요.",
+                  icon: "warning",
+                });
+                window.location.href = "/login"; // 로그인 페이지로 이동
+                return null;
+              }
+            })()}
+
             <hr style={{ margin: "10px 0px 10px 0px" }} />
 
             <h3>날짜</h3>
             <input
               className="form-control form-control-lg"
               id="inputLarge"
+              step="1"
               type="datetime-local"
               style={{ width: "98%", margin: "10px" }}
               onChange={(e) => {
