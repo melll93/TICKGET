@@ -20,7 +20,7 @@ const TogetherPage = () => {
               marginBottom: "30px",
             }}
           >
-            Together 게시판
+            <i class="bi bi-people-fill"></i>{" "}TOGETHER 게시판
           </h3>
         </div>
         <TogetherBoardList />
