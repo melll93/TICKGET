@@ -14,7 +14,7 @@ const UserProfile = ({ _userData }) => {
   const friendId = _userData && _userData.memberId;
   // console.log(_userData);
 
-  const [isFollow, setIsFollow] = useState(false)
+  const [isFollow, setIsFollow] = useState()
 
   const handleChatFromProfile = (myId, friendId) => {
     console.log(myId);
@@ -23,7 +23,7 @@ const UserProfile = ({ _userData }) => {
     navigate("/chat");
   };
 
-  const renderFollow = () => {
+  const renderFollow = (isFollow) => {
     let part;
     if (!isFollow) { // 팔로우 중이 아니라면
       part = <Dropdown.Item onClick={(e) => handleFollow(friendId)}>팔로우</Dropdown.Item>
@@ -45,15 +45,15 @@ const UserProfile = ({ _userData }) => {
       addFollowDB(friendId)
     } else { // 이미 팔로우하는 대상이라면
       // deleteFollowDB(friendId)
-      //console.log('이승현 바보');
-      //console.log('이승현 바보');  
 
     }
   }
 
   useEffect(() => {
     _userData && checkFollow(friendId)
-  }, [isFollow])
+    renderFollow()
+    console.log(isFollow);
+  }, [])
 
   return (
     <div className="userImage">
@@ -74,20 +74,30 @@ const UserProfile = ({ _userData }) => {
             }
           />
         </Dropdown.Toggle>
-        <Dropdown.Menu id="dropdown" className="dropdown items">
-          {(myId === friendId) ? null :
+        {(myId === friendId) ?
+          <Dropdown.Menu id="dropdown" className="dropdown items">
             <Dropdown.Item
               onClick={(e) =>
-                handleChatFromProfile(myId, friendId)
+                navigate("/mypage")
               }>
-              1:1 채팅
+              마이페이지
             </Dropdown.Item>
-          }
+          </Dropdown.Menu>
+          :
+          <Dropdown.Menu id="dropdown" className="dropdown items">
+            {
+              <Dropdown.Item
+                onClick={(e) =>
+                  handleChatFromProfile(myId, friendId)
+                }>
+                1:1 채팅
+              </Dropdown.Item>
+            }
 
-          <Dropdown.Item>프로필</Dropdown.Item>
+            <Dropdown.Item>프로필</Dropdown.Item>
 
-          {(myId === friendId) ? null : renderFollow()}
-        </Dropdown.Menu>
+            {renderFollow(isFollow)}
+          </Dropdown.Menu>}
       </Dropdown>
     </div>
   )

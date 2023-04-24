@@ -288,6 +288,10 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             {/************************** 구글 끝 **************************/}
           </div>
           {/************************************************* 소셜 로그인 끝 *************************************************/}
+          <hr />
+          <input type="button" value="구글" />&nbsp;&nbsp;
+          <input type="button" value="네이버" />&nbsp;&nbsp;
+          <input type="button" value="카카오" />&nbsp;&nbsp;
         </div>
       </div>
     </>

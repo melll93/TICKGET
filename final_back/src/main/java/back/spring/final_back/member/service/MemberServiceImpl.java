@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,14 +95,19 @@ public class MemberServiceImpl implements MemberService {
         UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
         String myId = userDetails.getUsername();
 
-        Object result = memberDao.checkFollow(myId, friendId);
-
-        if(result == null){
-            return false;
-        } else {
-            log.info(result.toString());
+        try {
+            memberDao.checkFollow(myId, friendId);
             return true;
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            return false;
         }
+//        if(result == null){
+//            return false;
+//        } else {
+//            log.info(result.toString());
+//            return true;
+//        }
     }
 
     @Override
@@ -109,7 +115,7 @@ public class MemberServiceImpl implements MemberService {
         Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
         String myId = userDetails.getUsername();
-        return memberDao.addFollow(myId,friendId);
+        return memberDao.addFollow(myId, friendId);
     }
 
 }
