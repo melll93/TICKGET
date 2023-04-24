@@ -88,4 +88,28 @@ public class MemberServiceImpl implements MemberService {
         return memberDao.getMemberData(memberId);
     }
 
+    @Override
+    public boolean checkFollow(String friendId) {
+        Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
+        String myId = userDetails.getUsername();
+
+        Object result = memberDao.checkFollow(myId, friendId);
+
+        if(result == null){
+            return false;
+        } else {
+            log.info(result.toString());
+            return true;
+        }
+    }
+
+    @Override
+    public int addFollow(String friendId) {
+        Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
+        String myId = userDetails.getUsername();
+        return memberDao.addFollow(myId,friendId);
+    }
+
 }

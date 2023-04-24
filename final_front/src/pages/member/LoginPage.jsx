@@ -76,7 +76,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           console.log(token);
           window.localStorage.setItem("access_token", token);
 
-          navigate("/");
+          // navigate("/");
+          window.location.href = "/"
         }
         // else if (res.response.status >= 400 && res.response.status < 600) {
         //   console.log(res.response);

@@ -56,4 +56,21 @@ public class MemberController {
         return memberService.searchById(memberId);
     }
 
+    /*************************
+     *
+     * @param friendId
+     * @return ifExist : true, ifNot : false
+     */
+    @GetMapping("/checkFollow")
+    public boolean checkFollow(@RequestParam String friendId) {
+        log.info(friendId);
+        return memberService.checkFollow(friendId);
+    }
+
+    @GetMapping("/addFollow")
+    public int addFollow(@RequestParam String friendId) {
+        log.info(friendId);
+        return memberService.addFollow(friendId);
+    }
+
 }

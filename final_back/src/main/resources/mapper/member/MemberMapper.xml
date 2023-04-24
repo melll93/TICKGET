@@ -22,4 +22,16 @@
         where member_id = #{memberId}
     </select>
 
+    <select id="checkFollow" parameterType="String" resultType="map">
+        SELECT *
+          FROM member_follow
+         WHERE member_flw_subject = #{myId}
+           AND member_flw_object = #{friendId}
+    </select>
+
+    <insert id="addFollow" parameterType="String">
+        INSERT
+          INTO member_follow
+        VALUES (#{myId}, #{friendId})
+    </insert>
 </mapper>
