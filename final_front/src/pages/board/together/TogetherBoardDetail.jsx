@@ -103,7 +103,6 @@ const TogetherBoardDetail = () => {
     };
     const res = await deleteTogetherDB(board);
     console.log(res.data);
-    /* alert("게시글 삭제 완료"); */
     Swal.fire({
       title: "게시글 삭제 완료",
       icon: "success",
@@ -120,7 +119,6 @@ const TogetherBoardDetail = () => {
     };
 
     if (!boardReplyTgContent) {
-      /* alert("내용을 입력해주세요."); */
       Swal.fire({
         title: "내용을 입력해주세요.",
         icon: "warning",
@@ -243,7 +241,6 @@ const TogetherBoardDetail = () => {
                     목록으로
                   </Button>
                   &nbsp;
-                  
                   {board.boardTgMemId === _userData?.memberId && (
                     <div>
                       <Button
@@ -286,8 +283,8 @@ const TogetherBoardDetail = () => {
                     className="form-control"
                     maxLength="1000"
                   />
-                  </div>
-                  <div>
+                </div>
+                <div>
                   <Button
                     style={{
                       marginLeft: "10px",
@@ -319,7 +316,7 @@ const TogetherBoardDetail = () => {
                     className="product_detail_review_comment"
                     style={{
                       borderBottom: "1px solid lightgray",
-                      width: "1100px",
+                      width: "90%",
                       margin: "50px",
                     }}
                   >
@@ -339,22 +336,20 @@ const TogetherBoardDetail = () => {
                         </span>
                       </div>
                     </h3>
-
-
                     {boardReply.boardReplyTgMemId === _userData?.memberId && (
-                    <Button
-                      style={{ marginLeft: "10px", backgroundColor: "black" }}
-                    >
-                      <span
-                        style={{ fontWeight: "bold" }}
-                        onClick={async () => {
-                          click();
-                          handleBoardReplyTgNo(boardReply.boardReplyTgNo);
-                        }}
+                      <Button
+                        style={{ marginLeft: "10px", backgroundColor: "black" }}
                       >
-                        댓글 수정
-                      </span>
-                    </Button>
+                        <span
+                          style={{ fontWeight: "bold" }}
+                          onClick={async () => {
+                            click();
+                            handleBoardReplyTgNo(boardReply.boardReplyTgNo);
+                          }}
+                        >
+                          댓글 수정
+                        </span>
+                      </Button>
                     )}
                     <Modal
                       size="lg"
@@ -425,31 +420,29 @@ const TogetherBoardDetail = () => {
                         <br />
                       </Modal.Body>
                     </Modal>
-
-
                     {boardReply.boardReplyTgMemId === _userData?.memberId && (
-                    <Button
-                      style={{ marginLeft: "10px", backgroundColor: "black" }}
-                      onClick={async () => {
-                        const reply = {
-                          boardTgNo: boardTgNo,
-                          boardReplyTgNo: boardReply.boardReplyTgNo,
-                        };
-                        const res = await deleteTogetherReplyDB(reply);
-                        console.log("deleteTogetherReplyDB ", res.data);
-                        // navigate("/together/BoardDetail/" + board.boardTgNo);
-                        window.location.reload();
-                        /* alert("댓글 삭제 완료"); */
-                        Swal.fire({
-                          title: "댓글 삭제 완료",
-                          icon: "success",
-                        });
-                      }}
-                    >
-                      <span style={{ color: "white", fontWeight: "bold" }}>
-                        댓글 삭제
-                      </span>
-                    </Button>
+                      <Button
+                        style={{ marginLeft: "10px", backgroundColor: "black" }}
+                        onClick={async () => {
+                          const reply = {
+                            boardTgNo: boardTgNo,
+                            boardReplyTgNo: boardReply.boardReplyTgNo,
+                          };
+                          const res = await deleteTogetherReplyDB(reply);
+                          console.log("deleteTogetherReplyDB ", res.data);
+                          // navigate("/together/BoardDetail/" + board.boardTgNo);
+                          window.location.reload();
+                          /* alert("댓글 삭제 완료"); */
+                          Swal.fire({
+                            title: "댓글 삭제 완료",
+                            icon: "success",
+                          });
+                        }}
+                      >
+                        <span style={{ color: "white", fontWeight: "bold" }}>
+                          댓글 삭제
+                        </span>
+                      </Button>
                     )}
                   </div>
                 ))}

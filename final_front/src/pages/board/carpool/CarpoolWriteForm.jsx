@@ -1,11 +1,6 @@
 /* global daum */
 import React, { useCallback, useState } from "react";
-import {
-  Button,
-  Col,
-  Form,
-  Row
-} from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -96,7 +91,7 @@ const CarpoolWriteForm = ({ carpool }) => {
     const carpool = {
       boardCpTitle: title, // 제목 추가
       boardCpContent: content, // 내용 추가
-      boardCpMemId: _userData.memberId,
+      boardCpMemId: _userData?.memberId,
       boardCpDate: date,
       boardCpNo: boardCpNo,
       boardCpPlace: place,
@@ -216,7 +211,14 @@ const CarpoolWriteForm = ({ carpool }) => {
                 border: "1px solid lightGray",
               }}
             >
-              {_userData.memberId}
+              {_userData?.memberId ||
+                (() => {
+                  Swal.fire({
+                    title: "로그인 후 이용해주세요.",
+                    icon: "warning",
+                  });
+                  window.location.href = "/login";
+                })()}
             </span>
             <hr style={{ margin: "10px 0px 10px 0px" }} />
 
@@ -265,7 +267,7 @@ const CarpoolWriteForm = ({ carpool }) => {
                 alignItems: "center",
               }}
             ></div>
-             <div
+            <div
               style={{
                 border: "1px solid lightGray",
                 borderRadius: "10px",
@@ -280,31 +282,31 @@ const CarpoolWriteForm = ({ carpool }) => {
           </div>
           {/* {<LandingPage />} */}
           <br />
-            <div>
-              <Row className="mb-4">
-                <Form.Group as={Col} controlId="formGridPlace">
-                  <h3>접선 장소</h3>
-                  <Form.Control
-                    required
-                    id="place"
-                    type="text"
-                    placeholder="접선 장소를 입력하세요."
-                    style={{ width: "98%", height: "50px" }}
-                    onClick={() => {
-                      searchAddress();
-                    }}
-                    onChange={(e) => {
-                      handlePlace(e.target.value);
-                    }}
-                  />
-                  {/* <MapContainer place={carpool.Place} /> */}
-                  <Form.Control.Feedback type="invalid">
-                    공연 장소를 입력해주세요.
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Row> 
-            </div> 
-            <br />
+          <div>
+            <Row className="mb-4">
+              <Form.Group as={Col} controlId="formGridPlace">
+                <h3>접선 장소</h3>
+                <Form.Control
+                  required
+                  id="place"
+                  type="text"
+                  placeholder="접선 장소를 입력하세요."
+                  style={{ width: "98%", height: "50px" }}
+                  onClick={() => {
+                    searchAddress();
+                  }}
+                  onChange={(e) => {
+                    handlePlace(e.target.value);
+                  }}
+                />
+                {/* <MapContainer place={carpool.Place} /> */}
+                <Form.Control.Feedback type="invalid">
+                  공연 장소를 입력해주세요.
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Row>
+          </div>
+          <br />
         </FormDiv>
       </ContainerDiv>
       <Footer />
