@@ -294,7 +294,7 @@ originDetail()
           id="festArea"
           aria-label="Default select example"
           style={{ width: "150px" }}
-          defaultValue={festLocation}
+          value={festArea}
           onChange={(e) => {
             inputArea(e.target.value);
           }}

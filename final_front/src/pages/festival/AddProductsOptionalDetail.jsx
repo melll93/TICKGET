@@ -13,8 +13,8 @@ const AddProductsOptionalDetail = ({ setFestOriginPsUrl, festPsNo, festOrginPsUr
 /*    console.log(festMId)  */
 /*   console.log(festTcType); 
 console.log(festTcTime); */
-console.log(festPsNo);
-console.log(festOrginPsUrl);
+/* console.log(festPsNo);
+console.log(festOrginPsUrl); */
   const[festDetailCasting, setFestDetailCasting] = useState()
   const[festDetailCrew, setFestDetailCrew] = useState()
   const[festDetailRuntime, setFestDetailRuntime] = useState(0)
@@ -50,7 +50,7 @@ console.log(festOrginPsUrl);
   };
   try {
   const res = await saveFestDetailDB(festival);
-  console.log(festival);
+/*   console.log(festival); */
   if (!res.data) {
   } else {
   }
@@ -72,7 +72,7 @@ const saveFestPoster=async()=>{
 };
 try {
 const res = await saveFestPsUrlDB(festival);
-console.log(festival);
+/* console.log(festival); */
 alert('추가완료')
 
 if (!res.data) {
@@ -200,12 +200,16 @@ fest_poster 추가 정보 입력  </h1>
           ref={imgRef}
           />
 
-          {festOrginPsUrl&&festOrginPsUrl.map((url, i)=>(
-            <div key={i} style={{display: 'inline'}}>
-           <img key={i} src={url} style={{width:'50px', height:'100px', overflow:'hidden', display: 'inline', margin:'5px'}}></img>
-          <BlackBtn onClick={() => deleteFestPsUrl({ i })} width='50px' height="10px" style={{fontSize:'5px'}}>삭제</BlackBtn>
-         </div>
-         ))}
+{festOrginPsUrl && festOrginPsUrl.some(url => url !== null) ? (
+  festOrginPsUrl.map((url, i) => (
+    url !== null ? (
+      <div key={i} style={{ display: 'inline' }}>
+        <img key={i} src={url} style={{ width: '50px', height: '100px', overflow: 'hidden', display: 'inline', margin: '5px' }}></img>
+        <BlackBtn onClick={() => deleteFestPsUrl({ i })} width='50px' height="10px" style={{ fontSize: '5px' }}>삭제</BlackBtn>
+      </div>
+    ) : null
+  ))
+) : null}
             
 
 

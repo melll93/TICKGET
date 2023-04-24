@@ -69,12 +69,12 @@ const FestivalsDetail = () => {
         festMEnd: jsonDoc[0].festMEnd,
         festMLoc: jsonDoc[0].festMLoc,
         festMImg: jsonDoc[0].festMImg,
-        festPsUrl:jsonDoc[0].festPsUrl,
-        festTcPrice:jsonDoc[0].festTcPrice,
-        festDtRuntime:jsonDoc[0].festDtRuntime,
         festDtAge:jsonDoc[0].festDtAge,
         festDtCrew:jsonDoc[0].festDtCrew,
-        festDtCasting:jsonDoc[0].festDtCasting
+        festDtCasting:jsonDoc[0].festDtCasting,
+        festPsUrl:jsonDoc[0].festPsUrl,
+        festTcPrice:jsonDoc[0].festTcPrice,
+        festDtRuntime:jsonDoc[0].festDtRuntime
       }]);
       if (res.data) {
         setFestival(res.data);
@@ -424,24 +424,25 @@ const FestivalsDetail = () => {
                   
                   
                 {festival.map((fest, i) => (
-  <div
+                  <div
     key={i}
     className="product_detail_description"
     style={{
-      maxWidth: "1250px",
-      height: "1000px",
+       maxWidth: "1250px",
+      maxHeight: "1000px", 
     }}
   >
-    {i === 0 && fest.festPsUrl === null ? (
+    {fest.festPsUrl === null ? (
+      null
+    ) : (
+      <img src={fest.festPsUrl} alt="상품상세정보이미지" />
+    )}
+    {i === festival.length - 1 && fest.festPsUrl === null ? (
       <div style={{ margin: '50px' }}>
-        <h1 style={{ margin: '50px' }}>상품 상세보기 이미지 정보가 없습니다.</h1>
+        <h1 style={{ margin: '50px' }}>상세보기 이미지 정보가 없습니다.</h1>
         <TicketCancleInfo />
       </div>
-    ) :  (
-      fest.festPsUrl !== null && (
-        <img src={fest.festPsUrl} alt="상품상세정보이미지" />
-      )
-    )}
+    ) : null}
   </div>
 ))}
 

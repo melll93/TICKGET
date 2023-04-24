@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Tab, Tabs } from "react-bootstrap";
 import BasicTable from "../../components/mainpage/BasicTable";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import CarouselList from "../../components/mainpage/CarouselList";
 import Sidebar from "../../components/Sidebar";
 import { useSelector } from "react-redux";
@@ -242,15 +243,12 @@ const HomePage = () => {
 
                 </div>
             </div>
-                
-
-
-              
             </div>
-
             {/* 지역별 추천 여기까지 */}
           </div>
         </section>
+
+        <Footer/>
       </div>
       {/* center */}
     </>
