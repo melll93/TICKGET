@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { BButton, LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
-import { memberUpdateDB } from '../../axios/member/memberCrud';
+import { changePwUpdateDB } from '../../axios/member/memberCrud';
 import { useNavigate } from 'react-router-dom';
 import { checkPassword, validatePassword } from '../../util/validateLogic';
 import Swal from "sweetalert2";
@@ -59,7 +59,7 @@ const ChangePwPage = () => {
           memberId: memberId,
           memberPassword: memInfo.pw,
         };
-        const res = await memberUpdateDB(member);
+        const res = await changePwUpdateDB(member);
         console.log(res.data);
         Swal.fire({
           title:'비밀번호가 성공적으로 변경되었습니다.',

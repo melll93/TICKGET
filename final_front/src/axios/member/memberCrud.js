@@ -29,7 +29,7 @@ export const memberInsertDB = (member) => {
     }
   });
 };
-
+// 전체 회원 정보 수정 update
 export const memberUpdateDB = (member) => {
   return new Promise((resolve, reject) => {
     console.log(member)
@@ -37,6 +37,22 @@ export const memberUpdateDB = (member) => {
       const response = axios({
         method: "post", // @RequestBody
         url: "http://localhost:8888/register/memberUpdate",
+        data: member, 
+      });
+      resolve(response); // 요청 처리가 성공 시
+    } catch (error) {
+      reject(error); // 요청 처리 실패 시
+    }
+  });
+};
+// 비밀번호 update
+export const changePwUpdateDB = (member) => {
+  return new Promise((resolve, reject) => {
+    console.log(member)
+    try {
+      const response = axios({
+        method: "post", // @RequestBody
+        url: "http://localhost:8888/register/changePwUpdate",
         data: member, 
       });
       resolve(response); // 요청 처리가 성공 시
