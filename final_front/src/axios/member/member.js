@@ -6,6 +6,7 @@ export const searchById = async (memberId) => {
   const result = await axios({
     method: "GET",
     url: "http://localhost:8888" + "/member/searchById",
+    headers: { Authorization: "Bearer " + access_token },
     params: {
       memberId,
     },

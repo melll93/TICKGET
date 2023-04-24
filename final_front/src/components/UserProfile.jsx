@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,8 @@ const UserProfile = ({ _userData }) => {
   const friendId = _userData && _userData.memberId;
   // console.log(_userData);
 
+  const [isFollow, setIsFollow] = useState(false)
+
   const handleChatFromProfile = (myId, friendId) => {
     console.log(myId);
     console.log(friendId);
@@ -21,19 +23,37 @@ const UserProfile = ({ _userData }) => {
     navigate("/chat");
   };
 
+  const renderFollow = () => {
+    let part;
+    if (!isFollow) { // 팔로우 중이 아니라면
+      part = <Dropdown.Item onClick={(e) => handleFollow(friendId)}>팔로우</Dropdown.Item>
+    } else { // 이미 팔로우하는 대상이라면
+      part = <Dropdown.Item onClick={(e) => handleFollow(friendId)}>팔로우 취소</Dropdown.Item>
+    }
 
+    return part
+  }
+
+  // ifAlreayFollow : true, or false
   const checkFollow = (friendId) => {
     console.log("check");
-    checkFollowDB(friendId).then(console.log);
+    checkFollowDB(friendId).then(setIsFollow);
   }
 
   const handleFollow = (friendId) => {
-    addFollowDB(friendId)
+    if (!isFollow) { // 팔로우 중이 아니라면,
+      addFollowDB(friendId)
+    } else { // 이미 팔로우하는 대상이라면
+      // deleteFollowDB(friendId)
+      //console.log('이승현 바보');
+      //console.log('이승현 바보');  
+
+    }
   }
 
   useEffect(() => {
-    checkFollow(friendId)
-  }, [])
+    _userData && checkFollow(friendId)
+  }, [isFollow])
 
   return (
     <div className="userImage">
@@ -54,20 +74,23 @@ const UserProfile = ({ _userData }) => {
             }
           />
         </Dropdown.Toggle>
-        <Dropdown.Menu className="dropdown items">
-          <Dropdown.Item
-            onClick={(e) => {
-              handleChatFromProfile(myId, friendId);
-            }}
-          >
-            1:1 채팅
-          </Dropdown.Item>
+        <Dropdown.Menu id="dropdown" className="dropdown items">
+          {(myId === friendId) ? null :
+            <Dropdown.Item
+              onClick={(e) =>
+                handleChatFromProfile(myId, friendId)
+              }>
+              1:1 채팅
+            </Dropdown.Item>
+          }
+
           <Dropdown.Item>프로필</Dropdown.Item>
-          <Dropdown.Item onClick={handleFollow(friendId)}>팔로우</Dropdown.Item>
+
+          {(myId === friendId) ? null : renderFollow()}
         </Dropdown.Menu>
       </Dropdown>
     </div>
-  );
+  )
 };
 
 export default UserProfile;
