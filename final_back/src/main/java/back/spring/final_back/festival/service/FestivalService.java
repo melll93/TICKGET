@@ -35,5 +35,9 @@ int festivalUpdate(FestivalDto festivalDto);
 
 int festivalPosterDelete(int fest_ps_no);
 
+int festivalDetailUpdate(FestivalDto festivalDto);
+
+int festivalTicketDelete(int fest_tc_no);
+
 
 }

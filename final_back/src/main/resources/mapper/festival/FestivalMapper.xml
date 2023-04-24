@@ -5,7 +5,7 @@
 <mapper
 	namespace="back.spring.final_back.festival.repository.FestivalDao">
 <select id="festivalDetail" resultType="FestivalDto">
-SELECT fm.*, fd.*, ft.fest_tc_price, ft.fest_tc_type, ft.fest_tc_time
+SELECT fm.*, fd.*, ft.*
 FROM fest_main fm 
 LEFT OUTER JOIN fest_detail fd ON fm.fest_m_id = fd.fest_dt_id 
 LEFT OUTER JOIN fest_ticket ft ON fm.fest_m_id = ft.fest_tc_id
@@ -109,7 +109,18 @@ SELECT * FROM fest_main
             fest_m_genre = #{festMGenre}
         where fest_m_id = #{festMId}
     </update>
+            <update id="festivalDetailUpdate" parameterType="FestivalDto">
+        update fest_detail set
+            fest_dt_casting = #{festDtCasting},
+            fest_dt_crew = #{festDtCrew},
+            fest_dt_runtime = #{festDtRuntime},
+            fest_dt_age = #{festDtAge}
+        where fest_dt_id = #{festMId}
+    </update>
  	<delete id="festivalPosterDelete" parameterType="int">
   delete from fest_poster where fest_ps_no =#{festPsNo};
+	</delete>
+	<delete id="festivalTicketDelete" parameterType="int">
+  delete from fest_ticket where fest_tc_no=#{festTcNo}
 	</delete>   
 </mapper>
