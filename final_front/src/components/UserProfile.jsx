@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { createChatRoom } from "../axios/chat/Chat";
+import { addFollowDB, checkFollowDB } from "../axios/member/member";
 const cookies = new Cookies();
 
 const UserProfile = ({ _userData }) => {
@@ -19,6 +20,20 @@ const UserProfile = ({ _userData }) => {
     createChatRoom(myId, friendId)
     navigate("/chat");
   };
+
+
+  const checkFollow = (friendId) => {
+    console.log("check");
+    checkFollowDB(friendId).then(console.log);
+  }
+
+  const handleFollow = (friendId) => {
+    addFollowDB(friendId)
+  }
+
+  useEffect(() => {
+    checkFollow(friendId)
+  }, [])
 
   return (
     <div className="userImage">
@@ -48,6 +63,7 @@ const UserProfile = ({ _userData }) => {
             1:1 채팅
           </Dropdown.Item>
           <Dropdown.Item>프로필</Dropdown.Item>
+          <Dropdown.Item onClick={handleFollow(friendId)}>팔로우</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </div>

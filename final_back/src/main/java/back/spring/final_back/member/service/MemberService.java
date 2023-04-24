@@ -20,4 +20,8 @@ public interface MemberService {
     Object getMemberData();
 
     MemberDto searchById(String id);
+
+    boolean checkFollow(String friendId);
+
+    int addFollow(String friendId);
 }
