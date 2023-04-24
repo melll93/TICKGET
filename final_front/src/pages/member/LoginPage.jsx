@@ -113,6 +113,12 @@ const LoginPage = ({ user, setUser, authLogic }) => {
     }
   };
 
+  const handleKakao = async () => {
+    const result = await axios({
+      url: "http://localhost:8888/oauth2/authorization/kakao"
+    }).then(console.log)
+  }
+
   /************************************comment************************************
    * 조장 생각 : 변수와 메소드가 많아지며 명칭이 많아져 코드가 많아질수록 혼동할 가능성이 높아짐.
    * 하나의 메소드로 핸들링할 수 있는 경우, 각 변수별 메소드를 만드는 것이 아닌 하나의 메소드 내에서 케이스를 다룬다.
@@ -289,9 +295,9 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           </div>
           {/************************************************* 소셜 로그인 끝 *************************************************/}
           <hr />
-          <input type="button" value="구글" />&nbsp;&nbsp;
-          <input type="button" value="네이버" />&nbsp;&nbsp;
-          <input type="button" value="카카오" />&nbsp;&nbsp;
+          <Link to="http://localhost:8888/oauth2/authorization/google">구글</Link>&nbsp;&nbsp;
+          <Link to="http://localhost:8888/oauth2/authorization/naver">네이버</Link>&nbsp;&nbsp;
+          <Link to="http://localhost:8888/oauth2/authorization/kakao">카카오</Link>&nbsp;&nbsp;
         </div>
       </div>
     </>
