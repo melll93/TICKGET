@@ -123,4 +123,9 @@
 		member_password = #{memberPassword}
 		WHERE member_Id = #{memberId}
 	</update>
+	
+	<delete id="memberDelete" parameterType="java.util.HashMap">
+	    DELETE member
+	    WHERE member_id = #{memberId}
+	</delete>
 </mapper>
