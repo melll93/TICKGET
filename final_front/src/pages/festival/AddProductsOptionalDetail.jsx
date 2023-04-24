@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { deleteFestPosterDB, saveFestDetailDB, saveFestPsUrlDB } from '../../axios/festival/festival';
+import { deleteFestPosterDB, festivalDetailUpdateDB, saveFestDetailDB, saveFestPsUrlDB } from '../../axios/festival/festival';
 import "../../styles/festivaldetails.css";
 import { BlackBtn } from '../../styles/formStyle';
 import AddProductsFestTicketDetail from './AddProductsFestTicketDetail';
 
 import Swal from "sweetalert2";
 
-const AddProductsOptionalDetail = ({ setFestOriginPsUrl, festPsNo, festOrginPsUrl, festDtCrew, festDtCasting, festDtAge, festDtRuntime, festTcType, festTcPrice, festTcTime}) => {
+const AddProductsOptionalDetail = ({ festTcNo, setFestOriginPsUrl, festPsNo, festOrginPsUrl, festDtCrew, festDtCasting, festDtAge, festDtRuntime, festTcType, festTcPrice, festTcTime}) => {
   const navigate = useNavigate();
   const {festMId}=useParams();
 /*    console.log(festMId)  */
 /*   console.log(festTcType); 
 console.log(festTcTime); */
-/* console.log(festPsNo);
-console.log(festOrginPsUrl); */
+/* console.log(festPsNo); */
+/* console.log(festOrginPsUrl); */
   const[festDetailCasting, setFestDetailCasting] = useState()
   const[festDetailCrew, setFestDetailCrew] = useState()
   const[festDetailRuntime, setFestDetailRuntime] = useState(0)
@@ -25,20 +25,6 @@ console.log(festOrginPsUrl); */
 
 
 
-  /* fest_detail 추가정보 입력 */
-  const inputCasting = useCallback((e) => {
-    setFestDetailCasting (e)
-  },[])
-  const inputCrew= useCallback((e) => {
-    setFestDetailCrew (e)
-  },[])
-  const inputRuntime= useCallback((e) => {
-    setFestDetailRuntime (e)
-  },[])
-  const inputAge= useCallback((e) => {
-    setFestDetailAge (e)
-  },[])
-  
   /* fest_detail INSERT */
   const saveFestDetail=async()=>{
     const festival = {
@@ -50,7 +36,7 @@ console.log(festOrginPsUrl); */
   };
   try {
   const res = await saveFestDetailDB(festival);
-/*   console.log(festival); */
+  /*   console.log(festival); */
   if (!res.data) {
   } else {
   }
@@ -59,8 +45,46 @@ console.log(festOrginPsUrl); */
   Swal.fire({
     title:'이미 등록된 정보가 있어 수정만 가능합니다.',
     icon:'warning'
-    })
+  })
 }
+
+};
+
+      /* fest_detail 추가정보 입력 */
+      const inputCasting = useCallback((e) => {
+        setFestDetailCasting (e)
+      },[])
+      const inputCrew= useCallback((e) => {
+        setFestDetailCrew (e)
+      },[])
+      const inputRuntime= useCallback((e) => {
+        setFestDetailRuntime (e)
+      },[])
+      const inputAge= useCallback((e) => {
+        setFestDetailAge (e)
+      },[])
+      
+      
+
+/* fest_detail Update  */
+const festivalDetailUpdate = async() => {
+
+  const festival={
+    festMId,
+    festDtCasting: festDetailCasting,
+    festDtCrew: festDetailCrew,
+    festDtRuntime: festDetailRuntime,
+    festDtAge: festDetailAge,
+  }   
+  try {
+    const res = await festivalDetailUpdateDB(festival)
+    Swal.fire({
+      title:'상품 수정 완료',
+      icon:'success'
+    })
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 
@@ -69,12 +93,11 @@ const saveFestPoster=async()=>{
   const festival = {
     festMId,
     festPsUrl,
-};
-try {
-const res = await saveFestPsUrlDB(festival);
+  };
+  try {
+    const res = await saveFestPsUrlDB(festival);
 /* console.log(festival); */
 alert('추가완료')
-
 if (!res.data) {
 } else {
 }    
@@ -92,7 +115,7 @@ const deleteFestPsUrl = async ({i}) => {
   if (!res.data) {
     const updatedFestPsUrl = festOrginPsUrl.filter((item, index) => index !== i);
     setFestOriginPsUrl(updatedFestPsUrl);
-   } else {
+  } else {
     alert("에러")
   }
 };
@@ -101,10 +124,10 @@ useEffect(() => {
 }, [festOrginPsUrl, festPsUrl]); 
 
 
-  //클라우디너리에 업로드
-  const FestImageUpload = (e) => {
-    const { files } = document.querySelector("#festivalPoster");
-    const imageFile = document.querySelector("#festivalPoster");
+//클라우디너리에 업로드
+const FestImageUpload = (e) => {
+  const { files } = document.querySelector("#festivalPoster");
+  const imageFile = document.querySelector("#festivalPoster");
     const filesa = imageFile.files;
     console.log("Image file", filesa[0]);
     const formData = new FormData();
@@ -117,42 +140,37 @@ useEffect(() => {
     };
     return (
       fetch("https://api.Cloudinary.com/v1_1/djxfvm2ev/image/upload", options)
-        //"https://api.Cloudinary.com/v1_1/본인 클라우드 네임/image/upload"
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res.secure_url);
-          const festPsUrl = res.secure_url;
+      //"https://api.Cloudinary.com/v1_1/본인 클라우드 네임/image/upload"
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.secure_url);
+        const festPsUrl = res.secure_url;
           localStorage.setItem("imageUrl", festPsUrl);
           console.log("페스트 이미지 유알엘 : " + festPsUrl);
-    setFestPsUrl(festPsUrl);
-
-
+          setFestPsUrl(festPsUrl);
+          
+          
         })
         .catch((err) => console.log(err))
-    );
-  };
+        );
+      };
+      
 
-
-
-
-
-
-
-
-
-  return (
-    <>
+      
+      
+      
+      
+      
+      
+      return (
+        <>
       {/* fest_detail  */}
 <div>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
 fest_detail 추가 정보 입력 
     </h1>
     <BlackBtn onClick={saveFestDetail}>임시저장</BlackBtn>
-    <BlackBtn onClick={()=>{/* alert('update 아직 안함') */
-    Swal.fire({
-    title:'수정 완료',
-    icon:'success'
-})}}>수정완료</BlackBtn>
+    <BlackBtn onClick={festivalDetailUpdate}>수정완료</BlackBtn>
 
     <div className="form-floating">
   <input type="text" className="form-control" 
@@ -215,7 +233,7 @@ fest_poster 추가 정보 입력  </h1>
 
 
 {/* fest_ticket */}
-<AddProductsFestTicketDetail festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}></AddProductsFestTicketDetail>
+<AddProductsFestTicketDetail festTcNo={festTcNo} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}></AddProductsFestTicketDetail>
 
 
     </>

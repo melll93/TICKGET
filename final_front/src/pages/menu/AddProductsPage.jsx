@@ -44,6 +44,7 @@ const AddProducts = () => {
   const [festTcType, setFestTcType] =useState();
   const [festTcPrice, setFestTcPrice] =useState();
   const [festTcTime, setFestTcTime]= useState();
+  const [festTcNo, setFestTcNo]= useState();
 
 
 
@@ -100,15 +101,21 @@ setFestDtAge(jsonDoc[0].festDtAge)
 setFestDtCasting(jsonDoc[0].festDtCasting)
 setFestDtCrew(jsonDoc[0].festDtCrew)
 
+
 const festPsUrlAll = jsonDoc.map(item => item.festPsUrl);
 setFestPsUrl(festPsUrlAll);
 const festPsNoAll = jsonDoc.map(item => item.festPsNo);
 setFestPsNo(festPsNoAll);
 
+const festTcNoAll = jsonDoc.map(item => item.festTcNo);
+setFestTcNo(festTcNoAll);
+
 const festTcTypeAll = jsonDoc.map(item => item.festTcType);
 setFestTcType(festTcTypeAll);
+
 const festTcPriceAll = jsonDoc.map(item => item.festTcPrice);
 setFestTcPrice(festTcPriceAll);
+
 const festTcTimeAll = jsonDoc.map(item => item.festTcTime);
 setFestTcTime(festTcTimeAll);
 
@@ -118,7 +125,7 @@ return console.log('작성자가 아닙니다.')
 } */
 }
 originDetail()
-},[festMId]);
+},[festMId, festPsUrl]);
 
 
     const festivalUpdate = async() => {
@@ -278,17 +285,6 @@ originDetail()
           />
           <label htmlFor="floatingInput"> festTitle </label>
         </div>
-{/*         <div className="form-floating mb-3">
-          <input
-            type="text"
-            className="form-control"
-            id="festDesc"
-            onChange={(e) => {
-              inputDesc(e.target.value);
-            }}
-          />
-          <label htmlFor="floatingInput"> desc </label>
-        </div> */}
         <select
           className="form-select"
           id="festArea"
@@ -324,19 +320,6 @@ originDetail()
           <label htmlFor="floatingInput">location</label>
         </div>
         <br />
-{/*         <div className="form-floating">
-          <input
-            type="number"
-            className="form-control"
-            id="festPrice"
-            name="price"
-            onChange={(e) => {
-              inputPrice(e.target.value);
-            }}
-          />
-          <label htmlFor="floatingInput">price</label>
-        </div>
-        <br /> */}
         <div className="form-floating mb-3">
           <input
             type="date"
@@ -365,28 +348,13 @@ originDetail()
           />
           <label htmlFor="floatingInput"> 행사종료일</label>
         </div>
-       {/*  <div className="form-floating">
-          <textarea
-            className="form-control"
-            placeholder="Leave a comment here"
-            id="festDetail"
-            style={{ height: "300px" }}
-            onChange={(e) => {
-              inputDetail(e.target.value);
-            }}
-          ></textarea>
-          <label htmlFor="floatingTextarea2">상세내용</label>
-        </div> 
-          <br />
-        */}
-
         <br />
         {/* 추가 정보 입력 */}
         <BlackBtn onClick={optionModalOpen}>
           {" "}
           판매 추가정보 입력 (추후기재가능)
         </BlackBtn>
-        {optionModal === 1 ? <AddProductsOptionalDetail setFestOriginPsUrl={setFestPsUrl} festPsNo={festPsNo} festOrginPsUrl={festPsUrl} festDtAge={festDtAge} festDtCasting={festDtCasting} festDtCrew={festDtCrew} festDtRuntime={festDtRuntime} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}/> : null}
+        {optionModal === 1 ? <AddProductsOptionalDetail  festTcNo={festTcNo} setFestOriginPsUrl={setFestPsUrl} festPsNo={festPsNo} festOrginPsUrl={festPsUrl} festDtAge={festDtAge} festDtCasting={festDtCasting} festDtCrew={festDtCrew} festDtRuntime={festDtRuntime} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}/> : null}
         {/* 추가 정보 입력 */}
         <br />
         <br />

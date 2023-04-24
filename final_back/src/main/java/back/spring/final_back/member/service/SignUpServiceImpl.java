@@ -1,5 +1,6 @@
 package back.spring.final_back.member.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,9 +70,13 @@ public class SignUpServiceImpl implements SignUpService {
 	// Delete
 	@Override
 	public int memberDelete(Map<String, Object> pMap) {
-		log.info("memberDelete 확인");
-		int result = 0;
-		result = signUpDao.memberDelete(pMap);
-		return result;
+	    log.info("memberDelete 확인");
+		log.info(pMap.toString());
+	    int result = 0;
+	    String memberId = (String) pMap.get("memberId");
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("memberId", memberId);
+	    result = signUpDao.memberDelete(paramMap);
+	    return result;
 	}
 }

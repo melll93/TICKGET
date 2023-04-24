@@ -94,6 +94,7 @@ const CarpoolBoardList = () => {
             Swal.fire({
               title: "인원이 다 찼습니다.",
               icon: "error",
+              icon: "warning",
             });
           }
         } else {
@@ -105,7 +106,6 @@ const CarpoolBoardList = () => {
         }
       });
   };
-
   /************* firebase 처리 중 *************/
 
   useEffect(() => {

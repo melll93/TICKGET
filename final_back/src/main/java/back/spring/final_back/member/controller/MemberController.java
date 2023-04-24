@@ -6,7 +6,9 @@ import back.spring.final_back.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +42,11 @@ public class MemberController {
     @PostMapping("/login/failed")
     public Object loginFailed() {
         return null;
+    }
+
+    @GetMapping("/oauth/loginSuccess")
+    public void oauthLoginSuccess() {
+//        log.info(oauth.toString());
     }
 
     @PostMapping("/getMemberData")
