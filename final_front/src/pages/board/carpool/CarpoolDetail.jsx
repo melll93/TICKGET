@@ -258,7 +258,6 @@ const CarpoolDetail = ({ match }) => {
                     <p
                       style={{
                         textAlign: "left",
-                        paddingRight: "10px",
                         marginTop: "25px",
                         opacity: "90%",
                       }}
@@ -267,7 +266,6 @@ const CarpoolDetail = ({ match }) => {
                         style={{
                           display: "inline-block",
                           width: "7rem",
-                          marginRight: "5px",
                           color: "black",
                         }}
                       >
@@ -358,7 +356,7 @@ const CarpoolDetail = ({ match }) => {
                     className="product_detail_review_comment"
                     style={{
                       borderBottom: "1px solid lightgray",
-                      width: "1100px",
+                      width: "90%",
                       margin: "50px",
                     }}
                   >

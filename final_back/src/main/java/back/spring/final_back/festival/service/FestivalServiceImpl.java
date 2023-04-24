@@ -112,4 +112,16 @@ public class FestivalServiceImpl implements FestivalService {
         result = festivalDao.festivalPosterDelete(fest_ps_no);
         return result;
     }
+	@Override
+	public int festivalDetailUpdate(FestivalDto festivalDto) {
+        int result = festivalDao.festivalDetailUpdate(festivalDto);
+        return result;
+	}
+
+	@Override
+	public int festivalTicketDelete(int fest_tc_no) {
+	       int result = 0;
+	        result = festivalDao.festivalTicketDelete(fest_tc_no);
+	        return result;
+	}
 }

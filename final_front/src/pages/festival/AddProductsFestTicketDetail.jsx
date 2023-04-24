@@ -1,19 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { FetivalDetailDB, festTicketInsertDB } from '../../axios/festival/festival';
+import { FetivalDetailDB, festTicketInsertDB, deleteFestTicketDB } from '../../axios/festival/festival';
 
-const AddProductsFestTicketDetail = ({festTcType, festTcPrice, festTcTime}) => {
+const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTcTime}) => {
   const {festMId}=useParams();
 /*    console.log('타입'+festTcType); */
  /*  console.log(festTcPrice); */ 
-
-  
+  console.log(festTcNo)
 
   const [dbTickets, setDbTickets] = useState(
     festTcType && festTcType
       .filter((_, index) => festTcType[index] !== null) // null인 요소 필터링
       .map((_, index) => ({
-        no: index + 1, // 좌석 정보의 개수
+        no: festTcNo[index], // 좌석 정보의 개수
         seatType: festTcType[index], // 티켓의 좌석 유형
         price: festTcPrice[index], // 티켓의 가격
         time: festTcTime[index] // 티켓의 시간 정보
@@ -30,7 +29,7 @@ const AddProductsFestTicketDetail = ({festTcType, festTcPrice, festTcTime}) => {
   );
     
 
-
+/*(신규입력용) 좌석추가 버튼 누를때 로우 추가  */
   const addTicket = () => {
     const newTicket = {
       no:'', // 좌석 정보의 개수
@@ -40,6 +39,8 @@ const AddProductsFestTicketDetail = ({festTcType, festTcPrice, festTcTime}) => {
     };
     setTickets(prevTickets => [...prevTickets, newTicket]);
   }
+
+ /* (신규입력용) 로우 삭제  */
   const removeTicket = (index) => {
     setTickets(prevTickets => prevTickets.filter((_, i) => i !== index));
   }
@@ -75,9 +76,9 @@ const inputTcTime = (index, time) => {
   });
 }
 
+/* fest_tc Insert */
 const festTicketInsert = async () => {
   for (const ticket of tickets) {
-
     const res = await festTicketInsertDB({
       festMId,
       festTcType: ticket.seatType,
@@ -89,10 +90,31 @@ const festTicketInsert = async () => {
      /*  alert('error')
    */  } else {  
       /* 성공 */
+    alert('저장완료')
     }
   }
   setTickets(tickets)
 }
+
+
+/* 티켓 로우 삭제 */
+const deleteFestTcRow = async ({index}) => {
+  const  festival = {
+    fest_tc_no:festTcNo[index],
+  }
+    const res = await deleteFestTicketDB(festival);
+  if (!res.data) {
+/*     const updatedFestTcRow = festTcType.filter((item, index) => index !== i);
+    setDbTickets(updatedFestTcRow); */
+  } else {
+    alert("에러")
+  }
+};
+
+
+console.log(dbTickets[0].no)
+console.log(festTcNo[0])
+console.log(festTcNo)
 
   return (
     <div>
@@ -127,29 +149,29 @@ fest_ticket 추가 정보 입력
           </th><th>좌석정보  {/* fest_ticket   (fest_tc_type) */}
           </th><th>티켓가격  {/* fest_ticket   (fest_tc_price) */}
           </th><th style={{width:'120px'}}>총좌석수   {/* 리얼타임dv 예정 fest_seats   (fest_tc_total) */}
-          </th><th style={{width:'60px'}}>삭제</th>
+          </th><th style={{width:'60px'}} >삭제</th>
           </tr>
         </thead>
         <tbody>
         {dbTickets&&dbTickets.map((ticket, index) => (
-            <tr key={dbTickets.no}><td>
-                  {index+1}
+            <tr key={ticket.no}><td>
+                  {ticket.no}
               </td><td>
-              <span>{festTcTime[index]}
+              <span>{ticket.time}
                 </span>
               </td><td>
              <span>
-              {festTcType[index]}
+              {ticket.seatType}
               </span>
               </td><td>
                 <div>
-                  {festTcPrice[index]}   원
+                {ticket.price}   원
                 </div>
 
               </td><td>
               <div>???석</div>
               </td><td>
-                <button type="button" className="btn-delete" onClick={() => removeDbTicket(index)}>
+                <button type="button" className="btn-delete" onClick={() => deleteFestTcRow(index)}>
                   삭제
                 </button>
               </td></tr>

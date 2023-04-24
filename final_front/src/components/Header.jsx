@@ -9,12 +9,23 @@ import { BlackLink } from "../styles/formStyle";
 const Header = () => {
   const cookies = new Cookies();
   const _userData = cookies.get("_userData")
+
+
+  const logout = () => {
+    window.localStorage.clear();
+    cookies.remove("_userData");
+    // navigate("/"); // cookie가 갱신이 안됨
+    window.location.href = "/";
+  };
+
+
   return (
     <>
     <div className="header">
 <div className="top_header">
-  {_userData==null ? <> <Link to="/" className="headerlink2">로그인</Link> |  <Link to="/" className="headerlink2">회원가입</Link>(일단대충박아놓음) </>: <> <Link to="/" className="headerlink2">로그아웃</Link> |  <Link to="/" className="headerlink2">마이페이지</Link>(일단대충박아놓음) </>}
+  {_userData&&_userData!=null ?  <> <Link to="/" className="headerlink2" onClick={logout}>로그아웃</Link> |  <Link to="/mypage" className="headerlink2">마이페이지</Link> </>: <> <Link to="/login"  className="headerlink2">로그인</Link> |  <Link to="/register" className="headerlink2">회원가입</Link> </>}
 </div>
+
 <div className="main_haeder">
     <HomeButton />
 <div className="topList" style={{fontFamily:"LeferiBaseBold"}}>

@@ -202,6 +202,18 @@ export const deleteFestPosterDB = async (fest_ps_no) => {
   return result;
 };
 
+/* fest_Ticket삭제 */
+export const deleteFestTicketDB = async (fest_tc_no) => {
+  const result = await axios({
+    method: "get",
+    url: "http://localhost:8888/festival/festivalTicketDelete",
+    params: fest_tc_no,
+  }).then((res) => res.data);
+  return result;
+};
+
+
+
 
 /* fest_ticekt 추가 */
 export const festTicketInsertDB = (tickets) => {
@@ -227,6 +239,22 @@ export const festivalUpdateDB = (festival) => {
       const response = axios({
         method: "post",
         url: "http://localhost:8888/festival/festivalUpdate",
+        data: festival,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* 수정 */
+export const festivalDetailUpdateDB = (festival) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/festival/festivalDetailUpdate",
         data: festival,
       });
       resolve(response);

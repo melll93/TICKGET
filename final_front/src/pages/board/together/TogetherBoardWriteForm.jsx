@@ -62,7 +62,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
     const board = {
       boardTgTitle: title, // 제목 추가
       boardTgContent: content, // 내용 추가
-      boardTgMemId: _userData.memberId,
+      boardTgMemId: _userData?.memberId,
       boardTgDate: date,
     };
     // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
@@ -163,7 +163,29 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                 border: "1px solid lightGray",
               }}
             >
-              {_userData.memberId}
+              {(() => {
+                if (_userData?.memberId) {
+                  return (
+                    <span
+                      id="board_writer"
+                      style={{
+                        width: "100%",
+                        height: "40px",
+                        border: "1px solid lightGray",
+                      }}
+                    >
+                      {_userData.memberId}
+                    </span>
+                  );
+                } else {
+                  Swal.fire({
+                    title: "로그인 후 이용해주세요.",
+                    icon: "warning",
+                  });
+                  window.location.href = "/login"; // 로그인 페이지로 이동
+                  return null;
+                }
+              })()}
             </span>
             <hr style={{ margin: "10px 0px 10px 0px" }} />
 
