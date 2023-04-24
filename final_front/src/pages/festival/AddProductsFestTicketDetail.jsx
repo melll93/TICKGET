@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useInsertionEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { FetivalDetailDB, festTicketInsertDB, deleteFestTicketDB } from '../../axios/festival/festival';
 
@@ -6,7 +6,6 @@ const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTc
   const {festMId}=useParams();
 /*    console.log('타입'+festTcType); */
  /*  console.log(festTcPrice); */ 
-  console.log(festTcNo)
 
   const [dbTickets, setDbTickets] = useState(
     festTcType && festTcType
@@ -22,9 +21,9 @@ const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTc
 
   const [tickets, setTickets] = useState([{
         no:'', // 좌석 정보의 개수
-        seatType: '', // 티켓의 좌석 유형
+        seatType: '지정석', // 티켓의 좌석 유형
         price:'', // 티켓의 가격
-        time:'' // 티켓의 시간 정보
+        time:'오후 00:00시 (미확정)' // 티켓의 시간 정보
       }]
   );
     
@@ -33,9 +32,9 @@ const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTc
   const addTicket = () => {
     const newTicket = {
       no:'', // 좌석 정보의 개수
-      seatType:'', // 티켓의 좌석 유형
+      seatType:'지정석', // 티켓의 좌석 유형
       price:'', // 티켓의 가격
-      time: '' // 티켓의 시간 정보
+      time: '오후 00:00시 (미확정)' // 티켓의 시간 정보
     };
     setTickets(prevTickets => [...prevTickets, newTicket]);
   }
@@ -58,7 +57,6 @@ const inputTcPrice = (index, price) => {
     return updatedTickets;
   });
 }
-
 
 const inputTcSeatType = (index, seatType) => {
   setTickets(prevTickets => {
@@ -111,10 +109,6 @@ const deleteFestTcRow = async ({index}) => {
   }
 };
 
-
-console.log(dbTickets[0].no)
-console.log(festTcNo[0])
-console.log(festTcNo)
 
   return (
     <div>
@@ -227,6 +221,10 @@ fest_ticket 추가 정보 입력
           ))}
         </tbody>
       </table>
+      <div style={{textAlign:'left', paddingLeft:'20px'}}>
+<span style={{color:'red'}}>*</span><span>미입력 시, '시간-오후 00:00시(미확정) | 좌석정보-지정석 | 티켓가격-(공란) | 총좌석수-0석 으로 기재 됩니다.</span>
+      </div>
+
     </div>
   )
 }

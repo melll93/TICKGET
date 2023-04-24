@@ -125,7 +125,7 @@ return console.log('작성자가 아닙니다.')
 } */
 }
 originDetail()
-},[festMId]);
+},[festMId, festPsUrl]);
 
 
     const festivalUpdate = async() => {

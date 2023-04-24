@@ -148,14 +148,13 @@ const CarpoolBoardList = () => {
         }
       });
   };
-
   // 쿠키에서 아이디 값 가져오기
   function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
     if (parts.length == 2) return parts.pop().split(";").shift();
   }
-
+  
   /************* firebase 처리 중 *************/
 
   useEffect(() => {
