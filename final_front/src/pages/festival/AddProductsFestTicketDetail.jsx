@@ -99,27 +99,29 @@ const inputFbSeat = (index, seat) => {
 
 const festTicketInsert = async () => {
   for (const ticket of tickets) {
-    if (ticket.seatType === '' || ticket.price === '' || ticket.time === '') {
+    if (ticket.seatType === '' || ticket.price === ''|| ticket.time === '' || ticket.seat === '') {
       alert('빈칸이 존재합니다. 확인해주세요. ');
     } else {
-      const res = await festTicketInsertDB({
+      const res = await festTicketInsertDB({  
         festMId,
         festTcType: ticket.seatType,
         festTcPrice: ticket.price,
         festTcTime: ticket.time,
-      });
+      });    
       if (!res.data) {
         alert('error');
-      } else {
+      } 
+      else {
         /* 성공 */
         alert('저장완료');
+        const newTickets=[];
+        setTickets(newTickets);
+        const updatedDbTickets = [...dbTickets, ...tickets]; 
+        setDbTickets(updatedDbTickets); 
       }
     }
+    
   } /* for */
-  const updatedDbTickets = [...dbTickets, ...tickets]; 
-  setDbTickets(updatedDbTickets); 
-  const newTickets=[];
-  setTickets(newTickets);
   insertData(tickets);
 }; /* festTicketInsert */
  
@@ -162,15 +164,17 @@ useEffect(() => {
 
 
 const insertData = (tickets) => {
-  console.log(tickets)
   for (const ticket of tickets) {
-  const data = {
-      [ticket.time]:{
-        type: ticket.seatType,
-        price: ticket.price,
-        seatAvailable: ticket.seat,
-        seatTotal: ticket.seat
-    }
+    if (ticket.seatType === '' || ticket.price === ''|| ticket.time === '' || ticket.seat === '') {
+      alert('빈칸이 존재합니다. 확인해주세요. ');
+    } else{
+      const data = {
+        [ticket.seatType]:{
+          time: ticket.time,
+          price: ticket.price,
+          seatAvailable: ticket.seat,
+          seatTotal: ticket.seat
+        }
     }
 
   firebase.database().ref(`FestMId/${festMId}`).update(data)  //ref에 원하는 경로 적으면 됨. 안해놔서 비워둠
@@ -181,6 +185,7 @@ const insertData = (tickets) => {
       console.error("데이터 삽입 중 오류가 발생하였습니다.", error);
     });
 }};
+}
 
 
 
@@ -221,7 +226,7 @@ fest_ticket 추가 정보 입력
           <th>no</th><th>시간    {/* fest_schedule  (fest_sc_time) */}
           </th><th>좌석정보  {/* fest_ticket   (fest_tc_type) */}
           </th><th>티켓가격  {/* fest_ticket   (fest_tc_price) */}
-          </th><th style={{width:'120px'}}>총좌석수   {/* 리얼타임dv 예정 fest_seats   (fest_tc_total) */}
+          </th><th style={{width:'120px'}}>총좌석수   
           </th><th style={{width:'60px'}} >삭제</th>
           </tr>
         </thead>
@@ -241,7 +246,9 @@ fest_ticket 추가 정보 입력
                 {ticket.price}   원
                 </div>
               </td><td>
-              <div>???석</div>
+              <div>
+                {/* {festMData.[{ticket.time}].seat}
+                 */}???석</div>
               </td><td>
                 <button type="button" className="btn-delete" onClick={() => deleteFestTcRow(index)}>
                   삭제

@@ -76,15 +76,15 @@ useEffect(() => {
 }, []); 
 
 
-console.log(selectedFestTcTime)
 /*파이어베이스 - READ  */
 const [festMData, setFestMData] = useState(null);  
+
 useEffect(() => {
   const festTcSeatsInfo= async () => {
     try {
       const snapshot = await firebase
         .database()
-        .ref(`FestMId/${festMId}/${selectedFestTcTime}`)
+        .ref(`FestMId/${festMId}/${selectedFestTcType}`)
         .once("value");    //한번읽기
       if (snapshot.exists()) {  //존재하면 여기 타기
         const data = snapshot.val();  
@@ -92,23 +92,38 @@ useEffect(() => {
         console.log(festMData)
       } else {
         // 데이터가 존재하지 않는 경우
-        alert("좌석 정보 없음");
       }
     } catch (error) {
       console.log("Firebase 데이터 읽기 에러", error);
     }
   };
   festTcSeatsInfo();
-}, [selectedFestTcTime]);
+}, [selectedFestTcType]);
 
 
 
+/* ////////////////////수정중 */
+/* 파이어베이스 - update */
 
 
 
+const [seatAvailable, setSeatAvailable] = useState(0);
 
 
+const fetchSeatAvailable = () => {
+  const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcType}/seatAvailable`);
+  seatsRef.on('value', snapshot => {
+    setSeatAvailable(snapshot.val());
+  });
+};
+const decreaseSeat = () => {
+  const updatedSeatAvailable = seatAvailable;
+  const seatsRef = firebase.database().ref('FestMId/seatsFestId/seatAvailable');
+  seatsRef.set(updatedSeatAvailable);
+};
 
+
+/* ////////////////////수정중 */
 
 
 
@@ -174,6 +189,13 @@ useEffect(() => {
     asyncDB();
     return () => {};
   }, []);
+
+const researveBtnClicked=()=>{
+
+
+  navigate("/payment2/" + festMId);
+}
+
 
 
   const reduxUser = useSelector((state) => state.userStatus.user);
@@ -500,7 +522,7 @@ useEffect(() => {
                 <div>
       {festMData && (
         <div>
-          <div>{festMData.type} -{festMData.price}</div>
+          <div>{festMData.time} -{festMData.price}</div>
          <div>{festMData.seatAvailable}/{festMData.seatTotal} </div>
         </div>
       )}
@@ -519,7 +541,7 @@ useEffect(() => {
                 <BlackBtn
                   width="250px"
                   style={{marginTop:'120px'}}
-                  onClick={() => navigate("/payment2/" + festMId)}
+                  onClick={researveBtnClicked}
                 >
                   예매하기
                 </BlackBtn>
