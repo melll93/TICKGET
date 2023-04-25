@@ -16,7 +16,7 @@ export const selectCarpoolDB = (carpool) => {
   });
 };
 
-/* 전체조회 */
+/* 글번호 +1 */
 export const getBoardCpNoDB = () => {
   return new Promise((resolve, reject) => {
     try {
