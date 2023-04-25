@@ -3,9 +3,7 @@ import "firebase/compat/database";
 import { useCallback, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { Cookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
 import {
   CarpoolDetailDB,
   deleteCarpoolDB,
@@ -19,18 +17,19 @@ import {
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv } from "../../../styles/formStyle";
-import MapContainer from "../market/Map/MapContainer";
+import LandingPage from "./Map/LandingPage";
+import Swal from "sweetalert2";
+import { Cookies } from "react-cookie";
 
-const CarpoolDetail = ({ match }) => {
+const CarpoolDetail = () => {
   const navigate = useNavigate();
   const { boardCpNo } = useParams();
   const [boardReplyCpNo, setBoardReplyCpNo] = useState("");
+  const { boardReplyCpMemId, setBoardReplyCpMemId } = useState();
   const [boardReplyCpContent, setBoardReplyCpContent] = useState(""); //기존 댓글
   const [boardReplyCpContent2, setBoardReplyCpContent2] = useState(""); //수정 댓글
   const [boardReplyList, setBoardReplyList] = useState([]);
   const [lgShow, setLgShow] = useState(false);
-
-  const [place, setPlace] = useState("");
 
   const cookies = new Cookies();
   const _userData = cookies.get("_userData"); //유저 정보
@@ -48,6 +47,7 @@ const CarpoolDetail = ({ match }) => {
   const selectBoardReplyList = async () => {
     const boardReply = { boardCpNo: boardCpNo };
     const res = await selectCarpoolReplyDB(boardReply);
+    console.log("asdas d", res.data);
     if (res.data && Array.isArray(res.data)) {
       setBoardReplyList(res.data);
     } else {
@@ -69,9 +69,7 @@ const CarpoolDetail = ({ match }) => {
     boardCpTitle: "",
     boardCpContent: "",
     boardCpDate: "",
-    boardCpPlace: "",
   });
-
   useEffect(() => {
     const asyncDB = async () => {
       const res = await CarpoolDetailDB({ boardCpNo });
@@ -84,11 +82,9 @@ const CarpoolDetail = ({ match }) => {
         boardCpTitle: jsonDoc.boardCpTitle,
         boardCpContent: jsonDoc.boardCpContent,
         boardCpDate: jsonDoc.boardCpDate,
-        boardCpPlace: jsonDoc.boardCpPlace,
       });
       if (res.data) {
         setCarpool(res.data);
-        setPlace(jsonDoc.boardCpPlace);
       } else {
         console.log("카풀 게시글 조회 실패");
       }
@@ -131,25 +127,17 @@ const CarpoolDetail = ({ match }) => {
     try {
       const res = await insertCarpoolReplyDB(boardReply);
       console.log(res);
-      window.location.reload();
+      // 성공시에 페이지 이동처리하기
+      window.location.replace(
+        "http://localhost:3333/carpool/carpoolDetail/" + boardCpNo
+      );
     } catch (error) {
       console.log(error);
     }
-    Swal.fire({
-      title: "댓글 등록 완료",
-      icon: "success",
-    });
   };
 
   const click = () => {
     setLgShow(true);
-  };
-
-  const handleContent = (value) => {
-    setCarpool((prevState) => ({
-      ...prevState,
-      boardCpContent: value,
-    }));
   };
 
   return (
@@ -157,331 +145,292 @@ const CarpoolDetail = ({ match }) => {
       <div>
         <Header />
         <Sidebar />
+
         <ContainerDiv>
-          <div style={{ height: "150px" }}></div>
+          <div style={{ height: "100px" }}></div>
           <br />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "90%",
-              border: "2px solid lightGray",
-              borderRadius: "20px",
-              padding: "10px",
-              maxWidth: "1500px",
-              minHeight: "650px",
-              justifyContent: "space-between",
-            }}
-          >
-            <div style={{ width: "98%", margin: "10px" }}>
-              <h2>카풀 상세보기</h2>
-              <br />
-              <div>
-                <form method="post">
-                  <input type="hidden" name="boardCpNo" value="" />
-                  <div>
-                    <label>제목</label>
-                    <span
-                      style={{ width: "98%", margin: "10px" }}
-                      type="text"
-                      name="carpoolTitle"
-                      required
-                      className="form-control form-control-lg"
-                      id="inputLarge"
-                    >
-                      {carpool.boardCpTitle}
-                    </span>
-                  </div>
+          <div style={{ width: "98%", margin: "10px" }}>
+            <h2>카풀 상세보기</h2>
+            <br />
+            <div>
+              <form method="post">
+                <input type="hidden" name="boardCpNo" value="" />
+                <div>
+                  <label>제목</label>
+                  <span
+                    style={{ width: "98%", margin: "10px" }}
+                    type="text"
+                    name="carpoolTitle"
+                    required
+                    className="form-control form-control-lg"
+                    id="inputLarge"
+                  >
+                    {carpool.boardCpTitle}
+                  </span>
+                </div>
 
-                  <div>
-                    <label>작성자</label>
-                    <span
-                      style={{ width: "98%", margin: "10px" }}
-                      type="text"
-                      name="carpoolMemId"
-                      required
-                      className="form-control form-control-lg"
-                      id="inputLarge"
-                    >
-                      {carpool.boardCpMemId}
-                    </span>
-                  </div>
+                <div>
+                  <label>작성자</label>
+                  <span
+                    style={{ width: "98%", margin: "10px" }}
+                    type="text"
+                    name="carpoolMemId"
+                    required
+                    className="form-control form-control-lg"
+                    id="inputLarge"
+                  >
+                    {carpool.boardCpMemId}
+                  </span>
+                </div>
 
-                  <div>
-                    <label>날짜</label>
-                    <span
-                      style={{ width: "98%", margin: "10px" }}
-                      type="text"
-                      name="carpoolCpDate"
-                      required
-                      className="form-control form-control-lg"
-                      id="inputLarge"
-                    >
-                      {carpool.boardCpDate}
-                    </span>
-                  </div>
+                <div>
+                  <label>날짜</label>
+                  <span
+                    style={{ width: "98%", margin: "10px" }}
+                    type="text"
+                    name="carpoolCpDate"
+                    required
+                    className="form-control form-control-lg"
+                    id="inputLarge"
+                  >
+                    {carpool.boardCpDate}
+                  </span>
+                </div>
 
-                  <div>
-                    <label>내용</label>
-                    <textarea
-                      style={{
-                        width: "98%",
-                        margin: "10px",
-                        height: "300px",
-                        fontSize: "20px",
-                      }}
-                      value={carpool.boardCpContent}
-                      name="carpoolContent"
-                      required
-                      rows="10"
-                      className="form-control"
-                      id="exampleTextarea"
-                      readOnly
-                      onChange={(e) => {
-                        handleContent(e.target.value);
-                      }}
-                    />
-                  </div>
-
-                  <label>만남의 장소</label>
-                  <div
+                <div>
+                  <label>내용</label>
+                  <span
                     style={{
-                      border: "1px solid lightGray",
-                      borderRadius: "10px",
                       width: "98%",
                       margin: "10px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
+                      height: "300px",
+                      fontSize: "20px",
                     }}
+                    type="html"
+                    name="carpoolContent"
+                    required
+                    rows="10"
+                    className="form-control"
+                    id="exampleTextarea"
                   >
-                    <p
-                      style={{
-                        textAlign: "left",
-                        marginTop: "25px",
-                        opacity: "90%",
-                      }}
-                    >
-                      <span
-                        style={{
-                          display: "inline-block",
-                          width: "7rem",
-                          color: "black",
-                        }}
-                      >
-                        ∙ 만남의 장소:
-                      </span>
-                      {place}
-                    </p>
-                    <MapContainer place={place} />
-                  </div>
-                </form>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <Button
-                  style={{ margin: "10px", backgroundColor: "black" }}
-                  onClick={() => navigate("/carpool")}
-                >
-                  목록으로
-                </Button>
-                &nbsp;
-                {carpool.boardCpMemId === _userData?.memberId && (
-                  <div>
-                    <Button
-                      style={{ margin: "10px", backgroundColor: "black" }}
-                      onClick={deleteCarpool}
-                    >
-                      삭제하자
-                    </Button>
-                    <Button
-                      style={{ marginLeft: "10px", backgroundColor: "black" }}
-                      onClick={() =>
-                        navigate({
-                          pathname:
-                            "/together/BoardUpdate/" + carpool.boardTgNo,
-                          state: { carpool },
-                        })
-                      }
-                    >
-                      수정하자
-                    </Button>
-                  </div>
-                )}
-              </div>
+                    {carpool.boardCpContent}
+                  </span>
+                </div>
 
-              <label>댓글</label>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <textarea
+                <label>지도</label>
+                <div
                   style={{
+                    border: "1px solid lightGray",
+                    borderRadius: "10px",
                     width: "98%",
                     margin: "10px",
-                    height: "100px",
-                    fontSize: "16px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
-                  name="boardReplyCpContent"
-                  onChange={(e) => {
-                    handleBoardReplyCpContent(e.target.value);
-                  }}
-                  required
-                  rows="3"
-                  className="form-control"
-                />
-              </div>
-
+                >
+                  <LandingPage />
+                </div>
+              </form>
+            </div>
+            <div style={{ textAlign: "center" }}>
               <Button
-                style={{
-                  marginLeft: "10px",
-                  backgroundColor: "black",
-                  textAlign: "center",
-                }}
-                onClick={submitComment}
+                style={{ margin: "10px", backgroundColor: "black" }}
+                onClick={() => navigate("/carpool")}
               >
-                댓글 등록
+                목록으로
               </Button>
-
-              <div
-                style={{
-                  width: "1500px",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                }}
-              />
-              <br />
-
-              <label>댓글리스트</label>
-              <div style={{ border: "1px solid lightgray", width: "98%" }}>
-                {boardReplyList.map((boardReply) => (
-                  <div
-                    key={boardReply.boardReplyCpNo}
-                    className="product_detail_review_comment"
-                    style={{
-                      borderBottom: "1px solid lightgray",
-                      width: "90%",
-                      margin: "50px",
-                    }}
+              &nbsp;
+              {_userData.memberAuthority === "ROLE_ADMIN" /* ||
+              _userData.memberAuthority === "ROLE_USER" */ ? (
+                <div>
+                  <Button
+                    style={{ margin: "10px", backgroundColor: "black" }}
+                    onClick={deleteCarpool}
                   >
-                    회원아이디 : {boardReply.boardReplyCpMemId}
-                    <div style={{ fontSize: "8px" }}>
-                      2 작성 시간 : ({boardReply.boardReplyCpDate})
-                    </div>
-                    <h3>
-                      <div className="replyContent">
-                        <span style={{ color: "red" }}> → </span>
-                        <span
-                          className="replyContentVal"
-                          style={{ color: "black" }}
-                        >
-                          {boardReply.boardReplyCpContent}
-                        </span>
-                      </div>
-                    </h3>
-                    {boardReply.boardReplyCpMemId === _userData?.memberId && (
-                      <Button
-                        style={{ marginLeft: "10px", backgroundColor: "black" }}
+                    삭제하자
+                  </Button>
+                  <Button
+                    style={{ marginLeft: "10px", backgroundColor: "black" }}
+                    onClick={() =>
+                      navigate({
+                        pathname: "/carpool/CarpoolUpdate/" + carpool.boardCpNo,
+                        state: { carpool },
+                      })
+                    }
+                  >
+                    수정하자
+                  </Button>
+                </div>
+              ) : null}
+            </div>
+
+            <label>댓글</label>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <textarea
+                style={{
+                  width: "98%",
+                  margin: "10px",
+                  height: "100px",
+                  fontSize: "16px",
+                }}
+                name="boardReplyCpContent"
+                onChange={(e) => {
+                  handleBoardReplyCpContent(e.target.value);
+                }}
+                required
+                rows="3"
+                className="form-control"
+              />
+            </div>
+
+            <Button
+              style={{
+                marginLeft: "10px",
+                backgroundColor: "black",
+                textAlign: "center",
+              }}
+              onClick={submitComment}
+            >
+              댓글 등록
+            </Button>
+
+            <div
+              style={{
+                width: "1500px",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            />
+            <br />
+
+            <label>댓글리스트</label>
+            <div style={{ border: "1px solid lightgray", width: "98%" }}>
+              {boardReplyList.map((boardReply) => (
+                <div
+                  key={boardReply.boardReplCpNo}
+                  className="product_detail_review_comment"
+                  style={{
+                    borderBottom: "1px solid lightgray",
+                    width: "1100px",
+                    margin: "50px",
+                  }}
+                >
+                  회원아이디 : {boardReply.boardReplyCpMemId}
+                  <div style={{ fontSize: "8px" }}>
+                    작성 시간 : ({boardReply.boardReplyCpDate})
+                  </div>
+                  <h3>
+                    <div className="replyContent">
+                      <span style={{ color: "red" }}> → </span>
+                      <span
+                        className="replyContentVal"
+                        style={{ color: "black" }}
                       >
-                        <span
-                          onClick={async () => {
-                            click();
-                            handleBoardReplyCpNo(boardReply.boardReplyCpNo);
-                          }}
-                        >
-                          댓글 수정
-                        </span>
-                      </Button>
-                    )}
-                    <Modal
-                      size="lg"
-                      show={lgShow}
-                      onHide={() => setLgShow(false)}
-                      aria-labelledby="example-modal-sizes-title-lg"
+                        {boardReply.boardReplyCpContent}
+                      </span>
+                    </div>
+                  </h3>
+                  <Button
+                    style={{ marginLeft: "10px", backgroundColor: "black" }}
+                  >
+                    <span
+                      onClick={async () => {
+                        click();
+                        handleBoardReplyCpNo(boardReply.boardReplyCpNo);
+                      }}
                     >
-                      <Modal.Header closeButton>
-                        <Modal.Title id="example-modal-sizes-title-lg">
-                          댓글 수정 detail
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <div
-                          className="form-floating mb-3"
-                          style={{ position: "relative" }}
-                        >
-                          <div>
-                            <input
-                              onChange={(e) => {
-                                inputModifiedReply(e.target.value);
-                              }}
-                              className="form-control2"
-                              placeholder="수정할 댓글 내용을 입력하세요"
-                              id="together_board_detail_reply_textarea"
-                              // value={boardReplyTgContent}
-                              style={{
-                                position: "relative",
-                                height: "300px",
-                                width: "98%",
-                                maxWidth: "1200px",
-                              }}
-                              maxLength=""
-                            ></input>
-                          </div>
-                          <br />
-                          <br />
-                          <button
+                      댓글 수정
+                    </span>
+                  </Button>
+                  <Modal
+                    size="lg"
+                    show={lgShow}
+                    onHide={() => setLgShow(false)}
+                    aria-labelledby="example-modal-sizes-title-lg"
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title id="example-modal-sizes-title-lg">
+                        댓글 수정 detail
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div
+                        className="form-floating mb-3"
+                        style={{ position: "relative" }}
+                      >
+                        <div>
+                          <input
+                            onChange={(e) => {
+                              inputModifiedReply(e.target.value);
+                            }}
+                            className="form-control2"
+                            placeholder="수정할 댓글 내용을 입력하세요"
+                            id="together_board_detail_reply_textarea"
+                            // value={boardReplyTgContent}
                             style={{
-                              position: "absolute",
-                              bottom: "0",
-                              right: "0",
-                              margin: "0px 15px 0px 0px ",
+                              position: "relative",
+                              height: "300px",
+                              width: "98%",
+                              maxWidth: "1200px",
                             }}
-                            className="replyBtn"
-                            onClick={async () => {
-                              const reply = {
-                                boardCpNo: boardCpNo,
-                                boardReplyCpNo: boardReplyCpNo,
-                                boardReplyCpContent: boardReplyCpContent2,
-                              };
-                              const res = await updateCarpoolReplyDB(reply);
-                              console.log("updateTogetherReplyDB : ", res.data);
-                              setLgShow(false);
-                              Swal.fire({
-                                title: "댓글 수정 완료",
-                                icon: "success",
-                              });
-                              window.location.reload();
-                              console.log(
-                                "리뷰번호" + boardReply.boardReplyCpNo
-                              );
-                            }}
-                          >
-                            Reply Button
-                          </button>
+                            maxLength="50"
+                          ></input>
                         </div>
                         <br />
-                      </Modal.Body>
-                    </Modal>
-                    {boardReply.boardReplyCpMemId === _userData?.memberId && (
-                      <Button
-                        style={{ marginLeft: "10px", backgroundColor: "black" }}
-                        onClick={async () => {
-                          const reply = {
-                            boardCpNo: boardCpNo,
-                            boardReplyCpNo: boardReply.boardReplyCpNo,
-                          };
-                          const res = await deleteCarpoolReplyDB(reply);
-                          // navigate("/together/BoardDetail/" + board.boardTgNo);
-                          window.location.reload();
-                          /* alert("댓글 삭제 완료"); */
-                          Swal.fire({
-                            title: "댓글 삭제 완료",
-                            icon: "success",
-                          });
-                        }}
-                      >
-                        <span>댓글 삭제</span>
-                      </Button>
-                    )}
-                  </div>
-                ))}
-              </div>
+                        <br />
+                        <button
+                          style={{
+                            position: "absolute",
+                            bottom: "0",
+                            right: "0",
+                            margin: "0px 15px 0px 0px ",
+                          }}
+                          className="replyBtn"
+                          onClick={async () => {
+                            const reply = {
+                              boardCpNo: boardCpNo,
+                              boardReplyCpNo: boardReplyCpNo,
+                              boardReplyCpContent: boardReplyCpContent2,
+                            };
+                            const res = await updateCarpoolReplyDB(reply);
+                            console.log("updateTogetherReplyDB : ", res.data);
+                            setLgShow(false);
+                            Swal.fire({
+                              title: "댓글 수정 완료",
+                              icon: "success",
+                            });
+                            window.location.reload();
+                            console.log("리뷰번호" + boardReply.boardReplyCpNo);
+                          }}
+                        >
+                          Reply Button
+                        </button>
+                      </div>
+                      <br />
+                    </Modal.Body>
+                  </Modal>
+                  <Button
+                    style={{ marginLeft: "10px", backgroundColor: "black" }}
+                    onClick={async () => {
+                      const reply = {
+                        boardCpNo: boardCpNo,
+                        boardReplyCpNo: boardReply.boardReplyCpNo,
+                      };
+                      const res = await deleteCarpoolReplyDB(reply);
+                      // navigate("/together/BoardDetail/" + board.boardTgNo);
+                      window.location.reload();
+                      /* alert("댓글 삭제 완료"); */
+                      Swal.fire({
+                        title: "댓글 삭제 완료",
+                        icon: "success",
+                      });
+                    }}
+                  >
+                    <span>댓글 삭제</span>
+                  </Button>
+                </div>
+              ))}
             </div>
           </div>
         </ContainerDiv>
