@@ -20,12 +20,13 @@ public class PaymentDto {
  private String paymentOrderName; //주문명 (상품명)
  private int paymentCount; //주문수량
  private int paymentPrice; //결제금액
- private LocalDateTime paymentDate; //주문 날짜 및 시간
- private String paymentPayer; //주문자 이름
- private String paymentSeller; //판매자 이름
- private int boardMkNo; //판매 게시글 번호
+ private LocalDateTime paymentFestDate; //관람일시
+ private int boardMkNo; //판매 게시글 번호 (마켓게시판)
+ private int memberNo; //구매자 회원번호
+ private String memberName; //구매자 이름
+ private String memberEmail; //구매자 이메일
  
- //
+ 
  
 }
  
