@@ -154,7 +154,7 @@ UPDATE board_market SET board_mk_likes = board_mk_likes+1
 <choose>
 <when test='boardMkNo!=null'>
 UPDATE board_market SET board_mk_likes = board_mk_likes-1
- WHERE board_mk_no = #{boardMkNo}
+ WHERE board_mk_no in (#{boardMkNo})
 </when>
 </choose>
 </update>	

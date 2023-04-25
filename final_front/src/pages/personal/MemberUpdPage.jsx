@@ -170,8 +170,8 @@ const MemberUpdPage = () => {
     }
   }
 
-  const handleUpdate = () => {
-
+  const handleUpdate = async (e) => {
+    // e.preventDefault();
   }
 
   return (

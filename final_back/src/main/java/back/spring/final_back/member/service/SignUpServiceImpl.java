@@ -60,7 +60,7 @@ public class SignUpServiceImpl implements SignUpService {
 	public int changePwUpdate(Map<String, Object> pMap) {
 		log.info("changePwUpdate 확인");
 		int result = 0;
-		String memberPassword = (String) pMap.get("changePwUpdate");
+		String memberPassword = (String) pMap.get("memberPassword");
 		String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
 		pMap.put("memberPassword", memberPasswordEncoded); // key값 수정
 		result = signUpDao.changePwUpdate(pMap);

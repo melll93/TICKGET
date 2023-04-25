@@ -52,6 +52,20 @@ const TogetherBoardList = (board) => {
   return (
     <>
       <div style={{ width: "1200px", marginLeft: "auto", marginRight: "auto" }}>
+        <Button
+          variant="success"
+          style={{
+            backgroundColor: "black",
+            marginLeft: "auto",
+            marginRight: "0px",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+          onClick={() => navigate("/together/write")}
+        >
+          글 작성하기
+        </Button>
+        <br />
         <div className="row" style={{ marginTop: "0px" }}>
           <Table className="table table-hover">
             <thead>
@@ -107,26 +121,7 @@ const TogetherBoardList = (board) => {
             justifyContent: "center",
             marginTop: "20px",
           }}
-        >
-          <Button
-            variant="warning"
-            style={{
-              backgroundColor: "black",
-              color: "white",
-              marginRight: "10px",
-            }}
-            onClick={selectBoardList}
-          >
-            전체조회
-          </Button>{" "}
-          <Button
-            variant="success"
-            style={{ backgroundColor: "black" }}
-            onClick={() => navigate("/together/write")}
-          >
-            글 작성하기
-          </Button>
-        </div>
+        ></div>
       </div>
     </>
   );

@@ -126,9 +126,9 @@ export const mk_plusLikesDB = (board) => {
   });
 };
 
-
 //찜하기 취소시
 export const mk_minusLikesDB = (board) => {
+  console.log(board);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({

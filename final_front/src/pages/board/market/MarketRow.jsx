@@ -115,7 +115,7 @@ onMouseEnter={() => { // 마우스를 요소 위로 올리면
 onMouseLeave={() => { // 마우스를 요소에서 떠나면
   setHovered(false); // 상태값 변경
 }}>
-<h5 className="card-title" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,fontSize:'1rem',opacity:'90%'}}>
+<h5 className="card-title" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,fontSize:'1rem'}}>
   {boards.boardMkTitle}</h5>
 </div>
 <div style={{ display: "flex", justifyContent: "space-between" , }} onClick={linkToDetail}
@@ -137,8 +137,8 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
       <p className="card-text" style={{color:'black' }} >
    
       <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}} >
-  {member_no === boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.1rem", color:'rgb(80, 50, 200)'}}>내 게시글</span>}
-  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px'}}><i class="bi bi-heart" />{" "}{boards.boardMkLikes}</span>}
+  {member_no === boards.memberNo && <span className="mr-5" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1rem", color:'rgb(80, 50, 200)'}}>내 게시글{" "} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span> <i class="bi bi-heart" style={{marginLeft:'3px', marginRight:'2px'}}/>{" "}찜{" "}{boards.boardMkLikes}</span>}
+  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px',fontFamily:"Nanum Gothic", fontWeight:"bold"}}><i class="bi bi-heart"/>{" "}찜{" "}{boards.boardMkLikes}</span>}
 </div>
        </p>
        <hr style={{marginTop:'-25px' , opacity:'0'}}/>

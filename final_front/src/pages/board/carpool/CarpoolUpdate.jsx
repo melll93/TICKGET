@@ -199,9 +199,7 @@ const CarpoolUpdate = () => {
               <div>
                 <label>수정된 날짜</label>
                 <br />
-                <input
-                  id="board_cp_date"
-                  type="date"
+                <span
                   maxLength="50"
                   defaultValue={carpool.boardCpDate}
                   style={{
@@ -215,9 +213,9 @@ const CarpoolUpdate = () => {
                     "YYYY-MM-DD 형식으로 입력해주세요. ex) : " +
                     new Date().toISOString().substr(0, 10)
                   }
-                  onChange={(e) => {
-                    handleDate(e.target.value);
-                  }}
+                  // onChange={(e) => {
+                  //   handleDate(e.target.value);
+                  // }}
                 />
               </div>
 

@@ -19,6 +19,7 @@ export const wishlistSelectDB = (wData) => {
 
 //위시리스트 상세정보
 export const wishlistDetailDB = (wData) => {
+  console.log(wData);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({

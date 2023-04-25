@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert, Button, Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
 import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
@@ -37,7 +37,7 @@ const MarketDetail = () => {
 
   }
 
-  const [_userdata, setUserData] = useState();
+  const [sellerinfo, setSellerinfo] = useState();
 
 
  
@@ -54,6 +54,11 @@ const MarketDetail = () => {
   const [wishlistDetail, setWishlistDetail] = useState({}) //게시글과 일치하는 위시리스트의 상세데이터
   const navigate = useNavigate();
 
+
+
+
+ //게시글,위시리스트 상세데이터 가져오기
+ useEffect(() => {
   const boardDetail = async () => {
     const board = {
       boardMkNo: no
@@ -81,7 +86,7 @@ const MarketDetail = () => {
         board_mk_likes : jsonDoc[0].boardMkLikes
       })
 
-      searchById(jsonDoc[0].memberId).then(setUserData);
+     searchById(jsonDoc[0].memberId).then(setSellerinfo); 
     });
   }
 
@@ -101,18 +106,13 @@ const MarketDetail = () => {
      wl_boardmkno : jsonDoc[0].boardMkNo
     })
   }
-
-
- //게시글,위시리스트 상세데이터 가져오기
- useEffect(() => {
   boardDetail()
   wlistDetail()
 }, [])
 
 
-
   //연월일 날짜 시간 표기방법으로 변경코드
-  const date = new Date(detail.mk_ticket_date);
+   const date = new Date(detail.mk_ticket_date);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
@@ -126,7 +126,7 @@ const MarketDetail = () => {
   const now = new Date();
   const boardMkDateTime = new Date(detail.board_mk_date)
   const diffInMs = now - boardMkDateTime;
-
+ 
 
   //작성일 태그에 적용
   const formatTimeDiff = (diffInMs) => {
@@ -167,113 +167,123 @@ const MarketDetail = () => {
 
 
 //찜하기 기능
-const [isWishlistAdded, setIsWishlistAdded] = useState(false);
+const [isWishlistAdded, setIsWishlistAdded] = useState((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? (member_no === wishlistDetail.wl_memno) : false);
+const [heart, setHeart] = useState((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? (member_no === wishlistDetail.wl_memno) : false);
 
 useEffect(() => {
-  console.log(member_no);
-  console.log(wishlistDetail.wl_memno);
-  if (member_no === wishlistDetail.wl_memno) {
-    setIsWishlistAdded(true);
-  } else {
-    setIsWishlistAdded(false);
-  }
-}, [wishlistDetail.wl_memno, member_no, isWishlistAdded]);;
+  console.log(member_no)
+  console.log(wishlistDetail.wl_memno)
+  setIsWishlistAdded((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? (member_no === wishlistDetail.wl_memno) : false);
+  setHeart((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? (member_no === wishlistDetail.wl_memno) : false)
+}, [wishlistDetail, member_no]);
+
 
 const handleClick = () => {
+  if(member_no === undefined){
+    Swal.fire({
+      title: "로그인 후 이용하실 수 있습니다.",
+      icon: 'warning',
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login');
+      }
+    });
+  }
   if (!isWishlistAdded) {
     addWishlist();
-    setIsWishlistAdded(true);
   } else {
     deleteWishlist();
-    setIsWishlistAdded(false);
   }
 }
 
 
-  const addWishlist = () => {
-    if (member_no > 0 && member_no != detail.member_no) {
-     const addtoWishlist = async() =>{
-      const wData = {
-        wishlistId : 0,
-        wishlistTitle : detail.board_mk_title,
-        wishlistPrice : detail.mk_ticket_price,
-        wishlistCategory : "market",
-        boardMkNo : detail.board_mk_no,
-        memberNo : member_no,
-      }
-      const res = await wishlistAddDB(wData)
-      console.log(res.data)
-     }
-     const mkplusLikes = async() => {  //게시글 찜 갯수 증가
-      const board={
-        boardMkNo : detail.board_mk_no,
-      }
-      const res = await mk_plusLikesDB(board)
-      console.log(res.data);
-     }
-     addtoWishlist()
-     mkplusLikes()
-     Swal.fire({
-      icon: 'success',
-      title: '상품을 찜했습니다!',
-     })
-     setIsWishlistAdded(true); // 상태를 true로 변경
-    
-    } else if (member_no === detail.member_no) {
-      Swal.fire({
-        title: "내 게시글에서 이용할 수 없습니다.",
-        icon: 'error'
-      });
-  
-    } else {
-      Swal.fire({
-        title: "로그인 후 이용하실 수 있습니다.",
-        icon: 'warning',
-        showCancelButton: true,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate('/login');
-        }
-      });
+const addWishlist = () => {
+  if (member_no > 0 && member_no != detail.member_no) {
+   const addtoWishlist = async() =>{
+    const wData = {
+      wishlistId : 0,
+      wishlistTitle : detail.board_mk_title,
+      wishlistPrice : detail.mk_ticket_price,
+      wishlistFileurl : detail.board_mk_fileurl,
+      wishlistCategory : "market",
+      boardMkNo : detail.board_mk_no,
+      memberNo : member_no,
     }
-  }
-
-
-  //찜하기 취소 시
-   const deleteWishlist = () => {
-    if (member_no > 0 && member_no != detail.member_no) {
-      /* 구현중.. */
-     const mkminusLikes = async() => {  //게시글 찜 갯수 감소
-      const board={
-        boardMkNo : detail.board_mk_no,
-      }
-      const res = await mk_minusLikesDB(board)
-      console.log(res.data);
-     }
-     mkminusLikes()
-     Swal.fire({
-      icon: 'info',
-      title: '찜하기를 취소하였습니다.',
-     })
-     setIsWishlistAdded(false); // 상태를 false로 변경
-    } else if (member_no === detail.member_no) {
-      Swal.fire({
-        title: "내 게시글에서 이용할 수 없습니다.",
-        icon: 'error'
-      });
-
-    } else {
-      Swal.fire({
-        title: "로그인 후 이용하실 수 있습니다.",
-        icon: 'warning',
-        showCancelButton: true,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate('/login');
-        }
-      });
+    const res = await wishlistAddDB(wData)
+    console.log(res.data)
+   }
+   const mkplusLikes = async() => {  //게시글 찜 갯수 증가
+    const board={
+      boardMkNo : detail.board_mk_no,
     }
+    const res = await mk_plusLikesDB(board)
+    console.log(res.data);
+   }
+   addtoWishlist()
+   mkplusLikes()
+   Swal.fire({
+    icon: 'success',
+    title: '상품을 찜했습니다!',
+   })
+   setIsWishlistAdded(true);
+   setHeart(true)
+  } else if (member_no === detail.member_no) {
+    Swal.fire({
+      title: "내 게시글에서 이용할 수 없습니다.",
+      icon: 'error'
+    });
+
+  } else {
+    Swal.fire({
+      title: "로그인 후 이용하실 수 있습니다.",
+      icon: 'warning',
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login');
+      }
+    });
   }
+}
+
+
+//찜하기 취소 시
+ const deleteWishlist = () => {
+  if (member_no > 0 && member_no != detail.member_no) {
+    /* 구현중.. */
+   const mkminusLikes = async() => {  //게시글 찜 갯수 감소
+    const board={
+      boardMkNo : detail.board_mk_no,
+    }
+    const res = await mk_minusLikesDB(board)
+    console.log(res.data);
+   }
+   mkminusLikes()
+   Swal.fire({
+    icon: 'info',
+    title: '찜하기를 취소하였습니다.',
+   })
+   setIsWishlistAdded(false);
+   setHeart(false)
+  } else if (member_no === detail.member_no) {
+    Swal.fire({
+      title: "내 게시글에서 이용할 수 없습니다.",
+      icon: 'error'
+    });
+
+  } else {
+    Swal.fire({
+      title: "로그인 후 이용하실 수 있습니다.",
+      icon: 'warning',
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login');
+      }
+    });
+  }
+}
    
 
 
@@ -348,10 +358,10 @@ const handleClick = () => {
               <hr />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", fontSize: "17.5px" }}>
                 <div style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.1rem" }}>
-                  <UserProfile _userData={_userdata} /> {detail.member_nickname}</div>
+                  <UserProfile _userData={sellerinfo} /> {detail.member_nickname}</div>
                 <div style={{ marginRight: '20px', opacity: '80%', marginTop: '15px' }}>
                   <span style={{ marginRight: "5px", color: 'black' }}>
-                  <i class="bi bi-heart-fill"></i> {detail.board_mk_likes} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
+                  {heart ? (<><i class="bi bi-heart-fill" style={{color:'red'}} /> {' '} </>) : (<><i class="bi bi-heart" /> {' '} </>)}<span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
                   </span>
                   <span style={{ marginRight: "5px", color: 'black' }}>
                     <i class="bi bi-eye-fill"></i> {detail.board_mk_hit} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
@@ -367,7 +377,7 @@ const handleClick = () => {
               <div style={{ fontSize: '1.1rem' }}>
                 <p style={{ textAlign: 'left', paddingRight: '10px', marginTop: '25px', opacity: '90%' }}>
                   <span style={{ display: 'inline-block', width: '5rem', marginRight: '10px', color: 'black' }}>∙ 공연일</span>
-                  {" "}{formattedTicketDate}
+                  {" "}{ formattedTicketDate }
                 </p>
                 <p style={{ textAlign: 'left', paddingRight: '10px', marginTop: '25px', opacity: '90%' }}>
                   <span style={{ display: 'inline-block', width: '5rem', marginRight: '10px', color: 'black' }}>∙ 공연장소</span>
@@ -394,23 +404,10 @@ const handleClick = () => {
 
 
               <div className="mb-2" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '70px', }}>
-              <Button
-    variant="outline-dark"
-    size="lg"
-    style={{ width: '180px' }}
-    onClick={handleClick}
-  >
-    {member_no === wishlistDetail.wl_memno ? (
-      <>
-        <i class="bi bi-check2-square" /> {' '} 찜한 상품
-      </>
-    ) : (
-      <>
-        <i class="bi bi-heart" /> {' '} 찜하기
-      </>
-    )}
-  </Button>{' '}
-                              <Button variant="outline-danger" size="lg" style={{ width: '180px' }} onClick={linkToChat}>
+              <Button variant="outline-danger" size="lg" style={{ width: '180px' }} onClick={handleClick}>
+              {isWishlistAdded ? (<><i class="bi bi-check2-square" /> {' '} 찜한 상품</>) : (<><i class="bi bi-heart" /> {' '} 찜하기</>)}
+  </Button> 
+                              <Button variant="outline-dark" size="lg" style={{ width: '180px' }} onClick={linkToChat}>
                   <i class="bi bi-chat-left-dots"></i>{" "}채팅하기
                 </Button>{' '}
                 <Button variant="outline-primary" size="lg" style={{ width: '180px' }} onClick={linkToPayment}>
