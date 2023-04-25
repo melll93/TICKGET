@@ -16,7 +16,9 @@ import { Cookies } from "react-cookie";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, onValue, get, set  } from "firebase/database";
 import firebase from "firebase/compat/app";
+import { firebaseConfig } from "../board/carpool/CarpoolBoardList";
 
+/*  카풀에서 주워다 쓰는중
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -27,7 +29,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-};
+}; */
 
 const FestivalsDetail = () => {
   const navigate = useNavigate();
@@ -39,248 +41,46 @@ const FestivalsDetail = () => {
   let { festMId } = useParams();
 
 
-/************* firebase 처리 중 *************/
-const [data, setData] = useState({});
-/* const [carpool, setCarpool] = useState({
-  boardCpNo: "",
-  max: "",
-  now: "",
-}); */
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app();
-}
+  
+  
+/* 초기화 */
 useEffect(() => {
   firebase.initializeApp(firebaseConfig);
   const database = firebase.database();
   database.ref().on("value", (snapshot) => {
-    const data = snapshot.val();
-    setData(data);
+    setFestMData(festMData);
   });
-
+  
   return () => {
     database.ref().off();
   };
-}, []);
-
-// const handleSaveData = (boardCpNo) => {
-//   const count = 1;
-//   firebase
-//     .database()
-//     .ref(`${boardCpNo}`)
-//     .once("value")
-//     .then((snapshot) => {
-//       if (snapshot.exists()) {
-//         const maxVal = snapshot.val().max;
-//         const now = snapshot.val().now;
-//         const currentCount = snapshot.val().count;
-//         if (now < maxVal && currentCount < maxVal) {
-//           const newNow = now + count;
-//           const newCount = currentCount + count;
-//           if (newNow <= maxVal && newCount <= maxVal) {
-//             firebase
-//               .database()
-//               .ref(`${boardCpNo}`)
-//               .update({
-//                 now: firebase.database.ServerValue.increment(count),
-//                 count: firebase.database.ServerValue.increment(count),
-//               });
-//           }
-//         } else {
-//           Swal.fire({
-//             title: "인원이 다 찼습니다.",
-//             icon: "success",
-//           });
-//         }
-//       } else {
-//         firebase.database().ref(`${boardCpNo}`).set({
-//           max: 10,
-//           now: 1,
-//           count: 1,
-//         });
-//       }
-//     });
-// };
-const handleSaveData = (boardCpNo) => {
-  const count = 1;
-  const cookies = new Cookies();
-  const _userData = cookies.get("_userData"); //유저 정보
-  console.log("_userData : ", _userData);
-  const id = _userData.memberId // 쿠키에서 아이디 값 가져오기
-  console.log("id : ", id);
-  if (!id) {
-    alert("회원가입을 해주세요.");
-    return;
-  }
-
-  firebase
-    .database()
-    .ref(`${boardCpNo}`)
-    .once("value")
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const maxVal = snapshot.val().max;
-        const now = snapshot.val().now;
-        const currentCount = snapshot.val().count;
-        if (now < maxVal && currentCount < maxVal) {
-          const newNow = now + count;
-          const newCount = currentCount + count;
-          if (newNow <= maxVal && newCount <= maxVal) {
-            firebase
-              .database()
-              .ref(`${boardCpNo}`)
-              .update({
-                now: firebase.database.ServerValue.increment(count),
-                count: firebase.database.ServerValue.increment(count),
-              });
-          }
-        } else {
- alert('인원다참')
-        }
-      } else {
-        firebase.database().ref(`${boardCpNo}`).set({
-          max: 10,
-          now: 1,
-          count: 1,
-        });
-      }
-    });
-};
-// 쿠키에서 아이디 값 가져오기
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
-}
-/*  ////////////////////////////////////파이어베이스 */
+}, []); 
 
 
-/* const app = initializeApp(firebaseConfig);
-const database = getDatabase(app); */
 
-/* const firebaseConfig= {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  databaseURL: (process.env.FIREBASE_DATABASE_URL =
-    "https://finalproject-85e01-default-rtdb.asia-southeast1.firebasedatabase.app"),
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-}; */
-/* 
-const firebaseConfig = {
-  databaseURL: "https://kh-221128-82a22-default-rtdb.asia-southeast1.firebasedatabase.app"
-};
-const [yigeo, setYigeo] = useState({});
-
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+/*파이어베이스 - READ  */
+const [festMData, setFestMData] = useState(null);  
 
 useEffect(() => {
-  const dbRef = ref(database);
-  const listener = get(dbRef, "/fest_seats", (snapshot) => {
-    if (snapshot.exists()) {
-      setYigeo(snapshot.val());
-    } else {
-      console.log("No data available");
-    }
-  });
-
-  return () => {
-    // Cleanup the listener when the component unmounts
-    listener();
-  };
-}, []);
-
-const readOne = () => {
-  const dbRef = ref(database, "/fest_seats");
-  get(dbRef)
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
+  const festTcSeatsInfo= async () => {
+    try {
+      const snapshot = await firebase
+        .database()
+        .ref(`${festMId}`)
+        .once("value");    //한번읽기
+      if (snapshot.exists()) {  //존재하면 여기 타기
+        const data = snapshot.val();  
+        setFestMData(data);      //받아온 값 담기 
       } else {
-        console.log("No data available");
+        // 데이터가 존재하지 않는 경우
+        alert("좌석 정보 없음");
       }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
- */
-
-/* if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app();
-}
-useEffect(() => {
-  firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
-  database.ref().on("value", (snapshot) => {
-    const yigeo = snapshot.val();
-    setYigeo(yigeo);
-  });
-
-  return () => {
-    database.ref().off();
-  };
-}, []);
- */
-
-
-/* const readOne = () => {
-  const dbRef = ref(yigeo);
-  get(child(dbRef, "/fest_seats"))
-    .then(snapshot => {
-    if (snapshot.exists()) {
-      console.log(snapshot.val());
-    } else {
-      console.log("No data available");
+    } catch (error) {
+      console.log("Firebase 데이터 읽기 에러", error);
     }
-  })
-    .catch(error => {
-    console.error(error);
-  });
-}; */
- 
-/* const db = getDatabase();
-const starCountRef = ref(db, 'posts/' + postId + '/starCount');
-onValue(starCountRef, (snapshot) => {
-  const data = snapshot.val();
-  updateStarCount(postElement, data);
-});
-
-const dbRef = ref(getDatabase());
-get(child(dbRef, `users/${userId}`)).then((snapshot) => {
-  if (snapshot.exists()) {
-    console.log(snapshot.val());
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
-
-
-const db = getDatabase();
-set(ref(db, 'users/' + userId), {
-  username: name,
-  email: email,
-  profile_picture : imageUrl
-})
-.then(() => {
-  // Data saved successfully!
-})
-.catch((error) => {
-  // The write failed...
-});
- */
-
-
+  };
+  festTcSeatsInfo();
+}, []);
 
 
 
@@ -673,25 +473,28 @@ set(ref(db, 'users/' + userId), {
 
                 <div style={{border:'1px solid red', margin: '10px', alignItems:'center'}}>
                 <h4 style={{color:'red', textDecoration:'underline'}}>[잔여좌석]</h4> 
-                {/* 파이어 베이스에서 받아온 값 호출하자 */}
-<td style={{ textAlign: "center", width: "200px" }}>
-                      {Object.keys(data).map((key, i) => {
-                        if (Number(key) != null) {
-                          const item = { boardCpNo: key, ...data[key] };
-                          return (
-                            <div className="data" key={i}>
-                              {/* 글번호={carpool.boardCpNo}<br/> */}
-                              {/*  현재인원={item.now},  */}
-                              잔여좌석 -  {item.count}/
-                              {item.max}
-                              <br />
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
-                    </td>
-                    {/* 파이어 베이스에서 받아온 값 호출하자 */}
+              
+              
+                {/* 파이어 베이스 - 좌석정보*/}
+
+{/* 클릭한 값 뜨게 하기 */}
+
+                <div>
+      {festMData && (
+        <div>
+          <div>{festMData.seats.type} - {festMData.seats.time}</div>
+          <div>{festMData.seats.seatAvailable}/{festMData.seats.seatTotal}</div>
+        </div>
+      )}
+    </div>
+
+
+
+                    {/* 파이어 베이스 - 좌석정보 끝 */}
+
+
+
+
                 </div>
                 구매 수량 : <DropdownButton options={options} ></DropdownButton>
                 

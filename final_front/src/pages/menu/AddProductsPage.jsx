@@ -54,28 +54,47 @@ const AddProducts = () => {
   const optionModalOpen = () => {if (optionModal === 0) {setOptionModal(1);
     } else {setOptionModal(0);}};
 
-  /* 상품등록 insert */
-  const festivalInsert = async () => {
+/* 상품등록 insert */
+const festivalInsert = async () => {
+  console.log(festTitle)
+  console.log(festLocation)
+  console.log(festCategory)
+  console.log(festEndday)
+  console.log(festStartday)
+  if (
+    festTitle == null || festTitle === '' || 
+    festLocation == null ||  festLocation === '' || 
+    festCategory == null || festCategory === '' || 
+    festStartday == null  || festStartday === '' || 
+    festEndday == null  || festEndday === '' || 
+    festArea == null  || festArea === '' || 
+    festImageUrl == null  || festImageUrl === '' 
+  ) {
+    alert('빈칸 없이 작성해주세요. ');
+  } else {
     const festival = {
       festMName: festTitle,
       festMLoc: festLocation,
       festMGenre: festCategory,
       festMStart: festStartday,
       festMEnd: festEndday,
-      festDetail,
-      festPrice,
-      festDesc,
       festMArea: festArea,
       festMImg: festImageUrl,
     };
     const res = await FestivalInsertDB(festival);
-/*     console.log(festival); */
+    /* console.log(festival); */
     if (!res.data) {
+  alert('error')
     } else {
-      navigate("/festival");
+      const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId);
+      if (confirmResult) {//예
+       optionModalOpen() 
+      } else {  //아니오
+        navigate('/festival');
+      }
     }
-  };
-
+  }
+};
 
 
 /* 입력되어있던 정보 가져오기 */  
@@ -125,10 +144,7 @@ return console.log('작성자가 아닙니다.')
 } */
 }
 originDetail()
-},[
-/*   festMId,  */
-/*   festPsUrl */
-]);
+},[]);
 
 
     const festivalUpdate = async() => {
@@ -293,7 +309,7 @@ originDetail()
           id="festArea"
           aria-label="Default select example"
           style={{ width: "150px" }}
-          value={festArea}
+          value={festArea==null? '': festArea}
           onChange={(e) => {
             inputArea(e.target.value);
           }}
@@ -352,13 +368,16 @@ originDetail()
           <label htmlFor="floatingInput"> 행사종료일</label>
         </div>
         <br />
+        
         {/* 추가 정보 입력 */}
+        {festMId==='new'? null:
         <BlackBtn onClick={optionModalOpen}>
-          {" "}
-          판매 추가정보 입력 (추후기재가능)
+          상세정보 입력 
         </BlackBtn>
+        }
         {optionModal === 1 ? <AddProductsOptionalDetail  festTcNo={festTcNo} setFestOriginPsUrl={setFestPsUrl} festPsNo={festPsNo} festOrginPsUrl={festPsUrl} festDtAge={festDtAge} festDtCasting={festDtCasting} festDtCrew={festDtCrew} festDtRuntime={festDtRuntime} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}/> : null}
         {/* 추가 정보 입력 */}
+        
         <br />
         <br />
         <BlackBtn

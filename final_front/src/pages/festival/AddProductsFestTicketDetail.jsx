@@ -123,7 +123,8 @@ const deleteFestTcRow = async (index) => { // 매개변수 수정
   return (
     <div>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
-fest_ticket 추가 정보 입력 
+fest_ticket 추가 정보 입력  
+<p style={{fontSize:'15px'}}>(상품 등록 후, 가능합니다.)</p>
     </h1>
 
     <div className="input-group">
@@ -196,7 +197,7 @@ fest_ticket 추가 정보 입력
         </thead>
         <tbody>
         {tickets&&tickets.map((ticket, index) => (
-            <tr key={index}><td>&{index+1+dbTickets.length}
+            <tr key={index}><td>  {dbTickets ? index + 1 + dbTickets.length : index + 1}
               </td><td>
               <input
                   type="text"
