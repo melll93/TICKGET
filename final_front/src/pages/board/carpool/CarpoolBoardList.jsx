@@ -16,9 +16,9 @@ import CommonPagination from "../../../components/CommonPagination";
 import Swal from "sweetalert2";
 import { Cookies } from "react-cookie";
 
-/************* firebase Config  ************ 
- * 은영 - festivalDetail 에서 주워다 쓰는중 export 지우거나 하면 알려주삼 
-*/
+/************* firebase Config  ************
+ * 은영 - festivalDetail 에서 주워다 쓰는중 export 지우거나 하면 알려주삼
+ */
 export const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -60,6 +60,12 @@ const CarpoolBoardList = () => {
     };
   }, []);
 
+  const [carpool, setCarpool] = useState({
+    boardCpNo: "",
+    max: "",
+    now: "",
+  });
+
   const handleSaveData = (boardCpNo) => {
     const count = 1;
     const cookies = new Cookies();
@@ -74,7 +80,7 @@ const CarpoolBoardList = () => {
 
     firebase
       .database()
-      .ref(`${boardCpNo}`)
+      .ref(`carpoolList/${boardCpNo}`)
       .once("value")
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -87,7 +93,7 @@ const CarpoolBoardList = () => {
             if (newNow <= maxVal && newCount <= maxVal) {
               firebase
                 .database()
-                .ref(`${boardCpNo}`)
+                .ref(`carpoolList/${boardCpNo}`)
                 .update({
                   now: firebase.database.ServerValue.increment(count),
                   count: firebase.database.ServerValue.increment(count),
@@ -100,7 +106,7 @@ const CarpoolBoardList = () => {
             });
           }
         } else {
-          firebase.database().ref(`${boardCpNo}`).set({
+          firebase.database().ref(`carpoolList/${boardCpNo}`).set({
             max: 10,
             now: 1,
             count: 1,
@@ -211,22 +217,25 @@ const CarpoolBoardList = () => {
 
                     {/* 파이어 베이스에서 받아온 값 호출하자 */}
                     <td style={{ textAlign: "center", width: "200px" }}>
-                      {Object.keys(data).map((key) => {
-                        if (Number(key) === carpool.boardCpNo) {
-                          const item = { boardCpNo: key, ...data[key] };
-                          return (
-                            <div className="data" key={carpool.boardCpNo}>
-                              {/* 글번호={carpool.boardCpNo}<br/> */}
-                              {/*  현재인원={item.now},  */}
-                              최대인원 = {item.max}, 참가인원 = {item.count}/
-                              {item.max}
-                              <br />
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
+                      {data.carpoolList &&
+                        Object.keys(data.carpoolList).map((key) => {
+                          if (Number(key) === carpool.boardCpNo) {
+                            const item = {
+                              boardCpNo: key,
+                              ...data.carpoolList[key],
+                            };
+                            return (
+                              <div className="data" key={carpool.boardCpNo}>
+                                최대인원 = {item.max}, 참가인원 = {item.count}/
+                                {item.max}
+                                <br />
+                              </div>
+                            );
+                          }
+                          return null;
+                        })}
                     </td>
+
                     {/* 파이어 베이스에서 받아온 값 호출하자 */}
 
                     <td style={{ textAlign: "center", width: "80px" }}>

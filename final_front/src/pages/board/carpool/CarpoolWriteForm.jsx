@@ -184,7 +184,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
 
     firebase
       .database()
-      .ref(carpool.name)
+      .ref(`carpoolList/${carpool.name}`)
       .once("value")
       .then((snapshot) => {
         Swal.fire({
@@ -198,13 +198,19 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             const newNow = now + count;
             const newCount = currentCount + count;
             if (newNow <= maxVal && newCount <= maxVal) {
-              firebase.database().ref(carpool.name).update({
+              firebase.database().ref(`carpoolList/${carpool.name}`).update({
                 max: maxVal,
                 now: 1,
                 count: 1,
               });
             }
           }
+        } else {
+          firebase.database().ref(`carpoolList/${carpool.name}`).update({
+            max: maxVal,
+            now: 1,
+            count: 1,
+          });
         }
       });
   };
@@ -347,7 +353,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 name="name"
                 placeholder="글번호"
                 // readOnly
-                Value={boardCpNo}
+                // value={boardCpNo}
                 onChange={handleInputChange}
               />
 
