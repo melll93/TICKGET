@@ -1,5 +1,6 @@
 package back.spring.final_back.member.config;
 
+import back.spring.final_back.member.handler.OAuth2AuthenticationSuccessHandler;
 import back.spring.final_back.member.jwt.JwtAccessDeniedHandler;
 import back.spring.final_back.member.jwt.JwtAuthenticationEntryPoint;
 import back.spring.final_back.member.jwt.JwtSecurityConfig;
@@ -28,6 +29,7 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final CorsFilter corsFilter;
     private final MemberOAuth2ServiceImpl memberOAuth2Service;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -35,7 +37,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {  
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf().disable()
@@ -54,8 +56,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
-//                .requestMatchers("/festival/**").hasAuthority("ROLE_USER")
-//                .anyRequest().authenticated()
+                // .requestMatchers("/festival/**").hasAuthority("ROLE_USER")
+                // .anyRequest().authenticated()
 
                 /*********************************
                  * 자체 로그인
@@ -67,24 +69,23 @@ public class SecurityConfig {
                 .formLogin()
                 .loginProcessingUrl("/login")
                 .successForwardUrl("/member/login/success")
-//                .failureForwardUrl("/member/login/failed")
+                // .failureForwardUrl("/member/login/failed")
                 .usernameParameter("memberId")
                 .passwordParameter("memberPassword")
-                
-                .and()
-                .apply(new JwtSecurityConfig(tokenProvider))
 
                 /*********************************
                  * OAuth2 로그인
                  *********************************/
                 .and()
                 .oauth2Login()
-//                .loginPage("/oauth/login")
-//                .loginProcessingUrl("/oauth/login")
+                // .loginPage("/oauth/login")
+                // .loginProcessingUrl("/oauth/login")
                 .defaultSuccessUrl("/member/oauth/loginSuccess")
+                .successHandler(oAuth2AuthenticationSuccessHandler)
                 .userInfoEndpoint().userService(memberOAuth2Service);
 
-
+        httpSecurity
+                .apply(new JwtSecurityConfig(tokenProvider));
 
         return httpSecurity.build();
     }

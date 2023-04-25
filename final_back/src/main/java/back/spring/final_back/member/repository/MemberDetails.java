@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 @Data
 // @RequiredArgsConstructor
-public class MemberDetails implements UserDetails {
+public class MemberDetails implements UserDetails, OAuth2User {
 
     private MemberDto memberDto;
     private Map<String, Object> attributes;
@@ -65,5 +66,10 @@ public class MemberDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return memberDto.getMemberName();
     }
 }
