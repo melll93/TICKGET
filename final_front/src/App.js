@@ -42,6 +42,7 @@ import PaymentPage from "./pages/personal/PaymentPage";
 import UnRegiesterPage from "./pages/personal/UnRegiesterPage";
 import MemberUpdPage from "./pages/personal/MemberUpdPage";
 import FireTest from "./pages/board/carpool/FireTest";
+import SocialRedirect from "./pages/member/SocialRedirect";
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
@@ -62,6 +63,7 @@ function App({ mkImageUploader }) {
           exact={true}
           element={<SocialRegisterPage />}
         />
+        <Route path="/oauth2/redirect/*" element={<SocialRedirect />} />
         <Route
           path="/login"
           exact={true}
@@ -118,7 +120,7 @@ function App({ mkImageUploader }) {
         />
 
         {/* CarpoolPage Routes */}
-        
+
         {/* ******************************************* */}
         <Route path="firebase" element={<FireTest />} />
         {/* ******************************************* */}

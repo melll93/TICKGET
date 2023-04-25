@@ -20,9 +20,6 @@ import { Cookies } from "react-cookie";
 import Header from "../../components/Header";
 import Swal from "sweetalert2";
 
-
-
-
 const LoginPage = ({ user, setUser, authLogic }) => {
   const dispatch = useDispatch();
   const reduxUser = useSelector((state) => state.userStatus.user);
@@ -65,10 +62,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           /* window.alert("로그인 성공"); */
           Swal.fire({
             title: "로그인 성공",
-            icon: 'success',
-          }
-
-          )
+            icon: "success",
+          });
           // 로그인 ID redux에 저장
           dispatch(reduxLogin(paramMember.memberId));
 
@@ -77,7 +72,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           window.localStorage.setItem("access_token", token);
 
           // navigate("/");
-          window.location.href = "/"
+          window.location.href = "/";
         }
         // else if (res.response.status >= 400 && res.response.status < 600) {
         //   console.log(res.response);
@@ -90,22 +85,22 @@ const LoginPage = ({ user, setUser, authLogic }) => {
       .catch((error) => {
         Swal.fire({
           title: "로그인 실패\n" + error,
-          icon: "error"
-        })
+          icon: "error",
+        });
       });
   };
 
   const handleLogin = () => {
     if (userId === null || userId === "" || userId === undefined) {
       Swal.fire({
-        title: '아이디를 입력해주세요',
-        icon: 'warning'
-      })
+        title: "아이디를 입력해주세요",
+        icon: "warning",
+      });
     } else if (userPw === null || userPw === "" || userPw === undefined) {
       Swal.fire({
-        title: '비밀번호를 입력해주세요',
-        icon: 'warning'
-      })
+        title: "비밀번호를 입력해주세요",
+        icon: "warning",
+      });
     } else {
       // 아이디 비밀번호 정상 입력
       console.log(userPw);
@@ -115,9 +110,9 @@ const LoginPage = ({ user, setUser, authLogic }) => {
 
   const handleKakao = async () => {
     const result = await axios({
-      url: "http://localhost:8888/oauth2/authorization/kakao"
-    }).then(console.log)
-  }
+      url: "http://localhost:8888/oauth2/authorization/kakao",
+    }).then(console.log);
+  };
 
   /************************************comment************************************
    * 조장 생각 : 변수와 메소드가 많아지며 명칭이 많아져 코드가 많아질수록 혼동할 가능성이 높아짐.
@@ -259,15 +254,9 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           </Form>
           {/***************************************************************/}
           <hr />
-
-          {/************************************************** 소셜 로그인 **************************************************/}
-          <div className="socialLogin">
-            {/********************** 네이버 로그인 버튼 **********************/}
-            <NaverLogin user={user} setUser={setUser} />
-            {/************************** 네이버 끝 **************************/}
-
-            {/********************** 카카오 로그인 버튼 **********************/}
-            <div className="loginbutton">
+          {/* <div className="socialLogin">
+            <NaverLogin user={user} setUser={setUser} /> // 네이버 로그인
+            <div className="loginbutton"> // 카카오 로그인
               <a href={KAKAO_AUTH_URL}>
                 <img
                   className="loginbuttonimg"
@@ -275,9 +264,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 />
               </a>
             </div>
-            {/************************** 카카오 끝 **************************/}
-            {/********************** 구글 로그인 버튼 **********************/}
-            <div
+            <div // 구글 로그인
               className="loginbutton"
               type="button"
               onClick={() => {
@@ -291,13 +278,33 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 />
               </a>
             </div>
-            {/************************** 구글 끝 **************************/}
+          </div> */}
+          <div className="socialLogin">
+            <Link to="http://localhost:8888/oauth2/authorization/google">
+              <div className="loginbutton">
+                <img
+                  className="loginbuttonimg"
+                  src="logos/google/btn_google_simple.png"
+                />
+              </div>
+            </Link>
+            <Link to="http://localhost:8888/oauth2/authorization/naver">
+              <div className="loginbutton">
+                <img
+                  className="loginbuttonimg"
+                  src="logos/naver/btnG_아이콘원형.png"
+                />
+              </div>
+            </Link>
+            <Link to="http://localhost:8888/oauth2/authorization/kakao">
+              <div className="loginbutton">
+                <img
+                  className="loginbuttonimg"
+                  src="logos/kakao/kakao_login_simple.png"
+                />
+              </div>
+            </Link>
           </div>
-          {/************************************************* 소셜 로그인 끝 *************************************************/}
-          <hr />
-          <Link to="http://localhost:8888/oauth2/authorization/google">구글</Link>&nbsp;&nbsp;
-          <Link to="http://localhost:8888/oauth2/authorization/naver">네이버</Link>&nbsp;&nbsp;
-          <Link to="http://localhost:8888/oauth2/authorization/kakao">카카오</Link>&nbsp;&nbsp;
         </div>
       </div>
     </>

@@ -17,4 +17,6 @@ public interface MemberDao {
     Map<String, Object> checkFollow(String myId, String friendId);
 
     int addFollow(String myId, String friendId);
+
+    int socialjoin(MemberDto memberDto);
 }

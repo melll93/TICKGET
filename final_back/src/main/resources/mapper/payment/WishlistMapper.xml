@@ -12,11 +12,7 @@
 <!-- 위시리스트 상세정보 -->
 <select id="wishlistDetail" parameterType="WishlistDto" resultType="WishlistDto">
   SELECT * FROM wishlist_data
-  <where>
-    <if test='boardMkNo != null'>
-      board_mk_no = #{boardMkNo}
-    </if>
-  </where>
+  WHERE member_no = #{memberNo} AND board_mk_no = #{boardMkNo}
 </select>
 
 
@@ -40,11 +36,19 @@
 
 
 
-<!-- 위시리스트 제거 -->
+<!-- 위시리스트 전체 제거 -->
 <delete id="wishlistDelete" parameterType="WishlistDto">
     DELETE FROM wishlist_data
-    WHERE board_mk_no = #{boardMkNo} AND member_no = #{memberNo}
+    WHERE member_no = #{memberNo}
 </delete>
+
+
+<!-- 위시리스트 선택 제거 -->
+<delete id="wishlistSelDelete" parameterType="WishlistDto">
+  DELETE FROM wishlist_data
+  WHERE member_no = #{memberNo} AND board_mk_no IN (#{boardMkNo})
+</delete>
+
 
 
 

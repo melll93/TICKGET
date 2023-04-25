@@ -33,6 +33,7 @@ const PaymentPage = ({orderDetail}) => {
   const _userData = cookies.get("_userData"); //유저 정보
   /*   console.log(paymentData) */
   console.log(_userData)
+  
   console.log(orderDetail); 
   const navigate = useNavigate()
   let totalPrice = orderDetail.amount*orderDetail.price
@@ -47,7 +48,7 @@ console.log(date) */
 
 const paymentData={
   amount:totalPrice, //가격
-  orderId:'assdasdadsad',    //주문번호
+  orderId:'x4PBm2QfOA5oiyJNd638T',    //주문번호
   orderName:orderDetail.title,  //주문명
   customerName:_userData.memberName,     //구매자 이름
   no,      
@@ -57,6 +58,7 @@ const paymentData={
 
 const handleToss = async() => {
   const res = await handlePayment(paymentData)
+  console.log(res.data)
 }
 
 
@@ -137,7 +139,7 @@ const handleToss = async() => {
       <div style={{ marginLeft: '20px' }}>
      <div style={{ display: 'inline-block' , marginTop:'5px' }}>
        <Card.Text style={{  fontSize: '22px'}}>
-         수량 <span style={{marginLeft:'400px', color:'black'}}>{orderDetail.amount}장</span></Card.Text>
+         수량 <span style={{marginLeft:'400px', color:'black'}}>{orderDetail.amount}{" "}장</span></Card.Text>
      </div>
      <hr/>
      <div>

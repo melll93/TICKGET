@@ -17,7 +17,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    window.localStorage.clear();
+    window.localStorage.removeItem("access_token");
     cookies.remove("_userData");
     // navigate("/"); // cookie가 갱신이 안됨
     window.location.href = "/";

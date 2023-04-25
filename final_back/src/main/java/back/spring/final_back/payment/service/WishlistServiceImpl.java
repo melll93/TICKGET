@@ -44,11 +44,21 @@ public class WishlistServiceImpl implements WishlistService {
 	}
 	
 	
+	//전체삭제
 	@Override
 	public int wishlistDelete(WishlistDto wlDto) {
 		logger.info("WishlistController : wishlistDelete 호출");
 		int result = 0;
 		result = wlDao.wishlistDelete(wlDto);
+		return result;
+	}
+
+	//선택삭제
+	@Override
+	public int wishlistSelDelete(WishlistDto wlDto) {
+		logger.info("WishlistController : wishlistSelDelete 호출");
+		int result = 0;
+		result = wlDao.wishlistSelDelete(wlDto);
 		return result;
 	}
 

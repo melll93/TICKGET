@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,7 +49,7 @@ public class PaymentController {
 	
 	//결제 정보 입력
     @PostMapping("/paymentInsert")
-    public int paymentInsert(PaymentDto paymentDto) {
+    public int paymentInsert(@RequestBody PaymentDto paymentDto) {
     	logger.info("PaymentController : paymentInsert 호출");
         int result = 0;
         result = paymentService.paymentInsert(paymentDto);

@@ -16,6 +16,30 @@
         where member_id = #{memberId}
     </select>
 
+    <insert id="socialjoin" parameterType="MemberDto">
+        INSERT 
+          INTO member(
+		                  member_domain,
+		                  member_id,
+		                  member_name,
+		                  member_email,
+		                  member_nickname,
+		                  member_profile_image,
+		                  member_register_date,
+                      member_authority
+                      )
+      	 VALUES (
+                 #{memberDomain},
+      	     	   #{memberId},
+      	         #{memberName},
+      	 	       #{memberEmail},
+      	 	       #{memberNickname},
+      	         #{memberProfileImage},
+      	 	       CURDATE(),
+                 #{memberAuthority}
+		)
+    </insert>
+
     <select id="getMemberData" parameterType="String" resultType="MemberDto">
         select *
         from member

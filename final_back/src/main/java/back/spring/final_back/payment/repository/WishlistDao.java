@@ -14,8 +14,11 @@ public interface WishlistDao {
 	
 	public int wishlistAdd(WishlistDto wlDto);
 
-	
+	//전체삭제
 	public int wishlistDelete(WishlistDto wlDto);
+
+	//선택삭제
+	public int wishlistSelDelete(WishlistDto wlDto);
 
 
 }
