@@ -135,23 +135,27 @@ const UnRegiesterPage = () => {
       try {
         const { memberId, memberMobile } = _userData;
     
-        if (id === "" || mobile === "") {
+        const member = {
+          memberId,
+          memberMobile,
+          type: "overlap",
+        };
+    
+        const res = await memberListDB(member);
+        console.log(res.data);
+    
+        if (!res.data || res.data.length === 0 || !res.data.some((data) => data.member_id === memberId && data.member_mobile === memberMobile)) {
+          console.log("회원 정보 없음");
           Swal.fire({
-            title: "회원 님의 아이디와 전화번호를 모두 입력해 주세요.",
+            title: "회원 정보를 다시 확인해 주세요.",
+            icon: "error",
           });
           return;
         }
     
-        if (id !== memberId || mobile !== memberMobile) {
-          Swal.fire({
-            title: "회원 님의 정보를 다시 확인해 주세요.",
-          });
-          return;
-        }
+        const resDelete = await memberDeleteDB({ id: memberId });
     
-        const res = await memberDeleteDB({ id: id });
-    
-        if (res.data.success) {
+        if (resDelete.data && resDelete.data.success) {
           cookies.remove("_userData");
           Swal.fire({
             title:
@@ -169,6 +173,7 @@ const UnRegiesterPage = () => {
         console.error("error : " + error);
       }
     };
+    
 
   return (
     <>
