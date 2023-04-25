@@ -89,7 +89,10 @@ public class MemberOAuth2ServiceImpl extends DefaultOAuth2UserService {
                                         memberDto.setMemberEmail(attributes.get("email").toString());
                                 }
                                 memberDto.setMemberNickname(userProfile.get("nickname").toString());
-                                memberDto.setMemberProfileImage(userProfile.get("profile_image_url").toString());
+                                if (userProfile.get("profile_image_url") != null) {
+                                        memberDto.setMemberProfileImage(
+                                                        userProfile.get("profile_image_url").toString());
+                                }
                         }
 
                         memberDao.socialjoin(memberDto);
