@@ -49,7 +49,7 @@ public class MemberOAuth2ServiceImpl extends DefaultOAuth2UserService {
                         resultMember = logic(id, response, "naver"); // attribute.response
                 } else if (attributes.get("id") != null) { // 카카오 로그인 케이스
                         Map<String, Object> kakao_account = (Map<String, Object>) attributes.get("kakao_account");
-
+                        log.info(kakao_account.toString());
                         String id = attributes.get("id").toString();
                         resultMember = logic(id, kakao_account, "kakao"); // attribute.kakao_account.profile
                 }
