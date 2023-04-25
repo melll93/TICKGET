@@ -168,13 +168,23 @@ const CarpoolWriteForm = (/* { carpool } */) => {
     };
   }, []);
 
+  // const handleInputChange = (event) => {
+  //   const target = event.target;
+  //   const value = target.type === "checkbox" ? target.checked : target.value;
+  //   const name = target.name;
+  //   setCarpool({
+  //     ...carpool,
+  //     [name]: value,
+  //   });
+  // };
+
   const handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
     setCarpool({
       ...carpool,
-      [name]: value,
+      [event.target.name]:
+        event.target.type === "checkbox"
+          ? event.target.checked
+          : event.target.value,
     });
   };
 
@@ -341,10 +351,10 @@ const CarpoolWriteForm = (/* { carpool } */) => {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "center",
+                // justifyContent: "center",
               }}
             >
-              <h5 style={{ marginLeft: "10px" }}>글번호</h5>
+              {/* <h5 style={{ marginLeft: "10px" }}>글번호</h5>
               <input
                 style={{ width: "auto", marginLeft: "10px" }}
                 className="form-control"
@@ -355,9 +365,10 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 // readOnly
                 value={boardCpNo}
                 onChange={handleInputChange}
-              />
+              /> */}
 
-              <h5 style={{ marginLeft: "50px" }}>최대 인원</h5>
+              <h5 style={{ marginLeft: "10px" }}>최대 인원</h5>
+
               <input
                 style={{ width: "auto", marginLeft: "10px" }}
                 className="form-control"
@@ -367,14 +378,12 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 placeholder="최대인원"
                 onChange={handleInputChange}
               />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "center" }}>
               <Button
                 style={{
-                  width: "30%",
+                  width: "auto",
+                  marginLeft: "10px",
                   backgroundColor: "black",
-                  marginTop: "10px",
+                  marginTop: "0px",
                 }}
                 className="form-control"
                 type="text"
@@ -385,7 +394,6 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             </div>
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-
             <div>
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridPlace">
