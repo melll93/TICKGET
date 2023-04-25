@@ -184,7 +184,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
 
     firebase
       .database()
-      .ref(`carpoolList/${carpool.name}`)
+      .ref(`carpoolList/${boardCpNo}`)
       .once("value")
       .then((snapshot) => {
         Swal.fire({
@@ -198,7 +198,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             const newNow = now + count;
             const newCount = currentCount + count;
             if (newNow <= maxVal && newCount <= maxVal) {
-              firebase.database().ref(`carpoolList/${carpool.name}`).update({
+              firebase.database().ref(`carpoolList/${boardCpNo}`).update({
                 max: maxVal,
                 now: 1,
                 count: 1,
@@ -206,7 +206,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             }
           }
         } else {
-          firebase.database().ref(`carpoolList/${carpool.name}`).update({
+          firebase.database().ref(`carpoolList/${boardCpNo}`).update({
             max: maxVal,
             now: 1,
             count: 1,
@@ -315,7 +315,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                   title: "로그인 후 이용해주세요.",
                   icon: "warning",
                 });
-                window.location.href = "/login"; // 로그인 페이지로 이동
+                navigate("/login");
                 return null;
               }
             })()}
@@ -350,10 +350,10 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 className="form-control"
                 type="text"
                 id={boardCpNo}
-                name="name"
+                name="boardCpNo"
                 placeholder="글번호"
                 // readOnly
-                // value={boardCpNo}
+                value={boardCpNo}
                 onChange={handleInputChange}
               />
 
