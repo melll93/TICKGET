@@ -16,8 +16,10 @@ import CommonPagination from "../../../components/CommonPagination";
 import Swal from "sweetalert2";
 import { Cookies } from "react-cookie";
 
-/************* firebase Config  *************/
-const firebaseConfig = {
+/************* firebase Config  ************ 
+ * 은영 - festivalDetail 에서 주워다 쓰는중 export 지우거나 하면 알려주삼 
+*/
+export const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   databaseURL: (process.env.FIREBASE_DATABASE_URL =
@@ -28,6 +30,7 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
+
 /************* firebase Config *************/
 
 const CarpoolBoardList = () => {
