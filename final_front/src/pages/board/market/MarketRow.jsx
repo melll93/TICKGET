@@ -96,7 +96,7 @@ const cookies = new Cookies();
     border: member_no === boards.memberNo ? "2px solid rgb(80, 50, 200)" : ""
   }}
 >
-<img src={boards.boardMkFileurl} style={{width:"100%", overflow:'hidden', height: '250px', objectFit: 'cover' , 
+<img src={boards.boardMkFileurl ? boards.boardMkFileurl : "http://via.placeholder.com/300X350"} style={{width:"100%", overflow:'hidden', height: '250px', objectFit: 'cover' , 
 borderTopLeftRadius:'10px',borderTopRightRadius:'10px',borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}} 
 onClick={linkToDetail}
 onMouseEnter={() => { // 마우스를 요소 위로 올리면
@@ -137,8 +137,8 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
       <p className="card-text" style={{color:'black' }} >
    
       <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}} >
-  {member_no === boards.memberNo && <span className="mr-5" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1rem", color:'rgb(80, 50, 200)'}}>내 게시글{" "} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span> <i class="bi bi-heart" style={{marginLeft:'3px', marginRight:'2px'}}/>{" "}찜{" "}{boards.boardMkLikes}</span>}
-  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px',fontFamily:"Nanum Gothic", fontWeight:"bold"}}><i class="bi bi-heart"/>{" "}찜{" "}{boards.boardMkLikes}</span>}
+  {member_no === boards.memberNo && <span className="mr-5" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1rem", color:'rgb(80, 50, 200)'}}>내 게시글{" "}</span>}
+  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px',fontFamily:"Nanum Gothic", fontWeight:"bold"}}><i class="bi bi-pen"/>{boards.memberNickname}</span>}
 </div>
        </p>
        <hr style={{marginTop:'-25px' , opacity:'0'}}/>

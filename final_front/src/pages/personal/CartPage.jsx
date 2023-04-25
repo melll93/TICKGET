@@ -22,7 +22,7 @@ const CartPage = () => {
    if (_userData) {
      member_no = _userData.memberNo; //쿠키에서 가져온 회원번호 (내정보)
    }
- 
+ console.log(member_no)
    
 
    const [cartlist , setCartlist] = useState([])
@@ -72,7 +72,7 @@ const CartPage = () => {
 
     const handleDeleteAll = async () => { //전체삭제
       Swal.fire({
-        title: '찜한 상품을 모두 삭제하시겠습니까?',
+        title: '상품을 모두 삭제하시겠습니까?',
         icon: 'warning',
         showCancelButton: true,
       }).then(async (result) => { // async 키워드를 추가
@@ -101,7 +101,14 @@ const CartPage = () => {
 
 
     const handleDeleteSelected = async () => {
-      Swal.fire({
+      if (checkedList.length === 0) {
+       Swal.fire({
+        title: '삭제할 상품을 선택해주세요',
+        icon:'warning'
+       })
+      }
+      else{
+        Swal.fire({
         title: '선택한 상품을 삭제하시겠습니까?',
         icon: 'warning',
         showCancelButton: true,
@@ -111,7 +118,9 @@ const CartPage = () => {
           console.log('cartlist:', cartlist);
           const wData = {
             boardMkNo: checkedList[0],
+            memberNo : member_no,
           };
+          console.log(wData)
           const res = await wishlistDelDB(wData);
           console.log(res.data);
           const mkminusLikes = async() => {  //게시글 찜 갯수 감소
@@ -132,6 +141,7 @@ const CartPage = () => {
         }
       });
     };
+  }
 
   return (
     <>
@@ -146,41 +156,65 @@ const CartPage = () => {
             <h1 className="top_line" style={{fontFamily:'Nanum-Gothic', fontWeight:'bold'}}><i class="bi bi-cart-check"></i>{" "}찜한 상품
             {" "}<span style={{ color: 'red' }}>{cartlistLength}</span></h1>
             <div className="cart_table_div">
-              <div style={{marginLeft:'50px'}}>
-                <MButton onClick={handleDeleteAll}>전체삭제</MButton>{" "}<MButton onClick={handleDeleteSelected}>선택삭제</MButton>
-              </div>
-            {cartlist.map(cart => (
-    <div className="card"
-      key={cart.boardMkNo}
-      style={{
-        width:"16rem",
-        display:"inline-block",
-        margin: "50px 50px 0px 50px",
-        borderRadius: "10px",
-        cursor: "pointer",
-      }}
-    >
-      <img src={cart.wishlistFileurl} style={{width:"100%", overflow:'hidden', height: '250px', objectFit: 'cover' , 
-      borderTopLeftRadius:'10px',borderTopRightRadius:'10px',borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}} 
-      onClick={linkToDetail}
-      alt="사진1"/>
-      <div className="card-body" style={{overflow:"hidden", height:'120px'}}>
-        <div style={{minHeight:'50px' , marginTop:'5px'}} onClick={linkToDetail}>
-          <h5 className="card-title" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,fontSize:'1rem'}}>
-            {cart.wishlistTitle}</h5>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.5rem" }}>{cart.wishlistPrice}원</p>
-          <input
-  type="checkbox"
-  style={{width:'25px' , marginBottom:'10px'}}
-  checked={checkedList.indexOf(cart.boardMkNo) !== -1}
-  onChange={(e) => handleCheckboxChange(e, cart.boardMkNo)}
-/>
+            {cartlist.length === 0 ? (
+  <div style={{ marginLeft: '620px', fontFamily: 'Nanum Gothic', fontWeight:'bold', fontSize: '1.5rem' }}>
+    아직 찜한 상품이 없습니다.
+  </div>
+) : (
+  <>
+    <div style={{ marginLeft: '50px' }}>
+      <MButton onClick={handleDeleteAll}>전체삭제</MButton>{' '}
+      <MButton onClick={handleDeleteSelected}>선택삭제</MButton>
+    </div>
+    {cartlist.map(cart => (
+      <div
+        className="card"
+        key={cart.boardMkNo}
+        style={{
+          width: '16rem',
+          display: 'inline-block',
+          margin: '50px 50px 0px 50px',
+          borderRadius: '10px',
+          cursor: 'pointer',
+        }}
+      >
+        <img
+          src={cart.wishlistFileurl}
+          style={{
+            width: '100%',
+            overflow: 'hidden',
+            height: '250px',
+            objectFit: 'cover',
+            borderTopLeftRadius: '10px',
+            borderTopRightRadius: '10px',
+            borderBottomLeftRadius: '0px',
+            borderBottomRightRadius: '0px',
+          }}
+          onClick={linkToDetail}
+          alt="사진1"
+        />
+        <div className="card-body" style={{ overflow: 'hidden', height: '120px' }}>
+          <div style={{ minHeight: '50px', marginTop: '5px' }} onClick={linkToDetail}>
+            <h5 className="card-title" style={{ fontFamily: 'Nanum Gothic', fontWeight: 'bold', fontSize: '1rem' }}>
+              {cart.wishlistTitle}
+            </h5>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <p className="card-text" style={{ fontFamily: 'Nanum Gothic', fontWeight: 'bold', fontSize: '1.5rem' }}>
+              {cart.wishlistPrice}원
+            </p>
+            <input
+              type="checkbox"
+              style={{ width: '25px', marginBottom: '10px' }}
+              checked={checkedList.indexOf(cart.boardMkNo) !== -1}
+              onChange={(e) => handleCheckboxChange(e, cart.boardMkNo)}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  ))}
+    ))}
+  </>
+)}
             </div>
 
           </div>{" "}
