@@ -5,8 +5,9 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import { checkPassword, validateEmail, validateHp, validateName, validatePassword } from '../../util/validateLogic';
 import Swal from "sweetalert2";
-import { memberListDB } from '../../axios/member/memberCrud';
+import { memberListDB, memberUpdateDB } from '../../axios/member/memberCrud';
 import { Cookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom';
 
 /* 
 회원 정보 수정 페이지 접속 시 사용자 ID -> 고정값
@@ -16,6 +17,8 @@ const MemberUpdPage = () => {
   const cookies = new Cookies();
   const _userData = cookies.get("_userData"); // 사용자 정보
   console.log(_userData)
+
+  const navigate = useNavigate();
 
   const toggleHover = () => {
   }
@@ -171,8 +174,48 @@ const MemberUpdPage = () => {
   }
 
   const handleUpdate = async (e) => {
-    // e.preventDefault();
-  }
+    e.preventDefault();
+    const { email, password, password2, name, mobile, zipcode } = memInfo;
+  
+    if (password !== password2) {
+      // 비밀번호와 비밀번호 확인 값이 다른 경우
+      Swal.fire({
+        title: "비밀번호가 일치하지 않습니다.",
+        icon: "error",
+      });
+      return;
+    }
+  
+    try {
+      const member = {
+        memberId: _userData.memberId,
+        memberPassword: password || "", // password 값이 없으면 빈 문자열로 설정
+        memberName: name || "", // name 값이 없으면 빈 문자열로 설정
+        memberEmail: email || "", // email 값이 없으면 빈 문자열로 설정
+        memberMobile: mobile || "", // mobile 값이 없으면 빈 문자열로 설정
+        memberZipcode: zipcode || "", // zipcode 값이 없으면 빈 문자열로 설정
+        memberAddress: "", // 해당 값이 없다면 빈 문자열로 전달
+        memberAddrDetail: "",
+      };
+      
+      const res = await memberUpdateDB(member);
+      console.log(res.data);
+  
+      Swal.fire({
+        title: "회원 정보가 성공적으로 수정되었습니다.",
+        icon: "success",
+      });
+  
+      navigate("/mypage");
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: "회원 정보 수정에 실패하였습니다.",
+        icon: "error",
+      });
+    }
+  };
+  
 
   return (
     <div>
@@ -209,7 +252,7 @@ const MemberUpdPage = () => {
 
           {/* 이름 */}
             <MyLabel> 이름 <span style={{ color: "red" }}>{star.name}</span>
-              <MyInput type="text" id="name" defaultValue={memInfo.name} placeholder="이름을 입력해 주세요" value={_userData.memberName}
+              <MyInput type="text" id="name" defaultValue={memInfo.name} placeholder="이름을 입력해 주세요" 
                 onChange={(e) => { changeMemInfo(e); validate('name', e); }} />
               <MyLabelAb>{comment.name}</MyLabelAb>
             </MyLabel>
@@ -225,7 +268,7 @@ const MemberUpdPage = () => {
             {/* 이메일 */}
             <div style={{display: 'flex'}}>
             <MyLabel> 이메일 <span style={{ color: "red" }}>{star.email}</span>
-              <MyInput type="email" id="email" placeholder="이메일를 입력해주세요" value={_userData.memberEmail}
+              <MyInput type="email" id="email" placeholder="이메일를 입력해주세요"
                 onChange={(e) => { changeMemInfo(e); validate('email', e); }} />
               <MyLabelAb>{comment.email}</MyLabelAb>
             </MyLabel>
@@ -234,7 +277,7 @@ const MemberUpdPage = () => {
             
             {/* 전화번호 */}
             <MyLabel> 전화번호 <span style={{ color: "red" }}>{star.mobile}</span>
-              <MyInput type="text" id="mobile" defaultValue={memInfo.mobile} placeholder="전화 번호를 입력해 주세요" value={_userData.memberMobile}
+              <MyInput type="text" id="mobile" defaultValue={memInfo.mobile} placeholder="전화 번호를 입력해 주세요" 
                 onChange={(e) => { changeMemInfo(e); validate('hp', e); }} />
               <MyLabelAb>{comment.mobile}</MyLabelAb>
             </MyLabel>

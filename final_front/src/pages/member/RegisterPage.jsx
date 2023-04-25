@@ -250,6 +250,12 @@ const RegisterPage = ({ authLogic }) => {
       }
       sessionStorage.clear();
       navigate('/');
+      /* 
+      Swal.fire({
+          title:'회원가입을 축하합니다.',
+          icon:'success'
+          })
+      */
       return "회원가입을 축하합니다";
 
     } catch (error) {

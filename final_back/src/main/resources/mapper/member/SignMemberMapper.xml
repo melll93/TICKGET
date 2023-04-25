@@ -87,7 +87,7 @@
 		member_addr_detail
 		FROM member
 		<where>
-		<!-- 아이디, 이메일, 닉네임 중복 확인 -->
+			<!-- 아이디, 이메일, 닉네임 중복 확인 -->
 			<if test='memberId!=null and memberId.length()>0'>
 				AND member_id = #{memberId}
 			</if>
@@ -101,21 +101,21 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<!-- 회원 정보 update -->
-	<update id="memberUpdate" parameterType="java.util.HashMap">
-		  UPDATE member
-		  SET 
-		    member_password = #{memberPassword},
-		    member_name = #{memberName},
-		    member_email = #{memberEmail},
-		    member_mobile = #{memberMobile},
-		    member_zipcode = #{memberZipcode},
-		    member_address = #{memberAddress},
-		    member_addr_detail = #{memberAddrDetail}
-		  WHERE member_Id = #{memberId}
-	</update>
-	
+<update id="memberUpdate" parameterType="java.util.HashMap">
+	UPDATE member
+	SET
+	<if test="memberPassword != null">member_password = #{memberPassword},</if>
+	<if test="memberName != null">member_name = #{memberName},</if>
+	<if test="memberEmail != null">member_email = #{memberEmail},</if>
+	<if test="memberMobile != null">member_mobile = #{memberMobile},</if>
+	<if test="memberZipcode != null">member_zipcode = #{memberZipcode},</if>
+	<if test="memberAddress != null">member_address = #{memberAddress},</if>
+	<if test="memberAddrDetail != null">member_addr_detail = #{memberAddrDetail},</if>
+	WHERE member_id = #{memberId}
+</update>
+
 	<!-- 비밀번호 update -->
 	<update id="changePwUpdate" parameterType="java.util.HashMap">
 		UPDATE member
@@ -123,9 +123,11 @@
 		member_password = #{memberPassword}
 		WHERE member_Id = #{memberId}
 	</update>
-	
+
 	<delete id="memberDelete" parameterType="java.util.HashMap">
-	    DELETE member
-	    WHERE member_id = #{id}
+		DELETE FROM member
+		WHERE
+		member_id = #{memberId}
 	</delete>
+
 </mapper>
