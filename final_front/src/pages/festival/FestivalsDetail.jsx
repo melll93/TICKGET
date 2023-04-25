@@ -37,7 +37,7 @@ const FestivalsDetail = () => {
 
   const cookies = new Cookies();
   const _userData = cookies.get("_userData"); //유저 정보
-
+  const festSelectedTkamt = cookies.get('tk_amount');
   let { festMId } = useParams();
 
 
@@ -116,11 +116,21 @@ const fetchSeatAvailable = () => {
     setSeatAvailable(snapshot.val());
   });
 };
+
 const decreaseSeat = () => {
-  const updatedSeatAvailable = seatAvailable;
-  const seatsRef = firebase.database().ref('FestMId/seatsFestId/seatAvailable');
+  fetchSeatAvailable()
+  const updatedSeatAvailable = seatAvailable - festSelectedTkamt ;
+  const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcType}/seatAvailable`);
   seatsRef.set(updatedSeatAvailable);
 };
+
+
+
+const researveBtnClicked=()=>{
+  decreaseSeat()
+  navigate("/payment2/" + festMId);
+}
+
 
 
 /* ////////////////////수정중 */
@@ -190,11 +200,6 @@ const decreaseSeat = () => {
     return () => {};
   }, []);
 
-const researveBtnClicked=()=>{
-
-
-  navigate("/payment2/" + festMId);
-}
 
 
 
