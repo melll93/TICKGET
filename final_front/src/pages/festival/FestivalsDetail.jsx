@@ -107,23 +107,13 @@ useEffect(() => {
 
 
 
-const [seatAvailable, setSeatAvailable] = useState(0);
-
-
-const fetchSeatAvailable = () => {
-  const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcType}/seatAvailable`);
-  seatsRef.on('value', snapshot => {
-    setSeatAvailable(snapshot.val());
-  });
-};
 
 const decreaseSeat = () => {
-  fetchSeatAvailable()
-  const updatedSeatAvailable = seatAvailable - festSelectedTkamt ;
-  const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcType}/seatAvailable`);
-  seatsRef.set(updatedSeatAvailable);
-};
-
+    const aaa = festMData.seatAvailable;
+    const updatedSeatAvailable = aaa- festSelectedTkamt ;
+    const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcType}/seatAvailable`);
+    seatsRef.set(updatedSeatAvailable);
+}; 
 
 
 const researveBtnClicked=()=>{
