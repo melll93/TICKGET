@@ -43,11 +43,7 @@
 <!-- 위시리스트 제거 -->
 <delete id="wishlistDelete" parameterType="WishlistDto">
     DELETE FROM wishlist_data
-    <where>
-  <if test='boardMkNo!=null and boardMkNo>0'>
-board_mk_no = #{boardMkNo}
-</if>
-  </where>
+    WHERE board_mk_no = #{boardMkNo} AND member_no = #{memberNo}
 </delete>
 
 

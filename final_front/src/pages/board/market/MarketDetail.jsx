@@ -252,6 +252,14 @@ const addWishlist = () => {
  const deleteWishlist = () => {
   if (member_no > 0 && member_no != detail.member_no) {
     /* 구현중.. */
+   const deltoWishlist = async() => {
+    const wData = {
+      boardMkNo: detail.board_mk_no,
+      memberNo : member_no,
+    }
+    const res = await wishlistDelDB(wData)
+    console.log(res.data)
+   } 
    const mkminusLikes = async() => {  //게시글 찜 갯수 감소
     const board={
       boardMkNo : detail.board_mk_no,
@@ -259,6 +267,7 @@ const addWishlist = () => {
     const res = await mk_minusLikesDB(board)
     console.log(res.data);
    }
+   deltoWishlist()
    mkminusLikes()
    Swal.fire({
     icon: 'info',
