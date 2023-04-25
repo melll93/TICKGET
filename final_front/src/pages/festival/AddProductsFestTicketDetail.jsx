@@ -1,40 +1,43 @@
 import React, { useCallback, useEffect, useInsertionEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { FetivalDetailDB, festTicketInsertDB, deleteFestTicketDB } from '../../axios/festival/festival';
+import {festTicketInsertDB, deleteFestTicketDB } from '../../axios/festival/festival';
 
 const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTcTime}) => {
   const {festMId}=useParams();
 /*    console.log('타입'+festTcType); */
  /*  console.log(festTcPrice); */ 
 
-  const [dbTickets, setDbTickets] = useState(
-    festTcType && festTcType
-      .filter((_, index) => festTcType[index] !== null) // null인 요소 필터링
-      .map((_, index) => ({
-        no: festTcNo[index], // 좌석 정보의 개수
-        seatType: festTcType[index], // 티켓의 좌석 유형
-        price: festTcPrice[index], // 티켓의 가격
-        time: festTcTime[index] // 티켓의 시간 정보
-      }))
-  );
+
+ const [dbTickets, setDbTickets] = useState(
+   festTcType && festTcType
+     .filter((_, index) => festTcType[index] !== null) // null인 요소 필터링
+     .map((_, index) => ({
+       no: festTcNo[index], // 좌석 정보의 개수
+       seatType: festTcType[index], // 티켓의 좌석 유형
+       price: festTcPrice[index], // 티켓의 가격
+       time: festTcTime[index] // 티켓의 시간 정보
+     }))
+ );
 
 
-  const [tickets, setTickets] = useState([{
-        no:'', // 좌석 정보의 개수
-        seatType: '지정석', // 티켓의 좌석 유형
-        price:'', // 티켓의 가격
-        time:'오후 00:00시 (미확정)' // 티켓의 시간 정보
-      }]
-  );
+
+  const [tickets, setTickets] = useState([
+    {
+      no: "", // 좌석 정보의 개수
+      seatType: "", // 티켓의 좌석 유형
+      price: "", // 티켓의 가격
+      time: "", // 티켓의 시간 정보
+    },
+  ]);
     
 
 /*(신규입력용) 좌석추가 버튼 누를때 로우 추가  */
   const addTicket = () => {
     const newTicket = {
       no:'', // 좌석 정보의 개수
-      seatType:'지정석', // 티켓의 좌석 유형
+      seatType:'', // 티켓의 좌석 유형
       price:'', // 티켓의 가격
-      time: '오후 00:00시 (미확정)' // 티켓의 시간 정보
+      time: '' // 티켓의 시간 정보
     };
     setTickets(prevTickets => [...prevTickets, newTicket]);
   }
@@ -74,36 +77,36 @@ const inputTcTime = (index, time) => {
   });
 }
 
-/* fest_tc Insert */
 const festTicketInsert = async () => {
   for (const ticket of tickets) {
-    const res = await festTicketInsertDB({
-      festMId,
-      festTcType: ticket.seatType,
-      festTcPrice: ticket.price,
-      festTcTime: ticket.time,
-    });
-  /*   console.log(ticket); */
-    if (!res.data) {
-     /*  alert('error')
-   */  } else {  
-      /* 성공 */
-    alert('저장완료')
+    if (ticket.seatType === '' || ticket.price === '' || ticket.time === '') {
+      alert('빈칸이 존재합니다. 확인해주세요. ');
+    } else {
+      const res = await festTicketInsertDB({
+        festMId,
+        festTcType: ticket.seatType,
+        festTcPrice: ticket.price,
+        festTcTime: ticket.time,
+      });
+      if (!res.data) {
+        alert('error');
+      } else {
+        /* 성공 */
+        alert('저장완료');
+      }
     }
   }
-  setTickets(tickets)
-}
+};
 
 
 /* 티켓 로우 삭제 */
-const deleteFestTcRow = async ({index}) => {
-  const  festival = {
-    fest_tc_no:festTcNo[index],
+const deleteFestTcRow = async (index) => { // 매개변수 수정
+  const festival = {
+    fest_tc_no: festTcNo[index],
   }
-    const res = await deleteFestTicketDB(festival);
+  const res = await deleteFestTicketDB(festival);
   if (!res.data) {
-/*     const updatedFestTcRow = festTcType.filter((item, index) => index !== i);
-    setDbTickets(updatedFestTcRow); */
+    // 삭제 성공 시 처리할 로직
   } else {
     alert("에러")
   }
@@ -148,8 +151,8 @@ fest_ticket 추가 정보 입력
         </thead>
         <tbody>
         {dbTickets&&dbTickets.map((ticket, index) => (
-            <tr key={ticket.no}><td>
-                  {ticket.no}
+            <tr key={index}><td>
+                  {index+1}
               </td><td>
               <span>{ticket.time}
                 </span>
@@ -187,24 +190,30 @@ fest_ticket 추가 정보 입력
         </thead>
         <tbody>
         {tickets&&tickets.map((ticket, index) => (
-            <tr key={index}><td>{index+1}
+            <tr key={index}><td>&{index+1+dbTickets.length}
               </td><td>
               <input
                   type="text"
                   className="form-control"
-                  onChange={(e) => inputTcTime (index, e.target.value)}
+                  onChange={(e) => {
+                      inputTcTime(index, e.target.value);
+                  }}
                 />
               </td><td>
                 <input
                   type="text"
                   className="form-control"
-                  onChange={(e) => inputTcSeatType(index, e.target.value)}
+                  onChange={(e) => {
+                      inputTcSeatType(index, e.target.value);
+                  }}
                 />
               </td><td>
                 <input
                   type="number"
                   className="form-control"
-                  onChange={(e) => inputTcPrice (index, e.target.value)}
+                  onChange={(e) => {
+                          inputTcPrice(index, e.target.value);
+                  }}
                 style={{display:'inline-block', width:'80%'}}
                 />원
               </td><td>
@@ -222,7 +231,6 @@ fest_ticket 추가 정보 입력
         </tbody>
       </table>
       <div style={{textAlign:'left', paddingLeft:'20px'}}>
-<span style={{color:'red'}}>*</span><span>미입력 시, '시간-오후 00:00시(미확정) | 좌석정보-지정석 | 티켓가격-(공란) | 총좌석수-0석 으로 기재 됩니다.</span>
       </div>
 
     </div>
