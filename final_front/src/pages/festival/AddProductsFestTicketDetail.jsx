@@ -1,11 +1,18 @@
 import React, { useCallback, useEffect, useInsertionEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import {festTicketInsertDB, deleteFestTicketDB } from '../../axios/festival/festival';
+import { firebaseConfig } from '../board/carpool/CarpoolBoardList';
+import firebase from "firebase/compat/app";
+import Swal from 'sweetalert2';
+
 
 const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTcTime}) => {
   const {festMId}=useParams();
 /*    console.log('타입'+festTcType); */
  /*  console.log(festTcPrice); */ 
+
+
+
 
 
  const [dbTickets, setDbTickets] = useState(
@@ -27,6 +34,7 @@ const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTc
       seatType: "", // 티켓의 좌석 유형
       price: "", // 티켓의 가격
       time: "", // 티켓의 시간 정보
+      seat:'',  //fb넣을 총좌석수 
     },
   ]);
     
@@ -37,7 +45,8 @@ const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTc
       no:'', // 좌석 정보의 개수
       seatType:'', // 티켓의 좌석 유형
       price:'', // 티켓의 가격
-      time: '' // 티켓의 시간 정보
+      time: '', // 티켓의 시간 정보
+      seat:'',
     };
     setTickets(prevTickets => [...prevTickets, newTicket]);
   }
@@ -77,6 +86,17 @@ const inputTcTime = (index, time) => {
   });
 }
 
+const inputFbSeat = (index, seat) => {
+  setTickets(prevTickets => {
+    const updatedTickets = [...prevTickets];
+    updatedTickets[index].seat = seat;
+    return updatedTickets;
+  });
+}
+
+
+
+
 const festTicketInsert = async () => {
   for (const ticket of tickets) {
     if (ticket.seatType === '' || ticket.price === '' || ticket.time === '') {
@@ -95,12 +115,13 @@ const festTicketInsert = async () => {
         alert('저장완료');
       }
     }
-  }
+  } /* for */
   const updatedDbTickets = [...dbTickets, ...tickets]; 
   setDbTickets(updatedDbTickets); 
   const newTickets=[];
   setTickets(newTickets);
-};
+  insertData(tickets);
+}; /* festTicketInsert */
  
 
 
@@ -118,6 +139,53 @@ const deleteFestTcRow = async (index) => { // 매개변수 수정
     alert("에러")
   }
 };
+
+/* fireBase  */
+
+/* 초기화 */
+const[festMData, setFestMData]=useState(null);
+
+useEffect(() => {
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  database.ref().on("value", (snapshot) => {
+    setFestMData(festMData);
+  });
+  
+  return () => {
+    database.ref().off();
+  };
+}, []); 
+
+
+/* FireBase Insert */
+
+
+const insertData = (tickets) => {
+  console.log(tickets)
+  for (const ticket of tickets) {
+  const data = {
+      [ticket.time]:{
+        type: ticket.seatType,
+        price: ticket.price,
+        seatAvailable: ticket.seat,
+        seatTotal: ticket.seat
+    }
+    }
+
+  firebase.database().ref(`FestMId/${festMId}`).update(data)  //ref에 원하는 경로 적으면 됨. 안해놔서 비워둠
+    .then(() => {
+      console.log("데이터가 성공적으로 삽입되었습니다.");
+    })
+    .catch((error) => {
+      console.error("데이터 삽입 중 오류가 발생하였습니다.", error);
+    });
+}};
+
+
+
+/* fireBase */
+
 
 
   return (
@@ -144,7 +212,7 @@ fest_ticket 추가 정보 입력
         <button type="submit" className="btn-save" onClick={festTicketInsert}>
           저장
         </button>
-      </div>
+      </div>  
 
 
 {/* DB 에 이미 있는 티켓정보 */}
@@ -228,6 +296,8 @@ fest_ticket 추가 정보 입력
                   type="number"
                   className="form-control"
                 style={{display:'inline-block', width:'75%'}}
+                              onChange={(e) => {
+                          inputFbSeat(index, e.target.value);}}
                 />석
               </td><td>
                 <button type="button" className="btn-delete" onClick={() => removeTicket(index)}>

@@ -15,8 +15,11 @@ public interface WishlistService {
 	//위시리스트 추가
 	public int wishlistAdd(WishlistDto wlDto);
 
-	//위시리스트 삭제
+	//위시리스트 전체삭제
 	public int wishlistDelete(WishlistDto wlDto);
+
+	//위시리스트 선택삭제
+	public int wishlistSelDelete(WishlistDto wlDto);
 
 
 }

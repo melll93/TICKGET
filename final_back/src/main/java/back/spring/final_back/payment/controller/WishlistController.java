@@ -55,12 +55,21 @@ public class WishlistController {
 	}
 	
 	
-	//위시리스트 삭제
+	//위시리스트 전체삭제
 	@GetMapping("/wishlistDelete")
 	public int wishlistDelete(WishlistDto wlDto) {
 		logger.info("WishlistController : wishlistDelete 호출");
 	     int result = 0;
 	     result = wlService.wishlistDelete(wlDto);
 	     return result;
+	}
+	
+	//위시리스트 선택삭제
+	@GetMapping("/wishlistSelDelete")
+	public int wishlistSelDelete(WishlistDto wlDto) {
+		logger.info("WishlistController : wishlistSelDelete 호출");
+		int result = 0;
+		result = wlService.wishlistSelDelete(wlDto);
+		return result;
 	}
 }

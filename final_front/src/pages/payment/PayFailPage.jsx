@@ -23,7 +23,7 @@ const PayFailPage = () => {
       <div>결제 금액 : {` ${Number(searchParams.get("amount")).toLocaleString()}원`}</div><br/>
         <p> 상품 {param}의 구매에 실패하였습니다. </p>
         <Link to = "/">
-          <button className="homebtn" style={{backgroundColor:'black', color:'white', borderRadius:'50px', width:'450px', height:'60px',marginTop:'30px'}}> 메인으로 </button>
+        <button className="homebtn" style={{backgroundColor:'rgb(80,50,200)', color:'white', borderRadius:'30px', width:'450px', height:'60px', marginTop:'10px' , fontFamily:'Nanum-Gothic', fontWeight:'bold', fontSize:'1.2rem'}}> 메인으로 이동 </button>
           </Link>
         </div>
 

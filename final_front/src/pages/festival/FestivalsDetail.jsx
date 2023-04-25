@@ -41,6 +41,25 @@ const FestivalsDetail = () => {
   let { festMId } = useParams();
 
 
+
+/* 클릭한 좌석 담기 */
+const [selectedFestTcType, setSelectedFestTcType] = useState("일반석");
+const [selectedFestTcPrice, setSelectedFestTcPrice] = useState(0);
+const [selectedFestTcTime, setSelectedFestTcTime] = useState("모르지");
+
+
+
+ const festivalTcClicked = (festTcPrice, festTcType, festTcTime) => {
+   setSelectedFestTcType(festTcType) 
+   setSelectedFestTcPrice(festTcPrice);
+   setSelectedFestTcTime(festTcTime);
+   document.cookie = `selectedFestTcPrice=${JSON.stringify(festTcPrice)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+   document.cookie = `selectedFestTcType=${JSON.stringify(festTcType)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+   document.cookie = `selectedFestTcTime=${JSON.stringify(festTcTime)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+
+ };
+
+
   
   
 /* 초기화 */
@@ -57,20 +76,20 @@ useEffect(() => {
 }, []); 
 
 
-
+console.log(selectedFestTcTime)
 /*파이어베이스 - READ  */
 const [festMData, setFestMData] = useState(null);  
-
 useEffect(() => {
   const festTcSeatsInfo= async () => {
     try {
       const snapshot = await firebase
         .database()
-        .ref(`${festMId}`)
+        .ref(`FestMId/${festMId}/${selectedFestTcTime}`)
         .once("value");    //한번읽기
       if (snapshot.exists()) {  //존재하면 여기 타기
         const data = snapshot.val();  
         setFestMData(data);      //받아온 값 담기 
+        console.log(festMData)
       } else {
         // 데이터가 존재하지 않는 경우
         alert("좌석 정보 없음");
@@ -80,7 +99,16 @@ useEffect(() => {
     }
   };
   festTcSeatsInfo();
-}, []);
+}, [selectedFestTcTime]);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -194,16 +222,6 @@ useEffect(() => {
   };
 
 
-/* 클릭한 좌석 담기 */
- const [selectedFestTcType, setSelectedFestTcType] = useState("일반석");
- const [selectedFestTcPrice, setSelectedFestTcPrice] = useState(0);
-
-  const festivalTcClicked = (festTcPrice, festTcType) => {
-    setSelectedFestTcType(festTcType) 
-    setSelectedFestTcPrice(festTcPrice);
-    document.cookie = `selectedFestTcPrice=${JSON.stringify(festTcPrice)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
-    document.cookie = `selectedFestTcType=${JSON.stringify(festTcType)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
-  };
 
 
 
@@ -453,7 +471,7 @@ useEffect(() => {
             
 
               {festival.map((fest, i) => (
-                        <div key={i} className={`product_info_subitem${selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType)} style={{border: '1px solid gray', borderRadius: '10px', marginTop:'5px'}}>
+                        <div key={i} className={`product_info_subitem${selectedFestTcTime === fest.festTcTime && selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType, fest.festTcTime)} style={{border: '1px solid gray', borderRadius: '10px', marginTop:'5px'}}>
                          { fest.festTcTime===null? null: <p style={{display:'inline'}}>{fest.festTcTime} - </p>}
                          { fest.festTcType===null? null: <p style={{display:'inline'}}>{fest.festTcType} - </p>}  
                          { fest.festTcPrice===null? null: <p style={{display:'inline'}}>{fest.festTcPrice}원</p>}
@@ -482,8 +500,8 @@ useEffect(() => {
                 <div>
       {festMData && (
         <div>
-          <div>{festMData.seats.type} - {festMData.seats.time}</div>
-          <div>{festMData.seats.seatAvailable}/{festMData.seats.seatTotal}</div>
+          <div>{festMData.type} -{festMData.price}</div>
+         <div>{festMData.seatAvailable}/{festMData.seatTotal} </div>
         </div>
       )}
     </div>

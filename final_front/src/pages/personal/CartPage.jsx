@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import TicketCancleInfo from "../../components/mypage/TicketCancleInfo";
 import Sidebar from "../../components/Sidebar";
-import { wishlistDelDB, wishlistDetailDB, wishlistSelectDB } from "../../axios/payment/wishlistLogic";
+import { wishlistDelDB, wishlistDetailDB, wishlistSelDelDB, wishlistSelectDB } from "../../axios/payment/wishlistLogic";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { MButton } from "../../styles/formStyle";
@@ -47,8 +47,8 @@ const CartPage = () => {
 
 
     //상세페이지 이동
-    const linkToDetail = () => {
-       navigate(`/market/mk_boardDetail?no=${cartlist.boardMkNo}`)
+    const linkToDetail = (cart) => {
+       navigate(`/market/mk_boardDetail?no=${cart.boardMkNo}`)
        
      }
 
@@ -79,14 +79,18 @@ const CartPage = () => {
         if (result.isConfirmed) {
           console.log('checkedList:', checkedList);
           console.log('cartlist:', cartlist);
-          const wData = cartlist.map(item => item.boardMkNo)
+          const wData = {
+            memberNo : member_no,
+          }
           console.log(wData)
           const res = await wishlistDelDB(wData);
           console.log(res.data);
          
           const mkminusLikes = async() => {  //게시글 찜 갯수 감소
             console.log(cartlist)
-            const board = cartlist.map(item => item.boardMkNo)
+            const board = {
+              memberNo : member_no
+            }
             console.log(board)
             const res = await mk_minusLikesDB(board)
             console.log(res.data);
@@ -117,25 +121,26 @@ const CartPage = () => {
           console.log('checkedList:', checkedList);
           console.log('cartlist:', cartlist);
           const wData = {
-            boardMkNo: checkedList[0],
             memberNo : member_no,
+            boardMkNo: checkedList
           };
-          console.log(wData)
-          const res = await wishlistDelDB(wData);
-          console.log(res.data);
-          const mkminusLikes = async() => {  //게시글 찜 갯수 감소
-            const board={
-              boardMkNo : checkedList[0],
+
+          for(let i=0; i<checkedList.length; i++) {
+            const temp = {
+              memberNo : member_no,
+              boardMkNo : checkedList[i]
             }
-            console.log(board)
-            const res = await mk_minusLikesDB(board)
+            const res = await wishlistSelDelDB(temp);
+            
             console.log(res.data);
-           }
+          }
+          console.log(wData)
+          // const res = await wishlistSelDelDB(wData);
+        
            Swal.fire('삭제가 완료되었습니다!', '', 'success');
            const newCartList = cartlist.filter(
              (cart) => !checkedList.includes(cart.boardMkNo)
              );
-          mkminusLikes()
           setCartlist(newCartList);
           setCheckedList([]);
         }
@@ -162,7 +167,7 @@ const CartPage = () => {
   </div>
 ) : (
   <>
-    <div style={{ marginLeft: '50px' }}>
+    <div style={{ marginLeft: '80px' }}>
       <MButton onClick={handleDeleteAll}>전체삭제</MButton>{' '}
       <MButton onClick={handleDeleteSelected}>선택삭제</MButton>
     </div>
@@ -173,7 +178,7 @@ const CartPage = () => {
         style={{
           width: '16rem',
           display: 'inline-block',
-          margin: '50px 50px 0px 50px',
+          margin: '50px 50px 0px 75px',
           borderRadius: '10px',
           cursor: 'pointer',
         }}
@@ -190,11 +195,11 @@ const CartPage = () => {
             borderBottomLeftRadius: '0px',
             borderBottomRightRadius: '0px',
           }}
-          onClick={linkToDetail}
+          onClick={() => linkToDetail(cart)}
           alt="사진1"
         />
         <div className="card-body" style={{ overflow: 'hidden', height: '120px' }}>
-          <div style={{ minHeight: '50px', marginTop: '5px' }} onClick={linkToDetail}>
+          <div style={{ minHeight: '50px', marginTop: '5px' }} onClick={() => linkToDetail(cart)}>
             <h5 className="card-title" style={{ fontFamily: 'Nanum Gothic', fontWeight: 'bold', fontSize: '1rem' }}>
               {cart.wishlistTitle}
             </h5>

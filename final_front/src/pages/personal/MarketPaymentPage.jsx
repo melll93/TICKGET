@@ -46,17 +46,6 @@
 
     setMkpDetails ({
   /*    board_mk_no : jsonDoc[0].boardMkNo,  글 번호 사용 보류*/
-  /*     board_mk_title : jsonDoc[0].boardMkTitle,
-      mk_ticket_place : jsonDoc[0].mkTicketPlace, 
-      mk_ticket_date : jsonDoc[0].mkTicketDate,  
-      mk_ticket_seat : jsonDoc[0].mkTicketSeat,  
-      board_mk_filename : jsonDoc[0].boardMkFilename, 
-      board_mk_fileurl : jsonDoc[0].boardMkFileurl,  
-
-      mk_ticket_count : jsonDoc[0].mkTicketCount, 
-      mk_ticket_price : jsonDoc[0].mkTicketPrice.toLocaleString(), 
-      ticketPrice : jsonDoc[0].mkTicketPrice  */
-
       url : jsonDoc[0].boardMkFileurl,
       title : jsonDoc[0].boardMkTitle,
       seat : jsonDoc[0].mkTicketSeat,
@@ -70,36 +59,6 @@
   },[])
 
 
-
-
-
-
-
-  /* 
-  const handleClick = async () => {
-      const tossPayments = await loadTossPayments(
-        // process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY
-        'test_ck_aBX7zk2yd8yjXw0pyNE3x9POLqKQ' //clientKey
-      );
-      await tossPayments.requestPayment("", {   //첫번째 파라미터 - 카드, 가상계좌, 계좌이체, 휴대폰, 문화상품권, 도서문화상품권, 게임문화상품권 가능  // 두번째 파라미터-결제정보
-        amount: mkpDetail.ticketPrice,   //
-        orderId: 'KjnHngSBVHXivyFnT4bMd',  //영문 대소문자, 숫자, 특수문자-,_,= 사용가능 (6~64자 이하 문자열)
-        orderName: mkpDetail.board_mk_title,  // 주문명 - 상품정보
-        customerName: 'member_name',  // *회원이름으로 수정해야함 (세션스토리지에서 가져옴)
-        successUrl: `${window.location.origin}/paymentsucess/:festMId`,  // 성공시 리다이렉트 URL 
-        failUrl: `${window.location.origin}/paymentfailed/:festMId`,  //실패시 리다이렉트 URL - 안만들어놈
-        flowMode: 'DEFAULT',
-        easyPay: '토스페이'
-        // windowTarget:'self'
-        // customerEmail:''  //결제결과 확인 이메일 발송 - 회원이메일(세션스토리지에서 가져옴)
-      }).catch(function (error) {
-        if (error.code === 'USER_CANCEL') {     // 결제 고객이 결제창을 닫았을 때 에러
-
-        } else if (error.code === 'INVALID_CARD_COMPANY') {        // 유효하지 않은 카드  에러
-        }
-      });
-    };
-  */
 
 
     return (
