@@ -96,7 +96,6 @@ const CarpoolBoardList = () => {
           } else {
             Swal.fire({
               title: "인원이 다 찼습니다.",
-              icon: "error",
               icon: "warning",
             });
           }
@@ -219,7 +218,7 @@ const CarpoolBoardList = () => {
                             <div className="data" key={carpool.boardCpNo}>
                               {/* 글번호={carpool.boardCpNo}<br/> */}
                               {/*  현재인원={item.now},  */}
-                              최대인원 = {item.max}, 참가하기 = {item.count}/
+                              최대인원 = {item.max}, 참가인원 = {item.count}/
                               {item.max}
                               <br />
                             </div>

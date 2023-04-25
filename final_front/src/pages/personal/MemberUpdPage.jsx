@@ -159,7 +159,7 @@ const MemberUpdPage = () => {
     if (jsonDoc && jsonDoc.length > 0) {
         console.log('이메일 중복');
         if (key === 'email') {
-            console.log('중복된 이메일이 존재');
+            console.log('중복된 이메일 존재');
         }
         Swal.fire({
           title:'중복되는 이메일이 존재합니다. ',
@@ -177,7 +177,6 @@ const MemberUpdPage = () => {
   return (
     <div>
       <div className='mypage_center' style={{paddingTop:'1050px'}}> 
-        <SignupForm suggested={false}>
         <MyH1>회원 정보 수정</MyH1>
         <div style={{ padding: '30px 30px 0px 30px' }}>
 
@@ -271,7 +270,6 @@ const MemberUpdPage = () => {
               {'수정하기'}
             </BButton>
           </div>
-        </SignupForm>
       </div>
     </div>
   )

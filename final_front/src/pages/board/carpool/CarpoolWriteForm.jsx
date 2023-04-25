@@ -1,5 +1,5 @@
 /* global daum */
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,10 @@ import "firebase/compat/auth";
 import "firebase/compat/database";
 import "firebase/compat/firestore";
 import "firebase/database";
-import { insertCarpoolDB } from "../../../axios/board/carpool/CarpoolLogic";
+import {
+  getBoardCpNoDB,
+  insertCarpoolDB,
+} from "../../../axios/board/carpool/CarpoolLogic";
 import Footer from "../../../components/Footer";
 
 const CarpoolWriteForm = (/* { carpool } */) => {
@@ -25,8 +28,6 @@ const CarpoolWriteForm = (/* { carpool } */) => {
 
   const navigate = useNavigate();
   const [title, setTitle] = useState(""); //제목
-  //mem_id를 받아오자
-  //const[writer, setWriter]= useState(''); //작성자
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
   const [place, setPlace] = useState(""); //판매할 티켓의 공연장소
@@ -36,6 +37,25 @@ const CarpoolWriteForm = (/* { carpool } */) => {
   const handleContent = useCallback((value) => {
     console.log(value);
     setContent(value);
+  }, []);
+
+  useEffect(() => {
+    const asyncDB = async () => {
+      const res = await getBoardCpNoDB({});
+      const result = JSON.stringify(res.data);
+      const jsonDoc = JSON.parse(result);
+
+      setBoardCpNo(result);
+      if (res.data) {
+        console.log(jsonDoc);
+        // setBoard(res.data);
+      } else {
+        console.log("게시글 조회 실패");
+      }
+    };
+
+    asyncDB();
+    return () => {};
   }, []);
 
   const handleTitle = useCallback((e) => {
@@ -72,7 +92,6 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       });
       return;
     }
-    console.log("insertCarpool");
     const carpool = {
       boardCpTitle: title, // 제목 추가
       boardCpContent: content, // 내용 추가
@@ -149,7 +168,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
     };
   }, []);
 
-  function handleInputChange(event) {
+  const handleInputChange = (event) => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -157,11 +176,12 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       ...carpool,
       [name]: value,
     });
-  }
+  };
 
-  function handleSaveData() {
+  const handleSaveData = () => {
     const count = 1;
     const maxVal = parseInt(carpool.max);
+
     firebase
       .database()
       .ref(carpool.name)
@@ -180,20 +200,14 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             if (newNow <= maxVal && newCount <= maxVal) {
               firebase.database().ref(carpool.name).update({
                 max: maxVal,
-                // now: firebase.database.ServerValue.increment(count),
-                // count: firebase.database.ServerValue.increment(count),
+                now: 1,
+                count: 1,
               });
             }
           }
-        } else {
-          firebase.database().ref(carpool.name).set({
-            max: maxVal,
-            now: 1,
-            count: 1,
-          });
         }
       });
-  }
+  };
   /*************** fireBase ***************/
   return (
     <>
@@ -244,6 +258,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 >
                   뒤로가기
                 </Button>
+
                 <Button
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
                   onClick={() => {
@@ -311,39 +326,59 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 handleDate(e.target.value);
               }}
             />
+
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-
             <br />
 
-            <h3>Carpool 최대 인원</h3>
-            <input
-              style={{ width: "98%", marginLeft: "10px" }}
-              className="form-control"
-              type="text"
-              id="name"
-              name="name"
-              placeholder="글번호"
-              onChange={handleInputChange}
-            />
-
-            <input
-              style={{ width: "98%", marginLeft: "10px" }}
-              className="form-control"
-              type="text"
-              id="max"
-              name="max"
-              placeholder="최대인원"
-              onChange={handleInputChange}
-            />
-            <br />
-            <button
-              style={{ width: "98%", marginLeft: "10px" }}
-              className="form-control"
-              type="text"
-              onClick={handleSaveData}
+            <h3 style={{ marginBottom: "20px" }}>Carpool 최대 인원</h3>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
             >
-              카풀 등록
-            </button>
+              <h5 style={{ marginLeft: "10px" }}>글번호</h5>
+              <input
+                style={{ width: "auto", marginLeft: "10px" }}
+                className="form-control"
+                type="text"
+                id={boardCpNo}
+                name="name"
+                placeholder="글번호"
+                // readOnly
+                Value={boardCpNo}
+                onChange={handleInputChange}
+              />
+
+              <h5 style={{ marginLeft: "50px" }}>최대 인원</h5>
+              <input
+                style={{ width: "auto", marginLeft: "10px" }}
+                className="form-control"
+                type="text"
+                id="max"
+                name="max"
+                placeholder="최대인원"
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                style={{
+                  width: "30%",
+                  backgroundColor: "black",
+                  marginTop: "10px",
+                }}
+                className="form-control"
+                type="text"
+                onClick={handleSaveData}
+              >
+                카풀 등록
+              </Button>
+            </div>
+
+            <hr style={{ margin: "10px 0px 10px 0px" }} />
 
             <div>
               <Row className="mb-4">

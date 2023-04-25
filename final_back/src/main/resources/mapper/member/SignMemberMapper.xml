@@ -126,6 +126,6 @@
 	
 	<delete id="memberDelete" parameterType="java.util.HashMap">
 	    DELETE member
-	    WHERE member_id = #{memberId}
+	    WHERE member_id = #{id}
 	</delete>
 </mapper>
