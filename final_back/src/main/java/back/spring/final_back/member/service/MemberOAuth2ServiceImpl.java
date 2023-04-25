@@ -85,7 +85,9 @@ public class MemberOAuth2ServiceImpl extends DefaultOAuth2UserService {
                                 Map<String, Object> userProfile = (Map<String, Object>) attributes.get("profile");
                                 memberDto.setMemberId(id);
                                 memberDto.setMemberName(userProfile.get("nickname").toString());
-                                memberDto.setMemberEmail(attributes.get("email").toString());
+                                if (attributes.get("email") != null) {
+                                        memberDto.setMemberEmail(attributes.get("email").toString());
+                                }
                                 memberDto.setMemberNickname(userProfile.get("nickname").toString());
                                 memberDto.setMemberProfileImage(userProfile.get("profile_image_url").toString());
                         }
