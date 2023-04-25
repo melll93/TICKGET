@@ -73,7 +73,7 @@ public class SignUpServiceImpl implements SignUpService {
 	    log.info("memberDelete 확인");
 		log.info(pMap.toString());
 	    int result = 0;
-	    String memberId = (String) pMap.get("memberId");
+	    String memberId = (String) pMap.get("id");
 	    Map<String, Object> paramMap = new HashMap<>();
 	    paramMap.put("memberId", memberId);
 	    result = signUpDao.memberDelete(paramMap);
