@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,10 @@ import back.spring.final_back.member.jwt.TokenProvider;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-  @Autowired
-  TokenProvider jwtTokenUtil;
+
+  private final TokenProvider tokenProvider;
 
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -27,14 +29,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     // login 성공한 사용자 목록.
     OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-    // log.info(oAuth2User.toString());
-    // Map<String, Object> kakao_account = (Map<String, Object>)
-    // oAuth2User.getAttributes().get("kakao_account");
-    // String email = (String) kakao_account.get("email");
-    // Map<String, Object> properties = (Map<String, Object>)
-    // oAuth2User.getAttributes().get("properties");
-    // String nickname = (String) properties.get("nickname");
-    String jwt = jwtTokenUtil.createToken(authentication);
+    log.info(oAuth2User.toString());
+
+    String jwt = tokenProvider.createToken(authentication);
 
     String url = makeRedirectUrl(jwt);
 
