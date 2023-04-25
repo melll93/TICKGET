@@ -9,7 +9,7 @@ const Footer = () => {
           <a href="https://github.com/melll93/final_project">
             <img style={{width:'60px' }} src="logos/GITHUB.png"></img>
             </a>
-          </div>
+          </div> 
           <a href="https://www.figma.com/team_invite/redeem/JlqZbEVbWCSmha2notKsMG">
             <img style={{width:'40px', marginTop:'10px' }} src="logos/NOTION.png"></img>
             </a>

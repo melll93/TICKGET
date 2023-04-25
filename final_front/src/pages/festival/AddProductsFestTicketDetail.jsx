@@ -96,7 +96,14 @@ const festTicketInsert = async () => {
       }
     }
   }
+  const updatedDbTickets = [...dbTickets, ...tickets]; 
+  setDbTickets(updatedDbTickets); 
+  const newTickets=[];
+  setTickets(newTickets);
 };
+ 
+
+
 
 
 /* 티켓 로우 삭제 */
@@ -164,7 +171,6 @@ fest_ticket 추가 정보 입력
                 <div>
                 {ticket.price}   원
                 </div>
-
               </td><td>
               <div>???석</div>
               </td><td>

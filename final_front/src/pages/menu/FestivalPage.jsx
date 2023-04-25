@@ -50,20 +50,35 @@ const FestivalsTest = () => {
 
   useEffect(() => {
     FetivalListDB().then(setFestivals);
-  }, [festivals]);
+  }, []);
+  
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
-
+  
   const currentFest = (festivals) => {
     let currentFest = 0;
     currentFest = festivals.slice(indexOfFirstPost, indexOfLastPost);
     return currentFest;
   };
-
   
-  const hitPlusOne=async (festMId)=>{
-    await thumbsupFestivalDB(festMId);
-  } 
+  
+  const hitPlusOne = (festMId) => {
+    thumbsupFestivalDB(festMId)
+    .then(() => {
+      // 새로운 배열을 생성하여 값을 업데이트
+      const updatedFestivals = [...festivals];
+      // 업데이트할 값 변경
+      // 예를 들어, festivals 배열에서 festMId에 해당하는 요소를 찾아 thumbsup 값을 1 증가시키는 경우
+      const festivalToUpdate = updatedFestivals.find(festival => festival.festMId === festMId);
+      festivalToUpdate.thumbsup += 1;
+      // 변경된 배열을 상태로 업데이트
+      setFestivals(updatedFestivals);
+    })
+    .catch((error) => {
+      console.error("Error updating thumbs up count:", error);
+    });
+  };
+  
 
   return (
     <>
@@ -73,7 +88,7 @@ const FestivalsTest = () => {
             // console.log(festival)
             return (
               <div
-                key={festival.festMId}
+                key={i}
                 className="card "
                 style={{
                  width: "18rem", 
