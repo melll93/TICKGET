@@ -16,7 +16,7 @@ import MapContainer from './Map/MapContainer';
 import UserProfile from '../../../components/UserProfile';
 import { searchById } from '../../../axios/member/member';
 import Swal from "sweetalert2";
-import { wishlistAddDB, wishlistDelDB, wishlistDetailDB } from '../../../axios/payment/wishlistLogic';
+import { wishlistAddDB, wishlistDelDB, wishlistDetailDB, wishlistSelDelDB } from '../../../axios/payment/wishlistLogic';
 
 
 const cookies = new Cookies();
@@ -92,7 +92,8 @@ const MarketDetail = () => {
 
   const wlistDetail = async() => {
     const wData = {
-      boardMkNo : no
+      boardMkNo : no,
+      memberNo : member_no
     }
     const res = await wishlistDetailDB(wData)
     console.log(res.data);
@@ -225,7 +226,15 @@ const addWishlist = () => {
    Swal.fire({
     icon: 'success',
     title: '상품을 찜했습니다!',
-   })
+    showCancelButton: true,
+    confirmButtonText: '확인하러 가기',
+    cancelButtonText: '닫기',
+   }).then(result => {
+    // 만약 Promise리턴을 받으면,
+    if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+       navigate("/cart")
+    }
+ });
    setIsWishlistAdded(true);
    setHeart(true)
   } else if (member_no === detail.member_no) {
@@ -257,7 +266,8 @@ const addWishlist = () => {
       boardMkNo: detail.board_mk_no,
       memberNo : member_no,
     }
-    const res = await wishlistDelDB(wData)
+    console.log(wData)
+    const res = await wishlistSelDelDB(wData)
     console.log(res.data)
    } 
    const mkminusLikes = async() => {  //게시글 찜 갯수 감소

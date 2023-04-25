@@ -171,12 +171,12 @@ board_mk_no = #{boardMkNo}
 </delete>	
 	
 	
-	<!-- 판매완료 처리 -->
+<!-- 판매완료 처리 -->
 <update id="mk_boardSell" parameterType="MarketDto">
 <choose>
-<when test='boardMkNo!=null'>
+<when test='boardMkNo!=null and boardMkNo>0'>
 UPDATE board_market SET board_mk_status = board_mk_status + 1
- WHERE board_mk_no= #{boardMkNo}
+ WHERE board_mk_no = #{boardMkNo} AND mk_ticket_price = #{mkTicketPrice}
 </when>
 </choose>
 </update>

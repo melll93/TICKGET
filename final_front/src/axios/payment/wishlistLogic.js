@@ -51,7 +51,7 @@ export const wishlistAddDB = (wData) => {
   });
 };
 
-//위시리스트 제거
+//위시리스트 전체 제거
 export const wishlistDelDB = (wData) => {
   console.log(wData);
   return new Promise((resolve, reject) => {
@@ -59,6 +59,23 @@ export const wishlistDelDB = (wData) => {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/wishlist/wishlistDelete",
+        params: wData,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+//위시리스트 선택 제거
+export const wishlistSelDelDB = (wData) => {
+  console.log(wData);
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: "http://localhost:8888/wishlist/wishlistSelDelete",
         params: wData,
       });
       resolve(response);
