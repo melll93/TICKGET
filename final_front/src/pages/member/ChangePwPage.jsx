@@ -2,11 +2,25 @@ import React from 'react'
 import axios from "axios";
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { BButton, LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
+import { LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
 import { changePwUpdateDB } from '../../axios/member/memberCrud';
 import { useNavigate } from 'react-router-dom';
 import { checkPassword, validatePassword } from '../../util/validateLogic';
 import Swal from "sweetalert2";
+import styled from 'styled-components';
+
+export const MButton = styled.button`
+  border-radius: 12px;
+  border: none;
+  background-color: rgb(80, 50, 200);
+  color: white;
+  width: 125px;
+  height: 45px;
+  font-weight: bold;
+  &:hover {
+    background-color: rgb(50, 50, 120);
+  }
+`;
 
 const ChangePwPage = () => {
   const navigate = useNavigate()
@@ -101,7 +115,7 @@ const ChangePwPage = () => {
               onChange={(e) => { changeMemInfo(e); validate('pwConfirm', e.target.value); }} />
               {comment.pwConfirm}
           </MyLabel>
-          <BButton type="submit" onClick={handlePwUpdate}>변경</BButton>
+          <MButton type="submit" onClick={handlePwUpdate}>변경</MButton>
         </div>
       </LoginForm>
     </>
