@@ -36,9 +36,6 @@ const UnRegiesterPage = () => {
   const cookies = new Cookies();
   const _userData = cookies.get("_userData"); // 사용자 정보
   console.log(_userData)
-  /*   useEffect(()=>{
-      setMemberId('yeg123') 
-    },[]) */ // UnRegiesterPage화면이 열릴 때 최초 딱 한번만 실행됨
 
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
@@ -125,6 +122,7 @@ const UnRegiesterPage = () => {
       // e.preventDefault();
       console.log("버튼 확인");
     
+      // 체크 박스 항목 동의
       if (!isChecked1 || !isChecked2) {
         Swal.fire({
           title: "모든 항목에 동의해주세요.",
@@ -132,9 +130,9 @@ const UnRegiesterPage = () => {
         return;
       }
     
+      // 아이디, 전화번호 비교 후 탈퇴 진행
       try {
         const { memberId, memberMobile } = _userData;
-    
         const member = {
           memberId,
           memberMobile,
@@ -144,7 +142,9 @@ const UnRegiesterPage = () => {
         const res = await memberListDB(member);
         console.log(res.data);
     
-        if (!res.data || res.data.length === 0 || !res.data.some((data) => data.member_id === memberId && data.member_mobile === memberMobile)) {
+        const memberExists = res.data && res.data.some((data) => data.member_id === memberId && data.member_mobile === memberMobile);
+    
+        if (!memberExists) {
           console.log("회원 정보 없음");
           Swal.fire({
             title: "회원 정보를 다시 확인해 주세요.",
@@ -152,29 +152,42 @@ const UnRegiesterPage = () => {
           });
           return;
         }
-    
-        const resDelete = await memberDeleteDB({ id: memberId });
-    
-        if (resDelete.data && resDelete.data.success) {
-          cookies.remove("_userData");
-          Swal.fire({
-            title:
-              "회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.",
-          });
-          navigate("/");
-        } else {
-          console.error("회원 탈퇴 실패");
-          Swal.fire({
-            title:
-              "회원 탈퇴에 실패하였습니다. 회원 님의 정보를 다시 확인해 주세요.",
-          });
-        }
+        // 바로 탈퇴 진행되는 문제점 발생
+        Swal.fire({
+          title: "회원님의 탈퇴를 진행하시겠습니까?",
+          text: "탈퇴하시면 회원님의 모든 정보가 삭제됩니다.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "탈퇴하기",
+          cancelButtonText: "취소",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              const resDelete = await memberDeleteDB({ id: memberId });
+              if (resDelete.data && resDelete.data.success) {
+                cookies.remove("_userData");
+                Swal.fire({
+                  title:
+                    "회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.",
+                });
+                navigate("/");
+              } else {
+                console.error("회원 탈퇴 실패");
+                Swal.fire({
+                  title:
+                    "회원 탈퇴에 실패하였습니다. 회원 님의 정보를 다시 확인해 주세요.",
+                });
+              }
+            } catch (error) {
+              console.error("error : " + error);
+            }
+          }
+        });
       } catch (error) {
         console.error("error : " + error);
       }
     };
     
-
   return (
     <>
       <div className="mypage_center">
@@ -229,14 +242,6 @@ const UnRegiesterPage = () => {
                 placeholder='탈퇴를 위해 회원님의 전화번호를 입력해 주세요.'
                 value={mobile}
                 onChange={changeMemInfo} />
-            {/*               
-            <Input
-                type="password"
-                placeholder="탈퇴를 위해 비밀번호를 한 번 더 입력해 주세요."
-                value={passwordInput}
-                onChange={changeMemInfo}
-              /> 
-              */}
             </label>
             <br/>
 
