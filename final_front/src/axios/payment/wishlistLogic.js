@@ -84,3 +84,20 @@ export const wishlistSelDelDB = (wData) => {
     }
   });
 };
+
+//위시리스트 판매여부 업데이트 (타 사용자 예외처리)
+export const wishlistUpdateStatusDB = (wishlistSelled) => {
+  console.log(wishlistSelled);
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: "http://localhost:8888/wishlist/wishlistUpdateStatus",
+        params: wishlistSelled,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

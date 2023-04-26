@@ -17,6 +17,12 @@ const cookies = new Cookies();
    }
  
 
+
+
+
+
+
+
  
     console.log(boards); // 마켓 게시판 조회 데이터
     const navigate = useNavigate()
@@ -93,9 +99,17 @@ const cookies = new Cookies();
     cursor: "pointer",
     transition: "transform 0.3s", // 애니메이션 속도 조절
     transform: hovered ? "scale(1.05)" : "scale(1)",
-    border: member_no === boards.memberNo ? "2px solid rgb(80, 50, 200)" : ""
+    border: member_no === boards.memberNo ? "2px solid rgb(80, 50, 200)" : "",
+    opacity: boards.boardMkStatus > 0 ? '50%' : ""
   }}
 >
+  {boards.boardMkStatus > 0 ? (
+  <div style={{textAlign: "center", fontWeight: "bold",position: "absolute", top: 0, left: 0, backgroundColor: "rgb(80,50,200)", color: "white", padding: "5px", borderTopLeftRadius:"5px"}}>
+  판매완료
+</div> 
+  ) : ""}
+  
+  
 <img src={boards.boardMkFileurl ? boards.boardMkFileurl : "http://via.placeholder.com/300X350"} style={{width:"100%", overflow:'hidden', height: '250px', objectFit: 'cover' , 
 borderTopLeftRadius:'10px',borderTopRightRadius:'10px',borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}} 
 onClick={linkToDetail}

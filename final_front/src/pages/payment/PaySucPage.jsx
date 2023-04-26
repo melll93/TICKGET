@@ -6,6 +6,8 @@
   import { mk_boardDetailDB, mk_boardSellDB } from '../../axios/board/market/marketLogic'
   import { paymentInsert } from '../../axios/payment/paymentLogic'
   import { Cookies } from 'react-cookie'
+import { wishlistSelDelDB, wishlistUpdateStatusDB } from '../../axios/payment/wishlistLogic'
+import Footer from '../../components/Footer'
 
   const cookies = new Cookies();
   const PaySucPage = () => {
@@ -45,22 +47,29 @@
           const res = await mk_boardDetailDB(board);
           const temp = JSON.stringify(res.data);
           const jsonDoc = JSON.parse(temp);
-   /*        setDetail({
-            board_mk_no: jsonDoc[0].boardMkNo,
-            board_mk_title: jsonDoc[0].boardMkTitle,
-            mk_ticket_place: jsonDoc[0].mkTicketPlace,
-            mk_ticket_date: jsonDoc[0].mkTicketDate,
-            mk_ticket_count: jsonDoc[0].mkTicketCount,
-            mk_ticket_price: jsonDoc[0].mkTicketPrice,
-          }); */
       
-          const sellBoard = {
+          const sellBoard = { //마켓게시판 판매완료 처리
             boardMkNo: jsonDoc[0].boardMkNo,
             mkTicketPrice: jsonDoc[0].mkTicketPrice,
           };
           await mk_boardSellDB(sellBoard);
       
-          const payment = {
+
+          const wishlistSelled = { //다른 사용자 카트 페이지 상품 상태 업데이트 (판매완료)
+            boardMkNo : jsonDoc[0].boardMkNo
+          } 
+          await wishlistUpdateStatusDB(wishlistSelled)
+
+
+          const deleteWishlist = { //결제한 상품은 찜한 목록에서 삭제
+             boardMkNo : jsonDoc[0].boardMkNo,
+             wlistMemberNo : member_no              
+          };
+          await wishlistSelDelDB(deleteWishlist)
+
+
+
+          const payment = { //결제내역 추가
             paymentId: 0,
             paymentOrderId: orderid,
             paymentOrderName: jsonDoc[0].boardMkTitle,
@@ -94,7 +103,8 @@
             <button className="homebtn" style={{backgroundColor:'rgb(80,50,200)', color:'white', borderRadius:'30px', width:'450px', height:'60px', marginTop:'10px' , fontFamily:'Nanum-Gothic', fontWeight:'bold', fontSize:'1.2rem'}}> 계속 둘러보기 </button>
             </Link>
           </div>
-
+          <section style={{height:'300px'}}/>
+<Footer/>
         </div>
       </>
     )

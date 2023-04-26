@@ -4,7 +4,7 @@ import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { mk_boardDetailDB, mk_boardListDB, mk_minusLikesDB, mk_plusLikesDB } from '../../../axios/board/market/marketLogic';
+import { mk_boardDeleteDB, mk_boardDetailDB, mk_boardListDB, mk_boardSellDB, mk_minusLikesDB, mk_plusLikesDB } from '../../../axios/board/market/marketLogic';
 import Header from '../../../components/Header';
 import Sidebar from '../../../components/Sidebar';
 import { ContainerDiv, FormDiv, HeaderDiv, QnACommentArea } from '../../../styles/formStyle';
@@ -17,6 +17,7 @@ import UserProfile from '../../../components/UserProfile';
 import { searchById } from '../../../axios/member/member';
 import Swal from "sweetalert2";
 import { wishlistAddDB, wishlistDelDB, wishlistDetailDB, wishlistSelDelDB } from '../../../axios/payment/wishlistLogic';
+import Footer from '../../../components/Footer';
 
 
 const cookies = new Cookies();
@@ -83,9 +84,41 @@ const MarketDetail = () => {
         mk_ticket_price: jsonDoc[0].mkTicketPrice.toLocaleString(),
         board_mk_filename: jsonDoc[0].boardMkFilename,
         board_mk_fileurl: jsonDoc[0].boardMkFileurl,
+        board_mk_status : jsonDoc[0].boardMkStatus,
         board_mk_likes : jsonDoc[0].boardMkLikes
       })
-
+      if(jsonDoc[0].boardMkStatus === 1  && member_no !== jsonDoc[0].memberNo) { //판매된 후 게시글 조회자가 판매자가 아닐 경우
+        Swal.fire({
+          icon: 'warning',
+          title: '이미 판매완료된 상품입니다.',
+          confirmButtonText: '확인',
+         }).then(result => {
+          // 만약 Promise리턴을 받으면,
+          if (result.isConfirmed) { // 만약 confirm 버튼을 눌렀다면
+             navigate(-1)
+          }
+       });
+      }else if(jsonDoc[0].boardMkStatus === 1 && member_no === jsonDoc[0].memberNo) { //판매된 후 게시글 조회자가 판매자일 경우 (완전판매처리)
+       Swal.fire({
+        icon:'info',
+        title:'판매 완료!',
+        text:`판매금액 : ${jsonDoc[0].mkTicketPrice}원`,
+        confirmButtonText: '확인',
+       }).then(result => {
+          if (result.isConfirmed) {
+            const confirmSelled = async() => {
+              const board =  {
+                boardMkNo : jsonDoc[0].boardMkNo,
+                mkTicketPrice : jsonDoc[0].mkTicketPrice
+              }
+              res = await mk_boardSellDB(board)
+              console.log(res.data)
+            }
+            confirmSelled()
+            navigate('/market')
+          }
+       })
+      }
      searchById(jsonDoc[0].memberId).then(setSellerinfo); 
     });
   }
@@ -109,6 +142,7 @@ const MarketDetail = () => {
   }
   boardDetail()
   wlistDetail()
+ 
 }, [])
 
 
@@ -160,8 +194,6 @@ const MarketDetail = () => {
     }
   }
 
-  /* console.log(Date.now())
-   console.log(new Date(detail.board_mk_date).getTime()) */
   const boardDateTime = formatTimeDiff(Date.now() - new Date(detail.board_mk_date).getTime())
 
 
@@ -200,7 +232,7 @@ const handleClick = () => {
 
 
 const addWishlist = () => {
-  if (member_no > 0 && member_no != detail.member_no) {
+  if (member_no > 0 && member_no !== detail.member_no) {
    const addtoWishlist = async() =>{
     const wData = {
       wishlistId : 0,
@@ -208,6 +240,7 @@ const addWishlist = () => {
       wishlistPrice : detail.mk_ticket_price,
       wishlistFileurl : detail.board_mk_fileurl,
       wishlistCategory : "market",
+      wishlistStatus : 0,
       boardMkNo : detail.board_mk_no,
       memberNo : member_no,
     }
@@ -259,8 +292,7 @@ const addWishlist = () => {
 
 //찜하기 취소 시
  const deleteWishlist = () => {
-  if (member_no > 0 && member_no != detail.member_no) {
-    /* 구현중.. */
+  if (member_no > 0 && member_no !== detail.member_no) {
    const deltoWishlist = async() => {
     const wData = {
       boardMkNo: detail.board_mk_no,
@@ -308,7 +340,7 @@ const addWishlist = () => {
 
   //채팅으로 연결
   const linkToChat = () => {
-    if (member_no > 0 && member_no != detail.member_no) {
+    if (member_no > 0 && member_no !== detail.member_no) {
       /* 유저와 판매자 채팅으로 연결해주기 */
 
 
@@ -333,7 +365,7 @@ const addWishlist = () => {
 
   //구매 페이지 이동
   const linkToPayment = () => {
-    if (member_no > 0 && member_no != detail.member_no) {
+    if (member_no > 0 && member_no !== detail.member_no) {
       navigate(`/payment/${no}`)
 
 
@@ -356,8 +388,6 @@ const addWishlist = () => {
     }
   }
  
-
-  //게시글 작성자(판매자) 프로필 가져오기
 
   return (
     <>
@@ -480,7 +510,7 @@ const addWishlist = () => {
           </Tabs>
         </section>
 
-
+<Footer/>
       </div>
     </>
   );

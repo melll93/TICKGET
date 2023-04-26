@@ -45,12 +45,15 @@ const MapContainer = ({ place }) => {
               map.setBounds(bounds);
             }
           }
+   
 
           function displayMarker(place) {
             let marker = new kakao.maps.Marker({
               map: map,
               position: new kakao.maps.LatLng(place.y, place.x),
             });
+          
+            console.log(marker.position)
 
             markers.current.push(marker);
 
