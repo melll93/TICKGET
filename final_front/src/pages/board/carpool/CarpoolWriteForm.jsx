@@ -85,6 +85,13 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       });
       return;
     }
+    if (!place) {
+      Swal.fire({
+        title: "장소을 입력해주세요",
+        icon: "warning",
+      });
+      return;
+    }
     if (!content) {
       Swal.fire({
         title: "내용을 입력해주세요",
@@ -92,6 +99,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       });
       return;
     }
+
     const carpool = {
       boardCpTitle: title, // 제목 추가
       boardCpContent: content, // 내용 추가
@@ -223,6 +231,11 @@ const CarpoolWriteForm = (/* { carpool } */) => {
           });
         }
       });
+
+    Swal.fire({
+      title: "카풀을 등록했습니다.",
+      icon: "success",
+    });
   };
   /*************** fireBase ***************/
   return (
@@ -261,30 +274,50 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                     insertCarpool();
                   }}
                 >
-                  글쓰기
+                  글 작성하기
                 </Button>
                 <Button
                   onClick={() => {
-                    if (window.confirm("정말로 뒤로 가시겠습니까?")) {
-                      window.history.back();
-                    }
+                    Swal.fire({
+                      title: "정말로 뒤로 가시겠습니까?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "black",
+                      cancelButtonColor: "black",
+                      confirmButtonText: "네",
+                      cancelButtonText: "아니오",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.history.back();
+                      }
+                    });
                   }}
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
                 >
                   뒤로가기
                 </Button>
-
+                {/* 
                 <Button
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
                   onClick={() => {
-                    if (window.confirm("정말 목록으로 가시겠습니까?")) {
-                      navigate("/carpool");
-                    }
+                    Swal.fire({
+                      title: "정말로 목록으로 가시겠습니까?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "black",
+                      cancelButtonColor: "black",
+                      confirmButtonText: "네",
+                      cancelButtonText: "아니오",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        navigate("/carpool");
+                      }
+                    });
                   }}
                 >
                   목록으로
-                </Button>
+                </Button> */}
               </div>
             </div>
 
@@ -378,6 +411,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 placeholder="최대인원"
                 onChange={handleInputChange}
               />
+
               <Button
                 style={{
                   width: "auto",

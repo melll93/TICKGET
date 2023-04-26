@@ -60,12 +60,6 @@ const CarpoolBoardList = () => {
     };
   }, []);
 
-  const [carpool, setCarpool] = useState({
-    boardCpNo: "",
-    max: "",
-    now: "",
-  });
-
   const handleSaveData = (boardCpNo) => {
     const count = 1;
     const cookies = new Cookies();
@@ -73,7 +67,8 @@ const CarpoolBoardList = () => {
     console.log("_userData : ", _userData);
     const id = _userData.memberId; // 쿠키에서 아이디 값 가져오기
     console.log("id : ", id);
-    if (!id) {
+
+    if (!_userData || !_userData.memberId) {
       alert("회원가입을 해주세요.");
       return;
     }
@@ -97,8 +92,13 @@ const CarpoolBoardList = () => {
                 .update({
                   now: firebase.database.ServerValue.increment(count),
                   count: firebase.database.ServerValue.increment(count),
+                  memberId: _userData.memberId,
                 });
             }
+            Swal.fire({
+              title: "신청이 완료 되었습니다.",
+              icon: "success",
+            });
           } else {
             Swal.fire({
               title: "인원이 다 찼습니다.",

@@ -106,7 +106,7 @@ const TogetherBoardUpdate = () => {
 
   const handleDate = useCallback((e) => {
     setDate(e);
-  },[]);
+  }, []);
 
   const handleContent = useCallback((e) => {
     setContent(e);
@@ -174,6 +174,7 @@ const TogetherBoardUpdate = () => {
                     border: "1px solid lightGray",
                     borderRadius: "10px",
                   }}
+                  step="1"
                   onChange={(e) => {
                     handleDate(e.target.value);
                   }}

@@ -222,6 +222,17 @@ const CarpoolDetail = ({ match }) => {
                   </div>
 
                   <div>
+                    <label>최대 인원</label>
+                    <span
+                      style={{ width: "98%", margin: "10px" }}
+                      type="text"
+                      required
+                      className="form-control form-control-lg"
+                      id="inputLarge"
+                    ></span>
+                  </div>
+
+                  <div>
                     <label>내용</label>
                     <textarea
                       style={{
@@ -298,7 +309,7 @@ const CarpoolDetail = ({ match }) => {
                       onClick={() =>
                         navigate({
                           pathname:
-                            "/together/BoardUpdate/" + carpool.boardTgNo,
+                            "/carpool/carpoolUpdate/" + carpool.boardCpNo,
                           state: { carpool },
                         })
                       }
@@ -412,8 +423,6 @@ const CarpoolDetail = ({ match }) => {
                               }}
                               className="form-control2"
                               placeholder="수정할 댓글 내용을 입력하세요"
-                              id="together_board_detail_reply_textarea"
-                              // value={boardReplyTgContent}
                               style={{
                                 position: "relative",
                                 height: "300px",
