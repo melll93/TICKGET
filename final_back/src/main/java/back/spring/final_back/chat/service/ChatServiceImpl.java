@@ -13,20 +13,39 @@ import java.util.Map;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ChatServiceImpl implements ChatService{
+public class ChatServiceImpl implements ChatService {
 
     private final ChatDao chatDao;
+
+    /********************
+     * 방이 존재하는지 체크 후 존재한다면 해당 방을 return,
+     * 존재하지 않는다면 방을 생성하여 return
+     * @param members
+     * @return
+     */
     @Override
-    public int createChatRoom(Map<String, String> chatMember) {
-        return 0;
+    public int createChatRoom(String[] members) {
+        int result = 0;
+        int roomNo = chatDao.selectMaxRoomNo() + 1;
+        try {
+            for (int i = 0; i < members.length; i++) {
+                log.info(members[i]);
+                chatDao.createChatRoom(roomNo, members[i]);
+                result ++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = 0;
+        }
+        return result;
     }
 
     @Override
-    public Map<String, Object> getChatRoom() {
+    public Map<String, Object> getChatRoomList() {
         Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
         log.info(userDetails.getUsername());
         String memberId = userDetails.getUsername();
-        return chatDao.getChatRoom(memberId);
+        return chatDao.getChatRoomList(memberId);
     }
 }

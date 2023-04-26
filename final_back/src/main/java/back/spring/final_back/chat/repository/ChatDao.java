@@ -6,5 +6,7 @@ import java.util.Map;
 
 @Mapper
 public interface ChatDao {
-    public Map<String, Object> getChatRoom(String memberId);
+    public int createChatRoom(int roomNo, String memberId);
+    public Map<String, Object> getChatRoomList(String memberId);
+    public int selectMaxRoomNo();
 }

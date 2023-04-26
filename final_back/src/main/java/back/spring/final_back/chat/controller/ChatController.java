@@ -11,7 +11,7 @@ import java.util.Map;
 @Controller
 @ResponseBody
 @Log4j2
-@RequestMapping("/chat")
+@RequestMapping("/chat/*")
 @RequiredArgsConstructor
 public class ChatController {
 
@@ -25,14 +25,14 @@ public class ChatController {
     }
 
     @PostMapping("/createChatRoom")
-    public int createChatRoom(@RequestBody Map<String, String> chatMember) {
-        log.info(chatMember);
-        return chatService.createChatRoom(chatMember);
+    public int createChatRoom(@RequestBody String[] members) {
+        log.info(members);
+        return chatService.createChatRoom(members);
     }
 
     @GetMapping("/getChatRoom")
-    public Map<String, Object> getChatRoom() {
+    public Map<String, Object> getChatRoomList() {
 
-        return null;
+        return chatService.getChatRoomList();
     }
 }

@@ -4,5 +4,16 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="back.spring.final_back.chat.repository.ChatDao">
 
+    <select id="selectMaxRoomNo" resultType="int">
+        SELECT
+               IFNULL(MAX(chat_room_no), 0)
+          FROM chat_room
+    </select>
 
+    <insert id="createChatRoom">
+        INSERT
+          INTO chat_room
+               (chat_room_no, chat_room_member)
+         VALUES (#{roomNo}, #{memberId})
+    </insert>
 </mapper>

@@ -6,34 +6,38 @@ import Sidebar from "../../components/Sidebar";
 import "../../styles/chat.css";
 import UserProfile from "../../components/UserProfile";
 import ChatList from "../../components/chat/ChatList";
+import { Cookies } from "react-cookie"
 
 // const ws = new WebSocket("ws://localhost:8888/ws/chat");
 // const ws = new SockJS("http://localhost:8888/ws/chat", null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] })
 const ws = new SockJS("http://localhost:8888/ws/chat");
-
+const cookies = new Cookies();
 /******************************************************************
  * @param msg 객체 리터럴로 user, msg, time 받아서 10~20개 정도 시간별 출력,
  * [{},{}, ...] for 문 돌려서 user가 본인이면 오른쪽, 아니라면 왼쪽 출력
  * chatBox 안에 chatText, profile, time
  ******************************************************************/
 const ChatPage = () => {
-  const userStatus = useSelector((state) => state.userStatus);
+  const _userData = cookies.get("_userData")
+  console.log(_userData);
+  const username = _userData.memberNickname;
+  const userId = _userData.memberId
 
-  const username = userStatus.user.nickname;
   const [msg, setMsg] = useState({});
 
+  // BE로 전송하는 메시지는 id로, 화면에 출력하는 메시지는 nickname으로
   const send = (msg) => {
     console.log("send");
     console.log(username + ":" + msg);
-    ws.send(username + ":" + msg);
+    ws.send(userId + ":" + msg);
 
     const msg_payload = {
-      id: username,
+      id: userId,
       room: 1,
       msg: msg,
     };
     ws.send(msg_payload);
-    console.log(msg_payload);
+    // console.log(msg_payload);
 
     /*************** 채팅 박스 구현 ***************/
     const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
@@ -83,14 +87,14 @@ const ChatPage = () => {
         {/****************************** CHAT AREA START ******************************/}
         <div className="chat container">
           {/******************** START chat bar ********************/}
-          <div className="chat bar">
+          {/* <div className="chat bar">
             <div className="chat bar dm">
               <span className="black">DM</span>
             </div>
             <div className="chat bar group">
               <span className="black">GROUP</span>
             </div>
-          </div>
+          </div> */}
           {/******************** END of chat bar ********************/}
           {/******************** START chat box ********************/}
           <div className="chat box">
