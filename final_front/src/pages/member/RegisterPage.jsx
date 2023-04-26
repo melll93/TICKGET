@@ -222,13 +222,22 @@ const RegisterPage = ({ authLogic }) => {
   /* 회원 가입 */
   const signup = async () => {
     try {
-      let id;
-      const birth = memInfo.birthday;
-      let birthday = "";
-      if (birth !== "") {
-        birthday = birth.slice(0, 4) + '-' + birth.slice(4, 6) + '-' + birth.slice(6, 8);
+      // 회원 가입 정보 기입 확인
+      const checkMeminfo = ['id', 'password', 'name', 'email', 'gender', 'mobile', 'nickname', 'birthday'];
+      const meminfoFields = checkMeminfo.filter(field => !memInfo[field]);
+      if (meminfoFields.length > 0) {
+        Swal.fire({
+          title: '회원 정보를 모두 입력해 주세요.'
+        });
+        return;
       }
-      console.log('입력받은 생일정보 ' + birthday);
+  
+      const birth = memInfo.birthday;
+      let birthday = '';
+      if (birth !== '') {
+        birthday = `${birth.slice(0, 4)}-${birth.slice(4, 6)}-${birth.slice(6, 8)}`;
+      }
+  
       const datas = {
         memberId: memInfo.id,
         memberPassword: memInfo.password,
@@ -240,28 +249,28 @@ const RegisterPage = ({ authLogic }) => {
         memberNickname: memInfo.nickname,
         memberZipcode: post.zipcode,
         memberAddress: post.address,
-        memberAddrDetail: post.addrDetail,
-      }
-      console.log(datas)
+        memberAddrDetail: post.addrDetail
+      };
+  
       const response = await memberInsertDB(datas);
       console.log(response);
       if (response.data !== 1) {
-        return "DB 오류: 관리자에게 연락바랍니다";
+        return 'DB 오류: 관리자에게 연락바랍니다';
       }
+  
       sessionStorage.clear();
       navigate('/');
-      /* 
       Swal.fire({
-          title:'회원가입을 축하합니다.',
-          icon:'success'
-          })
-      */
-      return "회원가입을 축하합니다";
-
+        title: 'Tickget 사이트 회원가입을 축하합니다.'
+      });
     } catch (error) {
-      console.log(error + " 오류: 관리자에게 연락바랍니다");
+      console.log(`${error} 오류: 관리자에게 연락바랍니다`);
+      Swal.fire({
+        title: '회원 가입에 실패하였습니다.'
+      });
     }
-  }
+  };
+  
 
   const checkboxLable = ['없음', '남자', '여자']
   const Checkbox = checkboxLable.map((item, index) => (
