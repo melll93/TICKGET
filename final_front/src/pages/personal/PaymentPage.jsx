@@ -4,7 +4,8 @@ import { Cookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 import { handlePayment } from '../../components/handlePayment'
-import { BlackBtn, ContainerDiv } from '../../styles/formStyle';
+import { BlackBtn, ContainerDiv, PurpleBtn } from '../../styles/formStyle';
+import Footer from '../../components/Footer';
 
 const Cimg = styled.img`
   width: 150px;
@@ -153,14 +154,16 @@ const handleToss = async() => {
 </section>
 <div style={{marginTop:'30px' , marginLeft:'30px' ,display:'flex'}}>
   <br/>
-<BlackBtn width='500px' onClick={()=>{handleToss(paymentData)}}>토스 결제하기</BlackBtn>
+<PurpleBtn width='500px' onClick={()=>{handleToss(paymentData)}}>토스 결제하기</PurpleBtn>
 {/* <PaymentComponent /> */}
 {/* <Button className="researvebtn" onClick={MarketPaymentComponent}>토스페이 결제하기</Button> */}
-<BlackBtn width='500px' onClick={() => navigate(-1)}>취소/이전으로</BlackBtn>
+<PurpleBtn width='500px' onClick={() => navigate(-1)}>취소/이전으로</PurpleBtn>
 </div>
    </div>
 </div> {/* paymentDiv 끝 */}
 </div>
+<section style={{height:'300px'}}/>
+<Footer/>
    </div>
   )
 }

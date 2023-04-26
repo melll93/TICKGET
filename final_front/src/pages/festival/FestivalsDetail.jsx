@@ -17,6 +17,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, onValue, get, set  } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { firebaseConfig } from "../board/carpool/CarpoolBoardList";
+import MapContainer from "../board/market/Map/MapContainer";
 
 /*  카풀에서 주워다 쓰는중
 const firebaseConfig = {
@@ -547,7 +548,7 @@ const researveBtnClicked=()=>{
           <section>
             <div className="bottomcontainer" style={{ marginLeft: "220px" }}>
               <Tabs
-                style={{ maxWidth: "1200px" }}
+                style={{ maxWidth: "1200px",fontFamily: "Nanum Gothic", fontWeight: "bold" }}
                 defaultActiveKey="product_detail_description"
                 id="justify-tab-example"
                 className="product_detail_tabs"
@@ -580,10 +581,24 @@ const researveBtnClicked=()=>{
   </div>
 ))}
 
-
-
-
                 </Tab>
+
+
+                <Tab eventKey="product_detail_place" title="공연장 위치">
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px", marginRight:'450px' }}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" , marginRight:'50px'}}>
+                  <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
+                    <i class="bi bi-geo-alt-fill"></i>
+                    {" "}
+                   {festival[0].festMLoc}
+                  </p>
+                  <div style={{ width: "40%", borderTop: "1px solid black", marginBottom: "10px", opacity: "15%" }} />
+                </div>
+               <MapContainer place={ festival[0].festMLoc } /> 
+              </div>
+
+</Tab>
+
                 <Tab eventKey="product_detail_review" title="상품리뷰">
                   리뷰리뷰
                   <div

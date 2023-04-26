@@ -62,5 +62,13 @@ public class WishlistServiceImpl implements WishlistService {
 		return result;
 	}
 
+	@Override
+	public int wishlistUpdateStatus(WishlistDto wlDto) {
+		logger.info("WishlistController : wishlistUpdateStatus 호출");
+		int result = 0;
+		result = wlDao.wishlistUpdateStatus(wlDto);
+		return result;
+	}
+
 
 }

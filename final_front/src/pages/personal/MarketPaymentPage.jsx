@@ -11,6 +11,7 @@
   import { loadTossPayments } from "@tosspayments/payment-sdk";
   import { handlePayment } from "../../components/handlePayment";
   import PaymentPage from "./PaymentPage";
+import Footer from "../../components/Footer";
 
 
   const Cimg = styled.img`

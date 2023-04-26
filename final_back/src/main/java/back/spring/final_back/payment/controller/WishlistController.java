@@ -72,4 +72,13 @@ public class WishlistController {
 		result = wlService.wishlistSelDelete(wlDto);
 		return result;
 	}
+	
+	//위시리스트 판매여부 업데이트
+	@GetMapping("/wishlistUpdateStatus")
+	public int wishlistUpdateStatus(WishlistDto wlDto) {
+	   logger.info("WishlistController : wishlistUpdateStatus 호출");
+	   int result = 0;
+	   result = wlService.wishlistUpdateStatus(wlDto);
+	   return result;
+	}
 }

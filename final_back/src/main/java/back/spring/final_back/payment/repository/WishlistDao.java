@@ -20,5 +20,8 @@ public interface WishlistDao {
 	//선택삭제
 	public int wishlistSelDelete(WishlistDto wlDto);
 
+	
+	public int wishlistUpdateStatus(WishlistDto wlDto);
+
 
 }

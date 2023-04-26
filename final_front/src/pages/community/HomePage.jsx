@@ -46,6 +46,7 @@ const HomePage = () => {
     const festivalHitList = async () => {
       const festMHit = true; // festHit 변수에 true 값을 할당하여 HIT가 높은 순으로 데이터를 가져옴
       const result = await festivalHitListDB(festMHit); // FestivalHitListDB 함수를 호출하여 데이터를 가져옴
+      console.log(result)
       setFestivalHitList(result); // 가져온 데이터를 상태값에 할당
     };
     festivalHitList(); // 데이터 가져오기
@@ -123,6 +124,18 @@ const HomePage = () => {
   });
    
 
+ /* ******************************************
+   ***** WHAT'S HOT 호버이벤트 *****
+   ********************************************  */
+   const [hovered, setHovered] = useState(Array(5).fill(false)); // 초기값: 5개의 요소에 대해 false
+   
+ /*   festMLoc
+   festMName
+   festMStart */
+  
+
+
+
   return (
     <>
       <Header />
@@ -139,24 +152,41 @@ const HomePage = () => {
             paddingBottom: "50px",
           }}
         >
-          <div style={{ textAlign: "center"}}>
-            <h1>
-              <strong> WHAT'S HOT</strong>
+          <div style={{ textAlign: "center" , fontFamily:'Nanum-Gothic', fontWeight:'bold'}}>
+            <h1 style={{ fontFamily:'Nanum-Gothic', fontWeight:'bold',  marginTop:'100px', marginBottom:'30px'}}>
+            WHAT'S HOT
             </h1>
             {festivalHitList.slice(0, 5).map((festival, i) => (
-              <Link to={`/productsDetail/${festival.festMId}`} key={i}  >
-                <Card.Img
-                  key={i}
-                  src={festival.festMImg}
-                  style={{
-                    width: "150px",
-                    height: "200px",
-                    marginRight: "20px",
-                  }}
-                  alt="Card image"
-                />
-              </Link>
-            ))}
+  <Link to={`/productsDetail/${festival.festMId}`} key={i}>
+
+    <Card.Img
+      key={i}
+      src={festival.festMImg}
+      style={{
+        width: "200px",
+        height: "250px",
+        marginRight: "20px",
+        transform: hovered[i] ? "scale(1.2)" : "",
+        transition: "transform 0.3s ease-in-out"
+      }}
+      onMouseEnter={() => { // 마우스를 요소 위로 올리면
+        setHovered(prevState => {
+          const newState = [...prevState]; // 상태값 배열 복사
+          newState[i] = true; // 현재 요소에 대해 true로 변경
+          return newState; // 변경된 배열 반환
+        });
+      }}
+      onMouseLeave={() => { // 마우스를 요소에서 떠나면
+        setHovered(prevState => {
+          const newState = [...prevState]; // 상태값 배열 복사
+          newState[i] = false; // 현재 요소에 대해 false로 변경
+          return newState; // 변경된 배열 반환
+        });
+      }}
+      alt="Card image"
+ />
+  </Link>
+))}
           </div>
         </section>
 
@@ -164,12 +194,12 @@ const HomePage = () => {
           className="home_total_sec"
           style={{ backgroundColor: "lightgray"}}
         >
-          <div className="total_section" style={{ display: "flex" }}>
-
+          <div className="total_section" style={{ display: "flex", marginTop:'200px' }}>
 
             {/* 메인하단 최신게시글 */}
               <div className="mainpage box" style={{flex: "1",  padding:'50px 0px 0px 170px'}}> 
                 <div className="mainpage div div1" >
+          <h4 style={{fontWeight:'bold'}}><i class="bi bi-clipboard"></i>{" "}최근 게시글</h4>
                   <Tabs
                     defaultActiveKey="market"
                     id="uncontrolled-tab-example"
@@ -202,7 +232,7 @@ const HomePage = () => {
               marginBottom: "50px", textAlign: "center", flex: "1",
             paddingRight:'100px', display:"inline-block"}}
             >
-                <h4>연계 추천 사이트</h4>
+                <h4 style={{fontWeight:'bold'}}><i class="bi bi-command"></i>{" "}연계 추천 사이트</h4>
               <div className="card" style={{ display: "inline-block", marginRight:'5px'}}>
                 <img
                   src="./images_key/travelgajae.jpg"

@@ -270,3 +270,18 @@ export let BlackBtn = styled.button`
 `;
 
 /* ▲▲▲▲은영사용중 ▲▲▲▲ */
+
+export let PurpleBtn = styled.button`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  margin: ${(props) => props.margin};
+  background: rgb(80, 50, 200);
+  font-weight: bold;
+  color: white;
+  padding: 10px;
+  border: 1px solid rgb(72, 71, 71);
+  border-radius: 10px;
+  &:hover {
+    background: rgb(50, 50, 120);
+  }
+`;

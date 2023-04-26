@@ -19,11 +19,11 @@
 <!-- 위시리스트 추가 -->
 <insert id="wishlistAdd" parameterType="WishlistDto">
 
-  insert into wishlist_data (wishlist_title,wishlist_price,wishlist_fileurl,wishlist_category,board_mk_no,member_no)
+  insert into wishlist_data (wishlist_title,wishlist_price,wishlist_fileurl,wishlist_category,wishlist_status,board_mk_no,member_no)
  <choose>
     <!-- 마켓 게시판에서 위시리스트 추가할 경우  -->
     <when test='wishlistCategory!=null and wishlistCategory.equals("market")'>
-      values (#{wishlistTitle},#{wishlistPrice},#{wishlistFileurl},#{wishlistCategory},#{boardMkNo},#{memberNo})
+      values (#{wishlistTitle},#{wishlistPrice},#{wishlistFileurl},#{wishlistCategory},#{wishlistStatus},#{boardMkNo},#{memberNo})
     </when>
     <otherwise>
       values (#{wishlistTitle},#{wishlistPrice},#{wishlistFileurl},#{wishlistCategory},#{boardMkNo},null)
@@ -51,7 +51,15 @@
 
 
 
-
+<!-- 위시리스트 판매여부 업데이트 -->
+<update id="wishlistUpdateStatus" parameterType="WishlistDto">
+<choose>
+<when test="boardMkNo!=null and boardMkNo > 0">
+UPDATE wishlist_data SET wishlist_status = wishlist_status + 1
+ WHERE board_mk_no = #{boardMkNo} 
+</when>
+</choose>
+</update>
 
 
 </mapper>

@@ -13,17 +13,6 @@ const MarketList = () => {
   console.log(search);
   const [boards, setBoards] = useState([]);
 
-  // mk_boardListDB의 return은 Promise이므로 then으로 다시 데이터를 처리해줘야함.
-  /*   useEffect(() => {
-    mk_boardListDB().then((res) => {
-      setBoards(res.data); // 응답 Promise로부터 data를 꺼내 boards에 세팅.
-    });
-  }, []); */
-
-  /*   useEffect(()=> {
-    mk_boardListDB().then(setBoards);
-  },[])
- */
 
   
   //페이지네이션 처리

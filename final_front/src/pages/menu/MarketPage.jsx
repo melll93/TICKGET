@@ -48,7 +48,7 @@ const MarketPage = () => {
 
         <div style={{marginTop:'100px' , textAlign: 'center'}}>
           <h3 style={{display:'inline-block' , fontFamily:"Nanum Gothic", fontWeight:"bold", marginTop:'50px', marginBottom:'30px'}}><i class="bi bi-bag"></i>{" "}TICK-GET 마켓</h3>
-          <MarketSearchBar style={{display: 'inline-block'}}/>
+          <MarketSearchBar style={{display: 'inline-block', marginLeft:'100px'}}/>
         </div>
 
 
@@ -57,7 +57,8 @@ const MarketPage = () => {
             <MarketList />
           </div>
         </MkFormDiv>
-   
+        <section style={{height:'300px'}}/>
+   <Footer/>
         
     </>
   );
