@@ -19,6 +19,7 @@ import {
   insertCarpoolDB,
 } from "../../../axios/board/carpool/CarpoolLogic";
 import Footer from "../../../components/Footer";
+import MapContainer from "../market/Map/MapContainer";
 
 const CarpoolWriteForm = (/* { carpool } */) => {
   const cookies = new Cookies();
@@ -99,7 +100,6 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       });
       return;
     }
-
     const carpool = {
       boardCpTitle: title, // 제목 추가
       boardCpContent: content, // 내용 추가
@@ -108,36 +108,18 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       boardCpNo: boardCpNo,
       boardCpPlace: place,
     };
-    console.log(carpool);
     try {
       const res = await insertCarpoolDB(carpool);
-      console.log("insertCarpoolDB : ", res.data);
-      handleSaveData();
+      // handleSaveData();
+      Swal.fire({
+        title: "게시글이 작성 완료되었습니다.",
+        icon: "success",
+      });
       window.location.replace("/carpool");
     } catch (error) {
       console.log(error);
     }
   };
-
-  /***************** 위치찾기 *****************/
-  const searchAddress = () => {
-    new daum.Postcode({
-      oncomplete: function (data) {
-        let address = "";
-        let buildingName = "";
-        if (data.userSelectedType === "R") {
-          address = data.roadAddress + " " + data.buildingName; //도로명
-        } else {
-          address = data.jibunAddress; //지번
-        }
-        console.log(data);
-        console.log(address);
-        setPlace(address);
-        document.getElementById("place").value = address;
-      },
-    }).open();
-  };
-  /***************** 위치찾기 *****************/
 
   /*************** fireBase ***************/
   const firebaseConfig = {
@@ -176,16 +158,6 @@ const CarpoolWriteForm = (/* { carpool } */) => {
     };
   }, []);
 
-  // const handleInputChange = (event) => {
-  //   const target = event.target;
-  //   const value = target.type === "checkbox" ? target.checked : target.value;
-  //   const name = target.name;
-  //   setCarpool({
-  //     ...carpool,
-  //     [name]: value,
-  //   });
-  // };
-
   const handleInputChange = (event) => {
     setCarpool({
       ...carpool,
@@ -206,7 +178,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       .once("value")
       .then((snapshot) => {
         Swal.fire({
-          title: "Carpool이 등록되었습니다.",
+          title: "카풀을 등록했습니다.",
           icon: "success",
         });
         if (snapshot.exists()) {
@@ -231,13 +203,28 @@ const CarpoolWriteForm = (/* { carpool } */) => {
           });
         }
       });
-
-    Swal.fire({
-      title: "카풀을 등록했습니다.",
-      icon: "success",
-    });
   };
   /*************** fireBase ***************/
+
+  /***************** 위치찾기 *****************/
+  const searchAddress = () => {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        let address = "";
+        let buildingName = "";
+        if (data.userSelectedType === "R") {
+          address = data.roadAddress + " " + data.buildingName; //도로명
+        } else {
+          address = data.jibunAddress; //지번
+        }
+        console.log(data);
+        console.log(address);
+        setPlace(address);
+        document.getElementById("place").value = address;
+      },
+    }).open();
+  };
+  /***************** 위치찾기 *****************/
   return (
     <>
       <Header />
@@ -297,27 +284,6 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 >
                   뒤로가기
                 </Button>
-                {/* 
-                <Button
-                  style={{ marginLeft: "10px", backgroundColor: "black" }}
-                  onClick={() => {
-                    Swal.fire({
-                      title: "정말로 목록으로 가시겠습니까?",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "black",
-                      cancelButtonColor: "black",
-                      confirmButtonText: "네",
-                      cancelButtonText: "아니오",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        navigate("/carpool");
-                      }
-                    });
-                  }}
-                >
-                  목록으로
-                </Button> */}
               </div>
             </div>
 
@@ -327,7 +293,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
               maxLength="50"
               placeholder="제목을 입력하세요."
               style={{
-                marginLeft: "10px",
+                margin: "10px 0px 0px 10px",
                 width: "98%",
                 height: "40px",
                 border: "1px solid lightGray",
@@ -366,7 +332,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             <br />
             <h3>날짜</h3>
             <input
-              style={{ width: "98%", marginLeft: "10px" }}
+              style={{ width: "390px", marginLeft: "10px" }}
               type="date"
               className="form-control"
               id="festStartday"
@@ -384,22 +350,8 @@ const CarpoolWriteForm = (/* { carpool } */) => {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                // justifyContent: "center",
               }}
             >
-              {/* <h5 style={{ marginLeft: "10px" }}>글번호</h5>
-              <input
-                style={{ width: "auto", marginLeft: "10px" }}
-                className="form-control"
-                type="text"
-                id={boardCpNo}
-                name="boardCpNo"
-                placeholder="글번호"
-                // readOnly
-                value={boardCpNo}
-                onChange={handleInputChange}
-              /> */}
-
               <h5 style={{ marginLeft: "10px" }}>최대 인원</h5>
 
               <input
@@ -426,33 +378,8 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 카풀 등록
               </Button>
             </div>
-
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-            <div>
-              <Row className="mb-4">
-                <Form.Group as={Col} controlId="formGridPlace">
-                  <br />
-                  <h3>접선 장소</h3>
-                  <Form.Control
-                    required
-                    id="place"
-                    type="text"
-                    placeholder="접선 장소를 입력하세요."
-                    style={{ width: "98%", height: "50px", marginLeft: "10px" }}
-                    onClick={() => {
-                      searchAddress();
-                    }}
-                    onChange={(e) => {
-                      handlePlace(e.target.value);
-                    }}
-                  />
-                  {/* <MapContainer place={carpool.Place} /> */}
-                </Form.Group>
-              </Row>
-            </div>
 
-            <hr style={{ margin: "10px 0px 10px 0px" }} />
-            <br />
             <br />
             <h3>상세내용</h3>
             <textarea
@@ -474,6 +401,37 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 handleContent(e.target.value);
               }}
             ></textarea>
+            <hr style={{ margin: "10px 0px 10px 0px" }} />
+            <div>
+              <Row className="mb-4">
+                <Form.Group as={Col} controlId="formGridPlace">
+                  <br />
+                  <h3>접선 장소</h3>
+                  <Form.Control
+                    required
+                    id="place"
+                    type="text"
+                    placeholder="접선 장소를 입력하세요."
+                    style={{ width: "98%", height: "50px", marginLeft: "10px" }}
+                    onClick={() => {
+                      searchAddress();
+                    }}
+                    onChange={(e) => {
+                      handlePlace(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+              </Row>
+            </div>
+            <span style={{ display: "block", textAlign: "center", marginBottom:"10px" }}>∙ 만남의 장소 : {place}</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <MapContainer place={place} />
+            </div>
           </div>
         </FormDiv>
       </ContainerDiv>

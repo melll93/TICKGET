@@ -17,8 +17,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
 
   const navigate = useNavigate();
   const [title, setTitle] = useState(""); //제목
-  //mem_id를 받아오자
-  //const[writer, setWriter]= useState(''); //작성자
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
 
@@ -64,20 +62,20 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       boardTgMemId: _userData?.memberId,
       boardTgDate: date,
     };
+    console.log(board);
     // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
-    // inser here
     try {
       const res = await insertTogetherDB(board);
       console.log(res.data);
-      // 성공시에 페이지 이동처리하기
-      window.location.replace("/together");
+      Swal.fire({
+        title: "게시글이 작성 완료되었습니다.",
+        icon: "success",
+      });
+      navigate("/together");
     } catch (error) {
       console.log(error);
     }
   };
-  /* ******************************** */
-
-  /* ******************************** */
   return (
     <>
       <Header />
@@ -137,26 +135,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                 >
                   뒤로가기
                 </Button>
-                {/* <Button
-                  style={{ marginLeft: "10px", backgroundColor: "black" }}
-                  onClick={() => {
-                    Swal.fire({
-                      title: "정말로 목록으로 가시겠습니까?",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "black",
-                      cancelButtonColor: "black",
-                      confirmButtonText: "네",
-                      cancelButtonText: "아니오",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        navigate("/together");
-                      }
-                    });
-                  }}
-                >
-                  목록으로
-                </Button> */}
               </div>
             </div>
 

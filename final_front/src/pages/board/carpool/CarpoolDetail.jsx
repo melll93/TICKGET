@@ -222,17 +222,6 @@ const CarpoolDetail = ({ match }) => {
                   </div>
 
                   <div>
-                    <label>최대 인원</label>
-                    <span
-                      style={{ width: "98%", margin: "10px" }}
-                      type="text"
-                      required
-                      className="form-control form-control-lg"
-                      id="inputLarge"
-                    ></span>
-                  </div>
-
-                  <div>
                     <label>내용</label>
                     <textarea
                       style={{
@@ -409,7 +398,7 @@ const CarpoolDetail = ({ match }) => {
                   >
                     회원아이디 : {boardReply.boardReplyCpMemId}
                     <div style={{ fontSize: "8px" }}>
-                      2 작성 시간 : ({boardReply.boardReplyCpDate})
+                      작성 시간 : ({boardReply.boardReplyCpDate})
                     </div>
                     <h3>
                       <div className="replyContent">
@@ -513,9 +502,7 @@ const CarpoolDetail = ({ match }) => {
                             boardReplyCpNo: boardReply.boardReplyCpNo,
                           };
                           const res = await deleteCarpoolReplyDB(reply);
-                          // navigate("/together/BoardDetail/" + board.boardTgNo);
                           window.location.reload();
-                          /* alert("댓글 삭제 완료"); */
                           Swal.fire({
                             title: "댓글 삭제 완료",
                             icon: "success",
