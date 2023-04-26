@@ -10,9 +10,24 @@ import { MyButton, MyH1, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitB
 import { onAuthChange } from '../../util/authLogic';
 import Swal from "sweetalert2";
 import { memberInsertDB, memberListDB } from '../../axios/member/memberCrud';
+import styled from 'styled-components';
+
+export const MButton = styled.button`
+margin-top: 20px;
+width: 200px;
+height: 40px;
+font-size: 16px;
+font-weight: bold;
+border-radius: 24px;
+margin-bottom: 20px;
+border: none;
+background-color: rgb(80, 50, 200);
+color: white;
+&:hover {
+  background-color: rgb(50, 50, 120);
+`;
 
 const RegisterPage = ({ authLogic }) => {
-  // const auth = authLogic.getUserAuth();
   const userAuth = useSelector(state => state.userAuth);
   const type = window.location.search.split('&')[0].split('=')[1];
   const navigate = useNavigate();
@@ -384,10 +399,10 @@ const RegisterPage = ({ authLogic }) => {
             </MyLabel>
 
             {/* 회원가입 버튼 */}
-            <SubmitButton type="button" style={{ backgroundColor: submitBtn.bgColor }}
+            <MButton type="button" 
               onClick={handleSignup} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
               {'가입하기'}
-            </SubmitButton>
+            </MButton>
           </div>
         </SignupForm>
       </div>

@@ -103,18 +103,54 @@
 	</select>
 
 	<!-- 회원 정보 update -->
-<update id="memberUpdate" parameterType="java.util.HashMap">
-	UPDATE member
-	SET
-	<if test="memberPassword != null">member_password = #{memberPassword},</if>
-	<if test="memberName != null">member_name = #{memberName},</if>
-	<if test="memberEmail != null">member_email = #{memberEmail},</if>
-	<if test="memberMobile != null">member_mobile = #{memberMobile},</if>
-	<if test="memberZipcode != null">member_zipcode = #{memberZipcode},</if>
-	<if test="memberAddress != null">member_address = #{memberAddress},</if>
-	<if test="memberAddrDetail != null">member_addr_detail = #{memberAddrDetail},</if>
-	WHERE member_id = #{memberId}
-</update>
+	<update id="memberUpdate" parameterType="java.util.HashMap">
+		UPDATE member
+		SET
+		member_password =
+		<choose>
+			<when test="memberPassword != null and memberPassword != ''">#{memberPassword}</when>
+			<otherwise>member_password</otherwise>
+		</choose>
+		,
+		member_name =
+		<choose>
+			<when test="memberName != null and memberName != ''">#{memberName}</when>
+			<otherwise>member_name</otherwise>
+		</choose>
+		,
+		member_email =
+		<choose>
+			<when test="memberEmail != null and memberEmail != ''">#{memberEmail}</when>
+			<otherwise>member_email</otherwise>
+		</choose>
+		,
+		member_mobile =
+		<choose>
+			<when test="memberMobile != null and memberMobile != ''">#{memberMobile}</when>
+			<otherwise>member_mobile</otherwise>
+		</choose>
+		,
+		member_zipcode =
+		<choose>
+			<when test="memberZipcode != null and memberZipcode != ''">#{memberZipcode}</when>
+			<otherwise>member_zipcode</otherwise>
+		</choose>
+		,
+		member_address =
+		<choose>
+			<when test="memberAddress != null and memberAddress != ''">#{memberAddress}</when>
+			<otherwise>member_address</otherwise>
+		</choose>
+		,
+		member_addr_detail =
+		<choose>
+			<when test="memberAddrDetail != null and memberAddrDetail != ''">#{memberAddrDetail}</when>
+			<otherwise>member_addr_detail</otherwise>
+		</choose>
+		WHERE member_Id = #{memberId}
+	</update>
+
+
 
 	<!-- 비밀번호 update -->
 	<update id="changePwUpdate" parameterType="java.util.HashMap">
