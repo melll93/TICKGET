@@ -249,7 +249,7 @@ const TogetherBoardDetail = () => {
                       >
                         삭제하자
                       </Button>
-                      
+
                       <Button
                         style={{ marginLeft: "10px", backgroundColor: "black" }}
                         onClick={() =>
@@ -311,7 +311,13 @@ const TogetherBoardDetail = () => {
                 <br />
 
                 <label>댓글리스트</label>
-                <div style={{ border: "2px solid lightGray" }}>
+                <div
+                  style={{
+                    border: "2px solid lightGray",
+                    width: "98%",
+                    margin: "10px",
+                  }}
+                >
                   {boardReplyList.map((boardReply) => (
                     <div
                       key={boardReply.boardReplyTgNo}

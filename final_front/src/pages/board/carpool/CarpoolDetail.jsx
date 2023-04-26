@@ -360,7 +360,13 @@ const CarpoolDetail = ({ match }) => {
               <br />
 
               <label>댓글리스트</label>
-              <div style={{ border: "1px solid lightgray", width: "98%" }}>
+              <div
+                style={{
+                  border: "2px solid lightGray",
+                  width: "98%",
+                  margin: "10px",
+                }}
+              >
                 {boardReplyList.map((boardReply) => (
                   <div
                     key={boardReply.boardReplyCpNo}
