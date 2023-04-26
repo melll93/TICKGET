@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Swal from "sweetalert2";
+import { MButton } from './RegisterPage';
 
 
 const FindIdPage = () => {
@@ -93,7 +94,7 @@ Swal.fire({
             <MyInput type="number" id="mobile" placeholder="회원님의 전화번호를 입력해 주세요"
               onChange={(e) => { handleChangeMemInfo(e); }} />
           </MyLabel>
-          <BButton type="onSubmit">찾기</BButton>
+          <MButton type="onSubmit">찾기</MButton>
         </div>
       </LoginForm>
       </div>
