@@ -128,6 +128,10 @@ const TogetherBoardDetail = () => {
       const res = await insertTogetherReplyDB(boardReply);
       // 성공시에 페이지 이동처리하기
       window.location.reload();
+      Swal.fire({
+        title: "댓글 등록 되었습니다.",
+        icon: "success",
+      });
     } catch (error) {
       console.log(error);
     }
@@ -235,17 +239,48 @@ const TogetherBoardDetail = () => {
 
                 <div style={{ textAlign: "center" }}>
                   <Button
-                    style={{ margin: "10px", backgroundColor: "black" }}
-                    onClick={() => navigate("/together")}
+                    onClick={() => {
+                      Swal.fire({
+                        title: "정말로 뒤로 가시겠습니까?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "black",
+                        cancelButtonColor: "black",
+                        confirmButtonText: "네",
+                        cancelButtonText: "아니오",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          window.history.back();
+                        }
+                      });
+                    }}
+                    variant="success"
+                    style={{ marginLeft: "10px", backgroundColor: "black" }}
                   >
-                    목록으로
+                    뒤로가기
                   </Button>
                   &nbsp;
                   {board.boardTgMemId === _userData?.memberId && (
                     <div>
+  
                       <Button
                         style={{ margin: "10px", backgroundColor: "black" }}
-                        onClick={deleteBoardList}
+                        onClick={() => {
+                          Swal.fire({
+                            title: "정말 삭제 하시겠습니까?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "black",
+                            cancelButtonColor: "black",
+                            confirmButtonText: "네",
+                            cancelButtonText: "아니오",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              deleteBoardList();
+                            }
+                          });
+                        }}
+                        variant="success"
                       >
                         삭제하자
                       </Button>
@@ -398,8 +433,9 @@ const TogetherBoardDetail = () => {
                             </div>
                             <br />
                             <br />
-                            <button
+                            <Button
                               style={{
+                                backgroundColor: "black",
                                 position: "absolute",
                                 bottom: "0",
                                 right: "0",
@@ -423,13 +459,10 @@ const TogetherBoardDetail = () => {
                                   icon: "success",
                                 });
                                 window.location.reload();
-                                console.log(
-                                  "리뷰번호" + boardReply.boardReplyTgNo
-                                );
                               }}
                             >
                               Reply Button
-                            </button>
+                            </Button>
                           </div>
                           <br />
                         </Modal.Body>
@@ -447,13 +480,11 @@ const TogetherBoardDetail = () => {
                             };
                             const res = await deleteTogetherReplyDB(reply);
                             console.log("deleteTogetherReplyDB ", res.data);
-                            // navigate("/together/BoardDetail/" + board.boardTgNo);
-                            window.location.reload();
-                            /* alert("댓글 삭제 완료"); */
                             Swal.fire({
                               title: "댓글 삭제 완료",
                               icon: "success",
                             });
+                            window.location.reload();
                           }}
                         >
                           <span style={{ color: "white", fontWeight: "bold" }}>

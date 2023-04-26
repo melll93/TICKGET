@@ -291,17 +291,25 @@ const CarpoolUpdate = () => {
                   수정하기
                 </Button>
                 <Button
-                  style={{ marginLeft: "10px", backgroundColor: "black" }}
                   onClick={() => {
-                    if (window.confirm("정말 돌아가시겠습니까?")) {
-                      navigate({
-                        pathname: "/carpool/carpoolDetail/" + carpool.boardCpNo,
-                        state: { carpool },
-                      });
-                    }
+                    Swal.fire({
+                      title: "정말로 뒤로 가시겠습니까?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "black",
+                      cancelButtonColor: "black",
+                      confirmButtonText: "네",
+                      cancelButtonText: "아니오",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.history.back();
+                      }
+                    });
                   }}
+                  variant="success"
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
                 >
-                  돌아가기
+                  뒤로가기
                 </Button>
               </div>
             </form>

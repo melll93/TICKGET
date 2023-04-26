@@ -214,18 +214,26 @@ const TogetherBoardUpdate = () => {
                 >
                   수정하기
                 </Button>
-                <Button
-                  style={{ marginLeft: "10px", backgroundColor: "black" }}
+                 <Button
                   onClick={() => {
-                    if (window.confirm("정말 돌아가시겠습니까?")) {
-                      navigate({
-                        pathname: "/together/BoardDetail/" + board.boardTgNo,
-                        state: { board },
-                      });
-                    }
+                    Swal.fire({
+                      title: "정말로 뒤로 가시겠습니까?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "black",
+                      cancelButtonColor: "black",
+                      confirmButtonText: "네",
+                      cancelButtonText: "아니오",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.history.back();
+                      }
+                    });
                   }}
+                  variant="success"
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
                 >
-                  돌아가기
+                  뒤로가기
                 </Button>
               </div>
             </form>

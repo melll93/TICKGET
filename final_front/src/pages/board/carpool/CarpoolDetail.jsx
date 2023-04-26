@@ -136,7 +136,7 @@ const CarpoolDetail = ({ match }) => {
       console.log(error);
     }
     Swal.fire({
-      title: "댓글 등록 완료",
+      title: "댓글 등록 되었습니다.",
       icon: "success",
     });
   };
@@ -290,17 +290,47 @@ const CarpoolDetail = ({ match }) => {
               </div>
               <div style={{ textAlign: "center" }}>
                 <Button
-                  style={{ margin: "10px", backgroundColor: "black" }}
-                  onClick={() => navigate("/carpool")}
+                  onClick={() => {
+                    Swal.fire({
+                      title: "정말로 뒤로 가시겠습니까?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "black",
+                      cancelButtonColor: "black",
+                      confirmButtonText: "네",
+                      cancelButtonText: "아니오",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.history.back();
+                      }
+                    });
+                  }}
+                  variant="success"
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
                 >
-                  목록으로
+                  뒤로가기
                 </Button>
                 &nbsp;
                 {carpool.boardCpMemId === _userData?.memberId && (
                   <div>
                     <Button
                       style={{ margin: "10px", backgroundColor: "black" }}
-                      onClick={deleteCarpool}
+                      onClick={() => {
+                        Swal.fire({
+                          title: "정말 삭제 하시겠습니까?",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "black",
+                          cancelButtonColor: "black",
+                          confirmButtonText: "네",
+                          cancelButtonText: "아니오",
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            deleteCarpool();
+                          }
+                        });
+                      }}
+                      variant="success"
                     >
                       삭제하자
                     </Button>
@@ -440,8 +470,9 @@ const CarpoolDetail = ({ match }) => {
                           </div>
                           <br />
                           <br />
-                          <button
+                          <Button
                             style={{
+                              backgroundColor: "black",
                               position: "absolute",
                               bottom: "0",
                               right: "0",
@@ -468,7 +499,7 @@ const CarpoolDetail = ({ match }) => {
                             }}
                           >
                             Reply Button
-                          </button>
+                          </Button>
                         </div>
                         <br />
                       </Modal.Body>
