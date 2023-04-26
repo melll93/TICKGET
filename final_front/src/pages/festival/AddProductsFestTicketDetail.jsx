@@ -56,9 +56,23 @@ const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTc
     setTickets(prevTickets => prevTickets.filter((_, i) => i !== index));
   }
 
-  const removeDbTicket = (index) => {
-    setDbTickets(prevTickets => prevTickets.filter((_, i) => i !== index));
+
+
+
+/* 티켓 로우 삭제 */
+const deleteFestTcRow = async (index) => { // 매개변수 수정
+  const festival = {
+    fest_tc_no: festTcNo[index],
   }
+  const res = await deleteFestTicketDB(festival);
+  if (!res.data) {
+    // 삭제 성공 시 처리할 로직
+    setDbTickets(dbTickets)
+  } else {
+    alert("에러")
+  }
+};
+
 
 
 /* fest_tc */
@@ -120,7 +134,6 @@ const festTicketInsert = async () => {
         setDbTickets(updatedDbTickets); 
       }
     }
-    
   } /* for */
   insertData(tickets);
 }; /* festTicketInsert */
@@ -129,18 +142,7 @@ const festTicketInsert = async () => {
 
 
 
-/* 티켓 로우 삭제 */
-const deleteFestTcRow = async (index) => { // 매개변수 수정
-  const festival = {
-    fest_tc_no: festTcNo[index],
-  }
-  const res = await deleteFestTicketDB(festival);
-  if (!res.data) {
-    // 삭제 성공 시 처리할 로직
-  } else {
-    alert("에러")
-  }
-};
+
 
 /* fireBase  */
 
@@ -153,12 +155,10 @@ useEffect(() => {
   database.ref().on("value", (snapshot) => {
     setFestMData(festMData);
   });
-  
   return () => {
     database.ref().off();
   };
 }, []); 
-
 
 /* FireBase Insert */
 
@@ -169,11 +169,12 @@ const insertData = (tickets) => {
       alert('빈칸이 존재합니다. 확인해주세요. ');
     } else{
       const data = {
-        [ticket.seatType]:{
-          time: ticket.time,
+        [ticket.time+'-'+ticket.seatType]:{
           price: ticket.price,
           seatAvailable: ticket.seat,
-          seatTotal: ticket.seat
+          seatTotal: ticket.seat,
+          time:ticket.time,
+          type:ticket.seatType
         }
     }
 
@@ -186,6 +187,12 @@ const insertData = (tickets) => {
     });
 }};
 }
+
+/* READ */
+
+
+
+
 
 
 
@@ -250,8 +257,8 @@ fest_ticket 추가 정보 입력
                 {/* {festMData.[{ticket.time}].seat}
                  */}???석</div>
               </td><td>
-                <button type="button" className="btn-delete" onClick={() => deleteFestTcRow(index)}>
-                  삭제
+                <button type="button" className="btn-delete" onClick={() => deleteFestTcRow(ticket.no, index)}>
+                  삭제 {ticket.no}
                 </button>
               </td></tr>
           ))}
@@ -305,7 +312,7 @@ fest_ticket 추가 정보 입력
                 style={{display:'inline-block', width:'75%'}}
                               onChange={(e) => {
                           inputFbSeat(index, e.target.value);}}
-                />석
+                />{festMData}석
               </td><td>
                 <button type="button" className="btn-delete" onClick={() => removeTicket(index)}>
                   삭제

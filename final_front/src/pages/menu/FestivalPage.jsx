@@ -48,30 +48,18 @@ const FestivalsTest = () => {
   const [perPage] = useState(20);
   const[thumbsup, setThumbsup] = useState(0);
 
-  useEffect(() => {
-    FetivalListDB().then(setFestivals);
-  }, []);
   
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
   
-  const currentFest = (festivals) => {
-    let currentFest = 0;
-    currentFest = festivals.slice(indexOfFirstPost, indexOfLastPost);
-    return currentFest;
-  };
   
   
   const hitPlusOne = (festMId) => {
     thumbsupFestivalDB(festMId)
     .then(() => {
-      // 새로운 배열을 생성하여 값을 업데이트
       const updatedFestivals = [...festivals];
-      // 업데이트할 값 변경
-      // 예를 들어, festivals 배열에서 festMId에 해당하는 요소를 찾아 thumbsup 값을 1 증가시키는 경우
       const festivalToUpdate = updatedFestivals.find(festival => festival.festMId === festMId);
-      festivalToUpdate.thumbsup += 1;
-      // 변경된 배열을 상태로 업데이트
+      festivalToUpdate.festMHit += 1;
       setFestivals(updatedFestivals);
     })
     .catch((error) => {
@@ -79,6 +67,15 @@ const FestivalsTest = () => {
     });
   };
   
+  const currentFest = (festivals) => {
+    let currentFest = 0;
+    currentFest = festivals.slice(indexOfFirstPost, indexOfLastPost);
+    return currentFest;
+  };
+
+  useEffect(() => {
+    FetivalListDB().then(setFestivals);
+  }, []);
 
   return (
     <>
@@ -113,7 +110,7 @@ const FestivalsTest = () => {
                 </a>
                 <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'center', marginLeft:'0%', paddingRight:'7px', cursor:'pointer'}}>
                 <i className="bi bi-hand-thumbs-up fs-4"></i>
-                {festival.festMHit==={thumbsup} ? 0: festival.festMHit}
+                {festival.festMHit ==null ? 0: festival.festMHit}
                 </div>
               </div>
             );

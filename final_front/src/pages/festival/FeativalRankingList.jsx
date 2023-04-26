@@ -22,7 +22,7 @@ const FestivalRankingList = () => {
       };
       festivalHitList(); // 데이터 가져오기
       console.log(festivalHitList);
-    }, [festivalHitList]);
+    }, []);
       
     const currentFest = (festivalHitList) => {
       let currentFest = 0;
@@ -33,11 +33,20 @@ const FestivalRankingList = () => {
     
 
     /* 좋아요  */
-    const hitPlusOne=async (festMHit)=>{
-      await thumbsupFestivalDB(festMHit);
-    } 
 
-    
+
+    const hitPlusOne = (festMId) => {
+      thumbsupFestivalDB(festMId)
+      .then(() => {
+        const updatedFestivals = [...festivalHitList];
+        const festivalToUpdate = updatedFestivals.find(festival => festival.festMId === festMId);
+        festivalToUpdate.festMHit += 1;
+        setFestivalHitList(updatedFestivals);
+      })
+      .catch((error) => {
+        console.error("Error updating thumbs up count:", error);
+      });
+    };
     
     
     return (

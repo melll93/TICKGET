@@ -18,18 +18,6 @@ import { getDatabase, ref, child, onValue, get, set  } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { firebaseConfig } from "../board/carpool/CarpoolBoardList";
 
-/*  카풀에서 주워다 쓰는중
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  databaseURL: (process.env.FIREBASE_DATABASE_URL =
-    "https://finalproject-85e01-default-rtdb.asia-southeast1.firebasedatabase.app"),
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-}; */
 
 const FestivalsDetail = () => {
   const navigate = useNavigate();
@@ -84,7 +72,7 @@ useEffect(() => {
     try {
       const snapshot = await firebase
         .database()
-        .ref(`FestMId/${festMId}/${selectedFestTcType}`)
+        .ref(`FestMId/${festMId}/${selectedFestTcTime}-${selectedFestTcType}`)
         .once("value");    //한번읽기
       if (snapshot.exists()) {  //존재하면 여기 타기
         const data = snapshot.val();  
@@ -101,7 +89,7 @@ useEffect(() => {
 }, [selectedFestTcType]);
 
 
-
+console.log(festMData)
 /* ////////////////////수정중 */
 /* 파이어베이스 - update */
 
@@ -111,14 +99,18 @@ useEffect(() => {
 const decreaseSeat = () => {
     const aaa = festMData.seatAvailable;
     const updatedSeatAvailable = aaa- festSelectedTkamt ;
-    const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcType}/seatAvailable`);
+    const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcTime}-${selectedFestTcType}/seatAvailable`);
     seatsRef.set(updatedSeatAvailable);
 }; 
 
 
 const researveBtnClicked=()=>{
-  decreaseSeat()
-  navigate("/payment2/" + festMId);
+  if(selectedFestTcPrice&&date&&festSelectedTkamt){
+    decreaseSeat()
+    navigate("/payment2/" + festMId);
+  }else{
+       alert('선택된 날짜 | 좌석 | 수량이 없습니다.')
+  }
 }
 
 
@@ -517,7 +509,9 @@ const researveBtnClicked=()=>{
                 <div>
       {festMData && (
         <div>
-          <div>{festMData.time} -{festMData.price}</div>
+          <div>{festMData.time}</div>
+          <div>{festMData.type}</div>
+          <div>{festMData.price}원</div>
          <div>{festMData.seatAvailable}/{festMData.seatTotal} </div>
         </div>
       )}

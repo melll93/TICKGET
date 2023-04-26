@@ -36,6 +36,7 @@ console.log(festTcTime); */
   };
   try {
   const res = await saveFestDetailDB(festival);
+
   /*   console.log(festival); */
   if (!res.data) {
   } else {
@@ -96,6 +97,8 @@ const saveFestPoster=async()=>{
   };
   try {
     const res = await saveFestPsUrlDB(festival);
+    const newPsPoster = [...festOrginPsUrl,festival.festPsUrl]
+    setFestOriginPsUrl(newPsPoster)
 /* console.log(festival); */
 alert('추가완료')
 if (!res.data) {
@@ -104,6 +107,8 @@ if (!res.data) {
 } catch (error) {
 }
 };
+
+
 
 
 
@@ -120,8 +125,7 @@ const deleteFestPsUrl = async ({i}) => {
   }
 };
 
-useEffect(() => {
-}, [festOrginPsUrl, festPsUrl]); 
+
 
 
 //클라우디너리에 업로드

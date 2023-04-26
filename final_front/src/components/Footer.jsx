@@ -49,16 +49,16 @@ const Footer = () => {
           <div>
           
             <div lg='3' md='6' className='link_div' style={{display:'inline-block'}}>
-              <h5 className='text-uppercase'>Links</h5>
+              <h5 className='text-uppercase'>이승현</h5>
               <ul className='list-unstyled mb-0'>
                 <li>
-                  <a href='#!' className='text-black'>
-                    Link 1
+                  <a href='https://github.com/melll93' className='text-black'>
+                  https://github.com/melll93
                   </a>
                 </li>
                 <li>
-                  <a href='#!' className='text-black'>
-                    Link 2
+                  <a href='http://melll.tistory.com/' className='text-black'>
+                  http://melll.tistory.com
                   </a>
                 </li>
                 <li>
@@ -75,7 +75,34 @@ const Footer = () => {
             </div>
 
             <div lg='3' md='6' className='mb-4 mb-md-0' style={{display:'inline-block', marginLeft:'100px'}}>
-              <h5 className='text-uppercase'>Links</h5>
+              <h5 className='text-uppercase'>고은영</h5>
+
+              <ul className='list-unstyled mb-0'>
+                <li>
+                  <a href='#!' className='text-black'>
+                    Link 1
+                  </a>
+                </li>
+                <li>
+                  <a href=' https://encode-nyoung.tistory.com/' className='text-black'>
+                  https://encode-nyoung.tistory.com
+                  </a>
+                </li>
+                <li>
+                  <a href='#!' className='text-black'>
+                    Link 3
+                  </a>
+                </li>
+                <li>
+                  <a href='#!' className='text-black'>
+                    Link 4
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div lg='3' md='6' className='mb-4 mb-md-0'  style={{display:'inline-block', marginLeft:'100px'}}>
+              <h5 className='text-uppercase'>고종훈</h5>
 
               <ul className='list-unstyled mb-0'>
                 <li>
@@ -102,17 +129,17 @@ const Footer = () => {
             </div>
 
             <div lg='3' md='6' className='mb-4 mb-md-0'  style={{display:'inline-block', marginLeft:'100px'}}>
-              <h5 className='text-uppercase'>Links</h5>
+              <h5 className='text-uppercase'>김성훈</h5>
 
               <ul className='list-unstyled mb-0'>
                 <li>
                   <a href='#!' className='text-black'>
-                    Link 1
+                  Link 1
                   </a>
                 </li>
                 <li>
-                  <a href='#!' className='text-black'>
-                    Link 2
+                  <a href='https://hunsolo.tistory.com/' className='text-black'>
+                  https://hunsolo.tistory.com
                   </a>
                 </li>
                 <li>
@@ -127,9 +154,10 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
+
 
             <div lg='3' md='6' className='mb-4 mb-md-0'  style={{display:'inline-block', marginLeft:'100px'}}>
-              <h5 className='text-uppercase'>Links</h5>
+              <h5 className='text-uppercase'>여은경</h5>
 
               <ul className='list-unstyled mb-0'>
                 <li>
@@ -144,7 +172,6 @@ const Footer = () => {
                 </li>
                 <li>
                   <a href='#!' className='text-black'>
-                    Link 3
                   </a>
                 </li>
                 <li>
@@ -154,6 +181,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
+
           </div>
         </section>
 
