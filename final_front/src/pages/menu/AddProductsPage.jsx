@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useNavigate, useParams } from "react-router";
 import { FestivalInsertDB, FetivalDetailDB, festivalUpdateDB } from "../../axios/festival/festival";
-import ImageUploader from "../../util/imageUploader";
+import ImageUploader, { handleUpload } from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
@@ -45,10 +45,19 @@ const AddProducts = () => {
   const [festTcPrice, setFestTcPrice] =useState();
   const [festTcTime, setFestTcTime]= useState();
   const [festTcNo, setFestTcNo]= useState();
+/* 클라우디너리 */
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [cloudImg, setCloudImg] = useState(null);
 
+  const handleFileInput = (e) => {
+    setSelectedFile(e);
+  };
 
-
-
+  const handleUploadClick = (e) => {
+    e.preventDefault();
+    handleUpload(selectedFile, setCloudImg); // handleUpload 함수 사용
+  };
+/* 클라우디너리 */
   /* 추가정보입력 띄우기 */
   const [optionModal, setOptionModal] = useState(0);
   const optionModalOpen = () => {if (optionModal === 0) {setOptionModal(1);
@@ -292,6 +301,28 @@ originDetail()
           ref={imgRef}
         />{" "}
         <br />
+{/* 클라우드 Test */}
+
+<input
+          className="form-control"
+          type="file"
+          accept="image/*"
+          id="festivalsImg"
+          onChange={(e)=>{handleFileInput(e.target.value)}}
+          ref={imgRef}
+        /> <BlackBtn onClick={handleUpload}>저장</BlackBtn>
+
+
+
+<div className="cloudinary_image">
+        <input type="file" onChange={(e) => handleFileInput(e.target.files[0])} />
+        <button onClick={handleUploadClick}>파일 저장</button>
+        {/* 이미지 표시 */}
+        {cloudImg && <img src={cloudImg} alt="uploaded image" />}
+      </div>
+
+
+{/* 클라우드 Test */}
         <div className="form-floating mb-3">
           <input
             type="text"
