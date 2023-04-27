@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import "firebase/database";
 import "firebase/analytics";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import "firebase/database";
+import React, { useEffect, useState } from "react";
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -19,7 +19,7 @@ const firebaseConfig = {
 
 const FireTest = () => {
   const [data, setData] = useState({});
-  const [carpool, setCarpool] = useState({
+  const [realTime, setRealTime] = useState({
     boardCpNo: "",
     max: "",
     now: "",
@@ -46,18 +46,18 @@ const FireTest = () => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    setCarpool({
-      ...carpool,
+    setRealTime({
+      ...realTime,
       [name]: value,
     });
   };
 
   const handleSaveData = () => {
     const count = 1;
-    const maxVal = parseInt(carpool.max);
+    const maxVal = parseInt(realTime.max);
     firebase
       .database()
-      .ref(carpool.name)
+      .ref(realTime.name)
       .once("value")
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -69,7 +69,7 @@ const FireTest = () => {
             if (newNow <= maxVal && newCount <= maxVal) {
               firebase
                 .database()
-                .ref(carpool.name)
+                .ref(realTime.name)
                 .update({
                   max: maxVal,
                   now: firebase.database.ServerValue.increment(count),
@@ -83,7 +83,7 @@ const FireTest = () => {
             console.log("인원이 다 찼습니다.");
           }
         } else {
-          firebase.database().ref(carpool.name).set({
+          firebase.database().ref(realTime.name).set({
             max: maxVal,
             now: 1,
             count: 1,
