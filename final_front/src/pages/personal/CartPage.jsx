@@ -46,13 +46,6 @@ const CartPage = () => {
     const navigate = useNavigate()
 
 
-   //회원이 담은 상품의 판매여부
-   useEffect(()=>{
-    const board = {
-
-    }
-
-   })
 
 
     //상세페이지 이동

@@ -578,7 +578,7 @@ const researveBtnClicked=()=>{
                 </Tab>
 
 
-                <Tab eventKey="product_detail_place" title="공연장 위치">
+                <Tab eventKey="product_detail_place" title="공연장 위치" mountOnEnter={true}>
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px", marginRight:'450px' }}>
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" , marginRight:'50px'}}>
                   <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
