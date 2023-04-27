@@ -74,6 +74,7 @@ const stringfestSelectedDate = `${year}년 ${month}월 ${day}일`;
     place: festival[0].festMLoc,
     amount: festSelectedTkamt,
     price: selectedFestTcPrice,
+    no:festMId
   };
 
   return (
