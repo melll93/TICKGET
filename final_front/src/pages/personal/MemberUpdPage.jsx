@@ -203,7 +203,8 @@ const MemberUpdPage = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const { email, password, password2, name, mobile, zipcode, address, addrDetail } = memInfo;
+    const { email, password, password2, name, mobile, zipcode } = memInfo;
+    const { address, addrDetail } = post;
   
     if (password !== password2) {
       // 비밀번호와 비밀번호 확인 값이 다른 경우
@@ -213,7 +214,7 @@ const MemberUpdPage = () => {
       });
       return;
     }
-    // 문제점 : 다른 값들은 update 되는데 주소지는 새로운 값을 넣어도 update 되지 않는 오류 발생
+  
     try {
       const member = {
         memberId: _userData.memberId,
@@ -243,7 +244,6 @@ const MemberUpdPage = () => {
       });
     }
   };
-  
 
   return (
     <div>
