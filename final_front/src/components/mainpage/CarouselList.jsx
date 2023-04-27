@@ -25,37 +25,34 @@ const responsive = {
   },
 };
 
+
+
 const MainCarousel = ({ festivalToday }) => {
   // console.log(festivalToday);
 const [movingImg, setMovingImg] = useState(2);
 
 
 
+
+
   return (
     <div className="carouselDiv">
-      <Carousel 
-      responsive={responsive}
-      infinite 
-      autoPlay
-      autoPlaySpeed={3000}
-      sliderClass=""
-      beforeChange={() => setMovingImg((prevSlide) => (prevSlide + 1) % festivalToday.length)}
-      customTransition="transform 500ms ease-in-out"
-      centerMode
-/*       centerSlidePercentage={100 / (responsive.desktop.items + 1)} */
-     draggable={false}
-      swipeable={false}
-/*       focusOnSelect={false} */
-/*       removeArrowOnDeviceType={["tablet", "mobile"]} */
-      arrows={false}
-      slidesToSlide={1}
-/*       containerClass="carousel-container" */
-/*       itemClass="carousel-item" */
-      >
-
+     <Carousel 
+  responsive={responsive}
+  infinite 
+  autoPlay
+  autoPlaySpeed={3500}
+  sliderClass=""
+  beforeChange={() => setMovingImg((prevSlide) => (prevSlide + 1) % festivalToday.length)}
+  customTransition="transform 1000ms ease-in-out"
+  centerMode={true}
+  draggable={false}
+  swipeable={false}
+  arrows={false}
+  slidesToSlide={1}
+>
         {festivalToday.map((festival, index) => (
-          <CarouselOne key={index} festival={festival} 
-          isActive={index === movingImg}/>
+          <CarouselOne key={index} festival={festival} isActive={index === movingImg} />
         ))}
       </Carousel>
     </div>

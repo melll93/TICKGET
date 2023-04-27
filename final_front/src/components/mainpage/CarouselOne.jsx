@@ -11,6 +11,7 @@ const CarouselOne = ({ festival, isActive }) => {
     <Link to={`/productsDetail/${festival.festMId}`}>
     <img className="compo_carouselone_img"  src={festival.festMImg} /> 
        </Link>
+    <p style={{textAlign:'center'}}>{festival.festMName}</p>
     </div>
     </>
   );
