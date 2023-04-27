@@ -60,14 +60,16 @@ const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTc
 
 
 /* 티켓 로우 삭제 */
-const deleteFestTcRow = async (index) => { // 매개변수 수정
+const deleteFestTcRow = async (festTcNo, index) => { // 매개변수 수정
+  console.log(festTcNo)
   const festival = {
-    fest_tc_no: festTcNo[index],
+    fest_tc_no: festTcNo
   }
   const res = await deleteFestTicketDB(festival);
   if (!res.data) {
     // 삭제 성공 시 처리할 로직
-    setDbTickets(dbTickets)
+
+setDbTickets(prevTickets => prevTickets.filter((_, i) => i !== index));
   } else {
     alert("에러")
   }
@@ -188,7 +190,6 @@ const insertData = (tickets) => {
 }};
 }
 
-/* READ */
 
 
 
@@ -214,7 +215,7 @@ fest_ticket 추가 정보 입력
             className="form-control"
             disabled
           defaultValue={dbTickets&&dbTickets.length} 
-            style={{ width: '100%' }}
+            style={{ width: '100%' }}btn
           />
           <label htmlFor="floatingInput">좌석정보</label>
         </div>
@@ -258,7 +259,7 @@ fest_ticket 추가 정보 입력
                  */}???석</div>
               </td><td>
                 <button type="button" className="btn-delete" onClick={() => deleteFestTcRow(ticket.no, index)}>
-                  삭제 {ticket.no}
+                  삭제 
                 </button>
               </td></tr>
           ))}

@@ -36,7 +36,6 @@ console.log(festTcTime); */
   };
   try {
   const res = await saveFestDetailDB(festival);
-
   /*   console.log(festival); */
   if (!res.data) {
   } else {
@@ -179,7 +178,9 @@ fest_detail 추가 정보 입력
     <div className="form-floating">
   <input type="text" className="form-control" 
  defaultValue={festDtCasting} 
-  id="festDetailCasting"onChange={(e)=>{inputCasting (e.target.value)}} />
+  id="festDetailCasting"
+  onChange={(e) => inputCasting(e.target.value)} 
+   />
   <label htmlFor="floatingInput">캐스팅정보</label>
 </div><br />
 <div className="form-floating">

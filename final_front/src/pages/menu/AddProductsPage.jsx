@@ -57,7 +57,6 @@ const AddProducts = () => {
     e.preventDefault();
     handleUpload(selectedFile, setCloudImg); // util > imageupload.js 의 handleUpload 로 넘기기
   };
-console.log(cloudImg)   //url 담긴당
 
 
   /* 클라우디너리 */
@@ -159,7 +158,7 @@ originDetail()
       try {
       const res = await festivalUpdateDB(festival)
 /*         console.log(res.data); */
-        navigate("/festival")
+        navigate(`/productsDetail/${festMId}`)
         /* alert('상품수정완료') */
         Swal.fire({
           title:'상품 수정 완료',

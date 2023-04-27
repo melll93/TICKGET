@@ -220,7 +220,7 @@ const researveBtnClicked=()=>{
       }
       navigate("/productsDetail/" + festMId);
       resetReviewField();
-    }else(alert('로그인 시, 이용가능합니다.'))
+    }else(alert('로그인 시, 이용가능합니다. '))
   };
 
   /* 상품삭제 */
@@ -384,7 +384,7 @@ const researveBtnClicked=()=>{
 
 
 
-
+console.log(festival)
 
 
 
@@ -494,14 +494,22 @@ const researveBtnClicked=()=>{
             </strong>
             
 
-              {festival.map((fest, i) => (
-                        <div key={i} className={`product_info_subitem${selectedFestTcTime === fest.festTcTime && selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType, fest.festTcTime)} style={{border: '1px solid gray', borderRadius: '10px', marginTop:'5px'}}>
-                         { fest.festTcTime===null? null: <p style={{display:'inline'}}>{fest.festTcTime} - </p>}
-                         { fest.festTcType===null? null: <p style={{display:'inline'}}>{fest.festTcType} - </p>}  
-                         { fest.festTcPrice===null? null: <p style={{display:'inline'}}>{fest.festTcPrice}원</p>}
-                          </div>
-                      ))}
 
+
+            {festival.map((fest, i) => (     <div  key={i}   className="product_detail_description"
+    style={{       maxWidth: "1250px",      maxHeight: "1000px",     }}  >
+    {fest.festTcType === null ? (      null    ) : (
+<div key={i} className={`product_info_subitem${selectedFestTcTime === fest.festTcTime && selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType, fest.festTcTime)} style={{border: '1px solid gray', borderRadius: '10px', marginTop:'5px'}}>
+{ fest.festTcTime===null? null: <p style={{display:'inline',}}>{fest.festTcTime} - </p>}
+{ fest.festTcType===null? null: <p style={{display:'inline'}}>{fest.festTcType} - </p>}  
+{ fest.festTcPrice===null? null: <p style={{display:'inline'}}>{fest.festTcPrice}원</p>}
+ </div>
+    )}
+    {i === festival.length - 1 && fest.festTcType === null ? (
+null
+    ) : null}
+  </div>
+))}
 
 
 
