@@ -68,7 +68,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       const res = await insertTogetherDB(board);
       console.log(res.data);
       Swal.fire({
-        title: "게시글이 작성 완료되었습니다.",
+        title: "게시글이 작성이 완료되었습니다.",
         icon: "success",
       });
       navigate("/together");
