@@ -17,7 +17,7 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-function FireTest() {
+const FireTest = () => {
   const [data, setData] = useState({});
   const [carpool, setCarpool] = useState({
     boardCpNo: "",
@@ -42,7 +42,7 @@ function FireTest() {
     };
   }, []);
 
-  function handleInputChange(event) {
+  const handleInputChange = (event) => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -50,9 +50,9 @@ function FireTest() {
       ...carpool,
       [name]: value,
     });
-  }
+  };
 
-  function handleSaveData() {
+  const handleSaveData = () => {
     const count = 1;
     const maxVal = parseInt(carpool.max);
     firebase
@@ -91,7 +91,7 @@ function FireTest() {
           console.log("저장 성공");
         }
       });
-  }
+  };
 
   return (
     <div>
@@ -124,16 +124,22 @@ function FireTest() {
       <br />
       <br />
       <button onClick={handleSaveData}>카풀참가</button>
-      {Object.keys(data).map((key) => {
-        const item = data[key];
-        return (
-          <div className="data" key={key}>
-            글번호={key} : 최대 인원={item.max}, save누르면 증가={item.count}
-          </div>
-        );
-      })}
+      {Object.keys(data)
+        .filter((key) => key === "carpoolList")
+        .map((key) => {
+          const carpoolList = data[key];
+          return Object.keys(carpoolList).map((boardCpNo) => {
+            const item = carpoolList[boardCpNo];
+            return (
+              <div className="data" key={boardCpNo}>
+                글번호={boardCpNo} : 최대 인원={item.max}, save누르면 증가=
+                {item.count}
+              </div>
+            );
+          });
+        })}
     </div>
   );
-}
+};
 
 export default FireTest;

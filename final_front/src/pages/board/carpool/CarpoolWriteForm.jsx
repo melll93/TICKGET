@@ -293,7 +293,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
               maxLength="50"
               placeholder="제목을 입력하세요."
               style={{
-                margin: "100px 0px 0px 10px",
+                margin: "10px 0px 0px 10px",
                 width: "98%",
                 height: "40px",
                 border: "1px solid lightGray",
@@ -333,10 +333,10 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             <h3>날짜</h3>
             <input
               style={{ width: "390px", marginLeft: "10px" }}
-              type="date"
               className="form-control"
               id="festStartday"
               name="startDay"
+              type="datetime-local"
               onChange={(e) => {
                 handleDate(e.target.value);
               }}
@@ -423,7 +423,15 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 </Form.Group>
               </Row>
             </div>
-            <span style={{ display: "block", textAlign: "center", marginBottom:"10px" }}>∙ 만남의 장소 : {place}</span>
+            <span
+              style={{
+                display: "block",
+                textAlign: "center",
+                marginBottom: "10px",
+              }}
+            >
+              ∙ 만남의 장소 : {place}
+            </span>
             <div
               style={{
                 display: "flex",

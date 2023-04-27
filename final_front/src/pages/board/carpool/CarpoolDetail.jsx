@@ -21,6 +21,8 @@ import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv } from "../../../styles/formStyle";
 import MapContainer from "../market/Map/MapContainer";
 
+
+
 const CarpoolDetail = ({ match }) => {
   const navigate = useNavigate();
   const { boardCpNo } = useParams();
@@ -29,7 +31,7 @@ const CarpoolDetail = ({ match }) => {
   const [boardReplyCpContent2, setBoardReplyCpContent2] = useState(""); //수정 댓글
   const [boardReplyList, setBoardReplyList] = useState([]);
   const [lgShow, setLgShow] = useState(false);
-
+  const [data, setData] = useState({});
   const [place, setPlace] = useState("");
 
   const cookies = new Cookies();
@@ -211,7 +213,7 @@ const CarpoolDetail = ({ match }) => {
                     <label>날짜</label>
                     <span
                       style={{ width: "98%", margin: "10px" }}
-                      type="text"
+                      type="datetime-local"
                       name="carpoolCpDate"
                       required
                       className="form-control form-control-lg"
@@ -219,6 +221,29 @@ const CarpoolDetail = ({ match }) => {
                     >
                       {carpool.boardCpDate}
                     </span>
+                  </div>
+
+                  <div>
+                    <label>최대인원</label>
+                    {/* 파이어 베이스에서 받아온 값 호출하자 시작*/}
+                    <div style={{ textAlign: "center", width: "200px" }}>
+                      {Object.keys(data)
+                        .filter((key) => key === "carpoolList")
+                        .map((key) => {
+                          const carpoolList = data[key];
+                          return Object.keys(carpoolList).map((boardCpNo) => {
+                            const item = carpoolList[boardCpNo];
+                            return (
+                              <div className="data" key={boardCpNo}>
+                                글번호={boardCpNo} : 최대 인원={item.max},
+                                save누르면 증가=
+                                {item.count}
+                              </div>
+                            );
+                          });
+                        })}
+                    </div>
+                    {/* 파이어 베이스에서 받아온 값 호출하자종료  */}
                   </div>
 
                   <div>
@@ -280,7 +305,7 @@ const CarpoolDetail = ({ match }) => {
               <div style={{ textAlign: "center" }}>
                 <Button
                   onClick={() => {
-                        window.history.back();
+                    window.history.back();
                   }}
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}
