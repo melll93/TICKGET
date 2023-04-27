@@ -280,19 +280,7 @@ const CarpoolDetail = ({ match }) => {
               <div style={{ textAlign: "center" }}>
                 <Button
                   onClick={() => {
-                    Swal.fire({
-                      title: "정말로 뒤로 가시겠습니까?",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "black",
-                      cancelButtonColor: "black",
-                      confirmButtonText: "네",
-                      cancelButtonText: "아니오",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
                         window.history.back();
-                      }
-                    });
                   }}
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}

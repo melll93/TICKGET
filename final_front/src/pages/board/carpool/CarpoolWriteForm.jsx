@@ -293,7 +293,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
               maxLength="50"
               placeholder="제목을 입력하세요."
               style={{
-                margin: "10px 0px 0px 10px",
+                margin: "100px 0px 0px 10px",
                 width: "98%",
                 height: "40px",
                 border: "1px solid lightGray",

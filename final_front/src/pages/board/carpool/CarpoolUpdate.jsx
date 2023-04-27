@@ -1,5 +1,4 @@
 /* global daum */
-/* global daum */
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
@@ -12,6 +11,12 @@ import {
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
+import "firebase/analytics";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/database";
+import "firebase/compat/firestore";
+import "firebase/database";
 
 const CarpoolUpdate = () => {
   const navigate = useNavigate();
@@ -126,6 +131,92 @@ const CarpoolUpdate = () => {
     setCarpoolContent(e);
   }, []);
 
+  /*************** fireBase ***************/
+  const firebaseConfig = {
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: (process.env.FIREBASE_DATABASE_URL =
+      "https://finalproject-85e01-default-rtdb.asia-southeast1.firebasedatabase.app"),
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+  };
+
+  const [data, setData] = useState({});
+  const [carpool1, setCarpool1] = useState({
+    boardCpNo: "",
+    max: "",
+    now: "",
+  });
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  } else {
+    firebase.app();
+  }
+
+  useEffect(() => {
+    const database = firebase.database();
+    database.ref().on("value", (snapshot) => {
+      const data = snapshot.val();
+      setData(data);
+    });
+    return () => {
+      database.ref().off();
+    };
+  }, []);
+
+  const handleInputChange = (event) => {
+    setCarpool1({
+      ...carpool1,
+      [event.target.name]:
+        event.target.type === "checkbox"
+          ? event.target.checked
+          : event.target.value,
+    });
+  };
+
+  const handleSaveData = () => {
+    const count = 1;
+    const maxVal = parseInt(carpool1.max);
+
+    firebase
+      .database()
+      .ref(`carpoolList/${boardCpNo}`)
+      .once("value")
+      .then((snapshot) => {
+        Swal.fire({
+          title: "카풀을 등록했습니다.",
+          icon: "success",
+        });
+        if (snapshot.exists()) {
+          const now = snapshot.val().now;
+          const currentCount = snapshot.val().count;
+          if (now < maxVal && currentCount < maxVal) {
+            const newNow = now + count;
+            const newCount = currentCount + count;
+            if (newNow <= maxVal && newCount <= maxVal) {
+              firebase.database().ref(`carpoolList/${boardCpNo}`).update({
+                max: maxVal,
+                now: 1,
+                count: 1,
+              });
+            }
+          }
+        } else {
+          firebase.database().ref(`carpoolList/${boardCpNo}`).update({
+            max: maxVal,
+            now: 1,
+            count: 1,
+          });
+        }
+      });
+  };
+  /*************** fireBase ***************/
+
+  /********** 위치찾기 시작 **********/
   const searchAddress = () => {
     new daum.Postcode({
       oncomplete: function (data) {
@@ -148,6 +239,7 @@ const CarpoolUpdate = () => {
     setBoardCpPlace(value);
   }, []);
 
+  /********** 위치찾기 종료 **********/
   return (
     <div>
       <Header />
@@ -155,7 +247,20 @@ const CarpoolUpdate = () => {
       <ContainerDiv>
         <div style={{ height: "100px" }}></div>
         <br />
-        <FormDiv style={{ width: "98%", margin: "10px" }}>
+        <div
+          style={{
+            margin: "10px",
+            display: "flex",
+            flexDirection: "column",
+            width: "90%",
+            border: "2px solid lightGray",
+            borderRadius: "20px",
+            padding: "10px",
+            maxWidth: "1500px",
+            minHeight: "650px",
+            justifyContent: "space-between",
+          }}
+        >
           <h2>카풀 게시판 수정하기</h2>
           <br />
           <div>
@@ -221,6 +326,39 @@ const CarpoolUpdate = () => {
                 />
               </div>
 
+              <h3 style={{ marginBottom: "20px" }}>Carpool 최대 인원</h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <h5 style={{ marginLeft: "10px" }}>최대 인원</h5>
+
+                <input
+                  style={{ width: "auto", marginLeft: "10px" }}
+                  className="form-control"
+                  type="text"
+                  id="max"
+                  name="max"
+                  placeholder="최대인원"
+                  onChange={handleInputChange}
+                />
+
+                <Button
+                  style={{
+                    width: "auto",
+                    marginLeft: "10px",
+                    backgroundColor: "black",
+                    marginTop: "0px",
+                  }}
+                  className="form-control"
+                  type="text"
+                  onClick={handleSaveData}
+                >
+                  카풀 인원 수정
+                </Button>
+              </div>
               <div>
                 <label>수정할 내용</label>
                 <br />
@@ -314,7 +452,7 @@ const CarpoolUpdate = () => {
               </div>
             </form>
           </div>
-        </FormDiv>
+        </div>
       </ContainerDiv>
     </div>
   );
