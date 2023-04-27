@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import "firebase/database";
 import "firebase/analytics";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import "firebase/database";
+import React, { useEffect, useState } from "react";
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -17,9 +17,9 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-function FireTest() {
+const FireTest = () => {
   const [data, setData] = useState({});
-  const [carpool, setCarpool] = useState({
+  const [realTime, setRealTime] = useState({
     boardCpNo: "",
     max: "",
     now: "",
@@ -42,22 +42,22 @@ function FireTest() {
     };
   }, []);
 
-  function handleInputChange(event) {
+  const handleInputChange = (event) => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    setCarpool({
-      ...carpool,
+    setRealTime({
+      ...realTime,
       [name]: value,
     });
-  }
+  };
 
-  function handleSaveData() {
+  const handleSaveData = () => {
     const count = 1;
-    const maxVal = parseInt(carpool.max);
+    const maxVal = parseInt(realTime.max);
     firebase
       .database()
-      .ref(carpool.name)
+      .ref(realTime.name)
       .once("value")
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -69,7 +69,7 @@ function FireTest() {
             if (newNow <= maxVal && newCount <= maxVal) {
               firebase
                 .database()
-                .ref(carpool.name)
+                .ref(realTime.name)
                 .update({
                   max: maxVal,
                   now: firebase.database.ServerValue.increment(count),
@@ -83,7 +83,7 @@ function FireTest() {
             console.log("인원이 다 찼습니다.");
           }
         } else {
-          firebase.database().ref(carpool.name).set({
+          firebase.database().ref(realTime.name).set({
             max: maxVal,
             now: 1,
             count: 1,
@@ -91,7 +91,7 @@ function FireTest() {
           console.log("저장 성공");
         }
       });
-  }
+  };
 
   return (
     <div>
@@ -124,16 +124,22 @@ function FireTest() {
       <br />
       <br />
       <button onClick={handleSaveData}>카풀참가</button>
-      {Object.keys(data).map((key) => {
-        const item = data[key];
-        return (
-          <div className="data" key={key}>
-            글번호={key} : 최대 인원={item.max}, save누르면 증가={item.count}
-          </div>
-        );
-      })}
+      {Object.keys(data)
+        .filter((key) => key === "carpoolList")
+        .map((key) => {
+          const carpoolList = data[key];
+          return Object.keys(carpoolList).map((boardCpNo) => {
+            const item = carpoolList[boardCpNo];
+            return (
+              <div className="data" key={boardCpNo}>
+                글번호={boardCpNo} : 최대 인원={item.max}, save누르면 증가=
+                {item.count}
+              </div>
+            );
+          });
+        })}
     </div>
   );
-}
+};
 
 export default FireTest;

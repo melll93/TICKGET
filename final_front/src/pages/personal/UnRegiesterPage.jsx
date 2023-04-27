@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
-import { BButton } from '../../styles/formStyle';
 import styled from 'styled-components';
 import { memberDeleteDB, memberListDB } from '../../axios/member/memberCrud';
 import Swal from "sweetalert2";
@@ -28,6 +27,22 @@ export const Input = styled.input`
     font-size: 12px;
   }
   margin-bottom: 10px
+`;
+
+export const MButton = styled.button`
+  margin-top: 20px;
+  width: 200px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 24px;
+  margin-bottom: 20px;
+  border: none;
+  background-color: rgb(80, 50, 200);
+  color: white;
+  &:hover {
+    background-color: rgb(50, 50, 120);
+  }
 `;
 
 const UnRegiesterPage = () => {
@@ -245,9 +260,9 @@ const UnRegiesterPage = () => {
             </label>
             <br/>
 
-            <BButton type="button" onClick={handleDelete}>
+            <MButton type="button" onClick={handleDelete}>
               탈퇴하기
-            </BButton>
+            </MButton>
           </div>
           {/* 탈퇴 체크 박스 */}
         </div>

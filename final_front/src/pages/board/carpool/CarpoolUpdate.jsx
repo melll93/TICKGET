@@ -188,7 +188,7 @@ const CarpoolUpdate = () => {
       .once("value")
       .then((snapshot) => {
         Swal.fire({
-          title: "카풀을 등록했습니다.",
+          title: "카풀인원 수정 완료.",
           icon: "success",
         });
         if (snapshot.exists()) {
@@ -316,10 +316,6 @@ const CarpoolUpdate = () => {
                     border: "1px solid lightGray",
                     borderRadius: "10px",
                   }}
-                  placeholder={
-                    "YYYY-MM-DD 형식으로 입력해주세요. ex) : " +
-                    new Date().toISOString().substr(0, 10)
-                  }
                   onChange={(e) => {
                     handleDate(e.target.value);
                   }}
