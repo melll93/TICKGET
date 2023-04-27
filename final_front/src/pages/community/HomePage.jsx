@@ -46,6 +46,7 @@ const HomePage = () => {
     const festivalHitList = async () => {
       const festMHit = true; // festHit 변수에 true 값을 할당하여 HIT가 높은 순으로 데이터를 가져옴
       const result = await festivalHitListDB(festMHit); // FestivalHitListDB 함수를 호출하여 데이터를 가져옴
+      console.log(result)
       setFestivalHitList(result); // 가져온 데이터를 상태값에 할당
     };
     festivalHitList(); // 데이터 가져오기
@@ -123,12 +124,20 @@ const HomePage = () => {
   });
    
 
+ /* ******************************************
+   ***** WHAT'S HOT 호버이벤트 *****
+   ********************************************  */
+   const [hovered, setHovered] = useState(Array(5).fill(false)); // 초기값: 5개의 요소에 대해 false
+   
+
+
+
   return (
     <>
       <Header />
       <Sidebar />
       <div className="center">
-        <div style={{ margin: "40px 0px 0px 0px", width: "1900px" }}>
+        <div style={{ margin: "40px 0px 0px 0px", width: "1000px", height:"1000px" }}>
           <CarouselList festivalToday={festivalToday} />
         </div>
 
@@ -139,55 +148,124 @@ const HomePage = () => {
             paddingBottom: "50px",
           }}
         >
-          <div style={{ textAlign: "center"}}>
-            <h1>
-              <strong> WHAT'S HOT</strong>
+          <div style={{ textAlign: "center" , fontFamily:'Nanum-Gothic', fontWeight:'bold'}}>
+            <h1 style={{ fontFamily:'Nanum-Gothic', fontWeight:'bold', marginTop:'-400px', marginBottom:'50px'}}>
+            <span>WHAT'S HOT</span>
             </h1>
             {festivalHitList.slice(0, 5).map((festival, i) => (
-              <Link to={`/productsDetail/${festival.festMId}`} key={i}  >
-                <Card.Img
-                  key={i}
-                  src={festival.festMImg}
-                  style={{
-                    width: "150px",
-                    height: "200px",
-                    marginRight: "20px",
-                  }}
-                  alt="Card image"
-                />
-              </Link>
-            ))}
+  <Link to={`/productsDetail/${festival.festMId}`} key={i}>
+    <div
+      style={{
+        position: "relative",
+        display: "inline-block",
+        marginRight: "20px"
+      }}
+    >
+     
+      <div style={{
+        position: "absolute",
+        top: "-20px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "40px",
+        height: "40px",
+        border:'3px solid white',
+        borderRadius: "50%",
+        backgroundColor: "rgb(236,125,40)",
+        color: "white",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontWeight: "bold",
+        fontSize: "1.3rem",
+        visibility: hovered[i] ? "hidden" : "visible", // 순위가 보이지 않도록 CSS 스타일 수정
+        transition: "visibility 0.01s ease-in-out"
+      }}>
+        {i + 1}
+      </div>
+      <Card.Img
+        key={i}
+        src={festival.festMImg}
+        style={{
+          width: "250px",
+          height: "300px",
+          filter: hovered[i] ? "brightness(40%)" : "",
+          transition: "filter 0.2s ease-in-out"
+        }}
+        onMouseEnter={() => {
+          setHovered(prevState => {
+            const newState = [...prevState];
+            newState[i] = true;
+            return newState;
+          });
+        }}
+        onMouseLeave={() => {
+          setHovered(prevState => {
+            const newState = [...prevState];
+            newState[i] = false;
+            return newState;
+          });
+        }}
+        alt="Card image"
+      />
+      {hovered[i] && (
+        <div
+          style={{
+            textAlign:'center',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            color: "white",
+            borderRadius: "5px"
+          }}
+        >
+          <p style={{fontWeight: "bold" , fontSize:'0.9rem',whiteSpace: 'nowrap',textOverflow: 'ellipsis'}}>
+            {festival.festMName}
+          </p>
+          <p style={{fontSize:'0.7rem'}}>{festival.festMStart}</p>
+          <p style={{fontSize:'0.8rem'}}>{festival.festMLoc}</p>
+        </div>
+      )}
+    </div>
+  </Link>
+))}
+</div>
+          <div style={{marginTop:'250px', textAlign: "center" }}>
+<img src="./images_key/앨리스.png" style={{width:"100%", height: 'auto'}}/>
           </div>
         </section>
 
         <section
           className="home_total_sec"
-          style={{ backgroundColor: "lightgray"}}
+          style={{ backgroundColor: "white"}}
         >
-          <div className="total_section" style={{ display: "flex" }}>
-
+          <div className="total_section" style={{ display: "flex", marginTop:'150px' }}>
 
             {/* 메인하단 최신게시글 */}
-              <div className="mainpage box" style={{flex: "1",  padding:'50px 0px 0px 170px'}}> 
+              <div className="mainpage box" style={{flex: "1",  padding:'20px 0px 0px 170px'}}> 
                 <div className="mainpage div div1" >
-                  <Tabs
-                    defaultActiveKey="market"
-                    id="uncontrolled-tab-example"
-                    className="margin0 mb-3"
-                  >
-                                        <Tab eventKey="market" title="Market">
-               <BasicTable items={mkboardsProps}/> 
-                    </Tab>
-                    <Tab eventKey="together" title="Together">
-                      
-                      <BasicTable items={boardListProps}/>
-                   
-                    </Tab>
-                    <Tab eventKey="carpool" title="Carpool">
-                   <BasicTable items={carpoolListProps}/> 
-                    </Tab>
-
-                  </Tabs>
+          <h4 style={{fontWeight:'bold', textAlign:'center'}}><i class="bi bi-clipboard"></i>{" "}최근 게시글</h4>
+                  
+    <Tabs defaultActiveKey="together" id="fill-tab-example" className="mb-3" fill style={{fontFamily:'Nanum-Gothic', fontWeight:'bold', marginTop:'20px'}}>
+      <Tab eventKey="together" title="TOGETHER">
+        <BasicTable items={boardListProps} />
+      </Tab>
+      <Tab eventKey="carpool" title="CARPOOL">
+        <BasicTable items={carpoolListProps}/> 
+      </Tab>
+      <Tab eventKey="market" title="MARKET">
+        <BasicTable items={mkboardsProps} /> 
+      </Tab>
+      <style>
+    {`
+      .nav-link.unselectable {
+        color: purple;
+      }
+    `}
+  </style>
+    </Tabs>
+                  
                 </div>{" "}
             </div>
             {/* 메인하단 최신게시글 */}
@@ -202,7 +280,7 @@ const HomePage = () => {
               marginBottom: "50px", textAlign: "center", flex: "1",
             paddingRight:'100px', display:"inline-block"}}
             >
-                <h4>연계 추천 사이트</h4>
+                <h4 style={{fontWeight:'bold'}}><i class="bi bi-command"></i>{" "}연계 추천 사이트</h4>
               <div className="card" style={{ display: "inline-block", marginRight:'5px'}}>
                 <img
                   src="./images_key/travelgajae.jpg"

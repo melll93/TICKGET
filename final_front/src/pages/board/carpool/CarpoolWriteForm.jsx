@@ -333,10 +333,10 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             <h3>날짜</h3>
             <input
               style={{ width: "390px", marginLeft: "10px" }}
-              type="date"
               className="form-control"
               id="festStartday"
               name="startDay"
+              type="datetime-local"
               onChange={(e) => {
                 handleDate(e.target.value);
               }}
@@ -423,7 +423,15 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 </Form.Group>
               </Row>
             </div>
-            <span style={{ display: "block", textAlign: "center", marginBottom:"10px" }}>∙ 만남의 장소 : {place}</span>
+            <span
+              style={{
+                display: "block",
+                textAlign: "center",
+                marginBottom: "10px",
+              }}
+            >
+              ∙ 만남의 장소 : {place}
+            </span>
             <div
               style={{
                 display: "flex",

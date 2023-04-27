@@ -1,5 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "firebase/analytics";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 import "firebase/compat/database";
+import "firebase/compat/firestore";
+import "firebase/database";
 import { useCallback, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
@@ -20,6 +25,19 @@ import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv } from "../../../styles/formStyle";
 import MapContainer from "../market/Map/MapContainer";
+/* ********************** */
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: (process.env.FIREBASE_DATABASE_URL =
+    "https://finalproject-85e01-default-rtdb.asia-southeast1.firebasedatabase.app"),
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+};
+/* ********************** */
 
 const CarpoolDetail = ({ match }) => {
   const navigate = useNavigate();
@@ -30,6 +48,72 @@ const CarpoolDetail = ({ match }) => {
   const [boardReplyList, setBoardReplyList] = useState([]);
   const [lgShow, setLgShow] = useState(false);
 
+  /* ********** Firebase ********** */
+  const [data, setData] = useState({});
+  const [realTime, setRealTime] = useState({
+    boardCpNo: "",
+    max: "",
+    now: "",
+  });
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  } else {
+    firebase.app();
+  }
+
+  useEffect(() => {
+    const database = firebase.database();
+    database.ref().on("value", (snapshot) => {
+      const data = snapshot.val();
+      setData(data);
+    });
+    return () => {
+      database.ref().off();
+    };
+  }, []);
+
+  // const handleSaveData = () => {
+  //   const count = 1;
+  //   const maxVal = parseInt(realTime.max);
+  //   firebase
+  //     .database()
+  //     .ref(realTime.name)
+  //     .once("value")
+  //     .then((snapshot) => {
+  //       if (snapshot.exists()) {
+  //         const now = snapshot.val().now;
+  //         const currentCount = snapshot.val().count;
+  //         if (now < maxVal && currentCount < maxVal) {
+  //           const newNow = now + count;
+  //           const newCount = currentCount + count;
+  //           if (newNow <= maxVal && newCount <= maxVal) {
+  //             firebase
+  //               .database()
+  //               .ref(realTime.name)
+  //               .update({
+  //                 max: maxVal,
+  //                 now: firebase.database.ServerValue.increment(count),
+  //                 count: firebase.database.ServerValue.increment(count),
+  //               });
+  //             console.log("저장 성공");
+  //           } else {
+  //             console.log("인원이 다 찼습니다.");
+  //           }
+  //         } else {
+  //           console.log("인원이 다 찼습니다.");
+  //         }
+  //       } else {
+  //         firebase.database().ref(realTime.name).set({
+  //           max: maxVal,
+  //           now: 1,
+  //           count: 1,
+  //         });
+  //         console.log("저장 성공");
+  //       }
+  //     });
+  // };
+
+  /* ********** Firebase ********* */
   const [place, setPlace] = useState("");
 
   const cookies = new Cookies();
@@ -211,7 +295,7 @@ const CarpoolDetail = ({ match }) => {
                     <label>날짜</label>
                     <span
                       style={{ width: "98%", margin: "10px" }}
-                      type="text"
+                      type="datetime-local"
                       name="carpoolCpDate"
                       required
                       className="form-control form-control-lg"
@@ -220,6 +304,40 @@ const CarpoolDetail = ({ match }) => {
                       {carpool.boardCpDate}
                     </span>
                   </div>
+
+                  {/* firebase에서 값 받아오기 시작 */}
+                  <div>
+                    <label>최대인원</label>
+                    <div
+                      style={{ width: "98%", margin: "10px" }}
+                      type="text"
+                      name="carpoolMemId"
+                      required
+                      className="form-control form-control-lg"
+                      id="inputLarge"
+                    >
+                      {Object.keys(data)
+                        .filter((key) => key === "carpoolList")
+                        .map((key) => {
+                          const carpoolList = data[key];
+                          return Object.keys(carpoolList).map((CpNo) => {
+                            if (CpNo === boardCpNo) {
+                              const item = carpoolList[CpNo];
+                              console.log(item);
+                              return (
+                                <div className="data" key={CpNo}>
+                                  최대 인원: {item.max}, 현재 신청인원 :
+                                  {item.now}
+                                </div>
+                              );
+                            } else {
+                              return null;
+                            }
+                          });
+                        })}
+                    </div>
+                  </div>
+                  {/* firebase에서 값 받아오기 종료 */}
 
                   <div>
                     <label>내용</label>
@@ -280,19 +398,7 @@ const CarpoolDetail = ({ match }) => {
               <div style={{ textAlign: "center" }}>
                 <Button
                   onClick={() => {
-                    Swal.fire({
-                      title: "정말로 뒤로 가시겠습니까?",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "black",
-                      cancelButtonColor: "black",
-                      confirmButtonText: "네",
-                      cancelButtonText: "아니오",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        window.history.back();
-                      }
-                    });
+                    window.history.back();
                   }}
                   variant="success"
                   style={{ marginLeft: "10px", backgroundColor: "black" }}

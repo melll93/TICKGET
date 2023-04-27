@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useNavigate, useParams } from "react-router";
 import { FestivalInsertDB, FetivalDetailDB, festivalUpdateDB } from "../../axios/festival/festival";
-import ImageUploader from "../../util/imageUploader";
+import ImageUploader, { handleUpload } from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
@@ -18,34 +18,48 @@ const AddProducts = () => {
   const navigate = useNavigate();
   const {festMId}=useParams();
 
- /*  console.log(festMId) */
+ /*  fest_main  */
   const [festTitle, setFesttitle] = useState();
   const [festLocation, setFestloc] = useState();
   const [festCategory, setFestcate] = useState();
   const [festStartday, setFeststart] = useState();
   const [festEndday, setFestend] = useState();
-  const [festDetail, setFestdetail] = useState();
-  const [festPrice, setFestprice] = useState();
-  const [festDesc, setFestdesc] = useState();
   const [festArea, setFestArea] = useState();
   const [festImages, setFestImages] = useState();
   const [festImageUrl, setFestImageUrl] = useState();
   const imgRef = useRef();
 
+  /*fest_poster  */
   const [festPsUrl, setFestPsUrl] = useState();
   const [festPsNo, setFestPsNo] = useState();
 
-
+/* fest_detail */
   const [festDtCrew, setFestDtCrew] = useState();
   const [festDtCasting, setFestDtCasting] = useState();
   const [festDtRuntime, setFestDtRuntime] = useState();
   const [festDtAge, setFestDtAge] = useState();
 
+  /* fest_ticket */
   const [festTcType, setFestTcType] =useState();
   const [festTcPrice, setFestTcPrice] =useState();
   const [festTcTime, setFestTcTime]= useState();
   const [festTcNo, setFestTcNo]= useState();
 
+
+/* 클라우디너리 */
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [cloudImg, setCloudImg] = useState();
+  const handleFileInput = (e) => {
+    setSelectedFile(e);
+  };
+  const handleUploadClick = (e) => {
+    e.preventDefault();
+    handleUpload(selectedFile, setCloudImg); // util > imageupload.js 의 handleUpload 로 넘기기
+  };
+
+
+  /* 클라우디너리 */
 
 
 
@@ -54,24 +68,12 @@ const AddProducts = () => {
   const optionModalOpen = () => {if (optionModal === 0) {setOptionModal(1);
     } else {setOptionModal(0);}};
 
+
+
 /* 상품등록 insert */
 const festivalInsert = async () => {
-  console.log(festTitle)
-  console.log(festLocation)
-  console.log(festCategory)
-  console.log(festEndday)
-  console.log(festStartday)
-  if (
-    festTitle == null || festTitle === '' || 
-    festLocation == null ||  festLocation === '' || 
-    festCategory == null || festCategory === '' || 
-    festStartday == null  || festStartday === '' || 
-    festEndday == null  || festEndday === '' || 
-    festArea == null  || festArea === '' || 
-    festImageUrl == null  || festImageUrl === '' 
-  ) {
-    alert('빈칸 없이 작성해주세요. ');
-  } else {
+  if (festTitle == null || festTitle === '' || festLocation == null ||  festLocation === '' ||  festCategory == null || festCategory === '' ||  festStartday == null  || festStartday === '' || 
+    festEndday == null  || festEndday === '' ||   festArea == null  || festArea === '' ||   festImageUrl == null  || festImageUrl === ''  ) {  alert('빈칸 없이 작성해주세요. ');  } else {
     const festival = {
       festMName: festTitle,
       festMLoc: festLocation,
@@ -79,7 +81,7 @@ const festivalInsert = async () => {
       festMStart: festStartday,
       festMEnd: festEndday,
       festMArea: festArea,
-      festMImg: festImageUrl,
+      festMImg: festImageUrl,   //festImageUrl(위에꺼),   cloudImg(아래꺼)  바꾸면 위에 널처리도
     };
     const res = await FestivalInsertDB(festival);
     /* console.log(festival); */
@@ -97,7 +99,7 @@ const festivalInsert = async () => {
 };
 
 
-/* 입력되어있던 정보 가져오기 */  
+/* READ 입력되어있던 정보 가져오기 */  
 useEffect(() => {
 const originDetail=async()=>{
   const festival={
@@ -111,42 +113,37 @@ const originDetail=async()=>{
 setFestend(jsonDoc[0].festMEnd)
 setFestloc(jsonDoc[0].festMLoc)
 setFestcate(jsonDoc[0].festMGenre)
-setFestdetail(jsonDoc[0].festDetail)   //아직 사용 안하는중
 setFestArea(jsonDoc[0].festMArea)
 setFestImageUrl(jsonDoc[0].festMImg)
 
+/* fest_detail 받아서 props로 넘기는중 */
 setFestDtRuntime(jsonDoc[0].festDtRuntime)
 setFestDtAge(jsonDoc[0].festDtAge)
 setFestDtCasting(jsonDoc[0].festDtCasting)
 setFestDtCrew(jsonDoc[0].festDtCrew)
 
-
+/* fest_poster 받아서 props로 넘기는 중 */
 const festPsUrlAll = jsonDoc.map(item => item.festPsUrl);
 setFestPsUrl(festPsUrlAll);
 const festPsNoAll = jsonDoc.map(item => item.festPsNo);
 setFestPsNo(festPsNoAll);
 
+
+/* fest_ticket 받아서 props로 넘기는 중 */
 const festTcNoAll = jsonDoc.map(item => item.festTcNo);
 setFestTcNo(festTcNoAll);
-
 const festTcTypeAll = jsonDoc.map(item => item.festTcType);
 setFestTcType(festTcTypeAll);
-
 const festTcPriceAll = jsonDoc.map(item => item.festTcPrice);
 setFestTcPrice(festTcPriceAll);
-
 const festTcTimeAll = jsonDoc.map(item => item.festTcTime);
 setFestTcTime(festTcTimeAll);
-
-
-/* if(jsonDoc[0].MEM_NO!==sessionStorage.getItem("no")){  //글의 회원번호와 로그인한 no가 달라?  네 -> 다른 사람 글
-return console.log('작성자가 아닙니다.')
-} */
 }
 originDetail()
 },[]);
 
 
+/* UPDATE */
     const festivalUpdate = async() => {
       const festival={
       festMId,
@@ -161,7 +158,7 @@ originDetail()
       try {
       const res = await festivalUpdateDB(festival)
 /*         console.log(res.data); */
-        navigate("/festival")
+        navigate(`/productsDetail/${festMId}`)
         /* alert('상품수정완료') */
         Swal.fire({
           title:'상품 수정 완료',
@@ -188,18 +185,10 @@ originDetail()
   const inputEndday = useCallback((e) => {
     setFestend(e);
   }, []);
-  const inputDetail = useCallback((e) => {
-    setFestdetail(e);
-  }, []);
-  const inputPrice = useCallback((e) => {
-    setFestprice(e);
-  }, []);
-  const inputDesc = useCallback((e) => {
-    setFestdesc(e);
-  }, []);
   const inputArea = useCallback((e) => {
     setFestArea(e);
   }, []);
+
 
   //선택파일 이미지로 교체
   const festImage = () => {
@@ -211,7 +200,7 @@ originDetail()
     };
   };
 
-  //클라우디너리에 업로드
+  //클라우디너리에 업로드 ( 리액트 )
   const FestImageUpload = (e) => {
     festImage();
     const { files } = document.querySelector("#festivalsImg");
@@ -292,6 +281,33 @@ originDetail()
           ref={imgRef}
         />{" "}
         <br />
+
+
+
+
+
+        
+{/* 클라우드 Test */}
+
+{/* <div className="cloudinary_image">
+<input
+          className="form-control"
+          type="file"
+          accept="image/*"
+          id="festivalsImg"
+          onChange={(e) => {handleFileInput(e.target.files[0])}}
+        />  <BlackBtn onClick={handleUploadClick}>클라우디너리 파일 저장</BlackBtn>
+
+        {cloudImg && <img src={cloudImg} alt="uploaded image" />}
+      </div> */}
+
+{/* 클라우드 Test */}
+
+
+
+
+
+
         <div className="form-floating mb-3">
           <input
             type="text"

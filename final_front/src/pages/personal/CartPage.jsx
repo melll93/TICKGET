@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { MButton } from "../../styles/formStyle";
 import Swal from "sweetalert2";
 import { mk_minusLikesDB } from "../../axios/board/market/marketLogic";
+import Footer from "../../components/Footer";
 
 const cookies = new Cookies();
-
 
 const CartPage = () => {
 
@@ -28,6 +28,7 @@ const CartPage = () => {
    const [cartlist , setCartlist] = useState([])
    const cartlistLength = cartlist.length; //찜한 상품 갯수
 
+   //회원이 담은 상품의 정보
   useEffect(()=>{
     const memberWdata = async() => {
       console.log(member_no)
@@ -43,6 +44,7 @@ const CartPage = () => {
     },[])
 
     const navigate = useNavigate()
+
 
 
 
@@ -86,17 +88,7 @@ const CartPage = () => {
           const res = await wishlistDelDB(wData);
           console.log(res.data);
          
-          const mkminusLikes = async() => {  //게시글 찜 갯수 감소
-            console.log(cartlist)
-            const board = {
-              memberNo : member_no
-            }
-            console.log(board)
-            const res = await mk_minusLikesDB(board)
-            console.log(res.data);
-           }
           Swal.fire('삭제가 완료되었습니다!', '', 'success');
-        mkminusLikes()
         setCartlist([])
         setCheckedList([])
         }
@@ -148,6 +140,7 @@ const CartPage = () => {
     };
   }
 
+
   return (
     <>
       <Header />
@@ -171,6 +164,7 @@ const CartPage = () => {
       <MButton onClick={handleDeleteAll}>전체삭제</MButton>{' '}
       <MButton onClick={handleDeleteSelected}>선택삭제</MButton>
     </div>
+   
     {cartlist.map(cart => (
       <div
         className="card"
@@ -181,8 +175,14 @@ const CartPage = () => {
           margin: '50px 50px 0px 75px',
           borderRadius: '10px',
           cursor: 'pointer',
+          opacity: cart.wishlistStatus > 0 ? '50%' : ""
         }}
       >
+          {cart.wishlistStatus > 0 ? (
+  <div style={{textAlign: "center", fontWeight: "bold",position: "absolute", top: 0, left: 0, backgroundColor: "rgb(80,50,200)", color: "white", padding: "5px", borderTopLeftRadius:"5px"}}>
+  판매완료
+</div> 
+  ) : ""}
         <img
           src={cart.wishlistFileurl}
           style={{
@@ -225,6 +225,8 @@ const CartPage = () => {
           </div>{" "}
           {/* main_center_div */}
         </section>
+        <section style={{height:'300px'}}/>
+        <Footer/>
       </div>
     </>
   );

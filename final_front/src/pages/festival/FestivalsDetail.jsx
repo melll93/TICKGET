@@ -17,6 +17,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, onValue, get, set  } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { firebaseConfig } from "../board/carpool/CarpoolBoardList";
+import MapContainer from "../board/market/Map/MapContainer";
 
 
 const FestivalsDetail = () => {
@@ -27,6 +28,7 @@ const FestivalsDetail = () => {
   const _userData = cookies.get("_userData"); //유저 정보
   const festSelectedTkamt = cookies.get('tk_amount');
   let { festMId } = useParams();
+  console.log(_userData)
 
 
 
@@ -204,17 +206,21 @@ const researveBtnClicked=()=>{
 
   /* 리뷰 인서트 요기  */
   const insertReview = async () => {
-    const freview = {
-      reviewContent,
-      reviewFestmid: festMId,
-    };
-    const res = await FestReviewInsertDB(freview);
-    //console.log(freview)
-    if (!res.data) {
-    } else {
-    }
-    navigate("/productsDetail/" + festMId);
-    resetReviewField();
+    if(_userData){
+
+      const freview = {
+        reviewMemid:_userData.memberNickname,
+        reviewContent,
+        reviewFestmid: festMId,
+      };
+      const res = await FestReviewInsertDB(freview);
+      //console.log(freview)
+      if (!res.data) {
+      } else {
+      }
+      navigate("/productsDetail/" + festMId);
+      resetReviewField();
+    }else(alert('로그인 시, 이용가능합니다. '))
   };
 
   /* 상품삭제 */
@@ -262,12 +268,15 @@ const researveBtnClicked=()=>{
                   }}
                 >
                   <h3>{review.reviewContent}</h3>
-                  id: {review.reviewMemid} 등록일: {review.reviewRegdate}
+                 작성자: {review.reviewMemid} 등록일: {review.reviewRegdate}
                   {
                     //로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람과 작성자 일치 시 수정, 삭제 버튼 보이기
                     // sessionStorage.getItem('Member_name')==='Member_name(작성자)'&&
                     <div>
-                      <BButton
+
+                      {_userData&& _userData.memberNickname===review.reviewMemid? 
+<div>
+                        <BButton
                         style={{ width: "80px", height: "38px" }}
                         onClick={()=>{ 
                           console.log(review.reviewNo);
@@ -276,66 +285,9 @@ const researveBtnClicked=()=>{
                           console.log(review.reviewNo);
 
                         }}
-                      >
+                        >
                         수정
                       </BButton>
-
-                      {/*/////////////////////////////리뷰 수정 모달//////////////////////////////////*/}
-
-                      <Modal
-                        size="lg"
-                        show={lgShow}
-                        onHide={() => setLgShow(false)}
-                        aria-labelledby="example-modal-sizes-title-lg"
-                      >
-                        <Modal.Header closeButton>
-                          <Modal.Title id="example-modal-sizes-title-lg">
-                            리뷰수정
-                          </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <div className="form-floating mb-3">
-                            <textarea
-                              onChange={(e) => {
-                                inputReviewRevisedContent(e.target.value);
-                              }}
-                              className="form-control2"
-                              placeholder="Leave a comment here"
-                              id="product_detail_review_revised_textarea"
-                              style={{
-                                height: "150px",
-                                margin: "10px",
-                                width: "97%",
-                              }}
-                            ></textarea>
-                            <BlackBtn
-                              className="reviseBtn"
-                              onClick={async () => {
-                                setLgShow(true);
-                                const freview = {
-                                  reviewNo: reviewToBeRevised.reviewNo,
-                                  reviewContent: reviewRevisedContent,
-                                };
-                                const res = await UpdateFestReviewDB(freview);
-                                if (!res.data) {
-                                } else {
-                                }
-                                setLgShow(false);
-                                console.log(
-                                  "수정완료" +
-                                    reviewRevisedContent +
-                                    freview.reviewNo
-                                );
-                                console.log("리뷰번호" + freview.reviewNo);
-                              }}
-                            >
-                              수정완료
-                            </BlackBtn>
-                          </div>
-                          <br />
-                        </Modal.Body>
-                      </Modal>
-                      {/* //////   리뷰 수정용 모달    여기까지///////*/}
 
                       <BButton
                         style={{ width: "80px", height: "38px" }}
@@ -350,9 +302,72 @@ const researveBtnClicked=()=>{
                           navigate("/productsDetail/" + festMId);
                           console.log("삭제완료");
                         }}
-                      >
+                        >
                         삭제
                       </BButton>
+                      </div>
+                      :null}
+
+
+                        {/*/////////////////////////////리뷰 수정 모달//////////////////////////////////*/}
+  
+                        <Modal
+                          size="lg"
+                          show={lgShow}
+                          onHide={() => setLgShow(false)}
+                          aria-labelledby="example-modal-sizes-title-lg"
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title id="example-modal-sizes-title-lg">
+                              리뷰수정
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <div className="form-floating mb-3">
+                              <textarea
+                                onChange={(e) => {
+                                  inputReviewRevisedContent(e.target.value);
+                                }}
+                                className="form-control2"
+                                placeholder="Leave a comment here"
+                                id="product_detail_review_revised_textarea"
+                                style={{
+                                  height: "150px",
+                                  margin: "10px",
+                                  width: "97%",
+                                }}
+                              ></textarea>
+                              <BlackBtn
+                                className="reviseBtn"
+                                onClick={async () => {
+                                  setLgShow(true);
+                                  const freview = {
+                                    reviewNo: reviewToBeRevised.reviewNo,
+                                    reviewContent: reviewRevisedContent,
+                                  };
+                                  const res = await UpdateFestReviewDB(freview);
+                                  if (!res.data) {
+                                  } else {
+                                  }
+                                  setLgShow(false);
+                                  console.log(
+                                    "수정완료" +
+                                      reviewRevisedContent +
+                                      freview.reviewNo
+                                  );
+                                  console.log("리뷰번호" + freview.reviewNo);
+                                }}
+                              >
+                                수정완료
+                              </BlackBtn>
+                            </div>
+                            <br />
+                          </Modal.Body>
+                        </Modal>
+                        {/* //////   리뷰 수정용 모달    여기까지///////*/}
+
+
+
                     </div>
                   }
                 </div>
@@ -369,7 +384,7 @@ const researveBtnClicked=()=>{
 
 
 
-
+console.log(festival)
 
 
 
@@ -479,14 +494,22 @@ const researveBtnClicked=()=>{
             </strong>
             
 
-              {festival.map((fest, i) => (
-                        <div key={i} className={`product_info_subitem${selectedFestTcTime === fest.festTcTime && selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType, fest.festTcTime)} style={{border: '1px solid gray', borderRadius: '10px', marginTop:'5px'}}>
-                         { fest.festTcTime===null? null: <p style={{display:'inline'}}>{fest.festTcTime} - </p>}
-                         { fest.festTcType===null? null: <p style={{display:'inline'}}>{fest.festTcType} - </p>}  
-                         { fest.festTcPrice===null? null: <p style={{display:'inline'}}>{fest.festTcPrice}원</p>}
-                          </div>
-                      ))}
 
+
+            {festival.map((fest, i) => (     <div  key={i}   className="product_detail_description"
+    style={{       maxWidth: "1250px",      maxHeight: "1000px",     }}  >
+    {fest.festTcType === null ? (      null    ) : (
+<div key={i} className={`product_info_subitem${selectedFestTcTime === fest.festTcTime && selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType, fest.festTcTime)} style={{border: '1px solid gray', borderRadius: '10px', marginTop:'5px'}}>
+{ fest.festTcTime===null? null: <p style={{display:'inline',}}>{fest.festTcTime} - </p>}
+{ fest.festTcType===null? null: <p style={{display:'inline'}}>{fest.festTcType} - </p>}  
+{ fest.festTcPrice===null? null: <p style={{display:'inline'}}>{fest.festTcPrice}원</p>}
+ </div>
+    )}
+    {i === festival.length - 1 && fest.festTcType === null ? (
+null
+    ) : null}
+  </div>
+))}
 
 
 
@@ -541,7 +564,7 @@ const researveBtnClicked=()=>{
           <section>
             <div className="bottomcontainer" style={{ marginLeft: "220px" }}>
               <Tabs
-                style={{ maxWidth: "1200px" }}
+                style={{ maxWidth: "1200px",fontFamily: "Nanum Gothic", fontWeight: "bold" }}
                 defaultActiveKey="product_detail_description"
                 id="justify-tab-example"
                 className="product_detail_tabs"
@@ -574,10 +597,24 @@ const researveBtnClicked=()=>{
   </div>
 ))}
 
-
-
-
                 </Tab>
+
+
+                <Tab eventKey="product_detail_place" title="공연장 위치" mountOnEnter={true}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px", marginRight:'450px' }}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" , marginRight:'50px'}}>
+                  <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
+                    <i class="bi bi-geo-alt-fill"></i>
+                    {" "}
+                   {festival[0].festMLoc}
+                  </p>
+                  <div style={{ width: "40%", borderTop: "1px solid black", marginBottom: "10px", opacity: "15%" }} />
+                </div>
+               <MapContainer place={ festival[0].festMLoc } /> 
+              </div>
+
+</Tab>
+
                 <Tab eventKey="product_detail_review" title="상품리뷰">
                   리뷰리뷰
                   <div

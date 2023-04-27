@@ -215,7 +215,7 @@ const CarpoolBoardList = () => {
                       {carpool.boardCpMemId}
                     </td>
 
-                    {/* 파이어 베이스에서 받아온 값 호출하자 */}
+                    {/* 파이어 베이스에서 받아온 값 호출하자 시작*/}
                     <td style={{ textAlign: "center", width: "200px" }}>
                       {data.carpoolList &&
                         Object.keys(data.carpoolList).map((key) => {
@@ -235,21 +235,20 @@ const CarpoolBoardList = () => {
                           return null;
                         })}
                     </td>
-
-                    {/* 파이어 베이스에서 받아온 값 호출하자 */}
+                    {/* 파이어 베이스에서 받아온 값 호출하자종료  */}
 
                     <td style={{ textAlign: "center", width: "80px" }}>
-                      <Button
-                        style={{
-                          height: "20px",
-                          width: "65px",
-                          fontSize: "10px",
-                          backgroundColor: "black",
-                        }}
-                        onClick={() => handleSaveData(carpool.boardCpNo)}
-                      >
-                        함께하기
-                      </Button>
+                        <Button
+                          style={{
+                            height: "20px",
+                            width: "65px",
+                            fontSize: "10px",
+                            backgroundColor: "black",
+                          }}
+                          onClick={() => handleSaveData(carpool.boardCpNo)}
+                        >
+                          함께하기
+                        </Button>
                     </td>
                     <td style={{ textAlign: "center", width: "100px" }}>
                       {carpool.boardCpDate}

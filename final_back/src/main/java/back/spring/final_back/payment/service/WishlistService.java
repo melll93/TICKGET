@@ -20,6 +20,9 @@ public interface WishlistService {
 
 	//위시리스트 선택삭제
 	public int wishlistSelDelete(WishlistDto wlDto);
+    
+	//위시리스트 판매여부 업데이트
+	public int wishlistUpdateStatus(WishlistDto wlDto);
 
 
 }
