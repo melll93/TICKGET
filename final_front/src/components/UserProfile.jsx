@@ -51,7 +51,9 @@ const UserProfile = ({ _userData }) => {
   }
 
   useEffect(() => {
-    _userData && checkFollow(friendId)
+    if (_userData && myId !== friendId) {
+      checkFollow(friendId)
+    }
     renderFollow()
     console.log(isFollow);
   }, [])
@@ -68,7 +70,6 @@ const UserProfile = ({ _userData }) => {
             id="profile"
             className="icon_black image40"
             style={{ borderRadius: "50%" }}
-            // src="https://phinf.pstatic.net/contact/20230416_257/1681630347916iq32w_PNG/avatar_profile.png?type=s160"
             src={
               _userData &&
               (_userData.memberProfileImage ?? "../logos/PROFILE.png")

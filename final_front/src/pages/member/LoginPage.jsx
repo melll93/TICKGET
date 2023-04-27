@@ -280,14 +280,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             </div>
           </div> */}
           <div className="socialLogin">
-            <Link to="http://localhost:8888/oauth2/authorization/google">
-              <div className="loginbutton">
-                <img
-                  className="loginbuttonimg"
-                  src="logos/google/btn_google_simple.png"
-                />
-              </div>
-            </Link>
             <Link to="http://localhost:8888/oauth2/authorization/naver">
               <div className="loginbutton">
                 <img
@@ -301,6 +293,14 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 <img
                   className="loginbuttonimg"
                   src="logos/kakao/kakao_login_simple.png"
+                />
+              </div>
+            </Link>
+            <Link to="http://localhost:8888/oauth2/authorization/google">
+              <div className="loginbutton">
+                <img
+                  className="loginbuttonimg"
+                  src="logos/google/btn_google_simple.png"
                 />
               </div>
             </Link>
