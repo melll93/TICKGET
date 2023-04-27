@@ -7,11 +7,10 @@ import "../../styles/chat.css";
 import UserProfile from "../../components/UserProfile";
 import ChatList from "../../components/chat/ChatList";
 import { Cookies } from "react-cookie"
-import { Stomp } from "@stomp/stompjs"
 
-const sock = new SockJS("http://localhost:8888/stompTest");
-const client = Stomp.over(sock);
-
+// const ws = new WebSocket("ws://localhost:8888/ws/chat");
+// const ws = new SockJS("http://localhost:8888/ws/chat", null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] })
+const ws = new SockJS("http://localhost:8888/ws/chat");
 const cookies = new Cookies();
 /******************************************************************
  * @param msg 객체 리터럴로 user, msg, time 받아서 10~20개 정도 시간별 출력,
@@ -20,68 +19,69 @@ const cookies = new Cookies();
  ******************************************************************/
 const ChatPage = () => {
   const _userData = cookies.get("_userData")
-  const username = _userData && _userData.memberNickname;
-  const userId = _userData && _userData.memberId
+  // console.log(_userData);
+  const username = _userData.memberNickname;
+  const userId = _userData.memberId
 
-  const [room, setRoom] = useState(1)
-
-  const [msg, setMsg] = useState({
-    id: userId,
-    room: room,
-    content: ""
-  });
-
-  useEffect(() => {
-
-    client.connect({}, () => {
-      console.log("stompTest connected");
-
-
-      client.subscribe('/sub/message/' + room, (e) => {
-        // console.log("event => ", e)
-
-        console.log(e.body);
-
-        const jsonMsg = JSON.parse(e.body)
-
-        const id = jsonMsg.id
-        const room = jsonMsg.room
-        const content = jsonMsg.content
-
-        /*************** 채팅 박스 구현 ***************/
-        const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
-        const chat = document.createElement("div"); // 컴포 디비전 좌우 처리
-        chat.setAttribute("class", "chatText"); // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
-        // for
-        // if (msg.user === 'ADMIN') { // user 이름 받아서
-        chatBox.setAttribute("class", "myChat");
-        // } else {
-        //   chatbox.setAttribute('className', 'otherChat')
-        // }
-
-        chat.innerText = id + ":" + content;
-        chatBox.appendChild(chat);
-        document.querySelector("#outputBox").appendChild(chatBox);
-        /*************** 채팅 박스 구현 ***************/
-      })
-    })
-
-  })
+  const [msg, setMsg] = useState();
 
   // BE로 전송하는 메시지는 id로, 화면에 출력하는 메시지는 nickname으로
   const send = (msg) => {
-    console.log(sock.readyState);
-    if (sock.readyState === 1) {
+    console.log("send");
+    console.log(username + ":" + msg);
+    ws.send(userId + ":" + msg);
 
-      client.send('/pub', {}, JSON.stringify(msg));
+    // const msg_payload = {
+    //   id: userId,
+    //   room: 1,
+    //   msg: msg,
+    // };
+    // ws.send(msg_payload);
+    // console.log(msg_payload);
 
-      setMsg({
-        id: userId,
-        room: 1,
-        content: ""
-      });
-      document.querySelector("#msg").value = "";
-    }
+    /*************** 채팅 박스 구현 ***************/
+    const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
+    const chat = document.createElement("div"); // 컴포 디비전 좌우 처리
+    chat.setAttribute("class", "chatText"); // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
+    // for
+    // if (msg.user === 'ADMIN') { // user 이름 받아서
+    chatBox.setAttribute("class", "myChat");
+    // } else {
+    //   chatbox.setAttribute('className', 'otherChat')
+    // }
+
+    chat.innerText = msg;
+    chatBox.appendChild(chat);
+    document.querySelector("#outputBox").appendChild(chatBox);
+    /*************** 채팅 박스 구현 ***************/
+
+    setMsg();
+    document.querySelector("#msg").value = "";
+  };
+
+  ws.onmessage = (e) => {
+    // console.log(e.data + '\n');
+    console.log(e);
+  }
+
+  const onOpen = (e) => {
+    const str = username + "님이 입장하셨습니다.";
+    ws.send(str);
+    console.log("onOpen");
+  };
+
+  const onClose = (e) => {
+    const str = username + "님이 방을 나가셨습니다.";
+    ws.send(str);
+    console.log("onClose");
+  };
+
+  ws.onopen = (ws, e) => {
+    onOpen(e);
+  };
+
+  ws.onclose = (ws, e) => {
+    onClose(e);
   };
 
   return (
@@ -137,10 +137,7 @@ const ChatPage = () => {
                       send(msg);
                     }
                   }}
-                  onChange={(e) => setMsg({
-                    ...msg,
-                    content: e.target.value
-                  })}
+                  onChange={(e) => setMsg(e.target.value)}
                 />
                 <input
                   type="button"

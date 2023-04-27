@@ -475,7 +475,7 @@ const addWishlist = () => {
 
 
         {/* 상세정보 탭 */}
-        <section style={{ maxWidth: '1400px', minHeight: '1000px', marginLeft: '300px', marginTop: '100px' }}>
+        <section style={{ maxWidth: '1400px', minHeight: '1000px', marginLeft: '170px', marginTop: '100px' }}>
           <Tabs
             id="fill-tab-example"
             fill
