@@ -65,11 +65,13 @@ const CarpoolBoardList = () => {
     const cookies = new Cookies();
     const _userData = cookies.get("_userData"); //유저 정보
     console.log("_userData : ", _userData);
-    const id = _userData.memberId; // 쿠키에서 아이디 값 가져오기
-    console.log("id : ", id);
 
-    if (!_userData || !_userData.memberId) {
-      alert("회원가입을 해주세요.");
+    if (!_userData) {
+      Swal.fire({
+        title: "로그인을 해주세요.",
+        icon: "error",
+      });
+      window.location.href = "/login";
       return;
     }
 
@@ -238,17 +240,17 @@ const CarpoolBoardList = () => {
                     {/* 파이어 베이스에서 받아온 값 호출하자종료  */}
 
                     <td style={{ textAlign: "center", width: "80px" }}>
-                        <Button
-                          style={{
-                            height: "20px",
-                            width: "65px",
-                            fontSize: "10px",
-                            backgroundColor: "black",
-                          }}
-                          onClick={() => handleSaveData(carpool.boardCpNo)}
-                        >
-                          함께하기
-                        </Button>
+                      <Button
+                        style={{
+                          height: "20px",
+                          width: "65px",
+                          fontSize: "10px",
+                          backgroundColor: "black",
+                        }}
+                        onClick={() => handleSaveData(carpool.boardCpNo)}
+                      >
+                        함께하기
+                      </Button>
                     </td>
                     <td style={{ textAlign: "center", width: "100px" }}>
                       {carpool.boardCpDate}

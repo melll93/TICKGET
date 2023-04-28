@@ -207,6 +207,16 @@ const CarpoolDetail = ({ match }) => {
 
   const submitComment = async () => {
     console.log("submitComment");
+
+    if (!_userData || !_userData.memberId) {
+      Swal.fire({
+        title: "로그인을 해주세요.",
+        icon: "error",
+      });
+      window.location.href = "/login";
+      return;
+    }
+
     const boardReply = {
       boardCpNo: boardCpNo,
       boardReplyCpMemId: _userData.memberId,
@@ -214,7 +224,10 @@ const CarpoolDetail = ({ match }) => {
     };
 
     if (!boardReplyCpContent) {
-      alert("내용을 입력해주세요.");
+      Swal.fire({
+        title: "내용을 입력해주세요.",
+        icon: "error",
+      });
       return;
     }
     try {
