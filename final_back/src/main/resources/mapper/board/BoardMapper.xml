@@ -15,8 +15,14 @@
         #{boardTgNo} , #{boardTgMemId} , #{boardTgTitle} , #{boardTgContent} , #{boardTgDate} ,
         #{boardTgViews} ) </insert>
     <!-- 게시슬 삭제 -->
-    <delete id="deleteBoardList" parameterType="TogetherDto"> delete from board_together where
-        board_tg_no=#{boardTgNo} </delete>
+    <delete id="deleteBoardList" parameterType="TogetherDto">   
+    DELETE board_together, board_reply_together
+    FROM board_together
+    LEFT JOIN board_reply_together
+    ON board_together.board_tg_no = board_reply_together.board_tg_no
+    WHERE board_together.board_tg_no = #{boardTgNo} 
+    </delete>
+
     <!-- 게시글 수정 -->
     <update id="updateBoardList" parameterType="TogetherDto"> update board_together set
         board_tg_title = #{boardTgTitle} , board_tg_content = #{boardTgContent}, board_tg_date =

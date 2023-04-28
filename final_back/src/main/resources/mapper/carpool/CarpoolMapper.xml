@@ -22,8 +22,13 @@
         #{boardCpViews} , #{boardCpPlace} ) </insert>
 
     <!-- 댓글 삭제 -->
-    <delete id="deleteCarpool" parameterType="CarpoolDto"> delete from board_carpool where
-        board_cp_no=#{boardCpNo} </delete>
+    <delete id="deleteCarpool" parameterType="CarpoolDto"> 
+    DELETE board_carpool, board_reply_carpool
+    FROM board_carpool
+    LEFT JOIN board_reply_carpool
+    ON board_carpool.board_cp_no = board_reply_carpool.board_cp_no
+    WHERE board_carpool.board_cp_no=#{boardCpNo}; 
+    </delete>
 
     <!-- 댓글 수정 -->
     <update id="updateCarpool" parameterType="CarpoolDto"> update board_carpool set board_cp_title =
