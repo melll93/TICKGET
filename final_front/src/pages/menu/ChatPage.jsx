@@ -17,7 +17,7 @@ const cookies = new Cookies();
  * @param msg 객체 리터럴로 user, msg, time 받아서 10~20개 정도 시간별 출력,
  * [{},{}, ...] for 문 돌려서 user가 본인이면 오른쪽, 아니라면 왼쪽 출력
  * chatBox 안에 chatText, profile, time
- ******************************************************************/
+******************************************************************/
 const ChatPage = () => {
   const _userData = cookies.get("_userData")
   const username = _userData && _userData.memberNickname;
@@ -31,42 +31,36 @@ const ChatPage = () => {
     content: ""
   });
 
-  useEffect(() => {
+  client.connect({}, () => {
+    client.subscribe('/sub/message/' + room, (e) => {
+      // console.log("event => ", e)
 
-    client.connect({}, () => {
-      console.log("stompTest connected");
+      console.log(e.body);
 
+      const jsonMsg = JSON.parse(e.body)
 
-      client.subscribe('/sub/message/' + room, (e) => {
-        // console.log("event => ", e)
+      const id = jsonMsg.id
+      const room = jsonMsg.room
+      const content = jsonMsg.content
 
-        console.log(e.body);
+      /*************** 채팅 박스 구현 ***************/
+      const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
+      const chat = document.createElement("div"); // 컴포 디비전 좌우 처리
+      chat.setAttribute("class", "chatText"); // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
+      // for
+      // if (msg.user === 'ADMIN') { // user 이름 받아서
+      chatBox.setAttribute("class", "myChat");
+      // } else {
+      //   chatbox.setAttribute('className', 'otherChat')
+      // }
 
-        const jsonMsg = JSON.parse(e.body)
-
-        const id = jsonMsg.id
-        const room = jsonMsg.room
-        const content = jsonMsg.content
-
-        /*************** 채팅 박스 구현 ***************/
-        const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
-        const chat = document.createElement("div"); // 컴포 디비전 좌우 처리
-        chat.setAttribute("class", "chatText"); // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
-        // for
-        // if (msg.user === 'ADMIN') { // user 이름 받아서
-        chatBox.setAttribute("class", "myChat");
-        // } else {
-        //   chatbox.setAttribute('className', 'otherChat')
-        // }
-
-        chat.innerText = id + ":" + content;
-        chatBox.appendChild(chat);
-        document.querySelector("#outputBox").appendChild(chatBox);
-        /*************** 채팅 박스 구현 ***************/
-      })
+      chat.innerText = id + ":" + content;
+      chatBox.appendChild(chat);
+      document.querySelector("#outputBox").appendChild(chatBox);
+      /*************** 채팅 박스 구현 ***************/
     })
-
   })
+
 
   // BE로 전송하는 메시지는 id로, 화면에 출력하는 메시지는 nickname으로
   const send = (msg) => {
