@@ -44,12 +44,12 @@ public class CarpoolController {
         return mList;
     }
 
-        // Carpool 게시판 조회(SelectAll)
-        @GetMapping("/getBoardCpNo")
-        public int getBoardCpNo() {
-            logger.info("CarpoolController : getBoardCpNo 호출");
-            return carpoolService.getBoardCpNo();
-        }
+    // Carpool 게시판 조회(SelectAll)
+    @GetMapping("/getBoardCpNo")
+    public int getBoardCpNo() {
+        logger.info("CarpoolController : getBoardCpNo 호출");
+        return carpoolService.getBoardCpNo();
+    }
 
     // Carpool 게시판 등록(Insert)
     @GetMapping("/insertCarpool")
@@ -86,11 +86,11 @@ public class CarpoolController {
         return result;
     }
 
-	// Carpool 조회수 증가시켜줘
-	@GetMapping("/carpoolViewUp")
-	public void viewUp(@RequestParam Map<String, Object> pMap) {
-		logger.info("CarpoolController : viewUp 호출");
+    // Carpool 조회수 증가시켜줘
+    @GetMapping("/carpoolViewUp")
+    public void viewUp(@RequestParam Map<String, Object> pMap) {
+        logger.info("CarpoolController : viewUp 호출");
         logger.error("pMap = {}", pMap);
-		carpoolService.viewUp(pMap);
-	}
+        carpoolService.viewUp(pMap);
+    }
 }

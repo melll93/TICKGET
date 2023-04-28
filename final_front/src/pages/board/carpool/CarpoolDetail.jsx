@@ -21,12 +21,12 @@ import {
   selectCarpoolReplyDB,
   updateCarpoolReplyDB,
 } from "../../../axios/board/carpool/CarpoolReplyLogic";
+import { searchById } from "../../../axios/member/member";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
+import UserProfile from "../../../components/UserProfile";
 import { ContainerDiv } from "../../../styles/formStyle";
 import MapContainer from "../market/Map/MapContainer";
-import UserProfile from "../../../components/UserProfile";
-import { searchById } from '../../../axios/member/member';
 
 /* ********************** */
 const firebaseConfig = {
@@ -180,7 +180,7 @@ const CarpoolDetail = ({ match }) => {
       } else {
         console.log("카풀 게시글 조회 실패");
       }
-      searchById(jsonDoc.boardCpMemId).then(setSellerinfo)
+      searchById(jsonDoc.boardCpMemId).then(setSellerinfo);
     };
 
     asyncDB();
