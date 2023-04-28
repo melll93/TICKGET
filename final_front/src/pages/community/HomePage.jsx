@@ -46,14 +46,11 @@ const HomePage = () => {
     const festivalHitList = async () => {
       const festMHit = true; // festHit 변수에 true 값을 할당하여 HIT가 높은 순으로 데이터를 가져옴
       const result = await festivalHitListDB(festMHit); // FestivalHitListDB 함수를 호출하여 데이터를 가져옴
-      console.log(result)
+      console.log(result);
       setFestivalHitList(result); // 가져온 데이터를 상태값에 할당
     };
     festivalHitList(); // 데이터 가져오기
   }, []);
-
-
-
 
   /* ******************************************
    *****메인화면 좌측 하단 테이블 (Together) *****
@@ -64,11 +61,15 @@ const HomePage = () => {
     /*  console.log(res.data); */
     if (res.data && Array.isArray(res.data)) {
       setBoardList(res.data);
-    } else { console.log("부서목록 조회 실패"); }
+    } else {
+      console.log("부서목록 조회 실패");
+    }
   };
-  useEffect(() => { selectBoardList(); }, []);
+  useEffect(() => {
+    selectBoardList();
+  }, []);
 
-  const boardListProps = boardList.map(item => {
+  const boardListProps = boardList.map((item) => {
     return {
       no: item.boardTgNo,
       title: item.boardTgTitle,
@@ -79,8 +80,8 @@ const HomePage = () => {
   });
 
   /* ******************************************
-    *****메인화면 좌측 하단 테이블 (Carpool) *****
-    ********************************************  */
+   *****메인화면 좌측 하단 테이블 (Carpool) *****
+   ********************************************  */
   const [carpoolList, setCarpoolList] = useState([]);
   const selectCarpoolList = async () => {
     const res = await selectCarpoolDB();
@@ -90,8 +91,10 @@ const HomePage = () => {
       console.log("부서목록 조회 실패");
     }
   };
-  useEffect(() => { selectCarpoolList(); }, []);
-  const carpoolListProps = carpoolList.map(item => {
+  useEffect(() => {
+    selectCarpoolList();
+  }, []);
+  const carpoolListProps = carpoolList.map((item) => {
     return {
       no: item.boardCpNo,
       title: item.boardCpTitle,
@@ -101,10 +104,9 @@ const HomePage = () => {
     };
   });
 
-
   /* ******************************************
-    *****메인화면 좌측 하단 테이블 (Market) *****
-    ********************************************  */
+   *****메인화면 좌측 하단 테이블 (Market) *****
+   ********************************************  */
 
   const [mkboards, setMkboards] = useState([]);
   const selectMkBoardList = async () => {
@@ -115,8 +117,10 @@ const HomePage = () => {
       console.log("부서목록 조회 실패");
     }
   };
-  useEffect(() => { selectMkBoardList(); }, []);
-  const mkboardsProps = mkboards.map(item => {
+  useEffect(() => {
+    selectMkBoardList();
+  }, []);
+  const mkboardsProps = mkboards.map((item) => {
     return {
       no: item.boardMkNo,
       title: item.boardMkTitle,
@@ -126,21 +130,23 @@ const HomePage = () => {
     };
   });
 
-
   /* ******************************************
-    ***** WHAT'S HOT 호버이벤트 *****
-    ********************************************  */
+   ***** WHAT'S HOT 호버이벤트 *****
+   ********************************************  */
   const [hovered, setHovered] = useState(Array(5).fill(false)); // 초기값: 5개의 요소에 대해 false
-
-
-
 
   return (
     <>
       <Header />
       <Sidebar />
       <div className="center">
-        <div style={{ margin: "40px 0px 0px 0px", width: "1000px", height: "1000px" }}>
+        <div
+          style={{
+            margin: "40px 0px 0px 0px",
+            width: "1000px",
+            height: "1000px",
+          }}
+        >
           <CarouselList festivalToday={festivalToday} />
         </div>
 
@@ -151,8 +157,21 @@ const HomePage = () => {
             paddingBottom: "50px",
           }}
         >
-          <div style={{ textAlign: "center", fontFamily: 'Nanum-Gothic', fontWeight: 'bold' }}>
-            <h1 style={{ fontFamily: 'Nanum-Gothic', fontWeight: 'bold', marginTop: '-400px', marginBottom: '50px' }}>
+          <div
+            style={{
+              textAlign: "center",
+              fontFamily: "Nanum-Gothic",
+              fontWeight: "bold",
+            }}
+          >
+            <h1
+              style={{
+                fontFamily: "Nanum-Gothic",
+                fontWeight: "bold",
+                marginTop: "-400px",
+                marginBottom: "50px",
+              }}
+            >
               <span>WHAT'S HOT</span>
             </h1>
             {festivalHitList.slice(0, 5).map((festival, i) => (
@@ -161,29 +180,30 @@ const HomePage = () => {
                   style={{
                     position: "relative",
                     display: "inline-block",
-                    marginRight: "20px"
+                    marginRight: "20px",
                   }}
                 >
-
-                  <div style={{
-                    position: "absolute",
-                    top: "-20px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: "40px",
-                    height: "40px",
-                    border: '3px solid white',
-                    borderRadius: "50%",
-                    backgroundColor: "rgb(236,125,40)",
-                    color: "white",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontWeight: "bold",
-                    fontSize: "1.3rem",
-                    visibility: hovered[i] ? "hidden" : "visible", // 순위가 보이지 않도록 CSS 스타일 수정
-                    transition: "visibility 0.01s ease-in-out"
-                  }}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "-20px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: "40px",
+                      height: "40px",
+                      border: "3px solid white",
+                      borderRadius: "50%",
+                      backgroundColor: "rgb(236,125,40)",
+                      color: "white",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      fontWeight: "bold",
+                      fontSize: "1.3rem",
+                      visibility: hovered[i] ? "hidden" : "visible", // 순위가 보이지 않도록 CSS 스타일 수정
+                      transition: "visibility 0.01s ease-in-out",
+                    }}
+                  >
                     {i + 1}
                   </div>
                   <Card.Img
@@ -193,17 +213,17 @@ const HomePage = () => {
                       width: "250px",
                       height: "300px",
                       filter: hovered[i] ? "brightness(40%)" : "",
-                      transition: "filter 0.2s ease-in-out"
+                      transition: "filter 0.2s ease-in-out",
                     }}
                     onMouseEnter={() => {
-                      setHovered(prevState => {
+                      setHovered((prevState) => {
                         const newState = [...prevState];
                         newState[i] = true;
                         return newState;
                       });
                     }}
                     onMouseLeave={() => {
-                      setHovered(prevState => {
+                      setHovered((prevState) => {
                         const newState = [...prevState];
                         newState[i] = false;
                         return newState;
@@ -214,28 +234,40 @@ const HomePage = () => {
                   {hovered[i] && (
                     <div
                       style={{
-                        textAlign: 'center',
+                        textAlign: "center",
                         position: "absolute",
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
                         color: "white",
-                        borderRadius: "5px"
+                        borderRadius: "5px",
                       }}
                     >
-                      <p style={{ fontWeight: "bold", fontSize: '0.9rem', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                      <p
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: "0.9rem",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
                         {festival.festMName}
                       </p>
-                      <p style={{ fontSize: '0.7rem' }}>{festival.festMStart}</p>
-                      <p style={{ fontSize: '0.8rem' }}>{festival.festMLoc}</p>
+                      <p style={{ fontSize: "0.7rem" }}>
+                        {festival.festMStart}
+                      </p>
+                      <p style={{ fontSize: "0.8rem" }}>{festival.festMLoc}</p>
                     </div>
                   )}
                 </div>
               </Link>
             ))}
           </div>
-          <div style={{ marginTop: '250px', textAlign: "center" }}>
-            <img src="./images_key/앨리스.png" style={{ width: "100%", height: 'auto' }} />
+          <div style={{ marginTop: "250px", textAlign: "center" }}>
+            <img
+              src="./images_key/앨리스.png"
+              style={{ width: "100%", height: "auto" }}
+            />
           </div>
         </section>
 
@@ -243,106 +275,112 @@ const HomePage = () => {
           className="home_total_sec"
           style={{ backgroundColor: "white" }}
         >
-          <div className="total_section" style={{ display: "flex", marginTop: '150px' }}>
-
+          <div
+            className="total_section"
+            style={{ display: "flex", marginTop: "150px" }}
+          >
             {/* 메인하단 최신게시글 */}
-<<<<<<< HEAD
-              <div className="mainpage box" style={{flex: "1",  padding:'20px 0px 0px 170px'}}> 
-                <div className="mainpage div div1" >
-          <h4 style={{fontWeight:'bold', textAlign:'center'}}><i class="bi bi-clipboard"></i>{" "}최근 게시글</h4>
-                  
-    <Tabs defaultActiveKey="market" id="fill-tab-example" className="mb-3" fill style={{fontFamily:'Nanum-Gothic', fontWeight:'bold', marginTop:'20px'}}>
-      <Tab eventKey="market" title="MARKET">
-        <BasicTable items={mkboardsProps} /> 
-      </Tab>
-      <Tab eventKey="together" title="TOGETHER">
-        <BasicTable items={boardListProps} />
-      </Tab>
-      <Tab eventKey="carpool" title="CARPOOL">
-        <BasicTable items={carpoolListProps}/> 
-      </Tab>
-      <style>
-    {`
-=======
-            <div className="mainpage box" style={{ flex: "1", padding: '20px 0px 0px 170px' }}>
-              <div className="mainpage div div1" >
-                <h4 style={{ fontWeight: 'bold', textAlign: 'center' }}><i className="bi bi-clipboard"></i>{" "}최근 게시글</h4>
+            <div
+              className="mainpage box"
+              style={{ flex: "1", padding: "20px 0px 0px 170px" }}
+            >
+              <div className="mainpage div div1">
+                <h4 style={{ fontWeight: "bold", textAlign: "center" }}>
+                  <i class="bi bi-clipboard"></i> 최근 게시글
+                </h4>
 
-                <Tabs defaultActiveKey="together" id="fill-tab-example" className="mb-3" fill style={{ fontFamily: 'Nanum-Gothic', fontWeight: 'bold', marginTop: '20px' }}>
+                <Tabs
+                  defaultActiveKey="market"
+                  id="fill-tab-example"
+                  className="mb-3"
+                  fill
+                  style={{
+                    fontFamily: "Nanum-Gothic",
+                    fontWeight: "bold",
+                    marginTop: "20px",
+                  }}
+                >
+                  <Tab eventKey="market" title="MARKET">
+                    <BasicTable items={mkboardsProps} />
+                  </Tab>
                   <Tab eventKey="together" title="TOGETHER">
                     <BasicTable items={boardListProps} />
                   </Tab>
                   <Tab eventKey="carpool" title="CARPOOL">
                     <BasicTable items={carpoolListProps} />
                   </Tab>
-                  <Tab eventKey="market" title="MARKET">
-                    <BasicTable items={mkboardsProps} />
-                  </Tab>
                   <style>
                     {`
->>>>>>> 9aaf5f275c42ed3b49fe339fb856430f5fb1b2ad
       .nav-link.unselectable {
         color: purple;
       }
     `}
                   </style>
                 </Tabs>
-
               </div>{" "}
             </div>
             {/* 메인하단 최신게시글 */}
-
-
-
 
             {/* 지역별 추천 */}
             <div
               className="top_sec_div"
               style={{
                 marginTop: "50px",
-                marginBottom: "50px", textAlign: "center", flex: "1",
-                paddingRight: '100px', display: "inline-block"
+                marginBottom: "50px",
+                textAlign: "center",
+                flex: "1",
+                paddingRight: "100px",
+                display: "inline-block",
               }}
             >
-              <h4 style={{ fontWeight: 'bold' }}><i className="bi bi-command"></i>{" "}연계 추천 사이트</h4>
-              <div className="card" style={{ display: "inline-block", marginRight: '5px' }}>
+              <h4 style={{ fontWeight: "bold" }}>
+                <i className="bi bi-command"></i> 연계 추천 사이트
+              </h4>
+              <div
+                className="card"
+                style={{ display: "inline-block", marginRight: "5px" }}
+              >
                 <img
                   src="./images_key/travelgajae.jpg"
-                  style={{ width: "200px", height: '250px', margin: "15px" }}
+                  style={{ width: "200px", height: "250px", margin: "15px" }}
                   alt="사진1"
                 />
                 <div className="card-body">
                   <h5 className="card-title">[숙박]트래블가재</h5>
-                  <a href="#" className="card-text">http://travelgajae.com</a>
+                  <a href="#" className="card-text">
+                    http://travelgajae.com
+                  </a>
                 </div>
               </div>
-
-
-
-
 
               <div className="card" style={{ display: "inline-block" }}>
                 <img
                   src="./images_key/triptoday.png"
-                  style={{ width: "200px", height: '250px', margin: "15px" }}
+                  style={{ width: "200px", height: "250px", margin: "15px" }}
                   alt="사진1"
                 />
                 <div className="card-body">
                   <h5 className="card-title">[숙박]오늘의여행 </h5>
-                  <a href="#" className="card-text">http://triptoday.com </a>
+                  <a href="#" className="card-text">
+                    http://triptoday.com{" "}
+                  </a>
                 </div>
               </div>
 
-              <div className="card" style={{ display: "inline-block", marginRight: '5px' }}>
+              <div
+                className="card"
+                style={{ display: "inline-block", marginRight: "5px" }}
+              >
                 <img
                   src="./images_key/khsrcarecenter.jpg"
-                  style={{ width: "200px", height: '250px', margin: "15px" }}
+                  style={{ width: "200px", height: "250px", margin: "15px" }}
                   alt="사진1"
                 />
                 <div className="card-body">
                   <h5 className="card-title"> [숙박]KH요양원 </h5>
-                  <a href="#" className="card-text">http://srcarecenter.com </a>
-
+                  <a href="#" className="card-text">
+                    http://srcarecenter.com{" "}
+                  </a>
                 </div>
               </div>
             </div>
