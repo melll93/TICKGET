@@ -9,16 +9,18 @@ import ChatList from "../../components/chat/ChatList";
 import { Cookies } from "react-cookie"
 import { Stomp } from "@stomp/stompjs"
 
-const sock = new SockJS("http://localhost:8888/stompTest");
-const client = Stomp.over(sock);
+// const sock = new SockJS("http://localhost:8888/stompTest");
+// const client = Stomp.over(sock);
 
 const cookies = new Cookies();
+
+
 /******************************************************************
  * @param msg 객체 리터럴로 user, msg, time 받아서 10~20개 정도 시간별 출력,
  * [{},{}, ...] for 문 돌려서 user가 본인이면 오른쪽, 아니라면 왼쪽 출력
  * chatBox 안에 chatText, profile, time
 ******************************************************************/
-const ChatPage = () => {
+const ChatPage = ({ client }) => {
   const _userData = cookies.get("_userData")
   const username = _userData && _userData.memberNickname;
   const userId = _userData && _userData.memberId
@@ -64,18 +66,18 @@ const ChatPage = () => {
 
   // BE로 전송하는 메시지는 id로, 화면에 출력하는 메시지는 nickname으로
   const send = (msg) => {
-    console.log(sock.readyState);
-    if (sock.readyState === 1) {
+    // console.log(sock.readyState);
+    // if (sock.readyState === 1) {
 
-      client.send('/pub', {}, JSON.stringify(msg));
+    client.send('/pub', {}, JSON.stringify(msg));
 
-      setMsg({
-        id: userId,
-        room: 1,
-        content: ""
-      });
-      document.querySelector("#msg").value = "";
-    }
+    setMsg({
+      id: userId,
+      room: 1,
+      content: ""
+    });
+    document.querySelector("#msg").value = "";
+    // }
   };
 
   return (

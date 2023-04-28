@@ -12,12 +12,28 @@ import rootReducer from "./redux/rootReducer";
 import { Provider } from "react-redux";
 import "react-quill/dist/quill.snow.css";
 import marketImageUploader from "./axios/board/market/mkImageUploader";
+import { Cookies } from "react-cookie";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
+import { chat } from "./util/chat";
 
 const store = legacy_createStore(rootReducer);
 // console.log(store.getState());
 // store에 있는 초기 상태 정보 출력
 // store.dispatch();
 console.log(store.getState());
+
+const cookies = new Cookies();
+const _userData = cookies.get("_userData");
+let client;
+
+// if (_userData) {
+const sock = new SockJS("http://localhost:8888/stompTest");
+client = Stomp.over(sock);
+const room = 1;
+
+chat(client, room);
+// }
 
 //마켓 게시판 이미지업로더 객체 생성
 const mkImageUploader = new marketImageUploader();
@@ -27,7 +43,7 @@ root.render(
   <>
     <Provider store={store}>
       <BrowserRouter>
-        <App mkImageUploader={mkImageUploader} />
+        <App mkImageUploader={mkImageUploader} client={client} />
       </BrowserRouter>
     </Provider>
   </>

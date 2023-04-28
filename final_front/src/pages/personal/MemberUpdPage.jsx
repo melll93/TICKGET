@@ -188,6 +188,15 @@ const MemberUpdPage = () => {
     console.log('DB : ' + data);
 
     if (jsonDoc && jsonDoc.length > 0) {
+      console.log('중복되는 이메일 존재');
+      setComment({ ...comment, [key]: <span style={{ color: 'red' }}>이미 사용 중인 {key} 입니다. 변경해 주세요.</span> });
+  } else {
+      console.log('이메일 변경 가능');
+      setComment({ ...comment, [key]: <span style={{ color: 'rgb(80, 50, 200)' }}>변경 가능한 {key} 입니다.</span> });
+  }
+};
+  
+/*     if (jsonDoc && jsonDoc.length > 0) {
         console.log('이메일 중복');
         if (key === 'email') {
             console.log('중복된 이메일 존재');
@@ -199,7 +208,7 @@ const MemberUpdPage = () => {
     else {
         console.log('이메일 변경 가능');
     }
-  }
+  } */
 
   const handleUpdate = async (e) => {
     e.preventDefault();

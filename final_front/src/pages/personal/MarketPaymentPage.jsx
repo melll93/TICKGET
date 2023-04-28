@@ -46,7 +46,7 @@ import Footer from "../../components/Footer";
 
 
     setMkpDetails ({
-  /*    board_mk_no : jsonDoc[0].boardMkNo,  글 번호 사용 보류*/
+      no: jsonDoc[0].boardMkNo,  //글 번호 사용 보류*/
       url : jsonDoc[0].boardMkFileurl,
       title : jsonDoc[0].boardMkTitle,
       seat : jsonDoc[0].mkTicketSeat,

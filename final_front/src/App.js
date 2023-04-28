@@ -44,7 +44,7 @@ import MemberUpdPage from "./pages/personal/MemberUpdPage";
 import FireTest from "./pages/board/carpool/FireTest";
 import SocialRedirect from "./pages/member/SocialRedirect";
 
-function App({ mkImageUploader }) {
+function App({ mkImageUploader, client }) {
   const [board, setBoard] = useState();
   const [carpool, setCarpool] = useState();
   const [user, setUser] = useState();
@@ -97,7 +97,11 @@ function App({ mkImageUploader }) {
         <Route path="/carpool" exact={true} element={<CarpoolPage />} />
         <Route path="/market" exact={true} element={<MarketPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
-        <Route path="/chat" exact={true} element={<ChatPage />} />
+        <Route
+          path="/chat"
+          exact={true}
+          element={<ChatPage client={client} />}
+        />
 
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />

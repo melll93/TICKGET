@@ -38,7 +38,7 @@ const PaymentPage = ({orderDetail}) => {
   console.log(orderDetail); 
   const navigate = useNavigate()
   let totalPrice = orderDetail.amount*orderDetail.price
-  let {no}=useParams()
+  /* let {no}=useParams() */
 /*   const date = orderDetail.date.split("T")[0]
   const time = orderDetail.date.split("T")[1].split(":")[0]
   console.log(time)
@@ -52,7 +52,7 @@ const paymentData={
   orderId:'x4PBm2QfOA5oiyJNd638T',    //주문번호
   orderName:orderDetail.title,  //주문명
   customerName:_userData.memberName,     //구매자 이름
-  no,      
+  no:orderDetail.no,      
 }
 
 

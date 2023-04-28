@@ -1,4 +1,3 @@
-  /* 은영 결제창 테스트중 */
   import React, { useEffect, useState } from 'react'
   import { Link, useLocation, useParams, useSearchParams } from "react-router-dom"
   import Header from '../../components/Header'
@@ -14,6 +13,7 @@ import Footer from '../../components/Footer'
 
     /* 결제 처리에 필요한 회원정보 */ 
     const _userData = cookies.get("_userData");
+    const festTcAmt = cookies.get("tk_amount");
     
     let member_no;
     let member_name = '';
@@ -22,7 +22,6 @@ import Footer from '../../components/Footer'
       member_no = _userData.memberNo;
       member_name = _userData.memberName;
       member_email = _userData.memberEmail;
-      
     }
 
 
@@ -31,17 +30,26 @@ import Footer from '../../components/Footer'
       
       const orderid = searchParams.get("orderId")
       console.log(orderid) //주문번호
-      const price = Number(searchParams.get("amount")).toLocaleString()
+      const price = searchParams.get("amount")
       console.log(price) // 가격
       const no = parseInt(festMId.substring(1))
-      console.log(no) //글번호
+      console.log(no) //글번호   - 은영 :NaN
+      console.log(festMId)    
 
       
+/* 
+은영 수정 중......
+
+
+*/
+
+
 
       //마켓 게시판 게시글일 경우 판매완료 처리 - 결제내역 추가
       useEffect(() => {
         const mkSell = async () => {
-          const board = {
+if (no){
+         const board = {
             boardMkNo: no,
           };
           const res = await mk_boardDetailDB(board);
@@ -68,10 +76,9 @@ import Footer from '../../components/Footer'
           await wishlistSelDelDB(deleteWishlist)
 
 
-
-          const payment = { //결제내역 추가
+         const payment = { //결제내역 추가
             paymentId: 0,
-            paymentOrderId: orderid,
+            paymentOrderId: orderid+jsonDoc[0].boardMkNo,
             paymentOrderName: jsonDoc[0].boardMkTitle,
             paymentCount: jsonDoc[0].mkTicketCount,
             paymentPrice: jsonDoc[0].mkTicketPrice,
@@ -80,13 +87,34 @@ import Footer from '../../components/Footer'
             memberNo: member_no,
             memberName: member_name,
             memberEmail: member_email,
-          };
+          }; 
           await paymentInsert(payment);
+          
+
+        }else{
+
+
+          const payment2 = { //결제내역 추가
+            paymentOrderId: orderid+festMId+member_no,
+            paymentOrderName: festMId,
+            paymentCount: festTcAmt,
+             paymentPrice: price,
+            boardMkNo: '',
+            memberNo: member_no,
+            memberName: member_name,
+            memberEmail: member_email,
+          };
+          await paymentInsert(payment2);
+          console.log(payment2)
         };
-        mkSell();
+      }
+         mkSell(); 
       }, []);
 
-    return (
+
+
+
+      return (
       <>
           <Header />
               <Sidebar />

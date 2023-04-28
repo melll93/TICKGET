@@ -1,4 +1,5 @@
 import { loadTossPayments } from "@tosspayments/payment-sdk";
+import { paymentInsert } from "../axios/payment/paymentLogic";
 
 /* const paymentData = {
   amount,
