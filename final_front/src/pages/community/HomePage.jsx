@@ -247,15 +247,15 @@ const HomePage = () => {
                 <div className="mainpage div div1" >
           <h4 style={{fontWeight:'bold', textAlign:'center'}}><i class="bi bi-clipboard"></i>{" "}최근 게시글</h4>
                   
-    <Tabs defaultActiveKey="together" id="fill-tab-example" className="mb-3" fill style={{fontFamily:'Nanum-Gothic', fontWeight:'bold', marginTop:'20px'}}>
+    <Tabs defaultActiveKey="market" id="fill-tab-example" className="mb-3" fill style={{fontFamily:'Nanum-Gothic', fontWeight:'bold', marginTop:'20px'}}>
+      <Tab eventKey="market" title="MARKET">
+        <BasicTable items={mkboardsProps} /> 
+      </Tab>
       <Tab eventKey="together" title="TOGETHER">
         <BasicTable items={boardListProps} />
       </Tab>
       <Tab eventKey="carpool" title="CARPOOL">
         <BasicTable items={carpoolListProps}/> 
-      </Tab>
-      <Tab eventKey="market" title="MARKET">
-        <BasicTable items={mkboardsProps} /> 
       </Tab>
       <style>
     {`

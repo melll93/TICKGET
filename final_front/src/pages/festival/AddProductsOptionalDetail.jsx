@@ -15,10 +15,10 @@ const AddProductsOptionalDetail = ({ festTcNo, setFestOriginPsUrl, festPsNo, fes
 console.log(festTcTime); */
 /* console.log(festPsNo); */
 /* console.log(festOrginPsUrl); */
-  const[festDetailCasting, setFestDetailCasting] = useState()
-  const[festDetailCrew, setFestDetailCrew] = useState()
-  const[festDetailRuntime, setFestDetailRuntime] = useState(0)
-  const[festDetailAge, setFestDetailAge] = useState(0)
+  const[festDetailCasting, setFestDetailCasting] = useState(festDtCasting)
+  const[festDetailCrew, setFestDetailCrew] = useState(festDtCrew)
+  const[festDetailRuntime, setFestDetailRuntime] = useState(festDtRuntime)
+  const[festDetailAge, setFestDetailAge] = useState(festDtAge)
 
   const[festPsUrl, setFestPsUrl] = useState()
   const imgRef = useRef()
@@ -50,6 +50,52 @@ console.log(festTcTime); */
 
 };
 
+/* fest_detail Update  */
+const festivalDetailUpdate = async() => {
+  const festival={
+    festMId,
+    festDtCasting: festDetailCasting,
+    festDtCrew: festDetailCrew,
+    festDtRuntime: festDetailRuntime,
+    festDtAge: festDetailAge
+  }
+  try {
+  const res = await festivalDetailUpdateDB(festival)
+    Swal.fire({
+      title:'상품 수정 완료',
+      icon:'success'
+    })
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
+
+/* fest_poster */
+const saveFestPoster=async()=>{
+  const festival = {
+    festMId,
+    festPsUrl,
+  };
+  try {
+    const res = await saveFestPsUrlDB(festival);
+    const newPsPoster = [...festOrginPsUrl,festival.festPsUrl]
+    setFestOriginPsUrl(newPsPoster)
+    /* console.log(festival); */
+alert('추가완료')
+if (!res.data) {
+} else {
+}    
+} catch (error) {
+}
+};
+
+
+
+
       /* fest_detail 추가정보 입력 */
       const inputCasting = useCallback((e) => {
         setFestDetailCasting (e)
@@ -65,50 +111,6 @@ console.log(festTcTime); */
       },[])
       
       
-
-/* fest_detail Update  */
-const festivalDetailUpdate = async() => {
-
-  const festival={
-    festMId,
-    festDtCasting: festDetailCasting,
-    festDtCrew: festDetailCrew,
-    festDtRuntime: festDetailRuntime,
-    festDtAge: festDetailAge,
-  }   
-  try {
-    const res = await festivalDetailUpdateDB(festival)
-    Swal.fire({
-      title:'상품 수정 완료',
-      icon:'success'
-    })
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
-/* fest_poster */
-const saveFestPoster=async()=>{
-  const festival = {
-    festMId,
-    festPsUrl,
-  };
-  try {
-    const res = await saveFestPsUrlDB(festival);
-    const newPsPoster = [...festOrginPsUrl,festival.festPsUrl]
-    setFestOriginPsUrl(newPsPoster)
-/* console.log(festival); */
-alert('추가완료')
-if (!res.data) {
-} else {
-}    
-} catch (error) {
-}
-};
-
-
-
 
 
 const deleteFestPsUrl = async ({i}) => {

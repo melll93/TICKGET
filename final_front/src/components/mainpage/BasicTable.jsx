@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 
 const BasicTable = ({ items }) => {
   // console.log('베이직테이블'+items)
+  console.log(items)
   return (
     <Table hover>
 <tbody>

@@ -101,15 +101,18 @@ console.log(festMData)
 const decreaseSeat = () => {
     const aaa = festMData.seatAvailable;
     const updatedSeatAvailable = aaa- festSelectedTkamt ;
-    const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcTime}-${selectedFestTcType}/seatAvailable`);
-    seatsRef.set(updatedSeatAvailable);
+    if(updatedSeatAvailable>0){
+      const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcTime}-${selectedFestTcType}/seatAvailable`);
+      seatsRef.set(updatedSeatAvailable);
+    navigate("/payment2/" + festMId);
+
+    }else{alert('선택한 좌석이 매진입니다.')}
 }; 
 
 
 const researveBtnClicked=()=>{
   if(selectedFestTcPrice&&date&&festSelectedTkamt){
     decreaseSeat()
-    navigate("/payment2/" + festMId);
   }else{
        alert('선택된 날짜 | 좌석 | 수량이 없습니다.')
   }
@@ -428,7 +431,7 @@ console.log(festival)
               <div className="product_detail_info">
                 <div className="product_detail_head">
                   <h3 className="product_title">{festival[0].festMName}</h3>
-                  <p className="product_sub_title">subtitle</p>
+   {/*                <p className="product_sub_title">subtitle</p> */}
                 </div>
                 <div className="product_info"></div>
                 <ul className="product_lnfo_list_col2">
@@ -485,7 +488,10 @@ console.log(festival)
 
           <section>
             <div className="midContainerCalendarAndRestSeats">
+            <p style={{color:'red', marginTop:'25px'}}><strong>[날짜 선택]</strong></p>
+
               <span className="products_calendar">
+
                 <Calendar value={date} onChange={handleDateChange}/>
               </span>
               <div className="calendarands1" style={{borderLeft:'1px dotted gray', borderRight:'1px dotted gray' , padding:'20px'}}>
@@ -517,13 +523,9 @@ null
               
               
               <div className="calendarands2">
-                <div style={{border:'1px solid red', margin: '10px', alignItems:'center'}}>
-                <h4 style={{color:'red', textDecoration:'underline'}}>[선택 좌석]</h4> {selectedFestTcType}  -   {selectedFestTcPrice}  원
-                </div>
 
-                <div style={{border:'1px solid red', margin: '10px', alignItems:'center'}}>
-                <h4 style={{color:'red', textDecoration:'underline'}}>[잔여좌석]</h4> 
-              
+                <div style={{border:'1px dotted red', borderRadius:'20px', margin: '15px', alignItems:'center'}}>
+                <p style={{color:'red'}}><strong>[잔여 좌석]</strong></p>
               
                 {/* 파이어 베이스 - 좌석정보*/}
 
@@ -532,10 +534,8 @@ null
                 <div>
       {festMData && (
         <div>
-          <div>{festMData.time}</div>
-          <div>{festMData.type}</div>
-          <div>{festMData.price}원</div>
-         <div>{festMData.seatAvailable}/{festMData.seatTotal} </div>
+          <div>선택 좌석 정보 : {festMData.time} - {festMData.type}</div>
+         <div> <h3>{festMData.seatAvailable} / {festMData.seatTotal} 석</h3></div>
         </div>
       )}
     </div>

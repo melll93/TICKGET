@@ -10,9 +10,13 @@ import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
 import Swal from "sweetalert2";
+import { Cookies } from "react-cookie";
 
 
 /* ========================= 상품 자체 등록 ============================ */
+
+const cookies = new Cookies();
+const _userData = cookies.get("_userData"); //유저 정보
 
 const AddProducts = () => {
   const navigate = useNavigate();
@@ -75,6 +79,7 @@ const festivalInsert = async () => {
   if (festTitle == null || festTitle === '' || festLocation == null ||  festLocation === '' ||  festCategory == null || festCategory === '' ||  festStartday == null  || festStartday === '' || 
     festEndday == null  || festEndday === '' ||   festArea == null  || festArea === '' ||   festImageUrl == null  || festImageUrl === ''  ) {  alert('빈칸 없이 작성해주세요. ');  } else {
     const festival = {
+      festMAuthor:_userData.memberId,
       festMName: festTitle,
       festMLoc: festLocation,
       festMGenre: festCategory,
