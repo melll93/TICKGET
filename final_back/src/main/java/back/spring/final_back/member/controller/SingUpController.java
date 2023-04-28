@@ -79,12 +79,12 @@ public class SingUpController {
 	}
 
 	// Delete
-	@GetMapping("memberDelete")
-	public String memberDelete(@RequestParam Map<String, Object> pMap) {
+	@PostMapping("memberDelete")
+	public int memberDelete(@RequestBody Map<String, Object> pMap) {
 		log.info("memberDelete 확인");
-		log.info(pMap.toString());
+		log.info(pMap+"");
 		int result = 0;
 		result = signUpService.memberDelete(pMap);
-		return String.valueOf(result);
+		return result;
 	}
 }

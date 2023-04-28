@@ -165,6 +165,8 @@
 		DELETE FROM member
 		WHERE
 		member_id = #{memberId}
+		AND
+		member_mobile = #{memberMobile}
 	</delete>
 
 </mapper>
