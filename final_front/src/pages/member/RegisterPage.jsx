@@ -130,7 +130,7 @@ const RegisterPage = ({ authLogic }) => {
     setMemInfo({ ...memInfo, [id]: value });
   }
 
-  // 가입 시 아이디, 이메일, 닉네임 중복 확인 검사
+  // 가입 시 아이디, 이메일, 닉네임 DB 중복 확인 검사
   const overlap = async (key) => {
     console.log('중복 확인 : ' + key);
     let params;
@@ -157,31 +157,41 @@ const RegisterPage = ({ authLogic }) => {
     const jsonDoc = JSON.parse(data);
     console.log('DB : ' + data);
 
+    // 중복 비교 후 사용 여부 출력
     if (jsonDoc && jsonDoc.length > 0) {
-        console.log('중복되는 값이 있습니다');
-        if (key === 'id') {
-            console.log('중복 아이디 존재');
-            Swal.fire({
-              title:'중복된 아이디가 존재합니다. 다른 아이디를 입력해주세요.',
-              })
-        }
-        else if (key === 'email') {
-            console.log('중복 이메일 존재');
-            Swal.fire({
-              title:'중복된 이메일이 존재합니다. 다른 이메일을 입력해주세요.',
-              })
-        }
-        else if (key === 'nickname') {
-            console.log('중복 닉네임 존재');
-            Swal.fire({
-              title:'중복된 닉네임이 존재합니다. 다른 닉네임을 입력해주세요.',
-              })
-        }
+      console.log('DB 중복값 O : 사용 불가');
+      setComment({ ...comment, [key]: <span style={{ color: 'red' }}>이미 사용 중인 {key} 입니다. 변경해 주세요.</span> });
+    } else {
+      console.log('DB 중복값 X : 사용 가능');
+      setComment({ ...comment, [key]: <span style={{ color: 'rgb(80, 50, 200)' }}>사용 가능한 {key} 입니다.</span> });
     }
-    else {
-        console.log('중복되는 값이 없습니다');
+  };
+  
+      
+/*     if (jsonDoc && jsonDoc.length > 0) {
+      if (key === 'id') {
+        console.log('중복 아이디 존재');
+        Swal.fire({
+          title:'중복된 아이디가 존재합니다. 다른 아이디를 입력해주세요.',
+        }); 
+      } else if (key === 'email') {
+        console.log('중복 이메일 존재');
+        Swal.fire({
+          title:'중복된 이메일이 존재합니다. 다른 이메일을 입력해주세요.',
+        });
+      } else if (key === 'nickname') {
+        console.log('중복 닉네임 존재');
+        Swal.fire({
+          title:'중복된 닉네임이 존재합니다. 다른 닉네임을 입력해주세요.',
+        });
+      }
+      setComment({ ...comment, [key]: '' });
+    } else {
+      console.log('사용 가능');
+      setComment({ ...comment, [key]: <span style={{ color: 'rgb(80, 50, 200)' }}>사용 가능한 {key} 입니다.</span> });
     }
-}
+  }; */
+
 // 회원 가입 유효성 검사
   const validate = (key, e) => {
     let result;
@@ -314,6 +324,7 @@ const RegisterPage = ({ authLogic }) => {
               <MyInput type="text" id="id" placeholder="아이디를 입력해 주세요" 
                 onChange={(e) => { changeMemInfo(e); validate('id', e); }} />
               <MyLabelAb>{comment.id}</MyLabelAb>
+              <div id="id-available"/>
             </MyLabel>
             <MyButton type="button" onClick={() => { overlap('id'); }}>중복 확인</MyButton>
             </div>
