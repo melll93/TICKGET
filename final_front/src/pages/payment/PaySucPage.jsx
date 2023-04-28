@@ -47,12 +47,8 @@ import Footer from '../../components/Footer'
 
       //마켓 게시판 게시글일 경우 판매완료 처리 - 결제내역 추가
       useEffect(() => {
-
-
         const mkSell = async () => {
-
 if (no){
-
          const board = {
             boardMkNo: no,
           };
@@ -82,7 +78,7 @@ if (no){
 
          const payment = { //결제내역 추가
             paymentId: 0,
-            paymentOrderId: orderid,
+            paymentOrderId: orderid+jsonDoc[0].boardMkNo,
             paymentOrderName: jsonDoc[0].boardMkTitle,
             paymentCount: jsonDoc[0].mkTicketCount,
             paymentPrice: jsonDoc[0].mkTicketPrice,
@@ -95,20 +91,21 @@ if (no){
           await paymentInsert(payment);
           
 
-        }else if (no===false){
+        }else{
 
 
           const payment2 = { //결제내역 추가
-            paymentOrderId: orderid,
+            paymentOrderId: orderid+festMId+member_no,
             paymentOrderName: festMId,
             paymentCount: festTcAmt,
              paymentPrice: price,
-            boardMkNo: 61,
+            boardMkNo: '',
             memberNo: member_no,
             memberName: member_name,
             memberEmail: member_email,
           };
           await paymentInsert(payment2);
+          console.log(payment2)
         };
       }
          mkSell(); 
