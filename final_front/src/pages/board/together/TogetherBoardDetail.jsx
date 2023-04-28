@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useCallback, useEffect, useState } from "react";
+import UserProfile from '../../../components/UserProfile';
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Cookies } from "react-cookie";
@@ -18,6 +19,7 @@ import {
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv } from "../../../styles/formStyle";
+import { searchById } from '../../../axios/member/member';
 
 const TogetherBoardDetail = () => {
   const navigate = useNavigate();
@@ -33,6 +35,8 @@ const TogetherBoardDetail = () => {
   const _userData = cookies.get("_userData"); //유저 정보
   console.log("_userData : ", _userData);
 
+  const [sellerinfo, setSellerinfo] = useState();
+
   const inputModifiedReply = useCallback((e) => {
     console.log("inputModifiedReply : ", e);
     setBoardReplyTgContent2(e);
@@ -40,6 +44,7 @@ const TogetherBoardDetail = () => {
 
   useEffect(() => {
     selectBoardReplyList();
+    
   }, []);
 
   const selectBoardReplyList = async () => {
@@ -81,13 +86,16 @@ const TogetherBoardDetail = () => {
       boardTgTitle: jsonDoc.boardTgTitle,
       boardTgContent: jsonDoc.boardTgContent,
       boardTgDate: jsonDoc.boardTgDate,
+      
     });
     if (res.data) {
       setBoard(res.data);
     } else {
       console.log("게시글 조회 실패");
     }
+    searchById(jsonDoc.boardTgMemId).then(setSellerinfo)
   };
+
   useEffect(() => {
     asyncDB();
   }, []);
@@ -147,6 +155,7 @@ const TogetherBoardDetail = () => {
       boardTgContent: value,
     }));
   };
+
   return (
     <div>
       <Header />
@@ -186,9 +195,11 @@ const TogetherBoardDetail = () => {
                   </span>
                 </div>
 
+                <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+
                 <div>
                   <label>작성자</label>
-                  <span
+                  {/* <span
                     style={{ width: "98%", margin: "10px" }}
                     type="text"
                     name="boardTgMemId"
@@ -197,9 +208,13 @@ const TogetherBoardDetail = () => {
                     id="inputLarge"
                   >
                     {board.boardTgMemId}
-                  </span>
+                  </span> */}
+                    <div style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.1rem" }}>
+                  <UserProfile _userData={sellerinfo}/> {board.boardTgMemId}</div>
                 </div>
-
+                
+                <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+                
                 <div>
                   <label>날짜</label>
                   <span
@@ -213,6 +228,8 @@ const TogetherBoardDetail = () => {
                     {board.boardTgDate}
                   </span>
                 </div>
+                
+                <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
 
                 <div>
                   <label>내용</label>
@@ -236,6 +253,8 @@ const TogetherBoardDetail = () => {
                     }}
                   />
                 </div>
+
+                <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
 
                 <div style={{ textAlign: "center" }}>
                   <Button

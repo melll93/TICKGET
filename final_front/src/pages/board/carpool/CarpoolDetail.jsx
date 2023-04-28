@@ -25,6 +25,9 @@ import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv } from "../../../styles/formStyle";
 import MapContainer from "../market/Map/MapContainer";
+import UserProfile from "../../../components/UserProfile";
+import { searchById } from '../../../axios/member/member';
+
 /* ********************** */
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -48,7 +51,7 @@ const CarpoolDetail = ({ match }) => {
   const [boardReplyList, setBoardReplyList] = useState([]);
   const [lgShow, setLgShow] = useState(false);
 
-  /* ********** Firebase ********** */
+  /* ********** Firebase 시작 ********** */
   const [data, setData] = useState({});
   const [realTime, setRealTime] = useState({
     boardCpNo: "",
@@ -113,11 +116,12 @@ const CarpoolDetail = ({ match }) => {
   //     });
   // };
 
-  /* ********** Firebase ********* */
+  /* ********** Firebase 종료 ********* */
   const [place, setPlace] = useState("");
 
   const cookies = new Cookies();
   const _userData = cookies.get("_userData"); //유저 정보
+  const [sellerinfo, setSellerinfo] = useState();
   console.log(_userData);
 
   const inputModifiedReply = useCallback((e) => {
@@ -176,6 +180,7 @@ const CarpoolDetail = ({ match }) => {
       } else {
         console.log("카풀 게시글 조회 실패");
       }
+      searchById(jsonDoc.boardCpMemId).then(setSellerinfo)
     };
 
     asyncDB();
@@ -277,9 +282,11 @@ const CarpoolDetail = ({ match }) => {
                     </span>
                   </div>
 
+                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+
                   <div>
                     <label>작성자</label>
-                    <span
+                    {/* <span
                       style={{ width: "98%", margin: "10px" }}
                       type="text"
                       name="carpoolMemId"
@@ -288,8 +295,20 @@ const CarpoolDetail = ({ match }) => {
                       id="inputLarge"
                     >
                       {carpool.boardCpMemId}
-                    </span>
+                    </span> */}
+                    <div
+                      style={{
+                        fontFamily: "Nanum Gothic",
+                        fontWeight: "bold",
+                        fontSize: "1.1rem",
+                      }}
+                    >
+                      <UserProfile _userData={sellerinfo} />
+                      {carpool.boardCpMemId}
+                    </div>
                   </div>
+
+                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
                   <div>
                     <label>날짜</label>
@@ -304,6 +323,8 @@ const CarpoolDetail = ({ match }) => {
                       {carpool.boardCpDate}
                     </span>
                   </div>
+
+                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
                   {/* firebase에서 값 받아오기 시작 */}
                   <div>
@@ -339,6 +360,8 @@ const CarpoolDetail = ({ match }) => {
                   </div>
                   {/* firebase에서 값 받아오기 종료 */}
 
+                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+
                   <div>
                     <label>내용</label>
                     <textarea
@@ -360,6 +383,8 @@ const CarpoolDetail = ({ match }) => {
                       }}
                     />
                   </div>
+
+                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
                   <label>만남의 장소</label>
                   <div
