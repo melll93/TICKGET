@@ -104,7 +104,7 @@ const cookies = new Cookies();
   }}
 >
   {boards.boardMkStatus > 0 ? (
-  <div style={{textAlign: "center", fontWeight: "bold",position: "absolute", top: 0, left: 0, backgroundColor: "rgb(80,50,200)", color: "white", padding: "5px", borderTopLeftRadius:"5px"}}>
+  <div style={{textAlign: "center", fontWeight: "bold",position: "absolute", top: 0, left: 0, backgroundColor: "rgb(80,50,200)", color: "white", padding: "5px", borderTopLeftRadius:"5px", borderBottomRightRadius:'5px'}}>
   판매완료
 </div> 
   ) : ""}

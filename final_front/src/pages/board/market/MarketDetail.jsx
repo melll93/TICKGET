@@ -1,14 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert, Button, Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
 import { Cookies } from 'react-cookie';
-import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { mk_boardDeleteDB, mk_boardDetailDB, mk_boardListDB, mk_boardSellDB, mk_minusLikesDB, mk_plusLikesDB } from '../../../axios/board/market/marketLogic';
 import Header from '../../../components/Header';
 import Sidebar from '../../../components/Sidebar';
 import { ContainerDiv, FormDiv, HeaderDiv, QnACommentArea } from '../../../styles/formStyle';
-import MarketBoardFileDetail from './MarketBoardFileDetail';
 import MarketBoardHeader from './MarketBoardHeader';
 import '../../../App.css'
 import MarketPaymentGuide from './MarketPaymentGuide';
@@ -102,7 +99,7 @@ const MarketDetail = () => {
        Swal.fire({
         icon:'info',
         title:'판매 완료!',
-        text:`판매금액 : ${jsonDoc[0].mkTicketPrice}원`,
+        text:`판매금액 : ${jsonDoc[0].mkTicketPrice * jsonDoc[0].mkTicketCount}원`,
         confirmButtonText: '확인',
        }).then(result => {
           if (result.isConfirmed) {
@@ -204,8 +201,8 @@ const [isWishlistAdded, setIsWishlistAdded] = useState((member_no !== undefined 
 const [heart, setHeart] = useState((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? (member_no === wishlistDetail.wl_memno) : false);
 
 useEffect(() => {
-  console.log(member_no)
-  console.log(wishlistDetail.wl_memno)
+  console.log("게시글을 조회하는 회원번호 : " + member_no)
+  console.log("해당 상품을 찜한 회원번호 : " + wishlistDetail.wl_memno)
   setIsWishlistAdded((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? (member_no === wishlistDetail.wl_memno) : false);
   setHeart((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? (member_no === wishlistDetail.wl_memno) : false)
 }, [wishlistDetail, member_no]);
@@ -509,8 +506,9 @@ const addWishlist = () => {
             </Tab>
           </Tabs>
         </section>
-
+<div >
 <Footer/>
+</div>
       </div>
     </>
   );

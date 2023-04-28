@@ -5,6 +5,8 @@ import CarouselOne from "./CarouselOne";
 import "../../styles/mainhomepage.css";
 
 
+
+
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -14,6 +16,7 @@ const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
     items: 5,
+    slidesToSlide: 1,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -32,31 +35,37 @@ const MainCarousel = ({ festivalToday }) => {
 const [movingImg, setMovingImg] = useState(2);
 
 
-
+const customTransition = {
+  enter: {
+    transform: 'translateX(0)',
+    opacity: 1,
+  },
+  exit: {
+    transform: 'translateX(-50px)',
+    opacity: 0,
+  },
+};
 
 
   return (
     <div className="carouselDiv">
-     <Carousel 
-  responsive={responsive}
-  infinite 
-  autoPlay
-  autoPlaySpeed={3500}
-  sliderClass=""
-  beforeChange={() => setMovingImg((prevSlide) => (prevSlide + 1) % festivalToday.length)}
-  customTransition="transform 1000ms ease-in-out"
-  centerMode={true}
-  draggable={false}
-  swipeable={false}
-  arrows={false}
-  slidesToSlide={1}
->
-        {festivalToday.map((festival, index) => (
-          <CarouselOne key={index} festival={festival} isActive={index === movingImg} />
-        ))}
-      </Carousel>
-    </div>
-  );
+    <Carousel 
+      responsive={responsive}
+      infinite 
+      autoPlay
+      autoPlaySpeed={3500}
+      beforeChange={() => setMovingImg((prevSlide) => (prevSlide + 1) % festivalToday.length)}
+      arrows={true}
+      slidesToSlide={1}
+      draggable={true}
+      swipeable={true}
+      customTransition={customTransition}
+    >
+      {festivalToday.map((festival, index) => (
+        <CarouselOne key={index} festival={festival} isActive={index === movingImg} />
+      ))}
+    </Carousel>
+  </div>
+);
 };
-
 export default MainCarousel;

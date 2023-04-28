@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import UserProfile from "../UserProfile";
+import { searchById } from "../../axios/member/member";
 
 /* const items = {
   no: festival.festMImg,
@@ -14,22 +16,41 @@ import { Link } from "react-router-dom";
 const BasicTable = ({ items }) => {
   // console.log('베이직테이블'+items)
   console.log(items)
+
+  const [writers,setWriters] = useState()
+
+  //작성자 정보 가져오기
+  useEffect(() => {
+    const fetchWriters = async () => {
+      const writerPromises = items.map(item => searchById(item.writer));
+      const writers = await Promise.all(writerPromises);
+      setWriters(writers);
+    }
+    fetchWriters();
+  }, [items]);
+  
+  console.log(writers);
+
   return (
-    <Table hover>
-<tbody>
-        {items.slice(0, 5).map((item, index) => (
-          <tr key={index}> 
-            <td>
-              {item.url === "" ? <img src="./images_key/WOONGS.jpg" style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-              ></img> : <img src={item.url} style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-              ></img>
-              }
-            </td><td colSpan={2}><Link to={`${item.link}${item.no}`} style={{textDecoration:'none', color:'black'}}>{item.title}</Link></td><td>
-                  {item.detail}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+<Table hover>
+  <tbody>
+    {items.slice(0, 5).map((item, index) => (
+      <tr key={index}> 
+          <td>
+          {writers[index] && <UserProfile _userData={writers[index]} />}
+        </td>
+        <td colSpan={2}>
+          <Link to={`${item.link}${item.no}`} style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>
+            {item.title}
+          </Link>
+        </td>
+        <td style={{fontWeight:'bold'}}>
+          {item.detail}
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</Table>
   );
 };
 
