@@ -129,15 +129,16 @@ const TogetherBoardDetail = () => {
         title: "내용을 입력해주세요.",
         icon: "warning",
       });
+      return;
     }
     try {
       const res = await insertTogetherReplyDB(boardReply);
       // 성공시에 페이지 이동처리하기
-      window.location.reload();
       Swal.fire({
         title: "댓글 등록 되었습니다.",
         icon: "success",
       });
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
