@@ -1,6 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import Header from '../../components/Header'
-import Sidebar from '../../components/Sidebar'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components';
 import { memberDeleteDB, memberListDB } from '../../axios/member/memberCrud';
 import Swal from "sweetalert2";
@@ -85,6 +83,8 @@ const UnRegiesterPage = () => {
     }
   };
 
+  
+
   // 체크 박스
   const handleCheckboxChange = useCallback((e) => {
     const id = e.target.id;
@@ -134,7 +134,6 @@ const UnRegiesterPage = () => {
     // 2 2 아이디, 전화번호 비교
     // 2 간단하게 사용자 아이디, 전화번호 입력 받고 쿠키/DB 비교하여 두 가지다 일치하는 경우 테이블 삭제
     const handleDelete = async (e) => {
-      // e.preventDefault();
       console.log("버튼 확인");
     
       // 체크 박스 항목 동의
@@ -149,15 +148,20 @@ const UnRegiesterPage = () => {
       try {
         const { memberId, memberMobile } = _userData;
         const member = {
-          memberId,
-          memberMobile,
+          memberId: id,
+          memberMobile: mobile,
           type: "overlap",
         };
     
         const res = await memberListDB(member);
         console.log(res.data);
     
-        const memberExists = res.data && res.data.some((data) => data.member_id === memberId && data.member_mobile === memberMobile);
+        const memberExists =
+          res.data &&
+          res.data.some(
+            (data) =>
+              data.member_id === memberId && data.member_mobile === memberMobile
+          );
     
         if (!memberExists) {
           console.log("회원 정보 없음");
@@ -167,41 +171,53 @@ const UnRegiesterPage = () => {
           });
           return;
         }
-        // 바로 탈퇴 진행되는 문제점 발생
-        Swal.fire({
+    
+        // 탈퇴하기 버튼 클릭 시 진행
+        const result = await Swal.fire({
           title: "회원님의 탈퇴를 진행하시겠습니까?",
           text: "탈퇴하시면 회원님의 모든 정보가 삭제됩니다.",
           icon: "warning",
           showCancelButton: true,
           confirmButtonText: "탈퇴하기",
           cancelButtonText: "취소",
-        }).then(async (result) => {
-          if (result.isConfirmed) {
-            try {
-              const resDelete = await memberDeleteDB({ id: memberId });
-              if (resDelete.data && resDelete.data.success) {
-                cookies.remove("_userData");
-                Swal.fire({
-                  title:
-                    "회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.",
-                });
-                navigate("/");
-              } else {
-                console.error("회원 탈퇴 실패");
-                Swal.fire({
-                  title:
-                    "회원 탈퇴에 실패하였습니다. 회원 님의 정보를 다시 확인해 주세요.",
-                });
-              }
-            } catch (error) {
-              console.error("error : " + error);
-            }
-          }
         });
+    
+        if (result.isConfirmed) {
+          try {
+            // member_id: memberId
+            // member_mobile: memberMobile
+            // 값으로 비교하고 있었기 때문에 사용자가 입력한 값이 아니라 149열에 선언한 _userData
+            // 넣어주기 때문에 무조건 사용자와 일치하는 정보를 입력 받아 무조건 회원 탈퇴 성공
+            const obj = {
+              memberId: id,
+              memberMobile: mobile,
+            }
+            console.log(obj)
+
+            const resDelete = await memberDeleteDB(obj);
+            console.log(resDelete.data);
+
+            if (resDelete.data === 1 ) {
+              cookies.remove("_userData");
+              Swal.fire({
+                title: "회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.",
+              });
+              navigate("/");
+            } else {
+              console.error("회원 탈퇴 실패");
+              Swal.fire({
+                title: "회원 탈퇴에 실패하였습니다. 회원 님의 정보를 다시 확인해 주세요.",
+              });
+            }
+          } catch (error) {
+            console.error("error : " + error);
+          }
+        }
       } catch (error) {
         console.error("error : " + error);
       }
     };
+    
     
   return (
     <>
