@@ -52,7 +52,7 @@ const MarketPage = () => {
         </div>
 
 
-        <MkFormDiv style={{ marginLeft: "160px" }}>
+        <MkFormDiv style={{ marginLeft: "80px" }}>
           <div className="book-list">
             <MarketList />
           </div>

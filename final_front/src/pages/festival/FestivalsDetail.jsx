@@ -18,6 +18,7 @@ import { getDatabase, ref, child, onValue, get, set  } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { firebaseConfig } from "../board/carpool/CarpoolBoardList";
 import MapContainer from "../board/market/Map/MapContainer";
+import Footer from "../../components/Footer";
 
 
 const FestivalsDetail = () => {
@@ -602,15 +603,17 @@ null
 
                 <Tab eventKey="product_detail_place" title="공연장 위치" mountOnEnter={true}>
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px", marginRight:'450px' }}>
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" , marginRight:'50px'}}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" , marginRight:'-120px'}}>
                   <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
                     <i class="bi bi-geo-alt-fill"></i>
                     {" "}
                    {festival[0].festMLoc}
                   </p>
-                  <div style={{ width: "40%", borderTop: "1px solid black", marginBottom: "10px", opacity: "15%" }} />
+                  <div style={{ width: "40%", borderTop: "1px solid black",marginBottom: "10px", opacity: "15%" }} />
                 </div>
-               <MapContainer place={ festival[0].festMLoc } /> 
+                <div  style={{marginRight:'-200px'}}>
+               <MapContainer place={ festival[0].festMLoc }/> 
+                </div>
               </div>
 
 </Tab>
@@ -672,6 +675,7 @@ null
           </section>
         </div>{" "}
         {/* totalcontainer div */}
+      <Footer/>
       </div>{" "}
       {/* center div */}
     </>

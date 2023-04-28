@@ -225,7 +225,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
         <ContainerDiv>
           <HeaderDiv style={{ display: "flex", justifyContent: "center" }}>
             <div className="form-floating mb-3">
-              <h3 style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.8rem"}}>티켓 중고판매 게시글 등록</h3>
+              <h3 style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.8rem"}}><i class="bi bi-pencil-square"></i>{" "}티켓 중고판매 게시글 등록</h3>
             </div>
           </HeaderDiv>
 

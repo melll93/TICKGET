@@ -3,7 +3,7 @@ import { Container, Button } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <footer className='text-center' style={{backgroundColor:'darkgray'}}>
+    <footer className='text-center' style={{backgroundColor:'darkgray', fontWeight:'bold'}}>
         <section className='mb-4'  style={{display:'inline'}} >
         <div className="link_logos" style={{display:'inline'}}>
           <a href="https://github.com/melll93/final_project">
@@ -49,7 +49,7 @@ const Footer = () => {
           <div>
           
             <div lg='3' md='6' className='link_div' style={{display:'inline-block'}}>
-              <h5 className='text-uppercase'>이승현</h5>
+              <h5 className='text-uppercase' style={{fontWeight:'bold'}}>이승현</h5>
               <ul className='list-unstyled mb-0'>
                 <li>
                   <a href='https://github.com/melll93' className='text-black'>
@@ -75,7 +75,7 @@ const Footer = () => {
             </div>
 
             <div lg='3' md='6' className='mb-4 mb-md-0' style={{display:'inline-block', marginLeft:'100px'}}>
-              <h5 className='text-uppercase'>고은영</h5>
+              <h5 className='text-uppercase' style={{fontWeight:'bold'}}>고은영</h5>
 
               <ul className='list-unstyled mb-0'>
                 <li>
@@ -102,7 +102,7 @@ const Footer = () => {
             </div>
 
             <div lg='3' md='6' className='mb-4 mb-md-0'  style={{display:'inline-block', marginLeft:'100px'}}>
-              <h5 className='text-uppercase'>고종훈</h5>
+              <h5 className='text-uppercase' style={{fontWeight:'bold'}}>고종훈</h5>
 
               <ul className='list-unstyled mb-0'>
                 <li>
@@ -129,7 +129,7 @@ const Footer = () => {
             </div>
 
             <div lg='3' md='6' className='mb-4 mb-md-0'  style={{display:'inline-block', marginLeft:'100px'}}>
-              <h5 className='text-uppercase'>김성훈</h5>
+              <h5 className='text-uppercase' style={{fontWeight:'bold'}}>김성훈</h5>
 
               <ul className='list-unstyled mb-0'>
                 <li>
@@ -157,7 +157,7 @@ const Footer = () => {
 
 
             <div lg='3' md='6' className='mb-4 mb-md-0'  style={{display:'inline-block', marginLeft:'100px'}}>
-              <h5 className='text-uppercase'>여은경</h5>
+              <h5 className='text-uppercase'style={{fontWeight:'bold'}}>여은경</h5>
 
               <ul className='list-unstyled mb-0'>
                 <li>

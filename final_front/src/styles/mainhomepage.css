@@ -35,10 +35,10 @@
     border: 1px solid black; */
 }
 
+/* 여기에 active 클래스에 적용할 스타일을 추가하세요 */
 .carouseloneDivactive {
-  /* 여기에 active 클래스에 적용할 스타일을 추가하세요 */
   /* 예시: 배경색을 빨간색으로 변경 */
-  transform: scale(1);
+  font-weight: bold;
 }
 
 /* 캐로쉘 디브에 이미지 100%로 맞춤 */

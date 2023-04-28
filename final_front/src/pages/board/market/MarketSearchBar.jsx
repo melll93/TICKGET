@@ -132,7 +132,7 @@ const MarketSearchBar = () => {
         style={{ width: "70px", height: "40px", marginRight: "10px" }}
         onClick={linkToWrite}
       >
-        글쓰기
+        판매하기
       </MButton>
     </div>
   );

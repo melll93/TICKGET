@@ -63,7 +63,10 @@ const HomePage = () => {
     const res = await selectTogetherDB();
    /*  console.log(res.data); */
     if (res.data && Array.isArray(res.data)) {
-      setBoardList(res.data);} else {console.log("부서목록 조회 실패");}};
+      setBoardList(res.data);
+    } else {
+      console.log("부서목록 조회 실패");
+    }};
   useEffect(() => {selectBoardList();}, []);
 
   const boardListProps = boardList.map(item => {
@@ -73,6 +76,7 @@ const HomePage = () => {
       detail: item.boardTgViews,
       link:"/together/boardDetail/",
       url:"",
+      writer: item.boardTgMemId
     };
   });
   
@@ -95,6 +99,7 @@ const HomePage = () => {
       detail: item.boardCpContent,
       link:"/carpool/carpoolDetail/",
       url:"",
+      writer:item.boardCpMemId
     };
   });
 
@@ -120,6 +125,7 @@ const HomePage = () => {
       detail: item.mkTicketSeat,
       link:"market/mk_boardDetail/?no=",
       url:item.boardMkFileurl,
+      writer: item.memberId
     };
   });
    
@@ -149,7 +155,7 @@ const HomePage = () => {
           }}
         >
           <div style={{ textAlign: "center" , fontFamily:'Nanum-Gothic', fontWeight:'bold'}}>
-            <h1 style={{ fontFamily:'Nanum-Gothic', fontWeight:'bold', marginTop:'-400px', marginBottom:'50px'}}>
+            <h1 style={{ fontFamily:'Nanum-Gothic', fontWeight:'bold', marginTop:'-350px', marginBottom:'50px'}}>
             <span>WHAT'S HOT</span>
             </h1>
             {festivalHitList.slice(0, 5).map((festival, i) => (
@@ -179,7 +185,7 @@ const HomePage = () => {
         fontWeight: "bold",
         fontSize: "1.3rem",
         visibility: hovered[i] ? "hidden" : "visible", // 순위가 보이지 않도록 CSS 스타일 수정
-        transition: "visibility 0.01s ease-in-out"
+        transition: "visibility 0.2s ease-in-out"
       }}>
         {i + 1}
       </div>
@@ -232,13 +238,15 @@ const HomePage = () => {
 ))}
 </div>
           <div style={{marginTop:'250px', textAlign: "center" }}>
+          <Link to={`/productsDetail/FT000149`}>
 <img src="./images_key/앨리스.png" style={{width:"100%", height: 'auto'}}/>
+          </Link>
           </div>
         </section>
 
         <section
           className="home_total_sec"
-          style={{ backgroundColor: "white"}}
+          style={{ backgroundColor: "white" , marginBottom:'200px'}}
         >
           <div className="total_section" style={{ display: "flex", marginTop:'150px' }}>
 
@@ -278,17 +286,17 @@ const HomePage = () => {
               className="top_sec_div"
               style={{ marginTop: "50px", 
               marginBottom: "50px", textAlign: "center", flex: "1",
-            paddingRight:'100px', display:"inline-block"}}
+            paddingRight:'100px', display:"inline-block",}}
             >
                 <h4 style={{fontWeight:'bold'}}><i class="bi bi-command"></i>{" "}연계 추천 사이트</h4>
-              <div className="card" style={{ display: "inline-block", marginRight:'5px'}}>
+              <div className="card" style={{ display: "inline-block", marginRight:'5px' }}>
                 <img
                   src="./images_key/travelgajae.jpg"
                   style={{ width: "200px",height:'250px', margin: "15px" }}
                   alt="사진1"
                   />
                   <div className="card-body">
-                  <h5 className="card-title">[숙박]트래블가재</h5>
+                  <h5 className="card-title" style={{fontWeight:'bold'}}>트래블가재</h5>
                   <a href="#" className="card-text">http://travelgajae.com</a> 
                   </div>
               </div>
@@ -304,7 +312,7 @@ const HomePage = () => {
                   alt="사진1"
                 />
                   <div className="card-body">
-                  <h5 className="card-title">[숙박]오늘의여행 </h5>
+                  <h5 className="card-title" style={{fontWeight:'bold'}}>오늘의여행 </h5>
                   <a href="#" className="card-text">http://triptoday.com </a>
                 </div>
                 </div>
@@ -316,7 +324,7 @@ const HomePage = () => {
                   alt="사진1"
                 />
                   <div className="card-body">
-                  <h5 className="card-title"> [숙박]KH요양원 </h5>
+                  <h5 className="card-title" style={{fontWeight:'bold'}}> KH요양원 </h5>
                   <a href="#" className="card-text">http://srcarecenter.com </a>
 
                 </div>
