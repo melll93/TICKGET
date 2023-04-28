@@ -120,6 +120,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       console.log(error);
     }
   };
+  
 
   /*************** fireBase ***************/
   const firebaseConfig = {
@@ -135,7 +136,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
   };
 
   const [data, setData] = useState({});
-  const [carpool, setCarpool] = useState({
+  const [realTime, setRealTime] = useState({
     boardCpNo: "",
     max: "",
     now: "",
@@ -159,18 +160,19 @@ const CarpoolWriteForm = (/* { carpool } */) => {
   }, []);
 
   const handleInputChange = (event) => {
-    setCarpool({
-      ...carpool,
+    setRealTime({
+      ...realTime,
       [event.target.name]:
         event.target.type === "checkbox"
           ? event.target.checked
           : event.target.value,
     });
+
   };
 
   const handleSaveData = () => {
     const count = 1;
-    const maxVal = parseInt(carpool.max);
+    const maxVal = parseInt(realTime.max);
 
     firebase
       .database()
@@ -328,7 +330,9 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 return null;
               }
             })()}
-            <hr style={{ margin: "10px 0px 10px 0px" }} />
+
+            <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+
             <br />
             <h3>날짜</h3>
             <input
@@ -342,7 +346,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
               }}
             />
 
-            <hr style={{ margin: "10px 0px 10px 0px" }} />
+            <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
             <br />
 
             <h3 style={{ marginBottom: "20px" }}>Carpool 최대 인원</h3>
@@ -378,7 +382,8 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 카풀 등록
               </Button>
             </div>
-            <hr style={{ margin: "10px 0px 10px 0px" }} />
+
+            <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
             <br />
             <h3>상세내용</h3>
@@ -401,7 +406,9 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 handleContent(e.target.value);
               }}
             ></textarea>
-            <hr style={{ margin: "10px 0px 10px 0px" }} />
+
+            <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+
             <div>
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridPlace">

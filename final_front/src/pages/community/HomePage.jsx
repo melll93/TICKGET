@@ -34,9 +34,9 @@ const HomePage = () => {
     const month = getDate.getMonth() - 2;
     const date = getDate.getDate();
     const fullDate = year + "-" + month + "-" + date;
-/*     console.log(fullDate); */
+    /*     console.log(fullDate); */
     // paramete : YYYY-MM-DD
- /*    festivalListByDate(fullDate).then(console.log); */
+    /*    festivalListByDate(fullDate).then(console.log); */
     festivalListByDate(fullDate).then(setFestivalToday);
   };
 
@@ -51,7 +51,7 @@ const HomePage = () => {
     };
     festivalHitList(); // 데이터 가져오기
   }, []);
-    
+
 
 
 
@@ -61,50 +61,53 @@ const HomePage = () => {
   const [boardList, setBoardList] = useState([]);
   const selectBoardList = async () => {
     const res = await selectTogetherDB();
-   /*  console.log(res.data); */
+    /*  console.log(res.data); */
     if (res.data && Array.isArray(res.data)) {
-      setBoardList(res.data);} else {console.log("부서목록 조회 실패");}};
-  useEffect(() => {selectBoardList();}, []);
+      setBoardList(res.data);
+    } else { console.log("부서목록 조회 실패"); }
+  };
+  useEffect(() => { selectBoardList(); }, []);
 
   const boardListProps = boardList.map(item => {
     return {
       no: item.boardTgNo,
       title: item.boardTgTitle,
       detail: item.boardTgViews,
-      link:"/together/boardDetail/",
-      url:"",
+      link: "/together/boardDetail/",
+      url: "",
     };
   });
-  
- /* ******************************************
-   *****메인화면 좌측 하단 테이블 (Carpool) *****
-   ********************************************  */
-   const [carpoolList, setCarpoolList] = useState([]);
-   const selectCarpoolList = async () => {
+
+  /* ******************************************
+    *****메인화면 좌측 하단 테이블 (Carpool) *****
+    ********************************************  */
+  const [carpoolList, setCarpoolList] = useState([]);
+  const selectCarpoolList = async () => {
     const res = await selectCarpoolDB();
     if (res.data && Array.isArray(res.data)) {
       setCarpoolList(res.data);
     } else {
       console.log("부서목록 조회 실패");
-    }};
-   useEffect(() => {selectCarpoolList();}, []);
-   const carpoolListProps = carpoolList.map(item => {
+    }
+  };
+  useEffect(() => { selectCarpoolList(); }, []);
+  const carpoolListProps = carpoolList.map(item => {
     return {
       no: item.boardCpNo,
       title: item.boardCpTitle,
       detail: item.boardCpContent,
-      link:"/carpool/carpoolDetail/",
-      url:"",
+      link: "/carpool/carpoolDetail/",
+      url: "",
     };
   });
 
-    
- /* ******************************************
-   *****메인화면 좌측 하단 테이블 (Market) *****
-   ********************************************  */
+
+  /* ******************************************
+    *****메인화면 좌측 하단 테이블 (Market) *****
+    ********************************************  */
 
   const [mkboards, setMkboards] = useState([]);
-   const selectMkBoardList = async () => {
+  const selectMkBoardList = async () => {
     const res = await mk_boardListDB();
     if (res.data && Array.isArray(res.data)) {
       setMkboards(res.data);
@@ -112,23 +115,23 @@ const HomePage = () => {
       console.log("부서목록 조회 실패");
     }
   };
-  useEffect(() => {selectMkBoardList();}, []);
+  useEffect(() => { selectMkBoardList(); }, []);
   const mkboardsProps = mkboards.map(item => {
     return {
       no: item.boardMkNo,
       title: item.boardMkTitle,
       detail: item.mkTicketSeat,
-      link:"market/mk_boardDetail/?no=",
-      url:item.boardMkFileurl,
+      link: "market/mk_boardDetail/?no=",
+      url: item.boardMkFileurl,
     };
   });
-   
 
- /* ******************************************
-   ***** WHAT'S HOT 호버이벤트 *****
-   ********************************************  */
-   const [hovered, setHovered] = useState(Array(5).fill(false)); // 초기값: 5개의 요소에 대해 false
-   
+
+  /* ******************************************
+    ***** WHAT'S HOT 호버이벤트 *****
+    ********************************************  */
+  const [hovered, setHovered] = useState(Array(5).fill(false)); // 초기값: 5개의 요소에 대해 false
+
 
 
 
@@ -137,7 +140,7 @@ const HomePage = () => {
       <Header />
       <Sidebar />
       <div className="center">
-        <div style={{ margin: "40px 0px 0px 0px", width: "1000px", height:"1000px" }}>
+        <div style={{ margin: "40px 0px 0px 0px", width: "1000px", height: "1000px" }}>
           <CarouselList festivalToday={festivalToday} />
         </div>
 
@@ -148,101 +151,102 @@ const HomePage = () => {
             paddingBottom: "50px",
           }}
         >
-          <div style={{ textAlign: "center" , fontFamily:'Nanum-Gothic', fontWeight:'bold'}}>
-            <h1 style={{ fontFamily:'Nanum-Gothic', fontWeight:'bold', marginTop:'-400px', marginBottom:'50px'}}>
-            <span>WHAT'S HOT</span>
+          <div style={{ textAlign: "center", fontFamily: 'Nanum-Gothic', fontWeight: 'bold' }}>
+            <h1 style={{ fontFamily: 'Nanum-Gothic', fontWeight: 'bold', marginTop: '-400px', marginBottom: '50px' }}>
+              <span>WHAT'S HOT</span>
             </h1>
             {festivalHitList.slice(0, 5).map((festival, i) => (
-  <Link to={`/productsDetail/${festival.festMId}`} key={i}>
-    <div
-      style={{
-        position: "relative",
-        display: "inline-block",
-        marginRight: "20px"
-      }}
-    >
-     
-      <div style={{
-        position: "absolute",
-        top: "-20px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        width: "40px",
-        height: "40px",
-        border:'3px solid white',
-        borderRadius: "50%",
-        backgroundColor: "rgb(236,125,40)",
-        color: "white",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontWeight: "bold",
-        fontSize: "1.3rem",
-        visibility: hovered[i] ? "hidden" : "visible", // 순위가 보이지 않도록 CSS 스타일 수정
-        transition: "visibility 0.01s ease-in-out"
-      }}>
-        {i + 1}
-      </div>
-      <Card.Img
-        key={i}
-        src={festival.festMImg}
-        style={{
-          width: "250px",
-          height: "300px",
-          filter: hovered[i] ? "brightness(40%)" : "",
-          transition: "filter 0.2s ease-in-out"
-        }}
-        onMouseEnter={() => {
-          setHovered(prevState => {
-            const newState = [...prevState];
-            newState[i] = true;
-            return newState;
-          });
-        }}
-        onMouseLeave={() => {
-          setHovered(prevState => {
-            const newState = [...prevState];
-            newState[i] = false;
-            return newState;
-          });
-        }}
-        alt="Card image"
-      />
-      {hovered[i] && (
-        <div
-          style={{
-            textAlign:'center',
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            color: "white",
-            borderRadius: "5px"
-          }}
-        >
-          <p style={{fontWeight: "bold" , fontSize:'0.9rem',whiteSpace: 'nowrap',textOverflow: 'ellipsis'}}>
-            {festival.festMName}
-          </p>
-          <p style={{fontSize:'0.7rem'}}>{festival.festMStart}</p>
-          <p style={{fontSize:'0.8rem'}}>{festival.festMLoc}</p>
-        </div>
-      )}
-    </div>
-  </Link>
-))}
-</div>
-          <div style={{marginTop:'250px', textAlign: "center" }}>
-<img src="./images_key/앨리스.png" style={{width:"100%", height: 'auto'}}/>
+              <Link to={`/productsDetail/${festival.festMId}`} key={i}>
+                <div
+                  style={{
+                    position: "relative",
+                    display: "inline-block",
+                    marginRight: "20px"
+                  }}
+                >
+
+                  <div style={{
+                    position: "absolute",
+                    top: "-20px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "40px",
+                    height: "40px",
+                    border: '3px solid white',
+                    borderRadius: "50%",
+                    backgroundColor: "rgb(236,125,40)",
+                    color: "white",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontWeight: "bold",
+                    fontSize: "1.3rem",
+                    visibility: hovered[i] ? "hidden" : "visible", // 순위가 보이지 않도록 CSS 스타일 수정
+                    transition: "visibility 0.01s ease-in-out"
+                  }}>
+                    {i + 1}
+                  </div>
+                  <Card.Img
+                    key={i}
+                    src={festival.festMImg}
+                    style={{
+                      width: "250px",
+                      height: "300px",
+                      filter: hovered[i] ? "brightness(40%)" : "",
+                      transition: "filter 0.2s ease-in-out"
+                    }}
+                    onMouseEnter={() => {
+                      setHovered(prevState => {
+                        const newState = [...prevState];
+                        newState[i] = true;
+                        return newState;
+                      });
+                    }}
+                    onMouseLeave={() => {
+                      setHovered(prevState => {
+                        const newState = [...prevState];
+                        newState[i] = false;
+                        return newState;
+                      });
+                    }}
+                    alt="Card image"
+                  />
+                  {hovered[i] && (
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        color: "white",
+                        borderRadius: "5px"
+                      }}
+                    >
+                      <p style={{ fontWeight: "bold", fontSize: '0.9rem', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                        {festival.festMName}
+                      </p>
+                      <p style={{ fontSize: '0.7rem' }}>{festival.festMStart}</p>
+                      <p style={{ fontSize: '0.8rem' }}>{festival.festMLoc}</p>
+                    </div>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div style={{ marginTop: '250px', textAlign: "center" }}>
+            <img src="./images_key/앨리스.png" style={{ width: "100%", height: 'auto' }} />
           </div>
         </section>
 
         <section
           className="home_total_sec"
-          style={{ backgroundColor: "white"}}
+          style={{ backgroundColor: "white" }}
         >
-          <div className="total_section" style={{ display: "flex", marginTop:'150px' }}>
+          <div className="total_section" style={{ display: "flex", marginTop: '150px' }}>
 
             {/* 메인하단 최신게시글 */}
+<<<<<<< HEAD
               <div className="mainpage box" style={{flex: "1",  padding:'20px 0px 0px 170px'}}> 
                 <div className="mainpage div div1" >
           <h4 style={{fontWeight:'bold', textAlign:'center'}}><i class="bi bi-clipboard"></i>{" "}최근 게시글</h4>
@@ -259,14 +263,32 @@ const HomePage = () => {
       </Tab>
       <style>
     {`
+=======
+            <div className="mainpage box" style={{ flex: "1", padding: '20px 0px 0px 170px' }}>
+              <div className="mainpage div div1" >
+                <h4 style={{ fontWeight: 'bold', textAlign: 'center' }}><i className="bi bi-clipboard"></i>{" "}최근 게시글</h4>
+
+                <Tabs defaultActiveKey="together" id="fill-tab-example" className="mb-3" fill style={{ fontFamily: 'Nanum-Gothic', fontWeight: 'bold', marginTop: '20px' }}>
+                  <Tab eventKey="together" title="TOGETHER">
+                    <BasicTable items={boardListProps} />
+                  </Tab>
+                  <Tab eventKey="carpool" title="CARPOOL">
+                    <BasicTable items={carpoolListProps} />
+                  </Tab>
+                  <Tab eventKey="market" title="MARKET">
+                    <BasicTable items={mkboardsProps} />
+                  </Tab>
+                  <style>
+                    {`
+>>>>>>> 9aaf5f275c42ed3b49fe339fb856430f5fb1b2ad
       .nav-link.unselectable {
         color: purple;
       }
     `}
-  </style>
-    </Tabs>
-                  
-                </div>{" "}
+                  </style>
+                </Tabs>
+
+              </div>{" "}
             </div>
             {/* 메인하단 최신게시글 */}
 
@@ -276,57 +298,59 @@ const HomePage = () => {
             {/* 지역별 추천 */}
             <div
               className="top_sec_div"
-              style={{ marginTop: "50px", 
-              marginBottom: "50px", textAlign: "center", flex: "1",
-            paddingRight:'100px', display:"inline-block"}}
+              style={{
+                marginTop: "50px",
+                marginBottom: "50px", textAlign: "center", flex: "1",
+                paddingRight: '100px', display: "inline-block"
+              }}
             >
-                <h4 style={{fontWeight:'bold'}}><i class="bi bi-command"></i>{" "}연계 추천 사이트</h4>
-              <div className="card" style={{ display: "inline-block", marginRight:'5px'}}>
+              <h4 style={{ fontWeight: 'bold' }}><i className="bi bi-command"></i>{" "}연계 추천 사이트</h4>
+              <div className="card" style={{ display: "inline-block", marginRight: '5px' }}>
                 <img
                   src="./images_key/travelgajae.jpg"
-                  style={{ width: "200px",height:'250px', margin: "15px" }}
-                  alt="사진1"
-                  />
-                  <div className="card-body">
-                  <h5 className="card-title">[숙박]트래블가재</h5>
-                  <a href="#" className="card-text">http://travelgajae.com</a> 
-                  </div>
-              </div>
-
-              
-
-
-                
-                <div className="card" style={{ display: "inline-block" }}>
-                <img
-                  src="./images_key/triptoday.png"
-                  style={{ width: "200px", height:'250px', margin: "15px" }}
+                  style={{ width: "200px", height: '250px', margin: "15px" }}
                   alt="사진1"
                 />
-                  <div className="card-body">
+                <div className="card-body">
+                  <h5 className="card-title">[숙박]트래블가재</h5>
+                  <a href="#" className="card-text">http://travelgajae.com</a>
+                </div>
+              </div>
+
+
+
+
+
+              <div className="card" style={{ display: "inline-block" }}>
+                <img
+                  src="./images_key/triptoday.png"
+                  style={{ width: "200px", height: '250px', margin: "15px" }}
+                  alt="사진1"
+                />
+                <div className="card-body">
                   <h5 className="card-title">[숙박]오늘의여행 </h5>
                   <a href="#" className="card-text">http://triptoday.com </a>
                 </div>
-                </div>
+              </div>
 
-                <div className="card" style={{ display: "inline-block",  marginRight:'5px' }}>
+              <div className="card" style={{ display: "inline-block", marginRight: '5px' }}>
                 <img
                   src="./images_key/khsrcarecenter.jpg"
-                  style={{ width: "200px",height:'250px', margin: "15px" }}
+                  style={{ width: "200px", height: '250px', margin: "15px" }}
                   alt="사진1"
                 />
-                  <div className="card-body">
+                <div className="card-body">
                   <h5 className="card-title"> [숙박]KH요양원 </h5>
                   <a href="#" className="card-text">http://srcarecenter.com </a>
 
                 </div>
-            </div>
+              </div>
             </div>
             {/* 지역별 추천 여기까지 */}
           </div>
         </section>
 
-        <Footer/>
+        <Footer />
       </div>
       {/* center */}
     </>

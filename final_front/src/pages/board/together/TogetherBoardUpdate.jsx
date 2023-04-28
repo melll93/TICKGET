@@ -144,7 +144,9 @@ const TogetherBoardUpdate = () => {
                   }}
                 />
               </div>
-
+              
+              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+              
               <div>
                 <label>작성자</label>
                 <span
@@ -158,11 +160,11 @@ const TogetherBoardUpdate = () => {
                   {board.boardTgMemId}
                 </span>
               </div>
+              
+              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
 
               <div>
                 <label>수정된 날짜</label>
-                <br />
-
                 <input
                   id="board_date"
                   type="datetime-local"
@@ -180,7 +182,9 @@ const TogetherBoardUpdate = () => {
                   }}
                 />
               </div>
-
+              
+              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+              
               <div>
                 <label>수정할 내용</label>
                 <br />

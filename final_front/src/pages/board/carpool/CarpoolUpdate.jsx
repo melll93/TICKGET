@@ -287,6 +287,8 @@ const CarpoolUpdate = () => {
                 />
               </div>
 
+              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+
               <div>
                 <label>작성자</label>
                 <span
@@ -300,6 +302,8 @@ const CarpoolUpdate = () => {
                   {carpool.boardCpMemId}
                 </span>
               </div>
+
+              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
 
               <div>
                 <label>수정된 날짜</label>
@@ -321,6 +325,8 @@ const CarpoolUpdate = () => {
                   }}
                 />
               </div>
+
+              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
 
               <h3 style={{ marginBottom: "20px" }}>Carpool 최대 인원</h3>
               <div
@@ -355,6 +361,9 @@ const CarpoolUpdate = () => {
                   카풀 인원 수정
                 </Button>
               </div>
+
+              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+
               <div>
                 <label>수정할 내용</label>
                 <br />
@@ -378,19 +387,6 @@ const CarpoolUpdate = () => {
                 />
               </div>
 
-              {/* <div
-                style={{
-                  border: "1px solid lightGray",
-                  borderRadius: "10px",
-                  width: "98%",
-                  margin: "0 auto",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-               <LandingPage />
-              </div> */}
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridPlace">
                   <h3>접선 장소</h3>
