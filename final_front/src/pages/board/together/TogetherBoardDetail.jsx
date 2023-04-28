@@ -118,6 +118,16 @@ const TogetherBoardDetail = () => {
 
   const submitComment = async () => {
     console.log("submitComment");
+
+    if (!_userData || !_userData.memberId) {
+      Swal.fire({
+        title: "로그인을 해주세요.",
+        icon: "error",
+      });
+      window.location.href = "/login";
+      return;
+    }
+
     const boardReply = {
       boardTgNo: boardTgNo,
       boardReplyTgMemId: _userData.memberId,
