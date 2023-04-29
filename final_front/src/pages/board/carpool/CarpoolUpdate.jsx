@@ -26,6 +26,12 @@ const CarpoolUpdate = () => {
   const [boardCpContent, setCarpoolContent] = useState(""); //사용자가 입력한 내용 담기
   const [boardCpPlace, setBoardCpPlace] = useState(""); //사용자가 입력한 내용 담기
 
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = currentDate.getDate().toString().padStart(2, "0");
+  const min = `${year}-${month}-${day}`;
+
   const [carpool, setCarpool] = useState({
     boardCpNo: 0,
     boardCpMemId: "",
@@ -68,13 +74,13 @@ const CarpoolUpdate = () => {
       });
       return;
     }
-    if (!boardCpDate) {
-      Swal.fire({
-        title: "날짜를 입력해주세요",
-        icon: "warning",
-      });
-      return;
-    }
+    // if (!boardCpDate) {
+    //   Swal.fire({
+    //     title: "날짜를 입력해주세요",
+    //     icon: "warning",
+    //   });
+    //   return;
+    // }
     if (!boardCpContent) {
       Swal.fire({
         title: "내용을 입력해주세요",
@@ -87,7 +93,7 @@ const CarpoolUpdate = () => {
       boardCpNo: boardCpNo, // 게시글 번호
       boardCpTitle: boardCpTitle, // 제목 추가
       boardCpContent: boardCpContent, // 내용 추가
-      boardCpDate: boardCpDate,
+      boardCpDate: min,
       boardCpPlace: boardCpPlace,
     };
 
@@ -109,23 +115,27 @@ const CarpoolUpdate = () => {
     setCarpoolTitle(e);
   }, []);
 
-  const handleDate = (date) => {
-    // "YYYY-MM-DD" 형식이 아닐 경우 에러 처리
-    const regex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!regex.test(date)) {
-      /* alert("날짜 형식이 올바르지 않습니다."); */
-      Swal.fire({
-        title: "날짜 형식이 올바르지 않습니다.",
-        icon: "warning",
-      });
-      return;
-    }
-    // "YYYY-MM-DD" 형식으로 변환
-    const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-    // 변환된 값을 상태 변수에 저장
-    setCarpoolDate(formattedDate);
-    // setDate();
-  };
+  // const handleDate = (date) => {
+  //   // "YYYY-MM-DD" 형식이 아닐 경우 에러 처리
+  //   const regex = /^\d{4}-\d{2}-\d{2}$/;
+  //   if (!regex.test(date)) {
+  //     /* alert("날짜 형식이 올바르지 않습니다."); */
+  //     Swal.fire({
+  //       title: "날짜 형식이 올바르지 않습니다.",
+  //       icon: "warning",
+  //     });
+  //     return;
+  //   }
+  //   // "YYYY-MM-DD" 형식으로 변환
+  //   const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+  //   // 변환된 값을 상태 변수에 저장
+  //   setCarpoolDate(formattedDate);
+  //   // setDate();
+  // };
+
+  const handleDate = useCallback((e) => {
+    setCarpoolDate(e);
+  }, []);
 
   const handleContent = useCallback((e) => {
     setCarpoolContent(e);
@@ -264,7 +274,7 @@ const CarpoolUpdate = () => {
           <h2>카풀 게시판 수정하기</h2>
           <br />
           <div>
-            <form method="post">
+            <div method="post">
               <div>
                 <label>수정 할 제목</label>
                 <br />
@@ -287,7 +297,7 @@ const CarpoolUpdate = () => {
                 />
               </div>
 
-              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
               <div>
                 <label>작성자</label>
@@ -303,16 +313,16 @@ const CarpoolUpdate = () => {
                 </span>
               </div>
 
-              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
               <div>
                 <label>수정된 날짜</label>
                 <br />
                 <input
                   id="board_cp_date"
-                  type="date"
+                  // type="date"
+                  // defaultValue={carpool.boardCpDate}
                   maxLength="50"
-                  defaultValue={carpool.boardCpDate}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -320,13 +330,14 @@ const CarpoolUpdate = () => {
                     border: "1px solid lightGray",
                     borderRadius: "10px",
                   }}
+                  value={min}
                   onChange={(e) => {
                     handleDate(e.target.value);
                   }}
                 />
               </div>
 
-              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
               <h3 style={{ marginBottom: "20px" }}>Carpool 최대 인원</h3>
               <div
@@ -362,7 +373,7 @@ const CarpoolUpdate = () => {
                 </Button>
               </div>
 
-              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
               <div>
                 <label>수정할 내용</label>
@@ -404,9 +415,6 @@ const CarpoolUpdate = () => {
                     }}
                   />
                   {/* <MapContainer place={carpool.Place} /> */}
-                  <Form.Control.Feedback type="invalid">
-                    공연 장소를 입력해주세요.
-                  </Form.Control.Feedback>
                 </Form.Group>
               </Row>
 
@@ -442,7 +450,7 @@ const CarpoolUpdate = () => {
                   뒤로가기
                 </Button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </ContainerDiv>

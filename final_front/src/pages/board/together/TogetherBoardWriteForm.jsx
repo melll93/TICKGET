@@ -20,6 +20,15 @@ const TogetherBoardWriteForm = ({ board_together }) => {
   const [date, setDate] = useState(""); //날짜
   const [content, setContent] = useState(""); //내용작성
 
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = currentDate.getDate().toString().padStart(2, "0");
+  const hour = currentDate.getHours().toString().padStart(2, "0");
+  const minute = currentDate.getMinutes().toString().padStart(2, "0");
+  const second = currentDate.getSeconds().toString().padStart(2, "0");
+  const min = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+
   const handleContent = useCallback((value) => {
     console.log(value);
     setContent(value);
@@ -41,13 +50,6 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       });
       return;
     }
-    if (!date) {
-      Swal.fire({
-        title: "날짜을 입력해주세요.",
-        icon: "warning",
-      });
-      return;
-    }
     if (!content) {
       Swal.fire({
         title: "내용을 입력해주세요.",
@@ -60,7 +62,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       boardTgTitle: title, // 제목 추가
       boardTgContent: content, // 내용 추가
       boardTgMemId: _userData?.memberId,
-      boardTgDate: date,
+      boardTgDate: min,
     };
     console.log(board);
     // 사용자가 입력한 값 넘기기 -@RequestBody로 처리됨
@@ -184,10 +186,10 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             <h3>날짜</h3>
             <input
               className="form-control form-control-lg"
-              id="inputLarge"
               step="1"
-              type="datetime-local"
+              readOnly
               style={{ width: "98%", margin: "10px" }}
+              value={min}
               onChange={(e) => {
                 handleDate(e.target.value);
               }}

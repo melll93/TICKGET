@@ -22,13 +22,9 @@
         #{boardCpViews} , #{boardCpPlace} ) </insert>
 
     <!-- 댓글 삭제 -->
-    <delete id="deleteCarpool" parameterType="CarpoolDto"> 
-    DELETE board_carpool, board_reply_carpool
-    FROM board_carpool
-    LEFT JOIN board_reply_carpool
-    ON board_carpool.board_cp_no = board_reply_carpool.board_cp_no
-    WHERE board_carpool.board_cp_no=#{boardCpNo}; 
-    </delete>
+    <delete id="deleteCarpool" parameterType="CarpoolDto"> DELETE board_carpool, board_reply_carpool
+        FROM board_carpool LEFT JOIN board_reply_carpool ON board_carpool.board_cp_no =
+        board_reply_carpool.board_cp_no WHERE board_carpool.board_cp_no=#{boardCpNo}; </delete>
 
     <!-- 댓글 수정 -->
     <update id="updateCarpool" parameterType="CarpoolDto"> update board_carpool set board_cp_title =
@@ -36,7 +32,7 @@
         board_cp_place = #{boardCpPlace} where board_cp_no = #{boardCpNo} </update>
 
 
-    <!-- 남의 글일 경우에만 조회수를 증가 -->
+    <!--  조회수를 증가 -->
     <update id="viewUp" parameterType="map"> update board_carpool set board_cp_views =
         board_cp_views +1 where board_cp_no = #{boardCpNo} <!-- <if test="memberNo != null">
         and board_tg_member_id != #{boardTgMemId}

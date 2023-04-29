@@ -18,6 +18,16 @@ const TogetherBoardUpdate = () => {
   const [boardTgDate, setDate] = useState(""); //사용자가 입력한 내용 담기
   const [boardTgContent, setContent] = useState(""); //사용자가 입력한 내용 담기
 
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = currentDate.getDate().toString().padStart(2, "0");
+  const hour = currentDate.getHours().toString().padStart(2, "0");
+  const minute = currentDate.getMinutes().toString().padStart(2, "0");
+  const second = currentDate.getSeconds().toString().padStart(2, "0");
+
+  const min = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+
   const [board, setBoard] = useState({
     boardTgNo: 0,
     boardTgMemId: "",
@@ -53,17 +63,8 @@ const TogetherBoardUpdate = () => {
 
   const updateBoard = async () => {
     if (!boardTgTitle) {
-      /* alert("제목을 입력해주세요."); */
       Swal.fire({
         title: "제목을 수정해주세요.",
-        icon: "warning",
-      });
-      return;
-    }
-
-    if (!boardTgDate) {
-      Swal.fire({
-        title: "날짜를 입력해주세요.",
         icon: "warning",
       });
       return;
@@ -81,7 +82,7 @@ const TogetherBoardUpdate = () => {
       boardTgNo: boardTgNo, // 게시글 번호
       boardTgTitle: boardTgTitle, // 제목 추가
       boardTgContent: boardTgContent, // 내용 추가
-      boardTgDate: boardTgDate,
+      boardTgDate: min,
     };
 
     console.log("board = ", JSON.stringify(board));
@@ -144,9 +145,9 @@ const TogetherBoardUpdate = () => {
                   }}
                 />
               </div>
-              
-              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
-              
+
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+
               <div>
                 <label>작성자</label>
                 <span
@@ -160,15 +161,15 @@ const TogetherBoardUpdate = () => {
                   {board.boardTgMemId}
                 </span>
               </div>
-              
-              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
+
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
               <div>
                 <label>수정된 날짜</label>
                 <input
                   id="board_date"
-                  type="datetime-local"
-                  defaultValue={board.boardTgDate}
+                  // type="datetime-local"
+                  // defaultValue={board.boardTgDate}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -176,15 +177,17 @@ const TogetherBoardUpdate = () => {
                     border: "1px solid lightGray",
                     borderRadius: "10px",
                   }}
+                  readOnly
                   step="1"
+                  value={min}
                   onChange={(e) => {
                     handleDate(e.target.value);
                   }}
                 />
               </div>
-              
-              <hr style={{width:"98%", margin: "10px 0px 10px 0px" }} />
-              
+
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+
               <div>
                 <label>수정할 내용</label>
                 <br />
@@ -218,7 +221,7 @@ const TogetherBoardUpdate = () => {
                 >
                   수정하기
                 </Button>
-                 <Button
+                <Button
                   onClick={() => {
                     Swal.fire({
                       title: "정말로 뒤로 가시겠습니까?",

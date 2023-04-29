@@ -35,6 +35,12 @@ const CarpoolWriteForm = (/* { carpool } */) => {
 
   const [boardCpNo, setBoardCpNo] = useState();
 
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = currentDate.getDate().toString().padStart(2, "0");
+  const min = `${year}-${month}-${day}`;
+
   const handleContent = useCallback((value) => {
     console.log(value);
     setContent(value);
@@ -79,13 +85,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       });
       return;
     }
-    if (!date) {
-      Swal.fire({
-        title: "날짜를 입력해주세요",
-        icon: "warning",
-      });
-      return;
-    }
+
     if (!place) {
       Swal.fire({
         title: "장소을 입력해주세요",
@@ -93,6 +93,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       });
       return;
     }
+
     if (!content) {
       Swal.fire({
         title: "내용을 입력해주세요",
@@ -104,7 +105,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       boardCpTitle: title, // 제목 추가
       boardCpContent: content, // 내용 추가
       boardCpMemId: _userData?.memberId,
-      boardCpDate: date,
+      boardCpDate: min,
       boardCpNo: boardCpNo,
       boardCpPlace: place,
     };
@@ -120,7 +121,6 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       console.log(error);
     }
   };
-  
 
   /*************** fireBase ***************/
   const firebaseConfig = {
@@ -167,7 +167,6 @@ const CarpoolWriteForm = (/* { carpool } */) => {
           ? event.target.checked
           : event.target.value,
     });
-
   };
 
   const handleSaveData = () => {
@@ -340,7 +339,8 @@ const CarpoolWriteForm = (/* { carpool } */) => {
               className="form-control"
               id="festStartday"
               name="startDay"
-              type="datetime-local"
+              // type="datetime-local"
+              value={min}
               onChange={(e) => {
                 handleDate(e.target.value);
               }}
