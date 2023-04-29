@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Cookies } from "react-cookie";
 
 export const Input = styled.input`
-  width: 250px;
+  width: 220px;
   height: 32px;
   display: block;
   border: none;
@@ -202,6 +202,8 @@ const UnRegiesterPage = () => {
               Swal.fire({
                 title: "회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.",
               });
+              cookies.remove("access_token"); // access token 쿠키도 삭제
+              window.location.reload(); // 사용자 정보 초기화 및 로그인 초기화를 위해 페이지 새로고침
               navigate("/");
             } else {
               console.error("회원 탈퇴 실패");
@@ -227,15 +229,32 @@ const UnRegiesterPage = () => {
             textAlign: "center",
             alignItems: "center",
             padding: "50px",
+            marginTop: "200px",
           }}
         >
           <h2>회원 탈퇴 안내</h2>
-          <br />
           <div>
-            <h5>
-              미결 거래가 있는 경우 이로 인해 발생한 청구 금액에 대한 책임은
-              귀하에게 있습니다.
-            </h5>
+          <div class="notice"
+          style={{marginTop: '8px'}}>
+            <strong class="notice-title">탈퇴 전 안내사항을 꼭 확인해 주세요.</strong>
+            <p>탈퇴 시 회원 님의 티겟 이용 정보가 삭제되어 복구가 불가능하며, 티겟 서비스는 더 이상 이용할 수 없습니다.</p>
+          </div>
+
+          <div class="notice-content">
+            <strong class="content-title">티겟 이용정보 삭제</strong>
+            <p>
+            정보 및 이용 기록은 모두 삭제되며,
+            동일한 계정으로 재가입하더라도 삭제된 데이터는 복구되지 않습니다.
+            </p>
+
+            <strong class="content-title">게시판형 서비스에 등록한 게시글 유지</strong>
+            <p>게시글은 탈퇴 후 본인의 게시물임을 확인할 방법이 없어 임의로 삭제해 드릴 수 없습니다.<br />
+              삭제를 원하시는 게시물이 있다면 반드시 탈퇴 전 비공개로 변경하거나 삭제하시기 바랍니다.</p>
+          </div>
+          <div class="notice-payment">
+            <strong class="payment-title">
+              미결 거래가 있는 경우 이로 인해 발생한 청구 금액에 대한 책임은 귀하에게 있습니다.
+            </strong>
             <label>
               <input  
                 type="checkbox"
@@ -243,7 +262,6 @@ const UnRegiesterPage = () => {
                 checked={isChecked1}
                 onChange={handleCheckboxChange}
               />
-
               본인은 모든 미결 금융 거래로 인해 발생하는 청구 금액에 대해 전적으로
               책임이 있음을 인지하며,<br />
               특정한 상황에서는 수익금을 지급받을 수 없다는 사실을 이해합니다.
@@ -256,25 +274,40 @@ const UnRegiesterPage = () => {
                 checked={isChecked2}
                 onChange={handleCheckboxChange}
               />
-              Tickget 사이트의 계정과 모든 데이터를 완전히 삭제하고자 합니다.
+              티겟 탈퇴 후 개인의 데이터를 복구할 수 없으며, 티겟 서비스에 남아있는 게시물을 삭제 할 수 없습니다.
             </label>
-            <br />
+            <br/>
+          </div>
+          
+          <div class="last-notice">
+            <strong class="contetn-title" 
+              style={{
+                color: 'red',
+                fontSize: '18px',
+                marginTop: '12px'
+              }}>
+              안내 사항에 동의하시고 탈퇴 진행을 원하시면 아래 회원 님의 정보를 입력해 주세요.
+              <div/>
+            </strong>
+          </div>
+          <div className='notice-check' style={{marginTop: '8px'}}>
             <label>
               <Input
                 type='text'
                 name='id'
-                placeholder='탈퇴를 위해 회원님의 아이디를 입력해 주세요.'
+                placeholder='회원님의 아이디를 입력해 주세요.'
                 value={id}
                 onChange={changeMemInfo} />
 
               <Input
                 type='text'
                 name='mobile'
-                placeholder='탈퇴를 위해 회원님의 전화번호를 입력해 주세요.'
+                placeholder='회원님의 전화번호를 입력해 주세요.'
                 value={mobile}
                 onChange={changeMemInfo} />
             </label>
             <br/>
+            </div>
 
             <MButton type="button" onClick={handleDelete}>
               탈퇴하기
