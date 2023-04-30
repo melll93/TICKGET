@@ -44,7 +44,7 @@ public class CarpoolController {
         return mList;
     }
 
-    // Carpool 게시판 조회(SelectAll)
+    // Carpool 게시판 글번호 조회
     @GetMapping("/getBoardCpNo")
     public int getBoardCpNo() {
         logger.info("CarpoolController : getBoardCpNo 호출");

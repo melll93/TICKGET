@@ -2,14 +2,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useCallback, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
-import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
+import Swal from "sweetalert2";
 import {
   selectTogetherDetailDB,
   updateTogetherDB,
 } from "../../../axios/board/together/TogetherLogic";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
-import Swal from "sweetalert2";
 
 const TogetherBoardUpdate = () => {
   const navigate = useNavigate();
@@ -92,7 +92,6 @@ const TogetherBoardUpdate = () => {
     } catch (error) {
       console.log(error);
     }
-    /* alert("게시글 수정 완료"); */
     Swal.fire({
       title: "게시글 수정 완료",
       icon: "success",

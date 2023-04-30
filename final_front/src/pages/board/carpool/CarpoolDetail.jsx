@@ -183,7 +183,7 @@ const CarpoolDetail = ({ match }) => {
     };
 
     asyncDB();
-    return () => { };
+    return () => {};
   }, []);
 
   if (!carpool.boardCpTitle) {

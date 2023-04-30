@@ -16,7 +16,4 @@ public class CarpoolReplyDto {
     private String boardReplyCpTitle;
     private String boardReplyCpContent;
     private String boardReplyCpDate;
-    private int boardReplyCpSuperNo;
-    private int boardReplyCpGroupNo;
-    private int boardReplyCpDepth;
 }

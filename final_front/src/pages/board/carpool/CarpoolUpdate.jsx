@@ -1,5 +1,11 @@
 /* global daum */
 import "bootstrap/dist/css/bootstrap.min.css";
+import "firebase/analytics";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/database";
+import "firebase/compat/firestore";
+import "firebase/database";
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,13 +16,7 @@ import {
 } from "../../../axios/board/carpool/CarpoolLogic";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
-import "firebase/analytics";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/database";
-import "firebase/compat/firestore";
-import "firebase/database";
+import { ContainerDiv } from "../../../styles/formStyle";
 
 const CarpoolUpdate = () => {
   const navigate = useNavigate();

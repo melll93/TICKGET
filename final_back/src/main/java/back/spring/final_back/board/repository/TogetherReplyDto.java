@@ -16,7 +16,4 @@ public class TogetherReplyDto {
     private String boardReplyTgTitle;
     private String boardReplyTgContent;
     private String boardReplyTgDate;
-    private int boardReplyTgSuperNo;
-    private int boardReplyTgGroupNo;
-    private int boardReplyTgDepth;
 }

@@ -146,6 +146,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
               maxLength="100"
               placeholder="제목을 입력하세요."
               style={{
+                marginLeft: "10px",
                 width: "100%",
                 height: "40px",
                 border: "1px solid lightGray",
