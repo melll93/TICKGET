@@ -28,7 +28,8 @@ import java.util.stream.Collectors;
 public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
-    private static final long ACCESS_TOKEN_VALIDITY_IN_MILLISECONDS = 30 * 60 * 1000; // 30분
+//    private static final long ACCESS_TOKEN_VALIDITY_IN_MILLISECONDS = 30 * 60 * 1000; // 30분
+    private static final long ACCESS_TOKEN_VALIDITY_IN_MILLISECONDS = 60 * 60 * 24 * 14 * 1000; // 14일
     private static final long REFRESH_TOKEN_VALIDITY_IN_MILLISECONDS = 60 * 60 * 24 * 14 * 1000; // 14일
     private Key key;
 

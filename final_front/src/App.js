@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import KakaoLogin from "./api/login/KakaoLogin";
@@ -43,11 +43,35 @@ import UnRegiesterPage from "./pages/personal/UnRegiesterPage";
 import MemberUpdPage from "./pages/personal/MemberUpdPage";
 import FireTest from "./pages/board/carpool/FireTest";
 import SocialRedirect from "./pages/member/SocialRedirect";
+import { Cookies } from "react-cookie";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
+import { chat } from "./util/chat";
 
-function App({ mkImageUploader, client }) {
+const cookies = new Cookies();
+
+function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
   const [carpool, setCarpool] = useState();
   const [user, setUser] = useState();
+  const _userData = cookies.get("_userData");
+
+  // let sock;
+  // let client;
+
+  // useEffect(() => {
+  //   if (_userData) {
+  const sock = new SockJS("http://localhost:8888/stompTest");
+  const client = Stomp.over(sock);
+
+  const room = 1;
+
+  chat(client, room);
+  // } else if (!_userData && client) {
+  // client.disconnect();
+  // sock.close();
+  // }
+  // }, [_userData]);
 
   // pages로 routing 처리
   return (

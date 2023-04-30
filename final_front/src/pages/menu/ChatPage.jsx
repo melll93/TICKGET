@@ -8,12 +8,13 @@ import UserProfile from "../../components/UserProfile";
 import ChatList from "../../components/chat/ChatList";
 import { Cookies } from "react-cookie"
 import { Stomp } from "@stomp/stompjs"
+import { getChatRoomList } from "../../axios/chat/chat";
+import { searchById } from "../../axios/member/member";
 
 // const sock = new SockJS("http://localhost:8888/stompTest");
 // const client = Stomp.over(sock);
 
 const cookies = new Cookies();
-
 
 /******************************************************************
  * @param msg 객체 리터럴로 user, msg, time 받아서 10~20개 정도 시간별 출력,
@@ -25,60 +26,56 @@ const ChatPage = ({ client }) => {
   const username = _userData && _userData.memberNickname;
   const userId = _userData && _userData.memberId
 
-  const [room, setRoom] = useState(1)
+  const [roomUserData, setRoomUserData] = useState([]);
+  const [currentRoom, setCurrentRoom] = useState();
 
   const [msg, setMsg] = useState({
     id: userId,
-    room: room,
+    room: currentRoom,
     content: ""
   });
 
-  client.connect({}, () => {
-    client.subscribe('/sub/message/' + room, (e) => {
-      // console.log("event => ", e)
-
-      console.log(e.body);
-
-      const jsonMsg = JSON.parse(e.body)
-
-      const id = jsonMsg.id
-      const room = jsonMsg.room
-      const content = jsonMsg.content
-
-      /*************** 채팅 박스 구현 ***************/
-      const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
-      const chat = document.createElement("div"); // 컴포 디비전 좌우 처리
-      chat.setAttribute("class", "chatText"); // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
-      // for
-      // if (msg.user === 'ADMIN') { // user 이름 받아서
-      chatBox.setAttribute("class", "myChat");
-      // } else {
-      //   chatbox.setAttribute('className', 'otherChat')
-      // }
-
-      chat.innerText = id + ":" + content;
-      chatBox.appendChild(chat);
-      document.querySelector("#outputBox").appendChild(chatBox);
-      /*************** 채팅 박스 구현 ***************/
-    })
-  })
-
-
   // BE로 전송하는 메시지는 id로, 화면에 출력하는 메시지는 nickname으로
   const send = (msg) => {
-    // console.log(sock.readyState);
-    // if (sock.readyState === 1) {
-
     client.send('/pub', {}, JSON.stringify(msg));
-
-    setMsg({
-      id: userId,
-      room: 1,
-      content: ""
-    });
     document.querySelector("#msg").value = "";
-    // }
   };
+
+  const renderChatList = () => {
+    console.log(roomUserData);
+    return (
+      roomUserData && roomUserData.map((item, index) => (
+        <div key={index} className="chatOne" style={{ cursor: "pointer" }}
+          onClick={(e) => {
+            setCurrentRoom(item.chatRoomNo)
+          }}>
+          <ChatList key={index} _userData={item} />
+        </div>
+      ))
+    )
+  }
+
+  useEffect(() => {
+    const temp = []
+    getChatRoomList()
+      .then((roomList) => {
+        roomList.map((room, index) => (
+          searchById(room.chatRoomMember)
+            .then(userData => {
+              temp.push({ ...userData, ...room })
+              return temp
+            })
+            // .then(setRoomUserData) // 에러 발생 코드
+            .then((temp) => {
+              temp.length === roomList.length && setRoomUserData(temp)
+              // 비동기로 처리되다보니 한 개, 두 개 일 때 setState를 해버려 렌더링 시 원치 않는 상태에서 렌더링이 끝남.
+              // temp, 임시 배열이 완성 되었을 떄, temp.length === roomList.length 일 때, setState를 해줌으로써, 배열이 완성된 후 렌더링을 해줌.
+            })
+        ))
+      })
+  }, [])
+
+  console.log(currentRoom);
 
   return (
     <>
@@ -100,17 +97,8 @@ const ChatPage = ({ client }) => {
           {/******************** START chat box ********************/}
           <div className="chat box">
             {/* start chat chatList */}
-            <div className="chat box chatList">
-              <ChatList />
-              <ChatList />
-              <ChatList />
-              <ChatList />
-              <ChatList />
-              <ChatList />
-              <ChatList />
-              <ChatList />
-              <ChatList />
-              <ChatList />
+            <div id="chatList" className="chat box chatList">
+              {renderChatList()}
             </div>
             {/* end of chat chatList */}
 
