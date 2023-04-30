@@ -240,9 +240,11 @@ const HomePage = () => {
   </Link>
 ))}
 </div>
+<Link to={'./productsDetail/FT000149'}>
           <div style={{marginTop:'250px', textAlign: "center" }}>
 <img src="./images_key/앨리스.png" style={{width:"100%", height: 'auto'}}/>
           </div>
+</Link>
         </section>
 
         <section

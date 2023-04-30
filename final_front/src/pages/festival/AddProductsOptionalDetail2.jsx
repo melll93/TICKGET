@@ -85,7 +85,10 @@ const saveFestPoster=async()=>{
     const newPsPoster = [...festOrginPsUrl,festival.festPsUrl]
     setFestOriginPsUrl(newPsPoster)
     /* console.log(festival); */
-alert('추가완료')
+    Swal.fire({
+      title:'추가 완료',
+      icon:'success'
+    })
 if (!res.data) {
 } else {
 }    
@@ -122,7 +125,10 @@ const deleteFestPsUrl = async ({i}) => {
     const updatedFestPsUrl = festOrginPsUrl.filter((item, index) => index !== i);
     setFestOriginPsUrl(updatedFestPsUrl);
   } else {
-    alert("에러")
+    Swal.fire({
+      title:'에러',
+      icon:'error'
+    })
   }
 };
 

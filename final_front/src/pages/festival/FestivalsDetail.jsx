@@ -19,6 +19,7 @@ import firebase from "firebase/compat/app";
 import { firebaseConfig } from "../board/carpool/CarpoolBoardList";
 import MapContainer from "../board/market/Map/MapContainer";
 import Footer from "../../components/Footer";
+import Swal from "sweetalert2";
 
 
 const FestivalsDetail = () => {
@@ -107,7 +108,12 @@ const decreaseSeat = () => {
       seatsRef.set(updatedSeatAvailable);
     navigate("/payment2/" + festMId);
 
-    }else{alert('선택한 좌석이 매진입니다.')}
+    }else{
+      Swal.fire({
+        title:'선택한 좌석이 매진입니다.',
+        icon: 'warning'
+      })
+    }
 }; 
 
 
@@ -115,7 +121,10 @@ const researveBtnClicked=()=>{
   if(selectedFestTcPrice&&date&&festSelectedTkamt){
     decreaseSeat()
   }else{
-       alert('선택된 날짜 | 좌석 | 수량이 없습니다.')
+    Swal.fire({
+      text:'선택된 날짜 | 좌석 | 수량이 없습니다.',
+      icon: 'warning'
+    })
   }
 }
 
@@ -224,7 +233,11 @@ const researveBtnClicked=()=>{
       }
       navigate("/productsDetail/" + festMId);
       resetReviewField();
-    }else(alert('로그인 시, 이용가능합니다. '))
+    }else(
+      Swal.fire({
+        title:'로그인 시 이용 가능합니다.',
+        icon:'warning'
+      }))
   };
 
   /* 상품삭제 */

@@ -91,7 +91,10 @@ const festivalInsert = async () => {
     const res = await FestivalInsertDB(festival);
     /* console.log(festival); */
     if (!res.data) {
-  alert('error')
+      Swal.fire({
+          title:'에러',
+          icon:'error'
+        })
     } else {
       const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId);
       if (confirmResult) {//예

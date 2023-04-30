@@ -71,7 +71,11 @@ const deleteFestTcRow = async (festTcNo, index) => { // 매개변수 수정
 
 setDbTickets(prevTickets => prevTickets.filter((_, i) => i !== index));
   } else {
-    alert("에러")
+    Swal.fire({
+      title: "에러",
+      icon: 'error',
+    })
+  /*   alert("에러") */
   }
 };
 
@@ -116,7 +120,10 @@ const inputFbSeat = (index, seat) => {
 const festTicketInsert = async () => {
   for (const ticket of tickets) {
     if (ticket.seatType === '' || ticket.price === ''|| ticket.time === '' || ticket.seat === '') {
-      alert('빈칸이 존재합니다. 확인해주세요. ');
+      Swal.fire({
+        title: '빈칸이 존재합니다. 확인해주세요. ',
+        icon: 'warning',
+      })
     } else {
       const res = await festTicketInsertDB({  
         festMId,
@@ -125,11 +132,17 @@ const festTicketInsert = async () => {
         festTcTime: ticket.time,
       });    
       if (!res.data) {
-        alert('error');
+        Swal.fire({
+          title : '에러',
+          icon:"error"
+        })
       } 
       else {
         /* 성공 */
-        alert('저장완료');
+        Swal.fire({
+          title : "저장 완료",
+          icon: "success"
+        })
         const newTickets=[];
         setTickets(newTickets);
         const updatedDbTickets = [...dbTickets, ...tickets]; 
@@ -168,7 +181,10 @@ useEffect(() => {
 const insertData = (tickets) => {
   for (const ticket of tickets) {
     if (ticket.seatType === '' || ticket.price === ''|| ticket.time === '' || ticket.seat === '') {
-      alert('빈칸이 존재합니다. 확인해주세요. ');
+      Swal.fire({
+        title:'빈 칸이 존재합니다. 확인해주세요.',
+        icon : 'warning'
+      })
     } else{
       const data = {
         [ticket.time+'-'+ticket.seatType]:{
