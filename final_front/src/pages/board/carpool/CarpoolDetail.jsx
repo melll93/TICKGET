@@ -27,7 +27,7 @@ import Sidebar from "../../../components/Sidebar";
 import UserProfile from "../../../components/UserProfile";
 import { ContainerDiv } from "../../../styles/formStyle";
 import MapContainer from "../market/Map/MapContainer";
-
+import { searchById } from "../../../axios/member/member";
 /* ********************** */
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -184,7 +184,7 @@ const CarpoolDetail = ({ match }) => {
     };
 
     asyncDB();
-    return () => {};
+    return () => { };
   }, []);
 
   if (!carpool.boardCpTitle) {

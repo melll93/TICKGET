@@ -65,5 +65,6 @@
     <logger name="back.spring.final_back.member.repository.NaverMemberDao" level="debug" />
     <logger name="back.spring.final_back.member.repository.SignUpDao" level="debug" />
     <logger name="back.spring.final_back.board.repository.DonationDao" level="debug" />
+    <logger name="back.spring.final_back.chat.repository.ChatDao" level="debug" />
 
 </configuration>
