@@ -7,6 +7,7 @@ import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
 import {
   GoogleButton,
+  MButton,
   MyInput,
   MyLabel,
   MyP,
@@ -206,7 +207,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             <div style={{ textAlign: "right" }}>
               {/* <Button variant="primary" type="login" onClick={() => { loginLocal() }}> */}
               {/* axios 이벤트로 처리 여기서 */}
-              <Button
+            {/*   <Button
                 variant="primary"
                 type="login"
                 onClick={(e) => {
@@ -215,7 +216,17 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 }}
               >
                 로그인
-              </Button>
+              </Button> */}
+              <div  style={{textAlign:'center'}}>
+
+              <MButton onClick={(e) => {
+                e.preventDefault();
+                handleLogin(member)
+              }}>
+                <i class="bi bi-box-arrow-in-right"></i>{" "}
+                로그인
+              </MButton>
+                </div>
             </div>
 
             <br />

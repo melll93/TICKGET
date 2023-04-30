@@ -210,7 +210,9 @@ const MarketWriteForm = ({ mkImageUploader }) => {
     }).open();
   }
 
-
+  const handleCancle = () => {
+    navigate('/market')
+  }
 
 
   
@@ -361,6 +363,8 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
 
               <hr style={{ opacity: "0%" }} />
+              <div style={{textAlign:'center'}}>
+
               <Button style={
                 {backgroundColor:"rgb(80,50,200)" 
                 , border:'1px solid white'
@@ -371,6 +375,19 @@ const MarketWriteForm = ({ mkImageUploader }) => {
               >
                 글 등록하기
               </Button>
+              <Button style={
+                {backgroundColor:"rgb(170,180,190)" 
+                , border:'1px solid white'
+                , fontWeight:'bold'
+                , transition:'background-color 0.3s ease',
+              }}
+              onClick={handleCancle}
+              >
+                취소/이전으로
+              </Button>
+
+
+                </div>
             </FormDiv>
           </Form>
         </ContainerDiv>

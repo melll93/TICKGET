@@ -17,7 +17,7 @@ const MarketList = () => {
   
   //페이지네이션 처리
   const [pages, setPage] = useState(1);
-  const [perPage] = useState(15);
+  const [perPage] = useState(10);
   
   useEffect(() => {
     selectBoardList();

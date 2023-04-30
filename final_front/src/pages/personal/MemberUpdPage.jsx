@@ -305,7 +305,7 @@ const MemberUpdPage = () => {
             <div style={{marginLeft: '80.5px'}}>
             <div style={{display: 'flex'}}>
             <MyLabel style={{textAlign: 'left'}}> 이메일
-              <MyInput type="email" id="email" placeholder="이메일를 입력해주세요"
+              <MyInput type="email" id="email" placeholder="이메일을 입력해주세요"
                 onChange={(e) => { changeMemInfo(e); validate('email', e); }} />
               <MyLabelAb>{comment.email}</MyLabelAb>
             </MyLabel>

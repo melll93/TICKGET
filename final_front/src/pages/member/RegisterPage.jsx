@@ -366,7 +366,7 @@ const RegisterPage = ({ authLogic }) => {
             {/* 이메일 */}
             <div style={{display: 'flex'}}>
             <MyLabel> 이메일 <span style={{ color: "red" }}>{star.email}</span>
-              <MyInput type="email" id="email" placeholder="이메일를 입력해주세요"
+              <MyInput type="email" id="email" placeholder="이메일을 입력해주세요"
                 onChange={(e) => { changeMemInfo(e); validate('email', e); }} />
               <MyLabelAb>{comment.email}</MyLabelAb>
             </MyLabel>
@@ -412,7 +412,7 @@ const RegisterPage = ({ authLogic }) => {
             {/* 회원가입 버튼 */}
             <MButton type="button" 
               onClick={handleSignup} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
-              {'가입하기'}
+              {<i class="bi bi-check-lg"></i>}{" "}{'가입하기'}
             </MButton>
           </div>
         </SignupForm>

@@ -232,10 +232,10 @@ const UnRegiesterPage = () => {
             marginTop: "200px",
           }}
         >
-          <h2>회원 탈퇴 안내</h2>
+          <h2 style={{fontWeight:'bold'}}>회원 탈퇴 안내</h2>
           <div>
           <div class="notice"
-          style={{marginTop: '8px'}}>
+          style={{marginTop: '20px'}}>
             <strong class="notice-title">탈퇴 전 안내사항을 꼭 확인해 주세요.</strong>
             <p>탈퇴 시 회원 님의 티겟 이용 정보가 삭제되어 복구가 불가능하며, 티겟 서비스는 더 이상 이용할 수 없습니다.</p>
           </div>
