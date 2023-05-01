@@ -222,8 +222,8 @@ const insertData = (tickets) => {
   return (
     <div>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
-티켓 정보 입력  
-<p style={{fontSize:'15px'}}>(입력후 '<span style={{color:'red'}}>저장</span>'버튼을 눌러주세요.)</p>
+예매 추가 정보 입력  
+<p style={{fontSize:'15px'}}>(상품 등록 후, 가능합니다.)</p>
     </h1>
 
     <div className="input-group">

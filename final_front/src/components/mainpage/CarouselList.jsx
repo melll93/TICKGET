@@ -12,11 +12,14 @@ const responsive = {
     // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
     items: 5,
+    partialVisibilityGutter: 40,
+    transitionDuration: 500, // 추가
   },
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 2000, min: 1024 },
     items: 5,
-    slidesToSlide: 1,
+    slideToslide: 1 ,
+    transitionDuration: 500, // 추가
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -42,25 +45,27 @@ const customTransition = {
   },
   exit: {
     transform: 'translateX(-50px)',
-    opacity: 0,
+    opacity: 0.5,
   },
 };
 
 
   return (
     <div className="carouselDiv">
-    <Carousel 
-      responsive={responsive}
-      infinite 
-      autoPlay
-      autoPlaySpeed={3500}
-      beforeChange={() => setMovingImg((prevSlide) => (prevSlide + 1) % festivalToday.length)}
-      arrows={true}
-      slidesToSlide={1}
-      draggable={true}
-      swipeable={true}
-      customTransition={customTransition}
-    >
+<Carousel
+  responsive={responsive}
+  infinite
+  autoPlay
+  autoPlaySpeed={3000}
+  beforeChange={() =>
+    setMovingImg((prevSlide) => (prevSlide + 1) % festivalToday.length)
+  }
+  arrows={true}
+  draggable={true}
+  swipeable={true}
+  customTransition={customTransition} // 추가
+  
+>
       {festivalToday.map((festival, index) => (
         <CarouselOne key={index} festival={festival} isActive={index === movingImg} />
       ))}
