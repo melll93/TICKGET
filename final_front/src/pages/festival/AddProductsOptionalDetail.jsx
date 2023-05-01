@@ -25,7 +25,7 @@ console.log(festTcTime); */
 
 
 
-  /* fest_detail INSERT */
+  /* fest_detail INSERT  & update*/
   const saveFestDetail=async()=>{
     const festival = {
       festMId,
@@ -36,22 +36,26 @@ console.log(festTcTime); */
   };
   try {
   const res = await saveFestDetailDB(festival);
-  /*   console.log(festival); */
+  Swal.fire({
+    title:'등록완료',
+    icon:'warning'
+  })
   if (!res.data) {
   } else {
   }
 } catch (error) {
-  /* alert('이미 등록된 정보가 있어 수정만 가능합니다.'); */
-  Swal.fire({
-    title:'이미 등록된 정보가 있어 수정만 가능합니다.',
-    icon:'warning'
-  })
+  const res = await festivalDetailUpdateDB(festival)
+    Swal.fire({
+      title:'상품 수정 완료',
+      icon:'success'
+    })
+    navigate(`/productsDetail/${festMId}`)
 }
 
 };
 
 /* fest_detail Update  */
-const festivalDetailUpdate = async() => {
+/* const festivalDetailUpdate = async() => {
   const festival={
     festMId,
     festDtCasting: festDetailCasting,
@@ -68,7 +72,7 @@ const festivalDetailUpdate = async() => {
   } catch (error) {
     console.log(error);
   }
-};
+}; */
 
 
 
@@ -178,10 +182,10 @@ const FestImageUpload = (e) => {
       {/* fest_detail  */}
 <div>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
-fest_detail 추가 정보 입력 
+추가 정보 입력 
     </h1>
-    <BlackBtn onClick={saveFestDetail}>임시저장</BlackBtn>
-    <BlackBtn onClick={festivalDetailUpdate}>수정완료</BlackBtn>
+{/*     <BlackBtn onClick={saveFestDetail}>저장</BlackBtn> */}
+{/*     <BlackBtn onClick={festivalDetailUpdate}>등록</BlackBtn> */}
 
     <div className="form-floating">
   <input type="text" className="form-control" 
@@ -213,18 +217,15 @@ fest_detail 추가 정보 입력
 </div>
 
 {/* fest_poster */}
-
-    <p>
+<div style={{textAlign:'left', paddingLeft:'12px', marginTop:'30px'}}>
+    <p style={{color:'gray', fontSize:'14px'}}>
     파일 상세이미지 업로드
     </p> 
-
+</div>
 
             <input
-          className="form-control"
-          type="file"
-          accept="image/*"
-          id="festivalPoster"
-          onChange={FestImageUpload}
+          className="form-control" type="file" accept="image/*"  id="festivalPoster"
+          onChange={FestImageUpload} style={{width:'86%', display:'inline'}}
           ref={imgRef}
           />
 <BlackBtn onClick={saveFestPoster}>선택파일 저장</BlackBtn>
@@ -244,7 +245,7 @@ fest_detail 추가 정보 입력
 
 
 {/* fest_ticket */}
-<AddProductsFestTicketDetail festTcNo={festTcNo} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}></AddProductsFestTicketDetail>
+<AddProductsFestTicketDetail saveFestDetail={saveFestDetail} festTcNo={festTcNo} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}></AddProductsFestTicketDetail>
 
 
     </>

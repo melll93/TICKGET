@@ -46,7 +46,7 @@
         fest_m_genre,
         fest_m_area)
         VALUES
-        ('admin_자체등록 member_id',
+        (#{festMAuthor},
         #{festMName},
         #{festMStart},
         #{festMEnd},

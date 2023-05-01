@@ -17,6 +17,7 @@ import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
 const _userData = cookies.get("_userData"); //유저 정보
+console.log(_userData)
 
 const AddProducts = () => {
   const navigate = useNavigate();
@@ -465,7 +466,9 @@ originDetail()
         {/* 추가 정보 입력 */}
         
         <br />
-        <br />
+
+        {optionModal===1? null : 
+        (festMId==='new' ?   <>  <br />
         <BlackBtn
           onClick={() => {
             navigate(-1);
@@ -473,8 +476,17 @@ originDetail()
         >
           취소
         </BlackBtn>
-        &nbsp;
-        {festMId==='new'? <BlackBtn onClick={festivalInsert}>상품등록하기</BlackBtn> : <BlackBtn onClick={festivalUpdate}>상품수정완료</BlackBtn>}
+        &nbsp;<BlackBtn onClick={festivalInsert}>상품등록하기</BlackBtn> </>:        <> <br />
+        <BlackBtn
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          취소
+        </BlackBtn>
+        &nbsp;<BlackBtn onClick={festivalUpdate}>상품수정완료</BlackBtn></>)
+        }
+
       </div>
       {/* //등록 div 끝 */}
     </>

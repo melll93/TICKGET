@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useInsertionEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {festTicketInsertDB, deleteFestTicketDB } from '../../axios/festival/festival';
 import { firebaseConfig } from '../board/carpool/CarpoolBoardList';
 import firebase from "firebase/compat/app";
 import Swal from 'sweetalert2';
+import { BlackBtn } from '../../styles/formStyle';
 
 
-const AddProductsFestTicketDetail = ({ festTcNo, festTcType, festTcPrice, festTcTime}) => {
+const AddProductsFestTicketDetail = ({ saveFestDetail, festTcNo, festTcType, festTcPrice, festTcTime}) => {
+  const navigate=useNavigate();
   const {festMId}=useParams();
 /*    console.log('타입'+festTcType); */
  /*  console.log(festTcPrice); */ 
@@ -220,8 +222,8 @@ const insertData = (tickets) => {
   return (
     <div>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
-fest_ticket 추가 정보 입력  
-<p style={{fontSize:'15px'}}>(상품 등록 후, 가능합니다.)</p>
+티켓 정보 입력  
+<p style={{fontSize:'15px'}}>(입력후 '<span style={{color:'red'}}>저장</span>'버튼을 눌러주세요.)</p>
     </h1>
 
     <div className="input-group">
@@ -340,6 +342,17 @@ fest_ticket 추가 정보 입력
       </table>
       <div style={{textAlign:'left', paddingLeft:'20px'}}>
       </div>
+
+
+      <br />
+        <BlackBtn
+          onClick={() => {
+            navigate(`/productsDetail/${festMId}`);
+          }}
+        >
+          취소
+        </BlackBtn>
+        &nbsp;<BlackBtn onClick={saveFestDetail}>상품등록완료</BlackBtn> 
 
     </div>
   )
