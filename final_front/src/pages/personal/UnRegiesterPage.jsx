@@ -203,7 +203,7 @@ const UnRegiesterPage = () => {
                 title: "회원 탈퇴되셨습니다. 저희 사이트를 이용해 주셔서 감사합니다.",
               });
               cookies.remove("access_token"); // access token 쿠키도 삭제
-              window.location.reload(); // 사용자 정보 초기화 및 로그인 초기화를 위해 페이지 새로고침
+              window.localStorage.removeItem("access_token");
               navigate("/");
             } else {
               console.error("회원 탈퇴 실패");

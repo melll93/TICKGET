@@ -212,8 +212,8 @@ const MemberUpdPage = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const { email, password, password2, name, mobile, zipcode } = memInfo;
-    const { address, addrDetail } = post;
+    const { email, password, password2, name, mobile } = memInfo;
+    const { zipcode, address, addrDetail } = post;
   
     if (password !== password2) {
       // 비밀번호와 비밀번호 확인 값이 다른 경우
@@ -325,7 +325,7 @@ const MemberUpdPage = () => {
 
             {/* 주소(우편번호, 주소지) */}
             <MyLabel style={{textAlign: 'left'}}> 우편번호
-                <MyInput type="text" id="zipcode" defaultValue={memInfo.zipcode} placeholder="우편번호를 입력해주세요." 
+                <MyInput type="text" id="zipcode" defaultValue={post.zipcode} placeholder="우편번호를 입력해주세요." 
                 onChange={(e)=>{changeMemInfo(e);}} />
                 <MyLabelAb>{comment.zipcode}</MyLabelAb>
               </MyLabel>
