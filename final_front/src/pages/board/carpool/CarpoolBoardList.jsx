@@ -104,7 +104,7 @@ const CarpoolBoardList = () => {
           } else {
             Swal.fire({
               title: "인원이 다 찼습니다.",
-              icon: "warning",
+              icon: "error",
             });
           }
         } else {
