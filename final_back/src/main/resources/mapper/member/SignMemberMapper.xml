@@ -108,8 +108,19 @@
 		SET
 		member_password =
 		<choose>
-			<when test="memberPassword != null and memberPassword != ''">#{memberPassword}</when>
-			<otherwise>member_password</otherwise>
+			<!-- 비밀번호가 null, ""가 아닌 경우 -> DB의 값과 비교하여 이전 비밀번호와도 일치하지 않을 경우에만 새비밀번호 update -->
+			<when test="memberPassword != null and memberPassword != ''">
+				<if test="memberPassword != member_password">
+					#{memberPassword}
+				</if>
+				<!-- 새비밀번호와 DB의 값과 비빌번호가 일치하는 경우 그대로 사용 -->
+				<if test="memberPassword == member_password">
+					member_password
+				</if>
+			</when>
+			<otherwise>
+				member_password
+			</otherwise>
 		</choose>
 		,
 		member_name =
