@@ -220,7 +220,7 @@ const insertData = (tickets) => {
   return (
     <div>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
-fest_ticket 추가 정보 입력  
+예매 추가 정보 입력  
 <p style={{fontSize:'15px'}}>(상품 등록 후, 가능합니다.)</p>
     </h1>
 

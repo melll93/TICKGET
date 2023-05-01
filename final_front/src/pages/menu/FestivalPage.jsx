@@ -103,9 +103,9 @@ const FestivalsTest = () => {
                    <div style={{height:'30px', overflow:'hidden', padding:'5px', marginBottom:'15px'}}>
                     <h5 className="card-title"><strong>{festival.festMName}</strong></h5>
                     </div>
-                    <p className="card-text">장소 : {festival.festMLoc}</p>
+                    <p className="card-text"><i class="bi bi-geo-alt-fill"></i> {festival.festMLoc}</p>
                     <p className="card-text">
-                     기간: {festival.festMStart} ~ {festival.festMEnd}
+                    <i class="bi bi-calendar"></i> {festival.festMStart} ~ {festival.festMEnd}
                     </p>
                   </div>
                 </a>

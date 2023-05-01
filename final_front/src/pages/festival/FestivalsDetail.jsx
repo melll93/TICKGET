@@ -412,25 +412,6 @@ console.log(festival)
       <Sidebar />
       <div className="center">
 
-
-
-        {/* 로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람이 관리자일경우 삭제 버튼 보이기 
-   {sessionStorage.getItem('Auth')===''관리자"'&&       
-   */}
-          {_userData && _userData.memberAuthority==="ROLE_ADMIN" ? 
-        <div>
-          <BlackBtn onClick={deleteProducts} width='100px'>상품삭제</BlackBtn>
-          <Link to={`/addProducts/${festMId}`}>
-          <BlackBtn width='100px'>상품수정</BlackBtn>
-        </Link>
-       </div>
-       :null}
-       
-
-
-
-
-
         <div className="totalcontainer">
           {/* //////////////////////////////////////탑 섹션///////////////////////////////////////////////////////////////////// */}
           <section>
@@ -443,60 +424,93 @@ console.log(festival)
                 />
               </div>
               <div className="product_detail_info">
-                <div className="product_detail_head">
-                  <h3 className="product_title" style={{fontWeight:'bold'}}>{festival[0].festMName}</h3>
-   {/*                <p className="product_sub_title">subtitle</p> */}
+              <div className="product_detail_head" style={{ display: 'flex', justifyContent: 'space-between' }}>
+  <h3 className="product_title" style={{ fontWeight: 'bold' }}>{festival[0].festMName}</h3>
+  {_userData && _userData.memberAuthority==="ROLE_ADMIN" ? 
+    <div style={{marginTop:'10px'}}>
+      &nbsp;<BlackBtn onClick={deleteProducts} width='100px'>상품삭제</BlackBtn>
+      <Link to={`/addProducts/${festMId}`}>
+        <BlackBtn width='100px'>상품수정</BlackBtn>
+      </Link>
+    </div>
+    :null
+  }
+</div>
+                <div className="product_info">
                 </div>
-                <div className="product_info"></div>
-                <ul className="product_lnfo_list_col2">
-                  <li className="product_info_list">
-                    <span className="product_info_title">장소</span>
-                    <div className="product_info_desc">{festival[0].festMLoc}</div>
-                  </li>
-                  <li className="product_info_list">
-                    <span className="product_info_title">관람시간</span>
-                    <div className="product_info_desc">{festival[0].festDtRuntime===null? <p>미제공</p>: <p>{festival[0].festDtRuntime}</p>}</div>
-                  </li>
-                  <li className="product_info_list">
-                    <span className="product_info_title">기간</span>
-                    <div className="product_info_desc">
-                      {festival[0].festMStart}~{festival[0].festMEnd}
-                    </div>
-                  </li>
-                  <li className="product_info_list">
-                    <span className="product_info_title">관람등급</span>
-                    <div className="product_info_desc">{festival[0].festDtAge===null? <p>미제공</p>: <p>{festival[0].festDtAge}</p>}</div>
-                  </li>
-                </ul>
 
+         
+            
+            <div className="product_info">
+  <ul className="product_lnfo_list_col2">
+    <li className="product_info_list">
+      <span className="product_info_title">장소</span>
+      <div className="product_info_desc">{festival[0].festMLoc}</div>
+    </li>
+  </ul>
+</div>
 
+<div className="product_info">
+  <ul className="product_lnfo_list_col2">
+    <li className="product_info_list">
+      <span className="product_info_title">관람시간</span>
+      <div className="product_info_desc">{festival[0].festDtRuntime===null? <p>미제공</p>: <p>{festival[0].festDtRuntime}</p>}</div>
+    </li>
+  </ul>
+</div>
 
-                <ul className="product_lnfo_list_col2">
-                  <li className="product_info_list">
-                    <span className="product_info_title">출연진</span>
-                    <div className="product_info_desc">
-                      <ul className="product_info_sublist" style={{paddingLeft:'0px', paddingRight:'20px'}}>
+<div className="product_info">
+  <ul className="product_lnfo_list_col2">
+    <li className="product_info_list">
+      <span className="product_info_title">기간</span>
+      <div className="product_info_desc">
+        {festival[0].festMStart}~{festival[0].festMEnd}
+      </div>
+    </li>
+  </ul>
+</div>
 
-                        <li className="product_info_subitem" >
-                         {festival[0].festDtCasting===null? <p style={{display:'inline'}}>(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}</p>}  
-                        </li>
+<div className="product_info">
+  <ul className="product_lnfo_list_col2">
+    <li className="product_info_list">
+      <span className="product_info_title">관람등급</span>
+      <div className="product_info_desc">{festival[0].festDtAge===null? <p>미제공</p>: <p>{festival[0].festDtAge}</p>}</div>
+    </li>
+  </ul>
+</div>
 
-                      </ul>
-                    </div>
-                  </li>
-                  <li className="product_info_list">
-                    <span className="product_info_title">제작진</span>
-                    <div className="product_info_desc">
-                      <ul className="product_info_sublist">
-                        <li className="product_info_subitem">
-                         { festival[0].festDtCrew===null? <p style={{display:'inline'}}>제작진(미공개)</p>: <p style={{display:'inline'}}>{festival[0].festDtCrew}</p>}
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+<div className="product_info">
+  <ul className="product_lnfo_list_col2">
+    <li className="product_info_list">
+      <span className="product_info_title">출연진</span>
+      <div className="product_info_desc">
+        <ul className="product_info_sublist" style={{paddingLeft:'0px', paddingRight:'20px'}}>
+          <li className="product_info_subitem">
+            {festival[0].festDtCasting===null? <p style={{display:'inline'}}>(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}</p>}
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div className="product_info">
+  <ul className="product_lnfo_list_col2">
+    <li className="product_info_list">
+      <span className="product_info_title">제작진</span>
+      <div className="product_info_desc">
+        <ul className="product_info_sublist">
+          <li className="product_info_subitem">
+            { festival[0].festDtCrew===null? <p style={{display:'inline'}}>제작진(미공개)</p>: <p style={{display:'inline'}}>{festival[0].festDtCrew}</p>}
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>     
+</div>
             </div>
+
           </section>
           {/* //////////////////////////////////////미드 섹션////////////////////////////////////////////////////////////////// */}
 
@@ -576,42 +590,42 @@ null
           </section>
           {/* ////////////////////////////////////// 바텀 섹션///////////////////////////////////////////////////////////////////// */}
           <section>
-            <div className="bottomcontainer" style={{ marginLeft: "220px" }}>
+            <div className="bottomcontainer" style={{ marginLeft: "220px", height:'1200px' }}>
               <Tabs
-                style={{ maxWidth: "1200px",fontFamily: "Nanum Gothic", fontWeight: "bold" }}
+                style={{ maxWidth: "1200px",fontFamily: "Nanum Gothic", fontWeight: "bold"}}
                 defaultActiveKey="product_detail_description"
                 id="justify-tab-example"
                 className="product_detail_tabs"
                 justify
               >
-                <Tab eventKey="product_detail_description" title="상세정보">
-                  
-                  
-                  
-                {festival.map((fest, i) => (
-                  <div
-    key={i}
-    className="product_detail_description"
-    style={{
-       maxWidth: "1250px",
-      maxHeight: "1000px", 
-    }}
-  >
-    {fest.festPsUrl === null ? (
-      null
-    ) : (
-      <img src={fest.festPsUrl} alt="상품상세정보이미지" />
-    )}
-    {i === festival.length - 1 && fest.festPsUrl === null ? (
-      <div style={{ margin: '50px' }}>
-        <h1 style={{ margin: '50px' }}>상세보기 이미지 정보가 없습니다.</h1>
-        <TicketCancleInfo />
-      </div>
-    ) : null}
-  </div>
-))}
-
-                </Tab>
+               <Tab eventKey="product_detail_description" title="상세정보">
+  {festival.map((fest, i) => (
+    <div
+      key={i}
+      className="product_detail_description"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        maxWidth: '1250px',
+        maxHeight: '1000px',
+      }}
+    >
+      {fest.festPsUrl === null ? (
+        null
+      ) : (
+        <img src={fest.festPsUrl} alt="상품상세정보이미지" style={{ width: '30%', height: '30%', objectFit: 'cover', marginTop: '50px' }} />
+      )}
+      {i === festival.length - 1 && fest.festPsUrl === null ? (
+        <div style={{ margin: '50px' }}>
+          <h1 style={{ margin: '50px' }}>상세보기 이미지 정보가 없습니다.</h1>
+          <TicketCancleInfo />
+        </div>
+      ) : null}
+    </div>
+  ))}
+</Tab>
 
 
                 <Tab eventKey="product_detail_place" title="공연장 위치" mountOnEnter={true}>
@@ -631,8 +645,7 @@ null
 
 </Tab>
 
-                <Tab eventKey="product_detail_review" title="상품리뷰">
-                  리뷰리뷰
+                <Tab eventKey="product_detail_review" title="공연후기">
                   <div
                     className="product_detail_review"
                     style={{
@@ -647,7 +660,7 @@ null
                         borderBottom: "1px solid black",
                       }}
                     >
-                      <h3>관람 후기</h3>
+                      <h3 style={{fontWeight:'bold'}}>관람 후기</h3>
                     </div>
 
                     <div
@@ -688,9 +701,12 @@ null
           </section>
         </div>{" "}
         {/* totalcontainer div */}
+        <div style={{marginTop:'100px'}}>
       <Footer/>
+        </div>
       </div>{" "}
       {/* center div */}
+      
     </>
   );
 };

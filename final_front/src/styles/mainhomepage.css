@@ -12,10 +12,10 @@
 
 /* 캐로쉘 각각 디브 */
 .carouseloneDiv {
-  height: 350px;
+  height: 300px;
   width: 250px;
   max-width: 1000px;
-  max-height: 1000px;
+  max-height: 1200px;
   /* border: 1px solid red;  */
   margin: 30px 50px;
   font-weight: bold;
@@ -24,7 +24,7 @@
 
 .carouseloneDiv:hover {
   transform: scale(1.1);
-  transition: transform 500ms ease-in-out;
+  transition: transform 300ms ease-in-out;
   object-fit: cover;
   font-weight: bold;
   font-size: 0.8rem;
@@ -47,8 +47,8 @@
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
-  width: 100%;
-  height: 100%;
+  height: 300px;
+  width: 250px;
   object-fit: cover;
   /*    border: 1px solid black;  */
 }

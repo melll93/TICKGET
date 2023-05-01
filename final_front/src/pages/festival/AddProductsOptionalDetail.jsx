@@ -176,14 +176,14 @@ const FestImageUpload = (e) => {
       return (
         <>
       {/* fest_detail  */}
-<div>
-    <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px', color:'darkgray'}}>
-fest_detail 추가 정보 입력 
+<div style={{marginTop:'50px'}}>
+    <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px',marginBottom:'30px' , color:'darkgray'}}>
+공연 추가 정보 입력 
     </h1>
     <BlackBtn onClick={saveFestDetail}>임시저장</BlackBtn>
     <BlackBtn onClick={festivalDetailUpdate}>수정완료</BlackBtn>
 
-    <div className="form-floating">
+    <div className="form-floating" style={{marginTop:'20px'}}>
   <input type="text" className="form-control" 
  defaultValue={festDtCasting} 
   id="festDetailCasting"
@@ -204,7 +204,7 @@ fest_detail 추가 정보 입력
     <input type="text" className="form-control" defaultValue={festDtRuntime} id="festDetailRuntime" onChange={(e)=>{inputRuntime (e.target.value)}} />
     <label htmlFor="floatingInput">runtime ('~분'으로 기재해주세요.)</label>
   </div>
-  <div className="form-floating" style={{flex: 1, paddingLeft:'5px'}}>
+  <div className="form-floating" style={{flex: 1, paddingLeft:'5px', marginBottom:'20px'}}>
     <input type="text" className="form-control" defaultValue={festDtAge} id="festDetailCrew" onChange={(e)=>{inputAge (e.target.value)}} />
     <label htmlFor="floatingInput">관람등급 ('만 ~세 이상'으로 기재해주세요.)</label>
   </div>
@@ -214,9 +214,6 @@ fest_detail 추가 정보 입력
 
 {/* fest_poster */}
 
-    <p>
-    파일 상세이미지 업로드
-    </p> 
 
 
             <input
@@ -227,14 +224,14 @@ fest_detail 추가 정보 입력
           onChange={FestImageUpload}
           ref={imgRef}
           />
-<BlackBtn onClick={saveFestPoster}>선택파일 저장</BlackBtn>
+<BlackBtn onClick={saveFestPoster} style={{marginTop:'20px'}}>선택파일 저장</BlackBtn>
 
 {festOrginPsUrl && festOrginPsUrl.some(url => url !== null) ? (
   festOrginPsUrl.map((url, i) => (
     url !== null ? (
       <div key={i} style={{ display: 'inline' }}>
         <img key={i} src={url} style={{ width: '50px', height: '100px', overflow: 'hidden', display: 'inline', margin: '5px' }}></img>
-        <BlackBtn onClick={() => deleteFestPsUrl({ i })} width='50px' height="10px" style={{ fontSize: '5px' }}>삭제</BlackBtn>
+        <BlackBtn onClick={() => deleteFestPsUrl({ i })} width='50px' height="50px" style={{ fontSize: '10px' }}>삭제</BlackBtn>
       </div>
     ) : null
   ))
