@@ -191,7 +191,8 @@ const TogetherBoardDetail = () => {
               <form method="post">
                 <input type="hidden" name="boardTgNo" value="" />
                 <div>
-                  <label>제목</label>
+                  <br />
+                  <h4>제목</h4>
                   <span
                     style={{ width: "98%", margin: "10px" }}
                     type="text"
@@ -205,9 +206,9 @@ const TogetherBoardDetail = () => {
                 </div>
 
                 <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+                <br />
                 <div>
-                  <label>작성자</label>
+                  <h4>작성자</h4>
                   {/* <span
                     style={{ width: "98%", margin: "10px" }}
                     type="text"
@@ -230,9 +231,9 @@ const TogetherBoardDetail = () => {
                 </div>
 
                 <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+                <br />
                 <div>
-                  <label>날짜</label>
+                  <h4>날짜</h4>
                   <span
                     style={{ width: "98%", margin: "10px" }}
                     type="text"
@@ -246,9 +247,9 @@ const TogetherBoardDetail = () => {
                 </div>
 
                 <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+                <br />
                 <div>
-                  <label>내용</label>
+                  <h4>내용</h4>
                   <textarea
                     style={{
                       width: "98%",
@@ -322,8 +323,8 @@ const TogetherBoardDetail = () => {
                     </div>
                   )}
                 </div>
-
-                <label>댓글</label>
+                <br />
+                <h4>댓글</h4>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <textarea
                     style={{
@@ -366,8 +367,8 @@ const TogetherBoardDetail = () => {
                   }}
                 />
                 <br />
-
-                <label>댓글리스트</label>
+                <br />
+                <h4>댓글리스트</h4>
                 <div
                   style={{
                     border: "2px solid lightGray",

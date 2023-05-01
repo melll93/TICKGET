@@ -120,12 +120,11 @@ const TogetherBoardUpdate = () => {
         <div style={{ height: "100px" }}></div>
         <FormDiv style={{ width: "98%", margin: "10px" }}>
           <h2>게시글 수정하기</h2>
-          <br />
+          <br/>
           <div>
             <form method="post">
               <div>
-                <label>수정 할 제목</label>
-                <br />
+                <h4>수정 할 제목</h4>
                 <input
                   id="board_tg_title"
                   type="text"
@@ -146,9 +145,9 @@ const TogetherBoardUpdate = () => {
               </div>
 
               <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+              <br/>
               <div>
-                <label>작성자</label>
+                <h4>작성자</h4>
                 <span
                   style={{ width: "98%", margin: "10px" }}
                   type="text"
@@ -162,9 +161,9 @@ const TogetherBoardUpdate = () => {
               </div>
 
               <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+              <br/>
               <div>
-                <label>수정된 날짜</label>
+                <h4>수정된 날짜</h4>
                 <input
                   id="board_date"
                   // type="datetime-local"
@@ -186,10 +185,9 @@ const TogetherBoardUpdate = () => {
               </div>
 
               <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+              <br/>
               <div>
-                <label>수정할 내용</label>
-                <br />
+                <h4>수정할 내용</h4>
                 <textarea
                   id="board_tg_date"
                   type="text"

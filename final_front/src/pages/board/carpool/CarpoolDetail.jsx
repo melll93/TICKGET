@@ -299,7 +299,7 @@ const CarpoolDetail = () => {
                 <div>
                   <input type="hidden" name="boardCpNo" value="" />
                   <div>
-                    <label>제목</label>
+                    <h4>제목</h4>
                     <span
                       style={{ width: "98%", margin: "10px" }}
                       type="text"
@@ -313,9 +313,9 @@ const CarpoolDetail = () => {
                   </div>
 
                   <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+                  <br />
                   <div>
-                    <label>작성자</label>
+                    <h4>작성자</h4>
                     <div
                       style={{
                         fontFamily: "Nanum Gothic",
@@ -329,9 +329,9 @@ const CarpoolDetail = () => {
                   </div>
 
                   <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+                  <br />
                   <div>
-                    <label>날짜</label>
+                    <h4>날짜</h4>
                     <span
                       style={{ width: "98%", margin: "10px" }}
                       type="datetime-local"
@@ -345,10 +345,10 @@ const CarpoolDetail = () => {
                   </div>
 
                   <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+                  <br />
                   {/* firebase에서 값 받아오기 시작 */}
                   <div>
-                    <label>최대인원</label>
+                    <h4>최대인원</h4>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <div
                         style={{ width: "350px", margin: "10px" }}
@@ -396,9 +396,9 @@ const CarpoolDetail = () => {
                   {/* firebase에서 값 받아오기 종료 */}
 
                   <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+                  <br />
                   <div>
-                    <label>내용</label>
+                    <h4>내용</h4>
                     <textarea
                       style={{
                         width: "98%",
@@ -420,8 +420,8 @@ const CarpoolDetail = () => {
                   </div>
 
                   <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
-                  <label>만남의 장소</label>
+                  <br />
+                  <h4>만남의 장소</h4>
                   <div
                     style={{
                       border: "1px solid lightGray",
@@ -505,7 +505,7 @@ const CarpoolDetail = () => {
                 )}
               </div>
 
-              <label>댓글</label>
+              <h4>댓글</h4>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <textarea
                   style={{
@@ -544,7 +544,7 @@ const CarpoolDetail = () => {
               />
               <br />
 
-              <label>댓글리스트</label>
+              <h4>댓글리스트</h4>
               <div
                 style={{
                   border: "2px solid lightGray",

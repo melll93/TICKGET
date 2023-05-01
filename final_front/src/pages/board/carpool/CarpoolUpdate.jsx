@@ -17,6 +17,7 @@ import {
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv } from "../../../styles/formStyle";
+import MapContainer from "../market/Map/MapContainer";
 
 const CarpoolUpdate = () => {
   const navigate = useNavigate();
@@ -74,13 +75,6 @@ const CarpoolUpdate = () => {
       });
       return;
     }
-    // if (!boardCpDate) {
-    //   Swal.fire({
-    //     title: "날짜를 입력해주세요",
-    //     icon: "warning",
-    //   });
-    //   return;
-    // }
     if (!boardCpContent) {
       Swal.fire({
         title: "내용을 입력해주세요",
@@ -114,24 +108,6 @@ const CarpoolUpdate = () => {
   const handleTitle = useCallback((e) => {
     setCarpoolTitle(e);
   }, []);
-
-  // const handleDate = (date) => {
-  //   // "YYYY-MM-DD" 형식이 아닐 경우 에러 처리
-  //   const regex = /^\d{4}-\d{2}-\d{2}$/;
-  //   if (!regex.test(date)) {
-  //     /* alert("날짜 형식이 올바르지 않습니다."); */
-  //     Swal.fire({
-  //       title: "날짜 형식이 올바르지 않습니다.",
-  //       icon: "warning",
-  //     });
-  //     return;
-  //   }
-  //   // "YYYY-MM-DD" 형식으로 변환
-  //   const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-  //   // 변환된 값을 상태 변수에 저장
-  //   setCarpoolDate(formattedDate);
-  //   // setDate();
-  // };
 
   const handleDate = useCallback((e) => {
     setCarpoolDate(e);
@@ -256,7 +232,6 @@ const CarpoolUpdate = () => {
       <Sidebar />
       <ContainerDiv>
         <div style={{ height: "100px" }}></div>
-        <br />
         <div
           style={{
             margin: "10px",
@@ -276,12 +251,12 @@ const CarpoolUpdate = () => {
           <div>
             <div method="post">
               <div>
-                <label>수정 할 제목</label>
-                <br />
+                <h4>수정 할 제목</h4>
                 <input
                   id="board_cp_title"
                   type="text"
                   maxLength="100"
+                  class="form-control form-control-lg"
                   defaultValue={carpool.boardCpTitle}
                   style={{
                     width: "98%",
@@ -298,9 +273,9 @@ const CarpoolUpdate = () => {
               </div>
 
               <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+              <br />
               <div>
-                <label>작성자</label>
+                <h4>작성자</h4>
                 <span
                   style={{ width: "98%", margin: "10px" }}
                   type="text"
@@ -314,14 +289,12 @@ const CarpoolUpdate = () => {
               </div>
 
               <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+              <br />
               <div>
-                <label>수정된 날짜</label>
-                <br />
+                <h4>수정된 날짜</h4>
                 <input
                   id="board_cp_date"
-                  // type="date"
-                  // defaultValue={carpool.boardCpDate}
+                  class="form-control form-control-lg"
                   maxLength="50"
                   style={{
                     width: "98%",
@@ -338,8 +311,8 @@ const CarpoolUpdate = () => {
               </div>
 
               <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
-              <h3 style={{ marginBottom: "20px" }}>Carpool 최대 인원</h3>
+              <br />
+              <h4 style={{ marginBottom: "20px" }}>Carpool 최대 인원</h4>
               <div
                 style={{
                   display: "flex",
@@ -374,10 +347,9 @@ const CarpoolUpdate = () => {
               </div>
 
               <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-
+              <br />
               <div>
-                <label>수정할 내용</label>
-                <br />
+                <h4>수정할 내용</h4>
                 <textarea
                   id="board_cp_date"
                   type="text"
@@ -398,15 +370,39 @@ const CarpoolUpdate = () => {
                 />
               </div>
 
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+              <br />
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridPlace">
-                  <h3>접선 장소</h3>
+                  <h4>기존의 위치</h4>
+                  <div
+                    class="form-control form-control-lg"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <input
+                      style={{ width: "98%", marginLeft: "10px" }}
+                      className="form-control"
+                      type="text"
+                      value={carpool.boardCpPlace}
+                      readOnly
+                    />
+                    <MapContainer place={carpool.boardCpPlace} />
+                  </div>
+
+                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+                  <br />
+                  <h4>변경할 위치</h4>
                   <Form.Control
                     required
                     id="place"
                     type="text"
                     placeholder="접선 장소를 입력하세요."
-                    style={{ width: "98%", height: "50px" }}
+                    style={{ width: "98%", height: "50px", marginLeft: "10px" }}
                     onClick={() => {
                       searchAddress();
                     }}
@@ -414,7 +410,6 @@ const CarpoolUpdate = () => {
                       handlePlace(e.target.value);
                     }}
                   />
-                  {/* <MapContainer place={carpool.Place} /> */}
                 </Form.Group>
               </Row>
 

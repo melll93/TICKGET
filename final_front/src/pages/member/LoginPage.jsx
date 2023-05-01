@@ -7,7 +7,6 @@ import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
 import {
   GoogleButton,
-  MButton,
   MyInput,
   MyLabel,
   MyP,
@@ -20,6 +19,25 @@ import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies } from "react-cookie";
 import Header from "../../components/Header";
 import Swal from "sweetalert2";
+import styled from "styled-components";
+
+export const MButton = styled.button`
+  border-radius: 20px;
+  border: 1px solid white;
+  background-color: rgb(80, 50, 200);
+  color: white;
+  width: 145px;
+  height: 38px;
+  font-weight: bold;
+  &:hover {
+    background-color: rgb(50, 50, 120);
+  }
+`;
+export const MyH1 = styled.h1`
+  font-size: 38px;
+  margin-bottom: 4px;
+  text-align: center;
+`;
 
 const LoginPage = ({ user, setUser, authLogic }) => {
   const dispatch = useDispatch();
@@ -169,15 +187,24 @@ const LoginPage = ({ user, setUser, authLogic }) => {
         <div className="login">
           {/********************** 자체 회원 로그인 **********************/}
           <Form>
+            <MyH1>
+            <img
+              className="loginicon"
+              src="../logos/loginicon.png"
+              style={{
+                width: "50%",
+              }}
+            />
+            </MyH1>
             {/**************************************************** ID START ***************************************************/}
             <MyLabel htmlFor="id">
-              {" "}
+                {" "}
               ID
               <MyInput
                 id="id"
                 type="text"
                 name="member_id"
-                placeholder="ID를 입력해주세요."
+                placeholder="ID를 입력해 주세요."
                 onChange={(event) => {
                   handleChange(event);
                 }}
@@ -193,7 +220,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 type="password"
                 autoComplete="off"
                 name="member_pw"
-                placeholder="비밀번호를 입력해주세요."
+                placeholder="비밀번호를 입력해 주세요."
                 onChange={(event) => {
                   handleChange(event);
                 }}

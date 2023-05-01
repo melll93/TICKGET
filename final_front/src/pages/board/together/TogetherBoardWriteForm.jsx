@@ -85,7 +85,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
       <ContainerDiv>
         <div style={{ height: "150px" }}></div>
         <FormDiv>
-          <h3>Together 글작성</h3>
+          <h2>Together 글작성</h2>
           <br />
           <div style={{ width: "100%", maxWidth: "2000px" }}>
             <div
@@ -95,7 +95,7 @@ const TogetherBoardWriteForm = ({ board_together }) => {
                 marginBottom: "10px",
               }}
             >
-              <h2>제목</h2>
+              <h4>제목</h4>
               <div style={{ display: "flex" }}>
                 <div
                   style={{
@@ -157,7 +157,8 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             />
             <br />
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-            <h3>작성자</h3>
+            <br />
+            <h4>작성자</h4>
             {(() => {
               if (_userData?.memberId) {
                 return (
@@ -183,8 +184,8 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             })()}
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-
-            <h3>날짜</h3>
+            <br />
+            <h4>날짜</h4>
             <input
               className="form-control form-control-lg"
               step="1"
@@ -197,7 +198,8 @@ const TogetherBoardWriteForm = ({ board_together }) => {
             />
 
             <hr style={{ margin: "10px 0px 10px 0px" }} />
-            <h3>상세내용</h3>
+            <br />
+            <h4>상세내용</h4>
             <textarea
               style={{
                 width: "98%",
