@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import SockJS from "sockjs-client";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import "../../styles/chat.css";
-import UserProfile from "../../components/UserProfile";
 import ChatList from "../../components/chat/ChatList";
 import { Cookies } from "react-cookie"
-import { Stomp } from "@stomp/stompjs"
-import { getChatRoomList } from "../../axios/chat/chat";
+import { getChatByRoom, getChatRoomList } from "../../axios/chat/chat";
 import { searchById } from "../../axios/member/member";
+import { setRoom } from "../../redux/chatStatus/action";
 
 // const sock = new SockJS("http://localhost:8888/stompTest");
 // const client = Stomp.over(sock);
@@ -23,14 +21,17 @@ const cookies = new Cookies();
 ******************************************************************/
 const ChatPage = ({ client }) => {
   const _userData = cookies.get("_userData")
-  const username = _userData && _userData.memberNickname;
+  const nickname = _userData && _userData.memberNickname;
   const userId = _userData && _userData.memberId
+  const room = useSelector((state) => state.chatStatus.room);
+  const dispatch = useDispatch();
 
   const [roomUserData, setRoomUserData] = useState([]);
   const [currentRoom, setCurrentRoom] = useState();
 
   const [msg, setMsg] = useState({
     id: userId,
+    nickname: nickname,
     room: currentRoom,
     content: ""
   });
@@ -41,13 +42,45 @@ const ChatPage = ({ client }) => {
     document.querySelector("#msg").value = "";
   };
 
-  const renderChatList = () => {
-    console.log(roomUserData);
+  const renderOldChat = (room) => {
+    document.querySelector("#outputBox").innerHTML = ''
+    getChatByRoom(room).then(data => {
+      // console.log(data);
+
+      /*************** 채팅 박스 구현 ***************/
+      for (let i = 0; i < data.length; i++) {
+        const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
+        const chat = document.createElement("div"); // 컴포 디비전 좌우 처리
+        chat.setAttribute("class", "chatText"); // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
+        const id = data[i].chatMsgWriter
+        const content = data[i].chatMsgContent
+
+        console.log(id);
+        searchById(id).then(console.log)
+        if (id === _userData.memberId) {
+          chatBox.setAttribute("class", "myChat");
+          chat.innerHTML = content + ":" + nickname;
+        } else {
+          chatBox.setAttribute("className", "otherChat");
+          chat.innerHTML = nickname + ":" + content;
+        }
+        chatBox.appendChild(chat);
+        document.querySelector("#outputBox").appendChild(chatBox);
+      }
+      /*************** 채팅 박스 구현 ***************/
+
+    })
+  }
+
+  const renderChatRoomList = () => {
+    // console.log(roomUserData);
     return (
       roomUserData && roomUserData.map((item, index) => (
         <div key={index} className="chatOne" style={{ cursor: "pointer" }}
           onClick={(e) => {
-            setCurrentRoom(item.chatRoomNo)
+            dispatch(setRoom(item.chatRoomNo))
+            setCurrentRoom(room)
+            renderOldChat(item.chatRoomNo)
           }}>
           <ChatList key={index} _userData={item} />
         </div>
@@ -98,7 +131,7 @@ const ChatPage = ({ client }) => {
           <div className="chat box">
             {/* start chat chatList */}
             <div id="chatList" className="chat box chatList">
-              {renderChatList()}
+              {renderChatRoomList()}
             </div>
             {/* end of chat chatList */}
 
@@ -123,6 +156,7 @@ const ChatPage = ({ client }) => {
                   }}
                   onChange={(e) => setMsg({
                     ...msg,
+                    room: currentRoom,
                     content: e.target.value
                   })}
                 />
