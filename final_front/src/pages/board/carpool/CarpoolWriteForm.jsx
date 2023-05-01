@@ -222,7 +222,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
       <ContainerDiv>
         <div style={{ height: "150px" }}></div>
         <FormDiv>
-          <h3>Carpool 글작성 하기</h3>
+          <h2>Carpool 글작성 하기</h2>
           <br />
           <div style={{ width: "100%", maxWidth: "2000px" }}>
             <div
@@ -232,7 +232,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
                 marginBottom: "10px",
               }}
             >
-              <h2>제목</h2>
+              <h4>제목</h4>
               <div style={{ display: "flex" }}>
                 <div
                   style={{
@@ -282,19 +282,20 @@ const CarpoolWriteForm = (/* { carpool } */) => {
               type="text"
               maxLength="50"
               placeholder="제목을 입력하세요."
+              className="form-control"
               style={{
                 margin: "10px 0px 0px 10px",
                 width: "98%",
                 height: "40px",
                 border: "1px solid lightGray",
+                borderRadius: "10px",
               }}
               onChange={(e) => {
                 handleTitle(e.target.value);
               }}
             />
             <br />
-            <br />
-            <h3>작성자</h3>
+            <h4>작성자</h4>
             {(() => {
               if (_userData?.memberId) {
                 return (
@@ -322,9 +323,9 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
             <br />
-            <h3>날짜</h3>
+            <h4>날짜</h4>
             <input
-              style={{ width: "390px", marginLeft: "10px" }}
+              style={{ width: "98%", marginLeft: "10px" }}
               className="form-control"
               id="festStartday"
               name="startDay"
@@ -338,7 +339,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
             <br />
 
-            <h3 style={{ marginBottom: "20px" }}>Carpool 최대 인원</h3>
+            <h4 style={{ marginBottom: "20px" }}>Carpool 최대 인원</h4>
             <div
               style={{
                 display: "flex",
@@ -375,7 +376,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
             <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
 
             <br />
-            <h3>상세내용</h3>
+            <h4>상세내용</h4>
             <textarea
               style={{
                 width: "98%",
@@ -402,7 +403,7 @@ const CarpoolWriteForm = (/* { carpool } */) => {
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridPlace">
                   <br />
-                  <h3>접선 장소</h3>
+                  <h4>접선 장소</h4>
                   <Form.Control
                     required
                     id="place"
