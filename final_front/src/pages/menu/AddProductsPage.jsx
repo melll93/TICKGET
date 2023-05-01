@@ -462,7 +462,7 @@ originDetail()
           상세정보 입력 
         </BlackBtn>
         }
-        {optionModal === 1 ? <AddProductsOptionalDetail  festTcNo={festTcNo} setFestOriginPsUrl={setFestPsUrl} festPsNo={festPsNo} festOrginPsUrl={festPsUrl} festDtAge={festDtAge} festDtCasting={festDtCasting} festDtCrew={festDtCrew} festDtRuntime={festDtRuntime} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}/> : null}
+        {optionModal === 1 ? <AddProductsOptionalDetail  festivalUpdate={festivalUpdate} festTcNo={festTcNo} setFestOriginPsUrl={setFestPsUrl} festPsNo={festPsNo} festOrginPsUrl={festPsUrl} festDtAge={festDtAge} festDtCasting={festDtCasting} festDtCrew={festDtCrew} festDtRuntime={festDtRuntime} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}/> : null}
         {/* 추가 정보 입력 */}
         
         <br />

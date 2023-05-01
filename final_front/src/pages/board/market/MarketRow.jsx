@@ -90,11 +90,12 @@ const cookies = new Cookies();
 
     return (
       <>
+      
 <div className="card"
   style={{
-    width:"16rem",
+    width:"18rem",
     display:"inline-block",
-    margin: "50px 0px 0px 50px",
+    margin: "80px 0px 0px 50px",
     borderRadius: "10px",
     cursor: "pointer",
     transition: "transform 0.3s", // 애니메이션 속도 조절
@@ -110,7 +111,7 @@ const cookies = new Cookies();
   ) : ""}
   
   
-<img src={boards.boardMkFileurl ? boards.boardMkFileurl : "http://via.placeholder.com/300X350"} style={{width:"100%", overflow:'hidden', height: '260px', objectFit: 'cover' , 
+<img src={boards.boardMkFileurl ? boards.boardMkFileurl : "http://via.placeholder.com/300X350"} style={{width:"100%", overflow:'hidden', height: '300px', objectFit: 'cover' , 
 borderTopLeftRadius:'10px',borderTopRightRadius:'10px',borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}} 
 onClick={linkToDetail}
 onMouseEnter={() => { // 마우스를 요소 위로 올리면
@@ -152,7 +153,7 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
    
       <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}} >
   {member_no === boards.memberNo && <span className="mr-5" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1rem", color:'rgb(80, 50, 200)'}}>내 게시글{" "}</span>}
-  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px',fontFamily:"Nanum Gothic", fontWeight:"bold"}}><i class="bi bi-person"></i>&nbsp;&nbsp;{boards.memberNickname}</span>}
+  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px',fontFamily:"Nanum Gothic", fontWeight:"bold"}}><i class="bi bi-person"></i>&nbsp;{boards.memberNickname}</span>}
 </div>
        </p>
        <hr style={{marginTop:'-25px' , opacity:'0'}}/>

@@ -98,6 +98,8 @@ const MarketSearchBar = () => {
 
 
   return (
+    <>
+    
     <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
       <MyFilter
         types={types}
@@ -134,7 +136,10 @@ const MarketSearchBar = () => {
       >
         판매하기
       </MButton>
+      
     </div>
+    
+    </>
   );
 };
 

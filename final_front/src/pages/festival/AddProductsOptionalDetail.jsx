@@ -7,7 +7,7 @@ import AddProductsFestTicketDetail from './AddProductsFestTicketDetail';
 
 import Swal from "sweetalert2";
 
-const AddProductsOptionalDetail = ({ festTcNo, setFestOriginPsUrl, festPsNo, festOrginPsUrl, festDtCrew, festDtCasting, festDtAge, festDtRuntime, festTcType, festTcPrice, festTcTime}) => {
+const AddProductsOptionalDetail = ({ festivalUpdate, festTcNo, setFestOriginPsUrl, festPsNo, festOrginPsUrl, festDtCrew, festDtCasting, festDtAge, festDtRuntime, festTcType, festTcPrice, festTcTime}) => {
   const navigate = useNavigate();
   const {festMId}=useParams();
 /*    console.log(festMId)  */
@@ -36,6 +36,7 @@ console.log(festTcTime); */
   };
   try {
   const res = await saveFestDetailDB(festival);
+  festivalUpdate()
   Swal.fire({
     title:'등록완료',
     icon:'warning'
@@ -45,6 +46,7 @@ console.log(festTcTime); */
   } else {
   }
 } catch (error) {
+  festivalUpdate()
   const res = await festivalDetailUpdateDB(festival)
     Swal.fire({
       title:'상품 수정 완료',
@@ -89,6 +91,7 @@ const saveFestPoster=async()=>{
     const res = await saveFestPsUrlDB(festival);
     const newPsPoster = [...festOrginPsUrl,festival.festPsUrl]
     setFestOriginPsUrl(newPsPoster)
+    setFestPsUrl(newPsPoster)
     /* console.log(festival); */
     Swal.fire({
       title:'추가 완료',
@@ -140,6 +143,8 @@ const deleteFestPsUrl = async ({i}) => {
 
 
 
+
+
 //클라우디너리에 업로드
 const FestImageUpload = (e) => {
   const { files } = document.querySelector("#festivalPoster");
@@ -172,6 +177,8 @@ const FestImageUpload = (e) => {
       };
       
 
+      useEffect(()=>{
+      },[festPsUrl])
       
       
       
@@ -228,6 +235,10 @@ const FestImageUpload = (e) => {
           />
 <BlackBtn onClick={saveFestPoster} style={{marginTop:'20px'}}>선택파일 저장</BlackBtn>
 
+{festPsUrl && <img src={festPsUrl}style={{ width: '50px', height: '100px', overflow: 'hidden', display: 'inline', margin: '5px' }}></img>
+}
+
+
 {festOrginPsUrl && festOrginPsUrl.some(url => url !== null) ? (
   festOrginPsUrl.map((url, i) => (
     url !== null ? (
@@ -243,7 +254,7 @@ const FestImageUpload = (e) => {
 
 
 {/* fest_ticket */}
-<AddProductsFestTicketDetail saveFestDetail={saveFestDetail} festTcNo={festTcNo} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}></AddProductsFestTicketDetail>
+<AddProductsFestTicketDetail  saveFestDetail={saveFestDetail} festTcNo={festTcNo} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}></AddProductsFestTicketDetail>
 
 
     </>
