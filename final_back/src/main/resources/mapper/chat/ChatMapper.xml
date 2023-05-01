@@ -41,4 +41,11 @@
          VALUES (#{chatRoomNo}, #{chatMsgWriter}, #{chatMsgContent})
     </insert>
 
+    <select id="getChatByRoom" parameterType="int" resultType="ChatMessageDto">
+        SELECT *
+          FROM chat_message
+         WHERE chat_room_no = #{roomNo}
+         ORDER BY chat_msg_time desc
+         LIMIT 30
+    </select>
 </mapper>

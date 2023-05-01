@@ -38,7 +38,6 @@ import CarpoolUpdate from "./pages/board/carpool/CarpoolUpdate";
 import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
-import PaymentPage from "./pages/personal/PaymentPage";
 import UnRegiesterPage from "./pages/personal/UnRegiesterPage";
 import MemberUpdPage from "./pages/personal/MemberUpdPage";
 import FireTest from "./pages/board/carpool/FireTest";
@@ -46,7 +45,8 @@ import SocialRedirect from "./pages/member/SocialRedirect";
 import { Cookies } from "react-cookie";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
-import { chat } from "./util/chat";
+import { chat } from "./util/chatSubscribe";
+import { useSelector } from "react-redux";
 
 const cookies = new Cookies();
 
@@ -63,8 +63,7 @@ function App({ mkImageUploader }) {
   //   if (_userData) {
   const sock = new SockJS("http://localhost:8888/stompTest");
   const client = Stomp.over(sock);
-
-  const room = 1;
+  const room = useSelector((state) => state.chatStatus.room);
 
   chat(client, room);
   // } else if (!_userData && client) {

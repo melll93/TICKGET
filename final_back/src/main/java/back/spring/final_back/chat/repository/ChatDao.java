@@ -12,4 +12,6 @@ public interface ChatDao {
     public int selectMaxRoomNo();
     public int addChat(ChatMessageDto chatMessageDto);
     public String getRecentChat(int roomNo);
+
+    List<ChatMessageDto> getChatByRoom(int roomNo);
 }
