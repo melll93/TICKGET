@@ -310,7 +310,7 @@ const HomePage = () => {
               }}
             >
               <h4 style={{ fontWeight: 'bold' }}><i class="bi bi-command"></i>{" "}연계 추천 사이트</h4>
-              <div className="card" style={{ display: "inline-block", marginRight: '5px' }}>
+              <div className="card" style={{ display: "inline-block", marginRight: '5px' , marginTop:'20px'}}>
                 <img
                   src="./images_key/travelgajae.jpg"
                   style={{ width: "200px", height: "250px", margin: "15px" }}

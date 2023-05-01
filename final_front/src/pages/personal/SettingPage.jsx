@@ -82,7 +82,6 @@ const MypageSidebarItem = () => {
         <div className="TabContent">
 
 {/*여기  */}
-프로필변경
 <Tab4_ProfileChange></Tab4_ProfileChange>
         </div>
       )}

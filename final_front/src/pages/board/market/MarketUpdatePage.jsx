@@ -10,6 +10,7 @@
   import MarketFileInsert from './MarketFileInsert'
   import { Cookies } from 'react-cookie'
   import Swal from "sweetalert2";
+import Footer from '../../../components/Footer'
 
   /* CSS */
   const DivUploadImg = styled.div`
@@ -379,6 +380,9 @@
             </FormDiv>
             </Form>
           </ContainerDiv>
+          <div style={{marginTop:'100px'}}>
+<Footer/>
+        </div>
         </div>
       </>
     );
