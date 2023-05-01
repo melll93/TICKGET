@@ -160,7 +160,7 @@ const CartPage = () => {
   </div>
 ) : (
   <>
-    <div style={{ marginLeft: '80px' }}>
+    <div style={{ marginLeft: '60px' }}>
       <MButton onClick={handleDeleteAll}>전체삭제</MButton>{' '}
       <MButton onClick={handleDeleteSelected}>선택삭제</MButton>
     </div>
@@ -170,9 +170,9 @@ const CartPage = () => {
         className="card"
         key={cart.boardMkNo}
         style={{
-          width: '16rem',
+          width: '15rem',
           display: 'inline-block',
-          margin: '50px 50px 0px 75px',
+          margin: '50px 50px 0px 50px',
           borderRadius: '10px',
           cursor: 'pointer',
           opacity: cart.wishlistStatus > 0 ? '50%' : ""

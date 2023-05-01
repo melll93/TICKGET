@@ -99,6 +99,7 @@ if (no){
             paymentOrderName: festMId,
             paymentCount: festTcAmt,
              paymentPrice: price,
+             paymentFestDate: '',
             boardMkNo: '',
             memberNo: member_no,
             memberName: member_name,
