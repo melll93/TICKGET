@@ -52,7 +52,7 @@ const AddProducts = () => {
 
 /* 클라우디너리 */
 
-  const [selectedFile, setSelectedFile] = useState(null);
+/*   const [selectedFile, setSelectedFile] = useState(null);
   const [cloudImg, setCloudImg] = useState();
   const handleFileInput = (e) => {
     setSelectedFile(e);
@@ -61,7 +61,7 @@ const AddProducts = () => {
     e.preventDefault();
     handleUpload(selectedFile, setCloudImg); // util > imageupload.js 의 handleUpload 로 넘기기
   };
-
+ */
 
   /* 클라우디너리 */
 
@@ -397,7 +397,7 @@ originDetail()
 {/* @@@@@@@@@@@@@@@@@@@@@@@@ 테스트 @@@@@@@@@@@@@@@@@@@@@@@@*/}
 
 
-<table className="table-seats"><thead>
+{/* <table className="table-seats"><thead>
           <tr>
           <th colSpan={6}><input type="checkbox" name="color" value="blue" style={{width:'50px'}} />추가 정보 입력  
           </th></tr></thead>
@@ -439,7 +439,7 @@ originDetail()
       </table>
 
 
-
+ */}
 
 {/* @@@@@@@@@@@@@@@@@@@@@@@@ 테스트 @@@@@@@@@@@@@@@@@@@@@@@@*/}
 
