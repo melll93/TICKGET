@@ -37,7 +37,6 @@ const UserProfile = ({ _userData }) => {
 
   // ifAlreayFollow : true, or false
   const checkFollow = (friendId) => {
-    console.log("check");
     checkFollowDB(friendId).then(setIsFollow);
   }
 
@@ -55,7 +54,6 @@ const UserProfile = ({ _userData }) => {
       checkFollow(friendId)
     }
     renderFollow()
-    console.log(isFollow);
   }, [])
 
   return (

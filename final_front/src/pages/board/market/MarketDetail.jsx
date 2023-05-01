@@ -15,6 +15,7 @@ import { searchById } from '../../../axios/member/member';
 import Swal from "sweetalert2";
 import { wishlistAddDB, wishlistDelDB, wishlistDetailDB, wishlistSelDelDB } from '../../../axios/payment/wishlistLogic';
 import Footer from '../../../components/Footer';
+import { createChatRoom } from '../../../axios/chat/chat';
 
 
 const cookies = new Cookies();
@@ -336,10 +337,14 @@ const addWishlist = () => {
 
 
   //채팅으로 연결
-  const linkToChat = () => {
+  const linkToChat = (myId,friendId) => {
     if (member_no > 0 && member_no !== detail.member_no) {
-      /* 유저와 판매자 채팅으로 연결해주기 */
-
+      /* 유저와 판매자를 채팅으로 연결해주기 */
+    console.log(myId);
+    console.log(friendId);
+    const members = [myId, friendId]
+    createChatRoom(members)
+    navigate("/chat");
 
     } else if (member_no === detail.member_no) {
       Swal.fire({
@@ -453,7 +458,9 @@ const addWishlist = () => {
               <Button variant="outline-danger" size="lg" style={{ width: '180px' }} onClick={handleClick}>
               {isWishlistAdded ? (<><i class="bi bi-check2-square" /> {' '} 찜한 상품</>) : (<><i class="bi bi-heart" /> {' '} 찜하기</>)}
   </Button> 
-                              <Button variant="outline-dark" size="lg" style={{ width: '180px' }} onClick={linkToChat}>
+                              <Button variant="outline-dark" size="lg" style={{ width: '180px' }}  onClick={(e) =>
+                  linkToChat(member_id, detail.member_id)
+                }>
                   <i class="bi bi-chat-left-dots"></i>{" "}채팅하기
                 </Button>{' '}
                 <Button variant="outline-primary" size="lg" style={{ width: '180px' }} onClick={linkToPayment}>

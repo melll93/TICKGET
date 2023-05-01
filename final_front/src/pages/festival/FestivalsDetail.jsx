@@ -444,7 +444,7 @@ console.log(festival)
               </div>
               <div className="product_detail_info">
                 <div className="product_detail_head">
-                  <h3 className="product_title">{festival[0].festMName}</h3>
+                  <h3 className="product_title" style={{fontWeight:'bold'}}>{festival[0].festMName}</h3>
    {/*                <p className="product_sub_title">subtitle</p> */}
                 </div>
                 <div className="product_info"></div>

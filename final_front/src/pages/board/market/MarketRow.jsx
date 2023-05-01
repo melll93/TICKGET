@@ -110,7 +110,7 @@ const cookies = new Cookies();
   ) : ""}
   
   
-<img src={boards.boardMkFileurl ? boards.boardMkFileurl : "http://via.placeholder.com/300X350"} style={{width:"100%", overflow:'hidden', height: '250px', objectFit: 'cover' , 
+<img src={boards.boardMkFileurl ? boards.boardMkFileurl : "http://via.placeholder.com/300X350"} style={{width:"100%", overflow:'hidden', height: '260px', objectFit: 'cover' , 
 borderTopLeftRadius:'10px',borderTopRightRadius:'10px',borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}} 
 onClick={linkToDetail}
 onMouseEnter={() => { // 마우스를 요소 위로 올리면

@@ -27,21 +27,9 @@ import Sidebar from "../../../components/Sidebar";
 import UserProfile from "../../../components/UserProfile";
 import { ContainerDiv } from "../../../styles/formStyle";
 import MapContainer from "../market/Map/MapContainer";
-/* ********************** */
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  databaseURL: (process.env.FIREBASE_DATABASE_URL =
-    "https://finalproject-85e01-default-rtdb.asia-southeast1.firebasedatabase.app"),
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-};
-/* ********************** */
+import { firebaseConfig } from "./CarpoolBoardList";
 
-const CarpoolDetail = ({ match }) => {
+const CarpoolDetail = () => {
   const navigate = useNavigate();
   const { boardCpNo } = useParams();
   const [boardReplyCpNo, setBoardReplyCpNo] = useState("");
@@ -74,46 +62,76 @@ const CarpoolDetail = ({ match }) => {
     };
   }, []);
 
-  // const handleSaveData = () => {
-  //   const count = 1;
-  //   const maxVal = parseInt(realTime.max);
-  //   firebase
-  //     .database()
-  //     .ref(realTime.name)
-  //     .once("value")
-  //     .then((snapshot) => {
-  //       if (snapshot.exists()) {
-  //         const now = snapshot.val().now;
-  //         const currentCount = snapshot.val().count;
-  //         if (now < maxVal && currentCount < maxVal) {
-  //           const newNow = now + count;
-  //           const newCount = currentCount + count;
-  //           if (newNow <= maxVal && newCount <= maxVal) {
-  //             firebase
-  //               .database()
-  //               .ref(realTime.name)
-  //               .update({
-  //                 max: maxVal,
-  //                 now: firebase.database.ServerValue.increment(count),
-  //                 count: firebase.database.ServerValue.increment(count),
-  //               });
-  //             console.log("저장 성공");
-  //           } else {
-  //             console.log("인원이 다 찼습니다.");
-  //           }
-  //         } else {
-  //           console.log("인원이 다 찼습니다.");
-  //         }
-  //       } else {
-  //         firebase.database().ref(realTime.name).set({
-  //           max: maxVal,
-  //           now: 1,
-  //           count: 1,
-  //         });
-  //         console.log("저장 성공");
-  //       }
-  //     });
-  // };
+  const handleSaveData = () => {
+    const maxVal = parseInt(realTime.max);
+    const firebaseRef = firebase.database().ref("carpoolList/" + boardCpNo);
+    const count = 1;
+
+    if (!_userData) {
+      Swal.fire({
+        title: "로그인을 해주세요.",
+        icon: "error",
+      });
+      window.location.href = "/login";
+      return;
+    }
+
+    firebase
+      .database()
+      .ref("carpoolList/" + boardCpNo)
+      .once("value")
+      .then((snapshot) => {
+        const carpoolData = snapshot.val();
+        if (carpoolData) {
+          const maxVal = parseInt(carpoolData.max);
+          const now = carpoolData.now;
+          const currentCount = carpoolData.count;
+          if (now < maxVal && currentCount < maxVal) {
+            const newNow = now + count;
+            const newCount = currentCount + count;
+            if (newNow <= maxVal && newCount <= maxVal) {
+              firebaseRef
+                .update({
+                  now: firebase.database.ServerValue.increment(count),
+                  count: firebase.database.ServerValue.increment(count),
+                  memberId: _userData.memberId,
+                })
+                .then(() => {
+                  Swal.fire({
+                    title: "신청이 완료 되었습니다.",
+                    icon: "success",
+                  });
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          } else {
+            Swal.fire({
+              title: "인원이 다 찼습니다.",
+              icon: "error",
+            });
+          }
+        } else {
+          firebaseRef
+            .set({
+              max: maxVal,
+              now: 1,
+              count: 1,
+              memberId: _userData.memberId,
+            })
+            .then(() => {
+              Swal.fire({
+                title: "신청이 완료 되었습니다.",
+                icon: "success",
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
+  };
 
   /* ********** Firebase 종료 ********* */
   const [place, setPlace] = useState("");
@@ -278,7 +296,7 @@ const CarpoolDetail = ({ match }) => {
               <h2>카풀 상세보기</h2>
               <br />
               <div>
-                <form method="post">
+                <div>
                   <input type="hidden" name="boardCpNo" value="" />
                   <div>
                     <label>제목</label>
@@ -298,16 +316,6 @@ const CarpoolDetail = ({ match }) => {
 
                   <div>
                     <label>작성자</label>
-                    {/* <span
-                      style={{ width: "98%", margin: "10px" }}
-                      type="text"
-                      name="carpoolMemId"
-                      required
-                      className="form-control form-control-lg"
-                      id="inputLarge"
-                    >
-                      {carpool.boardCpMemId}
-                    </span> */}
                     <div
                       style={{
                         fontFamily: "Nanum Gothic",
@@ -341,33 +349,48 @@ const CarpoolDetail = ({ match }) => {
                   {/* firebase에서 값 받아오기 시작 */}
                   <div>
                     <label>최대인원</label>
-                    <div
-                      style={{ width: "98%", margin: "10px" }}
-                      type="text"
-                      name="carpoolMemId"
-                      required
-                      className="form-control form-control-lg"
-                      id="inputLarge"
-                    >
-                      {Object.keys(data)
-                        .filter((key) => key === "carpoolList")
-                        .map((key) => {
-                          const carpoolList = data[key];
-                          return Object.keys(carpoolList).map((CpNo) => {
-                            if (CpNo === boardCpNo) {
-                              const item = carpoolList[CpNo];
-                              console.log(item);
-                              return (
-                                <div className="data" key={CpNo}>
-                                  최대 인원: {item.max}, 현재 신청인원 :
-                                  {item.now}
-                                </div>
-                              );
-                            } else {
-                              return null;
-                            }
-                          });
-                        })}
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <div
+                        style={{ width: "350px", margin: "10px" }}
+                        type="text"
+                        name="carpoolMemId"
+                        required
+                        className="form-control form-control-lg"
+                        id="inputLarge"
+                      >
+                        {Object.keys(data)
+                          .filter((key) => key === "carpoolList")
+                          .map((key) => {
+                            const carpoolList = data[key];
+                            return Object.keys(carpoolList).map((CpNo) => {
+                              if (CpNo === boardCpNo) {
+                                const item = carpoolList[CpNo];
+                                console.log(item);
+                                return (
+                                  <div className="data" key={CpNo}>
+                                    최대 인원: {item.max}, 현재 신청인원 :
+                                    {item.now}
+                                  </div>
+                                );
+                              } else {
+                                return null;
+                              }
+                            });
+                          })}
+                      </div>
+                      <Button
+                        style={{
+                          width: "auto",
+                          marginLeft: "10px",
+                          backgroundColor: "black",
+                          marginTop: "0px",
+                        }}
+                        className="form-control"
+                        type="text"
+                        onClick={handleSaveData}
+                      >
+                        카풀 신청하기
+                      </Button>
                     </div>
                   </div>
                   {/* firebase에서 값 받아오기 종료 */}
@@ -430,7 +453,7 @@ const CarpoolDetail = ({ match }) => {
                     </p>
                     <MapContainer place={place} />
                   </div>
-                </form>
+                </div>
               </div>
               <div style={{ textAlign: "center" }}>
                 <Button

@@ -28,3 +28,22 @@ export const getChatRoomList = async () => {
 
   return result;
 };
+
+export const getChatByRoom = async (room) => {
+  const result = await axios({
+    method: "GET",
+    url:
+      "http://localhost:8888" +
+      // +process.env.BACKEND_URL
+      "/chat/getChatByRoom",
+    headers: { Authorization: "Bearer " + access_token },
+    params: {
+      roomNo: room,
+    },
+  }).then((res) => {
+    console.log(res.data);
+    return res.data;
+  });
+
+  return result;
+};

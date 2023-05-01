@@ -12,6 +12,7 @@ import FestivalRankingList from "../festival/FeativalRankingList";
 import "../../styles/festivaldetails.css";
 import FestivalAreaList from "../festival/FestivalAreaList";
 import { Cookies } from "react-cookie";
+import Footer from "../../components/Footer";
 
 
 
@@ -116,7 +117,7 @@ const FestivalsTest = () => {
             );
           })}
       </div>
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center" , marginTop:'100px'}}>
         <CommonPagination
           pagination={setPage}
           perPage={perPage}
@@ -286,6 +287,9 @@ const _userData = cookies.get("_userData"); //유저 정보
         {modal2 === 1 ? <FestivalAreaList selectedNavbarValue={selectedNavbarValue}/> : null}
         {modal3 === 1 ? <FestivalRankingList /> : null}
         {modal4 === 1 ? <FestivalExtraList /> : null}
+        <div style={{marginTop:'300px'}}>
+        <Footer/>
+        </div>
       </div>
     </>
   );

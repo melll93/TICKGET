@@ -1,5 +1,6 @@
 package back.spring.final_back.chat.controller;
 
+import back.spring.final_back.chat.repository.ChatMessageDto;
 import back.spring.final_back.chat.repository.ChatRoomDto;
 import back.spring.final_back.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,10 @@ public class ChatController {
 
     private final ChatService chatService;
 
-    @GetMapping("/get")
-    public String chatGET() {
+    @GetMapping("/getChatByRoom")
+    public List<ChatMessageDto> getChatByRoom(@RequestParam int roomNo) {
 
-        log.info("@@@@@@@@@@@ChatController, chat GET()");
-        return "chat";
+        return chatService.getChatByRoom(roomNo);
     }
 
     @PostMapping("/createChatRoom")

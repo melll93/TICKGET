@@ -70,4 +70,9 @@ public class ChatServiceImpl implements ChatService {
         log.info(chatMessageDto.toString());
         return chatDao.addChat(chatMessageDto);
     }
+
+    @Override
+    public List<ChatMessageDto> getChatByRoom(int roomNo) {
+        return chatDao.getChatByRoom(roomNo);
+    }
 }
