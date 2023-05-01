@@ -4,10 +4,13 @@ import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { createChatRoom } from "../axios/chat/chat.js";
 import { addFollowDB, checkFollowDB } from "../axios/member/member";
+import { useDispatch } from "react-redux";
+import { setRoom } from "../redux/chatStatus/action.js";
 const cookies = new Cookies();
 
 const UserProfile = ({ _userData }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const _myData = cookies.get("_userData");
 
   const myId = _myData && _myData.memberId;
@@ -21,7 +24,14 @@ const UserProfile = ({ _userData }) => {
     console.log(friendId);
     const members = [myId, friendId]
     createChatRoom(members)
-    navigate("/chat");
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(setRoom(res.data))
+        }
+      })
+      .then((res) => {
+        navigate("/chat")
+      })
   };
 
   const renderFollow = (isFollow) => {

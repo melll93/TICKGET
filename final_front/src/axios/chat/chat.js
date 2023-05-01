@@ -10,7 +10,9 @@ export const createChatRoom = async (members) => {
       "/chat/createChatRoom",
     // headers: { Authorization: "Bearer " + access_token },
     data: members,
-  }).then(console.log);
+  });
+
+  return result;
 };
 
 export const getChatRoomList = async () => {

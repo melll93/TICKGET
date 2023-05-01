@@ -30,17 +30,37 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public int createChatRoom(String[] members) {
         int result = 0;
-        int roomNo = chatDao.selectMaxRoomNo() + 1;
-        try {
-            for (int i = 0; i < members.length; i++) {
-                log.info(members[i]);
-                chatDao.createChatRoom(roomNo, members[i]);
-                result ++;
+        boolean isExist = false;
+        List<ChatRoomDto> rooms = getOtherMemberInRoom(members[0]);
+
+        for (int i = 0; i < rooms.size(); i++) {
+            log.info("getMember : " + rooms.get(i).getChatRoomMember());
+            log.info("members[1] : " + members[1]);
+            if (rooms.get(i).getChatRoomMember().equals(members[1])) {
+                isExist = true;
+                result = rooms.get(i).getChatRoomNo();
+                break;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            result = 0;
         }
+        log.info(isExist+"");
+
+        if (isExist) { // 해당 채팅방이 존재하면
+            log.info("방번호 : " + result);
+            return result;
+        } else { // 존재하지 않으면 생성
+            int roomNo = chatDao.selectMaxRoomNo() + 1;
+            try {
+                for (int i = 0; i < members.length; i++) {
+                    log.info(members[i]);
+                    chatDao.createChatRoom(roomNo, members[i]);
+                    result = roomNo;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = 0;
+            }
+        }
+
         return result;
     }
 
@@ -74,5 +94,10 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatMessageDto> getChatByRoom(int roomNo) {
         return chatDao.getChatByRoom(roomNo);
+    }
+
+    @Override
+    public List<ChatRoomDto> getOtherMemberInRoom(String member) {
+        return chatDao.getOtherMemberInRoom(member);
     }
 }

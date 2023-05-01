@@ -12,4 +12,5 @@ public interface ChatService {
     List<Map<String, Object>> getChatRoomListWithRecentChat();
     int addChat(ChatMessageDto chatMessageDto);
     List<ChatMessageDto> getChatByRoom(int roomNo);
+    List<ChatRoomDto> getOtherMemberInRoom(String member);
 }
