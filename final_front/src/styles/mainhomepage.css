@@ -1,104 +1,110 @@
-     /******************************
+/******************************
    * 캐로셀 css  
    /components/CarouiselOnejsx,  
    ******************************/
-   
-   /* 캐로쉘 전체디브 */
-   .carouselDiv{
-/*      border: 1px solid blue; */
-    height: 550px;
-   } 
 
-   /* 캐로쉘 각각 디브 */
-.carouseloneDiv{
-  height:450PX;
-  width:300px; 
-  max-width: 1200px;
-  max-height:1200px;
-/*   border: 1px solid red;  */
-  margin:30px
+/* 캐로쉘 전체디브 */
+.carouselDiv {
+  /*    border: 1px solid blue; */
+  height: 1200px;
+  align-items: center;
 }
 
-.carouseloneDiv:hover{
-  transform: scale(1.03);
-  object-fit:  cover;
-  
-/*     width: 100%;
+/* 캐로쉘 각각 디브 */
+.carouseloneDiv {
+  height: 300px;
+  width: 250px;
+  max-width: 1000px;
+  max-height: 1200px;
+  /* border: 1px solid red;  */
+  margin: 30px 50px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.carouseloneDiv:hover {
+  transform: scale(1.1);
+  transition: transform 300ms ease-in-out;
+  object-fit: cover;
+  font-weight: bold;
+  font-size: 0.8rem;
+
+  /*     width: 100%;
     height: 80%;
     object-fit:  cover;
     border: 1px solid black; */
 }
 
+/* 여기에 active 클래스에 적용할 스타일을 추가하세요 */
 .carouseloneDivactive {
-  /* 여기에 active 클래스에 적용할 스타일을 추가하세요 */
   /* 예시: 배경색을 빨간색으로 변경 */
-  transform: scale(1.2);
+  font-weight: bold;
 }
 
 /* 캐로쉘 디브에 이미지 100%로 맞춤 */
-.compo_carouselone_img{
+.compo_carouselone_img {
   border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  width: 100%;
-   height: 100%;
-   object-fit:  cover;
-/*    border: 1px solid black;  */
+  border-bottom-left-radius: 20px;
+  height: 300px;
+  width: 250px;
+  object-fit: cover;
+  /*    border: 1px solid black;  */
 }
-
-
 
 /* 
 검색바 
 */
-  .searchbar{
-    margin-left:30%;
-    border: none;
-    border-bottom: 3px solid #000; /* 검은색 밑줄 스타일 설정 */
-    outline: none; /* input 요소의 기본 테두리 제거 */
-    width: 50%; /* 검색바가 가로 전체를 차지하도록 설정 */
-    }
+.searchbar {
+  margin-left: 30%;
+  border: none;
+  border-bottom: 3px solid #000; /* 검은색 밑줄 스타일 설정 */
+  outline: none; /* input 요소의 기본 테두리 제거 */
+  width: 50%; /* 검색바가 가로 전체를 차지하도록 설정 */
+}
 
-    .search_input{
-    color: white;
-    border: 0;
-    outline: 0;
-    background: none;
-    width: 0;
-    caret-color:transparent;
-    line-height: 40px;
-    transition: width 0.4s linear;
-    }
+.search_input {
+  color: white;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  caret-color: transparent;
+  line-height: 40px;
+  transition: width 0.4s linear;
+}
 
-    .searchbar:hover > .search_input{
-    padding: 0 10px;
-    width: 450px;
-    caret-color:red;
-    transition: width 0.4s linear;
-    }
+.searchbar:hover > .search_input {
+  padding: 0 10px;
+  width: 450px;
+  caret-color: red;
+  transition: width 0.4s linear;
+}
 
-    .searchbar:hover > .search_icon{
-    background: white;
-    color: #e74c3c;
-    }
+.searchbar:hover > .search_icon {
+  background: white;
+  color: #292929;
+}
 
-    .search_icon{
-    height: 40px;
-    width: 40px;
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    color:white;
-    text-decoration:none;
-    }
+.search_icon {
+  height: 40px;
+  width: 40px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+}
 
-    .image50{
-    color:black;
-    width:25px;
-    }
+.image50 {
+  color: black;
+  width: 25px;
+}
 
-     /******************************
+/******************************
    * 캐로셀 css  
    (./components/CarouiselList.jsx,  
    ******************************/
@@ -117,26 +123,23 @@ height: 55%;
 height:400px;
 } */
 
-     /******************************
+/******************************
    * 캐로셀 css  
    (./components/CarouiselList.jsx,  
    /components/CarouiselOnejsx,  
    ./community/HomePage.jsx) 
    ******************************/
 
-   /******************************
+/******************************
    * SearchBar : keyword 검색해서 페이지 이동(/search)
    * MainCarousel : 오늘 날짜로 검색해서 뿌려주기,
    * BasicTable : 게시판 별 최신 글 출력해주기, Link to
    * MainCalendar : 날짜 클릭하면 하단에 해당 날짜별 축제 출력해주기(Grid)
    ******************************/
 
-
-
-     /******************************
+/******************************
    * SearchBar : keyword 검색해서 페이지 이동(/search)
    * MainCarousel : 오늘 날짜로 검색해서 뿌려주기,
    * BasicTable : 게시판 별 최신 글 출력해주기, Link to
    * MainCalendar : 날짜 클릭하면 하단에 해당 날짜별 축제 출력해주기(Grid)
    ******************************/
-

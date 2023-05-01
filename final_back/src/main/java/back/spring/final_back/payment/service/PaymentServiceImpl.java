@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService{
-       Logger logger = LoggerFactory.getLogger(PaymentService.class);
+       Logger logger = LoggerFactory.getLogger(PaymentServiceImpl.class);
 	private final PaymentDao paymentDao;
        
 	//결제내역 조회

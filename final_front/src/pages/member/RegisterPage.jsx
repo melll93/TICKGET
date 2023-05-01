@@ -8,10 +8,26 @@ import Header from "../../components/Header";
 import { checkPassword, validateBirthdate, validateEmail, validateHp, validateName, validateNickname, validatePassword, validateId } from '../../util/validateLogic';
 import { MyButton, MyH1, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton } from '../../styles/formStyle';
 import { onAuthChange } from '../../util/authLogic';
+import Swal from "sweetalert2";
 import { memberInsertDB, memberListDB } from '../../axios/member/memberCrud';
+import styled from 'styled-components';
+
+export const MButton = styled.button`
+margin-top: 20px;
+width: 200px;
+height: 40px;
+font-size: 16px;
+font-weight: bold;
+border-radius: 24px;
+margin-bottom: 20px;
+border: none;
+background-color: rgb(80, 50, 200);
+color: white;
+&:hover {
+  background-color: rgb(50, 50, 120);
+`;
 
 const RegisterPage = ({ authLogic }) => {
-  // const auth = authLogic.getUserAuth();
   const userAuth = useSelector(state => state.userAuth);
   const type = window.location.search.split('&')[0].split('=')[1];
   const navigate = useNavigate();
@@ -114,7 +130,7 @@ const RegisterPage = ({ authLogic }) => {
     setMemInfo({ ...memInfo, [id]: value });
   }
 
-  // 가입 시 아이디, 이메일, 닉네임 중복 확인 검사
+  // 가입 시 아이디, 이메일, 닉네임 DB 중복 확인 검사
   const overlap = async (key) => {
     console.log('중복 확인 : ' + key);
     let params;
@@ -141,22 +157,41 @@ const RegisterPage = ({ authLogic }) => {
     const jsonDoc = JSON.parse(data);
     console.log('DB : ' + data);
 
+    // 중복 비교 후 사용 여부 출력
     if (jsonDoc && jsonDoc.length > 0) {
-        console.log('중복되는 값이 있습니다');
-        if (key === 'id') {
-            console.log('중복된 아이디가 존재합니다. 다른 아이디를 입력해주세요.');
-        }
-        else if (key === 'email') {
-            console.log('중복된 이메일이 존재합니다. 다른 이메일을 입력해주세요.');
-        }
-        else if (key === 'nickname') {
-            console.log('중복된 닉네임이 존재합니다. 다른 닉네임을 입력해주세요.');
-        }
+      console.log('DB 중복값 O : 사용 불가');
+      setComment({ ...comment, [key]: <span style={{ color: 'red' }}>이미 사용 중인 {key} 입니다. 변경해 주세요.</span> });
+    } else {
+      console.log('DB 중복값 X : 사용 가능');
+      setComment({ ...comment, [key]: <span style={{ color: 'rgb(80, 50, 200)' }}>사용 가능한 {key} 입니다.</span> });
     }
-    else {
-        console.log('중복되는 값이 없습니다');
+  };
+  
+      
+/*     if (jsonDoc && jsonDoc.length > 0) {
+      if (key === 'id') {
+        console.log('중복 아이디 존재');
+        Swal.fire({
+          title:'중복된 아이디가 존재합니다. 다른 아이디를 입력해주세요.',
+        }); 
+      } else if (key === 'email') {
+        console.log('중복 이메일 존재');
+        Swal.fire({
+          title:'중복된 이메일이 존재합니다. 다른 이메일을 입력해주세요.',
+        });
+      } else if (key === 'nickname') {
+        console.log('중복 닉네임 존재');
+        Swal.fire({
+          title:'중복된 닉네임이 존재합니다. 다른 닉네임을 입력해주세요.',
+        });
+      }
+      setComment({ ...comment, [key]: '' });
+    } else {
+      console.log('사용 가능');
+      setComment({ ...comment, [key]: <span style={{ color: 'rgb(80, 50, 200)' }}>사용 가능한 {key} 입니다.</span> });
     }
-}
+  }; */
+
 // 회원 가입 유효성 검사
   const validate = (key, e) => {
     let result;
@@ -212,13 +247,22 @@ const RegisterPage = ({ authLogic }) => {
   /* 회원 가입 */
   const signup = async () => {
     try {
-      let id;
-      const birth = memInfo.birthday;
-      let birthday = "";
-      if (birth !== "") {
-        birthday = birth.slice(0, 4) + '-' + birth.slice(4, 6) + '-' + birth.slice(6, 8);
+      // 회원 가입 정보 기입 확인
+      const checkMeminfo = ['id', 'password', 'name', 'email', 'gender', 'mobile', 'nickname', 'birthday'];
+      const meminfoFields = checkMeminfo.filter(field => !memInfo[field]);
+      if (meminfoFields.length > 0) {
+        Swal.fire({
+          title: '회원 정보를 모두 입력해 주세요.'
+        });
+        return;
       }
-      console.log('입력받은 생일정보 ' + birthday);
+  
+      const birth = memInfo.birthday;
+      let birthday = '';
+      if (birth !== '') {
+        birthday = `${birth.slice(0, 4)}-${birth.slice(4, 6)}-${birth.slice(6, 8)}`;
+      }
+  
       const datas = {
         memberId: memInfo.id,
         memberPassword: memInfo.password,
@@ -230,22 +274,28 @@ const RegisterPage = ({ authLogic }) => {
         memberNickname: memInfo.nickname,
         memberZipcode: post.zipcode,
         memberAddress: post.address,
-        memberAddrDetail: post.addrDetail,
-      }
-      console.log(datas)
+        memberAddrDetail: post.addrDetail
+      };
+  
       const response = await memberInsertDB(datas);
       console.log(response);
       if (response.data !== 1) {
-        return "DB 오류: 관리자에게 연락바랍니다";
+        return 'DB 오류: 관리자에게 연락바랍니다';
       }
+  
       sessionStorage.clear();
       navigate('/');
-      return "회원가입을 축하합니다";
-
+      Swal.fire({
+        title: 'Tickget 사이트 회원가입을 축하합니다.'
+      });
     } catch (error) {
-      console.log(error + " 오류: 관리자에게 연락바랍니다");
+      console.log(`${error} 오류: 관리자에게 연락바랍니다`);
+      Swal.fire({
+        title: '회원 가입에 실패하였습니다.'
+      });
     }
-  }
+  };
+  
 
   const checkboxLable = ['없음', '남자', '여자']
   const Checkbox = checkboxLable.map((item, index) => (
@@ -274,6 +324,7 @@ const RegisterPage = ({ authLogic }) => {
               <MyInput type="text" id="id" placeholder="아이디를 입력해 주세요" 
                 onChange={(e) => { changeMemInfo(e); validate('id', e); }} />
               <MyLabelAb>{comment.id}</MyLabelAb>
+              <div id="id-available"/>
             </MyLabel>
             <MyButton type="button" onClick={() => { overlap('id'); }}>중복 확인</MyButton>
             </div>
@@ -315,7 +366,7 @@ const RegisterPage = ({ authLogic }) => {
             {/* 이메일 */}
             <div style={{display: 'flex'}}>
             <MyLabel> 이메일 <span style={{ color: "red" }}>{star.email}</span>
-              <MyInput type="email" id="email" placeholder="이메일를 입력해주세요"
+              <MyInput type="email" id="email" placeholder="이메일을 입력해주세요"
                 onChange={(e) => { changeMemInfo(e); validate('email', e); }} />
               <MyLabelAb>{comment.email}</MyLabelAb>
             </MyLabel>
@@ -359,10 +410,10 @@ const RegisterPage = ({ authLogic }) => {
             </MyLabel>
 
             {/* 회원가입 버튼 */}
-            <SubmitButton type="button" style={{ backgroundColor: submitBtn.bgColor }}
+            <MButton type="button" 
               onClick={handleSignup} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
-              {'가입하기'}
-            </SubmitButton>
+              {<i class="bi bi-check-lg"></i>}{" "}{'가입하기'}
+            </MButton>
           </div>
         </SignupForm>
       </div>

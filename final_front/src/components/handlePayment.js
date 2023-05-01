@@ -1,4 +1,5 @@
 import { loadTossPayments } from "@tosspayments/payment-sdk";
+import { paymentInsert } from "../axios/payment/paymentLogic";
 
 /* const paymentData = {
   amount,
@@ -20,7 +21,7 @@ export const handlePayment = async (paymentData) => {
       orderId: paymentData.orderId,
       orderName: paymentData.orderName,
       customerName: paymentData.customerName,
-      successUrl: `${window.location.origin}/paymentsucess/:${paymentData.no}`,
+      successUrl: `${window.location.origin}/paymentsuccess/:${paymentData.no}`,
       failUrl: `${window.location.origin}/paymentfailed/:${paymentData.no}`,
       flowMode: "DEFAULT",
       easyPay: "토스페이",

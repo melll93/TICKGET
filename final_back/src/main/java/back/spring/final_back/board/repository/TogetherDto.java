@@ -16,12 +16,6 @@ public class TogetherDto {
     private String boardTgMemId;
     private String boardTgTitle;
     private String boardTgContent;
-    private Date boardTgDate;
+    private String boardTgDate;
     private int boardTgViews;
-    private int boardTgSuperNo;
-    private int boardTgGroupNo;
-    private int boardTgDepth;
-    private int boardTgReplyCount;
-    private String boardTgCheck;
-    private String boardTgSecret;
 }

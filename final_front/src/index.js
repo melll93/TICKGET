@@ -1,7 +1,7 @@
 /* eslint-disable */
 // eslint-disable-next-line
 
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./App.css";

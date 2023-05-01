@@ -17,7 +17,7 @@ const options = [
 
 
 function DropdownButton({ options }) {
-  console.log(options);
+/*   console.log(options); */
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 

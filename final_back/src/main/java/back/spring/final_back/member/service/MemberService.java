@@ -1,5 +1,6 @@
 package back.spring.final_back.member.service;
 
+import back.spring.final_back.festival.repository.FestivalDto;
 import back.spring.final_back.member.repository.MemberDto;
 
 import java.lang.reflect.Member;
@@ -20,4 +21,10 @@ public interface MemberService {
     Object getMemberData();
 
     MemberDto searchById(String id);
+
+    boolean checkFollow(String friendId);
+
+    int addFollow(String friendId);
+
+	int memberProfileImageUpdate(MemberDto memberDto);
 }

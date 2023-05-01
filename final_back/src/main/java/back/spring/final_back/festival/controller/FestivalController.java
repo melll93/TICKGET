@@ -49,6 +49,15 @@ public class FestivalController {
 		return festival;
 	}
 
+	@GetMapping("latestFestivalList")
+	public List<FestivalDto> latestFestivalList() {
+		List<FestivalDto> festival = null;
+		festival = festivalService.latestFestivalList();
+		// logger.info(festival.toString());
+		return festival;
+	}
+
+
 	@GetMapping("festivalList")
 	public List<FestivalDto> festivalList() {
 		List<FestivalDto> festival = null;
@@ -56,6 +65,7 @@ public class FestivalController {
 		// logger.info(festival.toString());
 		return festival;
 	}
+
 
 	@GetMapping("areaFestivalList")
 	public List<FestivalDto> areaFestivalList(@RequestParam String fest_m_area) {
@@ -107,6 +117,20 @@ public class FestivalController {
 		return String.valueOf(result);
 	}
 
+
+	@GetMapping("festivalPosterDelete")
+	public String festivalPosterDelete(@RequestParam int fest_ps_no) {
+		int result = 0;
+		result = festivalService.festivalPosterDelete(fest_ps_no);
+		return String.valueOf(result);
+	}
+	@GetMapping("festivalTicketDelete")
+	public String festivalTicketDelete(@RequestParam Integer fest_tc_no) {
+		int result = 0;
+		result = festivalService.festivalTicketDelete(fest_tc_no);
+		return String.valueOf(result);
+	}
+
 	@GetMapping("/festivalThumpsUp")
 	public void festivalThumpsUp(@RequestParam Map<String, Object> pMap) {
 		festivalService.festivalThumpsUp(pMap);
@@ -116,6 +140,12 @@ public class FestivalController {
 	public int festivalUpdate(@RequestBody FestivalDto festivalDto) {
 		int result = 0;
 		result = festivalService.festivalUpdate(festivalDto);
+		return result;
+	}
+	@PostMapping("/festivalDetailUpdate")
+	public int festivalDetailUpdate(@RequestBody FestivalDto festivalDto) {
+		int result = 0;
+		result = festivalService.festivalDetailUpdate(festivalDto);
 		return result;
 	}
 }

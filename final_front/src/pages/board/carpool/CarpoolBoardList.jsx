@@ -7,15 +7,19 @@ import "firebase/database";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
+import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   carpoolViewUpDB,
   selectCarpoolDB,
 } from "../../../axios/board/carpool/CarpoolLogic";
 import CommonPagination from "../../../components/CommonPagination";
 
-/************* firebase 처리 중 *************/
-const firebaseConfig = {
+/************* firebase Config  ************
+ * 은영 - festivalDetail 에서 주워다 쓰는중 export 지우거나 하면 알려주삼
+ */
+export const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   databaseURL: (process.env.FIREBASE_DATABASE_URL =
@@ -26,21 +30,17 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
-/************* firebase 처리 중 *************/
+
+/************* firebase Config *************/
 
 const CarpoolBoardList = () => {
   const navigate = useNavigate();
   const [carpoolList, setCarpoolList] = useState([]);
   const [page, setPage] = useState(1);
-  const [perPage] = useState(15);
+  const [perPage] = useState(10);
 
   /************* firebase 처리 중 *************/
   const [data, setData] = useState({});
-  /* const [carpool, setCarpool] = useState({
-    boardCpNo: "",
-    max: "",
-    now: "",
-  }); */
 
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -60,30 +60,59 @@ const CarpoolBoardList = () => {
     };
   }, []);
 
-  const handleSaveData = (boardCpNo, max) => {
+  const handleSaveData = (boardCpNo) => {
     const count = 1;
+    const cookies = new Cookies();
+    const _userData = cookies.get("_userData"); //유저 정보
+    console.log("_userData : ", _userData);
+
+    if (!_userData) {
+      Swal.fire({
+        title: "로그인을 해주세요.",
+        icon: "error",
+      });
+      window.location.href = "/login";
+      return;
+    }
+
     firebase
       .database()
-      .ref(`${boardCpNo}`)
+      .ref(`carpoolList/${boardCpNo}`)
       .once("value")
       .then((snapshot) => {
-        const maxVal = snapshot.val().max;
-        const now = snapshot.val().now;
-        const currentCount = snapshot.val().count;
-        if (now < maxVal && currentCount < maxVal) {
-          const newNow = now + count;
-          const newCount = currentCount + count;
-          if (newNow <= maxVal && newCount <= maxVal) {
-            firebase
-              .database()
-              .ref(`${boardCpNo}`)
-              .update({
-                now: firebase.database.ServerValue.increment(count),
-                count: firebase.database.ServerValue.increment(count),
-              });
+        if (snapshot.exists()) {
+          const maxVal = snapshot.val().max;
+          const now = snapshot.val().now;
+          const currentCount = snapshot.val().count;
+          if (now < maxVal && currentCount < maxVal) {
+            const newNow = now + count;
+            const newCount = currentCount + count;
+            if (newNow <= maxVal && newCount <= maxVal) {
+              firebase
+                .database()
+                .ref(`carpoolList/${boardCpNo}`)
+                .update({
+                  now: firebase.database.ServerValue.increment(count),
+                  count: firebase.database.ServerValue.increment(count),
+                  memberId: _userData.memberId,
+                });
+            }
+            Swal.fire({
+              title: "신청이 완료 되었습니다.",
+              icon: "success",
+            });
+          } else {
+            Swal.fire({
+              title: "인원이 다 찼습니다.",
+              icon: "error",
+            });
           }
         } else {
-          alert("인원이 다 찼습니다.");
+          firebase.database().ref(`carpoolList/${boardCpNo}`).set({
+            max: 10,
+            now: 1,
+            count: 1,
+          });
         }
       });
   };
@@ -93,7 +122,7 @@ const CarpoolBoardList = () => {
     selectCarpoolList();
   }, []);
 
-  /********** 페이지 네이션 처리 **********/
+  /********** 페이지 네이션 처리 시작 **********/
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
 
@@ -102,7 +131,7 @@ const CarpoolBoardList = () => {
     currentFest = boardList.slice(indexOfFirstPost, indexOfLastPost);
     return currentFest;
   };
-  /********** 페이지 네이션 처리 **********/
+  /********** 페이지 네이션 처리 종료 **********/
 
   // 전체 게시글 조회
   const selectCarpoolList = async () => {
@@ -116,7 +145,6 @@ const CarpoolBoardList = () => {
 
   //조회수 증가
   const updateViews = async (boardCpNo) => {
-    console.log("boardCpNo넌 누구야? " + boardCpNo);
     await carpoolViewUpDB(boardCpNo);
     await selectCarpoolList();
   };
@@ -131,6 +159,20 @@ const CarpoolBoardList = () => {
         <div
           style={{ width: "1200px", marginLeft: "auto", marginRight: "auto" }}
         >
+          <Button
+            variant="success"
+            style={{
+              backgroundColor: "black",
+              marginLeft: "auto",
+              marginRight: "0px",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+            onClick={() => navigate("/carpool/write")}
+          >
+            글 작성하기
+          </Button>
+          <br />
           <div className="row" style={{ marginTop: "0px" }}>
             <Table className="table table-hover">
               <thead>
@@ -175,29 +217,36 @@ const CarpoolBoardList = () => {
                       {carpool.boardCpMemId}
                     </td>
 
-                    {/* 파이어 베이스에서 받아온 값 호출하자 */}
+                    {/* 파이어 베이스에서 받아온 값 호출하자 시작*/}
                     <td style={{ textAlign: "center", width: "200px" }}>
-                      {Object.keys(data).map((key) => {
-                        if (Number(key) === carpool.boardCpNo) {
-                          const item = { boardCpNo: key, ...data[key] };
-                          return (
-                            <div className="data" key={carpool.boardCpNo}>
-                              {/* 글번호={carpool.boardCpNo}<br/> */}
-                              {/*  현재인원={item.now},  */}
-                              최대인원 = {item.max}, 참가하기 = {item.count}/
-                              {item.max}
-                              <br />
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
+                      {data.carpoolList &&
+                        Object.keys(data.carpoolList).map((key) => {
+                          if (Number(key) === carpool.boardCpNo) {
+                            const item = {
+                              boardCpNo: key,
+                              ...data.carpoolList[key],
+                            };
+                            return (
+                              <div className="data" key={carpool.boardCpNo}>
+                                최대인원 = {item.max}, 참가인원 = {item.count}/
+                                {item.max}
+                                <br />
+                              </div>
+                            );
+                          }
+                          return null;
+                        })}
                     </td>
-                    {/* 파이어 베이스에서 받아온 값 호출하자 */}
+                    {/* 파이어 베이스에서 받아온 값 호출하자종료  */}
 
                     <td style={{ textAlign: "center", width: "80px" }}>
                       <Button
-                        style={{ backgroundColor: "black" }}
+                        style={{
+                          height: "20px",
+                          width: "65px",
+                          fontSize: "10px",
+                          backgroundColor: "black",
+                        }}
                         onClick={() => handleSaveData(carpool.boardCpNo)}
                       >
                         함께하기
@@ -226,24 +275,7 @@ const CarpoolBoardList = () => {
             justifyContent: "center",
             marginTop: "20px",
           }}
-        >
-          <Button
-            variant="warning"
-            style={{ backgroundColor: "black", color: "white" }}
-            onClick={selectCarpoolList}
-          >
-            전체조회
-          </Button>
-          &nbsp;
-          <Button
-            variant="success"
-            style={{ backgroundColor: "black" }}
-            onClick={() => navigate("/carpool/write")}
-          >
-            글 작성하기
-          </Button>
-          &nbsp;
-        </div>
+        ></div>
       </div>
     </>
   );

@@ -13,6 +13,9 @@ public interface CarpoolDao {
     // Carpool 게시판 상세조회
     public CarpoolDto carpoolDetail(CarpoolDto carpoolDto);
 
+    // Carpool 게시글 다음 번호 조회
+    public int getBoardCpNo();
+
     // Carpool 게시글 등록
     public int insertCarpool(CarpoolDto carpoolDto);
 

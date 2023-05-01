@@ -16,9 +16,24 @@ export const selectCarpoolDB = (carpool) => {
   });
 };
 
+/* 글번호 +1 */
+export const getBoardCpNoDB = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: "http://localhost:8888/carpool/getBoardCpNo",
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 /* 작성 */
 export const insertCarpoolDB = (carpool) => {
-  console.log("여기보아라~~~~~~~~~",carpool)
+  console.log("여기보아라~~~~~~~~~", carpool);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -82,7 +97,7 @@ export const updateCarpoolDB = (carpool) => {
 };
 
 /* 조회수 */
-export const carpoolViewUpDB = async(boardCpNo) => {
+export const carpoolViewUpDB = async (boardCpNo) => {
   /* 오케이 여기까진 진출했어 */
   console.log("viewUpDB boardCpNo ", boardCpNo);
   return new Promise((resolve, reject) => {
@@ -90,7 +105,7 @@ export const carpoolViewUpDB = async(boardCpNo) => {
       const response = axios({
         method: "get",
         url: "http://localhost:8888/carpool/carpoolViewUp",
-        params: {boardCpNo :boardCpNo }
+        params: { boardCpNo: boardCpNo },
       });
       resolve(response);
     } catch (error) {

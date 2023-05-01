@@ -2,14 +2,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useCallback, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate, useParams } from "react-router-dom";
-import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
+import Swal from "sweetalert2";
 import {
   selectTogetherDetailDB,
   updateTogetherDB,
 } from "../../../axios/board/together/TogetherLogic";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
 import { ContainerDiv, FormDiv } from "../../../styles/formStyle";
-import Swal from "sweetalert2";
 
 const TogetherBoardUpdate = () => {
   const navigate = useNavigate();
@@ -17,6 +17,16 @@ const TogetherBoardUpdate = () => {
   const [boardTgTitle, setTitle] = useState(""); //사용자가 입력한 내용 담기
   const [boardTgDate, setDate] = useState(""); //사용자가 입력한 내용 담기
   const [boardTgContent, setContent] = useState(""); //사용자가 입력한 내용 담기
+
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = currentDate.getDate().toString().padStart(2, "0");
+  const hour = currentDate.getHours().toString().padStart(2, "0");
+  const minute = currentDate.getMinutes().toString().padStart(2, "0");
+  const second = currentDate.getSeconds().toString().padStart(2, "0");
+
+  const min = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 
   const [board, setBoard] = useState({
     boardTgNo: 0,
@@ -41,7 +51,7 @@ const TogetherBoardUpdate = () => {
       });
       if (res.data) {
         console.log(jsonDoc);
-        setBoard(res.data);
+        // setBoard(res.data);
       } else {
         console.log("게시글 조회 실패");
       }
@@ -53,7 +63,6 @@ const TogetherBoardUpdate = () => {
 
   const updateBoard = async () => {
     if (!boardTgTitle) {
-      /* alert("제목을 입력해주세요."); */
       Swal.fire({
         title: "제목을 수정해주세요.",
         icon: "warning",
@@ -61,17 +70,7 @@ const TogetherBoardUpdate = () => {
       return;
     }
 
-    if (!boardTgDate) {
-      /* alert("날짜를 입력해 주세요."); */
-      Swal.fire({
-        title: "날짜를 입력해주세요.",
-        icon: "warning",
-      });
-      return;
-    }
-
     if (!boardTgContent) {
-      /* alert("내용을 입력해주세요."); */
       Swal.fire({
         title: "내용을 입력해주세요.",
         icon: "warning",
@@ -83,7 +82,7 @@ const TogetherBoardUpdate = () => {
       boardTgNo: boardTgNo, // 게시글 번호
       boardTgTitle: boardTgTitle, // 제목 추가
       boardTgContent: boardTgContent, // 내용 추가
-      boardTgDate: boardTgDate,
+      boardTgDate: min,
     };
 
     console.log("board = ", JSON.stringify(board));
@@ -93,7 +92,6 @@ const TogetherBoardUpdate = () => {
     } catch (error) {
       console.log(error);
     }
-    /* alert("게시글 수정 완료"); */
     Swal.fire({
       title: "게시글 수정 완료",
       icon: "success",
@@ -106,23 +104,9 @@ const TogetherBoardUpdate = () => {
     setTitle(e);
   }, []);
 
-  const handleDate = (date) => {
-    // "YYYY-MM-DD" 형식이 아닐 경우 에러 처리
-    const regex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!regex.test(date)) {
-      /* alert("날짜 형식이 올바르지 않습니다."); */
-      Swal.fire({
-        title: "날짜 형식이 올바르지 않습니다.",
-        icon: "warning",
-      });
-      return;
-    }
-    // "YYYY-MM-DD" 형식으로 변환
-    const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-    // 변환된 값을 상태 변수에 저장
-    setDate(formattedDate);
-    // setDate();
-  };
+  const handleDate = useCallback((e) => {
+    setDate(e);
+  }, []);
 
   const handleContent = useCallback((e) => {
     setContent(e);
@@ -136,16 +120,15 @@ const TogetherBoardUpdate = () => {
         <div style={{ height: "100px" }}></div>
         <FormDiv style={{ width: "98%", margin: "10px" }}>
           <h2>게시글 수정하기</h2>
-          <br />
+          <br/>
           <div>
             <form method="post">
               <div>
-                <label>수정 할 제목</label>
-                <br />
+                <h4>수정 할 제목</h4>
                 <input
                   id="board_tg_title"
                   type="text"
-                  maxLength="50"
+                  maxLength="100"
                   defaultValue={board.boardTgTitle}
                   style={{
                     width: "98%",
@@ -161,8 +144,10 @@ const TogetherBoardUpdate = () => {
                 />
               </div>
 
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+              <br/>
               <div>
-                <label>작성자</label>
+                <h4>작성자</h4>
                 <span
                   style={{ width: "98%", margin: "10px" }}
                   type="text"
@@ -175,14 +160,14 @@ const TogetherBoardUpdate = () => {
                 </span>
               </div>
 
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+              <br/>
               <div>
-                <label>수정된 날짜</label>
-                <br />
+                <h4>수정된 날짜</h4>
                 <input
-                  id="board_tg_date"
-                  type="date"
-                  maxLength="50"
-                  defaultValue={board.boardTgDate}
+                  id="board_date"
+                  // type="datetime-local"
+                  // defaultValue={board.boardTgDate}
                   style={{
                     width: "98%",
                     height: "40px",
@@ -190,19 +175,23 @@ const TogetherBoardUpdate = () => {
                     border: "1px solid lightGray",
                     borderRadius: "10px",
                   }}
+                  readOnly
+                  step="1"
+                  value={min}
                   onChange={(e) => {
                     handleDate(e.target.value);
                   }}
                 />
               </div>
 
+              <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+              <br/>
               <div>
-                <label>수정할 내용</label>
-                <br />
+                <h4>수정할 내용</h4>
                 <textarea
                   id="board_tg_date"
                   type="text"
-                  maxLength="50"
+                  maxLength="1000"
                   defaultValue={board.boardTgContent}
                   style={{
                     width: "98%",
@@ -230,17 +219,25 @@ const TogetherBoardUpdate = () => {
                   수정하기
                 </Button>
                 <Button
-                  style={{ marginLeft: "10px", backgroundColor: "black" }}
                   onClick={() => {
-                    if (window.confirm("정말 돌아가시겠습니까?")) {
-                      navigate({
-                        pathname: "/together/BoardDetail/" + board.boardTgNo,
-                        state: { board },
-                      });
-                    }
+                    Swal.fire({
+                      title: "정말로 뒤로 가시겠습니까?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "black",
+                      cancelButtonColor: "black",
+                      confirmButtonText: "네",
+                      cancelButtonText: "아니오",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.history.back();
+                      }
+                    });
                   }}
+                  variant="success"
+                  style={{ marginLeft: "10px", backgroundColor: "black" }}
                 >
-                  돌아가기
+                  뒤로가기
                 </Button>
               </div>
             </form>

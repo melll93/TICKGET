@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="back.spring.final_back.chat.repository.ChatDao">
+
+    <select id="selectMaxRoomNo" resultType="int">
+        SELECT
+               IFNULL(MAX(chat_room_no), 0)
+          FROM chat_room
+    </select>
+
+    <select id="getChatRoomList" resultType="ChatRoomDto">
+        SELECT chat_room_no, chat_room_member
+          FROM chat_room
+         WHERE chat_room_no in (SELECT chat_room_no
+                                  FROM chat_room
+                                 WHERE chat_room_member = #{memberId})
+           AND chat_room_member != #{memberId}
+    </select>
+
+    <insert id="createChatRoom">
+        INSERT
+          INTO chat_room
+               (chat_room_no, chat_room_member)
+         VALUES (#{roomNo}, #{memberId})
+    </insert>
+
+    <select id="getRecentChat" parameterType="int" resultType="String">
+        SELECT chat_msg_content
+          FROM chat_message
+         WHERE chat_room_no = #{roomNo}
+         ORDER BY chat_msg_time desc
+         LIMIT 1
+    </select>
+
+    <insert id="addChat">
+        INSERT
+          INTO chat_message
+               (chat_room_no, chat_msg_writer, chat_msg_content)
+         VALUES (#{chatRoomNo}, #{chatMsgWriter}, #{chatMsgContent})
+    </insert>
+
+    <select id="getChatByRoom" parameterType="int" resultType="ChatMessageDto">
+        SELECT *
+          FROM chat_message
+         WHERE chat_room_no = #{roomNo}
+         ORDER BY chat_msg_time desc
+         LIMIT 30
+    </select>
+</mapper>

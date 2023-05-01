@@ -19,9 +19,25 @@ import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies } from "react-cookie";
 import Header from "../../components/Header";
 import Swal from "sweetalert2";
+import styled from "styled-components";
 
-
-
+export const MButton = styled.button`
+  border-radius: 20px;
+  border: 1px solid white;
+  background-color: rgb(80, 50, 200);
+  color: white;
+  width: 145px;
+  height: 38px;
+  font-weight: bold;
+  &:hover {
+    background-color: rgb(50, 50, 120);
+  }
+`;
+export const MyH1 = styled.h1`
+  font-size: 38px;
+  margin-bottom: 4px;
+  text-align: center;
+`;
 
 const LoginPage = ({ user, setUser, authLogic }) => {
   const dispatch = useDispatch();
@@ -65,10 +81,8 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           /* window.alert("로그인 성공"); */
           Swal.fire({
             title: "로그인 성공",
-            icon: 'success',
-          }
-
-          )
+            icon: "success",
+          });
           // 로그인 ID redux에 저장
           dispatch(reduxLogin(paramMember.memberId));
 
@@ -76,33 +90,47 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           console.log(token);
           window.localStorage.setItem("access_token", token);
 
-          navigate("/");
-        } else if (res.status >= 400 && res.status < 600) {
-          Swal.fire({
-            title: "로그인 실패",
-            icon: 'error'
-          })
+          // navigate("/");
+          window.location.href = "/";
         }
+        // else if (res.response.status >= 400 && res.response.status < 600) {
+        //   console.log(res.response);
+        //   Swal.fire({
+        //     title: "로그인 실패",
+        //     icon: 'error'
+        //   })
+        // }
       })
-      .catch(console.log);
+      .catch((error) => {
+        Swal.fire({
+          title: "로그인 실패\n" + error,
+          icon: "error",
+        });
+      });
   };
 
   const handleLogin = () => {
     if (userId === null || userId === "" || userId === undefined) {
       Swal.fire({
-        title:'아이디를 입력해주세요',
-        icon :'warning'
-      })
+        title: "아이디를 입력해주세요",
+        icon: "warning",
+      });
     } else if (userPw === null || userPw === "" || userPw === undefined) {
       Swal.fire({
-        title:'비밀번호를 입력해주세요',
-        icon :'warning'
-      })
+        title: "비밀번호를 입력해주세요",
+        icon: "warning",
+      });
     } else {
       // 아이디 비밀번호 정상 입력
       console.log(userPw);
       login(member);
     }
+  };
+
+  const handleKakao = async () => {
+    const result = await axios({
+      url: "http://localhost:8888/oauth2/authorization/kakao",
+    }).then(console.log);
   };
 
   /************************************comment************************************
@@ -159,15 +187,24 @@ const LoginPage = ({ user, setUser, authLogic }) => {
         <div className="login">
           {/********************** 자체 회원 로그인 **********************/}
           <Form>
+            <MyH1>
+            <img
+              className="loginicon"
+              src="../logos/loginicon.png"
+              style={{
+                width: "50%",
+              }}
+            />
+            </MyH1>
             {/**************************************************** ID START ***************************************************/}
             <MyLabel htmlFor="id">
-              {" "}
+                {" "}
               ID
               <MyInput
                 id="id"
                 type="text"
                 name="member_id"
-                placeholder="ID를 입력해주세요."
+                placeholder="ID를 입력해 주세요."
                 onChange={(event) => {
                   handleChange(event);
                 }}
@@ -183,7 +220,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 type="password"
                 autoComplete="off"
                 name="member_pw"
-                placeholder="비밀번호를 입력해주세요."
+                placeholder="비밀번호를 입력해 주세요."
                 onChange={(event) => {
                   handleChange(event);
                 }}
@@ -197,7 +234,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             <div style={{ textAlign: "right" }}>
               {/* <Button variant="primary" type="login" onClick={() => { loginLocal() }}> */}
               {/* axios 이벤트로 처리 여기서 */}
-              <Button
+            {/*   <Button
                 variant="primary"
                 type="login"
                 onClick={(e) => {
@@ -206,7 +243,17 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 }}
               >
                 로그인
-              </Button>
+              </Button> */}
+              <div  style={{textAlign:'center'}}>
+
+              <MButton onClick={(e) => {
+                e.preventDefault();
+                handleLogin(member)
+              }}>
+                <i class="bi bi-box-arrow-in-right"></i>{" "}
+                로그인
+              </MButton>
+                </div>
             </div>
 
             <br />
@@ -245,15 +292,9 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           </Form>
           {/***************************************************************/}
           <hr />
-
-          {/************************************************** 소셜 로그인 **************************************************/}
-          <div className="socialLogin">
-            {/********************** 네이버 로그인 버튼 **********************/}
-            <NaverLogin user={user} setUser={setUser} />
-            {/************************** 네이버 끝 **************************/}
-
-            {/********************** 카카오 로그인 버튼 **********************/}
-            <div className="loginbutton">
+          {/* <div className="socialLogin">
+            <NaverLogin user={user} setUser={setUser} /> // 네이버 로그인
+            <div className="loginbutton"> // 카카오 로그인
               <a href={KAKAO_AUTH_URL}>
                 <img
                   className="loginbuttonimg"
@@ -261,9 +302,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 />
               </a>
             </div>
-            {/************************** 카카오 끝 **************************/}
-            {/********************** 구글 로그인 버튼 **********************/}
-            <div
+            <div // 구글 로그인
               className="loginbutton"
               type="button"
               onClick={() => {
@@ -277,9 +316,33 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 />
               </a>
             </div>
-            {/************************** 구글 끝 **************************/}
+          </div> */}
+          <div className="socialLogin">
+            <Link to="http://localhost:8888/oauth2/authorization/naver">
+              <div className="loginbutton">
+                <img
+                  className="loginbuttonimg"
+                  src="logos/naver/btnG_아이콘원형.png"
+                />
+              </div>
+            </Link>
+            <Link to="http://localhost:8888/oauth2/authorization/kakao">
+              <div className="loginbutton">
+                <img
+                  className="loginbuttonimg"
+                  src="logos/kakao/kakao_login_simple.png"
+                />
+              </div>
+            </Link>
+            <Link to="http://localhost:8888/oauth2/authorization/google">
+              <div className="loginbutton">
+                <img
+                  className="loginbuttonimg"
+                  src="logos/google/btn_google_simple.png"
+                />
+              </div>
+            </Link>
           </div>
-          {/************************************************* 소셜 로그인 끝 *************************************************/}
         </div>
       </div>
     </>

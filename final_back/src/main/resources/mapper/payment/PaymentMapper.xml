@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="back.spring.final_back.board.repository.PaymentDao">
+<mapper namespace="back.spring.final_back.payment.repository.PaymentDao">
 
 
-<!-- 결제 정보 조회 -->
+<!-- 결제 정보 조회 //모든 결제 정보이므로 회원 개인의 정보는 detail참조해야함 -->
 <select id="paymentList" parameterType="PaymentDto" resultType="PaymentDto">
   select * from payment
-  <!-- 사이트에서 결제된 모든 정보의 조회이다. 각 회원마다의 결제를 조회하려면 조건절 처리해야함. -->
 </select>
 
 
@@ -19,8 +18,8 @@
 <select id="paymentDetail" parameterType="PaymentDto" resultType="PaymentDto">
 select * from payment
 <where>
-<if test="paymentId!=null">
-and payment_Id = #{paymentId} <!-- 회원고유번호로 수정?  -->
+<if test="memberNo!=null">
+and member_no = #{memberNo} <!-- 회원 개인의 결제 정보  -->
 </if>
 </where>
 </select>
@@ -33,10 +32,10 @@ and payment_Id = #{paymentId} <!-- 회원고유번호로 수정?  -->
 
 <!-- 결제 내역 입력 -->
 <insert id="paymentInsert" parameterType="PaymentDto">
-insert into payment (payment_order_id,payment_order_name,payment_count,payment_price,payment_date,
-                     payment_payer,payment_seller,board_mk_no)
-VALUES (#{paymentOrderId},#{paymentOrderName},#{paymentCount},#{paymentPrice},#{paymentDate},
-       #{paymentPayer},#{paymentSeller},#{boardMkNo}
+insert into payment (payment_order_id, payment_order_name,payment_count,payment_price,payment_fest_date,
+                 board_mk_no,member_no,member_name,member_email)
+VALUES (#{paymentOrderId},#{paymentOrderName},#{paymentCount},#{paymentPrice},#{paymentFestDate},
+                 #{boardMkNo},#{memberNo},#{memberName},#{memberEmail})
        <!-- 토스 페이먼츠 api에서 결제 성공 시 결제완료 URL로 이동된다. URL페이지가 호출됐을 때 결제정보가 insert되어야 한다.   -->
 </insert>
 
@@ -48,11 +47,8 @@ VALUES (#{paymentOrderId},#{paymentOrderName},#{paymentCount},#{paymentPrice},#{
 <!-- 결제 내역 삭제 (환불) -->
 <delete id="paymentDelete" parameterType="PaymentDto">
 delete * from payment
-<where>
-<if test='paymentId != null and paymentId > 0'>
- and payment_id = #{paymentId}
-</if>
-</where>
+ where member_no = #{memberNo} and payment_order_name = #{paymentOrderName}
+ <!-- 회원번호, 상품명 모두 같은 조건인 경우 삭제 -->
 </delete>
 
 

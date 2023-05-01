@@ -4,7 +4,8 @@ import { Cookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 import { handlePayment } from '../../components/handlePayment'
-import { BlackBtn, ContainerDiv } from '../../styles/formStyle';
+import { BlackBtn, ContainerDiv, PurpleBtn } from '../../styles/formStyle';
+import Footer from '../../components/Footer';
 
 const Cimg = styled.img`
   width: 150px;
@@ -33,10 +34,11 @@ const PaymentPage = ({orderDetail}) => {
   const _userData = cookies.get("_userData"); //유저 정보
   /*   console.log(paymentData) */
   console.log(_userData)
+  
   console.log(orderDetail); 
   const navigate = useNavigate()
   let totalPrice = orderDetail.amount*orderDetail.price
-  let {no}=useParams()
+  /* let {no}=useParams() */
 /*   const date = orderDetail.date.split("T")[0]
   const time = orderDetail.date.split("T")[1].split(":")[0]
   console.log(time)
@@ -47,16 +49,17 @@ console.log(date) */
 
 const paymentData={
   amount:totalPrice, //가격
-  orderId:'assdasdadsad',    //주문번호
+  orderId:'x4PBm2QfOA5oiyJNd638T',    //주문번호
   orderName:orderDetail.title,  //주문명
   customerName:_userData.memberName,     //구매자 이름
-  no,      
+  no:orderDetail.no,      
 }
 
 
 
 const handleToss = async() => {
   const res = await handlePayment(paymentData)
+  console.log(res.data)
 }
 
 
@@ -90,7 +93,7 @@ const handleToss = async() => {
          <div>
             <Card.Text style={{ fontSize: '1.1rem', margin: '0 auto' }}>
                {/* 좌석정보 | 공연일 | 공연장소 */}
-               <p style={{ margin: '0 0 5px 0' }}>좌석정보(수정예정){orderDetail.seat}</p>
+               <p style={{ margin: '0 0 5px 0' }}>{orderDetail.seat}</p>
                <p style={{ margin: '0 0 5px 0' }}>{orderDetail.date}</p>
                <p style={{ margin: '0' }}>{orderDetail.place}</p>
             </Card.Text>
@@ -137,7 +140,7 @@ const handleToss = async() => {
       <div style={{ marginLeft: '20px' }}>
      <div style={{ display: 'inline-block' , marginTop:'5px' }}>
        <Card.Text style={{  fontSize: '22px'}}>
-         수량 <span style={{marginLeft:'400px', color:'black'}}>{orderDetail.amount}장</span></Card.Text>
+         수량 <span style={{marginLeft:'400px', color:'black'}}>{orderDetail.amount}{" "}장</span></Card.Text>
      </div>
      <hr/>
      <div>
@@ -151,14 +154,16 @@ const handleToss = async() => {
 </section>
 <div style={{marginTop:'30px' , marginLeft:'30px' ,display:'flex'}}>
   <br/>
-<BlackBtn width='500px' onClick={()=>{handleToss(paymentData)}}>토스 결제하기</BlackBtn>
+<PurpleBtn width='500px' onClick={()=>{handleToss(paymentData)}}>토스 결제하기</PurpleBtn>
 {/* <PaymentComponent /> */}
 {/* <Button className="researvebtn" onClick={MarketPaymentComponent}>토스페이 결제하기</Button> */}
-<BlackBtn width='500px' onClick={() => navigate(-1)}>취소/이전으로</BlackBtn>
+<PurpleBtn width='500px' onClick={() => navigate(-1)}>취소/이전으로</PurpleBtn>
 </div>
    </div>
 </div> {/* paymentDiv 끝 */}
 </div>
+<section style={{height:'300px'}}/>
+<Footer/>
    </div>
   )
 }

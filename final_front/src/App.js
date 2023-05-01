@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import KakaoLogin from "./api/login/KakaoLogin";
@@ -38,13 +38,39 @@ import CarpoolUpdate from "./pages/board/carpool/CarpoolUpdate";
 import CarpoolWrietForm from "./pages/board/carpool/CarpoolWriteForm";
 import ChangePwPage from "./pages/member/ChangePwPage";
 import MarketPaymentPage from "./pages/personal/MarketPaymentPage";
-import PaymentPage from "./pages/personal/PaymentPage";
 import UnRegiesterPage from "./pages/personal/UnRegiesterPage";
+import MemberUpdPage from "./pages/personal/MemberUpdPage";
+import FireTest from "./pages/board/carpool/FireTest";
+import SocialRedirect from "./pages/member/SocialRedirect";
+import { Cookies } from "react-cookie";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
+import { chat } from "./util/chatSubscribe";
+import { useSelector } from "react-redux";
+
+const cookies = new Cookies();
 
 function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
   const [carpool, setCarpool] = useState();
   const [user, setUser] = useState();
+  const _userData = cookies.get("_userData");
+
+  // let sock;
+  // let client;
+
+  // useEffect(() => {
+  //   if (_userData) {
+  const sock = new SockJS("http://localhost:8888/stompTest");
+  const client = Stomp.over(sock);
+  const room = useSelector((state) => state.chatStatus.room);
+
+  chat(client, room);
+  // } else if (!_userData && client) {
+  // client.disconnect();
+  // sock.close();
+  // }
+  // }, [_userData]);
 
   // pages로 routing 처리
   return (
@@ -60,6 +86,7 @@ function App({ mkImageUploader }) {
           exact={true}
           element={<SocialRegisterPage />}
         />
+        <Route path="/oauth2/redirect/*" element={<SocialRedirect />} />
         <Route
           path="/login"
           exact={true}
@@ -84,6 +111,7 @@ function App({ mkImageUploader }) {
         <Route path="/bookmark" exact={true} element={<BookmarkPage />} />
         <Route path="/setting" exact={true} element={<SettingPage />} />
         <Route path="/unregiester" exact={true} element={<UnRegiesterPage />} />
+        <Route path="/update" exact={true} element={<MemberUpdPage />} />
 
         {/* MenuBar Routes */}
         <Route path="/search" exact={true} element={<SearchResultPage />} />
@@ -92,7 +120,11 @@ function App({ mkImageUploader }) {
         <Route path="/carpool" exact={true} element={<CarpoolPage />} />
         <Route path="/market" exact={true} element={<MarketPage />} />
         <Route path="/calendar" exact={true} element={<CalendarPage />} />
-        <Route path="/chat" exact={true} element={<ChatPage />} />
+        <Route
+          path="/chat"
+          exact={true}
+          element={<ChatPage client={client} />}
+        />
 
         {/* 상품 - 은영 수정중 */}
         <Route path="/festival" exact={true} element={<FestivalPage />} />
@@ -115,6 +147,11 @@ function App({ mkImageUploader }) {
         />
 
         {/* CarpoolPage Routes */}
+
+        {/* ******************************************* */}
+        <Route path="firebase" element={<FireTest />} />
+        {/* ******************************************* */}
+
         <Route path="carpool/write/*" element={<CarpoolWrietForm />} />
         <Route
           path="carpool/carpoolDetail/:boardCpNo"

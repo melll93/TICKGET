@@ -24,12 +24,20 @@ const FestivalAreaList = ({selectedNavbarValue}) => {
       setFestivals(data);
     }
     areaList();
-  }, [festMArea, selectedNavbarValue, festivals]);
+  }, [festMArea, selectedNavbarValue]);
 
-  const hitPlusOne=async (festMId)=>{
-    await thumbsupFestivalDB(festMId);
-  } 
-
+  const hitPlusOne = (festMId) => {
+    thumbsupFestivalDB(festMId)
+    .then(() => {
+      const updatedFestivals = [...festivals];
+      const festivalToUpdate = updatedFestivals.find(festival => festival.festMId === festMId);
+      festivalToUpdate.festMHit += 1;
+      setFestivals(updatedFestivals);
+    })
+    .catch((error) => {
+      console.error("Error updating thumbs up count:", error);
+    });
+  };
 
 
 

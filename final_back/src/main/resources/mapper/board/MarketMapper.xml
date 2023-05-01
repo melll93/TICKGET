@@ -7,38 +7,19 @@
 <select id="mk_boardList" parameterType="MarketDto" resultType="MarketDto">
   select *
   from board_market
-  <if test='condition!=null and condition.equals("전체")'>
-    <choose>
-      <when test='content=null and condition.equals("전체")'>
-        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%') 
-      </when>
-      <when test='content!=null and condition.equals("제목")'>
-        WHERE board_mk_title LIKE CONCAT('%', #{content}, '%')  
-      </when>
-      <when test='content!=null and condition.equals("장소")'>
-        WHERE mk_ticket_place LIKE CONCAT('%', #{content}, '%') 
-      </when>
-      <when test='content!=null and condition.equals("작성자")'>
-        WHERE member_nickname LIKE CONCAT('%', #{content}, '%') 
-      </when>
-    </choose>
+  where board_mk_status &lt; 2
+  <if test='condition!=null and condition.equals("제목")'>
+    and board_mk_title LIKE CONCAT('%', #{content}, '%')
   </if>
-  <if test='condition!=null and !condition.equals("전체")'>
-    <where>
-      <if test='content!=null and condition.equals("제목")'>
-        board_mk_title LIKE CONCAT('%', #{content}, '%') 
-      </if>
-      <if test='content!=null and condition.equals("장소")'>
-        mk_ticket_place LIKE CONCAT('%', #{content}, '%') 
-      </if>
-      <if test='content!=null and condition.equals("작성자")'>
-        member_nickname LIKE CONCAT('%', #{content}, '%') 
-      </if>
-    </where>
+  <if test='condition!=null and condition.equals("장소")'>
+    and mk_ticket_place LIKE CONCAT('%', #{content}, '%')
   </if>
-  order by board_mk_date DESC
+  <if test='condition!=null and condition.equals("작성자")'>
+    and member_nickname LIKE CONCAT('%', #{content}, '%')
+  </if>
+  order by board_mk_status ASC, board_mk_date DESC
 </select>
-<!-- 판매여부가 0인 (판매처리되지 않은) 게시글만 조회되게하기, board_mk_status -->
+<!-- 판매여부가 0,1인 게시글만 조회되게하기 ( 0 - 판매중 , 1 - 판매완료(판매자 확인x) , 2 - 판매확인(판매자 확인o) ) -->
 
 
 
@@ -120,12 +101,11 @@ board_mk_no = #{boardMkNo}
 <select id="mk_boardDetail" parameterType="MarketDto" resultType="MarketDto">
 select * from board_market 
 <where>
-  <if test='boardMkNo!=null'> <!-- setNull(1,1111)에러 타입, 부적합한 열 유형 Integer.parseInt() -->
+  <if test='boardMkNo!=null'> 
     board_mk_no = #{boardMkNo}
     </if>
      </where>
 </select>
-
 
 
 
@@ -140,12 +120,44 @@ select * from board_market
 	</update>
 	
 	
-	<!-- 판매완료 처리 -->
-<update id="mk_boardSell" parameterType="MarketDto">
+<!-- 찜하기 버튼 -->
+<update id="mk_plusLikes" parameterType="MarketDto">
 <choose>
 <when test='boardMkNo!=null'>
+UPDATE board_market SET board_mk_likes = board_mk_likes+1
+ WHERE board_mk_no = #{boardMkNo}
+</when>
+</choose>
+</update>	
+	
+<!-- 찜하기 취소시 -->	
+<update id="mk_minusLikes" parameterType="MarketDto">
+<choose>
+<when test='boardMkNo!=null'>
+UPDATE board_market SET board_mk_likes = board_mk_likes-1
+ WHERE board_mk_no in (#{boardMkNo})
+</when>
+</choose>
+</update>	
+
+
+<!-- 찜하기 취소 -> 위시리스트 삭제 -->
+<delete id="mk_wishlistDelete" parameterType="MarketDto">
+delete from wishlist_data
+<where>
+<if test='boardMkNo!=null and boardMkNo>0'>
+board_mk_no = #{boardMkNo}
+</if>
+</where>
+</delete>	
+	
+	
+<!-- 판매완료 처리 -->
+<update id="mk_boardSell" parameterType="MarketDto">
+<choose>
+<when test='boardMkNo!=null and boardMkNo>0'>
 UPDATE board_market SET board_mk_status = board_mk_status + 1
- WHERE board_mk_no= #{boardMkNo}
+ WHERE board_mk_no = #{boardMkNo} AND mk_ticket_price = #{mkTicketPrice}
 </when>
 </choose>
 </update>

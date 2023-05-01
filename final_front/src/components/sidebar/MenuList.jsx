@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "./Menu";
 import SearchBar from "../header/SearchBar";
+import { Cookies } from "react-cookie";
 
 const MenuList = () => {
-  const [items, setItems] = useState([
-    "FESTIVAL",
-    // "CONCERT",
-    "TOGETHER",
-    "CARPOOL",
-    "MARKET",
-    // "CALENDAR",
-    "CHAT",
-  ]);
+  const cookies = new Cookies()
+  const _userData = cookies.get("_userData")
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    if (_userData) {
+      setItems([
+        "FESTIVAL",
+        "CONCERT",
+        "TOGETHER",
+        "CARPOOL",
+        "MARKET",
+        "CHAT",
+      ])
+    } else {
+      setItems([
+        "FESTIVAL",
+        "CONCERT",
+        "TOGETHER",
+        "CARPOOL",
+        "MARKET",
+      ])
+    }
+  }, [])
 
   return (
     <div className="MenuList">

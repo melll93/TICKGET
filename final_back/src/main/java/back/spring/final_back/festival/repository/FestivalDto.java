@@ -26,18 +26,19 @@ public class FestivalDto {
 	private String festMArea;
 	private Integer festMHit;
 
+	private int festTcNo;
 	private Integer festTcPrice;
 	private String festTcType;
 	private String festTcTime;
 	
 	
+	private String festDtId;
 	private String festDtAge;
 	private String festDtRuntime;
-	private String festDtId;
 	private String festDtCasting;
 	private String festDtCrew;
 	
-	private String festPsNo;
+	private int festPsNo;
 	private String festPsId;
 	private String festPsUrl;
 	

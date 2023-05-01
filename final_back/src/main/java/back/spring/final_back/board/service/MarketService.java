@@ -31,6 +31,12 @@ public interface MarketService {
 	//마켓 게시글 판매완료 처리
 	int mk_boardSell(MarketDto marketDto);
 
+	//게시글 찜 갯수 증가처리
+	int mk_plusLikes(MarketDto marketDto);
+
+	//게시글 찜 갯수 감소처리
+	int mk_minusLikes(MarketDto marketDto);
+
 
 
 

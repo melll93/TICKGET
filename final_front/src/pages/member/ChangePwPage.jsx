@@ -2,11 +2,25 @@ import React from 'react'
 import axios from "axios";
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { BButton, LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
-import { memberUpdateDB } from '../../axios/member/memberCrud';
+import { LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
+import { changePwUpdateDB } from '../../axios/member/memberCrud';
 import { useNavigate } from 'react-router-dom';
 import { checkPassword, validatePassword } from '../../util/validateLogic';
 import Swal from "sweetalert2";
+import styled from 'styled-components';
+
+export const MButton = styled.button`
+  border-radius: 12px;
+  border: none;
+  background-color: rgb(80, 50, 200);
+  color: white;
+  width: 125px;
+  height: 45px;
+  font-weight: bold;
+  &:hover {
+    background-color: rgb(50, 50, 120);
+  }
+`;
 
 const ChangePwPage = () => {
   const navigate = useNavigate()
@@ -30,15 +44,6 @@ const ChangePwPage = () => {
       result = checkPassword(memInfo.pw, e);
     }
     setComment({ ...comment, [key]: result });
-/*     if (result) {
-      if (result === ' ') {
-        setStar({ ...star, [key]: "" });
-      } else {
-        setStar({ ...star, [key]: "*" });
-      }
-    } else {
-      setStar({ ...star, [key]: "" });
-    } */
   }
   const changeMemInfo = (e) => {
     const id = e.currentTarget.id;
@@ -54,24 +59,22 @@ const ChangePwPage = () => {
     }
   };
 
-  const handleFormSubmit = async (e) => {
+  const handlePwUpdate = async (e) => {
     e.preventDefault();
     if (memInfo.pw === memInfo.pwConfirm) {
       console.log('비밀번호가 일치합니다.');
-  /*     alert('비밀번호가 일치합니다.'); */
-      Swal.fire({
+/*       Swal.fire({
         title:'비밀번호가 일치합니다.',
         icon:'success'
-        })
+        }) */
         
       try {
         const member = {
           memberId: memberId,
           memberPassword: memInfo.pw,
         };
-        const res = await memberUpdateDB(member);
+        const res = await changePwUpdateDB(member);
         console.log(res.data);
-       /*  alert('비밀번호가 성공적으로 변경되었습니다'); */
         Swal.fire({
           title:'비밀번호가 성공적으로 변경되었습니다.',
           icon:'success'
@@ -80,7 +83,6 @@ const ChangePwPage = () => {
         navigate('/login')
       } catch (error) {
         console.error(error);
-        /* alert('비밀번호 변경에 실패하였습니다'); */
         Swal.fire({
           title:'비밀번호 변경에 실패하였습니다.',
           icon:'error'
@@ -89,7 +91,6 @@ const ChangePwPage = () => {
       }
     } else {
       console.log('비밀번호 불일치');
-      /* alert('비밀번호가 일치하지 않습니다.'); */
       Swal.fire({
         title:'비밀번호가 일치하지 않습니다.',
         icon:'error'
@@ -114,7 +115,7 @@ const ChangePwPage = () => {
               onChange={(e) => { changeMemInfo(e); validate('pwConfirm', e.target.value); }} />
               {comment.pwConfirm}
           </MyLabel>
-          <BButton type="submit" onClick={handleFormSubmit}>변경</BButton>
+          <MButton type="submit" onClick={handlePwUpdate}>변경</MButton>
         </div>
       </LoginForm>
     </>

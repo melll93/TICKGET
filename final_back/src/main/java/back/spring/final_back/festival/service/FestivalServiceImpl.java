@@ -1,6 +1,7 @@
 package back.spring.final_back.festival.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -60,7 +61,11 @@ public class FestivalServiceImpl implements FestivalService {
 	@Override
 	public List<FestivalDto> festivalDetail(FestivalDto festivalDto) {
 		List<FestivalDto> festival = festivalDao.festivalDetail(festivalDto);
-		 return festival;
+		List<FestivalDto> festival2 = festivalDao.festivalDetail2(festivalDto);
+        List<FestivalDto> mergedFestival = new ArrayList<>();
+        mergedFestival.addAll(festival);
+        mergedFestival.addAll(festival2);
+        return mergedFestival;
 		    }
 
     @Override
@@ -100,4 +105,32 @@ public class FestivalServiceImpl implements FestivalService {
         int result = festivalDao.festivalUpdate(festivalDto);
         return result;
     }
+
+    @Override
+    public int festivalPosterDelete(int fest_ps_no) {
+        int result = 0;
+        result = festivalDao.festivalPosterDelete(fest_ps_no);
+        return result;
+    }
+	@Override
+	public int festivalDetailUpdate(FestivalDto festivalDto) {
+        int result = festivalDao.festivalDetailUpdate(festivalDto);
+        return result;
+	}
+
+	@Override
+	public int festivalTicketDelete(int fest_tc_no) {
+	       int result = 0;
+	        result = festivalDao.festivalTicketDelete(fest_tc_no);
+	        return result;
+	}
+
+    @Override
+    public List<FestivalDto> latestFestivalList() {
+    List<FestivalDto> festival = null;
+    festival = festivalDao.latestFestivalList();
+    return festival;
+    }
 }
+
+

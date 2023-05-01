@@ -14,4 +14,11 @@ public interface MemberDao {
 
     MemberDto getMemberData(String memberId);
 
+    Map<String, Object> checkFollow(String myId, String friendId);
+
+    int addFollow(String myId, String friendId);
+
+    int socialjoin(MemberDto memberDto);
+
+	int memberProfileImageUpdate(MemberDto memberDto);
 }

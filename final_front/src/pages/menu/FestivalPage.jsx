@@ -12,6 +12,7 @@ import FestivalRankingList from "../festival/FeativalRankingList";
 import "../../styles/festivaldetails.css";
 import FestivalAreaList from "../festival/FestivalAreaList";
 import { Cookies } from "react-cookie";
+import Footer from "../../components/Footer";
 
 
 
@@ -48,22 +49,34 @@ const FestivalsTest = () => {
   const [perPage] = useState(20);
   const[thumbsup, setThumbsup] = useState(0);
 
-  useEffect(() => {
-    FetivalListDB().then(setFestivals);
-  }, [festivals]);
+  
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
-
+  
+  
+  
+  const hitPlusOne = (festMId) => {
+    thumbsupFestivalDB(festMId)
+    .then(() => {
+      const updatedFestivals = [...festivals];
+      const festivalToUpdate = updatedFestivals.find(festival => festival.festMId === festMId);
+      festivalToUpdate.festMHit += 1;
+      setFestivals(updatedFestivals);
+    })
+    .catch((error) => {
+      console.error("Error updating thumbs up count:", error);
+    });
+  };
+  
   const currentFest = (festivals) => {
     let currentFest = 0;
     currentFest = festivals.slice(indexOfFirstPost, indexOfLastPost);
     return currentFest;
   };
 
-  
-  const hitPlusOne=async (festMId)=>{
-    await thumbsupFestivalDB(festMId);
-  } 
+  useEffect(() => {
+    FetivalListDB().then(setFestivals);
+  }, []);
 
   return (
     <>
@@ -73,7 +86,7 @@ const FestivalsTest = () => {
             // console.log(festival)
             return (
               <div
-                key={festival.festMId}
+                key={i}
                 className="card "
                 style={{
                  width: "18rem", 
@@ -90,21 +103,21 @@ const FestivalsTest = () => {
                    <div style={{height:'30px', overflow:'hidden', padding:'5px', marginBottom:'15px'}}>
                     <h5 className="card-title"><strong>{festival.festMName}</strong></h5>
                     </div>
-                    <p className="card-text">장소 : {festival.festMLoc}</p>
+                    <p className="card-text"><i class="bi bi-geo-alt-fill"></i> {festival.festMLoc}</p>
                     <p className="card-text">
-                     기간: {festival.festMStart} ~ {festival.festMEnd}
+                    <i class="bi bi-calendar"></i> {festival.festMStart} ~ {festival.festMEnd}
                     </p>
                   </div>
                 </a>
                 <div className='thumbs-up' onClick={()=>{hitPlusOne(festival.festMId)}} style={{borderRadius:'5px', border:'1px solid lightgray', textAlign:'center', marginLeft:'0%', paddingRight:'7px', cursor:'pointer'}}>
                 <i className="bi bi-hand-thumbs-up fs-4"></i>
-                {festival.festMHit==={thumbsup} ? 0: festival.festMHit}
+                {festival.festMHit ==null ? 0: festival.festMHit}
                 </div>
               </div>
             );
           })}
       </div>
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center" , marginTop:'100px'}}>
         <CommonPagination
           pagination={setPage}
           perPage={perPage}
@@ -274,6 +287,9 @@ const _userData = cookies.get("_userData"); //유저 정보
         {modal2 === 1 ? <FestivalAreaList selectedNavbarValue={selectedNavbarValue}/> : null}
         {modal3 === 1 ? <FestivalRankingList /> : null}
         {modal4 === 1 ? <FestivalExtraList /> : null}
+        <div style={{marginTop:'300px'}}>
+        <Footer/>
+        </div>
       </div>
     </>
   );

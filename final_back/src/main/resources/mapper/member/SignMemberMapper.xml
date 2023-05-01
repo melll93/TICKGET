@@ -87,7 +87,7 @@
 		member_addr_detail
 		FROM member
 		<where>
-		<!-- 아이디, 이메일, 닉네임 중복 확인 -->
+			<!-- 아이디, 이메일, 닉네임 중복 확인 -->
 			<if test='memberId!=null and memberId.length()>0'>
 				AND member_id = #{memberId}
 			</if>
@@ -102,10 +102,71 @@
 		</where>
 	</select>
 
+	<!-- 회원 정보 update -->
 	<update id="memberUpdate" parameterType="java.util.HashMap">
+		UPDATE member
+		SET
+		member_password =
+		<choose>
+			<when test="memberPassword != null and memberPassword != ''">#{memberPassword}</when>
+			<otherwise>member_password</otherwise>
+		</choose>
+		,
+		member_name =
+		<choose>
+			<when test="memberName != null and memberName != ''">#{memberName}</when>
+			<otherwise>member_name</otherwise>
+		</choose>
+		,
+		member_email =
+		<choose>
+			<when test="memberEmail != null and memberEmail != ''">#{memberEmail}</when>
+			<otherwise>member_email</otherwise>
+		</choose>
+		,
+		member_mobile =
+		<choose>
+			<when test="memberMobile != null and memberMobile != ''">#{memberMobile}</when>
+			<otherwise>member_mobile</otherwise>
+		</choose>
+		,
+		member_zipcode =
+		<choose>
+			<when test="memberZipcode != null and memberZipcode != ''">#{memberZipcode}</when>
+			<otherwise>member_zipcode</otherwise>
+		</choose>
+		,
+		member_address =
+		<choose>
+			<when test="memberAddress != null and memberAddress != ''">#{memberAddress}</when>
+			<otherwise>member_address</otherwise>
+		</choose>
+		,
+		member_addr_detail =
+		<choose>
+			<when test="memberAddrDetail != null and memberAddrDetail != ''">#{memberAddrDetail}</when>
+			<otherwise>member_addr_detail</otherwise>
+		</choose>
+		WHERE member_Id = #{memberId}
+	</update>
+
+
+
+
+	<!-- 비밀번호 update -->
+	<update id="changePwUpdate" parameterType="java.util.HashMap">
 		UPDATE member
 		SET
 		member_password = #{memberPassword}
 		WHERE member_Id = #{memberId}
 	</update>
+
+	<delete id="memberDelete" parameterType="java.util.HashMap">
+		DELETE FROM member
+		WHERE
+		member_id = #{memberId}
+		AND
+		member_mobile = #{memberMobile}
+	</delete>
+
 </mapper>

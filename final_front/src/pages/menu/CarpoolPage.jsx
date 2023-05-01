@@ -1,9 +1,9 @@
-/* global kakao */
 import React, { useEffect, useState } from "react";
 import { getMovieListDB } from "../../axios/festival/main";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CarpoolBoardList from "../board/carpool/CarpoolBoardList";
+import Footer from "../../components/Footer";
 
 const CarpoolPage = () => {
   const [dbResults, setDbResults] = useState([]);
@@ -27,10 +27,11 @@ const CarpoolPage = () => {
               marginBottom: "30px",
             }}
           >
-            Carpool 게시판
+            <i class="bi bi-people-fill"></i> Carpool 게시판
           </h3>
         </div>
-        {<CarpoolBoardList />}
+        <CarpoolBoardList />
+        <Footer />
       </div>
     </>
   );

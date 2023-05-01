@@ -1,5 +1,6 @@
 package back.spring.final_back.member.service;
 
+import back.spring.final_back.festival.repository.FestivalDto;
 import back.spring.final_back.member.jwt.TokenProvider;
 import back.spring.final_back.member.repository.MemberDao;
 import back.spring.final_back.member.repository.MemberDto;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,4 +90,41 @@ public class MemberServiceImpl implements MemberService {
         return memberDao.getMemberData(memberId);
     }
 
+    @Override
+    public boolean checkFollow(String friendId) {
+        Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
+        String myId = userDetails.getUsername();
+
+        try {
+            memberDao.checkFollow(myId, friendId);
+            return true;
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            return false;
+        }
+//        if(result == null){
+//            return false;
+//        } else {
+//            log.info(result.toString());
+//            return true;
+//        }
+    }
+
+    @Override
+    public int addFollow(String friendId) {
+        Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
+        String myId = userDetails.getUsername();
+        return memberDao.addFollow(myId, friendId);
+    }
+
+	@Override
+	public int memberProfileImageUpdate(MemberDto memberDto) {
+		int result = memberDao.memberProfileImageUpdate(memberDto);
+		return result;
+	}
 }
+
+
+

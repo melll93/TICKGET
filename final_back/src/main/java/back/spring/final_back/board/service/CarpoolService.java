@@ -12,6 +12,9 @@ public interface CarpoolService {
     // Carpool 게시글 상세보기
     public CarpoolDto CarpoolDetail(CarpoolDto carpoolDto);
 
+    // Carpool 게시글 다음 번호 조회
+    public int getBoardCpNo();
+
     // Carpool 게시글 작성
     public int insertCarpool(CarpoolDto carpoolDto);
 

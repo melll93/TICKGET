@@ -14,11 +14,11 @@ const PersonalTabs = () => {
           <img className="icon image20" src="../logos/TICKET.png" />
         </Link>
       </div>
-      <div className="PersonalTabs tab">
+{/*       <div className="PersonalTabs tab">
         <Link to="/bookmark">
           <img className="icon image20" src="../logos/BOOKMARK.png" />
         </Link>
-      </div>
+      </div> */}
       <div className="PersonalTabs tab">
         <Link to="/setting">
           <img className="icon image20" src="../logos/SETTING.png" />

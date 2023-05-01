@@ -72,3 +72,62 @@
     margin:100px  50px 50px 50px;  /* 위 오 밑 왼 */
 }
 
+/* dd */
+/* TabList 스타일 */
+.TabList {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+    width:250px;
+    margin-top: 100px;
+  }
+
+  .TabItem {
+      display: flex;
+      align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    width:250px;
+  }
+  
+  .TabItem:hover {
+    background-color: lightgray;
+  }
+  
+  .TabItem.active {
+    background-color: rgb(92, 92, 92);
+    color: white;
+  }
+  .mypage_tab_icon{
+    width:25px;
+    margin-right:10px;
+  }
+
+
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .MypageTabList {
+    display: flex;
+    margin-left: 15%;
+    width: 1200px;
+    border-radius: 5px;
+  }
+
+  
+  .TabContent {
+    flex-grow: 1;
+    padding: 1rem;
+  }
+  
+  .TabContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .mypage_center{margin-top: 250px;}

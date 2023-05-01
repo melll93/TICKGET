@@ -1,6 +1,7 @@
   import React, { useEffect, useState } from 'react'
 import { Cookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom';
+import { mk_pushLikeBtnDB } from '../../../axios/board/market/marketLogic';
 
 const cookies = new Cookies();
 
@@ -12,12 +13,17 @@ const cookies = new Cookies();
  
    let member_no;
    if (_userData) {
-     member_no = _userData.memberNo;
+     member_no = _userData.memberNo; //쿠키에서 가져온 회원번호 (내정보)
    }
  
 
 
 
+
+
+
+
+ 
     console.log(boards); // 마켓 게시판 조회 데이터
     const navigate = useNavigate()
 
@@ -27,11 +33,6 @@ const cookies = new Cookies();
     //가격 쉼표 처리
     const price = boards.mkTicketPrice.toLocaleString()
     console.log(price)
-
-
-
-
-
 
 
     //현재 시간 - 게시글 작성 시간
@@ -98,10 +99,18 @@ const cookies = new Cookies();
     cursor: "pointer",
     transition: "transform 0.3s", // 애니메이션 속도 조절
     transform: hovered ? "scale(1.05)" : "scale(1)",
-    border: member_no === boards.memberNo ? "2px solid rgb(80, 50, 200)" : ""
+    border: member_no === boards.memberNo ? "2px solid rgb(80, 50, 200)" : "",
+    opacity: boards.boardMkStatus > 0 ? '50%' : ""
   }}
 >
-<img src={boards.boardMkFileurl} style={{width:"100%", overflow:'hidden', height: '250px', objectFit: 'cover' , 
+  {boards.boardMkStatus > 0 ? (
+  <div style={{textAlign: "center", fontWeight: "bold",position: "absolute", top: 0, left: 0, backgroundColor: "rgb(80,50,200)", color: "white", padding: "5px", borderTopLeftRadius:"5px", borderBottomRightRadius:'5px'}}>
+  판매완료
+</div> 
+  ) : ""}
+  
+  
+<img src={boards.boardMkFileurl ? boards.boardMkFileurl : "http://via.placeholder.com/300X350"} style={{width:"100%", overflow:'hidden', height: '260px', objectFit: 'cover' , 
 borderTopLeftRadius:'10px',borderTopRightRadius:'10px',borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}} 
 onClick={linkToDetail}
 onMouseEnter={() => { // 마우스를 요소 위로 올리면
@@ -120,7 +129,7 @@ onMouseEnter={() => { // 마우스를 요소 위로 올리면
 onMouseLeave={() => { // 마우스를 요소에서 떠나면
   setHovered(false); // 상태값 변경
 }}>
-<h5 className="card-title" style={{fontSize:'1.1rem'}}>
+<h5 className="card-title" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,fontSize:'1rem'}}>
   {boards.boardMkTitle}</h5>
 </div>
 <div style={{ display: "flex", justifyContent: "space-between" , }} onClick={linkToDetail}
@@ -141,9 +150,9 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
 
       <p className="card-text" style={{color:'black' }} >
    
-      <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}}>
-  {member_no === boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.1rem", color:'rgb(80, 50, 200)'}}>내 게시글</span>}
-  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px'}}><i class="bi bi-heart" />{" "}찜 5</span>}
+      <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}} >
+  {member_no === boards.memberNo && <span className="mr-5" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1rem", color:'rgb(80, 50, 200)'}}>내 게시글{" "}</span>}
+  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px',fontFamily:"Nanum Gothic", fontWeight:"bold"}}><i class="bi bi-person"></i>&nbsp;&nbsp;{boards.memberNickname}</span>}
 </div>
        </p>
        <hr style={{marginTop:'-25px' , opacity:'0'}}/>

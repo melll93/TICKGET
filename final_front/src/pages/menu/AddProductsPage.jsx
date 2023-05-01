@@ -4,33 +4,68 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useNavigate, useParams } from "react-router";
-import { FestivalInsertDB, FetivalDetailDB, festivalUpdateDB } from "../../axios/festival/festival";
-import ImageUploader from "../../util/imageUploader";
+import { FestivalInsertDB, FetivalDetailDB, festivalUpdateDB, getLatestFestivalDB } from "../../axios/festival/festival";
+import ImageUploader, { handleUpload } from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
 import Swal from "sweetalert2";
+import { Cookies } from "react-cookie";
 
 
 /* ========================= 상품 자체 등록 ============================ */
+
+const cookies = new Cookies();
+const _userData = cookies.get("_userData"); //유저 정보
+console.log(_userData)
 
 const AddProducts = () => {
   const navigate = useNavigate();
   const {festMId}=useParams();
 
- /*  console.log(festMId) */
+ /*  fest_main  */
   const [festTitle, setFesttitle] = useState();
   const [festLocation, setFestloc] = useState();
   const [festCategory, setFestcate] = useState();
   const [festStartday, setFeststart] = useState();
   const [festEndday, setFestend] = useState();
-  const [festDetail, setFestdetail] = useState();
-  const [festPrice, setFestprice] = useState();
-  const [festDesc, setFestdesc] = useState();
   const [festArea, setFestArea] = useState();
   const [festImages, setFestImages] = useState();
   const [festImageUrl, setFestImageUrl] = useState();
   const imgRef = useRef();
+
+  /*fest_poster  */
+  const [festPsUrl, setFestPsUrl] = useState();
+  const [festPsNo, setFestPsNo] = useState();
+
+/* fest_detail */
+  const [festDtCrew, setFestDtCrew] = useState();
+  const [festDtCasting, setFestDtCasting] = useState();
+  const [festDtRuntime, setFestDtRuntime] = useState();
+  const [festDtAge, setFestDtAge] = useState();
+
+  /* fest_ticket */
+  const [festTcType, setFestTcType] =useState();
+  const [festTcPrice, setFestTcPrice] =useState();
+  const [festTcTime, setFestTcTime]= useState();
+  const [festTcNo, setFestTcNo]= useState();
+
+
+/* 클라우디너리 */
+
+/*   const [selectedFile, setSelectedFile] = useState(null);
+  const [cloudImg, setCloudImg] = useState();
+  const handleFileInput = (e) => {
+    setSelectedFile(e);
+  };
+  const handleUploadClick = (e) => {
+    e.preventDefault();
+    handleUpload(selectedFile, setCloudImg); // util > imageupload.js 의 handleUpload 로 넘기기
+  };
+ */
+
+  /* 클라우디너리 */
+
 
 
   /* 추가정보입력 띄우기 */
@@ -38,31 +73,47 @@ const AddProducts = () => {
   const optionModalOpen = () => {if (optionModal === 0) {setOptionModal(1);
     } else {setOptionModal(0);}};
 
-  /* 상품등록 insert */
-  const festivalInsert = async () => {
+
+
+/* 상품등록 insert */
+const festivalInsert = async () => {
+  if (festTitle == null || festTitle === '' || festLocation == null ||  festLocation === '' ||  festCategory == null || festCategory === '' ||  festStartday == null  || festStartday === '' || 
+    festEndday == null  || festEndday === '' ||   festArea == null  || festArea === '' ||   festImageUrl == null  || festImageUrl === ''  ) {  alert('빈칸 없이 작성해주세요. ');  } else {
     const festival = {
+      festMAuthor:_userData.memberId,
       festMName: festTitle,
       festMLoc: festLocation,
       festMGenre: festCategory,
       festMStart: festStartday,
       festMEnd: festEndday,
-      festDetail,
-      festPrice,
-      festDesc,
       festMArea: festArea,
-      festMImg: festImageUrl,
+      festMImg: festImageUrl,   //festImageUrl(위에꺼),   cloudImg(아래꺼)  바꾸면 위에 널처리도
     };
     const res = await FestivalInsertDB(festival);
-/*     console.log(festival); */
+    /* console.log(festival); */
     if (!res.data) {
+      Swal.fire({
+          title:'에러',
+          icon:'error'
+        })
     } else {
-      navigate("/festival");
+      const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId);
+      if (confirmResult) {//예
+        const latestFestival = await getLatestFestivalDB();
+   /*      console.log(latestFestival[0].festMId); */
+        navigate(`/addProducts/${latestFestival[0].festMId}`);
+        optionModalOpen() 
+      } else {  //아니오
+    navigate('/festival'); 
+      }
     }
-  };
+  }
+};
 
 
 
-/* 입력되어있던 정보 가져오기 */  
+
+/* READ 입력되어있던 정보 가져오기 */  
 useEffect(() => {
 const originDetail=async()=>{
   const festival={
@@ -76,18 +127,37 @@ const originDetail=async()=>{
 setFestend(jsonDoc[0].festMEnd)
 setFestloc(jsonDoc[0].festMLoc)
 setFestcate(jsonDoc[0].festMGenre)
-setFestdetail(jsonDoc[0].festDetail)   //아직 사용 안하는중
-setFestprice(jsonDoc[0].festPrice)       //아직 사용 안하는중
 setFestArea(jsonDoc[0].festMArea)
 setFestImageUrl(jsonDoc[0].festMImg)
-/* if(jsonDoc[0].MEM_NO!==sessionStorage.getItem("no")){  //글의 회원번호와 로그인한 no가 달라?  네 -> 다른 사람 글
-return console.log('작성자가 아닙니다.')
-} */
+
+/* fest_detail 받아서 props로 넘기는중 */
+setFestDtRuntime(jsonDoc[0].festDtRuntime)
+setFestDtAge(jsonDoc[0].festDtAge)
+setFestDtCasting(jsonDoc[0].festDtCasting)
+setFestDtCrew(jsonDoc[0].festDtCrew)
+
+/* fest_poster 받아서 props로 넘기는 중 */
+const festPsUrlAll = jsonDoc.map(item => item.festPsUrl);
+setFestPsUrl(festPsUrlAll);
+const festPsNoAll = jsonDoc.map(item => item.festPsNo);
+setFestPsNo(festPsNoAll);
+
+
+/* fest_ticket 받아서 props로 넘기는 중 */
+const festTcNoAll = jsonDoc.map(item => item.festTcNo);
+setFestTcNo(festTcNoAll);
+const festTcTypeAll = jsonDoc.map(item => item.festTcType);
+setFestTcType(festTcTypeAll);
+const festTcPriceAll = jsonDoc.map(item => item.festTcPrice);
+setFestTcPrice(festTcPriceAll);
+const festTcTimeAll = jsonDoc.map(item => item.festTcTime);
+setFestTcTime(festTcTimeAll);
 }
 originDetail()
-},[festMId]);
+},[]);
 
 
+/* UPDATE */
     const festivalUpdate = async() => {
       const festival={
       festMId,
@@ -102,7 +172,7 @@ originDetail()
       try {
       const res = await festivalUpdateDB(festival)
 /*         console.log(res.data); */
-        navigate("/festival")
+        navigate(`/productsDetail/${festMId}`)
         /* alert('상품수정완료') */
         Swal.fire({
           title:'상품 수정 완료',
@@ -129,18 +199,10 @@ originDetail()
   const inputEndday = useCallback((e) => {
     setFestend(e);
   }, []);
-  const inputDetail = useCallback((e) => {
-    setFestdetail(e);
-  }, []);
-  const inputPrice = useCallback((e) => {
-    setFestprice(e);
-  }, []);
-  const inputDesc = useCallback((e) => {
-    setFestdesc(e);
-  }, []);
   const inputArea = useCallback((e) => {
     setFestArea(e);
   }, []);
+
 
   //선택파일 이미지로 교체
   const festImage = () => {
@@ -152,7 +214,7 @@ originDetail()
     };
   };
 
-  //클라우디너리에 업로드
+  //클라우디너리에 업로드 ( 리액트 )
   const FestImageUpload = (e) => {
     festImage();
     const { files } = document.querySelector("#festivalsImg");
@@ -182,6 +244,10 @@ originDetail()
     );
   };
 
+
+
+
+
   return (
     <>
       <div
@@ -207,8 +273,8 @@ originDetail()
           <option value="CONCERT">CONCERT</option>
         </select>
         <br />
-        <h2>상품 자체 등록</h2>
-        <div id="uploadImg">
+        <h2 style={{fontWeight:'bold'}}><i class="bi bi-pencil-square"></i>{" "}상품 자체 등록</h2>
+        <div id="uploadImg" style={{marginTop:'20px'}}>
           <img
             id="festivalImgChange"
             className="thumbNail"
@@ -229,11 +295,37 @@ originDetail()
           type="file"
           accept="image/*"
           id="festivalsImg"
-          
           onChange={FestImageUpload}
           ref={imgRef}
         />{" "}
         <br />
+
+
+
+
+
+        
+{/* 클라우드 Test */}
+
+{/* <div className="cloudinary_image">
+<input
+          className="form-control"
+          type="file"
+          accept="image/*"
+          id="festivalsImg"
+          onChange={(e) => {handleFileInput(e.target.files[0])}}
+        />  <BlackBtn onClick={handleUploadClick}>클라우디너리 파일 저장</BlackBtn>
+
+        {cloudImg && <img src={cloudImg} alt="uploaded image" />}
+      </div> */}
+
+{/* 클라우드 Test */}
+
+
+
+
+
+
         <div className="form-floating mb-3">
           <input
             type="text"
@@ -246,24 +338,12 @@ originDetail()
           />
           <label htmlFor="floatingInput"> festTitle </label>
         </div>
-{/*         <div className="form-floating mb-3">
-          <input
-            type="text"
-            className="form-control"
-            id="festDesc"
-            onChange={(e) => {
-              inputDesc(e.target.value);
-            }}
-          />
-          <label htmlFor="floatingInput"> desc </label>
-        </div> */}
         <select
-          defaultValue=""
           className="form-select"
           id="festArea"
           aria-label="Default select example"
           style={{ width: "150px" }}
-          value={festLocation}
+          value={festArea==null? '': festArea}
           onChange={(e) => {
             inputArea(e.target.value);
           }}
@@ -293,19 +373,6 @@ originDetail()
           <label htmlFor="floatingInput">location</label>
         </div>
         <br />
-{/*         <div className="form-floating">
-          <input
-            type="number"
-            className="form-control"
-            id="festPrice"
-            name="price"
-            onChange={(e) => {
-              inputPrice(e.target.value);
-            }}
-          />
-          <label htmlFor="floatingInput">price</label>
-        </div>
-        <br /> */}
         <div className="form-floating mb-3">
           <input
             type="date"
@@ -334,31 +401,74 @@ originDetail()
           />
           <label htmlFor="floatingInput"> 행사종료일</label>
         </div>
-       {/*  <div className="form-floating">
-          <textarea
-            className="form-control"
-            placeholder="Leave a comment here"
-            id="festDetail"
-            style={{ height: "300px" }}
-            onChange={(e) => {
-              inputDetail(e.target.value);
-            }}
-          ></textarea>
-          <label htmlFor="floatingTextarea2">상세내용</label>
-        </div> 
-          <br />
-        */}
+        <br />
 
-        <br />
+
+{/* @@@@@@@@@@@@@@@@@@@@@@@@ 테스트 @@@@@@@@@@@@@@@@@@@@@@@@*/}
+
+{/* 
+<table className="table-seats"><thead>
+          <tr>
+          <th colSpan={6}><input type="checkbox" name="color" value="blue" style={{width:'50px'}} />추가 정보 입력  
+          </th></tr></thead>
+        <tbody>
+            <tr><td colSpan={6}>
+            <div className="form-floating">
+  <input type="text" className="form-control" defaultValue={festDtCasting}  id="festDetailCasting" style={{border:'none'}}/>
+  <label htmlFor="floatingInput">캐스팅정보</label></div>
+              </td></tr>
+              <tr><td colSpan={6}>
+            <div className="form-floating">
+  <input type="text" className="form-control" defaultValue={festDtCrew}  id="festDetailCasting" style={{border:'none'}}/>
+  <label htmlFor="floatingInput">제작진정보</label></div>
+              </td></tr>
+              <tr><td colSpan={3}>
+              <div className="form-floating">
+              <input type="text" className="form-control" style={{border:'none'}}  defaultValue={festDtRuntime}/>
+              <label htmlFor="floatingInput">runtime</label></div>
+              </td><td colSpan={3}>
+              <div className="form-floating">
+              <input type="text" className="form-control" style={{border:'none'}} defaultValue={festDtAge}/>
+              <label htmlFor="floatingInput">관람등급</label></div>
+              </td></tr>
+              <tr><td style={{textAlign:'left', color:'gray'}} colSpan={6}>
+                <p style={{paddingLeft:'13px', fontSize:'12px'}}>상품 상세보기_포스터 이미지 추가</p>
+                <div style ={{display:'flex'}}>
+            <input
+          className="form-control"
+          style={{width:'85%'}}
+          type="file"
+          accept="image/*"
+          id="festivalPoster"
+          onChange={FestImageUpload}
+          ref={imgRef} 
+          />
+          <BlackBtn height='38px'>선택파일 저장</BlackBtn>
+          </div></td></tr>
+        </tbody>
+      </table> */}
+
+
+
+
+{/* @@@@@@@@@@@@@@@@@@@@@@@@ 테스트 @@@@@@@@@@@@@@@@@@@@@@@@*/}
+
+
+
+
         {/* 추가 정보 입력 */}
+        {festMId==='new'? null:
         <BlackBtn onClick={optionModalOpen}>
-          {" "}
-          판매 추가정보 입력 (추후기재가능)
+          상세정보 입력 
         </BlackBtn>
-        {optionModal === 1 ? <AddProductsOptionalDetail /> : null}
+        }
+        {optionModal === 1 ? <AddProductsOptionalDetail  festTcNo={festTcNo} setFestOriginPsUrl={setFestPsUrl} festPsNo={festPsNo} festOrginPsUrl={festPsUrl} festDtAge={festDtAge} festDtCasting={festDtCasting} festDtCrew={festDtCrew} festDtRuntime={festDtRuntime} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}/> : null}
         {/* 추가 정보 입력 */}
+        
         <br />
-        <br />
+
+        {optionModal===1? null : 
+        (festMId==='new' ?   <>  <br />
         <BlackBtn
           onClick={() => {
             navigate(-1);
@@ -366,8 +476,17 @@ originDetail()
         >
           취소
         </BlackBtn>
-        &nbsp;
-        {festMId==='new'? <BlackBtn onClick={festivalInsert}>상품등록하기</BlackBtn> : <BlackBtn onClick={festivalUpdate}>상품수정완료</BlackBtn>}
+        &nbsp;<BlackBtn onClick={festivalInsert}>상품등록하기</BlackBtn> </>:        <> <br />
+        <BlackBtn
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          취소
+        </BlackBtn>
+        &nbsp;<BlackBtn onClick={festivalUpdate}>상품수정완료</BlackBtn></>)
+        }
+
       </div>
       {/* //등록 div 끝 */}
     </>
@@ -382,6 +501,7 @@ const AddProductsPage = () => {
       <Sidebar />
       <div className="center">
         <AddProducts />
+      
       </div>
     </>
   );

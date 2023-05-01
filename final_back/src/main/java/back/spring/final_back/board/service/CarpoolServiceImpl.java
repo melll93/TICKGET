@@ -35,6 +35,14 @@ public class CarpoolServiceImpl implements CarpoolService {
         return mList;
     }
 
+    
+    // Carpool 게시글 상세보기(SelectOne)
+    @Override
+    public int getBoardCpNo() {
+        logger.info("CarpoolServiceImpl : getBoardCpNo");
+        return carpoolDao.getBoardCpNo();
+    }
+
     // Carpool 게시판 등록(Insert)
     @Override
     public int insertCarpool(CarpoolDto carpoolDto) {

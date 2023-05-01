@@ -10,10 +10,13 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface FestivalDao {
 	public List<FestivalDto> festivalDetail(FestivalDto festivalDto);
+	public List<FestivalDto> festivalDetail2(FestivalDto festivalDto);
 	
     public List<FestivalDto> festivalListByDate(Date date);
 
     public List<FestivalDto> festivalList();
+
+    public List<FestivalDto> latestFestivalList();
 
     public List<FestivalDto> areaFestivalList(String area);
 
@@ -35,4 +38,8 @@ public interface FestivalDao {
 
 
   public int festivalUpdate(FestivalDto festivalDto);
+
+  public int festivalPosterDelete(int fest_ps_no);
+public int festivalDetailUpdate(FestivalDto festivalDto);
+public int festivalTicketDelete(int fest_tc_no);
 }

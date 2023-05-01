@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { BButton, LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
+import { LoginForm, MyH1, MyInput, MyLabel  } from '../../styles/formStyle';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { memberListDB } from '../../axios/member/memberCrud';
@@ -7,6 +7,7 @@ import { setUserId } from "../../redux/userAuth/action"
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Swal from "sweetalert2";
+import { MButton } from './RegisterPage';
 
 
 const ResetPwPage = () => {
@@ -122,7 +123,7 @@ Swal.fire({
             }}
           />
         </MyLabel>
-        <BButton onClick={handleResetPw}>비밀번호 변경</BButton>
+        <MButton onClick={handleResetPw}>비밀번호 변경</MButton>
       </div>
     </LoginForm>
     </div>

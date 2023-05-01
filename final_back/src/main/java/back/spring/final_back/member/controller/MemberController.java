@@ -1,12 +1,15 @@
 package back.spring.final_back.member.controller;
 
+import back.spring.final_back.festival.repository.FestivalDto;
 import back.spring.final_back.member.repository.MemberDto;
 import back.spring.final_back.member.service.MemberService;
 import back.spring.final_back.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +45,11 @@ public class MemberController {
         return null;
     }
 
+    @GetMapping("/oauth/loginSuccess")
+    public void oauthLoginSuccess() {
+//        log.info(oauth.toString());
+    }
+
     @PostMapping("/getMemberData")
     public Object getMemberData() {
 
@@ -56,4 +64,28 @@ public class MemberController {
         return memberService.searchById(memberId);
     }
 
+    /*************************
+     *
+     * @param friendId
+     * @return ifExist : true, ifNot : false
+     */
+    @GetMapping("/checkFollow")
+    public boolean checkFollow(@RequestParam String friendId) {
+        log.info(friendId);
+        return memberService.checkFollow(friendId);
+    }
+
+    @GetMapping("/addFollow")
+    public int addFollow(@RequestParam String friendId) {
+        log.info(friendId);
+        return memberService.addFollow(friendId);
+    }
+
+	@PostMapping("/memberProfileImageUpdate")
+	public int memberProfileImageUpdate(@RequestBody MemberDto memberDto) {
+		int result = 0;
+		result = memberService.memberProfileImageUpdate(memberDto);
+		return result;
+	}
+    
 }

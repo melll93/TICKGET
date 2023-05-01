@@ -26,7 +26,7 @@ public class MarketDto {
 	private LocalDateTime mkTicketDate;
 	private String mkTicketSeat;
 	private int mkTicketPrice;
-	private String mkTicketCount;
+	private int mkTicketCount;
 	private String mkTicketPlace;
 	private String boardMkFilename;
 	private String boardMkFileurl;
@@ -34,6 +34,7 @@ public class MarketDto {
 	private String memberId;
 	private int memberNo;
 	private int boardMkStatus;
+	private int boardMkLikes;
 	
 	
 	//조건검색 시 필요

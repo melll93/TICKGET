@@ -1,5 +1,6 @@
 package back.spring.final_back.member.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class SignUpServiceImpl implements SignUpService {
 		return result;
 	}
 
-	// Update
+	// 회원 정보 Update
 	@Override
 	public int memberUpdate(Map<String, Object> pMap) {
 		log.info("memberUpdate 확인");
@@ -53,13 +54,30 @@ public class SignUpServiceImpl implements SignUpService {
 		result = signUpDao.memberUpdate(pMap);
 		return result;
 	}
+	
+	// 비밀번호 Update
+	@Override
+	public int changePwUpdate(Map<String, Object> pMap) {
+		log.info("changePwUpdate 확인");
+		int result = 0;
+		String memberPassword = (String) pMap.get("memberPassword");
+		String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
+		pMap.put("memberPassword", memberPasswordEncoded); // key값 수정
+		result = signUpDao.changePwUpdate(pMap);
+		return result;
+	}
 
 	// Delete
 	@Override
 	public int memberDelete(Map<String, Object> pMap) {
-		log.info("memberDelete 확인");
-		int result = 0;
-		result = signUpDao.memberDelete(pMap);
-		return result;
+	    log.info("memberDelete 확인");
+		log.info(pMap.toString());
+	    int result = 0;
+		/*
+		 * String memberId = (String) pMap.get("id"); Map<String, Object> paramMap = new
+		 * HashMap<>(); paramMap.put("memberId", memberId);
+		 */
+	    result = signUpDao.memberDelete(pMap);
+	    return result;
 	}
 }

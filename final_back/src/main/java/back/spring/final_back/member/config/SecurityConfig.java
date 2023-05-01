@@ -1,9 +1,11 @@
 package back.spring.final_back.member.config;
 
+import back.spring.final_back.member.handler.OAuth2AuthenticationSuccessHandler;
 import back.spring.final_back.member.jwt.JwtAccessDeniedHandler;
 import back.spring.final_back.member.jwt.JwtAuthenticationEntryPoint;
 import back.spring.final_back.member.jwt.JwtSecurityConfig;
 import back.spring.final_back.member.jwt.TokenProvider;
+import back.spring.final_back.member.service.MemberOAuth2ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,8 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final CorsFilter corsFilter;
+    private final MemberOAuth2ServiceImpl memberOAuth2Service;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -52,8 +56,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
-//                .requestMatchers("/festival/**").hasAuthority("ROLE_USER")
-//                .anyRequest().authenticated()
+                // .requestMatchers("/festival/**").hasAuthority("ROLE_USER")
+                // .anyRequest().authenticated()
 
                 /*********************************
                  * 자체 로그인
@@ -65,18 +69,22 @@ public class SecurityConfig {
                 .formLogin()
                 .loginProcessingUrl("/login")
                 .successForwardUrl("/member/login/success")
-//                .failureForwardUrl("/member/login/failed")
+                // .failureForwardUrl("/member/login/failed")
                 .usernameParameter("memberId")
                 .passwordParameter("memberPassword")
 
                 /*********************************
                  * OAuth2 로그인
                  *********************************/
-//                .and()
-//                .oauth2Login()
-//                .loginPage("/oauth")
-
                 .and()
+                .oauth2Login()
+                // .loginPage("/oauth/login")
+                // .loginProcessingUrl("/oauth/login")
+                .defaultSuccessUrl("/member/oauth/loginSuccess")
+                .successHandler(oAuth2AuthenticationSuccessHandler)
+                .userInfoEndpoint().userService(memberOAuth2Service);
+
+        httpSecurity
                 .apply(new JwtSecurityConfig(tokenProvider));
 
         return httpSecurity.build();

@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   BButton, ContainerDiv, FormDiv, HeaderDiv, MyButton, MyH1, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton,
 } from "../../../styles/formStyle";
-import QuillEditor from "./QuillEditor";
-import { mk_boardInsertDB, uploadFileDB } from "../../../axios/board/market/marketLogic";
+import { mk_boardInsertDB } from "../../../axios/board/market/marketLogic";
 import { Button, Col, FloatingLabel, Form, InputGroup, Row, } from "react-bootstrap";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
@@ -103,7 +102,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
 
   const handleContent = useCallback((value) => {
-    //quilleditor에서 담김 - 태그포함된 정보
     setContent(value);
   }, []);
 
@@ -212,7 +210,9 @@ const MarketWriteForm = ({ mkImageUploader }) => {
     }).open();
   }
 
-
+  const handleCancle = () => {
+    navigate('/market')
+  }
 
 
   
@@ -227,7 +227,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
         <ContainerDiv>
           <HeaderDiv style={{ display: "flex", justifyContent: "center" }}>
             <div className="form-floating mb-3">
-              <h3 style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.8rem"}}>티켓 중고판매 게시글 등록</h3>
+              <h3 style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.8rem"}}><i class="bi bi-pencil-square"></i>{" "}티켓 중고판매 게시글 등록</h3>
             </div>
           </HeaderDiv>
 
@@ -363,6 +363,8 @@ const MarketWriteForm = ({ mkImageUploader }) => {
 
 
               <hr style={{ opacity: "0%" }} />
+              <div style={{textAlign:'center'}}>
+
               <Button style={
                 {backgroundColor:"rgb(80,50,200)" 
                 , border:'1px solid white'
@@ -373,6 +375,19 @@ const MarketWriteForm = ({ mkImageUploader }) => {
               >
                 글 등록하기
               </Button>
+              <Button style={
+                {backgroundColor:"rgb(170,180,190)" 
+                , border:'1px solid white'
+                , fontWeight:'bold'
+                , transition:'background-color 0.3s ease',
+              }}
+              onClick={handleCancle}
+              >
+                취소/이전으로
+              </Button>
+
+
+                </div>
             </FormDiv>
           </Form>
         </ContainerDiv>

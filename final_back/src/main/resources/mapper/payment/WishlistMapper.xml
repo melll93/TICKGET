@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="back.spring.final_back.payment.repository.WishlistDao">
+
+<!-- 위시리스트 조회 -->
+<select id="wishlistSelect" parameterType="WishlistDto" resultType="WishlistDto">
+  select * from wishlist_data
+   where member_no = #{memberNo}
+</select>
+
+
+<!-- 위시리스트 상세정보 -->
+<select id="wishlistDetail" parameterType="WishlistDto" resultType="WishlistDto">
+  SELECT * FROM wishlist_data
+  WHERE member_no = #{memberNo} AND board_mk_no = #{boardMkNo}
+</select>
+
+
+<!-- 위시리스트 추가 -->
+<insert id="wishlistAdd" parameterType="WishlistDto">
+
+  insert into wishlist_data (wishlist_title,wishlist_price,wishlist_fileurl,wishlist_category,wishlist_status,board_mk_no,member_no)
+ <choose>
+    <!-- 마켓 게시판에서 위시리스트 추가할 경우  -->
+    <when test='wishlistCategory!=null and wishlistCategory.equals("market")'>
+      values (#{wishlistTitle},#{wishlistPrice},#{wishlistFileurl},#{wishlistCategory},#{wishlistStatus},#{boardMkNo},#{memberNo})
+    </when>
+    <otherwise>
+      values (#{wishlistTitle},#{wishlistPrice},#{wishlistFileurl},#{wishlistCategory},#{boardMkNo},null)
+    </otherwise>
+  </choose>
+</insert>
+
+
+
+
+
+
+<!-- 위시리스트 전체 제거 -->
+<delete id="wishlistDelete" parameterType="WishlistDto">
+    DELETE FROM wishlist_data
+    WHERE member_no = #{memberNo}
+</delete>
+
+
+<!-- 위시리스트 선택 제거 -->
+<delete id="wishlistSelDelete" parameterType="WishlistDto">
+  DELETE FROM wishlist_data
+  WHERE member_no = #{memberNo} AND board_mk_no IN (#{boardMkNo})
+</delete>
+
+
+
+<!-- 위시리스트 판매여부 업데이트 -->
+<update id="wishlistUpdateStatus" parameterType="WishlistDto">
+<choose>
+<when test="boardMkNo!=null and boardMkNo > 0">
+UPDATE wishlist_data SET wishlist_status = wishlist_status + 1
+ WHERE board_mk_no = #{boardMkNo} 
+</when>
+</choose>
+</update>
+
+
+</mapper>

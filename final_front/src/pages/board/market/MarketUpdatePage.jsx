@@ -8,7 +8,6 @@
   import Sidebar from '../../../components/Sidebar'
   import { ContainerDiv, FormDiv, HeaderDiv } from '../../../styles/formStyle'
   import MarketFileInsert from './MarketFileInsert'
-  import QuillEditor from './QuillEditor'
   import { Cookies } from 'react-cookie'
   import Swal from "sweetalert2";
 
@@ -360,7 +359,7 @@
     <input className="form-control" type="file" accept='image/*' id="dimg" name="dimg" onChange={imageChange}/>
   </Form.Group>
         <DivUploadImg div id="uploadImg">
-                    <img src={files.fileUrl}   alt="미리보기" />
+                    <img src={files.fileUrl}   alt="http://via.placeholder.com/300X350" />
               </DivUploadImg>
 
 

@@ -10,7 +10,7 @@ const HomeButton = ({ icon }) => {
           <img
             className={icon + " image40"}
             src="../logos/tickget.png"
-            style={{ width: "100px" }}
+            style={{ width: "90%" }}
           />
         </Link>
       </div>

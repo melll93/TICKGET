@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/carpool")
 @RequiredArgsConstructor
 public class CarpoolController {
-    Logger logger = LoggerFactory.getLogger(TogetherController.class);
+    Logger logger = LoggerFactory.getLogger(CarpoolController.class);
     private final CarpoolService carpoolService;
 
     // Carpool 게시판 조회(SelectAll)
@@ -42,6 +42,13 @@ public class CarpoolController {
         logger.info("CarpoolController : CarpoolDetail 호출");
         CarpoolDto mList = carpoolService.CarpoolDetail(carpoolDto);
         return mList;
+    }
+
+    // Carpool 게시판 글번호 조회
+    @GetMapping("/getBoardCpNo")
+    public int getBoardCpNo() {
+        logger.info("CarpoolController : getBoardCpNo 호출");
+        return carpoolService.getBoardCpNo();
     }
 
     // Carpool 게시판 등록(Insert)
@@ -79,11 +86,11 @@ public class CarpoolController {
         return result;
     }
 
-	// Carpool 조회수 증가시켜줘
-	@GetMapping("/carpoolViewUp")
-	public void viewUp(@RequestParam Map<String, Object> pMap) {
-		logger.info("CarpoolController : viewUp 호출");
+    // Carpool 조회수 증가시켜줘
+    @GetMapping("/carpoolViewUp")
+    public void viewUp(@RequestParam Map<String, Object> pMap) {
+        logger.info("CarpoolController : viewUp 호출");
         logger.error("pMap = {}", pMap);
-		carpoolService.viewUp(pMap);
-	}
+        carpoolService.viewUp(pMap);
+    }
 }
