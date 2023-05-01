@@ -226,19 +226,21 @@ const MemberUpdPage = () => {
       });
       return;
     }
-  
+
     try {
+      // 값이 입력되지 않은 경우 "" 값으로 처리 받고 db 값 그대로 유지
       const member = {
         memberId: _userData.memberId,
-        memberPassword: password || "", // password 값이 없으면 빈 문자열로 설정
-        memberName: name || "", // name 값이 없으면 빈 문자열로 설정
-        memberEmail: email || "", // email 값이 없으면 빈 문자열로 설정
-        memberMobile: mobile || "", // mobile 값이 없으면 빈 문자열로 설정
-        memberZipcode: zipcode || "", // zipcode 값이 없으면 빈 문자열로 설정
-        memberAddress: address || "", // 해당 값이 없다면 빈 문자열로 전달
+        memberPassword: password || "",
+        // 새로운 비밀번호 입력하지 않을 시 빈값으로 값을 주고 back에서 값이 입력되지 않은 null인 경우 update를 하지 않도록 처리
+        memberName: name || "",
+        memberEmail: email || "",
+        memberMobile: mobile || "",
+        memberZipcode: zipcode || "",
+        memberAddress: address || "",
         memberAddrDetail: addrDetail || "",
       };
-      
+
       const res = await memberUpdateDB(member);
       console.log(res.data);
   
