@@ -1,5 +1,6 @@
 package back.spring.final_back.member.service;
 
+import back.spring.final_back.festival.repository.FestivalDto;
 import back.spring.final_back.member.jwt.TokenProvider;
 import back.spring.final_back.member.repository.MemberDao;
 import back.spring.final_back.member.repository.MemberDto;
@@ -118,4 +119,12 @@ public class MemberServiceImpl implements MemberService {
         return memberDao.addFollow(myId, friendId);
     }
 
+	@Override
+	public int memberProfileImageUpdate(MemberDto memberDto) {
+		int result = memberDao.memberProfileImageUpdate(memberDto);
+		return result;
+	}
 }
+
+
+

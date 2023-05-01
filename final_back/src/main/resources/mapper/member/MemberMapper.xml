@@ -58,4 +58,9 @@
           INTO member_follow
         VALUES (#{myId}, #{friendId})
     </insert>
+    <update id="memberProfileImageUpdate" parameterType="MemberDto">
+        update member set
+        member_profile_image = #{memberProfileImage}
+        where member_id = #{memberId}
+    </update>
 </mapper>

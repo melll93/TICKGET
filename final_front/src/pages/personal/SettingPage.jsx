@@ -8,6 +8,7 @@ import Tab2Content from "../../components/mypage/Tab2Content";
 import Tab3Content from "../../components/mypage/Tab3Content";
 import UnRegiesterPage from "./UnRegiesterPage";
 import MemberUpdPage from "./MemberUpdPage";
+import Tab4_ProfileChange from "../../components/mypage/Tab4_ProfileChange";
 
 
 const MypageSidebarItem = () => {
@@ -16,6 +17,7 @@ const MypageSidebarItem = () => {
     "회원정보수정",
     "비밀번호변경",
     "배송지관리",
+    "프로필변경",
     "SNS연결설정",
     "로그인관리",
     "회원탈퇴",
@@ -74,6 +76,18 @@ const MypageSidebarItem = () => {
 <Tab3Content></Tab3Content>
         </div>
       )}
+
+
+{items[activeTab] === "프로필변경" && (
+        <div className="TabContent">
+
+{/*여기  */}
+프로필변경
+<Tab4_ProfileChange></Tab4_ProfileChange>
+        </div>
+      )}
+
+
 
 {items[activeTab] === "SNS연결설정" && (
         <div className="TabContent">

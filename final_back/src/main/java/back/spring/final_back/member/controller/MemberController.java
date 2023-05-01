@@ -1,5 +1,6 @@
 package back.spring.final_back.member.controller;
 
+import back.spring.final_back.festival.repository.FestivalDto;
 import back.spring.final_back.member.repository.MemberDto;
 import back.spring.final_back.member.service.MemberService;
 import back.spring.final_back.member.service.MemberServiceImpl;
@@ -80,4 +81,11 @@ public class MemberController {
         return memberService.addFollow(friendId);
     }
 
+	@PostMapping("/memberProfileImageUpdate")
+	public int memberProfileImageUpdate(@RequestBody MemberDto memberDto) {
+		int result = 0;
+		result = memberService.memberProfileImageUpdate(memberDto);
+		return result;
+	}
+    
 }

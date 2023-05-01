@@ -43,3 +43,20 @@ export const addFollowDB = async (friendId) => {
 
   return result;
 };
+
+
+
+export const memberPofileImageUpdateDB = (member) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: "http://localhost:8888/member/memberProfileImageUpdate",
+        data: member,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

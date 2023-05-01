@@ -19,4 +19,6 @@ public interface MemberDao {
     int addFollow(String myId, String friendId);
 
     int socialjoin(MemberDto memberDto);
+
+	int memberProfileImageUpdate(MemberDto memberDto);
 }

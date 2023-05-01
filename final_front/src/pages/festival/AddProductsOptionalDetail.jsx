@@ -40,6 +40,7 @@ console.log(festTcTime); */
     title:'등록완료',
     icon:'warning'
   })
+  navigate(`/productsDetail/${festMId}`)
   if (!res.data) {
   } else {
   }
