@@ -49,6 +49,15 @@ public class FestivalController {
 		return festival;
 	}
 
+	@GetMapping("latestFestivalList")
+	public List<FestivalDto> latestFestivalList() {
+		List<FestivalDto> festival = null;
+		festival = festivalService.latestFestivalList();
+		// logger.info(festival.toString());
+		return festival;
+	}
+
+
 	@GetMapping("festivalList")
 	public List<FestivalDto> festivalList() {
 		List<FestivalDto> festival = null;
@@ -56,6 +65,7 @@ public class FestivalController {
 		// logger.info(festival.toString());
 		return festival;
 	}
+
 
 	@GetMapping("areaFestivalList")
 	public List<FestivalDto> areaFestivalList(@RequestParam String fest_m_area) {

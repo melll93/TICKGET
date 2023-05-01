@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useNavigate, useParams } from "react-router";
-import { FestivalInsertDB, FetivalDetailDB, festivalUpdateDB } from "../../axios/festival/festival";
+import { FestivalInsertDB, FetivalDetailDB, festivalUpdateDB, getLatestFestivalDB } from "../../axios/festival/festival";
 import ImageUploader, { handleUpload } from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
 import { Button } from "react-bootstrap";
@@ -52,7 +52,7 @@ const AddProducts = () => {
 
 /* 클라우디너리 */
 
-  const [selectedFile, setSelectedFile] = useState(null);
+/*   const [selectedFile, setSelectedFile] = useState(null);
   const [cloudImg, setCloudImg] = useState();
   const handleFileInput = (e) => {
     setSelectedFile(e);
@@ -61,7 +61,7 @@ const AddProducts = () => {
     e.preventDefault();
     handleUpload(selectedFile, setCloudImg); // util > imageupload.js 의 handleUpload 로 넘기기
   };
-
+ */
 
   /* 클라우디너리 */
 
@@ -98,13 +98,18 @@ const festivalInsert = async () => {
     } else {
       const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId);
       if (confirmResult) {//예
-       optionModalOpen() 
+        const latestFestival = await getLatestFestivalDB();
+   /*      console.log(latestFestival[0].festMId); */
+        navigate(`/addProducts/${latestFestival[0].festMId}`);
+        optionModalOpen() 
       } else {  //아니오
     navigate('/festival'); 
       }
     }
   }
 };
+
+
 
 
 /* READ 입력되어있던 정보 가져오기 */  
@@ -237,6 +242,10 @@ originDetail()
         .catch((err) => console.log(err))
     );
   };
+
+
+
+
 
   return (
     <>
@@ -396,7 +405,7 @@ originDetail()
 
 {/* @@@@@@@@@@@@@@@@@@@@@@@@ 테스트 @@@@@@@@@@@@@@@@@@@@@@@@*/}
 
-
+{/* 
 <table className="table-seats"><thead>
           <tr>
           <th colSpan={6}><input type="checkbox" name="color" value="blue" style={{width:'50px'}} />추가 정보 입력  
@@ -436,7 +445,7 @@ originDetail()
           <BlackBtn height='38px'>선택파일 저장</BlackBtn>
           </div></td></tr>
         </tbody>
-      </table>
+      </table> */}
 
 
 

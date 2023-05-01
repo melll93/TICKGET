@@ -39,5 +39,7 @@ int festivalDetailUpdate(FestivalDto festivalDto);
 
 int festivalTicketDelete(int fest_tc_no);
 
+List<FestivalDto> latestFestivalList();
+
 
 }

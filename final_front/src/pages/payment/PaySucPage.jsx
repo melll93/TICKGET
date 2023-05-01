@@ -14,6 +14,7 @@ import Footer from '../../components/Footer'
     /* 결제 처리에 필요한 회원정보 */ 
     const _userData = cookies.get("_userData");
     const festTcAmt = cookies.get("tk_amount");
+    const festTcDate = cookies.get("date");
     
     let member_no;
     let member_name = '';
@@ -98,7 +99,8 @@ if (no){
             paymentOrderId: orderid+festMId+member_no,
             paymentOrderName: festMId,
             paymentCount: festTcAmt,
-             paymentPrice: price,
+            paymentPrice: price,
+            paymentFestDate:festTcDate, 
             boardMkNo: '',
             memberNo: member_no,
             memberName: member_name,

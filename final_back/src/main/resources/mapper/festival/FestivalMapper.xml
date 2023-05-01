@@ -28,9 +28,11 @@
         FROM fest_main
         WHERE #{date} &lt; fest_m_start
     </select>
-
     <select id="festivalList" resultType="FestivalDto">
-        SELECT * FROM fest_main
+        SELECT * FROM fest_main ORDER BY fest_m_regdate DESC
+    </select>
+       <select id="latestFestivalList" resultType="FestivalDto">
+        SELECT * FROM fest_main ORDER BY fest_m_regdate DESC LIMIT 1
     </select>
     <insert id="festivalInsert" parameterType="Map">
         INSERT INTO

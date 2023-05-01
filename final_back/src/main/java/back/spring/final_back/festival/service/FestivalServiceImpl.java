@@ -124,4 +124,13 @@ public class FestivalServiceImpl implements FestivalService {
 	        result = festivalDao.festivalTicketDelete(fest_tc_no);
 	        return result;
 	}
+
+    @Override
+    public List<FestivalDto> latestFestivalList() {
+    List<FestivalDto> festival = null;
+    festival = festivalDao.latestFestivalList();
+    return festival;
+    }
 }
+
+

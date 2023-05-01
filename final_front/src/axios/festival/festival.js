@@ -52,6 +52,14 @@ export const FetivalListDB = async (festival) => {
 };
 
 
+
+
+
+export const getLatestFestivalDB = async () => {
+  const res = await axios.get('http://localhost:8888/festival/latestFestivalList');
+  return res.data;
+};
+
 export const DeleteFestivalDB = async (festival) => {
   const result = await axios({
     method: "get",
