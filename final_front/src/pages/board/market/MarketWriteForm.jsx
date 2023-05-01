@@ -12,6 +12,7 @@ import MarketFileInsert from "./MarketFileInsert";
 import styled from "styled-components";
 import { Cookies } from "react-cookie";
 import Swal from "sweetalert2";
+import Footer from "../../../components/Footer";
 
 
 
@@ -391,6 +392,9 @@ const MarketWriteForm = ({ mkImageUploader }) => {
             </FormDiv>
           </Form>
         </ContainerDiv>
+        <div style={{marginTop:'100px'}}>
+<Footer/>
+        </div>
       </div>
     </>
   );

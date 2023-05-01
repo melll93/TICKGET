@@ -13,6 +13,8 @@ const MarketList = () => {
   console.log(search);
   const [boards, setBoards] = useState([]);
 
+  //판매중인 상품 갯수
+  const [numBoards, setNumBoards] = useState(0);
 
   
   //페이지네이션 처리
@@ -38,6 +40,9 @@ const MarketList = () => {
     console.log(res.data);
     if (res.data && Array.isArray(res.data)) {
       setBoards(res.data);
+      const numBoards = res.data.filter(board => board.boardMkStatus === 0).length;
+      console.log(numBoards);
+      setNumBoards(numBoards);
     } else {
       console.log("부서목록 조회 실패");
     }
@@ -77,12 +82,16 @@ const MarketList = () => {
       const res = await mk_boardListDB(board);
       console.log(res.data);
       setBoards(res.data);
+      const numBoards = res.data.filter(board => board.boardMkStatus === 0).length;
+      console.log(numBoards);
+      setNumBoards(numBoards);
     };
     boardList();
   }, [setBoards, page, search]);
 
   return (
     <>
+         <div style={{textAlign:'center', fontWeight:'bold', fontSize:'1.8rem', marginTop:'50px'}}>현재 <span style={{color:'rgb(236,120,40)'}}>{numBoards}개</span>{" "}의 상품이 판매중입니다.</div>
       {currentMkBoard(boards).map((boards) => (
         <MarketRow key={boards.boardMkNo} boards={boards} />
       ))}
