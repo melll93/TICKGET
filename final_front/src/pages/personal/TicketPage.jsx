@@ -99,13 +99,16 @@ paymentList()
             <div className="MainDIv" style={{marginTop:'100px'}}>
                 <div className="main_center_div">
                     <h1 className="top_line" style={{fontWeight:'bold'}}><i class="bi bi-card-checklist"></i>&nbsp;결제 내역 확인</h1>
-
+         {plist.length === 0 ? (
+          <div style={{textAlign:'center',marginTop:'100px' ,fontWeight:'bold', fontSize:'2.0rem', opacity:'60%'}}>
+             아직 결제한 티켓이 없습니다.
+          </div>
+         ) : (
+          <>
                     <div className="p_text" style={{fontWeight:'bold'}}>
                         <span className="strong_font">결제번호</span>를 꼭 확인
                         부탁드립니다.
                     </div>
-
-                    {/* <button className="mypage_btn" style={{fontWeight:'bold'}}> 전체조회 </button> */}
 
                     <table className="table">
                         <thead className="thead-dark" style={{backgroundColor:'rgb(50, 50, 120)'}}>
@@ -135,8 +138,9 @@ paymentList()
                             {/* 맵돌려야징 */}
                         </tbody>
                     </table>
+              
+              
 
-                    {/* 페이지네이션.....컴포로 옮겨야함... */}
                     <nav aria-label="Page navigation example" style={{marginTop:'50px'}}>
                         <ul className="pagination">
                             <li className="page-item">
@@ -167,7 +171,8 @@ paymentList()
                         </ul>
                     </nav>
                     {/* 페이지네이션 여기까지 */}
-
+                    </>
+                    )}
                     <div className="cancle_info" style={{marginTop:'150px'}}>
                         <TicketCancleInfo></TicketCancleInfo>
                     </div>

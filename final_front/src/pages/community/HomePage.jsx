@@ -141,7 +141,7 @@ const HomePage = () => {
   return (
     <>
       <Header />
-      <Sidebar />
+      <Sidebar/>
       <div className="center">
         <div
           style={{
@@ -150,7 +150,7 @@ const HomePage = () => {
             height: "1000px",
           }}
         >
-          <CarouselList festivalToday={festivalToday} />
+          <CarouselList festivalToday={festivalToday}/>
         </div>
 
         <section
@@ -353,8 +353,10 @@ const HomePage = () => {
             {/* 지역별 추천 여기까지 */}
           </div>
         </section>
+<div style={{marginTop:'200px'}}>
 
         <Footer />
+</div>
       </div>
       {/* center */}
     </>
