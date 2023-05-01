@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "../../components/sidebar/Menu";
 import "../../styles/mypage.css";
 import Header from "../../components/Header";
@@ -9,9 +9,13 @@ import Tab3Content from "../../components/mypage/Tab3Content";
 import UnRegiesterPage from "./UnRegiesterPage";
 import MemberUpdPage from "./MemberUpdPage";
 import Tab4_ProfileChange from "../../components/mypage/Tab4_ProfileChange";
+import { Cookies } from "react-cookie";
+import Swal from "sweetalert2";
 
 
 const MypageSidebarItem = () => {
+
+
   const [activeTab, setActiveTab] = useState(0);
   const [items, setItems] = useState([
     "회원정보수정",
@@ -27,11 +31,16 @@ const MypageSidebarItem = () => {
     setActiveTab(index);
   };
 
+
+
+
   return (
     <>
     <Header />
     <Sidebar />
     <div className="center">
+
+
 
     <div className="MypageTabList">
     <div className="TabList">
@@ -82,7 +91,7 @@ const MypageSidebarItem = () => {
         <div className="TabContent">
 
 {/*여기  */}
-프로필변경
+{/* 프로필변경 */}
 <Tab4_ProfileChange></Tab4_ProfileChange>
         </div>
       )}
@@ -108,7 +117,7 @@ sns연결설정
         <div className="Menu">
 
 {/*여기  */}
-회원탈퇴
+{/* 회원탈퇴 */}
 <UnRegiesterPage></UnRegiesterPage>
         </div>
       )}

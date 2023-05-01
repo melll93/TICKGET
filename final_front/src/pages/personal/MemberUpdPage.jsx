@@ -1,5 +1,5 @@
 /* global daum */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MyH1, MyLabel, MyInput, PwEye, MyLabelAb, MyButton } from '../../styles/formStyle';
 import { checkPassword, validateEmail, validateHp, validateName, validatePassword } from '../../util/validateLogic';
 import Swal from "sweetalert2";
@@ -48,8 +48,11 @@ const MemberUpdPage = () => {
   const cookies = new Cookies();
   const _userData = cookies.get("_userData"); // 사용자 정보
   console.log(_userData)
-
+  
   const navigate = useNavigate();
+  
+
+
 
 
   // 비밀번호 
@@ -256,6 +259,10 @@ const MemberUpdPage = () => {
 
   return (
     <div>
+
+
+
+
       <div className='mypage_center' style={{paddingTop:'1050px'}}> 
       <UpdateForm>
         <MyH1>회원 정보 수정</MyH1>
@@ -263,7 +270,7 @@ const MemberUpdPage = () => {
           {/* 아이디 변경 불가*/}
             <div style={{display: 'flex'}}>
               <MyLabel style={{textAlign: 'left'}}> 아이디
-                <MyInput type="text" id="id" style={{ backgroundColor: "rgb(112, 128, 144, 0.3)" }} readOnly value={_userData.memberId}/>
+                <MyInput type="text" id="id" style={{ backgroundColor: "rgb(112, 128, 144, 0.3)" }} readOnly value={_userData&&_userData.memberId}/>
               </MyLabel>
             </div>
 
@@ -289,14 +296,14 @@ const MemberUpdPage = () => {
 
           {/* 이름 */}
             <MyLabel style={{textAlign: 'left'}}> 이름
-              <MyInput type="text" id="name" defaultValue={memInfo.name} placeholder="이름을 입력해 주세요" readOnly value={_userData.memberName}
+              <MyInput type="text" id="name" defaultValue={memInfo.name} placeholder="이름을 입력해 주세요" readOnly value={_userData&&_userData.memberName}
                 style={{ backgroundColor: "rgb(112, 128, 144, 0.3)" }} />
             </MyLabel>
 
             {/* 닉네임 변경 불가 */}
             <div style={{display: 'flex'}}>
               <MyLabel style={{textAlign: 'left'}}> 닉네임
-                <MyInput type="text" id="nickname" defaultValue={memInfo.nickname} readOnly value={_userData.memberNickname}
+                <MyInput type="text" id="nickname" defaultValue={memInfo.nickname} readOnly value={_userData&&_userData.memberNickname}
                   style={{ backgroundColor: "rgb(112, 128, 144, 0.3)" }} />
               </MyLabel>
             </div>
@@ -347,7 +354,7 @@ const MemberUpdPage = () => {
 
             {/* 생년월일 변경 불가 */}
             <MyLabel style={{textAlign: 'left'}}> 생년월일
-              <MyInput type="text" id="birthday" defaultValue={memInfo.birthday} readOnly value={_userData.memberBirth}
+              <MyInput type="text" id="birthday" defaultValue={memInfo.birthday} readOnly value={_userData&&_userData.memberBirth}
                 style={{ backgroundColor: "rgba(112, 128, 144, 0.3)" }} />
             </MyLabel>
 

@@ -31,7 +31,10 @@ const Tab4_ProfileChange = () => {
       );
       setImageURL(res.data);
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title:error,
+        icon:'warning'
+      })
     }
   };
  
