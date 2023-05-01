@@ -63,7 +63,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberDto getMemberData() {
         Authentication userAuth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) userAuth.getPrincipal();
-        log.info(userDetails.getUsername());
+//        log.info(userDetails.getUsername());
         String memberId = userDetails.getUsername();
 
         return memberDao.getMemberData(memberId);
