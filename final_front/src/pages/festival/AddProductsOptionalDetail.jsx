@@ -20,9 +20,10 @@ console.log(festTcTime); */
   const[festDetailRuntime, setFestDetailRuntime] = useState(festDtRuntime)
   const[festDetailAge, setFestDetailAge] = useState(festDtAge)
 
-  const[festPsUrl, setFestPsUrl] = useState()
+const[festPsUrl, setFestPsUrl] = useState([])
   const imgRef = useRef()
 
+  const [isLoading, setIsLoading] = useState(false);
 
 
   /* fest_detail INSERT  & update*/
@@ -89,18 +90,18 @@ const saveFestPoster=async()=>{
   };
   try {
     const res = await saveFestPsUrlDB(festival);
-    const newPsPoster = [...festOrginPsUrl,festival.festPsUrl]
+    const newPsPoster = [...festOrginPsUrl,festPsUrl]
     setFestOriginPsUrl(newPsPoster)
-    setFestPsUrl(newPsPoster)
     /* console.log(festival); */
     Swal.fire({
       title:'추가 완료',
       icon: 'success'
-    })
+    });
 if (!res.data) {
 } else {
 }    
 } catch (error) {
+
 }
 };
 
@@ -147,12 +148,13 @@ const deleteFestPsUrl = async ({i}) => {
 
 //클라우디너리에 업로드
 const FestImageUpload = (e) => {
+  setIsLoading(true);
   const { files } = document.querySelector("#festivalPoster");
   const imageFile = document.querySelector("#festivalPoster");
     const filesa = imageFile.files;
     console.log("Image file", filesa[0]);
     const formData = new FormData();
-    setFestPsUrl(festPsUrl);
+   /*  setFestPsUrl(festPsUrl); */
     formData.append("file", files[0]);
     formData.append("upload_preset", "dpa186u8"); // "본인 프리셋 업로드 네임"
     const options = {
@@ -169,16 +171,21 @@ const FestImageUpload = (e) => {
           localStorage.setItem("imageUrl", festPsUrl);
           console.log("페스트 이미지 유알엘 : " + festPsUrl);
           setFestPsUrl(festPsUrl);
-          
+          setIsLoading(false);
           
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          setIsLoading(false);
+          console.log(err);
+        }
+        )
+        
         );
       };
       
 
       useEffect(()=>{
-      },[festPsUrl])
+      },[festPsUrl ])
       
       
       
@@ -188,6 +195,8 @@ const FestImageUpload = (e) => {
       return (
         <>
       {/* fest_detail  */}
+
+
 <div style={{marginTop:'50px'}}>
     <h1 style={{borderBottom:'1px solid lightgray', marginTop:'30px',marginBottom:'30px' , color:'darkgray'}}>
 공연 추가 정보 입력 
@@ -209,6 +218,7 @@ const FestImageUpload = (e) => {
   id="festDetailCrew"onChange={(e)=>{inputCrew (e.target.value)}} />
   <label htmlFor="floatingInput">제작진정보</label>
 </div><br />
+
 
 
 <div style={{display: 'flex'}}>
@@ -233,12 +243,17 @@ const FestImageUpload = (e) => {
           onChange={FestImageUpload} style={{width:'86%', display:'inline'}}
           ref={imgRef}
           />
-<BlackBtn onClick={saveFestPoster} style={{marginTop:'20px'}}>선택파일 저장</BlackBtn>
+                      {isLoading ? (
+  <div style={{ display: 'inline', justifyContent: 'center', alignItems: 'center' }}>
+    <img src="../images_key/LOADING.png" alt="사진확인중..." style={{width:'150px'}}/>
+  </div>
+) : (
+null
+)}
+<BlackBtn onClick={saveFestPoster} style={{marginTop:'20px'}} >선택파일 저장</BlackBtn>
 
-{festPsUrl && <img src={festPsUrl}style={{ width: '50px', height: '100px', overflow: 'hidden', display: 'inline', margin: '5px' }}></img>
-}
 
-
+<br/>
 {festOrginPsUrl && festOrginPsUrl.some(url => url !== null) ? (
   festOrginPsUrl.map((url, i) => (
     url !== null ? (
@@ -249,7 +264,7 @@ const FestImageUpload = (e) => {
     ) : null
   ))
 ) : null}
-            
+
 
 
 

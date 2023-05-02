@@ -16,12 +16,13 @@ const Tab4_ProfileChange = () => {
    if (_userData) {
      member_nickname = _userData.memberNickname; //쿠키에서 가져온 회원번호 (내정보)
    }
- console.log(member_nickname)
+/*  console.log(member_nickname) */
 
   const navigate = useNavigate();
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageURL, setImageURL] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileInput = (e) => {
     console.log(e);
@@ -29,6 +30,8 @@ const Tab4_ProfileChange = () => {
   };
 
   const handleUpload = async (e) => {
+    setIsLoading(true);
+
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", selectedFile);
@@ -38,11 +41,15 @@ const Tab4_ProfileChange = () => {
         formData
       );
       setImageURL(res.data);
+    setIsLoading(false);
+
     } catch (error) {
       Swal.fire({
         title:error,
         icon:'warning'
       })
+    setIsLoading(false);
+
     }
   };
  
@@ -84,6 +91,16 @@ const profileImageUpdate = async() => {
     <div style={{textAlign:'center', marginTop:'100px'}}>
       <p style={{fontWeight:'bold', fontSize:'2.0rem'}}>&nbsp;<span style={{color:'rgb(50,50,120)'}}>'{member_nickname}'</span> 님의 프로필 사진</p> 
       {_userData&&<img src={_userData.memberProfileImage} alt="uploaded image" style={{borderRadius:'50%', width:'200px', height:'200px' }} />} 
+     
+
+      {isLoading ? (
+  <div style={{ display: 'inline', justifyContent: 'center', alignItems: 'center', zIndex:'2' }}>
+    <img src="../images_key/LOADING.png" alt="사진확인중..." style={{width:'150px'}}/>
+  </div>
+) : (
+null
+)}
+      {imageURL&&  <img src={imageURL} alt="uploaded image" style={{borderRadius:'50%', width:'200px', height:'200px' }} />} 
     </div>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '30px' }}>
       <input style={{width:'220px'}} type="file" onChange={(e)=>{handleFileInput(e.target.files[0])}} />
@@ -91,6 +108,8 @@ const profileImageUpdate = async() => {
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '10px' }}>
       <MButton onClick={handleUpload}>변경 확인</MButton>
       <MButton onClick={profileImageUpdate} style={{ marginLeft: '10px' }}>수정 완료</MButton>
+
+  
     </div>
   </div>
 </>

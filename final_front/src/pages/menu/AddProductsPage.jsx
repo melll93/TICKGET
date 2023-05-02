@@ -273,7 +273,7 @@ originDetail()
           <option value="CONCERT">CONCERT</option>
         </select>
         <br />
-        <h2 style={{fontWeight:'bold'}}><i class="bi bi-pencil-square"></i>{" "}상품 자체 등록</h2>
+        <h2 style={{fontWeight:'bold'}}><i className="bi bi-pencil-square"></i>{" "}상품 자체 등록</h2>
         <div id="uploadImg" style={{marginTop:'20px'}}>
           <img
             id="festivalImgChange"

@@ -265,7 +265,7 @@ const HomePage = () => {
             >
               <div className="mainpage div div1">
                 <h4 style={{ fontWeight: "bold", textAlign: "center" }}>
-                  <i class="bi bi-clipboard"></i> 최근 게시글
+                  <i className="bi bi-clipboard"></i> 최근 게시글
                 </h4>
 
                 <Tabs
@@ -309,7 +309,7 @@ const HomePage = () => {
                 paddingRight: '100px', display: "inline-block"
               }}
             >
-              <h4 style={{ fontWeight: 'bold' }}><i class="bi bi-command"></i>{" "}연계 추천 사이트</h4>
+              <h4 style={{ fontWeight: 'bold' }}><i className="bi bi-command"></i>{" "}연계 추천 사이트</h4>
               <div className="card" style={{ display: "inline-block", marginRight: '5px' , marginTop:'20px'}}>
                 <img
                   src="./images_key/travelgajae.jpg"
