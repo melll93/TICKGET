@@ -1,14 +1,12 @@
 /* 은영 결제페이지 수정중 */
 
-import React, { useCallback, useEffect, useState } from "react";
-import { Button, Card, Dropdown, DropdownButton } from "react-bootstrap";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Button, Card} from "react-bootstrap";
+import { useLocation, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import { mk_boardDetailDB } from "../../../axios/board/market/marketLogic";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { MyInput, MyLabel, MyLabelAb } from "../../../styles/formStyle";
-import PaymentComponent from "../../payment/PaymentComponent";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 import { Cookies } from "react-cookie";
 
@@ -18,7 +16,6 @@ const Cimg = styled.img`
   object-fit: cover;
 `;
 
-
 const cookies = new Cookies();
 
 const MarketPaymentPage = () => {
@@ -26,7 +23,6 @@ const MarketPaymentPage = () => {
   const _userData = cookies.get("_userData"); //유저 정보
   console.log(_userData)
   
-
 
   const href = window.location.href; //url 주소 전체 가져옴
   console.log(href);
@@ -86,12 +82,7 @@ const MarketPaymentPage = () => {
     const formattedDate = `${year}-${month}-${day} ${hours}시 ${minutes}분`;
     console.log(formattedDate); // "2023-04-14 00:00"
   
-  
-
-
-
-
-
+    
    //토스페이먼츠 호출
   const handleClick = async () => {
     const tossPayments = await loadTossPayments(

@@ -1,17 +1,13 @@
 //상품등록 페이지 - 은영 - 수정중
-
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useNavigate, useParams } from "react-router";
 import { FestivalInsertDB, FetivalDetailDB, festivalUpdateDB, getLatestFestivalDB } from "../../axios/festival/festival";
-import ImageUploader, { handleUpload } from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
-import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
 import Swal from "sweetalert2";
 import { Cookies } from "react-cookie";
-
 
 /* ========================= 상품 자체 등록 ============================ */
 
@@ -67,12 +63,10 @@ const AddProducts = () => {
   /* 클라우디너리 */
 
 
-
   /* 추가정보입력 띄우기 */
   const [optionModal, setOptionModal] = useState(0);
   const optionModalOpen = () => {if (optionModal === 0) {setOptionModal(1);
     } else {setOptionModal(0);}};
-
 
 
 /* 상품등록 insert */
@@ -110,9 +104,6 @@ const festivalInsert = async () => {
   }
 };
 
-
-
-
 /* READ 입력되어있던 정보 가져오기 */  
 useEffect(() => {
 const originDetail=async()=>{
@@ -141,7 +132,6 @@ const festPsUrlAll = jsonDoc.map(item => item.festPsUrl);
 setFestPsUrl(festPsUrlAll);
 const festPsNoAll = jsonDoc.map(item => item.festPsNo);
 setFestPsNo(festPsNoAll);
-
 
 /* fest_ticket 받아서 props로 넘기는 중 */
 const festTcNoAll = jsonDoc.map(item => item.festTcNo);
@@ -244,10 +234,6 @@ originDetail()
     );
   };
 
-
-
-
-
   return (
     <>
       <div
@@ -300,10 +286,6 @@ originDetail()
         />{" "}
         <br />
 
-
-
-
-
         
 {/* 클라우드 Test */}
 
@@ -320,10 +302,6 @@ originDetail()
       </div> */}
 
 {/* 클라우드 Test */}
-
-
-
-
 
 
         <div className="form-floating mb-3">
