@@ -590,7 +590,7 @@ null
           </section>
           {/* ////////////////////////////////////// 바텀 섹션///////////////////////////////////////////////////////////////////// */}
           <section>
-            <div className="bottomcontainer" style={{ marginLeft: "220px", height:'1200px' }}>
+            <div className="bottomcontainer" style={{ marginLeft: "200px", height:'1200px' }}>
               <Tabs
                 style={{ maxWidth: "1200px",fontFamily: "Nanum Gothic", fontWeight: "bold"}}
                 defaultActiveKey="product_detail_description"
@@ -615,7 +615,7 @@ null
       {fest.festPsUrl === null ? (
         null
       ) : (
-        <img src={fest.festPsUrl} alt="상품상세정보이미지" style={{ width: '30%', height: '30%', objectFit: 'cover', marginTop: '50px' }} />
+        <img src={fest.festPsUrl} alt="상품상세정보이미지" style={{ width: '80%', height: '80%', objectFit: 'cover', marginTop: '50px' }} />
       )}
       {i === festival.length - 1 && fest.festPsUrl === null ? (
         <div style={{ margin: '50px' }}>
@@ -630,7 +630,7 @@ null
 
                 <Tab eventKey="product_detail_place" title="공연장 위치" mountOnEnter={true}>
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px", marginRight:'450px' }}>
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" , marginRight:'-120px'}}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" , marginRight:'50px'}}>
                   <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
                     <i class="bi bi-geo-alt-fill"></i>
                     {" "}
@@ -638,7 +638,7 @@ null
                   </p>
                   <div style={{ width: "40%", borderTop: "1px solid black",marginBottom: "10px", opacity: "15%" }} />
                 </div>
-                <div  style={{marginRight:'-200px'}}>
+                <div  style={{marginRight:'0px'}}>
                <MapContainer place={ festival[0].festMLoc }/> 
                 </div>
               </div>

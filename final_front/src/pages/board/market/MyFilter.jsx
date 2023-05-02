@@ -2,7 +2,6 @@ import React from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-
 const MyFilter = ({types, type, id, title, handleTitle}) => {
   console.log(id);//
   const navigate = useNavigate();
@@ -16,8 +15,6 @@ const MyFilter = ({types, type, id, title, handleTitle}) => {
    let path=location.pathname+`?page=1&${key}=${newItem}`;
     return path;
   }
-
-
 
   return (
     <DropdownButton variant="" title={title} style={{border: '1px solid lightgray', borderRadius:'5px', height:'38px'}}>

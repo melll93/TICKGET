@@ -62,12 +62,20 @@ public class SingUpController {
 	// 회원 정보 Update
 	@PostMapping("memberUpdate")
 	public String memberUpdate(@RequestBody Map<String, Object> pMap) {
-		log.info("memberUpdate 확인");
-		log.info(pMap.toString());
-		int result = 0;
-		result = signUpService.memberUpdate(pMap);
-		return String.valueOf(result);
+	log.info("memberUpdate 확인");
+	log.info(pMap.toString());
+	int result = 0;
+	String memberPassword = (String) pMap.get("memberPassword");
+	/*
+	 비밀번호를 그대로 사용하는 경우 인코딩된 비밀번호를 사용하지 않고 기존의 비밀번호 유지 필요
+	 */
+	if (memberPassword != null && memberPassword.isEmpty()) {
+	pMap.put("memberPassword", null);
 	}
+	result = signUpService.memberUpdate(pMap);
+	return String.valueOf(result);
+	}
+	
 	// 비밀번호 Update
 	@PostMapping("changePwUpdate")
 	public String changePwUpdate(@RequestBody Map<String, Object> pMap) {

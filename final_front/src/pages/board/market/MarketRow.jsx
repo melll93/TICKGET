@@ -1,29 +1,19 @@
-  import React, { useEffect, useState } from 'react'
+  import React, { useState } from 'react'
 import { Cookies } from 'react-cookie';
-import { Link, useNavigate } from 'react-router-dom';
-import { mk_pushLikeBtnDB } from '../../../axios/board/market/marketLogic';
+import { useNavigate } from 'react-router-dom';
 
 const cookies = new Cookies();
 
   const MarketRow = ({boards}) => {
 
    //회원 정보
-   const _userData = cookies.get("_userData"); 
+  const _userData = cookies.get("_userData"); 
    /* console.log(_userData) */
- 
-   let member_no;
-   if (_userData) {
+
+  let member_no;
+  if (_userData) {
      member_no = _userData.memberNo; //쿠키에서 가져온 회원번호 (내정보)
-   }
- 
-
-
-
-
-
-
-
- 
+  }
     console.log(boards); // 마켓 게시판 조회 데이터
     const navigate = useNavigate()
 
@@ -34,14 +24,12 @@ const cookies = new Cookies();
     const price = boards.mkTicketPrice.toLocaleString()
     console.log(price)
 
-
     //현재 시간 - 게시글 작성 시간
     const now = new Date();
     const boardMkDateTime = new Date(boards.boardMkDate)
     const diffInMs = now - boardMkDateTime;
    /*  console.log(diffInMs) */
-       
-   
+      
 
     //작성일 태그에 적용
       const formatTimeDiff = (diffInMs) =>{
@@ -74,27 +62,22 @@ const cookies = new Cookies();
         }
       } 
 
-     /* console.log(Date.now())
+    /* console.log(Date.now())
      console.log(new Date(boards.boardMkDate).getTime()) */
     const boardDateTime = formatTimeDiff(Date.now() - new Date(boards.boardMkDate).getTime())
-
-
-
 
    //상세페이지 이동
     const linkToDetail = () => {
       navigate(`/market/mk_boardDetail?no=${boards.boardMkNo}`)
-      
     }
-
 
     return (
       <>
 <div className="card"
   style={{
-    width:"16rem",
+    width:"18rem",
     display:"inline-block",
-    margin: "50px 0px 0px 50px",
+    margin: "80px 0px 0px 50px",
     borderRadius: "10px",
     cursor: "pointer",
     transition: "transform 0.3s", // 애니메이션 속도 조절
@@ -108,9 +91,7 @@ const cookies = new Cookies();
   판매완료
 </div> 
   ) : ""}
-  
-  
-<img src={boards.boardMkFileurl ? boards.boardMkFileurl : "http://via.placeholder.com/300X350"} style={{width:"100%", overflow:'hidden', height: '260px', objectFit: 'cover' , 
+<img src={boards.boardMkFileurl ? boards.boardMkFileurl : "http://via.placeholder.com/300X350"} style={{width:"100%", overflow:'hidden', height: '300px', objectFit: 'cover' , 
 borderTopLeftRadius:'10px',borderTopRightRadius:'10px',borderBottomLeftRadius:'0px',borderBottomRightRadius:'0px'}} 
 onClick={linkToDetail}
 onMouseEnter={() => { // 마우스를 요소 위로 올리면
@@ -132,33 +113,26 @@ onMouseLeave={() => { // 마우스를 요소에서 떠나면
 <h5 className="card-title" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,fontSize:'1rem'}}>
   {boards.boardMkTitle}</h5>
 </div>
-<div style={{ display: "flex", justifyContent: "space-between" , }} onClick={linkToDetail}
+<div style={{display: "flex", justifyContent: "space-between"}} onClick={linkToDetail}
 onMouseEnter={() => { // 마우스를 요소 위로 올리면
   setHovered(true); // 상태값 변경
 }}
 onMouseLeave={() => { // 마우스를 요소에서 떠나면
   setHovered(false); // 상태값 변경
 }}> 
-
 <p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1.5rem" }}>{price}원</p>
-
 <p className="card-text" style={{fontFamily:"Nanum Gothic", fontWeight:"bold" ,  fontSize: "1rem" ,marginTop: "10px" , opacity:'50%'}}>{boardDateTime}</p>
 </div>
 </div>
-   
       <hr style={{marginTop:'-5px'}}/>
-
       <p className="card-text" style={{color:'black' }} >
-   
       <div className="mb-2" style={{display: 'flex', justifyContent: 'center', marginBottom:'10px'}} >
   {member_no === boards.memberNo && <span className="mr-5" style={{color:'black', marginRight:'0px' , fontFamily:"Nanum Gothic", fontWeight:"bold" , fontSize: "1rem", color:'rgb(80, 50, 200)'}}>내 게시글{" "}</span>}
-  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px',fontFamily:"Nanum Gothic", fontWeight:"bold"}}><i class="bi bi-person"></i>&nbsp;&nbsp;{boards.memberNickname}</span>}
+  {member_no !== boards.memberNo && <span className="mr-4" style={{color:'black', marginRight:'0px',fontFamily:"Nanum Gothic", fontWeight:"bold"}}><i class="bi bi-person"></i>&nbsp;{boards.memberNickname}</span>}
 </div>
-       </p>
-       <hr style={{marginTop:'-25px' , opacity:'0'}}/>
+    </p>
+    <hr style={{marginTop:'-25px' , opacity:'0'}}/>
 </div>
-
-
     </>
     )
   }

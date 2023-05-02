@@ -1,8 +1,6 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import PaymentComponent from "../payment/PaymentComponent";
 import Footer from "../../components/Footer";
 import TicketCancleInfo from "../../components/mypage/TicketCancleInfo";
 import { ContainerDiv, HeaderDiv } from "../../styles/formStyle";
@@ -12,34 +10,6 @@ import { paymentDetail } from "../../axios/payment/paymentLogic";
 const cookies = new Cookies();
 
 const TicketPage = () => {
-  /* const [selectedFile, setSelectedFile] = useState(null);
-  const [imageURL, setImageURL] = useState(null);
-
-  const handleFileInput = (e) => {
-    console.log(e);
-    setSelectedFile(e);
-  };
-
-  const handleUpload = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    try {
-      const res = await axios.post(
-        "http://localhost:8888/api/image-upload",
-        formData
-      );
-      setImageURL(res.data);
-      console.log("완료");
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  console.log(imageURL);
- */
-
 
   //회원 정보
   const _userData = cookies.get("_userData");
@@ -83,13 +53,6 @@ paymentList()
 
   return (
     <>
-       {/* <div className="cloudinary_image">
-        <input type="file" onChange={(e)=>{handleFileInput(e.target.files[0])}} />
-        <button onClick={handleUpload}>파일 저장</button>
-        {<img src="" alt="uploaded image" />}
-        {imageURL && <img src={imageURL} alt="uploaded image" />}
-        
-      </div> */}
       <Header />
       <Sidebar />
       <div className="center">
@@ -139,8 +102,6 @@ paymentList()
                         </tbody>
                     </table>
               
-              
-
                     <nav aria-label="Page navigation example" style={{marginTop:'50px'}}>
                         <ul className="pagination">
                             <li className="page-item">

@@ -46,13 +46,22 @@ public class SignUpServiceImpl implements SignUpService {
 	// 회원 정보 Update
 	@Override
 	public int memberUpdate(Map<String, Object> pMap) {
-		log.info("memberUpdate 확인");
-		int result = 0;
-		String memberPassword = (String) pMap.get("memberPassword");
-		String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
-		pMap.put("memberPassword", memberPasswordEncoded); // key값 수정
-		result = signUpDao.memberUpdate(pMap);
-		return result;
+	log.info("memberUpdate 확인");
+	int result = 0;
+	String memberPassword = (String) pMap.get("memberPassword");
+	if (memberPassword != null && !memberPassword.isEmpty()) {
+	String memberPasswordEncoded = passwordEncoder.encode(memberPassword);
+	pMap.put("memberPassword", memberPasswordEncoded); // key값 수정
+	} 
+	/*
+	 변경값이 없는 경우 기존의 비밀번호를 이용하기 위해서
+	 passwordEncoder.encode()를 호출하는 게 아닌 기존의 비밀번호를 가져와서 pMap에 넣어줘야함
+	 */
+	else {
+	pMap.put("memberPassword", null);
+	}
+	result = signUpDao.memberUpdate(pMap);
+	return result;
 	}
 	
 	// 비밀번호 Update

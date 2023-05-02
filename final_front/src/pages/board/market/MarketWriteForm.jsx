@@ -1,19 +1,15 @@
 /* global daum */
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback,useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  BButton, ContainerDiv, FormDiv, HeaderDiv, MyButton, MyH1, MyInput, MyLabel, MyLabelAb, PwEye, SignupForm, SubmitButton,
-} from "../../../styles/formStyle";
+import {ContainerDiv, FormDiv, HeaderDiv} from "../../../styles/formStyle";
 import { mk_boardInsertDB } from "../../../axios/board/market/marketLogic";
-import { Button, Col, FloatingLabel, Form, InputGroup, Row, } from "react-bootstrap";
+import { Button, Col,Form, InputGroup, Row, } from "react-bootstrap";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
-import MarketFileInsert from "./MarketFileInsert";
 import styled from "styled-components";
 import { Cookies } from "react-cookie";
 import Swal from "sweetalert2";
-
-
+import Footer from "../../../components/Footer";
 
 /* CSS */
 const DivUploadImg = styled.div`
@@ -25,12 +21,10 @@ margin:10px auto;
 `;
 
 const Img = styled.img`
- width:100%;
- height:100%;
- object-fit:cover;
+width:100%;
+height:100%;
+object-fit:cover;
 `
-
-
 const cookies = new Cookies();
 
 const MarketWriteForm = ({ mkImageUploader }) => {
@@ -46,43 +40,30 @@ const MarketWriteForm = ({ mkImageUploader }) => {
   console.log(member_nickname)
   console.log(member_id)
 
-
   console.log("글쓰기 페이지 호출");
   const navigate = useNavigate();
 
-  
  // 현재 시간을 구한다.
- const now = new Date();
+  const now = new Date();
  // 현재 시간 이후의 최소 날짜를 구한다.
- const minDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
-
-
+  const minDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
   const [board_mk_title, setTitle] = useState(""); //사용자가 입력한 제목 담기
- const [mk_ticket_place, setTicketPlace] = useState(""); //판매할 티켓의 공연장소 
+  const [mk_ticket_place, setTicketPlace] = useState(""); //판매할 티켓의 공연장소 
   const [mk_ticket_date, setTicketDate] = useState(""); //판매할 티켓의 공연일
   const [mk_ticket_seat, setTicketSeat] = useState(""); //판매할 티켓의 좌석정보
   const [mk_ticket_count, setTicketCount] = useState(""); //판매할 티켓의 수량
   const [mk_ticket_price, setTicketPrice] = useState(""); //사용자가 입력한 판매가격
   const [board_mk_content, setContent] = useState(""); //사용자가 입력한 내용 담기
-
   //filename 하나 fileurl 둘이니 객체로 선언할 것
   const [files, setFiles] = useState({ fileName: null, fileUrl: null })
 
   const [validated, setValidated] = useState(false); //필수입력 내용 관리
 
-
-
-
-
-
-
   //사용자가 입력한 값을 useState에 초기화 하기
   const handleTitle = useCallback((e) => {
     setTitle(e);
   }, []);
-
-
 
   const handleTicketDate = useCallback((e) => {
     setTicketDate(e);
@@ -99,7 +80,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
   const handleTicketPrice = useCallback((e) => {
     setTicketPrice(e);
   }, []);
-
 
   const handleContent = useCallback((value) => {
     setContent(value);
@@ -130,7 +110,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
     reader.readAsDataURL(file)
     return false
   }
-
 
   //필수입력 확인 함수 호출
   const handleSubmit = (event) => {
@@ -189,9 +168,7 @@ const MarketWriteForm = ({ mkImageUploader }) => {
   };
 
 
- 
-
-  // 다음 주소 찾기
+  // 다음 API 주소 찾기
   const searchAddress = () => {
     new daum.Postcode({
       oncomplete: function(data) {
@@ -214,11 +191,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
     navigate('/market')
   }
 
-
-  
-
-
-
   return (
     <>
       <Header />
@@ -230,8 +202,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
               <h3 style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.8rem"}}><i class="bi bi-pencil-square"></i>{" "}티켓 중고판매 게시글 등록</h3>
             </div>
           </HeaderDiv>
-
-
           <Form noValidate validated={validated}>
             <FormDiv style={{ width: "1000px" }}>
               <hr style={{ opacity: '0%' }} />
@@ -248,19 +218,14 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                       onChange={(e) => {
                         handleTitle(e.target.value);
                       }}
-                      
                     />
-
                     <Form.Control.Feedback type="invalid">
                       상품 제목을 입력해주세요.
                     </Form.Control.Feedback>
                   </Form.Group>
-
                 </Row>
               </div>
-
               <hr style={{ opacity: '0%' }} />
-
               <div>
                 <Row className="mb-4">
                 <Form.Group as={Col} controlId="formGridPlace">
@@ -277,7 +242,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
           공연 장소를 입력해주세요.
         </Form.Control.Feedback>
       </Form.Group>
- 
                   <Form.Group as={Col} controlId="formGridDate">
                     <h3>공연일</h3>
                     <Form.Control
@@ -293,18 +257,12 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                         const ticketDate = value ? value : null;
                         handleTicketDate(ticketDate);
                       }}></Form.Control>
-      {/*               <Form.Control.Feedback type="invalid">
-                      공연 날짜와 시간을 입력해주세요.
-                    </Form.Control.Feedback> */}
                   </Form.Group>
                 </Row>
               </div>
               <hr style={{ opacity: '0%' }} />
-
               <div>
-
                 <Row className="mb-5">
-
                   <Form.Group as={Col} controlId="formGridTicketSeat">
                     <h3>좌석정보</h3>
                     <Form.Control
@@ -321,7 +279,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                       좌석 정보를 입력해주세요.
                     </Form.Control.Feedback>
                   </Form.Group>
-
                   <Form.Group as={Col} controlId="formGridTicketCount" style={{ marginRight: '30px' }}>
                     <h3>판매수량</h3>
                     <Form.Control required id="mk_ticket_count" type="number" min="1" placeholder="티켓의 수량을 입력하세요." style={{ width: '270px', height: '50px' }} onChange={(e) => { handleTicketCount(e.target.value) }} />
@@ -329,7 +286,6 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                       판매할 티켓의 수량을 선택해주세요.
                     </Form.Control.Feedback>
                   </Form.Group>
-
                   <Form.Group as={Col} controlId="formGridPrice" style={{ marginLeft: 'auto' }} >
                     <h3>판매등록가</h3>
                     <InputGroup>
@@ -340,11 +296,9 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                       </Form.Control.Feedback>
                     </InputGroup>
                   </Form.Group>
-
                 </Row>
               </div>
               <hr style={{ opacity: '0%' }} />
-
               <h3>상세내용</h3>
               <hr style={{ margin: "10px 0px 10px 0px" }} />
               <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
@@ -353,14 +307,12 @@ const MarketWriteForm = ({ mkImageUploader }) => {
                     handleContent(e.target.value);
                   }} />
               </Form.Group>
-
               <Form.Group controlId="formFileMultiple" className="mb-3">
                 <input className="form-control" type="file" accept='image/*' id="dimg" name="dimg" onChange={imageChange} />
               </Form.Group>
               <DivUploadImg div id="uploadImg">
                 <img src="http://via.placeholder.com/300X350" alt="미리보기" />
               </DivUploadImg>
-
 
               <hr style={{ opacity: "0%" }} />
               <div style={{textAlign:'center'}}>
@@ -385,12 +337,13 @@ const MarketWriteForm = ({ mkImageUploader }) => {
               >
                 취소/이전으로
               </Button>
-
-
                 </div>
             </FormDiv>
           </Form>
         </ContainerDiv>
+        <div style={{marginTop:'100px'}}>
+<Footer/>
+        </div>
       </div>
     </>
   );

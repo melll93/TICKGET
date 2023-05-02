@@ -1,17 +1,13 @@
 //상품등록 페이지 - 은영 - 수정중
-
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useNavigate, useParams } from "react-router";
 import { FestivalInsertDB, FetivalDetailDB, festivalUpdateDB, getLatestFestivalDB } from "../../axios/festival/festival";
-import ImageUploader, { handleUpload } from "../../util/imageUploader";
 import AddProductsOptionalDetail from "../festival/AddProductsOptionalDetail";
-import { Button } from "react-bootstrap";
 import { BlackBtn } from "../../styles/formStyle";
 import Swal from "sweetalert2";
 import { Cookies } from "react-cookie";
-
 
 /* ========================= 상품 자체 등록 ============================ */
 
@@ -67,18 +63,16 @@ const AddProducts = () => {
   /* 클라우디너리 */
 
 
-
   /* 추가정보입력 띄우기 */
   const [optionModal, setOptionModal] = useState(0);
   const optionModalOpen = () => {if (optionModal === 0) {setOptionModal(1);
     } else {setOptionModal(0);}};
 
 
-
 /* 상품등록 insert */
 const festivalInsert = async () => {
   if (festTitle == null || festTitle === '' || festLocation == null ||  festLocation === '' ||  festCategory == null || festCategory === '' ||  festStartday == null  || festStartday === '' || 
-    festEndday == null  || festEndday === '' ||   festArea == null  || festArea === '' ||   festImageUrl == null  || festImageUrl === ''  ) {  alert('빈칸 없이 작성해주세요. ');  } else {
+    festEndday == null  || festEndday === '' ||   festArea == null  || festArea === '' ||   festImageUrl == null  || festImageUrl === ''  ) { Swal.fire({title:'빈 칸 없이 작성해주세요.',icon:'warning'}) /* alert('빈칸 없이 작성해주세요. ');   */} else {
     const festival = {
       festMAuthor:_userData.memberId,
       festMName: festTitle,
@@ -97,7 +91,8 @@ const festivalInsert = async () => {
           icon:'error'
         })
     } else {
-      const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId);
+      /* const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId); */
+      const confirmResult = Swal.fire({title:'추가 정보를 입력하시겠습니까?',icon:'info'},festival.festMId)
       if (confirmResult) {//예
         const latestFestival = await getLatestFestivalDB();
    /*      console.log(latestFestival[0].festMId); */
@@ -109,9 +104,6 @@ const festivalInsert = async () => {
     }
   }
 };
-
-
-
 
 /* READ 입력되어있던 정보 가져오기 */  
 useEffect(() => {
@@ -141,7 +133,6 @@ const festPsUrlAll = jsonDoc.map(item => item.festPsUrl);
 setFestPsUrl(festPsUrlAll);
 const festPsNoAll = jsonDoc.map(item => item.festPsNo);
 setFestPsNo(festPsNoAll);
-
 
 /* fest_ticket 받아서 props로 넘기는 중 */
 const festTcNoAll = jsonDoc.map(item => item.festTcNo);
@@ -244,10 +235,6 @@ originDetail()
     );
   };
 
-
-
-
-
   return (
     <>
       <div
@@ -273,7 +260,7 @@ originDetail()
           <option value="CONCERT">CONCERT</option>
         </select>
         <br />
-        <h2 style={{fontWeight:'bold'}}><i class="bi bi-pencil-square"></i>{" "}상품 자체 등록</h2>
+        <h2 style={{fontWeight:'bold'}}><i className="bi bi-pencil-square"></i>{" "}상품 자체 등록</h2>
         <div id="uploadImg" style={{marginTop:'20px'}}>
           <img
             id="festivalImgChange"
@@ -300,10 +287,6 @@ originDetail()
         />{" "}
         <br />
 
-
-
-
-
         
 {/* 클라우드 Test */}
 
@@ -320,10 +303,6 @@ originDetail()
       </div> */}
 
 {/* 클라우드 Test */}
-
-
-
-
 
 
         <div className="form-floating mb-3">
@@ -462,7 +441,7 @@ originDetail()
           상세정보 입력 
         </BlackBtn>
         }
-        {optionModal === 1 ? <AddProductsOptionalDetail  festTcNo={festTcNo} setFestOriginPsUrl={setFestPsUrl} festPsNo={festPsNo} festOrginPsUrl={festPsUrl} festDtAge={festDtAge} festDtCasting={festDtCasting} festDtCrew={festDtCrew} festDtRuntime={festDtRuntime} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}/> : null}
+        {optionModal === 1 ? <AddProductsOptionalDetail  festivalUpdate={festivalUpdate} festTcNo={festTcNo} setFestOriginPsUrl={setFestPsUrl} festPsNo={festPsNo} festOrginPsUrl={festPsUrl} festDtAge={festDtAge} festDtCasting={festDtCasting} festDtCrew={festDtCrew} festDtRuntime={festDtRuntime} festTcType={festTcType} festTcPrice={festTcPrice} festTcTime={festTcTime}/> : null}
         {/* 추가 정보 입력 */}
         
         <br />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { mk_boardListDB } from "../../../axios/board/market/marketLogic";
 import MarketRow from "./MarketRow";
-import { Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import CommonPagination from "../../../components/CommonPagination";
 
@@ -11,9 +10,12 @@ const MarketList = () => {
   //url 주소에 한글 있을 때 사용
   const search = decodeURIComponent(useLocation().search);
   console.log(search);
+
+  //게시글 데이터 받아오기
   const [boards, setBoards] = useState([]);
 
-
+  //판매중인 상품 갯수
+  const [numBoards, setNumBoards] = useState(0);
   
   //페이지네이션 처리
   const [pages, setPage] = useState(1);
@@ -31,20 +33,19 @@ const MarketList = () => {
     currentFest = boards.slice(indexOfFirstPost, indexOfLastPost);
     return currentFest;
   };
-
   
   const selectBoardList = async () => {
     const res = await mk_boardListDB();
     console.log(res.data);
     if (res.data && Array.isArray(res.data)) {
       setBoards(res.data);
+      const numBoards = res.data.filter(board => board.boardMkStatus === 0).length;
+      console.log(numBoards);
+      setNumBoards(numBoards);
     } else {
       console.log("부서목록 조회 실패");
     }
   };
-
-
-
 
   useEffect(() => {
     const boardList = async () => {
@@ -77,16 +78,19 @@ const MarketList = () => {
       const res = await mk_boardListDB(board);
       console.log(res.data);
       setBoards(res.data);
+      const numBoards = res.data.filter(board => board.boardMkStatus === 0).length;
+      console.log(numBoards);
+      setNumBoards(numBoards);
     };
     boardList();
   }, [setBoards, page, search]);
 
   return (
     <>
+         <div style={{textAlign:'center', fontWeight:'bold', fontSize:'1.8rem', marginTop:'50px'}}>현재 <span style={{color:'rgb(236,120,40)'}}>{numBoards}개</span>{" "}의 상품이 판매중입니다.</div>
       {currentMkBoard(boards).map((boards) => (
         <MarketRow key={boards.boardMkNo} boards={boards} />
       ))}
- 
  <CommonPagination 
           pagination={setPage}
           perPage={perPage}
