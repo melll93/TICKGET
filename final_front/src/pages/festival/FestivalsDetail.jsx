@@ -615,7 +615,7 @@ null
       {fest.festPsUrl === null ? (
         null
       ) : (
-        <img src={fest.festPsUrl} alt="상품상세정보이미지" style={{ width: '50%', height: '50%', objectFit: 'cover', marginTop: '50px' }} />
+        <img src={fest.festPsUrl} alt="상품상세정보이미지" style={{ width: '80%', height: '80%', objectFit: 'cover', marginTop: '50px' }} />
       )}
       {i === festival.length - 1 && fest.festPsUrl === null ? (
         <div style={{ margin: '50px' }}>

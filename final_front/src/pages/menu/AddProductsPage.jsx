@@ -72,7 +72,7 @@ const AddProducts = () => {
 /* 상품등록 insert */
 const festivalInsert = async () => {
   if (festTitle == null || festTitle === '' || festLocation == null ||  festLocation === '' ||  festCategory == null || festCategory === '' ||  festStartday == null  || festStartday === '' || 
-    festEndday == null  || festEndday === '' ||   festArea == null  || festArea === '' ||   festImageUrl == null  || festImageUrl === ''  ) {  alert('빈칸 없이 작성해주세요. ');  } else {
+    festEndday == null  || festEndday === '' ||   festArea == null  || festArea === '' ||   festImageUrl == null  || festImageUrl === ''  ) { Swal.fire({title:'빈 칸 없이 작성해주세요.',icon:'warning'}) /* alert('빈칸 없이 작성해주세요. ');   */} else {
     const festival = {
       festMAuthor:_userData.memberId,
       festMName: festTitle,
@@ -91,7 +91,8 @@ const festivalInsert = async () => {
           icon:'error'
         })
     } else {
-      const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId);
+      /* const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId); */
+      const confirmResult = Swal.fire({title:'추가 상세정보를 입력하시겠습니까?',icon:'info'},festival.festMId)
       if (confirmResult) {//예
         const latestFestival = await getLatestFestivalDB();
    /*      console.log(latestFestival[0].festMId); */

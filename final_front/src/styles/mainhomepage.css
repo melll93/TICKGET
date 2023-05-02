@@ -13,7 +13,7 @@
 /* 캐로쉘 각각 디브 */
 .carouseloneDiv {
   height: 300px;
-  width: 250px;
+  width: 300px;
   max-width: 1000px;
   max-height: 1200px;
   /* border: 1px solid red;  */
@@ -43,12 +43,12 @@
 
 /* 캐로쉘 디브에 이미지 100%로 맞춤 */
 .compo_carouselone_img {
-  border-top-right-radius: 20px;
+/*   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-bottom-left-radius: 20px; */
   height: 300px;
-  width: 250px;
+  width: 300px;
   object-fit: cover;
   /*    border: 1px solid black;  */
 }

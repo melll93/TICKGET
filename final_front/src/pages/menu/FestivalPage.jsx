@@ -91,7 +91,7 @@ const FestivalsTest = () => {
                 style={{
                  width: "18rem", 
                   display: "inline-block",
-                  margin: "50px 0px 0px 50px",
+                  margin: "70px 0px 0px 75px",
                 }}
               >
                 <a
@@ -214,7 +214,7 @@ const _userData = cookies.get("_userData"); //유저 정보
         
 
         <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div className="container-fluid2">
+        <div className="container-fluid2" >
           <ul className="navbar-nav">
 
             {/* 전체 */}
