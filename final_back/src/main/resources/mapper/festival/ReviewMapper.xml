@@ -10,7 +10,7 @@ SELECT * FROM fest_review
 	<insert id="reviewInsert" parameterType="Map"
 		useGeneratedKeys="true" keyProperty="reviewNo">
 	INSERT INTO
-	review (review_no, review_pw,
+	fest_review (review_no, review_pw,
 	review_hit, review_content,
 	review_festmid, review_memid, review_memnickname)
 	VALUES (#{reviewNo}, #{reviewPw}, #{reviewHit}, #{reviewContent},
