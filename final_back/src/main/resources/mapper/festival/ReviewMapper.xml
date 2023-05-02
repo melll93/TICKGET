@@ -5,19 +5,19 @@
 <mapper
 	namespace="back.spring.final_back.festival.repository.ReviewDao">
 	<select id="reviewList" resultType="ReviewDto">
-SELECT * FROM review_test
+SELECT * FROM fest_review
 	</select>
 	<insert id="reviewInsert" parameterType="Map"
 		useGeneratedKeys="true" keyProperty="reviewNo">
 	INSERT INTO
-	review_test (review_no, review_pw,
+	review (review_no, review_pw,
 	review_hit, review_content,
 	review_festmid, review_memid, review_memnickname)
 	VALUES (#{reviewNo}, #{reviewPw}, #{reviewHit}, #{reviewContent},
 	 #{reviewFestmid}, #{reviewMemid}, #{reviewMemnickname})
 	</insert>
 	<delete id="reviewDelete" parameterType="Integer">
-		delete from review_test
+		delete from fest_review
 		<where>
 			<if test='review_no!=null and review_no>0'>
 				and review_no=#{reviewNo}
@@ -25,7 +25,7 @@ SELECT * FROM review_test
 		</where>
 	</delete>
 	<update id="reviewUpdate" parameterType="ReviewDto">
- update review_test
+ update fest_review
  set review_content = #{reviewContent} where review_no=#{reviewNo}
 </update>
 	
