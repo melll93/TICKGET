@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Cookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-import { BButton, MButton } from "../../../styles/formStyle";
+import { MButton } from "../../../styles/formStyle";
 import MyFilter from "./MyFilter";
 import Swal from "sweetalert2";
 
@@ -16,8 +16,6 @@ const MarketSearchBar = () => {
   if(_userData){
     member_no = _userData.memberNo
   }
-
-
 
   //사용자가 입력한 문자열 담기
   const [content, setContent] = useState("");
@@ -76,8 +74,6 @@ const MarketSearchBar = () => {
     return path;
   };
 
-
-
   const linkToWrite = () => {
     if(member_no > 0){
       navigate("/market/write")
@@ -91,15 +87,11 @@ const MarketSearchBar = () => {
           navigate('/login');
         }
       });
-
     }
-
   }
-
 
   return (
     <>
-    
     <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
       <MyFilter
         types={types}
@@ -136,9 +128,7 @@ const MarketSearchBar = () => {
       >
         판매하기
       </MButton>
-      
     </div>
-    
     </>
   );
 };

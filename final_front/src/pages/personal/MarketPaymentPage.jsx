@@ -1,18 +1,11 @@
   /* 은영 결제페이지 수정중 */
-
   import React, { useCallback, useEffect, useState } from "react";
-  import { Button, Card, Dropdown, DropdownButton } from "react-bootstrap";
-  import { useLocation, useNavigate, useParams } from "react-router-dom";
+  import { useLocation, useNavigate} from "react-router-dom";
   import styled from "styled-components";
   import { mk_boardDetailDB } from "../../axios/board/market/marketLogic";
   import Header from "../../components/Header";
   import Sidebar from "../../components/Sidebar";
-  import { MyInput, MyLabel, MyLabelAb } from "../../styles/formStyle";
-  import { loadTossPayments } from "@tosspayments/payment-sdk";
-  import { handlePayment } from "../../components/handlePayment";
   import PaymentPage from "./PaymentPage";
-import Footer from "../../components/Footer";
-
 
   const Cimg = styled.img`
   width:150px;
@@ -44,7 +37,6 @@ import Footer from "../../components/Footer";
     const jsonDoc = JSON.parse(temp)
     console.log(jsonDoc[0])
 
-
     setMkpDetails ({
       no: jsonDoc[0].boardMkNo,  //글 번호 사용 보류*/
       url : jsonDoc[0].boardMkFileurl,
@@ -60,14 +52,12 @@ import Footer from "../../components/Footer";
   },[])
 
 
-
-
     return (
       <>
       <Header/>
         <Sidebar />
         <div className="center">
-        <PaymentPage orderDetail={mkpDetail} /* paymentData={paymentData} */ />
+        <PaymentPage orderDetail={mkpDetail} />
         </div>
       </>
     );

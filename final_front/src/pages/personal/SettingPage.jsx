@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Menu from "../../components/sidebar/Menu";
+import React, { useState } from "react";
 import "../../styles/mypage.css";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -9,8 +8,6 @@ import Tab3Content from "../../components/mypage/Tab3Content";
 import UnRegiesterPage from "./UnRegiesterPage";
 import MemberUpdPage from "./MemberUpdPage";
 import Tab4_ProfileChange from "../../components/mypage/Tab4_ProfileChange";
-import { Cookies } from "react-cookie";
-import Swal from "sweetalert2";
 
 
 const MypageSidebarItem = () => {
@@ -30,8 +27,6 @@ const MypageSidebarItem = () => {
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
-
-
 
 
   return (
