@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { mk_boardListDB } from "../../../axios/board/market/marketLogic";
 import MarketRow from "./MarketRow";
-import { Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import CommonPagination from "../../../components/CommonPagination";
 
@@ -11,11 +10,12 @@ const MarketList = () => {
   //url 주소에 한글 있을 때 사용
   const search = decodeURIComponent(useLocation().search);
   console.log(search);
+
+  //게시글 데이터 받아오기
   const [boards, setBoards] = useState([]);
 
   //판매중인 상품 갯수
   const [numBoards, setNumBoards] = useState(0);
-
   
   //페이지네이션 처리
   const [pages, setPage] = useState(1);
@@ -33,7 +33,6 @@ const MarketList = () => {
     currentFest = boards.slice(indexOfFirstPost, indexOfLastPost);
     return currentFest;
   };
-
   
   const selectBoardList = async () => {
     const res = await mk_boardListDB();
@@ -47,9 +46,6 @@ const MarketList = () => {
       console.log("부서목록 조회 실패");
     }
   };
-
-
-
 
   useEffect(() => {
     const boardList = async () => {
@@ -95,7 +91,6 @@ const MarketList = () => {
       {currentMkBoard(boards).map((boards) => (
         <MarketRow key={boards.boardMkNo} boards={boards} />
       ))}
- 
  <CommonPagination 
           pagination={setPage}
           perPage={perPage}
