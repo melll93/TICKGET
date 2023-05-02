@@ -92,7 +92,7 @@ const festivalInsert = async () => {
         })
     } else {
       /* const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId); */
-      const confirmResult = Swal.fire({title:'추가 상세정보를 입력하시겠습니까?',icon:'info'},festival.festMId)
+      const confirmResult = Swal.fire({title:'추가 정보를 입력하시겠습니까?',icon:'info'},festival.festMId)
       if (confirmResult) {//예
         const latestFestival = await getLatestFestivalDB();
    /*      console.log(latestFestival[0].festMId); */
