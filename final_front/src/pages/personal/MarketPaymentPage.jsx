@@ -25,6 +25,11 @@
     const [mkpDetail,setMkpDetails] = useState([])
 
 
+
+
+
+      
+
   useEffect(() => {
     const boardDetail = async() => {
     const board = {
@@ -36,13 +41,22 @@
     const temp = JSON.stringify(res.data)
     const jsonDoc = JSON.parse(temp)
     console.log(jsonDoc[0])
+    const date = new Date(jsonDoc[0].mkTicketDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    
+    const formattedDate = `${year}-${month}-${day} ${hours}시 ${minutes}분`;
+    console.log(formattedDate); 
 
     setMkpDetails ({
       no: jsonDoc[0].boardMkNo,  //글 번호 사용 보류*/
       url : jsonDoc[0].boardMkFileurl,
       title : jsonDoc[0].boardMkTitle,
       seat : jsonDoc[0].mkTicketSeat,
-      date : jsonDoc[0].mkTicketDate,
+      date : formattedDate,
       place : jsonDoc[0].mkTicketPlace,
       amount : jsonDoc[0].mkTicketCount,
       price : jsonDoc[0].mkTicketPrice
@@ -50,6 +64,7 @@
     }
     boardDetail()
   },[])
+
 
 
     return (

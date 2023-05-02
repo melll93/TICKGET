@@ -37,6 +37,8 @@
    }
 
 
+
+
    return (
       <div className="center" style={{marginTop:'-40px'}}>
       {/* ----------------------------------결제페이지---------------------------------- */}
@@ -47,12 +49,12 @@
       <hr style={{marginTop:'30px' , borderTop:'3px solid rgb(80, 50, 200)'}}/>
       <div style={{display:"flex" , marginBottom:'100px' ,margin: '0 auto'}}>
    </div>
-   <div style={{marginTop:'15px'}}>
+   <div style={{marginTop:'30px'}}>
    {/*  상품 정보 섹션  */}
-      <h3 style={{ fontWeight: 'bold' }}>◽상품 정보</h3>
+      <h3 style={{ fontWeight: 'bold' }}><i class="bi bi-clipboard-check"></i>&nbsp;&nbsp;상품 정보</h3>
    <section style={{marginLeft:'-50px'}}>
    <Card style={{width:'800px', height:'200px', border:'2px solid rgb(224,224,224)', borderColor:'', margin: '0 auto', marginTop:'20px',alignItems:'center'}}>
-      <Card.Body style={{ display: 'flex', alignItems: 'center' , marginLeft:'0px' }}>
+      <Card.Body style={{ display: 'flex', alignItems: 'center' , marginLeft:'0px' }}> 
          <div style={{marginRight: '50px'}}>
             <Cimg src={orderDetail.url}/>
          </div>
@@ -77,7 +79,7 @@
 
 
    {/*  구매자 정보 섹션  */}
-   <h3 style={{ fontWeight: 'bold', marginTop:'80px' }}>◽구매자 정보</h3>
+   <h3 style={{ fontWeight: 'bold', marginTop:'80px' }}><span><i class="bi bi-person-lines-fill" ></i></span>&nbsp;&nbsp;구매자 정보</h3>
    <section style={{justifyContent: 'space-between' ,marginLeft:'-50px'}}>
    <Card style={{width:'800px' , height:'150px' , border:'2px solid rgb(224,224,224)' , borderColor:''
    , margin: '0 auto',display: 'flex' , alignItems:'center', marginTop:'20px'}}>
@@ -85,7 +87,7 @@
    <div style={{ marginLeft: '20px' }}>
    <div style={{ display: 'inline-block' , marginTop:'20px' }}>
    <Card.Text style={{ fontSize: '22px'}}>
-   구매자명 <span style={{marginLeft:'350px', color:'black'}}>{_userData.memberName}</span></Card.Text>
+  구매자명 <span style={{marginLeft:'350px', color:'black'}}>{_userData.memberName}</span></Card.Text>
    </div>
    <div>
    <Card.Text style={{ fontSize: '22px',marginTop:'10px' }}>
@@ -102,7 +104,7 @@
 
 
    {/*  결제 정보 섹션  */}
-   <h3 style={{ fontWeight: 'bold', marginTop:'80px' }}>◽결제 정보</h3>
+   <h3 style={{ fontWeight: 'bold', marginTop:'80px' }}><i class="bi bi-wallet2"></i>&nbsp;&nbsp;결제 정보</h3>
    <section style={{  justifyContent: 'space-between' ,marginLeft:'-50px'}}>
    <Card style={{width:'800px' , height:'150px' , border:'2px solid rgb(224,224,224)' , borderColor:'' 
    , margin: '0 auto',display: 'flex' ,  alignItems:'center', marginTop:'20px'}}>
