@@ -256,6 +256,17 @@ const RegisterPage = ({ authLogic }) => {
         });
         return;
       }
+
+      // 중복 검사 실행
+      const overlapFields = ['id', 'email', 'nickname'];
+      for (let i = 0; i < overlapFields.length; i++) {
+        const field = overlapFields[i];
+        await overlap(field);
+        if (comment[field] && comment[field].props.style.color === 'red') {
+          // 중복값이 존재하는 경우 회원 가입 중단
+          return;
+        }
+      }
   
       const birth = memInfo.birthday;
       let birthday = '';
