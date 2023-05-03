@@ -91,7 +91,7 @@ const FestivalsTest = () => {
                 style={{
                  width: "18rem", 
                   display: "inline-block",
-                  margin: "50px 0px 0px 50px",
+                  margin: "70px 0px 0px 75px",
                 }}
               >
                 <a
@@ -103,9 +103,9 @@ const FestivalsTest = () => {
                    <div style={{height:'30px', overflow:'hidden', padding:'5px', marginBottom:'15px'}}>
                     <h5 className="card-title"><strong>{festival.festMName}</strong></h5>
                     </div>
-                    <p className="card-text"><i class="bi bi-geo-alt-fill"></i> {festival.festMLoc}</p>
+                    <p className="card-text"><i className="bi bi-geo-alt-fill"></i> {festival.festMLoc}</p>
                     <p className="card-text">
-                    <i class="bi bi-calendar"></i> {festival.festMStart} ~ {festival.festMEnd}
+                    <i className="bi bi-calendar"></i> {festival.festMStart} ~ {festival.festMEnd}
                     </p>
                   </div>
                 </a>
@@ -214,38 +214,38 @@ const _userData = cookies.get("_userData"); //유저 정보
         
 
         <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div className="container-fluid">
+        <div className="container-fluid2" >
           <ul className="navbar-nav">
 
             {/* 전체 */}
             <ul className="nav-item">
-              <li className="nav-link" onClick={changeModal} style={{ marginLeft: "150px" }}> 전체 </li>
+              <li className="nav-link2" onClick={changeModal} style={{ marginLeft: "150px" }}> 전체 </li>
             </ul>{/* end of  전체 */}
 
 {/* 지역별 */}
             <ul className="nav-item">
-              <ul className="nav-link" style={{ marginLeft: "150px" }}  onMouseEnter={e => { setStyle({display: 'block'})}} 
+              <ul className="nav-link2" style={{ marginLeft: "150px" }}  onMouseEnter={e => { setStyle({display: 'block'})}} 
               onMouseLeave={e => {setStyle({display: 'none'})}} > 지역별 <ul style={style}>
                 <ul className="nav-item">
-              <li className="nav-link" onClick={seoul}> 서울 </li>
+              <li className="nav-link2" onClick={seoul}> 서울 </li>
             </ul>
                 <ul className="nav-item">
-              <li className="nav-link" onClick={kyeongkiAndIncheon}> 경기/인천 </li>
+              <li className="nav-link2" onClick={kyeongkiAndIncheon}> 경기/인천 </li>
                  </ul>
             <ul className="nav-item">
-              <li className="nav-link" onClick={chungAndKangwon}> 충청/강원 </li>
+              <li className="nav-link2" onClick={chungAndKangwon}> 충청/강원 </li>
             </ul>
             <ul className="nav-item">
-              <li className="nav-link" onClick={daeguAndKyungBuk}> 대구/경북 </li>
+              <li className="nav-link2" onClick={daeguAndKyungBuk}> 대구/경북 </li>
             </ul>
             <ul className="nav-item">
-              <li className="nav-link" onClick={busanAndKyungNam}> 부산/경남 </li>
+              <li className="nav-link2" onClick={busanAndKyungNam}> 부산/경남 </li>
             </ul>
             <ul className="nav-item">
-              <li className="nav-link" onClick={kwanjuAndJunla}> 광주/전라 </li>
+              <li className="nav-link2" onClick={kwanjuAndJunla}> 광주/전라 </li>
             </ul>
             <ul className="nav-item">
-              <li className="nav-link" onClick={Jeju}> 제주 </li>
+              <li className="nav-link2" onClick={Jeju}> 제주 </li>
             </ul>
             </ul>
               </ul>
@@ -253,16 +253,16 @@ const _userData = cookies.get("_userData"); //유저 정보
 
 {/* 인기순 */}
             <ul className="nav-item">
-              <li className="nav-link" style={{ marginLeft: "150px" }} onClick={rankingModalopen}> 인기순/랭킹 </li>
+              <li className="nav-link2" style={{ marginLeft: "150px" }} onClick={rankingModalopen}> 인기순/랭킹 </li>
             </ul>
 
 {/* 기타 */}
             <ul className="nav-item">
-              <li className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4open}> 기타 </li>
+              <li className="nav-link2"  style={{ marginLeft: "150px" }} onClick={modal4open}> 기타 </li>
             </ul> {/* end of 기타*/}
 
 
-            <li className="nav-link"  style={{ marginLeft: "150px" }} onClick={modal4open}> 
+            <li className="nav-link2"  style={{ marginLeft: "150px" }} onClick={modal4open}> 
             {_userData&&_userData.memberAuthority==="ROLE_ADMIN" ? <Link
           to="/addProducts/new"
           style={{

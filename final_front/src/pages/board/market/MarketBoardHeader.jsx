@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { mk_boardDeleteDB, mk_boardHeaderDetailDB } from "../../../axios/board/market/marketLogic";
-import { BButton, MButton } from "../../../styles/formStyle";
+import { mk_boardDeleteDB } from "../../../axios/board/market/marketLogic";
+import { MButton } from "../../../styles/formStyle";
 import Swal from "sweetalert2";
-
 
 const cookies = new Cookies();
 
 const MarketBoardHeader = ({ detail, no }) => {
   //상세보기 정보를 detail props로 받는다
-
 
   //회원 정보
   const _userData = cookies.get("_userData");
@@ -28,7 +26,6 @@ const MarketBoardHeader = ({ detail, no }) => {
   useEffect(() => {
     console.log(detail)
     console.log(mkbNo)
-
   }, [])
 
 

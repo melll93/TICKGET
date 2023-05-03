@@ -233,7 +233,7 @@ const insertData = (tickets) => {
             className="form-control"
             disabled
           defaultValue={dbTickets&&dbTickets.length} 
-            style={{ width: '100%' }}btn
+            style={{ width: '100%' }}
           />
           <label htmlFor="floatingInput">좌석정보</label>
         </div>

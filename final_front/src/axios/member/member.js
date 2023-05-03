@@ -1,6 +1,8 @@
 import axios from "axios";
+import { Cookies } from "react-cookie";
 
 const access_token = window.localStorage.getItem("access_token");
+const cookies = new Cookies();
 
 export const searchById = async (memberId) => {
   const result = await axios({
@@ -18,7 +20,7 @@ export const searchById = async (memberId) => {
 /**************
  * @return boolean
  */
-export const checkFollowDB = async (friendId) => {
+export const checkFollowDB = async (friendId, access_token) => {
   const result = await axios({
     method: "GET",
     url: "http://localhost:8888" + "/member/checkFollow",
@@ -44,8 +46,6 @@ export const addFollowDB = async (friendId) => {
   return result;
 };
 
-
-
 export const memberPofileImageUpdateDB = (member) => {
   return new Promise((resolve, reject) => {
     try {
@@ -59,4 +59,19 @@ export const memberPofileImageUpdateDB = (member) => {
       reject(error);
     }
   });
+};
+
+export const getUserData = async (token) => {
+  const result = await axios({
+    method: "POST",
+    url: "http://localhost:8888" + "/member/getMemberData",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    const _userData = res.data;
+    cookies.set("_userData", _userData);
+    return _userData;
+  });
+  return result;
 };

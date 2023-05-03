@@ -7,9 +7,9 @@
   import Header from '../../../components/Header'
   import Sidebar from '../../../components/Sidebar'
   import { ContainerDiv, FormDiv, HeaderDiv } from '../../../styles/formStyle'
-  import MarketFileInsert from './MarketFileInsert'
   import { Cookies } from 'react-cookie'
   import Swal from "sweetalert2";
+  import Footer from '../../../components/Footer'
 
   /* CSS */
   const DivUploadImg = styled.div`
@@ -25,8 +25,6 @@
   height:100%;
   object-fit:cover;
   `
-
-
   const cookies = new Cookies();
 
   const MarketUpdatePage = ({mkImageUploader}) => {
@@ -36,10 +34,8 @@
     const _userData = cookies.get("_userData"); 
     console.log(_userData)
 
-
     const {no} = useParams() //보드헤더에서 해시값 가져옴
     console.log(no)
-
 
     const [board_mk_title, setTitle] = useState(""); //사용자가 입력한 제목 담기
     const [mk_ticket_place, setTicketPlace] = useState(""); //판매할 티켓의 공연장소
@@ -54,8 +50,6 @@
     const quillRef = useRef();
 
     const [validated, setValidated] = useState(false);//필수입력 내용 관리훅
-
-
 
     useEffect (() => {
       //상세보기 한 건만 가져와야함
@@ -81,15 +75,10 @@
     boardDetail()
     },[no])
     
-
-
-
-  
     //사용자가 입력한 값을 useState에 초기화 하기
     const handleTitle = useCallback((value) => {
       setTitle(value);
     }, []);
-  
   
     const handleTicketPlace = useCallback((value) => {
       setTicketPlace(value);
@@ -142,8 +131,6 @@
       return false
     }
     
-    
-
     //필수입력 확인 함수 호출
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -193,9 +180,7 @@
       navigate(`/market/mk_boardDetail?no=${no}`)
     },1000)
     if(!res.data) return console.log('게시글 수정 실패')
-
     }
-
 
 // 다음 주소 찾기
   const searchAddress = () => {
@@ -216,13 +201,8 @@
     }).open();
   }
 
-
-
-    
-
     return (
       <>
-      
           <Header />
       <Sidebar />
         <div className="center">
@@ -232,7 +212,6 @@
     <h3  style={{fontFamily: "Nanum Gothic", fontWeight: "bold" , fontSize:"1.8rem"}}>티켓 중고판매 게시글 수정</h3>
   </div>
 </HeaderDiv>
-    
       <Form noValidate validated={validated}>
             <FormDiv style={{ width: "1000px" }}>
               <hr style={{opacity:'0%'}}/>
@@ -254,12 +233,9 @@
               제목을 입력해주세요.
             </Form.Control.Feedback>
                   </Form.Group>
-
                 </Row>
               </div>
-
   <hr style={{opacity:'0%'}}/>
-
               <div>
                 <Row className="mb-4">
                   <Form.Group as={Col} controlId="formGridPlace">
@@ -279,8 +255,6 @@
               공연 장소를 입력해주세요.
             </Form.Control.Feedback>
                   </Form.Group>
-
-                  
                   <Form.Group as={Col} controlId="formGridDate">
                     <h3>공연일</h3>
                     <Form.Control
@@ -294,17 +268,12 @@
                         handleTicketDate(e.target.value);
                       }}
                     />
-  {/*                   <Form.Control.Feedback type="invalid">
-              공연 날짜와 시간을 입력해주세요.
-            </Form.Control.Feedback> */}
                   </Form.Group>
     </Row>
   </div>
   <hr style={{opacity:'0%'}}/>
-
   <div>
     <Row className="mb-5">
-
                   <Form.Group as={Col} controlId="formGridTicketSeat">
                     <h3>좌석정보</h3>
                     <Form.Control
@@ -321,7 +290,6 @@
               좌석 정보를 입력해주세요.
             </Form.Control.Feedback>
                   </Form.Group>
-
           <Form.Group as={Col} controlId="formGridTicketCount">
             <h3>판매수량</h3>
             <Form.Control required id="mk_ticket_count" type="number" min="1" value={mk_ticket_count}  style={{width:'250px' , height:'50px'}} onChange={(e)=>{handleTicketCount(e.target.value)}}/>
@@ -329,7 +297,6 @@
               판매할 티켓의 수량을 선택해주세요.
             </Form.Control.Feedback>
           </Form.Group>
-      
           <Form.Group as={Col} controlId="formGridPrice" style={{marginLeft:'auto' }} >
             <h3>판매등록가</h3>
             <InputGroup>
@@ -344,7 +311,6 @@
           </Row>
         </div>
             <hr style={{opacity:'0%'}}/>
-
               <h3>상세내용</h3>
               <hr style={{ margin: "10px 0px 10px 0px" }} />
   <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
@@ -353,16 +319,12 @@
                     handleContent(e.target.value);
                   }} />
               </Form.Group>
-
-
         <Form.Group controlId="formFileMultiple" className="mb-3">
     <input className="form-control" type="file" accept='image/*' id="dimg" name="dimg" onChange={imageChange}/>
   </Form.Group>
         <DivUploadImg div id="uploadImg">
                     <img src={files.fileUrl}   alt="http://via.placeholder.com/300X350" />
               </DivUploadImg>
-
-
               <hr style={{ opacity: "0%" }} />
               <Button style={
                 {backgroundColor:"rgb(80,50,200)" 
@@ -379,6 +341,9 @@
             </FormDiv>
             </Form>
           </ContainerDiv>
+          <div style={{marginTop:'100px'}}>
+<Footer/>
+        </div>
         </div>
       </>
     );

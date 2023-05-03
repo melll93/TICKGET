@@ -27,14 +27,16 @@ public class StompChatController {
 
     @MessageMapping("/pub")
     public String message(String message) throws Exception {
+
         JsonParser ps = new JsonParser();
         JsonObject jsonMsg = (JsonObject) ps.parse(message);
         
         String id = jsonMsg.get("id").getAsString();
-        int room = Integer.parseInt(jsonMsg.get("room").toString());
+        int room = Integer.parseInt(jsonMsg.get("room").getAsString());
         String content = jsonMsg.get("content").getAsString();
 
         log.info(id);
+        log.info(room+"");
         log.info(content);
         template.convertAndSend("/sub/message/" + room, message);
 

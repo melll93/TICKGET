@@ -20,6 +20,7 @@ import { Cookies } from "react-cookie";
 import Header from "../../components/Header";
 import Swal from "sweetalert2";
 import styled from "styled-components";
+import { getUserData } from "../../axios/member/member";
 
 export const MButton = styled.button`
   border-radius: 20px;
@@ -82,24 +83,22 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           Swal.fire({
             title: "로그인 성공",
             icon: "success",
-          });
-          // 로그인 ID redux에 저장
-          dispatch(reduxLogin(paramMember.memberId));
+          })
+            .then((result) => {
+              // 로그인 ID redux에 저장
+              // dispatch(reduxLogin(paramMember.memberId));
 
-          const token = res.data;
-          console.log(token);
-          window.localStorage.setItem("access_token", token);
+              console.log(result);
 
-          // navigate("/");
-          window.location.href = "/";
+              const token = res.data;
+              console.log(token);
+              window.localStorage.setItem("access_token", token);
+            })
+            .then(() => {
+              // navigate("/");
+              window.location.href = "/";
+            });
         }
-        // else if (res.response.status >= 400 && res.response.status < 600) {
-        //   console.log(res.response);
-        //   Swal.fire({
-        //     title: "로그인 실패",
-        //     icon: 'error'
-        //   })
-        // }
       })
       .catch((error) => {
         Swal.fire({
@@ -188,17 +187,17 @@ const LoginPage = ({ user, setUser, authLogic }) => {
           {/********************** 자체 회원 로그인 **********************/}
           <Form>
             <MyH1>
-            <img
-              className="loginicon"
-              src="../logos/loginicon.png"
-              style={{
-                width: "50%",
-              }}
-            />
+              <img
+                className="loginicon"
+                src="../logos/loginicon.png"
+                style={{
+                  width: "50%",
+                }}
+              />
             </MyH1>
             {/**************************************************** ID START ***************************************************/}
             <MyLabel htmlFor="id">
-                {" "}
+              {" "}
               ID
               <MyInput
                 id="id"
@@ -234,7 +233,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             <div style={{ textAlign: "right" }}>
               {/* <Button variant="primary" type="login" onClick={() => { loginLocal() }}> */}
               {/* axios 이벤트로 처리 여기서 */}
-            {/*   <Button
+              {/*   <Button
                 variant="primary"
                 type="login"
                 onClick={(e) => {
@@ -244,16 +243,16 @@ const LoginPage = ({ user, setUser, authLogic }) => {
               >
                 로그인
               </Button> */}
-              <div  style={{textAlign:'center'}}>
-
-              <MButton onClick={(e) => {
-                e.preventDefault();
-                handleLogin(member)
-              }}>
-                <i class="bi bi-box-arrow-in-right"></i>{" "}
-                로그인
-              </MButton>
-                </div>
+              <div style={{ textAlign: "center" }}>
+                <MButton
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLogin(member);
+                  }}
+                >
+                  <i class="bi bi-box-arrow-in-right"></i> 로그인
+                </MButton>
+              </div>
             </div>
 
             <br />

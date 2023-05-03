@@ -48,4 +48,13 @@
          ORDER BY chat_msg_time desc
          LIMIT 30
     </select>
+
+    <select id="getOtherMemberInRoom" parameterType="string" resultType="ChatRoomDto">
+        SELECT chat_room_no, chat_room_member
+          FROM chat_room
+         WHERE chat_room_no in (SELECT chat_room_no
+                                  FROM chat_room
+                                 WHERE chat_room_member = #{member})
+           AND chat_room_member != #{member}
+    </select>
 </mapper>

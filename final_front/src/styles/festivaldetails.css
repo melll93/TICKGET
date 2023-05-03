@@ -262,3 +262,18 @@ color:white
     padding-left:0px;
     padding-right:20px;
   }
+
+  /* 나브바 */
+  .nav-link2{
+    color: white;
+    cursor: pointer;
+  }
+
+  .nav-link2:hover{
+    color: lightgray;
+  }
+
+  .container-fluid2{
+    align-items: center;
+  padding-top:12px;
+  }

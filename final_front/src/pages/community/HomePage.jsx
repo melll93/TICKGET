@@ -6,12 +6,9 @@ import Footer from "../../components/Footer";
 import CarouselList from "../../components/mainpage/CarouselList";
 import Sidebar from "../../components/Sidebar";
 import { useSelector } from "react-redux";
-import CalendarPage from "../menu/CalendarPage";
 import { festivalListByDate } from "../../axios/festival/festival";
 import { festivalHitListDB } from "../../axios/festival/festival";
 import { Link } from "react-router-dom";
-import { searchById } from "../../axios/member/member";
-import UserProfile from "../../components/UserProfile";
 import { selectTogetherDB } from "../../axios/board/together/TogetherLogic";
 import { selectCarpoolDB } from "../../axios/board/carpool/CarpoolLogic";
 import { mk_boardListDB } from "../../axios/board/market/marketLogic";
@@ -243,7 +240,7 @@ const HomePage = () => {
               </Link>
             ))}
           </div>
-          <Link to={'./productsDetail/FT000149'}>
+          <Link to={'./productsDetail/FT000229'}>
             <div style={{ marginTop: '250px', textAlign: "center" }}>
               <img src="./images_key/앨리스.png" style={{ width: "100%", height: 'auto' }} />
             </div>
@@ -265,7 +262,7 @@ const HomePage = () => {
             >
               <div className="mainpage div div1">
                 <h4 style={{ fontWeight: "bold", textAlign: "center" }}>
-                  <i class="bi bi-clipboard"></i> 최근 게시글
+                  <i className="bi bi-clipboard"></i> 최근 게시글
                 </h4>
 
                 <Tabs
@@ -309,8 +306,8 @@ const HomePage = () => {
                 paddingRight: '100px', display: "inline-block"
               }}
             >
-              <h4 style={{ fontWeight: 'bold' }}><i class="bi bi-command"></i>{" "}연계 추천 사이트</h4>
-              <div className="card" style={{ display: "inline-block", marginRight: '5px' }}>
+              <h4 style={{ fontWeight: 'bold' }}><i className="bi bi-command"></i>{" "}연계 추천 사이트</h4>
+              <div className="card" style={{ display: "inline-block", marginRight: '5px' , marginTop:'20px'}}>
                 <img
                   src="./images_key/travelgajae.jpg"
                   style={{ width: "200px", height: "250px", margin: "15px" }}

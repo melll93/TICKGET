@@ -37,7 +37,11 @@ const BasicTable = ({ items }) => {
         {items.slice(0, 5).map((item, index) => (
           <tr key={index}>
             <td>
-              {writers[index] && <UserProfile _userData={writers[index]} />}
+            {item.url != null && item.url !== "" ? (
+  <img src={item.url} style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
+) : (
+  writers[index] && <UserProfile _userData={writers[index]} />
+)}
             </td>
             <td colSpan={2}>
               <Link to={`${item.link}${item.no}`} style={{ textDecoration: 'none', color: 'black', fontWeight: 'bold' }}>

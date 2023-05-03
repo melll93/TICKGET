@@ -45,7 +45,7 @@ import SocialRedirect from "./pages/member/SocialRedirect";
 import { Cookies } from "react-cookie";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
-import { chat } from "./util/chatSubscribe";
+import chatSubscribe from "./util/chatSubscribe";
 import { useSelector } from "react-redux";
 
 const cookies = new Cookies();
@@ -54,25 +54,16 @@ function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
   const [carpool, setCarpool] = useState();
   const [user, setUser] = useState();
-  const _userData = cookies.get("_userData");
 
-  // let sock;
-  // let client;
-
-  // useEffect(() => {
-  //   if (_userData) {
   const sock = new SockJS("http://localhost:8888/stompTest");
   const client = Stomp.over(sock);
-  const room = useSelector((state) => state.chatStatus.room);
+  const room = useSelector((state) => state.roomReducer.room);
 
-  chat(client, room);
-  // } else if (!_userData && client) {
-  // client.disconnect();
-  // sock.close();
-  // }
-  // }, [_userData]);
+  chatSubscribe(client, room);
 
-  // pages로 routing 처리
+  console.log(room);
+  // pages로 routing 
+  
   return (
     <>
       <Routes>

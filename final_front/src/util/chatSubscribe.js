@@ -2,13 +2,15 @@ import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
 const _userData = cookies.get("_userData");
+let currentSubscription;
 
-export const chat = (client, room) => {
-  client.disconnect();
+const ChatSubscribe = (client, room) => {
+  if (currentSubscription) {
+    currentSubscription.unsubscribe();
+  }
+
   client.connect({}, () => {
-    client.subscribe("/sub/message/" + room, (e) => {
-      // console.log("event => ", e)
-
+    currentSubscription = client.subscribe("/sub/message/" + room, (e) => {
       console.log(e.body);
 
       const jsonMsg = JSON.parse(e.body);
@@ -34,6 +36,13 @@ export const chat = (client, room) => {
       chatBox.appendChild(chat);
       document.querySelector("#outputBox").appendChild(chatBox);
       /*************** 채팅 박스 구현 ***************/
+
+      const opb = document.querySelector("#outputBox");
+      opb.scrollTop = opb.scrollHeight;
     });
   });
+
+  console.log(room + "번방 연결 성공");
 };
+
+export default ChatSubscribe;
