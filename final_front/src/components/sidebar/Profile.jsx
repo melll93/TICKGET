@@ -6,10 +6,10 @@ import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies } from "react-cookie";
 import { Dropdown } from "react-bootstrap";
 import UserProfile from "../UserProfile";
+import { getUserData } from "../../axios/member/member";
 const cookies = new Cookies();
 
 const Profile = () => {
-  const reduxUser = useSelector((state) => state.userStatus.user);
   const _userData = cookies.get("_userData");
   const naver_token = window.localStorage.getItem("com.naver.nid.access_token");
   const access_token = window.localStorage.getItem("access_token");
@@ -26,20 +26,20 @@ const Profile = () => {
   /********************************************
    * 로그인 시 발급된 jwt를 가지고 BE에 요청
    ********************************************/
-  const getUserData = async () => {
-    const token = window.localStorage.getItem("access_token");
-    const result = await axios({
-      method: "POST",
-      url: "http://localhost:8888" + "/member/getMemberData",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => {
-      const _userData = res.data;
-      cookies.set("_userData", _userData);
-    });
-    return result;
-  };
+  // const getUserData = async () => {
+  //   const token = window.localStorage.getItem("access_token");
+  //   const result = await axios({
+  //     method: "POST",
+  //     url: "http://localhost:8888" + "/member/getMemberData",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   }).then((res) => {
+  //     const _userData = res.data;
+  //     cookies.set("_userData", _userData);
+  //   });
+  //   return result;
+  // };
 
   const getProfile = () => {
     // if (!_userData && naver_token === null) {
@@ -90,8 +90,11 @@ const Profile = () => {
   }; //end of getProfile
 
   useEffect(() => {
-    access_token && getUserData().then(console.log);
-  }, [access_token]);
+    access_token &&
+      getUserData(access_token).then((res) => {
+        console.log(res);
+      });
+  }, []);
 
   return getProfile();
 };

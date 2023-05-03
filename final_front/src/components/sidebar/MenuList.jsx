@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Menu from "./Menu";
-import SearchBar from "../header/SearchBar";
 import { Cookies } from "react-cookie";
 
 const MenuList = () => {
-  const cookies = new Cookies()
-  const _userData = cookies.get("_userData")
+  const cookies = new Cookies();
+  const _userData = cookies.get("_userData");
   const [items, setItems] = useState([]);
+
+  // useEffect(() => {
+  //   userCookie && setUserData(userCookie);
+  // }, []);
 
   useEffect(() => {
     if (_userData) {
@@ -17,17 +20,11 @@ const MenuList = () => {
         "CARPOOL",
         "MARKET",
         "CHAT",
-      ])
+      ]);
     } else {
-      setItems([
-        "FESTIVAL",
-        "CONCERT",
-        "TOGETHER",
-        "CARPOOL",
-        "MARKET",
-      ])
+      setItems(["FESTIVAL", "CONCERT", "TOGETHER", "CARPOOL", "MARKET"]);
     }
-  }, [])
+  }, [items]);
 
   return (
     <div className="MenuList">

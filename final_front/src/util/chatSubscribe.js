@@ -14,7 +14,6 @@ const ChatSubscribe = (client, room) => {
       console.log(e.body);
 
       const jsonMsg = JSON.parse(e.body);
-      // dispatch(setRecentMsg(jsonMsg));
 
       const id = jsonMsg.id;
       const nickname = jsonMsg.nickname;

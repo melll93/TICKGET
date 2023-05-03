@@ -54,19 +54,16 @@ function App({ mkImageUploader }) {
   const [board, setBoard] = useState();
   const [carpool, setCarpool] = useState();
   const [user, setUser] = useState();
-  const _userData = cookies.get("_userData");
 
   const sock = new SockJS("http://localhost:8888/stompTest");
   const client = Stomp.over(sock);
   const room = useSelector((state) => state.roomReducer.room);
 
-  // for (let i = 0; i < rooms.length; i++) {
-  // unsubscribe(room);
   chatSubscribe(client, room);
-  // }
 
   console.log(room);
-  // pages로 routing 처리
+  // pages로 routing 
+  
   return (
     <>
       <Routes>

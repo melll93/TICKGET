@@ -9,7 +9,7 @@ const SocialRedirect = () => {
   window.localStorage.setItem("access_token", access_token);
 
   useEffect(() => {
-    navigate("/");
+    window.location.href = "/";
   }, []);
 };
 
