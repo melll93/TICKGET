@@ -15,7 +15,17 @@ import Footer from '../../components/Footer'
     const _userData = cookies.get("_userData");
     const festTcAmt = cookies.get("tk_amount");
     const festTcDate = cookies.get("date");
+    const festTcTime = cookies.get("selecetedFestTcTime");
     
+    const date = new Date(festTcDate);
+    const year = date.getFullYear(); 
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    const day = String(date.getDate()).padStart(2, '0'); 
+/*     const hour = festTcTime.substr(2,2);
+    const min = festTcTime.substr(3,2); */
+    const stringfestSelectedDate = `${year}-${month}-${day}T20:00:00`; 
+
+
     let member_no;
     let member_name = '';
     let member_email = '';
@@ -90,7 +100,7 @@ if (no){
             memberEmail: member_email,
           }; 
           await paymentInsert(payment);
-          
+          console.log(jsonDoc[0].mkTicketPrice,)
 
         }else{
 
@@ -100,7 +110,7 @@ if (no){
             paymentOrderName: festMId,
             paymentCount: festTcAmt,
             paymentPrice: price,
-            paymentFestDate:festTcDate, 
+            paymentFestDate:stringfestSelectedDate,
             boardMkNo: '',
             memberNo: member_no,
             memberName: member_name,
