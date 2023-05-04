@@ -62,8 +62,8 @@ function App({ mkImageUploader }) {
   chatSubscribe(client, room);
 
   console.log(room);
-  // pages로 routing 
-  
+  // pages로 routing
+
   return (
     <>
       <Routes>

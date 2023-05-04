@@ -39,8 +39,6 @@ const ChatPage = ({ client }) => {
     content: "",
   });
 
-  console.log(currentRoom.room);
-
   // BE로 전송하는 메시지는 id로, 화면에 출력하는 메시지는 nickname으로
   const send = (msg) => {
     client.send("/pub", {}, JSON.stringify(msg));
@@ -67,10 +65,28 @@ const ChatPage = ({ client }) => {
 
           if (id === _userData.memberId) {
             chatBox.setAttribute("class", "myChat");
-            chat.innerHTML = content + ":" + nickname;
+            chat.innerHTML =
+              content +
+              ":" +
+              nickname +
+              `<img
+            id="profile"
+            class="icon_black image40"
+            style="border-radius: 50%"
+            src=${_userData.memberProfileImage}
+          />`;
           } else {
             chatBox.setAttribute("className", "otherChat");
-            chat.innerHTML = currentRoom.frNickname + ":" + content;
+            chat.innerHTML =
+              `<img
+            id="profile"
+            class="icon_black image40"
+            style="border-radius: 50%"
+            src=${currentRoom.frImage}
+          />` +
+              currentRoom.frNickname +
+              ":" +
+              content;
           }
           chatBox.appendChild(chat);
           document.querySelector("#outputBox").appendChild(chatBox);
@@ -91,10 +107,17 @@ const ChatPage = ({ client }) => {
           className="chatOne"
           style={{ cursor: "pointer" }}
           onClick={(e) => {
-            dispatch(setRoom(item.chatRoomNo));
+            dispatch(
+              setRoom({
+                room: item.chatRoomNo,
+                frNickname: item.memberNickname,
+                frImage: item.memberProfileImage,
+              })
+            );
             setCurrentRoom({
               room: item.chatRoomNo,
               frNickname: item.memberNickname,
+              frImage: item.memberProfileImage,
             }); // 여긴가?
             console.log(item);
           }}
