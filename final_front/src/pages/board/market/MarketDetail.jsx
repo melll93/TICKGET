@@ -74,7 +74,7 @@
           board_mk_status : jsonDoc[0].boardMkStatus,
           board_mk_likes : jsonDoc[0].boardMkLikes
         })
-        if(jsonDoc[0].boardMkStatus === 1  && member_no !== jsonDoc[0].memberNo) { //판매된 후 게시글 조회자가 판매자가 아닐 경우
+        if(jsonDoc[0].boardMkStatus >= 1  && member_no !== jsonDoc[0].memberNo) { //판매된 후 게시글 조회자가 판매자가 아닐 경우
           Swal.fire({
             icon: 'warning',
             title: '이미 판매완료된 상품입니다.',
@@ -85,7 +85,7 @@
               navigate(-1)
             }
         });
-        }else if(jsonDoc[0].boardMkStatus === 1 && member_no === jsonDoc[0].memberNo) { //판매된 후 게시글 조회자가 판매자일 경우 (완전판매처리)
+        }else if(jsonDoc[0].boardMkStatus >= 1 && member_no === jsonDoc[0].memberNo) { //판매된 후 게시글 조회자가 판매자일 경우 (완전판매처리)
         Swal.fire({
           icon:'info',
           title:'판매 완료!',
