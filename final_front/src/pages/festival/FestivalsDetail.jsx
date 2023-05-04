@@ -13,12 +13,9 @@ import TicketCancleInfo from "../../components/mypage/TicketCancleInfo";
 import {BButton, BlackBtn} from "../../styles/formStyle";
 import DropdownButton from "../../components/DropdownButton";
 import { Cookies } from "react-cookie";
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, child, onValue, get, set  } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { firebaseConfig } from "../board/carpool/CarpoolBoardList";
 import MapContainer from "../board/market/Map/MapContainer";
-import Footer from "../../components/Footer";
 import Swal from "sweetalert2";
 
 
@@ -328,12 +325,7 @@ const researveBtnClicked=()=>{
 
                         {/*/////////////////////////////리뷰 수정 모달//////////////////////////////////*/}
   
-                        <Modal
-                          size="lg"
-                          show={lgShow}
-                          onHide={() => setLgShow(false)}
-                          aria-labelledby="example-modal-sizes-title-lg"
-                        >
+                        <Modal size="lg" show={lgShow}  onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg" >
                           <Modal.Header closeButton>
                             <Modal.Title id="example-modal-sizes-title-lg">
                               리뷰수정
@@ -341,40 +333,13 @@ const researveBtnClicked=()=>{
                           </Modal.Header>
                           <Modal.Body>
                             <div className="form-floating mb-3">
-                              <textarea
-                                onChange={(e) => {
-                                  inputReviewRevisedContent(e.target.value);
-                                }}
-                                className="form-control2"
-                                placeholder="Leave a comment here"
-                                id="product_detail_review_revised_textarea"
-                                style={{
-                                  height: "150px",
-                                  margin: "10px",
-                                  width: "97%",
-                                }}
-                              ></textarea>
-                              <BlackBtn
-                                className="reviseBtn"
-                                onClick={async () => {
-                                  setLgShow(true);
-                                  const freview = {
-                                    reviewNo: reviewToBeRevised.reviewNo,
-                                    reviewContent: reviewRevisedContent,
-                                  };
-                                  const res = await UpdateFestReviewDB(freview);
-                                  if (!res.data) {
-                                  } else {
-                                  }
-                                  setLgShow(false);
-                                  console.log(
-                                    "수정완료" +
-                                      reviewRevisedContent +
-                                      freview.reviewNo
-                                  );
-                                  console.log("리뷰번호" + freview.reviewNo);
-                                }}
-                              >
+                              <textarea onChange={(e) => { inputReviewRevisedContent(e.target.value); }} className="form-control2" 
+                              placeholder="Leave a comment here" id="product_detail_review_revised_textarea" 
+                              style={{height: "150px", margin: "10px", width: "97%"}} ></textarea>
+                              <BlackBtn className="reviseBtn" onClick={async () => { setLgShow(true);  
+                              const freview = { reviewNo: reviewToBeRevised.reviewNo, reviewContent: reviewRevisedContent, };
+                                  const res = await UpdateFestReviewDB(freview); if (!res.data){} else{} setLgShow(false);
+                                  console.log("리뷰번호" + freview.reviewNo); }}  >
                                 수정완료
                               </BlackBtn>
                             </div>
@@ -423,79 +388,38 @@ console.log(festival)
                   alt="상품사진"
                 />
               </div>
-              <div className="product_detail_info">
-              <div className="product_detail_head" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className="product_detail_info" >
+              <div className="product_detail_head" >
   <h3 className="product_title" style={{ fontWeight: 'bold' }}>{festival[0].festMName}</h3>
   {_userData && _userData.memberAuthority==="ROLE_ADMIN" ? 
-    <div style={{marginTop:'10px'}}>
-      &nbsp;<BlackBtn onClick={deleteProducts} width='100px'>상품삭제</BlackBtn>
+    <div>
+    <BlackBtn onClick={deleteProducts} width='100px' height='30px' margin='5px'>상품삭제</BlackBtn>
       <Link to={`/addProducts/${festMId}`}>
-        <BlackBtn width='100px'>상품수정</BlackBtn>
+        <BlackBtn width='100px' height='30px'>상품수정</BlackBtn>
       </Link>
     </div>
     :null
   }
 </div>
-                <div className="product_info">
-                </div>
-
-         
             
             <div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">장소</span>
-      <div className="product_info_desc">{festival[0].festMLoc}</div>
-    </li>
+  <ul className="product_lnfo_list_col2" style={{marginBottom:'0px', paddingTop:'10px'}}>
+    <li className="product_info_list"><span className="product_info_title">장소</span> <div className="product_info_desc">{festival[0].festMLoc}</div> </li>
+    <li className="product_info_list"><span className="product_info_title">관람시간</span><div className="product_info_desc">{festival[0].festDtRuntime===null? <p>미제공</p>: <p>{festival[0].festDtRuntime}</p>}</div></li>
+    <li className="product_info_list"><span className="product_info_title">기간</span><div className="product_info_desc">{festival[0].festMStart}~{festival[0].festMEnd}</div></li>
+    <li className="product_info_list"><span className="product_info_title">관람등급</span><div className="product_info_desc">{festival[0].festDtAge===null? <p>미제공</p>: <p>{festival[0].festDtAge}</p>}</div></li>
   </ul>
 </div>
 
-<div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">관람시간</span>
-      <div className="product_info_desc">{festival[0].festDtRuntime===null? <p>미제공</p>: <p>{festival[0].festDtRuntime}</p>}</div>
-    </li>
-  </ul>
-</div>
 
 <div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">기간</span>
-      <div className="product_info_desc">
-        {festival[0].festMStart}~{festival[0].festMEnd}
-      </div>
-    </li>
-  </ul>
-</div>
-
-<div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">관람등급</span>
-      <div className="product_info_desc">{festival[0].festDtAge===null? <p>미제공</p>: <p>{festival[0].festDtAge}</p>}</div>
-    </li>
-  </ul>
-</div>
-
-<div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">출연진</span>
-      <div className="product_info_desc">
-        <ul className="product_info_sublist" style={{paddingLeft:'0px', paddingRight:'20px'}}>
-          <li className="product_info_subitem">
-            {festival[0].festDtCasting===null? <p style={{display:'inline'}}>(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}</p>}
+  <ul className="product_lnfo_list_col2" style={{paddingTop:'10px'}}>
+    <li className="product_info_list"><span className="product_info_title">출연진</span><div className="product_info_desc"><ul className="product_info_sublist" >
+      <li className="product_info_subitem"> {festival[0].festDtCasting===null? <p style={{display:'inline'}}>(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}</p>}
           </li>
         </ul>
       </div>
     </li>
-  </ul>
-</div>
-
-<div className="product_info">
-  <ul className="product_lnfo_list_col2">
     <li className="product_info_list">
       <span className="product_info_title">제작진</span>
       <div className="product_info_desc">
@@ -507,7 +431,7 @@ console.log(festival)
       </div>
     </li>
   </ul>
-</div>     
+</div>
 </div>
             </div>
 
@@ -522,7 +446,7 @@ console.log(festival)
 
                 <Calendar value={date} onChange={handleDateChange}/>
               </span>
-              <div className="calendarands1" style={{borderLeft:'1px dotted gray', borderRight:'1px dotted gray' , padding:'20px'}}>
+              <div className="calendarands1">
           <strong>
             <p style={{color:'red'}}>[좌석 선택]</p>
             </strong>
@@ -530,8 +454,7 @@ console.log(festival)
 
 
 
-            {festival.map((fest, i) => (     <div  key={i}   className="product_detail_description"
-    style={{       maxWidth: "1250px",      maxHeight: "1000px",     }}  >
+            {festival.map((fest, i) => (     <div  key={i}   className="product_detail_description">
     {fest.festTcType === null ? (      null    ) : (
 <div key={i} className={`product_info_subitem${selectedFestTcTime === fest.festTcTime && selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType, fest.festTcTime)} style={{border: '1px solid gray', borderRadius: '10px', marginTop:'5px'}}>
 { fest.festTcTime===null? null: <p style={{display:'inline',}}>{fest.festTcTime} - </p>}
@@ -552,7 +475,7 @@ null
               
               <div className="calendarands2">
 
-                <div style={{border:'1px dotted red', borderRadius:'20px', margin: '15px', alignItems:'center'}}>
+                <div className="calendarands2-1">
                 <p style={{color:'red'}}><strong>[잔여 좌석]</strong></p>
               
                 {/* 파이어 베이스 - 좌석정보*/}
@@ -572,9 +495,6 @@ null
 
                     {/* 파이어 베이스 - 좌석정보 끝 */}
 
-
-
-
                 </div>
                 구매 수량 : <DropdownButton options={options} ></DropdownButton>
                 
@@ -590,33 +510,25 @@ null
           </section>
           {/* ////////////////////////////////////// 바텀 섹션///////////////////////////////////////////////////////////////////// */}
           <section>
-            <div className="bottomcontainer" style={{ marginLeft: "200px", height:'1200px' }}>
+            <div className="bottomcontainer" >
               <Tabs
-                style={{ maxWidth: "1200px",fontFamily: "Nanum Gothic", fontWeight: "bold"}}
+                style={{ maxWidth: "1260px",fontFamily: "Nanum Gothic", fontWeight: "bold"}}
                 defaultActiveKey="product_detail_description"
                 id="justify-tab-example"
                 className="product_detail_tabs"
                 justify
               >
                <Tab eventKey="product_detail_description" title="상세정보">
+
   {festival.map((fest, i) => (
     <div
       key={i}
-      className="product_detail_description"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        maxWidth: '1250px',
-        maxHeight: '1000px',
-      }}
-    >
+      className="product_detail_description">
       {fest.festPsUrl === null ? (
         null
-      ) : (
-        <img src={fest.festPsUrl} alt="상품상세정보이미지" style={{ width: '80%', height: '80%', objectFit: 'cover', marginTop: '50px' }} />
-      )}
+        ) : (
+        <img className="product_detail_description_imgUrl" src={fest.festPsUrl} alt="상품상세정보이미지" />
+        )}
       {i === festival.length - 1 && fest.festPsUrl === null ? (
         <div style={{ margin: '50px' }}>
           <h1 style={{ margin: '50px' }}>상세보기 이미지 정보가 없습니다.</h1>
@@ -629,16 +541,18 @@ null
 
 
                 <Tab eventKey="product_detail_place" title="공연장 위치" mountOnEnter={true}>
+               
+
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px", marginRight:'450px' }}>
+               
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" , marginRight:'50px'}}>
                   <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
-                    <i class="bi bi-geo-alt-fill"></i>
-                    {" "}
+                    <i className="bi bi-geo-alt-fill"></i>
                    {festival[0].festMLoc}
                   </p>
                   <div style={{ width: "40%", borderTop: "1px solid black",marginBottom: "10px", opacity: "15%" }} />
                 </div>
-                <div  style={{marginRight:'0px'}}>
+                <div  style={{zIndex:'0'}} >
                <MapContainer place={ festival[0].festMLoc }/> 
                 </div>
               </div>
@@ -647,19 +561,9 @@ null
 
                 <Tab eventKey="product_detail_review" title="공연후기">
                   <div
-                    className="product_detail_review"
-                    style={{
-                      maxWidth: "1250px",
-                      height: "1000px",
-                    }}
-                  >
+                    className="product_detail_review" >
                     <div
-                      className="product_detail_review_heading"
-                      style={{
-                        margin: "50px",
-                        borderBottom: "1px solid black",
-                      }}
-                    >
+                      className="product_detail_review_heading"   >
                       <h3 style={{fontWeight:'bold'}}>관람 후기</h3>
                     </div>
 
@@ -673,22 +577,15 @@ null
                         }}
                         className="form-control"
                         placeholder="Leave a comment here"
-                        id="product_detail_review_textarea"
-                        style={{
-                          height: "300px",
-                          margin: "10px",
-                          maxWidth: "1200px",
-                        }}
-                      ></textarea>
-                      <label htmlFor="floatingTextarea">관람후기</label>
+                        id="product_detail_review_textarea"  ></textarea>
+                      <label style={{paddingLeft:'50px'}} htmlFor="floatingTextarea">관람후기</label>
                       <BlackBtn
                         width="250px"
                         height="50px"
                         margin="10px 80px 10px 10px"
                         onClick={insertReview}
                       >
-                        {" "}
-                        등록{" "}
+                        등록 
                       </BlackBtn>
                     </div>
 
@@ -702,7 +599,6 @@ null
         </div>{" "}
         {/* totalcontainer div */}
         <div style={{marginTop:'100px'}}>
-      <Footer/>
         </div>
       </div>{" "}
       {/* center div */}

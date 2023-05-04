@@ -167,8 +167,10 @@ const TogetherBoardDetail = () => {
 
   return (
     <div>
-      <Header />
+            <Header />
       <Sidebar />
+      <div className="center">
+
       <ContainerDiv>
         <div style={{ height: "150px" }}></div>
         <br />
@@ -523,6 +525,7 @@ const TogetherBoardDetail = () => {
           </div>
         </div>
       </ContainerDiv>
+    </div>
     </div>
   );
 };

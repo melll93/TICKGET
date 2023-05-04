@@ -276,6 +276,8 @@ const CarpoolDetail = () => {
       <div>
         <Header />
         <Sidebar />
+      <div className="center">
+
         <ContainerDiv>
           <div style={{ height: "150px" }}></div>
           <br />
@@ -451,7 +453,10 @@ const CarpoolDetail = () => {
                       </span>
                       {place}
                     </p>
+                    <div style={{zIndex:'0'}}>
                     <MapContainer place={place} />
+                    </div>
+                  
                   </div>
                 </div>
               </div>
@@ -684,6 +689,7 @@ const CarpoolDetail = () => {
             </div>
           </div>
         </ContainerDiv>
+      </div>
       </div>
     </>
   );
