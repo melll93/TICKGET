@@ -28,7 +28,7 @@ const ChatPage = ({ client }) => {
 
   const [roomUserData, setRoomUserData] = useState([]);
   const [currentRoom, setCurrentRoom] = useState({
-    room,
+    room: room,
     frNickname: "",
   });
 
@@ -38,6 +38,8 @@ const ChatPage = ({ client }) => {
     room: currentRoom.room,
     content: "",
   });
+
+  console.log(currentRoom.room);
 
   // BE로 전송하는 메시지는 id로, 화면에 출력하는 메시지는 nickname으로
   const send = (msg) => {
@@ -128,7 +130,7 @@ const ChatPage = ({ client }) => {
   }, []);
 
   useEffect(() => {
-    setCurrentRoom(room);
+    setCurrentRoom({ ...currentRoom, room: room });
   }, []);
 
   useEffect(() => {
@@ -185,7 +187,7 @@ const ChatPage = ({ client }) => {
                   onChange={(e) =>
                     setMsg({
                       ...msg,
-                      room: currentRoom,
+                      room: currentRoom.room,
                       content: e.target.value,
                     })
                   }
