@@ -46,7 +46,7 @@ public class StompChatController {
         msgDto.setChatMsgContent(content);
         chatService.addChat(msgDto);
 
-        return message;
+        return message; 
     }
 
 

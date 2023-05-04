@@ -20,7 +20,7 @@ import { Cookies } from "react-cookie";
 import Header from "../../components/Header";
 import Swal from "sweetalert2";
 import styled from "styled-components";
-import { getUserData } from "../../axios/member/member";
+import { getUserData, login } from "../../axios/member/member";
 
 export const MButton = styled.button`
   border-radius: 20px;
@@ -60,52 +60,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   const member = {
     memberId: userId,
     memberPassword: userPw,
-  };
-
-  /***************************************
-   * @param { memberId, memberPassword }
-   ***************************************/
-  const login = async (paramMember) => {
-    const result = await axios({
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      url:
-        // process.env.BACKEND_URL + "/login",
-        "http://localhost:8888/login",
-      data: paramMember,
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.status >= 200 && res.status < 400) {
-          /* window.alert("로그인 성공"); */
-          Swal.fire({
-            title: "로그인 성공",
-            icon: "success",
-          })
-            .then((result) => {
-              // 로그인 ID redux에 저장
-              // dispatch(reduxLogin(paramMember.memberId));
-
-              console.log(result);
-
-              const token = res.data;
-              console.log(token);
-              window.localStorage.setItem("access_token", token);
-            })
-            .then(() => {
-              // navigate("/");
-              window.location.href = "/";
-            });
-        }
-      })
-      .catch((error) => {
-        Swal.fire({
-          title: "로그인 실패\n" + error,
-          icon: "error",
-        });
-      });
   };
 
   const handleLogin = () => {

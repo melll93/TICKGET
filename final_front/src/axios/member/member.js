@@ -1,8 +1,50 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
+import Swal from "sweetalert2";
 
 const access_token = window.localStorage.getItem("access_token");
 const cookies = new Cookies();
+
+/***************************************
+ * @param { memberId, memberPassword }
+ ***************************************/
+export const login = async (paramMember) => {
+  const result = await axios({
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    url:
+      // process.env.BACKEND_URL + "/login",
+      "http://localhost:8888/login",
+    data: paramMember,
+  })
+    .then((res) => {
+      console.log(res);
+      if (res.status >= 200 && res.status < 400) {
+        Swal.fire({
+          title: "로그인 성공",
+          icon: "success",
+        })
+          .then((result) => {
+            console.log(result);
+
+            const token = res.data;
+            console.log(token);
+            window.localStorage.setItem("access_token", token);
+          })
+          .then(() => {
+            window.location.href = "/";
+          });
+      }
+    })
+    .catch((error) => {
+      Swal.fire({
+        title: "로그인 실패\n" + error,
+        icon: "error",
+      });
+    });
+};
 
 export const searchById = async (memberId) => {
   const result = await axios({
