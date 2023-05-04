@@ -135,7 +135,7 @@
           <section className="cart_main_section">
             <div className="main_left_div"></div> {/* main_left_div */}
             <div className="main_center_div">
-              <h1 className="top_line" style={{fontFamily:'Nanum-Gothic', fontWeight:'bold'}}><i class="bi bi-cart-check"></i>{" "}찜한 상품
+              <h1 className="top_line" style={{fontFamily:'Nanum-Gothic', fontWeight:'bold'}}><i className="bi bi-cart-check"></i>{" "}찜한 상품
               {" "}<span style={{ color: 'red' }}>{cartlistLength}</span></h1>
               <div className="cart_table_div">
               {cartlist.length === 0 ? (
