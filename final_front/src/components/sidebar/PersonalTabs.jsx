@@ -6,12 +6,12 @@ const PersonalTabs = () => {
     <div className="PersonalTabs">
       <div className="PersonalTabs tab">
         <Link to="/cart">
-          <img className="icon image20" src="../logos/CART.png" />
+          <img className="icon image20" src="/logos/CART.png" />
         </Link>
       </div>
       <div className="PersonalTabs tab">
         <Link to="/ticket">
-          <img className="icon image20" src="../logos/TICKET.png" />
+          <img className="icon image20" src="/logos/TICKET.png" />
         </Link>
       </div>
 {/*       <div className="PersonalTabs tab">
@@ -21,7 +21,7 @@ const PersonalTabs = () => {
       </div> */}
       <div className="PersonalTabs tab">
         <Link to="/setting">
-          <img className="icon image20" src="../logos/SETTING.png" />
+          <img className="icon image20" src="/logos/SETTING.png" />
         </Link>
       </div>
     </div>

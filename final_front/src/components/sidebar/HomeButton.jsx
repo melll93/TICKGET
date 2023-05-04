@@ -9,7 +9,7 @@ const HomeButton = ({ icon }) => {
         <Link to="/" className="link">
           <img
             className={icon + " image40"}
-            src="../logos/tickget.png"
+            src="/logos/tickget.png"
             style={{ width: "90%" }}
           />
         </Link>

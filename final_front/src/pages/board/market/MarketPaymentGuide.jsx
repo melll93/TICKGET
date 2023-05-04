@@ -3,13 +3,13 @@ import React from 'react'
 const MarketPaymentGuide = () => {
   return (
     <>
-      <table class="table">
+      <table className="table">
   <thead>
     <tr>
       <th scope="col">상품 결제 안내</th>
     </tr>
   </thead>
-  <tbody class="table-group-divider" >
+  <tbody className="table-group-divider" >
     <tr>
       <th scope="row" style={{textAlign:'center'}}>결제방식</th>
       <td>카드, 가상계좌, 계좌이체, 휴대폰, 문화상품권, 무통장입금</td>
@@ -25,13 +25,13 @@ const MarketPaymentGuide = () => {
   </tbody>
 </table>
 
-<table class="table" style={{marginTop:'50px'}}>
+<table className="table" style={{marginTop:'50px'}}>
   <thead>
     <tr>
       <th scope="col">상품 수령 안내</th>
     </tr>
   </thead>
-  <tbody class="table-group-divider" >
+  <tbody className="table-group-divider" >
     <tr>
       <th scope="row" style={{textAlign:'center'}}>PIN거래	</th>
       <td>결제가 완료 되면 사이트에서 확인 후 구매자에게 해당 티켓의 PIN 번호 (E-ticket)를 발송하여 마이페이지에서 확인이 가능합니다.

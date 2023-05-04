@@ -30,7 +30,7 @@ const SearchBar = () => {
     />
      <img
         className="image50"
-        src="../logos/SEARCH.png"
+        src="/logos/SEARCH.png"
         onClick={search}
       />
 
