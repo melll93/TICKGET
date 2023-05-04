@@ -7,11 +7,17 @@ import java.util.Map;
 
 @Mapper
 public interface ChatDao {
-    public int createChatRoom(int roomNo, String memberId);
+    public int createChatRoom(ChatRoomDto chatRoomDto);
+
     public List<ChatRoomDto> getChatRoomList(String memberId);
+
     public int selectMaxRoomNo();
+
     public int addChat(ChatMessageDto chatMessageDto);
+
     public String getRecentChat(int roomNo);
+
     List<ChatMessageDto> getChatByRoom(int roomNo);
+
     List<ChatRoomDto> getOtherMemberInRoom(String member);
 }

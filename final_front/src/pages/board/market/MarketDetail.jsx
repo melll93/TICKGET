@@ -379,13 +379,13 @@
                     <UserProfile _userData={sellerinfo} /> {detail.member_nickname}</div>
                   <div style={{ marginRight: '20px', opacity: '80%', marginTop: '15px' }}>
                     <span style={{ marginRight: "5px", color: 'black' }}>
-                    {heart ? (<><i class="bi bi-heart-fill" style={{color:'red'}} /> {' '} </>) : (<><i class="bi bi-heart" /> {' '} </>)}<span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
+                    {heart ? (<><i className="bi bi-heart-fill" style={{color:'red'}} /> {' '} </>) : (<><i className="bi bi-heart" /> {' '} </>)}<span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
                     </span>
                     <span style={{ marginRight: "5px", color: 'black' }}>
-                      <i class="bi bi-eye-fill"></i> {detail.board_mk_hit} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
+                      <i className="bi bi-eye-fill"></i> {detail.board_mk_hit} <span style={{ color: 'black', opacity: '30%', margin: '3px' }}> | </span>
                     </span>
                     <span style={{ marginRight: "5px", color: 'black' }}>
-                      <i class="bi bi-clock-fill"></i> {boardDateTime}
+                      <i className="bi bi-clock-fill"></i> {boardDateTime}
                     </span>
                   </div>
                 </div>
@@ -419,15 +419,15 @@
 
                 <div className="mb-2" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '70px', }}>
                 <Button variant="outline-danger" size="lg" style={{ width: '180px' }} onClick={handleClick}>
-                {isWishlistAdded ? (<><i class="bi bi-check2-square" /> {' '} 찜한 상품</>) : (<><i class="bi bi-heart" /> {' '} 찜하기</>)}
+                {isWishlistAdded ? (<><i className="bi bi-check2-square" /> {' '} 찜한 상품</>) : (<><i className="bi bi-heart" /> {' '} 찜하기</>)}
     </Button> 
                                 <Button variant="outline-dark" size="lg" style={{ width: '180px' }}  onClick={(e) =>
                     linkToChat(member_id, detail.member_id)
                   }>
-                    <i class="bi bi-chat-left-dots"></i>{" "}채팅하기
+                    <i className="bi bi-chat-left-dots"></i>{" "}채팅하기
                   </Button>{' '}
                   <Button variant="outline-primary" size="lg" style={{ width: '180px' }} onClick={linkToPayment}>
-                    <i class="bi bi-wallet2" ></i>{" "}구매하기
+                    <i className="bi bi-wallet2" ></i>{" "}구매하기
                   </Button>
                 </div>
               </div>
@@ -451,7 +451,7 @@
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px" }}>
                   <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginRight: '40px' }}>
                     <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
-                      <i class="bi bi-geo-alt-fill"></i>
+                      <i className="bi bi-geo-alt-fill"></i>
                       {" "}
                       {detail.mk_ticket_place}
                     </p>

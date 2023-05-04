@@ -252,7 +252,6 @@ const insertData = (tickets) => {
           <th>no</th><th>시간    {/* fest_schedule  (fest_sc_time) */}
           </th><th>좌석정보  {/* fest_ticket   (fest_tc_type) */}
           </th><th>티켓가격  {/* fest_ticket   (fest_tc_price) */}
-          </th><th style={{width:'120px'}}>총좌석수   
           </th><th style={{width:'60px'}} >삭제</th>
           </tr>
         </thead>
@@ -271,10 +270,6 @@ const insertData = (tickets) => {
                 <div>
                 {ticket.price}   원
                 </div>
-              </td><td>
-              <div>
-                {/* {festMData.[{ticket.time}].seat}
-                 */}???석</div>
               </td><td>
                 <button type="button" className="btn-delete" onClick={() => deleteFestTcRow(ticket.no, index)}>
                   삭제 

@@ -153,7 +153,7 @@ const TogetherBoardUpdate = () => {
                   type="text"
                   name="boardTgMemId"
                   required
-                  class="form-control form-control-lg"
+                  className="form-control form-control-lg"
                   id="inputLarge"
                 >
                   {board.boardTgMemId}

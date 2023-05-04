@@ -84,6 +84,8 @@ const festivalInsert = async () => {
       festMImg: festImageUrl,   //festImageUrl(위에꺼),   cloudImg(아래꺼)  바꾸면 위에 널처리도
     };
     const res = await FestivalInsertDB(festival);
+    const latestFestival = await getLatestFestivalDB();
+
     /* console.log(festival); */
     if (!res.data) {
       Swal.fire({
@@ -91,17 +93,34 @@ const festivalInsert = async () => {
           icon:'error'
         })
     } else {
-      /* const confirmResult = window.confirm('추가상세정보를 지금 입력하시겠습니까?', festival.festMId); */
-      const confirmResult = Swal.fire({title:'추가 정보를 입력하시겠습니까?',icon:'info'},festival.festMId)
-      if (confirmResult) {//예
-        const latestFestival = await getLatestFestivalDB();
-   /*      console.log(latestFestival[0].festMId); */
-        navigate(`/addProducts/${latestFestival[0].festMId}`);
-        optionModalOpen() 
-      } else {  //아니오
-    navigate('/festival'); 
-      }
+
+
+/*       const confirmResult = Swal.fire({
+      }) */
+      
+      
+      Swal.fire({
+      title:'추가 정보를 바로 입력하시겠습니까?',icon:'info', 
+      showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+      confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+      cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+      confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+      cancelButtonText: '취소' // cancel 버튼 텍스트 지정
+      // ...
+    }).then(result => {
+        if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+          navigate(`/addProducts/${latestFestival[0].festMId}`);
+          optionModalOpen() 
+        } else if (result.isDismissed) { // 만약 모달창에서 cancel 버튼을 눌렀다면
+          navigate('/festival'); 
+        }
+    });
+
+
+
+
     }
+
   }
 };
 

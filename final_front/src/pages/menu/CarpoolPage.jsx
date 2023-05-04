@@ -27,7 +27,7 @@ const CarpoolPage = () => {
               marginBottom: "30px",
             }}
           >
-            <i class="bi bi-people-fill"></i> Carpool 게시판
+            <i className="bi bi-people-fill"></i> Carpool 게시판
           </h3>
         </div>
         <CarpoolBoardList />

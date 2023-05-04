@@ -10,7 +10,7 @@ const Menu = ({ item }) => {
   return (
     <div className="Menu">
       <Link to={"/" + urlLower} className="link Menu aTag">
-        <img className="icon image20" src={"../logos/" + item + ".png"}></img>
+        <img className="icon image20" src={"/logos/" + item + ".png"}></img>
         <div className="TextBox">
           <span className="menuLIst">{item}</span>
         </div>

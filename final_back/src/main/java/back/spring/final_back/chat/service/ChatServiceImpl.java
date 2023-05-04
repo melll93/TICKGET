@@ -24,6 +24,7 @@ public class ChatServiceImpl implements ChatService {
     /********************
      * 방이 존재하는지 체크 후 존재한다면 해당 방을 return,
      * 존재하지 않는다면 방을 생성하여 return
+     * 
      * @param members
      * @return
      */
@@ -42,7 +43,7 @@ public class ChatServiceImpl implements ChatService {
                 break;
             }
         }
-        log.info(isExist+"");
+        log.info(isExist + "");
 
         if (isExist) { // 해당 채팅방이 존재하면
             log.info("방번호 : " + result);
@@ -52,7 +53,10 @@ public class ChatServiceImpl implements ChatService {
             try {
                 for (int i = 0; i < members.length; i++) {
                     log.info(members[i]);
-                    chatDao.createChatRoom(roomNo, members[i]);
+                    ChatRoomDto chatRoomDto = new ChatRoomDto();
+                    chatRoomDto.setChatRoomNo(roomNo);
+                    chatRoomDto.setChatRoomMember(members[i]);
+                    chatDao.createChatRoom(chatRoomDto);
                     result = roomNo;
                 }
             } catch (Exception e) {
@@ -81,7 +85,7 @@ public class ChatServiceImpl implements ChatService {
         String memberId = userDetails.getUsername();
         List<Map<String, Object>> result = new ArrayList<>();
         List<ChatRoomDto> list = chatDao.getChatRoomList(memberId);
-//        result.add();
+        // result.add();
         return null;
     }
 

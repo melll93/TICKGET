@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import "../../styles/chat.css";
 import ChatList from "../../components/chat/ChatList";
-import { Cookies } from "react-cookie"
+import { Cookies } from "react-cookie";
 import { getChatByRoom, getChatRoomList } from "../../axios/chat/chat";
 import { searchById } from "../../axios/member/member";
 import { setRoom } from "../../redux/chatStatus/action";
@@ -18,114 +18,147 @@ const cookies = new Cookies();
  * @param msg 객체 리터럴로 user, msg, time 받아서 10~20개 정도 시간별 출력,
  * [{},{}, ...] for 문 돌려서 user가 본인이면 오른쪽, 아니라면 왼쪽 출력
  * chatBox 안에 chatText, profile, time
-******************************************************************/
+ ******************************************************************/
 const ChatPage = ({ client }) => {
-  const _userData = cookies.get("_userData")
+  const _userData = cookies.get("_userData");
   const nickname = _userData && _userData.memberNickname;
-  const userId = _userData && _userData.memberId
-  const recentMessage = useSelector((state) => state.recentMsgReducer.msg);
+  const userId = _userData && _userData.memberId;
   const room = useSelector((state) => state.roomReducer.room);
   const dispatch = useDispatch();
 
   const [roomUserData, setRoomUserData] = useState([]);
-  const [currentRoom, setCurrentRoom] = useState();
+  const [currentRoom, setCurrentRoom] = useState({
+    room: room,
+    frNickname: "",
+  });
 
   const [msg, setMsg] = useState({
     id: userId,
     nickname: nickname,
-    room: currentRoom,
-    content: ""
+    room: currentRoom.room,
+    content: "",
   });
 
   // BE로 전송하는 메시지는 id로, 화면에 출력하는 메시지는 nickname으로
   const send = (msg) => {
-    client.send('/pub', {}, JSON.stringify(msg));
+    client.send("/pub", {}, JSON.stringify(msg));
     document.querySelector("#msg").value = "";
     setMsg({
-      ...msg, content: ""
-    })
+      ...msg,
+      content: "",
+    });
   };
 
   const renderOldChat = () => {
-    document.querySelector("#outputBox").innerHTML = '';
-    currentRoom && getChatByRoom(currentRoom).then(data => {
-      // console.log(data);
+    document.querySelector("#outputBox").innerHTML = "";
+    currentRoom &&
+      getChatByRoom(currentRoom.room).then((data) => {
+        // console.log(data);
 
-      /*************** 채팅 박스 구현 ***************/
-      for (let i = data.length - 1; i >= 0; i--) {
-        const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
-        const chat = document.createElement("div"); // 컴포 디비전 좌우 처리
-        chat.setAttribute("class", "chatText"); // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
-        const id = data[i].chatMsgWriter
-        const content = data[i].chatMsgContent
+        /*************** 채팅 박스 구현 ***************/
+        for (let i = data.length - 1; i >= 0; i--) {
+          const chatBox = document.createElement("div"); // 한 줄 담기 (세로 사이즈 조정)
+          const chat = document.createElement("div"); // 컴포 디비전 좌우 처리
+          chat.setAttribute("class", "chatText"); // 프로필 사진도 chat처럼 디비전 만들어서 추가하기
+          const id = data[i].chatMsgWriter;
+          const content = data[i].chatMsgContent;
 
-        // console.log(id);
-        if (id === _userData.memberId) {
-          chatBox.setAttribute("class", "myChat");
-          chat.innerHTML = content + ":" + nickname;
-        } else {
-          chatBox.setAttribute("className", "otherChat");
-          chat.innerHTML = nickname + ":" + content;
+          if (id === _userData.memberId) {
+            chatBox.setAttribute("class", "myChat");
+            chat.innerHTML =
+              content +
+              ":" +
+              nickname +
+              `<img
+            id="profile"
+            class="icon_black image40"
+            style="border-radius: 50%"
+            src=${_userData.memberProfileImage}
+          />`;
+          } else {
+            chatBox.setAttribute("className", "otherChat");
+            chat.innerHTML =
+              `<img
+            id="profile"
+            class="icon_black image40"
+            style="border-radius: 50%"
+            src=${currentRoom.frImage}
+          />` +
+              currentRoom.frNickname +
+              ":" +
+              content;
+          }
+          chatBox.appendChild(chat);
+          document.querySelector("#outputBox").appendChild(chatBox);
         }
-        chatBox.appendChild(chat);
-        document.querySelector("#outputBox").appendChild(chatBox);
-      }
-      /*************** 채팅 박스 구현 ***************/
-      const opb = document.querySelector("#outputBox");
-      opb.scrollTop = opb.scrollHeight;
-    })
-  }
+        /*************** 채팅 박스 구현 ***************/
+        const opb = document.querySelector("#outputBox");
+        opb.scrollTop = opb.scrollHeight;
+      });
+  };
 
   const renderChatRoomList = () => {
     // console.log(roomUserData);
     return (
-      roomUserData && roomUserData.map((item, index) => (
-        <div key={index} className="chatOne" style={{ cursor: "pointer" }}
+      roomUserData &&
+      roomUserData.map((item, index) => (
+        <div
+          key={index}
+          className="chatOne"
+          style={{ cursor: "pointer" }}
           onClick={(e) => {
-            dispatch(setRoom(item.chatRoomNo))
-            setCurrentRoom(item.chatRoomNo)
-            // renderOldChat(currentRoom)
-          }}>
+            dispatch(
+              setRoom({
+                room: item.chatRoomNo,
+                frNickname: item.memberNickname,
+                frImage: item.memberProfileImage,
+              })
+            );
+            setCurrentRoom({
+              room: item.chatRoomNo,
+              frNickname: item.memberNickname,
+              frImage: item.memberProfileImage,
+            }); // 여긴가?
+            console.log(item);
+          }}
+        >
           <ChatList key={index} _userData={item} />
         </div>
       ))
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     const tempUserData = [];
     const roomNos = [];
-    getChatRoomList()
-      .then((roomList) => {
-        roomList.map((room, index) => (
+    getChatRoomList().then((roomList) => {
+      roomList.map(
+        (room, index) =>
           roomNos.push(room.chatRoomNo) &&
           searchById(room.chatRoomMember)
-            .then(userData => {
-              tempUserData.push({ ...userData, ...room })
-              return tempUserData
+            .then((userData) => {
+              tempUserData.push({ ...userData, ...room });
+              return tempUserData;
             })
             // .then(setRoomUserData) // 에러 발생 코드
             .then((tempUserData) => {
-              tempUserData.length === roomList.length && setRoomUserData(tempUserData)
+              tempUserData.length === roomList.length &&
+                setRoomUserData(tempUserData);
               // 비동기로 처리되다보니 한 개, 두 개 일 때 setState를 해버려 렌더링 시 원치 않는 상태에서 렌더링이 끝남.
               // temp, 임시 배열이 완성 되었을 떄, temp.length === roomList.length 일 때, setState를 해줌으로써, 배열이 완성된 후 렌더링을 해줌.
             })
-        ))
-        return roomNos
-      })
-    // .then(roomNos => {
-    //   console.log(roomNos);
-    //   dispatch(setRoom(roomNos))
-    // })
-  }, [])
+      );
+      return roomNos;
+    });
+  }, []);
 
   useEffect(() => {
-    setCurrentRoom(room)
-  }, [])
+    setCurrentRoom({ ...currentRoom, room: room });
+  }, []);
 
   useEffect(() => {
-    renderOldChat()
-  }, [currentRoom])
+    renderOldChat();
+  }, [currentRoom]);
 
   console.log(currentRoom);
   // console.log(room);
@@ -174,11 +207,13 @@ const ChatPage = ({ client }) => {
                       send(msg);
                     }
                   }}
-                  onChange={(e) => setMsg({
-                    ...msg,
-                    room: currentRoom,
-                    content: e.target.value
-                  })}
+                  onChange={(e) =>
+                    setMsg({
+                      ...msg,
+                      room: currentRoom.room,
+                      content: e.target.value,
+                    })
+                  }
                 />
                 <input
                   type="button"

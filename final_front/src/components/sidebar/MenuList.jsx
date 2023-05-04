@@ -7,10 +7,6 @@ const MenuList = () => {
   const _userData = cookies.get("_userData");
   const [items, setItems] = useState([]);
 
-  // useEffect(() => {
-  //   userCookie && setUserData(userCookie);
-  // }, []);
-
   useEffect(() => {
     if (_userData) {
       setItems([
@@ -24,7 +20,7 @@ const MenuList = () => {
     } else {
       setItems(["FESTIVAL", "CONCERT", "TOGETHER", "CARPOOL", "MARKET"]);
     }
-  }, [items]);
+  }, []);
 
   return (
     <div className="MenuList">

@@ -20,7 +20,7 @@ console.log(festTcTime); */
   const[festDetailRuntime, setFestDetailRuntime] = useState(festDtRuntime)
   const[festDetailAge, setFestDetailAge] = useState(festDtAge)
 
-const[festPsUrl, setFestPsUrl] = useState([])
+const[festPsUrl, setFestPsUrl] = useState(festOrginPsUrl)
   const imgRef = useRef()
 
   const [isLoading, setIsLoading] = useState(false);
@@ -90,18 +90,27 @@ const saveFestPoster=async()=>{
   };
   try {
     const res = await saveFestPsUrlDB(festival);
-    const newPsPoster = [...festOrginPsUrl,festPsUrl]
-    setFestOriginPsUrl(newPsPoster)
-    /* console.log(festival); */
-    Swal.fire({
-      title:'추가 완료',
-      icon: 'success'
-    });
+    setFestPsUrl(festPsUrl)  
+    if(Array.isArray(festOrginPsUrl)){
+      const newPsPoster = [...festOrginPsUrl,festPsUrl];
+      setFestOriginPsUrl(newPsPoster) 
+    }else {
+      const newPsPoster = [festPsUrl];
+      setFestOriginPsUrl(newPsPoster) 
+    }
+      Swal.fire({
+    title:'추가 완료',
+    icon: 'success'
+  });
 if (!res.data) {
 } else {
+ 
 }    
 } catch (error) {
-
+  Swal.fire({
+    title:error,
+    icon: 'warning'
+  });
 }
 };
 
@@ -253,8 +262,8 @@ null
 <BlackBtn onClick={saveFestPoster} style={{marginTop:'20px'}} >선택파일 저장</BlackBtn>
 
 
-<br/>
-{festOrginPsUrl && festOrginPsUrl.some(url => url !== null) ? (
+
+{festOrginPsUrl &&festOrginPsUrl.some(url => url !== null) ? (
   festOrginPsUrl.map((url, i) => (
     url !== null ? (
       <div key={i} style={{ display: 'inline' }}>
