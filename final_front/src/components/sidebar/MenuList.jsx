@@ -5,29 +5,24 @@ import { Cookies } from "react-cookie";
 const MenuList = () => {
   const cookies = new Cookies();
   const _userData = cookies.get("_userData");
-  const [items, setItems] = useState([]);
 
-  useEffect(() => {
-    if (_userData) {
-      setItems([
-        "FESTIVAL",
-        "CONCERT",
-        "TOGETHER",
-        "CARPOOL",
-        "MARKET",
-        "CHAT",
-      ]);
-    } else {
-      setItems(["FESTIVAL", "CONCERT", "TOGETHER", "CARPOOL", "MARKET"]);
-    }
-  }, []);
+  let items;
 
-  return (
-    <div className="MenuList">
-      {items.map((item, index) => (
-        <Menu key={index} item={item} />
-      ))}
-    </div>
-  );
+  const renderItems = () => {
+    _userData
+      ? (items = [
+          "FESTIVAL",
+          "CONCERT",
+          "TOGETHER",
+          "CARPOOL",
+          "MARKET",
+          "CHAT",
+        ])
+      : (items = ["FESTIVAL", "CONCERT", "TOGETHER", "CARPOOL", "MARKET"]);
+
+    return items.map((item, index) => <Menu key={index} item={item} />);
+  };
+
+  return <div className="MenuList">{renderItems()}</div>;
 };
 export default MenuList;
