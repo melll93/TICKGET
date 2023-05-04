@@ -403,60 +403,23 @@ console.log(festival)
 </div>
             
             <div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">장소</span>
-      <div className="product_info_desc">{festival[0].festMLoc}</div>
-    </li>
+  <ul className="product_lnfo_list_col2" style={{marginBottom:'0px', paddingTop:'10px'}}>
+    <li className="product_info_list"><span className="product_info_title">장소</span> <div className="product_info_desc">{festival[0].festMLoc}</div> </li>
+    <li className="product_info_list"><span className="product_info_title">관람시간</span><div className="product_info_desc">{festival[0].festDtRuntime===null? <p>미제공</p>: <p>{festival[0].festDtRuntime}</p>}</div></li>
+    <li className="product_info_list"><span className="product_info_title">기간</span><div className="product_info_desc">{festival[0].festMStart}~{festival[0].festMEnd}</div></li>
+    <li className="product_info_list"><span className="product_info_title">관람등급</span><div className="product_info_desc">{festival[0].festDtAge===null? <p>미제공</p>: <p>{festival[0].festDtAge}</p>}</div></li>
   </ul>
 </div>
 
-<div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">관람시간</span>
-      <div className="product_info_desc">{festival[0].festDtRuntime===null? <p>미제공</p>: <p>{festival[0].festDtRuntime}</p>}</div>
-    </li>
-  </ul>
-</div>
 
 <div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">기간</span>
-      <div className="product_info_desc">
-        {festival[0].festMStart}~{festival[0].festMEnd}
-      </div>
-    </li>
-  </ul>
-</div>
-
-<div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">관람등급</span>
-      <div className="product_info_desc">{festival[0].festDtAge===null? <p>미제공</p>: <p>{festival[0].festDtAge}</p>}</div>
-    </li>
-  </ul>
-</div>
-
-<div className="product_info">
-  <ul className="product_lnfo_list_col2">
-    <li className="product_info_list">
-      <span className="product_info_title">출연진</span>
-      <div className="product_info_desc">
-        <ul className="product_info_sublist" >
-          <li className="product_info_subitem">
-            {festival[0].festDtCasting===null? <p style={{display:'inline'}}>(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}</p>}
+  <ul className="product_lnfo_list_col2" style={{paddingTop:'10px'}}>
+    <li className="product_info_list"><span className="product_info_title">출연진</span><div className="product_info_desc"><ul className="product_info_sublist" >
+      <li className="product_info_subitem"> {festival[0].festDtCasting===null? <p style={{display:'inline'}}>(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}</p>}
           </li>
         </ul>
       </div>
     </li>
-  </ul>
-</div>
-
-<div className="product_info">
-  <ul className="product_lnfo_list_col2">
     <li className="product_info_list">
       <span className="product_info_title">제작진</span>
       <div className="product_info_desc">
@@ -468,7 +431,7 @@ console.log(festival)
       </div>
     </li>
   </ul>
-</div>     
+</div>
 </div>
             </div>
 

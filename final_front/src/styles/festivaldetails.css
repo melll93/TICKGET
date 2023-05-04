@@ -153,6 +153,9 @@ img, form, fieldset, svg, li {
     vertical-align: top;
 }
 
+.product_info{
+}
+
 .product_detail_info .product_info_title {
     flex: none;
     width: 70px;
@@ -174,7 +177,6 @@ img, form, fieldset, svg, li {
 .product_detail_info .product_lnfo_list_col2 .product_info_list {
     width: 50%;
 }
-
 
 .product_lnfo_list_col2{
     border-top: 1px solid #ecedf2;
