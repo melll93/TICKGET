@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Cookies } from 'react-cookie';
 import { FiChevronDown } from 'react-icons/fi';
 import { CSSTransition } from 'react-transition-group';
-import '../styles/festivaldetails.css';
+import '../../styles/festivaldetails.css';
 
 /* 
 쓸 곳에서 프롭스 options로 넘기면 됩니당
@@ -17,7 +17,7 @@ const options = [
 
 
 function DropdownButton({ options }) {
-/*   console.log(options); */
+  /*   console.log(options); */
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -31,25 +31,25 @@ function DropdownButton({ options }) {
 
   return (
     <div className="dropdown-container">
-    <button className="dropdown-button" onClick={() => setIsOpen(!isOpen)}>
-      {selectedOption ? selectedOption.label : '선택하세요'}
-      <FiChevronDown className="dropdown-icon" />
-    </button>
-    <CSSTransition
-      in={isOpen}
-      timeout={200}
-      classNames="dropdown__menu"
-      unmountOnExit
+      <button className="dropdown-button" onClick={() => setIsOpen(!isOpen)}>
+        {selectedOption ? selectedOption.label : '선택하세요'}
+        <FiChevronDown className="dropdown-icon" />
+      </button>
+      <CSSTransition
+        in={isOpen}
+        timeout={200}
+        classNames="dropdown__menu"
+        unmountOnExit
       >
-      <ul className="dropdown__menu">
-        {options.map((option) => (
-          <li key={option.value} onClick={() => handleOptionClick(option)}>
-            {option.label}
-          </li>
-        ))}
-      </ul>
-    </CSSTransition>
-  </div>
+        <ul className="dropdown__menu">
+          {options.map((option) => (
+            <li key={option.value} onClick={() => handleOptionClick(option)}>
+              {option.label}
+            </li>
+          ))}
+        </ul>
+      </CSSTransition>
+    </div>
   );
 }
 

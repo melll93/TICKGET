@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { createChatRoom } from "../axios/chat/chat.js";
-import { addFollowDB, checkFollowDB } from "../axios/member/member";
+import { createChatRoom } from "../../axios/chat/chat.js";
+import { addFollowDB, checkFollowDB } from "../../axios/member/member";
 import { useDispatch } from "react-redux";
-import { setRoom } from "../redux/chatStatus/action.js";
+import { setRoom } from "../../redux/chatStatus/action.js";
 const cookies = new Cookies();
 
 const UserProfile = ({ _userData }) => {

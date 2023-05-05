@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "react-bootstrap";
-import "../styles/pagination.css";
+import "../../styles/pagination.css";
 
 /* 
 쓸 곳에서 프롭스 options로 넘기기
