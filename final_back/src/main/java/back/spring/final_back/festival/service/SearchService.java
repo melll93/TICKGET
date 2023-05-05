@@ -5,6 +5,7 @@ import java.util.List;
 import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.board.repository.MarketDto;
 import back.spring.final_back.festival.repository.FestivalDto;
+import back.spring.final_back.festival.repository.MymymyDto;
 
 
 public interface SearchService {
@@ -14,6 +15,8 @@ public interface SearchService {
   List<CarpoolDto> searchCarpoolByKeyword(String keyword);
 
   List<MarketDto> searchMarketByKeyword(String keyword);
+
+  List<MymymyDto> searchForMypage(String memid);
 
 
 }

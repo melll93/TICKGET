@@ -10,12 +10,16 @@ SELECT * FROM fest_main WHERE fest_m_name LIKE #{keyword} OR fest_m_loc LIKE #{k
 	<select id="findAll" resultType="FestivalDto">
 SELECT * FROM fest_main
 	</select>
-
    <select id="searchCarpoolByKeyword" resultType="CarpoolDto"> 
    select * from board_carpool WHERE board_cp_title LIKE #{keyword} OR board_cp_content LIKE #{keyword}
    </select>
 <select id="searchMarketByKeyword" parameterType="MarketDto" resultType="MarketDto">
   select * from board_market where board_mk_title LIKE #{keyword} OR board_mk_content LIKE #{keyword}
 </select>
+<select id="searchForMypage" resultType="MymymyDto">
+  select * from fest_main where fest_m_author = #{memid}
+</select>
+<select id="searchForMypage2" resultType="MymymyDto">
+  select * from board_carpool where board_cp_mem_id = #{memid}
+</select>
 </mapper>
-

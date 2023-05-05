@@ -1,5 +1,6 @@
 package back.spring.final_back.festival.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import back.spring.final_back.board.repository.MarketDao;
 import back.spring.final_back.board.repository.MarketDto;
 import back.spring.final_back.festival.repository.FestivalDao;
 import back.spring.final_back.festival.repository.FestivalDto;
+import back.spring.final_back.festival.repository.MymymyDto;
 import back.spring.final_back.festival.repository.SearchDao;
 import lombok.RequiredArgsConstructor;
 
@@ -51,4 +53,14 @@ public class SearchServiceImpl implements SearchService {
       return marketDao.mk_boardList(null);
   }
 }
+
+  @Override
+  public List<MymymyDto> searchForMypage(String memid) {
+    List<MymymyDto> mList=searchDao.searchForMypage(memid);
+    List<MymymyDto> mList2=searchDao.searchForMypage2(memid);
+        List<MymymyDto> mergedMList = new ArrayList<>();
+        mergedMList.addAll(mList);
+        mergedMList.addAll(mList2);
+        return mergedMList;
+		    }
 }

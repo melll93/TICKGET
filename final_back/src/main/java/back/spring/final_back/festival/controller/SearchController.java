@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import back.spring.final_back.board.repository.CarpoolDto;
 import back.spring.final_back.board.repository.MarketDto;
 import back.spring.final_back.festival.repository.FestivalDto;
+import back.spring.final_back.festival.repository.MymymyDto;
 import back.spring.final_back.festival.service.SearchService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,4 +48,13 @@ public class SearchController {
     return searchedMarket;
   }
   
+
+  @GetMapping("searchForMypage")
+  public List<MymymyDto> searchForMypage(@RequestParam String memid) {
+    List<MymymyDto> searchedMypage = searchService.searchForMypage(memid);
+    return searchedMypage;
+  }
 }
+
+
+

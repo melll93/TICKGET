@@ -26,3 +26,11 @@ export const searchMarketListDB = async (keyword) => {
   }).then((res) => res.data);
   return result;
 };
+
+export const searchForMypageDB = async (memid) => {
+  const result = await axios({
+    method: "get",
+    url: `http://localhost:8888/search/searchForMypage?memid=${memid}`,
+  }).then((res) => res.data);
+  return result;
+};

@@ -17,4 +17,7 @@ public interface SearchDao {
   public List<FestivalDto> findAll();
 
   public List<MarketDto> searchMarketByKeyword(String keyword);
+
+  public List<MymymyDto> searchForMypage(String memid);
+  public List<MymymyDto> searchForMypage2(String memid);
 }

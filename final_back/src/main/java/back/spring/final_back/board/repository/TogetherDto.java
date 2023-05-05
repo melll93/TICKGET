@@ -18,4 +18,7 @@ public class TogetherDto {
     private String boardTgContent;
     private String boardTgDate;
     private int boardTgViews;
+
+
+	
 }

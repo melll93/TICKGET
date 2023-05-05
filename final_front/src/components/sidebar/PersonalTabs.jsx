@@ -6,7 +6,7 @@ const PersonalTabs = () => {
     <div className="PersonalTabs">
       <div className="PersonalTabs tab">
         <Link to="/cart">
-          <img className="icon image20" src="/logos/CART.png" />
+          <img className="icon image20" src="/logos/BOOKMARK.png" />
         </Link>
       </div>
       <div className="PersonalTabs tab">
@@ -14,11 +14,11 @@ const PersonalTabs = () => {
           <img className="icon image20" src="/logos/TICKET.png" />
         </Link>
       </div>
-{/*       <div className="PersonalTabs tab">
-        <Link to="/bookmark">
-          <img className="icon image20" src="../logos/BOOKMARK.png" />
+       <div className="PersonalTabs tab">
+        <Link to="/mypage">
+          <img className="icon image20" src="../logos/mywrites.png" />
         </Link>
-      </div> */}
+      </div> 
       <div className="PersonalTabs tab">
         <Link to="/setting">
           <img className="icon image20" src="/logos/SETTING.png" />
