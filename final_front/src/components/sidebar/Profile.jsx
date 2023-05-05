@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { reduxLogin } from "../../redux/userAuth/action";
 import { Cookies } from "react-cookie";
 import { Dropdown } from "react-bootstrap";
-import UserProfile from "../UserProfile";
+import UserProfile from "../sidebar/UserProfile";
 import { getUserData } from "../../axios/member/member";
 const cookies = new Cookies();
 

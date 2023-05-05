@@ -1,17 +1,19 @@
-import {useCallback, useEffect, useState} from "react";
-import {Modal, Tab, Tabs} from "react-bootstrap";
+import { useCallback, useEffect, useState } from "react";
+import { Modal, Tab, Tabs } from "react-bootstrap";
 import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { DeleteFestReviewDB, DeleteFestivalDB, FestReviewInsertDB, FestivalReviewDB, FetivalDetailDB,
-  UpdateFestReviewDB } from "../../axios/festival/festival";
+import {
+  DeleteFestReviewDB, DeleteFestivalDB, FestReviewInsertDB, FestivalReviewDB, FetivalDetailDB,
+  UpdateFestReviewDB
+} from "../../axios/festival/festival";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import "../../styles/festivaldetails.css";
 import "../../styles/Calendar.css";
 import TicketCancleInfo from "../../components/mypage/TicketCancleInfo";
-import {BButton, BlackBtn} from "../../styles/formStyle";
-import DropdownButton from "../../components/DropdownButton";
+import { BButton, BlackBtn } from "../../styles/formStyle";
+import DropdownButton from "../../components/mainpage/DropdownButton";
 import { Cookies } from "react-cookie";
 import firebase from "firebase/compat/app";
 import { firebaseConfig } from "../board/carpool/CarpoolBoardList";
@@ -31,103 +33,103 @@ const FestivalsDetail = () => {
 
 
 
-/* 클릭한 좌석 담기 */
-const [selectedFestTcType, setSelectedFestTcType] = useState("일반석");
-const [selectedFestTcPrice, setSelectedFestTcPrice] = useState(0);
-const [selectedFestTcTime, setSelectedFestTcTime] = useState("모르지");
+  /* 클릭한 좌석 담기 */
+  const [selectedFestTcType, setSelectedFestTcType] = useState("일반석");
+  const [selectedFestTcPrice, setSelectedFestTcPrice] = useState(0);
+  const [selectedFestTcTime, setSelectedFestTcTime] = useState("모르지");
 
 
 
- const festivalTcClicked = (festTcPrice, festTcType, festTcTime) => {
-   setSelectedFestTcType(festTcType) 
-   setSelectedFestTcPrice(festTcPrice);
-   setSelectedFestTcTime(festTcTime);
-   document.cookie = `selectedFestTcPrice=${JSON.stringify(festTcPrice)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
-   document.cookie = `selectedFestTcType=${JSON.stringify(festTcType)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
-   document.cookie = `selectedFestTcTime=${JSON.stringify(festTcTime)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+  const festivalTcClicked = (festTcPrice, festTcType, festTcTime) => {
+    setSelectedFestTcType(festTcType)
+    setSelectedFestTcPrice(festTcPrice);
+    setSelectedFestTcTime(festTcTime);
+    document.cookie = `selectedFestTcPrice=${JSON.stringify(festTcPrice)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+    document.cookie = `selectedFestTcType=${JSON.stringify(festTcType)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+    document.cookie = `selectedFestTcTime=${JSON.stringify(festTcTime)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
 
- };
-
-
-  
-  
-/* 초기화 */
-useEffect(() => {
-  firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
-  database.ref().on("value", (snapshot) => {
-    setFestMData(festMData);
-  });
-  
-  return () => {
-    database.ref().off();
   };
-}, []); 
 
 
-/*파이어베이스 - READ  */
-const [festMData, setFestMData] = useState(null);  
 
-useEffect(() => {
-  const festTcSeatsInfo= async () => {
-    try {
-      const snapshot = await firebase
-        .database()
-        .ref(`FestMId/${festMId}/${selectedFestTcTime}-${selectedFestTcType}`)
-        .once("value");    //한번읽기
-      if (snapshot.exists()) {  //존재하면 여기 타기
-        const data = snapshot.val();  
-        setFestMData(data);      //받아온 값 담기 
-        console.log(festMData)
-      } else {
-        // 데이터가 존재하지 않는 경우
+
+  /* 초기화 */
+  useEffect(() => {
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    database.ref().on("value", (snapshot) => {
+      setFestMData(festMData);
+    });
+
+    return () => {
+      database.ref().off();
+    };
+  }, []);
+
+
+  /*파이어베이스 - READ  */
+  const [festMData, setFestMData] = useState(null);
+
+  useEffect(() => {
+    const festTcSeatsInfo = async () => {
+      try {
+        const snapshot = await firebase
+          .database()
+          .ref(`FestMId/${festMId}/${selectedFestTcTime}-${selectedFestTcType}`)
+          .once("value");    //한번읽기
+        if (snapshot.exists()) {  //존재하면 여기 타기
+          const data = snapshot.val();
+          setFestMData(data);      //받아온 값 담기 
+          console.log(festMData)
+        } else {
+          // 데이터가 존재하지 않는 경우
+        }
+      } catch (error) {
+        console.log("Firebase 데이터 읽기 에러", error);
       }
-    } catch (error) {
-      console.log("Firebase 데이터 읽기 에러", error);
-    }
-  };
-  festTcSeatsInfo();
-}, [selectedFestTcType]);
+    };
+    festTcSeatsInfo();
+  }, [selectedFestTcType]);
 
 
-console.log(festMData)
-/* ////////////////////수정중 */
-/* 파이어베이스 - update */
+  console.log(festMData)
+  /* ////////////////////수정중 */
+  /* 파이어베이스 - update */
 
 
 
 
-const decreaseSeat = () => {
+  const decreaseSeat = () => {
     const aaa = festMData.seatAvailable;
-    const updatedSeatAvailable = aaa- festSelectedTkamt ;
-    if(updatedSeatAvailable>0){
+    const updatedSeatAvailable = aaa - festSelectedTkamt;
+    if (updatedSeatAvailable > 0) {
       const seatsRef = firebase.database().ref(`FestMId/${festMId}/${selectedFestTcTime}-${selectedFestTcType}/seatAvailable`);
       seatsRef.set(updatedSeatAvailable);
-    navigate("/payment2/" + festMId);
+      navigate("/payment2/" + festMId);
 
-    }else{
+    } else {
       Swal.fire({
-        title:'선택한 좌석이 매진입니다.',
+        title: '선택한 좌석이 매진입니다.',
         icon: 'warning'
       })
     }
-}; 
+  };
 
 
-const researveBtnClicked=()=>{
-  if(selectedFestTcPrice&&date&&festSelectedTkamt){
-    decreaseSeat()
-  }else{
-    Swal.fire({
-      text:'선택된 날짜 | 좌석 | 수량이 없습니다.',
-      icon: 'warning'
-    })
+  const researveBtnClicked = () => {
+    if (selectedFestTcPrice && date && festSelectedTkamt) {
+      decreaseSeat()
+    } else {
+      Swal.fire({
+        text: '선택된 날짜 | 좌석 | 수량이 없습니다.',
+        icon: 'warning'
+      })
+    }
   }
-}
 
 
 
-/* ////////////////////수정중 */
+  /* ////////////////////수정중 */
 
 
 
@@ -156,18 +158,18 @@ const researveBtnClicked=()=>{
     festMEnd: "",
     festMLoc: "",
     festMImg: "",
-    festPsUrl:"",
-    festTcPrice:"",
-    festDtRuntime:"",
-    festDtAge:"",
-    festDtCrew:"",
-    festDtCasting:""
+    festPsUrl: "",
+    festTcPrice: "",
+    festDtRuntime: "",
+    festDtAge: "",
+    festDtCrew: "",
+    festDtCasting: ""
   }]);
 
   useEffect(() => {
     const asyncDB = async () => {
       const res = await FetivalDetailDB({ festMId });
-    /*   console.log(res.data) */
+      /*   console.log(res.data) */
       const result = JSON.stringify(res.data);
       const jsonDoc = JSON.parse(result);
       setFestival([{
@@ -176,29 +178,29 @@ const researveBtnClicked=()=>{
         festMEnd: jsonDoc[0].festMEnd,
         festMLoc: jsonDoc[0].festMLoc,
         festMImg: jsonDoc[0].festMImg,
-        festDtAge:jsonDoc[0].festDtAge,
-        festDtCrew:jsonDoc[0].festDtCrew,
-        festDtCasting:jsonDoc[0].festDtCasting,
-        festPsUrl:jsonDoc[0].festPsUrl,
-        festTcPrice:jsonDoc[0].festTcPrice,
-        festDtRuntime:jsonDoc[0].festDtRuntime
+        festDtAge: jsonDoc[0].festDtAge,
+        festDtCrew: jsonDoc[0].festDtCrew,
+        festDtCasting: jsonDoc[0].festDtCasting,
+        festPsUrl: jsonDoc[0].festPsUrl,
+        festTcPrice: jsonDoc[0].festTcPrice,
+        festDtRuntime: jsonDoc[0].festDtRuntime
       }]);
       if (res.data) {
         setFestival(res.data);
-        
+
       } else {
         console.log("조회 실패");
       }
     };
     asyncDB();
-    return () => {};
+    return () => { };
   }, []);
 
 
 
 
   const reduxUser = useSelector((state) => state.userStatus.user);
-  
+
   /* 리뷰 */
   const [reviewContent, setReviewContent] = useState("");
   const [lgShow, setLgShow] = useState(false); //리뷰수정모달
@@ -216,10 +218,10 @@ const researveBtnClicked=()=>{
 
   /* 리뷰 인서트 요기  */
   const insertReview = async () => {
-    if(_userData){
+    if (_userData) {
 
       const freview = {
-        reviewMemid:_userData.memberNickname,
+        reviewMemid: _userData.memberNickname,
         reviewContent,
         reviewFestmid: festMId,
       };
@@ -230,10 +232,10 @@ const researveBtnClicked=()=>{
       }
       navigate("/productsDetail/" + festMId);
       resetReviewField();
-    }else(
+    } else (
       Swal.fire({
-        title:'로그인 시 이용 가능합니다.',
-        icon:'warning'
+        title: '로그인 시 이용 가능합니다.',
+        icon: 'warning'
       }))
   };
 
@@ -282,71 +284,73 @@ const researveBtnClicked=()=>{
                   }}
                 >
                   <h3>{review.reviewContent}</h3>
-                 작성자: {review.reviewMemid} 등록일: {review.reviewRegdate}
+                  작성자: {review.reviewMemid} 등록일: {review.reviewRegdate}
                   {
                     //로그인 작업 후 하단 주석 해제 예정 , session에 로그인한 사람과 작성자 일치 시 수정, 삭제 버튼 보이기
                     // sessionStorage.getItem('Member_name')==='Member_name(작성자)'&&
                     <div>
 
-                      {_userData&& _userData.memberNickname===review.reviewMemid? 
-<div>
-                        <BButton
-                        style={{ width: "80px", height: "38px" }}
-                        onClick={()=>{ 
-                          console.log(review.reviewNo);
-                          setLgShow(true);
-                          setReviewToBeRevised(review); 
-                          console.log(review.reviewNo);
+                      {_userData && _userData.memberNickname === review.reviewMemid ?
+                        <div>
+                          <BButton
+                            style={{ width: "80px", height: "38px" }}
+                            onClick={() => {
+                              console.log(review.reviewNo);
+                              setLgShow(true);
+                              setReviewToBeRevised(review);
+                              console.log(review.reviewNo);
 
-                        }}
-                        >
-                        수정
-                      </BButton>
+                            }}
+                          >
+                            수정
+                          </BButton>
 
-                      <BButton
-                        style={{ width: "80px", height: "38px" }}
-                        onClick={async () => {
-                          const freview = {
-                            review_no: review.reviewNo,
-                          };
-                          const res = await DeleteFestReviewDB(freview);
-                          if (!res.data) {
-                          } else {
-                          }
-                          navigate("/productsDetail/" + festMId);
-                          console.log("삭제완료");
-                        }}
-                        >
-                        삭제
-                      </BButton>
-                      </div>
-                      :null}
+                          <BButton
+                            style={{ width: "80px", height: "38px" }}
+                            onClick={async () => {
+                              const freview = {
+                                review_no: review.reviewNo,
+                              };
+                              const res = await DeleteFestReviewDB(freview);
+                              if (!res.data) {
+                              } else {
+                              }
+                              navigate("/productsDetail/" + festMId);
+                              console.log("삭제완료");
+                            }}
+                          >
+                            삭제
+                          </BButton>
+                        </div>
+                        : null}
 
 
-                        {/*/////////////////////////////리뷰 수정 모달//////////////////////////////////*/}
-  
-                        <Modal size="lg" show={lgShow}  onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg" >
-                          <Modal.Header closeButton>
-                            <Modal.Title id="example-modal-sizes-title-lg">
-                              리뷰수정
-                            </Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body>
-                            <div className="form-floating mb-3">
-                              <textarea onChange={(e) => { inputReviewRevisedContent(e.target.value); }} className="form-control2" 
-                              placeholder="Leave a comment here" id="product_detail_review_revised_textarea" 
-                              style={{height: "150px", margin: "10px", width: "97%"}} ></textarea>
-                              <BlackBtn className="reviseBtn" onClick={async () => { setLgShow(true);  
+                      {/*/////////////////////////////리뷰 수정 모달//////////////////////////////////*/}
+
+                      <Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg" >
+                        <Modal.Header closeButton>
+                          <Modal.Title id="example-modal-sizes-title-lg">
+                            리뷰수정
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <div className="form-floating mb-3">
+                            <textarea onChange={(e) => { inputReviewRevisedContent(e.target.value); }} className="form-control2"
+                              placeholder="Leave a comment here" id="product_detail_review_revised_textarea"
+                              style={{ height: "150px", margin: "10px", width: "97%" }} ></textarea>
+                            <BlackBtn className="reviseBtn" onClick={async () => {
+                              setLgShow(true);
                               const freview = { reviewNo: reviewToBeRevised.reviewNo, reviewContent: reviewRevisedContent, };
-                                  const res = await UpdateFestReviewDB(freview); if (!res.data){} else{} setLgShow(false);
-                                  console.log("리뷰번호" + freview.reviewNo); }}  >
-                                수정완료
-                              </BlackBtn>
-                            </div>
-                            <br />
-                          </Modal.Body>
-                        </Modal>
-                        {/* //////   리뷰 수정용 모달    여기까지///////*/}
+                              const res = await UpdateFestReviewDB(freview); if (!res.data) { } else { } setLgShow(false);
+                              console.log("리뷰번호" + freview.reviewNo);
+                            }}  >
+                              수정완료
+                            </BlackBtn>
+                          </div>
+                          <br />
+                        </Modal.Body>
+                      </Modal>
+                      {/* //////   리뷰 수정용 모달    여기까지///////*/}
 
 
 
@@ -366,14 +370,14 @@ const researveBtnClicked=()=>{
 
 
 
-console.log(festival)
+  console.log(festival)
 
 
 
   return (
     <>
 
-        <Header />
+      <Header />
       <Sidebar />
       <div className="center">
 
@@ -389,50 +393,50 @@ console.log(festival)
                 />
               </div>
               <div className="product_detail_info" >
-              <div className="product_detail_head" >
-  <h3 className="product_title" style={{ fontWeight: 'bold' }}>{festival[0].festMName}</h3>
-  {_userData && _userData.memberAuthority==="ROLE_ADMIN" ? 
-    <div>
-    <BlackBtn onClick={deleteProducts} width='100px' height='30px' margin='5px'>상품삭제</BlackBtn>
-      <Link to={`/addProducts/${festMId}`}>
-        <BlackBtn width='100px' height='30px'>상품수정</BlackBtn>
-      </Link>
-    </div>
-    :null
-  }
-</div>
-            
-            <div className="product_info">
-  <ul className="product_lnfo_list_col2" style={{marginBottom:'0px', paddingTop:'10px'}}>
-    <li className="product_info_list"><span className="product_info_title">장소</span> <div className="product_info_desc">{festival[0].festMLoc}</div> </li>
-    <li className="product_info_list"><span className="product_info_title">관람시간</span><div className="product_info_desc">{festival[0].festDtRuntime===null? <p>미제공</p>: <p>{festival[0].festDtRuntime}</p>}</div></li>
-    <li className="product_info_list"><span className="product_info_title">기간</span><div className="product_info_desc">{festival[0].festMStart}~{festival[0].festMEnd}</div></li>
-    <li className="product_info_list"><span className="product_info_title">관람등급</span><div className="product_info_desc">{festival[0].festDtAge===null? <p>미제공</p>: <p>{festival[0].festDtAge}</p>}</div></li>
-  </ul>
-</div>
+                <div className="product_detail_head" >
+                  <h3 className="product_title" style={{ fontWeight: 'bold' }}>{festival[0].festMName}</h3>
+                  {_userData && _userData.memberAuthority === "ROLE_ADMIN" ?
+                    <div>
+                      <BlackBtn onClick={deleteProducts} width='100px' height='30px' margin='5px'>상품삭제</BlackBtn>
+                      <Link to={`/addProducts/${festMId}`}>
+                        <BlackBtn width='100px' height='30px'>상품수정</BlackBtn>
+                      </Link>
+                    </div>
+                    : null
+                  }
+                </div>
+
+                <div className="product_info">
+                  <ul className="product_lnfo_list_col2" style={{ marginBottom: '0px', paddingTop: '10px' }}>
+                    <li className="product_info_list"><span className="product_info_title">장소</span> <div className="product_info_desc">{festival[0].festMLoc}</div> </li>
+                    <li className="product_info_list"><span className="product_info_title">관람시간</span><div className="product_info_desc">{festival[0].festDtRuntime === null ? <p>미제공</p> : <p>{festival[0].festDtRuntime}</p>}</div></li>
+                    <li className="product_info_list"><span className="product_info_title">기간</span><div className="product_info_desc">{festival[0].festMStart}~{festival[0].festMEnd}</div></li>
+                    <li className="product_info_list"><span className="product_info_title">관람등급</span><div className="product_info_desc">{festival[0].festDtAge === null ? <p>미제공</p> : <p>{festival[0].festDtAge}</p>}</div></li>
+                  </ul>
+                </div>
 
 
-<div className="product_info">
-  <ul className="product_lnfo_list_col2" style={{paddingTop:'10px'}}>
-    <li className="product_info_list"><span className="product_info_title">출연진</span><div className="product_info_desc"><ul className="product_info_sublist" >
-      <li className="product_info_subitem"> {festival[0].festDtCasting===null? <p style={{display:'inline'}}>(미정) </p>: <p style={{display:'inline'}}>{festival[0].festDtCasting}</p>}
-          </li>
-        </ul>
-      </div>
-    </li>
-    <li className="product_info_list">
-      <span className="product_info_title">제작진</span>
-      <div className="product_info_desc">
-        <ul className="product_info_sublist">
-          <li className="product_info_subitem">
-            { festival[0].festDtCrew===null? <p style={{display:'inline'}}>제작진(미공개)</p>: <p style={{display:'inline'}}>{festival[0].festDtCrew}</p>}
-          </li>
-        </ul>
-      </div>
-    </li>
-  </ul>
-</div>
-</div>
+                <div className="product_info">
+                  <ul className="product_lnfo_list_col2" style={{ paddingTop: '10px' }}>
+                    <li className="product_info_list"><span className="product_info_title">출연진</span><div className="product_info_desc"><ul className="product_info_sublist" >
+                      <li className="product_info_subitem"> {festival[0].festDtCasting === null ? <p style={{ display: 'inline' }}>(미정) </p> : <p style={{ display: 'inline' }}>{festival[0].festDtCasting}</p>}
+                      </li>
+                    </ul>
+                    </div>
+                    </li>
+                    <li className="product_info_list">
+                      <span className="product_info_title">제작진</span>
+                      <div className="product_info_desc">
+                        <ul className="product_info_sublist">
+                          <li className="product_info_subitem">
+                            {festival[0].festDtCrew === null ? <p style={{ display: 'inline' }}>제작진(미공개)</p> : <p style={{ display: 'inline' }}>{festival[0].festDtCrew}</p>}
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
           </section>
@@ -440,67 +444,67 @@ console.log(festival)
 
           <section>
             <div className="midContainerCalendarAndRestSeats">
-            <p style={{color:'red', marginTop:'25px'}}><strong>[날짜 선택]</strong></p>
+              <p style={{ color: 'red', marginTop: '25px' }}><strong>[날짜 선택]</strong></p>
 
               <span className="products_calendar">
 
-                <Calendar value={date} onChange={handleDateChange}/>
+                <Calendar value={date} onChange={handleDateChange} />
               </span>
               <div className="calendarands1">
-          <strong>
-            <p style={{color:'red'}}>[좌석 선택]</p>
-            </strong>
-            
+                <strong>
+                  <p style={{ color: 'red' }}>[좌석 선택]</p>
+                </strong>
 
 
 
-            {festival.map((fest, i) => (     <div  key={i}   className="product_detail_description">
-    {fest.festTcType === null ? (      null    ) : (
-<div key={i} className={`product_info_subitem${selectedFestTcTime === fest.festTcTime && selectedFestTcPrice === fest.festTcPrice && selectedFestTcType===fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType, fest.festTcTime)} style={{border: '1px solid gray', borderRadius: '10px', marginTop:'5px'}}>
-{ fest.festTcTime===null? null: <p style={{display:'inline',}}>{fest.festTcTime} - </p>}
-{ fest.festTcType===null? null: <p style={{display:'inline'}}>{fest.festTcType} - </p>}  
-{ fest.festTcPrice===null? null: <p style={{display:'inline'}}>{fest.festTcPrice}원</p>}
- </div>
-    )}
-    {i === festival.length - 1 && fest.festTcType === null ? (
-null
-    ) : null}
-  </div>
-))}
+
+                {festival.map((fest, i) => (<div key={i} className="product_detail_description">
+                  {fest.festTcType === null ? (null) : (
+                    <div key={i} className={`product_info_subitem${selectedFestTcTime === fest.festTcTime && selectedFestTcPrice === fest.festTcPrice && selectedFestTcType === fest.festTcType ? 'active' : ''}`} onClick={() => festivalTcClicked(fest.festTcPrice, fest.festTcType, fest.festTcTime)} style={{ border: '1px solid gray', borderRadius: '10px', marginTop: '5px' }}>
+                      {fest.festTcTime === null ? null : <p style={{ display: 'inline', }}>{fest.festTcTime} - </p>}
+                      {fest.festTcType === null ? null : <p style={{ display: 'inline' }}>{fest.festTcType} - </p>}
+                      {fest.festTcPrice === null ? null : <p style={{ display: 'inline' }}>{fest.festTcPrice}원</p>}
+                    </div>
+                  )}
+                  {i === festival.length - 1 && fest.festTcType === null ? (
+                    null
+                  ) : null}
+                </div>
+                ))}
 
 
 
               </div>
-              
-              
+
+
               <div className="calendarands2">
 
                 <div className="calendarands2-1">
-                <p style={{color:'red'}}><strong>[잔여 좌석]</strong></p>
-              
-                {/* 파이어 베이스 - 좌석정보*/}
+                  <p style={{ color: 'red' }}><strong>[잔여 좌석]</strong></p>
 
-{/* 클릭한 값 뜨게 하기 */}
+                  {/* 파이어 베이스 - 좌석정보*/}
 
-                <div>
-      {festMData && (
-        <div>
-          <div>선택 좌석 정보 : {festMData.time} - {festMData.type}</div>
-         <div> <h3>{festMData.seatAvailable} / {festMData.seatTotal} 석</h3></div>
-        </div>
-      )}
-    </div>
+                  {/* 클릭한 값 뜨게 하기 */}
+
+                  <div>
+                    {festMData && (
+                      <div>
+                        <div>선택 좌석 정보 : {festMData.time} - {festMData.type}</div>
+                        <div> <h3>{festMData.seatAvailable} / {festMData.seatTotal} 석</h3></div>
+                      </div>
+                    )}
+                  </div>
 
 
 
-                    {/* 파이어 베이스 - 좌석정보 끝 */}
+                  {/* 파이어 베이스 - 좌석정보 끝 */}
 
                 </div>
                 구매 수량 : <DropdownButton options={options} ></DropdownButton>
-                
+
                 <BlackBtn
                   width="250px"
-                  style={{marginTop:'120px'}}
+                  style={{ marginTop: '120px' }}
                   onClick={researveBtnClicked}
                 >
                   예매하기
@@ -512,59 +516,59 @@ null
           <section>
             <div className="bottomcontainer" >
               <Tabs
-                style={{ maxWidth: "1260px",fontFamily: "Nanum Gothic", fontWeight: "bold"}}
+                style={{ maxWidth: "1260px", fontFamily: "Nanum Gothic", fontWeight: "bold" }}
                 defaultActiveKey="product_detail_description"
                 id="justify-tab-example"
                 className="product_detail_tabs"
                 justify
               >
-               <Tab eventKey="product_detail_description" title="상세정보">
+                <Tab eventKey="product_detail_description" title="상세정보">
 
-  {festival.map((fest, i) => (
-    <div
-      key={i}
-      className="product_detail_description">
-      {fest.festPsUrl === null ? (
-        null
-        ) : (
-        <img className="product_detail_description_imgUrl" src={fest.festPsUrl} alt="상품상세정보이미지" />
-        )}
-      {i === festival.length - 1 && fest.festPsUrl === null ? (
-        <div style={{ margin: '50px' }}>
-          <h1 style={{ margin: '50px' }}>상세보기 이미지 정보가 없습니다.</h1>
-          <TicketCancleInfo />
-        </div>
-      ) : null}
-    </div>
-  ))}
-</Tab>
+                  {festival.map((fest, i) => (
+                    <div
+                      key={i}
+                      className="product_detail_description">
+                      {fest.festPsUrl === null ? (
+                        null
+                      ) : (
+                        <img className="product_detail_description_imgUrl" src={fest.festPsUrl} alt="상품상세정보이미지" />
+                      )}
+                      {i === festival.length - 1 && fest.festPsUrl === null ? (
+                        <div style={{ margin: '50px' }}>
+                          <h1 style={{ margin: '50px' }}>상세보기 이미지 정보가 없습니다.</h1>
+                          <TicketCancleInfo />
+                        </div>
+                      ) : null}
+                    </div>
+                  ))}
+                </Tab>
 
 
                 <Tab eventKey="product_detail_place" title="공연장 위치" mountOnEnter={true}>
-               
 
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px", marginRight:'450px' }}>
-               
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" , marginRight:'50px'}}>
-                  <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
-                    <i className="bi bi-geo-alt-fill"></i>
-                   {festival[0].festMLoc}
-                  </p>
-                  <div style={{ width: "40%", borderTop: "1px solid black",marginBottom: "10px", opacity: "15%" }} />
-                </div>
-                <div  style={{zIndex:'0'}} >
-               <MapContainer place={ festival[0].festMLoc }/> 
-                </div>
-              </div>
 
-</Tab>
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "calc(100% - 140px)", marginTop: "50px", marginRight: '450px' }}>
+
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginRight: '50px' }}>
+                      <p style={{ fontFamily: "Nanum Gothic", fontWeight: "bold", fontSize: "1.8rem", marginBottom: "20px" }}>
+                        <i className="bi bi-geo-alt-fill"></i>
+                        {festival[0].festMLoc}
+                      </p>
+                      <div style={{ width: "40%", borderTop: "1px solid black", marginBottom: "10px", opacity: "15%" }} />
+                    </div>
+                    <div style={{ zIndex: '0' }} >
+                      <MapContainer place={festival[0].festMLoc} />
+                    </div>
+                  </div>
+
+                </Tab>
 
                 <Tab eventKey="product_detail_review" title="공연후기">
                   <div
                     className="product_detail_review" >
                     <div
                       className="product_detail_review_heading"   >
-                      <h3 style={{fontWeight:'bold'}}>관람 후기</h3>
+                      <h3 style={{ fontWeight: 'bold' }}>관람 후기</h3>
                     </div>
 
                     <div
@@ -578,14 +582,14 @@ null
                         className="form-control"
                         placeholder="Leave a comment here"
                         id="product_detail_review_textarea"  ></textarea>
-                      <label style={{paddingLeft:'50px'}} htmlFor="floatingTextarea">관람후기</label>
+                      <label style={{ paddingLeft: '50px' }} htmlFor="floatingTextarea">관람후기</label>
                       <BlackBtn
                         width="250px"
                         height="50px"
                         margin="10px 80px 10px 10px"
                         onClick={insertReview}
                       >
-                        등록 
+                        등록
                       </BlackBtn>
                     </div>
 
@@ -598,11 +602,11 @@ null
           </section>
         </div>{" "}
         {/* totalcontainer div */}
-        <div style={{marginTop:'100px'}}>
+        <div style={{ marginTop: '100px' }}>
         </div>
       </div>{" "}
       {/* center div */}
-      
+
     </>
   );
 };

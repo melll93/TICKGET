@@ -14,7 +14,7 @@ import {
   carpoolViewUpDB,
   selectCarpoolDB,
 } from "../../../axios/board/carpool/CarpoolLogic";
-import CommonPagination from "../../../components/CommonPagination";
+import CommonPagination from "../../../components/mainpage/CommonPagination";
 
 /************* firebase Config  ************
  * 은영 - festivalDetail 에서 주워다 쓰는중 export 지우거나 하면 알려주삼

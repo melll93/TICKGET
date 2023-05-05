@@ -1,10 +1,6 @@
-import { Cookies } from "react-cookie";
-
-const cookies = new Cookies();
-const _userData = cookies.get("_userData");
 let currentSubscription;
 
-const ChatSubscribe = (client, currentRoom) => {
+const ChatSubscribe = (client, currentRoom, _userData) => {
   if (currentSubscription) {
     currentSubscription.unsubscribe();
   }

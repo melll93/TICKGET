@@ -58,8 +58,9 @@ function App({ mkImageUploader }) {
   const sock = new SockJS("http://localhost:8888/stompTest");
   const client = Stomp.over(sock);
   const room = useSelector((state) => state.roomReducer.room);
+  const _userData = cookies.get("_userData");
 
-  chatSubscribe(client, room);
+  chatSubscribe(client, room, _userData);
 
   console.log(room);
   // pages로 routing

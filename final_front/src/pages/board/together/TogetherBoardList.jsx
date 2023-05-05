@@ -7,7 +7,7 @@ import {
   selectTogetherDB,
   togetherViewUpDB,
 } from "../../../axios/board/together/TogetherLogic";
-import CommonPagination from "../../../components/CommonPagination";
+import CommonPagination from "../../../components/mainpage/CommonPagination";
 
 const TogetherBoardList = (board) => {
   console.log("BoardList");
