@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
-import { searchFetivalListDB } from '../../axios/search/search';
+import { searchFetivalListDB } from '../../axios/festival/search/search';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
