@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import CommonPagination from '../../components/mainpage/CommonPagination';
 import Footer from '../../components/Footer';
+import UserProfile from '../../components/sidebar/UserProfile';
+import { searchById } from '../../axios/member/member';
 
 const SearchResultPage = () => {
 
@@ -14,6 +16,8 @@ console.log(keyword);
 const [searchResults, setSearchResults] = useState([]);
 const [searchResults2, setSearchResults2] = useState([]);
 const [searchResults3, setSearchResults3] = useState([]);
+
+const[writers, setWriters]=useState();
 
  
   const [page, setPage] = useState(1);   
@@ -35,17 +39,32 @@ const [searchResults3, setSearchResults3] = useState([]);
         const data = await searchFetivalListDB(keyword);
         const data2 = await searchCarpoolListDB(keyword);
         const data3 = await searchMarketListDB(keyword);
-  /*     console.log(data);
-      console.log(data2); */
-      console.log(data3);
+  /*     console.log(data); */
+      console.log(data2); 
+/*        console.log(data3);  */
       setSearchResults(data);
       setSearchResults2(data2);
       setSearchResults3(data3);
-      
+
+      /* 작성자 정보 가져오기 <_userData > */
+/*       const writerPromises = searchResults2.map(item => searchById(item.boardCpMemId));
+      const writers = await Promise.all(writerPromises);
+      setWriters(writers); */
     }
     areaList();
   }, [keyword]);
 
+
+
+  useEffect(() => {
+    const fetchWriters = async () => {
+      const writerPromises = searchResults2.map(item => searchById(item.boardCpMemId));
+      const writers = await Promise.all(writerPromises);
+      setWriters(writers);
+    }
+    fetchWriters();
+  }, [searchResults2]);
+  
 
     return (
         <>
@@ -79,11 +98,17 @@ const [searchResults3, setSearchResults3] = useState([]);
              "카풀게시판"
       {searchResults2 && searchResults2.length > 0 ? (
   <ul>
-    {searchResults2.map((item,i) => (
-     <li key={i}> 
-<Link to={`http://localhost:3333/carpool/carpoolDetail/${item.boardCpNo}`}> {item.boardCpTitle}</Link>- {item.boardCpMemId}
-</li>
-      ))}
+  {searchResults2.map((item, i) => {
+      return (
+        <li key={i}>
+          <UserProfile _userData={writers[i]} />
+          <Link to={`http://localhost:3333/carpool/carpoolDetail/${item.boardCpNo}`}>
+            {item.boardCpTitle}
+          </Link>
+          - {item.boardCpMemId}
+        </li>
+      );
+    })}
   </ul>
 ) : (
     <h2>검색 결과가 없습니다.</h2>
@@ -95,14 +120,17 @@ const [searchResults3, setSearchResults3] = useState([]);
       {/* 마켓 */}
       <ul>
              "마켓게시판"
+                
       {searchResults3 && searchResults3.length > 0 ? (
-  <ul>
+          <div style={{paddingLeft:'15px'}}>
+  <ul style={{paddingLeft:'30px'}}>
     {searchResults3.map((item,i) => (
-     <li key={i}> 
+        <li key={i}> <img src={item.boardMkFileurl} style={{width:'50px', height:'70px', borderRadius:'5px', marginBottom:'10px'}}/>
 <Link to={`http://localhost:3333/market/mk_boardDetail?no=${item.boardMkNo}`}> {item.boardMkTitle}</Link>- {item.mkTicketSeat}
 </li>
       ))}
   </ul>
+      </div>
 ) : (
     <h2>검색 결과가 없습니다.</h2>
     )}
