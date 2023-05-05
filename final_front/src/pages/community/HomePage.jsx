@@ -65,7 +65,6 @@ const HomePage = () => {
   useEffect(() => {
     selectBoardList();
   }, []);
-
   const boardListProps = boardList.map((item) => {
     return {
       no: item.boardTgNo,

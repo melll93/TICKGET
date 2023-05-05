@@ -106,7 +106,7 @@ function App({ mkImageUploader }) {
         <Route path="/update" exact={true} element={<MemberUpdPage />} />
 
         {/* MenuBar Routes */}
-        <Route path="/search" exact={true} element={<SearchResultPage />} />
+        <Route path="/search/:keyword" element={<SearchResultPage />} />
         <Route path="/concert" exact={true} element={<ConcertPage />} />
         <Route path="/together" exact={true} element={<TogetherPage />} />
         <Route path="/carpool" exact={true} element={<CarpoolPage />} />

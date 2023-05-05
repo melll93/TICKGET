@@ -15,7 +15,7 @@ const SearchBar = () => {
 
   const search = () => {
     console.log(keyword);
-    navigate("/search?s=" + keyword);
+    navigate("/search/" + keyword);
   };
 
   return (

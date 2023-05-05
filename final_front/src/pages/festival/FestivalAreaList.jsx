@@ -3,10 +3,10 @@ import { areaFestivalListDB, thumbsupFestivalDB } from '../../axios/festival/fes
 import CommonPagination from '../../components/CommonPagination';
 
 const FestivalAreaList = ({selectedNavbarValue}) => {
+  const [festMArea, setFestArea] = useState(selectedNavbarValue);
  const [festivals, setFestivals] = useState([]);
   const [page, setPage] = useState(1);
   const [perPage] = useState(20);
-  const [festMArea, setFestArea] = useState(selectedNavbarValue);
 
   const indexOfLastPost = page * perPage;
   const indexOfFirstPost = indexOfLastPost - perPage;
