@@ -5,11 +5,17 @@
 <mapper
 	namespace="back.spring.final_back.festival.repository.SearchDao">
 	<select id="searchFestivalsByKeyword" resultType="FestivalDto">
-SELECT * FROM fest_main WHERE fest_m_name LIKE #{keyword}
+SELECT * FROM fest_main WHERE fest_m_name LIKE #{keyword} OR fest_m_loc LIKE #{keyword}
 	</select>
 	<select id="findAll" resultType="FestivalDto">
 SELECT * FROM fest_main
 	</select>
-</mapper>
 
+   <select id="searchCarpoolByKeyword" resultType="CarpoolDto"> 
+   select * from board_carpool WHERE board_cp_title LIKE #{keyword} OR board_cp_content LIKE #{keyword}
+   </select>
+<select id="searchMarketByKeyword" parameterType="MarketDto" resultType="MarketDto">
+  select * from board_market where board_mk_title LIKE #{keyword} OR board_mk_content LIKE #{keyword}
+</select>
+</mapper>
 

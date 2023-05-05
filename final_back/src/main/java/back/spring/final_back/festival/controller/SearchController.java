@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import back.spring.final_back.board.repository.CarpoolDto;
+import back.spring.final_back.board.repository.MarketDto;
 import back.spring.final_back.festival.repository.FestivalDto;
 import back.spring.final_back.festival.service.SearchService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,18 @@ public class SearchController {
   public List<FestivalDto> searchFestivals(@RequestParam String keyword) {
     List<FestivalDto> searchedFest = searchService.searchFestivalsByKeyword(keyword);
     return searchedFest;
+  }
+
+  @GetMapping("searchCarpool")
+  public List<CarpoolDto> searchCarpool(@RequestParam String keyword) {
+    List<CarpoolDto> searchedCarpool = searchService.searchCarpoolByKeyword(keyword);
+    return searchedCarpool;
+  }
+
+    @GetMapping("searchMarket")
+  public List<MarketDto> searchMarket(@RequestParam String keyword) {
+    List<MarketDto> searchedMarket = searchService.searchMarketByKeyword(keyword);
+    return searchedMarket;
   }
   
 }
