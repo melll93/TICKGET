@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { mk_boardListDB } from "../../../axios/board/market/marketLogic";
 import MarketRow from "./MarketRow";
 import { useLocation } from "react-router-dom";
-import CommonPagination from "../../../components/CommonPagination";
+import CommonPagination from "../../../components/mainpage/CommonPagination";
 
 const MarketList = () => {
   //페이징 처리시에 현재 내가 바라보는 페이지 정보 담기
@@ -16,11 +16,11 @@ const MarketList = () => {
 
   //판매중인 상품 갯수
   const [numBoards, setNumBoards] = useState(0);
-  
+
   //페이지네이션 처리
   const [pages, setPage] = useState(1);
   const [perPage] = useState(10);
-  
+
   useEffect(() => {
     selectBoardList();
   }, []);
@@ -33,7 +33,7 @@ const MarketList = () => {
     currentFest = boards.slice(indexOfFirstPost, indexOfLastPost);
     return currentFest;
   };
-  
+
   const selectBoardList = async () => {
     const res = await mk_boardListDB();
     console.log(res.data);
@@ -87,15 +87,15 @@ const MarketList = () => {
 
   return (
     <>
-         <div style={{textAlign:'center', fontWeight:'bold', fontSize:'1.8rem', marginTop:'50px'}}>현재 <span style={{color:'rgb(236,120,40)'}}>{numBoards}개</span>{" "}의 상품이 판매중입니다.</div>
+      <div style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.8rem', marginTop: '50px' }}>현재 <span style={{ color: 'rgb(236,120,40)' }}>{numBoards}개</span>{" "}의 상품이 판매중입니다.</div>
       {currentMkBoard(boards).map((boards) => (
         <MarketRow key={boards.boardMkNo} boards={boards} />
       ))}
- <CommonPagination 
-          pagination={setPage}
-          perPage={perPage}
-          totalItems={boards.length}
-        ></CommonPagination>
+      <CommonPagination
+        pagination={setPage}
+        perPage={perPage}
+        totalItems={boards.length}
+      ></CommonPagination>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "react-bootstrap";
 import { getConcertListDB } from "../../axios/festival/main";
-import BasicPagination from "../../components/BasicPagination";
+import BasicPagination from "../../components/mainpage/BasicPagination";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 

@@ -1,5 +1,4 @@
 import React from "react";
-import UserProfile from "../UserProfile";
 
 const ChatList = ({ _userData }) => {
   // console.log(_userData);

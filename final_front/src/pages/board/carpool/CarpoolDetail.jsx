@@ -24,7 +24,7 @@ import {
 import { searchById } from "../../../axios/member/member";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import UserProfile from "../../../components/UserProfile";
+import UserProfile from "../../../components/sidebar/UserProfile";
 import { ContainerDiv } from "../../../styles/formStyle";
 import MapContainer from "../market/Map/MapContainer";
 import { firebaseConfig } from "./CarpoolBoardList";
@@ -201,7 +201,7 @@ const CarpoolDetail = () => {
     };
 
     asyncDB();
-    return () => {};
+    return () => { };
   }, []);
 
   if (!carpool.boardCpTitle) {
@@ -276,420 +276,420 @@ const CarpoolDetail = () => {
       <div>
         <Header />
         <Sidebar />
-      <div className="center">
+        <div className="center">
 
-        <ContainerDiv>
-          <div style={{ height: "150px" }}></div>
-          <br />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "90%",
-              border: "2px solid lightGray",
-              borderRadius: "20px",
-              padding: "10px",
-              maxWidth: "1500px",
-              minHeight: "650px",
-              justifyContent: "space-between",
-            }}
-          >
-            <div style={{ width: "98%", margin: "10px" }}>
-              <h2>카풀 상세보기</h2>
-              <br />
-              <div>
+          <ContainerDiv>
+            <div style={{ height: "150px" }}></div>
+            <br />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "90%",
+                border: "2px solid lightGray",
+                borderRadius: "20px",
+                padding: "10px",
+                maxWidth: "1500px",
+                minHeight: "650px",
+                justifyContent: "space-between",
+              }}
+            >
+              <div style={{ width: "98%", margin: "10px" }}>
+                <h2>카풀 상세보기</h2>
+                <br />
                 <div>
-                  <input type="hidden" name="boardCpNo" value="" />
                   <div>
-                    <h4>제목</h4>
-                    <span
-                      style={{ width: "98%", margin: "10px" }}
-                      type="text"
-                      name="carpoolTitle"
-                      required
-                      className="form-control form-control-lg"
-                      id="inputLarge"
-                    >
-                      {carpool.boardCpTitle}
-                    </span>
-                  </div>
-
-                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-                  <br />
-                  <div>
-                    <h4>작성자</h4>
-                    <div
-                      style={{
-                        fontFamily: "Nanum Gothic",
-                        fontWeight: "bold",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      <UserProfile _userData={sellerinfo} />
-                      {carpool.boardCpMemId}
-                    </div>
-                  </div>
-
-                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-                  <br />
-                  <div>
-                    <h4>날짜</h4>
-                    <span
-                      style={{ width: "98%", margin: "10px" }}
-                      type="datetime-local"
-                      name="carpoolCpDate"
-                      required
-                      className="form-control form-control-lg"
-                      id="inputLarge"
-                    >
-                      {carpool.boardCpDate}
-                    </span>
-                  </div>
-
-                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-                  <br />
-                  {/* firebase에서 값 받아오기 시작 */}
-                  <div>
-                    <h4>최대인원</h4>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <div
-                        style={{ width: "350px", margin: "10px" }}
+                    <input type="hidden" name="boardCpNo" value="" />
+                    <div>
+                      <h4>제목</h4>
+                      <span
+                        style={{ width: "98%", margin: "10px" }}
                         type="text"
-                        name="carpoolMemId"
+                        name="carpoolTitle"
                         required
                         className="form-control form-control-lg"
                         id="inputLarge"
                       >
-                        {Object.keys(data)
-                          .filter((key) => key === "carpoolList")
-                          .map((key) => {
-                            const carpoolList = data[key];
-                            return Object.keys(carpoolList).map((CpNo) => {
-                              if (CpNo === boardCpNo) {
-                                const item = carpoolList[CpNo];
-                                console.log(item);
-                                return (
-                                  <div className="data" key={CpNo}>
-                                    최대 인원: {item.max}, 현재 신청인원 :
-                                    {item.now}
-                                  </div>
-                                );
-                              } else {
-                                return null;
-                              }
-                            });
-                          })}
-                      </div>
-                      <Button
-                        style={{
-                          width: "auto",
-                          marginLeft: "10px",
-                          backgroundColor: "black",
-                          marginTop: "0px",
-                        }}
-                        className="form-control"
-                        type="text"
-                        onClick={handleSaveData}
-                      >
-                        카풀 신청하기
-                      </Button>
+                        {carpool.boardCpTitle}
+                      </span>
                     </div>
-                  </div>
-                  {/* firebase에서 값 받아오기 종료 */}
 
-                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-                  <br />
-                  <div>
-                    <h4>내용</h4>
-                    <textarea
+                    <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+                    <br />
+                    <div>
+                      <h4>작성자</h4>
+                      <div
+                        style={{
+                          fontFamily: "Nanum Gothic",
+                          fontWeight: "bold",
+                          fontSize: "1.1rem",
+                        }}
+                      >
+                        <UserProfile _userData={sellerinfo} />
+                        {carpool.boardCpMemId}
+                      </div>
+                    </div>
+
+                    <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+                    <br />
+                    <div>
+                      <h4>날짜</h4>
+                      <span
+                        style={{ width: "98%", margin: "10px" }}
+                        type="datetime-local"
+                        name="carpoolCpDate"
+                        required
+                        className="form-control form-control-lg"
+                        id="inputLarge"
+                      >
+                        {carpool.boardCpDate}
+                      </span>
+                    </div>
+
+                    <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+                    <br />
+                    {/* firebase에서 값 받아오기 시작 */}
+                    <div>
+                      <h4>최대인원</h4>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <div
+                          style={{ width: "350px", margin: "10px" }}
+                          type="text"
+                          name="carpoolMemId"
+                          required
+                          className="form-control form-control-lg"
+                          id="inputLarge"
+                        >
+                          {Object.keys(data)
+                            .filter((key) => key === "carpoolList")
+                            .map((key) => {
+                              const carpoolList = data[key];
+                              return Object.keys(carpoolList).map((CpNo) => {
+                                if (CpNo === boardCpNo) {
+                                  const item = carpoolList[CpNo];
+                                  console.log(item);
+                                  return (
+                                    <div className="data" key={CpNo}>
+                                      최대 인원: {item.max}, 현재 신청인원 :
+                                      {item.now}
+                                    </div>
+                                  );
+                                } else {
+                                  return null;
+                                }
+                              });
+                            })}
+                        </div>
+                        <Button
+                          style={{
+                            width: "auto",
+                            marginLeft: "10px",
+                            backgroundColor: "black",
+                            marginTop: "0px",
+                          }}
+                          className="form-control"
+                          type="text"
+                          onClick={handleSaveData}
+                        >
+                          카풀 신청하기
+                        </Button>
+                      </div>
+                    </div>
+                    {/* firebase에서 값 받아오기 종료 */}
+
+                    <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+                    <br />
+                    <div>
+                      <h4>내용</h4>
+                      <textarea
+                        style={{
+                          width: "98%",
+                          margin: "10px",
+                          height: "300px",
+                          fontSize: "20px",
+                        }}
+                        value={carpool.boardCpContent}
+                        name="carpoolContent"
+                        required
+                        rows="10"
+                        className="form-control"
+                        id="exampleTextarea"
+                        readOnly
+                        onChange={(e) => {
+                          handleContent(e.target.value);
+                        }}
+                      />
+                    </div>
+
+                    <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
+                    <br />
+                    <h4>만남의 장소</h4>
+                    <div
                       style={{
+                        border: "1px solid lightGray",
+                        borderRadius: "10px",
                         width: "98%",
                         margin: "10px",
-                        height: "300px",
-                        fontSize: "20px",
-                      }}
-                      value={carpool.boardCpContent}
-                      name="carpoolContent"
-                      required
-                      rows="10"
-                      className="form-control"
-                      id="exampleTextarea"
-                      readOnly
-                      onChange={(e) => {
-                        handleContent(e.target.value);
-                      }}
-                    />
-                  </div>
-
-                  <hr style={{ width: "98%", margin: "10px 0px 10px 0px" }} />
-                  <br />
-                  <h4>만남의 장소</h4>
-                  <div
-                    style={{
-                      border: "1px solid lightGray",
-                      borderRadius: "10px",
-                      width: "98%",
-                      margin: "10px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    <p
-                      style={{
-                        textAlign: "left",
-                        marginTop: "25px",
-                        opacity: "90%",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
                       }}
                     >
-                      <span
+                      <p
                         style={{
-                          display: "inline-block",
-                          width: "7rem",
-                          color: "black",
+                          textAlign: "left",
+                          marginTop: "25px",
+                          opacity: "90%",
                         }}
                       >
-                        ∙ 만남의 장소:
-                      </span>
-                      {place}
-                    </p>
-                    <div style={{zIndex:'0'}}>
-                    <MapContainer place={place} />
-                    </div>
-                  
-                  </div>
-                </div>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <Button
-                  onClick={() => {
-                    window.history.back();
-                  }}
-                  variant="success"
-                  style={{ marginLeft: "10px", backgroundColor: "black" }}
-                >
-                  뒤로가기
-                </Button>
-                &nbsp;
-                {carpool.boardCpMemId === _userData?.memberId && (
-                  <div>
-                    <Button
-                      style={{ margin: "10px", backgroundColor: "black" }}
-                      onClick={() => {
-                        Swal.fire({
-                          title: "정말 삭제 하시겠습니까?",
-                          icon: "warning",
-                          showCancelButton: true,
-                          confirmButtonColor: "black",
-                          cancelButtonColor: "black",
-                          confirmButtonText: "네",
-                          cancelButtonText: "아니오",
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            deleteCarpool();
-                          }
-                        });
-                      }}
-                      variant="success"
-                    >
-                      삭제하자
-                    </Button>
-                    <Button
-                      style={{ marginLeft: "10px", backgroundColor: "black" }}
-                      onClick={() =>
-                        navigate({
-                          pathname:
-                            "/carpool/carpoolUpdate/" + carpool.boardCpNo,
-                          state: { carpool },
-                        })
-                      }
-                    >
-                      수정하자
-                    </Button>
-                  </div>
-                )}
-              </div>
-
-              <h4>댓글</h4>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <textarea
-                  style={{
-                    width: "98%",
-                    margin: "10px",
-                    height: "100px",
-                    fontSize: "16px",
-                  }}
-                  name="boardReplyCpContent"
-                  onChange={(e) => {
-                    handleBoardReplyCpContent(e.target.value);
-                  }}
-                  required
-                  rows="3"
-                  className="form-control"
-                />
-              </div>
-
-              <Button
-                style={{
-                  marginLeft: "10px",
-                  backgroundColor: "black",
-                  textAlign: "center",
-                }}
-                onClick={submitComment}
-              >
-                댓글 등록
-              </Button>
-
-              <div
-                style={{
-                  width: "1500px",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                }}
-              />
-              <br />
-
-              <h4>댓글리스트</h4>
-              <div
-                style={{
-                  border: "2px solid lightGray",
-                  width: "98%",
-                  margin: "10px",
-                }}
-              >
-                {boardReplyList.map((boardReply) => (
-                  <div
-                    key={boardReply.boardReplyCpNo}
-                    className="product_detail_review_comment"
-                    style={{
-                      borderBottom: "1px solid lightgray",
-                      width: "90%",
-                      margin: "50px",
-                    }}
-                  >
-                    회원아이디 : {boardReply.boardReplyCpMemId}
-                    <div style={{ fontSize: "8px" }}>
-                      작성 시간 : ({boardReply.boardReplyCpDate})
-                    </div>
-                    <h3>
-                      <div className="replyContent">
-                        <span style={{ color: "red" }}> → </span>
                         <span
-                          className="replyContentVal"
-                          style={{ color: "black" }}
-                        >
-                          {boardReply.boardReplyCpContent}
-                        </span>
-                      </div>
-                    </h3>
-                    {boardReply.boardReplyCpMemId === _userData?.memberId && (
-                      <Button
-                        style={{ marginLeft: "10px", backgroundColor: "black" }}
-                      >
-                        <span
-                          onClick={async () => {
-                            click();
-                            handleBoardReplyCpNo(boardReply.boardReplyCpNo);
+                          style={{
+                            display: "inline-block",
+                            width: "7rem",
+                            color: "black",
                           }}
                         >
-                          댓글 수정
+                          ∙ 만남의 장소:
                         </span>
-                      </Button>
-                    )}
-                    <Modal
-                      size="lg"
-                      show={lgShow}
-                      onHide={() => setLgShow(false)}
-                      aria-labelledby="example-modal-sizes-title-lg"
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title id="example-modal-sizes-title-lg">
-                          댓글 수정 detail
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <div
-                          className="form-floating mb-3"
-                          style={{ position: "relative" }}
-                        >
-                          <div>
-                            <input
-                              onChange={(e) => {
-                                inputModifiedReply(e.target.value);
-                              }}
-                              className="form-control2"
-                              placeholder="수정할 댓글 내용을 입력하세요"
-                              style={{
-                                position: "relative",
-                                height: "300px",
-                                width: "98%",
-                                maxWidth: "1200px",
-                              }}
-                              maxLength=""
-                            ></input>
-                          </div>
-                          <br />
-                          <br />
-                          <Button
-                            style={{
-                              backgroundColor: "black",
-                              position: "absolute",
-                              bottom: "0",
-                              right: "0",
-                              margin: "0px 15px 0px 0px ",
-                            }}
-                            className="replyBtn"
-                            onClick={async () => {
-                              const reply = {
-                                boardCpNo: boardCpNo,
-                                boardReplyCpNo: boardReplyCpNo,
-                                boardReplyCpContent: boardReplyCpContent2,
-                              };
-                              const res = await updateCarpoolReplyDB(reply);
-                              console.log("updateTogetherReplyDB : ", res.data);
-                              setLgShow(false);
-                              Swal.fire({
-                                title: "댓글 수정 완료",
-                                icon: "success",
-                              });
-                              window.location.reload();
-                              console.log(
-                                "리뷰번호" + boardReply.boardReplyCpNo
-                              );
-                            }}
-                          >
-                            Reply Button
-                          </Button>
-                        </div>
-                        <br />
-                      </Modal.Body>
-                    </Modal>
-                    {boardReply.boardReplyCpMemId === _userData?.memberId && (
+                        {place}
+                      </p>
+                      <div style={{ zIndex: '0' }}>
+                        <MapContainer place={place} />
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    onClick={() => {
+                      window.history.back();
+                    }}
+                    variant="success"
+                    style={{ marginLeft: "10px", backgroundColor: "black" }}
+                  >
+                    뒤로가기
+                  </Button>
+                  &nbsp;
+                  {carpool.boardCpMemId === _userData?.memberId && (
+                    <div>
                       <Button
-                        style={{ marginLeft: "10px", backgroundColor: "black" }}
-                        onClick={async () => {
-                          const reply = {
-                            boardCpNo: boardCpNo,
-                            boardReplyCpNo: boardReply.boardReplyCpNo,
-                          };
-                          const res = await deleteCarpoolReplyDB(reply);
-                          window.location.reload();
+                        style={{ margin: "10px", backgroundColor: "black" }}
+                        onClick={() => {
                           Swal.fire({
-                            title: "댓글 삭제 완료",
-                            icon: "success",
+                            title: "정말 삭제 하시겠습니까?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "black",
+                            cancelButtonColor: "black",
+                            confirmButtonText: "네",
+                            cancelButtonText: "아니오",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              deleteCarpool();
+                            }
                           });
                         }}
+                        variant="success"
                       >
-                        <span>댓글 삭제</span>
+                        삭제하자
                       </Button>
-                    )}
-                  </div>
-                ))}
+                      <Button
+                        style={{ marginLeft: "10px", backgroundColor: "black" }}
+                        onClick={() =>
+                          navigate({
+                            pathname:
+                              "/carpool/carpoolUpdate/" + carpool.boardCpNo,
+                            state: { carpool },
+                          })
+                        }
+                      >
+                        수정하자
+                      </Button>
+                    </div>
+                  )}
+                </div>
+
+                <h4>댓글</h4>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <textarea
+                    style={{
+                      width: "98%",
+                      margin: "10px",
+                      height: "100px",
+                      fontSize: "16px",
+                    }}
+                    name="boardReplyCpContent"
+                    onChange={(e) => {
+                      handleBoardReplyCpContent(e.target.value);
+                    }}
+                    required
+                    rows="3"
+                    className="form-control"
+                  />
+                </div>
+
+                <Button
+                  style={{
+                    marginLeft: "10px",
+                    backgroundColor: "black",
+                    textAlign: "center",
+                  }}
+                  onClick={submitComment}
+                >
+                  댓글 등록
+                </Button>
+
+                <div
+                  style={{
+                    width: "1500px",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                />
+                <br />
+
+                <h4>댓글리스트</h4>
+                <div
+                  style={{
+                    border: "2px solid lightGray",
+                    width: "98%",
+                    margin: "10px",
+                  }}
+                >
+                  {boardReplyList.map((boardReply) => (
+                    <div
+                      key={boardReply.boardReplyCpNo}
+                      className="product_detail_review_comment"
+                      style={{
+                        borderBottom: "1px solid lightgray",
+                        width: "90%",
+                        margin: "50px",
+                      }}
+                    >
+                      회원아이디 : {boardReply.boardReplyCpMemId}
+                      <div style={{ fontSize: "8px" }}>
+                        작성 시간 : ({boardReply.boardReplyCpDate})
+                      </div>
+                      <h3>
+                        <div className="replyContent">
+                          <span style={{ color: "red" }}> → </span>
+                          <span
+                            className="replyContentVal"
+                            style={{ color: "black" }}
+                          >
+                            {boardReply.boardReplyCpContent}
+                          </span>
+                        </div>
+                      </h3>
+                      {boardReply.boardReplyCpMemId === _userData?.memberId && (
+                        <Button
+                          style={{ marginLeft: "10px", backgroundColor: "black" }}
+                        >
+                          <span
+                            onClick={async () => {
+                              click();
+                              handleBoardReplyCpNo(boardReply.boardReplyCpNo);
+                            }}
+                          >
+                            댓글 수정
+                          </span>
+                        </Button>
+                      )}
+                      <Modal
+                        size="lg"
+                        show={lgShow}
+                        onHide={() => setLgShow(false)}
+                        aria-labelledby="example-modal-sizes-title-lg"
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title id="example-modal-sizes-title-lg">
+                            댓글 수정 detail
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <div
+                            className="form-floating mb-3"
+                            style={{ position: "relative" }}
+                          >
+                            <div>
+                              <input
+                                onChange={(e) => {
+                                  inputModifiedReply(e.target.value);
+                                }}
+                                className="form-control2"
+                                placeholder="수정할 댓글 내용을 입력하세요"
+                                style={{
+                                  position: "relative",
+                                  height: "300px",
+                                  width: "98%",
+                                  maxWidth: "1200px",
+                                }}
+                                maxLength=""
+                              ></input>
+                            </div>
+                            <br />
+                            <br />
+                            <Button
+                              style={{
+                                backgroundColor: "black",
+                                position: "absolute",
+                                bottom: "0",
+                                right: "0",
+                                margin: "0px 15px 0px 0px ",
+                              }}
+                              className="replyBtn"
+                              onClick={async () => {
+                                const reply = {
+                                  boardCpNo: boardCpNo,
+                                  boardReplyCpNo: boardReplyCpNo,
+                                  boardReplyCpContent: boardReplyCpContent2,
+                                };
+                                const res = await updateCarpoolReplyDB(reply);
+                                console.log("updateTogetherReplyDB : ", res.data);
+                                setLgShow(false);
+                                Swal.fire({
+                                  title: "댓글 수정 완료",
+                                  icon: "success",
+                                });
+                                window.location.reload();
+                                console.log(
+                                  "리뷰번호" + boardReply.boardReplyCpNo
+                                );
+                              }}
+                            >
+                              Reply Button
+                            </Button>
+                          </div>
+                          <br />
+                        </Modal.Body>
+                      </Modal>
+                      {boardReply.boardReplyCpMemId === _userData?.memberId && (
+                        <Button
+                          style={{ marginLeft: "10px", backgroundColor: "black" }}
+                          onClick={async () => {
+                            const reply = {
+                              boardCpNo: boardCpNo,
+                              boardReplyCpNo: boardReply.boardReplyCpNo,
+                            };
+                            const res = await deleteCarpoolReplyDB(reply);
+                            window.location.reload();
+                            Swal.fire({
+                              title: "댓글 삭제 완료",
+                              icon: "success",
+                            });
+                          }}
+                        >
+                          <span>댓글 삭제</span>
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </ContainerDiv>
-      </div>
+          </ContainerDiv>
+        </div>
       </div>
     </>
   );
