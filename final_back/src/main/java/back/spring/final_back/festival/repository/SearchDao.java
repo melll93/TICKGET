@@ -20,4 +20,6 @@ public interface SearchDao {
 
   public List<MymymyDto> searchForMypage(String memid);
   public List<MymymyDto> searchForMypage2(String memid);
+
+  public List<MymymyDto> searchForMypage3(String memid);
 }

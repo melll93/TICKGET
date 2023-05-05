@@ -58,8 +58,10 @@ public class SearchServiceImpl implements SearchService {
   public List<MymymyDto> searchForMypage(String memid) {
     List<MymymyDto> mList=searchDao.searchForMypage(memid);
     List<MymymyDto> mList2=searchDao.searchForMypage2(memid);
+    List<MymymyDto> mList3=searchDao.searchForMypage3(memid);
         List<MymymyDto> mergedMList = new ArrayList<>();
         mergedMList.addAll(mList2);
+        mergedMList.addAll(mList3);
         mergedMList.addAll(mList);
         return mergedMList;
 		    }

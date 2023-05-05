@@ -21,13 +21,14 @@ const memid = _userData.memberId
         searchByMemidList();
       },[]);
     
-      const clickeddd = (e, festMId, cpNo) =>{
+      const clickeddd = (e, festMId, cpNo, boardMkNo) =>{
         e.preventDefault();
         if(festMId){
             navigate(`../productsDetail/${festMId}`)
         } else if(cpNo){
             navigate(`../carpool/carpoolDetail/${cpNo}`)
-
+        } else{
+            navigate(`../market/mk_boardDetail?no=${boardMkNo}`)  
         }
 
       }
@@ -67,10 +68,10 @@ const memid = _userData.memberId
       return (
           <tr key={i}>
       <th scope="row">{i+1}</th>
-      <td>{item.festMName? (<p>FESTIVAL</p>): (<p>BOARD</p>)}</td>
-      <td>{item.festMName? item.festMName: item.boardCpTitle}</td>
-      <td>{item.festMName? item.festMRegdate : item.boardCpDate}</td>
-      <td><button className="mypage_btn" onClick={(e) => clickeddd(e, item.festMId, item.boardCpNo)}>삭제/수정하러가기</button>
+      <td>{item.festMName? (<p>FESTIVAL</p>): item.boardCpTitle? (<p>Board</p>): (<p>Market</p>)}</td>
+      <td>{item.boardMkTitle? item.boardMkTitle: item.festMName? item.festMName: item.boardCpTitle}</td>
+      <td>{item.boardMkTitle? (<p style={{color:'red'}}>확인불가</p>): item.festMName? item.festMRegdate: item.boardCpDate}</td>
+      <td><button className="mypage_btn" onClick={(e) => clickeddd(e, item.festMId, item.boardCpNo, item.boardMkNo)}>삭제/수정하러가기</button>
 </td>
     </tr>
         );

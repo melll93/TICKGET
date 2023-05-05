@@ -22,4 +22,7 @@ SELECT * FROM fest_main
 <select id="searchForMypage2" resultType="MymymyDto">
   select * from board_carpool where board_cp_mem_id = #{memid}
 </select>
+<select id="searchForMypage3" resultType="MymymyDto">
+  select * from board_market where member_id = #{memid}
+</select>
 </mapper>
