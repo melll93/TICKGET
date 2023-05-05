@@ -54,6 +54,7 @@ const memid = _userData.memberId
   <thead className="thead-light">
     <tr>
       <th scope="col"></th>
+      <th scope="col">카테고리</th>
       <th scope="col">글제목</th>
       <th scope="col">작성일시</th>
       <th scope="col">게시글관리</th>
@@ -66,6 +67,7 @@ const memid = _userData.memberId
       return (
           <tr key={i}>
       <th scope="row">{i+1}</th>
+      <td>{item.festMName? (<p>FESTIVAL</p>): (<p>BOARD</p>)}</td>
       <td>{item.festMName? item.festMName: item.boardCpTitle}</td>
       <td>{item.festMName? item.festMRegdate : item.boardCpDate}</td>
       <td><button className="mypage_btn" onClick={(e) => clickeddd(e, item.festMId, item.boardCpNo)}>삭제/수정하러가기</button>
