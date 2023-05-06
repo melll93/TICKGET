@@ -5,7 +5,7 @@ import axios from "axios";
 export const festivalListByDate = async (date) => {
   const result = await axios({
     method: "GET",
-    url: process.env.REACT_APP_BACKEND_URL + "festival/festivalListByDate",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalListByDate",
     params: {
       date: date,
     },
