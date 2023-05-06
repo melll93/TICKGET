@@ -24,7 +24,7 @@ export const wishlistDetailDB = (wData) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/wishlist/wishlistDetail",
+        url: process.env.REACT_APP_BACKEND_URL + "/wishlist/wishlistDetail",
         params: wData,
       });
       resolve(response);
@@ -41,7 +41,7 @@ export const wishlistAddDB = (wData) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/wishlist/wishlistAdd",
+        url: process.env.REACT_APP_BACKEND_URL + "/wishlist/wishlistAdd",
         data: wData,
       });
       resolve(response);
@@ -58,7 +58,7 @@ export const wishlistDelDB = (wData) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/wishlist/wishlistDelete",
+        url: process.env.REACT_APP_BACKEND_URL + "/wishlist/wishlistDelete",
         params: wData,
       });
       resolve(response);
@@ -75,7 +75,7 @@ export const wishlistSelDelDB = (wData) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/wishlist/wishlistSelDelete",
+        url: process.env.REACT_APP_BACKEND_URL + "/wishlist/wishlistSelDelete",
         params: wData,
       });
       resolve(response);
@@ -92,7 +92,8 @@ export const wishlistUpdateStatusDB = (wishlistSelled) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/wishlist/wishlistUpdateStatus",
+        url:
+          process.env.REACT_APP_BACKEND_URL + "/wishlist/wishlistUpdateStatus",
         params: wishlistSelled,
       });
       resolve(response);

@@ -6,7 +6,8 @@ export const selectCarpoolReplyDB = (boardReply) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/carpool/selectCarpoolReplyList",
+        url:
+          process.env.REACT_APP_BACKEND_URL + "/carpool/selectCarpoolReplyList",
         params: boardReply, //쿼리스트링은 header에 담김 - get방식
       });
       resolve(response);
@@ -22,7 +23,7 @@ export const insertCarpoolReplyDB = (boardReply) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/carpool/insertCarpoolReply",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/insertCarpoolReply",
         params: boardReply,
       });
       resolve(response);
@@ -39,7 +40,7 @@ export const deleteCarpoolReplyDB = (boardReply) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/carpool/deleteCarpoolReply",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/deleteCarpoolReply",
         data: boardReply,
       });
       resolve(response);
@@ -56,7 +57,7 @@ export const updateCarpoolReplyDB = (boardReply) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/carpool/updateCarpoolReply",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/updateCarpoolReply",
         data: boardReply,
       });
       resolve(response);

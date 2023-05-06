@@ -14,6 +14,8 @@ import { selectCarpoolDB } from "../../axios/board/carpool/CarpoolLogic";
 import { mk_boardListDB } from "../../axios/board/market/marketLogic";
 
 const HomePage = () => {
+  console.log(process.env.REACT_APP_BACKEND_URL);
+
   /******************************
    * SearchBar : keyword 검색해서 페이지 이동(/search)
    * MainCarousel : 오늘 날짜로 검색해서 뿌려주기,
@@ -137,7 +139,7 @@ const HomePage = () => {
   return (
     <>
       <Header />
-      <Sidebar/>
+      <Sidebar />
       <div className="center">
         <div
           style={{
@@ -146,7 +148,7 @@ const HomePage = () => {
             height: "1000px",
           }}
         >
-          <CarouselList festivalToday={festivalToday}/>
+          <CarouselList festivalToday={festivalToday} />
         </div>
 
         <section
@@ -306,7 +308,7 @@ const HomePage = () => {
               }}
             >
               <h4 style={{ fontWeight: 'bold' }}><i className="bi bi-command"></i>{" "}연계 추천 사이트</h4>
-              <div className="card" style={{ display: "inline-block", marginRight: '5px' , marginTop:'20px'}}>
+              <div className="card" style={{ display: "inline-block", marginRight: '5px', marginTop: '20px' }}>
                 <img
                   src="./images_key/travelgajae.jpg"
                   style={{ width: "200px", height: "250px", margin: "15px" }}
@@ -349,10 +351,10 @@ const HomePage = () => {
             {/* 지역별 추천 여기까지 */}
           </div>
         </section>
-<div style={{marginTop:'200px'}}>
+        <div style={{ marginTop: '200px' }}>
 
-        <Footer />
-</div>
+          <Footer />
+        </div>
       </div>
       {/* center */}
     </>

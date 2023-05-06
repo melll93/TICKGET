@@ -6,7 +6,9 @@ export const selectCarpoolDB = (carpool) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/carpool/selectCarpool",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/selectCarpool",
+
+        // "http://localhost:8888/carpool/selectCarpool",
         params: carpool, //쿼리스트링은 header에 담김 - get방식
       });
       resolve(response);
@@ -22,7 +24,7 @@ export const getBoardCpNoDB = () => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/carpool/getBoardCpNo",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/getBoardCpNo",
       });
       resolve(response);
     } catch (error) {
@@ -38,7 +40,7 @@ export const insertCarpoolDB = (carpool) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/carpool/insertCarpool",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/insertCarpool",
         params: carpool,
       });
       resolve(response);
@@ -54,7 +56,7 @@ export const CarpoolDetailDB = (carpool) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/carpool/carpoolDetail",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/carpoolDetail",
         params: carpool, //쿼리스트링은 header에 담김 - get방식
       });
       resolve(response);
@@ -70,7 +72,7 @@ export const deleteCarpoolDB = (carpool) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/carpool/deleteCarpool",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/deleteCarpool",
         params: carpool,
       });
       resolve(response);
@@ -86,7 +88,7 @@ export const updateCarpoolDB = (carpool) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/carpool/updateCarpool",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/updateCarpool",
         data: carpool,
       });
       resolve(response);
@@ -104,7 +106,7 @@ export const carpoolViewUpDB = async (boardCpNo) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/carpool/carpoolViewUp",
+        url: process.env.REACT_APP_BACKEND_URL + "/carpool/carpoolViewUp",
         params: { boardCpNo: boardCpNo },
       });
       resolve(response);
