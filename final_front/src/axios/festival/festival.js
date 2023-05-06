@@ -5,9 +5,7 @@ import axios from "axios";
 export const festivalListByDate = async (date) => {
   const result = await axios({
     method: "GET",
-    url:
-      // process.env.BACKEND_URL
-      "http://localhost:8888/" + "festival/festivalListByDate",
+    url: process.env.REACT_APP_BACKEND_URL + "festival/festivalListByDate",
     params: {
       date: date,
     },
@@ -19,7 +17,7 @@ export const festivalListByDate = async (date) => {
 export const festivalHitListDB = async (festMHit) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalHitList",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalHitList",
     params: { festMHit },
   }).then((res) => res.data);
   return result;
@@ -31,7 +29,7 @@ export const FestivalInsertDB = (festival) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/festival/festivalInsert",
+        url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalInsert",
         data: festival,
       });
       resolve(response);
@@ -44,7 +42,7 @@ export const FestivalInsertDB = (festival) => {
 export const FetivalListDB = async (festival) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalList",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalList",
     params: festival,
   }).then((res) => res.data);
   return result;
@@ -52,7 +50,7 @@ export const FetivalListDB = async (festival) => {
 
 export const getLatestFestivalDB = async () => {
   const res = await axios.get(
-    "http://localhost:8888/festival/latestFestivalList"
+    process.env.REACT_APP_BACKEND_URL + "/festival/latestFestivalList"
   );
   return res.data;
 };
@@ -60,7 +58,7 @@ export const getLatestFestivalDB = async () => {
 export const DeleteFestivalDB = async (festival) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalDelete",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalDelete",
     params: festival,
   }).then((res) => res.data);
   return result;
@@ -70,7 +68,7 @@ export const DeleteFestivalDB = async (festival) => {
 export const thumbsupFestivalDB = async (festMId) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalThumpsUp",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalThumpsUp",
     params: { festMId },
   }).then((res) => res.data);
   return result;
@@ -80,7 +78,7 @@ export const thumbsupFestivalDB = async (festMId) => {
 export const areaFestivalListDB = async (festMArea) => {
   const result = await axios({
     method: "get",
-    url: `http://localhost:8888/festival/areaFestivalList?fest_m_area=${festMArea}`,
+    url: `${process.env.REACT_APP_BACKEND_URL}/festival/areaFestivalList?fest_m_area=${festMArea}`,
     params: { festMArea },
   }).then((res) => res.data);
   return result;
