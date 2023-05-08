@@ -42,8 +42,8 @@ const memid = _userData.memberId
 
  </div>   {/* main_left_div */}
 <div className="main_center_div">
-
-<h1 className="top_line">
+<h1 className="top_line" style={{fontWeight:'bold'}}>
+<i class="bi bi-pencil-square"></i>{" "}
   내 게시글 확인
 </h1>
 
@@ -66,12 +66,12 @@ const memid = _userData.memberId
 {/* 맵돌려야징 */}
   {memIdData && memIdData.map((item, i) => {
       return (
-          <tr key={i}>
+          <tr key={i} style={{fontWeight:'bold'}}>
       <th scope="row">{i+1}</th>
-      <td>{item.festMName? (<p>FESTIVAL</p>): item.boardCpTitle? (<p>Board</p>): (<p>Market</p>)}</td>
+      <td>{item.festMName? (<p>FESTIVAL</p>): item.boardCpTitle? (<p>Board</p>): (<p>MARKET</p>)}</td>
       <td>{item.boardMkTitle? item.boardMkTitle: item.festMName? item.festMName: item.boardCpTitle}</td>
       <td>{item.boardMkTitle? (<p style={{color:'red'}}>확인불가</p>): item.festMName? item.festMRegdate: item.boardCpDate}</td>
-      <td><button className="mypage_btn" onClick={(e) => clickeddd(e, item.festMId, item.boardCpNo, item.boardMkNo)}>삭제/수정하러가기</button>
+      <td><button className="mypage_btn" onClick={(e) => clickeddd(e, item.festMId, item.boardCpNo, item.boardMkNo)}>삭제/수정</button>
 </td>
     </tr>
         );

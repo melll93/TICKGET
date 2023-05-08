@@ -1,7 +1,7 @@
   import React, { useEffect, useState } from "react";
   import Header from "../../components/Header";
   import Sidebar from "../../components/Sidebar";
-  import { wishlistDelDB, wishlistDetailDB, wishlistSelDelDB, wishlistSelectDB } from "../../axios/payment/wishlistLogic";
+  import { wishlistDelDB,wishlistSelDelDB, wishlistSelectDB } from "../../axios/payment/wishlistLogic";
   import { Cookies } from "react-cookie";
   import { useNavigate } from "react-router-dom";
   import { MButton } from "../../styles/formStyle";
