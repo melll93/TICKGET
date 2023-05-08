@@ -11,12 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1cff8025-8f38-4120-b9f2-a8341d3a81b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/back/spring/final_back/FinalBackApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/back/spring/final_back/FinalBackApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/back/spring/final_back/chat/config/WebSocketMsgBrokerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/back/spring/final_back/chat/config/WebSocketMsgBrokerConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/back/spring/final_back/member/handler/OAuth2AuthenticationSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/back/spring/final_back/member/handler/OAuth2AuthenticationSuccessHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../final_front/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../final_front/build/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../final_front/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../final_front/build/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../final_front/src/pages/member/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../final_front/src/pages/member/LoginPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +151,7 @@
       <workItem from="1683369404614" duration="2386000" />
       <workItem from="1683371828010" duration="1059000" />
       <workItem from="1683373113045" duration="735000" />
-      <workItem from="1683373872672" duration="6863000" />
+      <workItem from="1683373872672" duration="8692000" />
     </task>
     <servers />
   </component>
