@@ -8,6 +8,17 @@
             "mainClass": "back.spring.final_back.FinalBackApplication",
             "projectName": "final_back",
             "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=57186 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=final_back"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-FinalBackApplication<back.spring.final_back>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "back.spring.final_back.FinalBackApplication",
+            "projectName": "back.spring.final_back",
+            "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
     ]
