@@ -16,7 +16,7 @@ export const mk_boardListDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/market/mk_boardList",
+        url: process.env.REACT_APP_BACKEND_URL + "/market/mk_boardList",
         params: board,
       });
       resolve(response);
@@ -33,7 +33,7 @@ export const mk_boardDetailDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/market/mk_boardDetail",
+        url: process.env.REACT_APP_BACKEND_URL + "/market/mk_boardDetail",
         params: board, //post 방식일땐 params 대신 data
       });
       resolve(response);
@@ -50,7 +50,7 @@ export const mk_boardInsertDB = (board) => {
     try {
       const response = axios({
         method: "post", //@RequestBody
-        url: "http://localhost:8888/market/mk_boardInsert",
+        url: process.env.REACT_APP_BACKEND_URL + "/market/mk_boardInsert",
         data: board, //post 방식일땐 params 대신 data
       });
       resolve(response);
@@ -67,7 +67,7 @@ export const mk_boardUpdateDB = (board) => {
     try {
       const response = axios({
         method: "post", //@RequestBody
-        url: "http://localhost:8888/market/mk_boardUpdate",
+        url: process.env.REACT_APP_BACKEND_URL + "/market/mk_boardUpdate",
         data: board, //post 방식일땐 params 대신 data
       });
       resolve(response);
@@ -84,7 +84,7 @@ export const mk_boardDeleteDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/market/mk_boardDelete",
+        url: process.env.REACT_APP_BACKEND_URL + "/market/mk_boardDelete",
         params: board,
       });
       resolve(response);
@@ -100,7 +100,7 @@ export const mk_boardSellDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/market/mk_boardSell",
+        url: process.env.REACT_APP_BACKEND_URL + "/market/mk_boardSell",
         params: board,
       });
       resolve(response);
@@ -116,7 +116,7 @@ export const mk_plusLikesDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/market/mk_plusLikes",
+        url: process.env.REACT_APP_BACKEND_URL + "/market/mk_plusLikes",
         params: board,
       });
       resolve(response);
@@ -133,7 +133,7 @@ export const mk_minusLikesDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/market/mk_minusLikes",
+        url: process.env.REACT_APP_BACKEND_URL + "/market/mk_minusLikes",
         params: board,
       });
       resolve(response);

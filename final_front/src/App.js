@@ -55,7 +55,7 @@ function App({ mkImageUploader }) {
   const [carpool, setCarpool] = useState();
   const [user, setUser] = useState();
 
-  const sock = new SockJS("http://localhost:8888/stompTest");
+  const sock = new SockJS(process.env.REACT_APP_BACKEND_URL + "/stompTest");
   const client = Stomp.over(sock);
   const room = useSelector((state) => state.roomReducer.room);
   const _userData = cookies.get("_userData");

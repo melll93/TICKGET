@@ -5,8 +5,8 @@ export const createChatRoom = async (members) => {
   const result = await axios({
     method: "POST",
     url:
-      "http://localhost:8888" +
-      // +process.env.BACKEND_URL
+      process.env.REACT_APP_BACKEND_URL +
+      // "http://localhost:8888" +
       "/chat/createChatRoom",
     // headers: { Authorization: "Bearer " + access_token },
     data: members,
@@ -19,8 +19,8 @@ export const getChatRoomList = async () => {
   const result = await axios({
     method: "GET",
     url:
-      "http://localhost:8888" +
-      // +process.env.BACKEND_URL
+      process.env.REACT_APP_BACKEND_URL +
+      // "http://localhost:8888" +
       "/chat/getChatRoomList",
     headers: { Authorization: "Bearer " + access_token },
   }).then((res) => {
@@ -35,8 +35,8 @@ export const getChatByRoom = async (room) => {
   const result = await axios({
     method: "GET",
     url:
-      "http://localhost:8888" +
-      // +process.env.BACKEND_URL
+      process.env.REACT_APP_BACKEND_URL +
+      // "http://localhost:8888" +
       "/chat/getChatByRoom",
     headers: { Authorization: "Bearer " + access_token },
     params: {

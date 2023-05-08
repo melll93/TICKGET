@@ -7,7 +7,7 @@ import axios from "axios";
 export const getFestivalTodayDB = async () => {
   const result = await axios({
     method: "GET",
-    url: "http://localhost:8888/api/concertToday",
+    url: process.env.REACT_APP_BACKEND_URL + "/api/concertToday",
     // process.env.BACKEND_URL + "api/concertToday"
   }).then((res) => res.data);
   // console.log(result);
@@ -21,7 +21,7 @@ export const getFestivalTodayDB = async () => {
 export const getConcertListDB = async (category) => {
   const result = await axios({
     method: "GET",
-    url: "http://localhost:8888/api/concertList",
+    url: process.env.REACT_APP_BACKEND_URL + "/api/concertList",
     // process.env.BACKEND_URL + "api/concertToday"
     params: { category: category },
   }).then((res) => res.data);
@@ -36,7 +36,7 @@ export const getConcertListDB = async (category) => {
 export const getOpenSoonListDB = async () => {
   const result = await axios({
     method: "GET",
-    url: "http://localhost:8888/api/openSoonList",
+    url: process.env.REACT_APP_BACKEND_URL + "/api/openSoonList",
   }).then((res) => res.data);
   return result;
 };
@@ -44,7 +44,7 @@ export const getOpenSoonListDB = async () => {
 export const getMovieListDB = async () => {
   const result = await axios({
     method: "GET",
-    url: "http://localhost:8888/api/movieList",
+    url: process.env.REACT_APP_BACKEND_URL + "/api/movieList",
   }).then((res) => res.data);
 
   return result;

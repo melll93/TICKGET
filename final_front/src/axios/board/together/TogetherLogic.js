@@ -7,7 +7,7 @@ export const selectTogetherDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/board/selectBoardList",
+        url: process.env.REACT_APP_BACKEND_URL + "/board/selectBoardList",
         params: board, //쿼리스트링은 header에 담김 - get방식
       });
       resolve(response);
@@ -24,7 +24,7 @@ export const selectTogetherDetailDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/board/selectBoardDetail",
+        url: process.env.REACT_APP_BACKEND_URL + "/board/selectBoardDetail",
         params: board, //쿼리스트링은 header에 담김 - get방식
       });
       resolve(response);
@@ -41,7 +41,7 @@ export const deleteTogetherDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/board/deleteBoardList",
+        url: process.env.REACT_APP_BACKEND_URL + "/board/deleteBoardList",
         params: board,
       });
       resolve(response);
@@ -58,7 +58,7 @@ export const insertTogetherDB = (board) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/board/insertBoardList",
+        url: process.env.REACT_APP_BACKEND_URL + "/board/insertBoardList",
         params: board,
       });
       resolve(response);
@@ -75,7 +75,7 @@ export const updateTogetherDB = (board) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/board/updateBoardList",
+        url: process.env.REACT_APP_BACKEND_URL + "/board/updateBoardList",
         data: board,
       });
       resolve(response);
@@ -93,7 +93,7 @@ export const togetherViewUpDB = async (boardTgNo) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/board/togetherViewUp",
+        url: process.env.REACT_APP_BACKEND_URL + "/board/togetherViewUp",
         params: { boardTgNo: boardTgNo },
       });
       console.log("@@@@@@@@@@@@@@", boardTgNo);

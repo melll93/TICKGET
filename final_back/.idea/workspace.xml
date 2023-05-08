@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="back.spring.final_back:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1cff8025-8f38-4120-b9f2-a8341d3a81b3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/back/spring/final_back/chat/config/WebSocketMsgBrokerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/back/spring/final_back/chat/config/WebSocketMsgBrokerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/back/spring/final_back/member/handler/OAuth2AuthenticationSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/back/spring/final_back/member/handler/OAuth2AuthenticationSuccessHandler.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="back.spring.final_back" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2NJPVxZ4y4KuXbE1p1aaiO2Ak3U" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelOrder2&quot;: &quot;2&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth2&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/melll/workspace/project/final_project/final_back&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.1388889&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;a7bc9a99537cbefb81218181cb9580f6&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="back.spring.final_back.chat.repositry" />
+      <recent name="back.spring.final_back.member.handler" />
+      <recent name="back.spring.final_back.chat" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/back/spring/final_back/member" />
+      <recent name="$PROJECT_DIR$/src/main/resources/mapper/member" />
+      <recent name="$PROJECT_DIR$/src/main/java/back/spring/final_back" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/mapper/member" />
+      <recent name="$PROJECT_DIR$/src/main/resources/mapper/festival" />
+      <recent name="$PROJECT_DIR$/src/main/resources/mapper/board" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="back.spring.final_back.member.repository" />
+      <recent name="back.spring.final_back.member.service" />
+      <recent name="back.spring.final_back.social.service" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="FinalBackApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="back.spring.final_back.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="back.spring.final_back.FinalBackApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1cff8025-8f38-4120-b9f2-a8341d3a81b3" name="Changes" comment="" />
+      <created>1679379242272</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1679379242272</updated>
+      <workItem from="1679379244091" duration="920000" />
+      <workItem from="1679472465449" duration="57000" />
+      <workItem from="1679573431156" duration="5939000" />
+      <workItem from="1679583060630" duration="6727000" />
+      <workItem from="1679717682465" duration="9869000" />
+      <workItem from="1680058452757" duration="7971000" />
+      <workItem from="1680162393123" duration="26453000" />
+      <workItem from="1681033138353" duration="10464000" />
+      <workItem from="1681198033520" duration="443000" />
+      <workItem from="1681198542636" duration="98655000" />
+      <workItem from="1682421799352" duration="9973000" />
+      <workItem from="1682576162693" duration="36674000" />
+      <workItem from="1683093873784" duration="3609000" />
+      <workItem from="1683176596058" duration="3946000" />
+      <workItem from="1683368107610" duration="1267000" />
+      <workItem from="1683369404614" duration="2386000" />
+      <workItem from="1683371828010" duration="1059000" />
+      <workItem from="1683373113045" duration="735000" />
+      <workItem from="1683373872672" duration="8692000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

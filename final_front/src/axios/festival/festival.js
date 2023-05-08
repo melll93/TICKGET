@@ -5,9 +5,7 @@ import axios from "axios";
 export const festivalListByDate = async (date) => {
   const result = await axios({
     method: "GET",
-    url:
-      // process.env.BACKEND_URL
-      "http://localhost:8888/" + "festival/festivalListByDate",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalListByDate",
     params: {
       date: date,
     },
@@ -19,12 +17,11 @@ export const festivalListByDate = async (date) => {
 export const festivalHitListDB = async (festMHit) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalHitList",
-    params: {festMHit},
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalHitList",
+    params: { festMHit },
   }).then((res) => res.data);
   return result;
 };
-
 
 /* 페스티발 페이지*/
 export const FestivalInsertDB = (festival) => {
@@ -32,7 +29,7 @@ export const FestivalInsertDB = (festival) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/festival/festivalInsert",
+        url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalInsert",
         data: festival,
       });
       resolve(response);
@@ -45,53 +42,47 @@ export const FestivalInsertDB = (festival) => {
 export const FetivalListDB = async (festival) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalList",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalList",
     params: festival,
   }).then((res) => res.data);
   return result;
 };
 
-
-
-
-
 export const getLatestFestivalDB = async () => {
-  const res = await axios.get('http://localhost:8888/festival/latestFestivalList');
+  const res = await axios.get(
+    process.env.REACT_APP_BACKEND_URL + "/festival/latestFestivalList"
+  );
   return res.data;
 };
 
 export const DeleteFestivalDB = async (festival) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalDelete",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalDelete",
     params: festival,
   }).then((res) => res.data);
   return result;
 };
 
-
 /* 조회수 */
-export const thumbsupFestivalDB = async(festMId) => {
+export const thumbsupFestivalDB = async (festMId) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalThumpsUp",
-        params: {festMId}
-      }).then((res) => res.data);
-      return result;
-    };
-
-
-/* 지역별 */
-export const areaFestivalListDB = async(festMArea) => {
-  const result = await axios({
-    method: "get",
-    url: `http://localhost:8888/festival/areaFestivalList?fest_m_area=${festMArea}`,
-    params: {festMArea},
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalThumpsUp",
+    params: { festMId },
   }).then((res) => res.data);
   return result;
 };
 
-
+/* 지역별 */
+export const areaFestivalListDB = async (festMArea) => {
+  const result = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_URL}/festival/areaFestivalList?fest_m_area=${festMArea}`,
+    params: { festMArea },
+  }).then((res) => res.data);
+  return result;
+};
 
 /* 
 페스티발 상세페이지 하단 - 리뷰
@@ -99,17 +90,16 @@ export const areaFestivalListDB = async(festMArea) => {
 export const DeleteFestReviewDB = async (freview) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/review/reviewDelete",
+    url: process.env.REACT_APP_BACKEND_URL + "/review/reviewDelete",
     params: freview,
   }).then((res) => res.data);
   return result;
 };
 
-
 export const FestivalReviewDB = async (freview) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/review/reviewList",
+    url: process.env.REACT_APP_BACKEND_URL + "/review/reviewList",
     params: freview,
   }).then((res) => res.data);
   return result;
@@ -120,7 +110,7 @@ export const FestReviewInsertDB = (freview) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/review/reviewInsert",
+        url: process.env.REACT_APP_BACKEND_URL + "/review/reviewInsert",
         data: freview,
       });
       resolve(response);
@@ -133,13 +123,11 @@ export const FestReviewInsertDB = (freview) => {
 export const UpdateFestReviewDB = async (freview) => {
   const result = await axios({
     method: "post",
-    url: "http://localhost:8888/review/reviewUpdate",
+    url: process.env.REACT_APP_BACKEND_URL + "/review/reviewUpdate",
     data: freview,
   }).then((res) => res.data);
   return result;
 };
-
-
 
 /* 
 페스티발 상세페이지 
@@ -147,7 +135,7 @@ export const UpdateFestReviewDB = async (freview) => {
 export const FetivalDetailDB2 = async (festival) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalDetail",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalDetail",
     params: festival,
   }).then((res) => res.data);
   return result;
@@ -158,7 +146,7 @@ export const FetivalDetailDB = (festMId) => {
     try {
       const response = axios({
         method: "get",
-        url: "http://localhost:8888/festival/festivalDetail",
+        url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalDetail",
         params: festMId,
       });
       resolve(response);
@@ -174,7 +162,7 @@ export const saveFestDetailDB = (festival) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/festival/festDetailInsert",
+        url: process.env.REACT_APP_BACKEND_URL + "/festival/festDetailInsert",
         data: festival,
       });
       resolve(response);
@@ -190,7 +178,7 @@ export const saveFestPsUrlDB = (festival) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/festival/festPosterInsert",
+        url: process.env.REACT_APP_BACKEND_URL + "/festival/festPosterInsert",
         data: festival,
       });
       resolve(response);
@@ -204,7 +192,7 @@ export const saveFestPsUrlDB = (festival) => {
 export const deleteFestPosterDB = async (fest_ps_no) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalPosterDelete",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalPosterDelete",
     params: fest_ps_no,
   }).then((res) => res.data);
   return result;
@@ -214,14 +202,11 @@ export const deleteFestPosterDB = async (fest_ps_no) => {
 export const deleteFestTicketDB = async (fest_tc_no) => {
   const result = await axios({
     method: "get",
-    url: "http://localhost:8888/festival/festivalTicketDelete",
+    url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalTicketDelete",
     params: fest_tc_no,
   }).then((res) => res.data);
   return result;
 };
-
-
-
 
 /* fest_ticekt 추가 */
 export const festTicketInsertDB = (tickets) => {
@@ -229,7 +214,7 @@ export const festTicketInsertDB = (tickets) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/festival/festTicketInsert",
+        url: process.env.REACT_APP_BACKEND_URL + "/festival/festTicketInsert",
         data: tickets,
       });
       resolve(response);
@@ -239,14 +224,13 @@ export const festTicketInsertDB = (tickets) => {
   });
 };
 
-
 /* 수정 */
 export const festivalUpdateDB = (festival) => {
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/festival/festivalUpdate",
+        url: process.env.REACT_APP_BACKEND_URL + "/festival/festivalUpdate",
         data: festival,
       });
       resolve(response);
@@ -262,7 +246,8 @@ export const festivalDetailUpdateDB = (festival) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/festival/festivalDetailUpdate",
+        url:
+          process.env.REACT_APP_BACKEND_URL + "/festival/festivalDetailUpdate",
         data: festival,
       });
       resolve(response);

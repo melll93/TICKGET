@@ -16,7 +16,7 @@ export const login = async (paramMember) => {
     },
     url:
       // process.env.BACKEND_URL + "/login",
-      "http://localhost:8888/login",
+      process.env.REACT_APP_BACKEND_URL + "/login",
     data: paramMember,
   })
     .then((res) => {
@@ -49,7 +49,7 @@ export const login = async (paramMember) => {
 export const searchById = async (memberId) => {
   const result = await axios({
     method: "GET",
-    url: "http://localhost:8888" + "/member/searchById",
+    url: process.env.REACT_APP_BACKEND_URL + "/member/searchById",
     headers: { Authorization: "Bearer " + access_token },
     params: {
       memberId,
@@ -65,7 +65,7 @@ export const searchById = async (memberId) => {
 export const checkFollowDB = async (friendId, access_token) => {
   const result = await axios({
     method: "GET",
-    url: "http://localhost:8888" + "/member/checkFollow",
+    url: process.env.REACT_APP_BACKEND_URL + "/member/checkFollow",
     headers: { Authorization: "Bearer " + access_token },
     params: {
       friendId,
@@ -78,7 +78,7 @@ export const checkFollowDB = async (friendId, access_token) => {
 export const addFollowDB = async (friendId) => {
   const result = await axios({
     method: "GET",
-    url: "http://localhost:8888" + "/member/addFollow",
+    url: process.env.REACT_APP_BACKEND_URL + "/member/addFollow",
     headers: { Authorization: "Bearer " + access_token },
     params: {
       friendId,
@@ -93,7 +93,9 @@ export const memberPofileImageUpdateDB = (member) => {
     try {
       const response = axios({
         method: "post",
-        url: "http://localhost:8888/member/memberProfileImageUpdate",
+        url:
+          process.env.REACT_APP_BACKEND_URL +
+          "/member/memberProfileImageUpdate",
         data: member,
       });
       resolve(response);
@@ -106,7 +108,7 @@ export const memberPofileImageUpdateDB = (member) => {
 export const getUserData = async (token) => {
   const result = await axios({
     method: "POST",
-    url: "http://localhost:8888" + "/member/getMemberData",
+    url: process.env.REACT_APP_BACKEND_URL + "/member/getMemberData",
     headers: {
       Authorization: `Bearer ${token}`,
     },

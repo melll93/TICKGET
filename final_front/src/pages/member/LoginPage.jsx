@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import NaverLogin from "../../api/login/NaverLogin";
 import Sidebar from "../../components/Sidebar";
 import {
   GoogleButton,
@@ -80,12 +79,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
     }
   };
 
-  const handleKakao = async () => {
-    const result = await axios({
-      url: "http://localhost:8888/oauth2/authorization/kakao",
-    }).then(console.log);
-  };
-
   /************************************comment************************************
    * 조장 생각 : 변수와 메소드가 많아지며 명칭이 많아져 코드가 많아질수록 혼동할 가능성이 높아짐.
    * 하나의 메소드로 핸들링할 수 있는 경우, 각 변수별 메소드를 만드는 것이 아닌 하나의 메소드 내에서 케이스를 다룬다.
@@ -107,21 +100,6 @@ const LoginPage = ({ user, setUser, authLogic }) => {
   };
   // console.log("id : " + userId);
   // console.log("pw : " + userPw);
-
-  // 구글 로그인
-  const loginG = async () => {
-    try {
-      const result = await loginGoogle(
-        authLogic.getUserAuth(),
-        authLogic.getGoogleAuthProvider()
-      );
-      console.log(result.data);
-      //navigate("/")
-      //window.location.reload()
-    } catch (error) {
-      console.log("로그인 오류입니다");
-    }
-  };
 
   return (
     <>
@@ -271,7 +249,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             </div>
           </div> */}
           <div className="socialLogin">
-            <Link to="http://localhost:8888/oauth2/authorization/naver">
+            <Link to={process.env.REACT_APP_BACKEND_URL + "/oauth2/authorization/naver"}>
               <div className="loginbutton">
                 <img
                   className="loginbuttonimg"
@@ -279,7 +257,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 />
               </div>
             </Link>
-            <Link to="http://localhost:8888/oauth2/authorization/kakao">
+            <Link to={process.env.REACT_APP_BACKEND_URL + "/oauth2/authorization/kakao"}>
               <div className="loginbutton">
                 <img
                   className="loginbuttonimg"
@@ -287,7 +265,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
                 />
               </div>
             </Link>
-            <Link to="http://localhost:8888/oauth2/authorization/google">
+            <Link to={process.env.REACT_APP_BACKEND_URL + "/oauth2/authorization/google"}>
               <div className="loginbutton">
                 <img
                   className="loginbuttonimg"
@@ -297,7 +275,7 @@ const LoginPage = ({ user, setUser, authLogic }) => {
             </Link>
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };
