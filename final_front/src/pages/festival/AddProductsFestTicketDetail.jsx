@@ -145,14 +145,18 @@ const festTicketInsert = async () => {
           title : "저장 완료",
           icon: "success"
         })
-        const newTickets=[];
-        setTickets(newTickets);
+        if(Array.isArray(dbTickets)){
         const updatedDbTickets = [...dbTickets, ...tickets]; 
         setDbTickets(updatedDbTickets); 
+        }else {
+          setDbTickets(tickets)
+        }
       }
     }
   } /* for */
   insertData(tickets);
+  const newTickets=[];
+  setTickets(newTickets)
 }; /* festTicketInsert */
  
 

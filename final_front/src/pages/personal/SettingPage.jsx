@@ -47,7 +47,7 @@ const MypageSidebarItem = () => {
         >
             <img
               className="mypage_tab_icon"
-              src={"../logos/" +item+ ".png"}
+              src={"/logos/" +item+ ".png"}
               alt={item}
             />{item}
         </div>

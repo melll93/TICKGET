@@ -8,17 +8,22 @@ import { useNavigate } from 'react-router-dom';
 const ReservationPage = () => {
     const cookies = new Cookies();
 const _userData = cookies.get("_userData"); //유저 정보
-const memid = _userData.memberId
-    const [memIdData, setMemIdData]=useState([]);
-    const navigate = useNavigate();
+const [memIdData, setMemIdData]=useState([]);
+const navigate = useNavigate();
 
-    useEffect(() => {
-        async function searchByMemidList() {
-            const data = await searchForMypageDB(memid);
+useEffect(() => {
+    if(!_userData){
+        alert('로그인 후 이용가능합니다.')
+        navigate(-1)
+    }else{
+            const memid = _userData.memberId
+            async function searchByMemidList() {
+                const data = await searchForMypageDB(memid);
             setMemIdData(data)
             console.log(data);
         }
         searchByMemidList();
+    }
       },[]);
     
       const clickeddd = (e, festMId, cpNo, boardMkNo) =>{
@@ -30,8 +35,8 @@ const memid = _userData.memberId
         } else{
             navigate(`../market/mk_boardDetail?no=${boardMkNo}`)  
         }
-
-      }
+        
+    }
     
     return (
     <>
