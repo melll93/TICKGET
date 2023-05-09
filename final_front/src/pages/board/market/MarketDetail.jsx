@@ -179,7 +179,8 @@ const MarketDetail = () => {
   const boardDateTime = formatTimeDiff(Date.now() - new Date(detail.board_mk_date).getTime())
 
   //찜하기 기능
-  const [isWishlistAdded, setIsWishlistAdded] = useState((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? (member_no === wishlistDetail.wl_memno) : false);
+  const [isWishlistAdded, setIsWishlistAdded] = useState((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? 
+  (member_no === wishlistDetail.wl_memno) : false);
   const [heart, setHeart] = useState((member_no !== undefined && wishlistDetail.wl_memno !== undefined) ? (member_no === wishlistDetail.wl_memno) : false);
 
   useEffect(() => {
